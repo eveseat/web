@@ -19,27 +19,27 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-// Namespace all of the routes for this package.
-Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
+// Authentication routes
+Route::get('login', [
+    'as'   => 'auth.login',
+    'uses' => 'AuthController@getLogin'
+]);
+Route::post('login', [
+    'as'   => 'auth.login.post',
+    'uses' => 'AuthController@postLogin'
+]);
+Route::get('logout', [
+    'as'   => 'auth.logout',
+    'uses' => 'AuthController@getLogout'
+]);
 
-    // Authentication & Registration Routes.
-    Route::group(['namespace' => 'Auth'], function () {
+// Registration routes
+Route::get('register', [
+    'as'   => 'auth.register',
+    'uses' => 'AuthController@getRegister'
+]);
+Route::post('register', [
+    'as'   => 'auth.register.post',
+    'uses' => 'AuthController@postRegister'
+]);
 
-        Route::group(['prefix' => 'auth'], function () {
-
-            include __DIR__ . '/Routes/Auth/Auth.php';
-        });
-
-        Route::group(['prefix' => 'password'], function () {
-
-            include __DIR__ . '/Routes/Auth/Password.php';
-        });
-    });
-
-    // All routes from here require *at least* that the
-    // user is authenticated.
-    Route::group(['middleware' => 'auth'], function () {
-
-        include __DIR__ . '/Routes/Home.php';
-    });
-});

@@ -19,26 +19,22 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-// Authentication routes
-Route::get('login', [
-    'as'   => 'auth.login',
-    'uses' => 'AuthController@getLogin'
+// Password reset link request routes
+Route::get('email', [
+    'as'   => 'password.email',
+    'uses' => 'PasswordController@getEmail'
 ]);
-Route::post('login', [
-    'as'   => 'auth.login.post',
-    'uses' => 'AuthController@postLogin'
-]);
-Route::get('logout', [
-    'as'   => 'auth.logout',
-    'uses' => 'AuthController@getLogout'
-]);
+Route::post('email', [
+        'as'   => 'password.email.post',
+        'uses' => 'PasswordController@postEmail']
+);
 
-// Registration routes
-Route::get('register', [
-    'as'   => 'auth.register',
-    'uses' => 'AuthController@getRegister'
+// Password reset routes
+Route::get('reset/{token}', [
+    'as'   => 'password.reset',
+    'uses' => 'PasswordController@getReset'
 ]);
-Route::post('register', [
-    'as'   => 'auth.register.post',
-    'uses' => 'AuthController@postRegister'
+Route::post('reset', [
+    'as'   => 'password.reset.post',
+    'uses' => 'PasswordController@postReset'
 ]);
