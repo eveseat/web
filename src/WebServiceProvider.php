@@ -23,6 +23,7 @@ namespace Seat\Web;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use Seat\Web\Http\Middleware\Authenticate;
 
 /**
  * Class EveapiServiceProvider
@@ -57,7 +58,7 @@ class WebServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__ . '/lang', 'web');
 
         // Add middleware
-        $router->middleware('auth', 'Seat\Web\Http\Middleware\Authenticate');
+        $router->middleware('auth', Authenticate::class);
 
     }
 
