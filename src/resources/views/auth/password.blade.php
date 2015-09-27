@@ -5,7 +5,7 @@
 @section('content')
 
   <div class="login-logo">
-    S<b>e</b>AT | {{ trans('web::passwords.reset') }}
+    S<b>e</b>AT | {{ trans('web::passwords.reset_topic') }}
   </div>
 
   <hr>
@@ -31,7 +31,7 @@
         <div class="pull-left">
           <a href="{{ route('auth.login') }}" class="text-center">{{ trans('web::passwords.remember') }}</a>
         </div>
-        <button type="submit" class="btn btn-warning pull-right">{{ trans('web::passwords.reset') }}</button>
+        <button type="submit" class="btn btn-warning pull-right">{{ trans('web::passwords.reset_topic') }}</button>
       </div>
       <!-- /.box-footer -->
 
