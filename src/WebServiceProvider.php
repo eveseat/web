@@ -23,6 +23,7 @@ namespace Seat\Web;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use Seat\Web\Http\Composers\User;
 use Seat\Web\Http\Middleware\Authenticate;
 
 /**
@@ -35,30 +36,28 @@ class WebServiceProvider extends ServiceProvider
     /**
      * Bootstrap the application services.
      *
-     * @return void
+     * @param \Illuminate\Routing\Router $router
      */
     public function boot(Router $router)
     {
 
         // Include the Routes
-        if (!$this->app->routesAreCached()) {
-            include __DIR__ . '/Http/routes.php';
-        }
+        $this->add_routes();
 
         // Publish the JS & CSS, and Database migrations
-        $this->publishes([
-            __DIR__ . '/resources/assets'     => public_path('web'),
-            __DIR__ . '/database/migrations/' => database_path('migrations'),
-        ]);
+        $this->add_publications();
 
         // Add the views for the 'web' namespace
-        $this->loadViewsFrom(__DIR__ . '/resources/views', 'web');
+        $this->add_views();
+
+        // Add the view composers
+        $this->add_view_composers();
 
         // Include our translations
-        $this->loadTranslationsFrom(__DIR__ . '/lang', 'web');
+        $this->add_translations();
 
         // Add middleware
-        $router->middleware('auth', Authenticate::class);
+        $this->add_middleware($router);
 
     }
 
@@ -70,7 +69,76 @@ class WebServiceProvider extends ServiceProvider
     public function register()
     {
 
+        // Merge the config with anything in the main app
         $this->mergeConfigFrom(
             __DIR__ . '/Config/web.config.php', 'web.config');
+    }
+
+    /**
+     * Include the routes
+     */
+    public function add_routes()
+    {
+
+        if (!$this->app->routesAreCached()) {
+            include __DIR__ . '/Http/routes.php';
+        }
+    }
+
+    /**
+     * Set the paths for migrations and assets that
+     * should be published to the main application
+     */
+    public function add_publications()
+    {
+
+        $this->publishes([
+            __DIR__ . '/resources/assets'     => public_path('web'),
+            __DIR__ . '/database/migrations/' => database_path('migrations'),
+        ]);
+    }
+
+    /**
+     * Set the path and namespace for the vies
+     */
+    public function add_views()
+    {
+
+        $this->loadViewsFrom(__DIR__ . '/resources/views', 'web');
+    }
+
+    /**
+     * Add the view composers. This allows us
+     * to make data available in views without
+     * repeating any of the code.
+     */
+    public function add_view_composers()
+    {
+
+        $this->app['view']->composer([
+            'web::includes.sidebar',
+            'web::includes.header'
+        ], User::class);
+
+    }
+
+    /**
+     * Include the translations and set the namespace
+     */
+    public function add_translations()
+    {
+
+        $this->loadTranslationsFrom(__DIR__ . '/lang', 'web');
+    }
+
+    /**
+     * Include the middleware needed
+     *
+     * @param $router
+     */
+    public function add_middleware($router)
+    {
+
+        $router->middleware('auth', Authenticate::class);
     }
 }
