@@ -55,7 +55,7 @@ class Sidebar
 
             // Home
             [
-                'name'          => 'Home',
+                'name'          => trans('web::sidebar.home'),
                 'icon'          => 'fa-home',
                 'route_segment' => 'home',
                 'route'         => route('home')
@@ -63,17 +63,17 @@ class Sidebar
 
             // Configuration
             [
-                'name'          => 'Configuration',
+                'name'          => trans('web::sidebar.configuration'),
                 'icon'          => 'fa-cogs',
                 'route_segment' => 'configuration',
                 'acl_slug'      => 'admin',
                 'entries'       => [
                     [
-                        'name'  => 'Users',
+                        'name'  => trans('web::sidebar.users'),
                         'route' => route('home')
                     ],
                     [
-                        'name'  => 'Permissions',
+                        'name'  => trans('web::sidebar.permissions'),
                         'route' => route('home')
                     ]
                 ]
@@ -81,7 +81,7 @@ class Sidebar
 
             // Other
             [
-                'name'          => 'Other',
+                'name'          => trans('web::sidebar.other'),
                 'icon'          => 'fa-circle',
                 'route_segment' => 'other',
             ]
