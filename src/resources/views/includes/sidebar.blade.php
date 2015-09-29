@@ -44,7 +44,10 @@
             <ul class="treeview-menu">
 
               @foreach($entry['entries'] as $item)
-                <li><a href="{{ $item['route'] or '#' }}">{{ $item['name'] }}</a></li>
+
+                <li class="{{ isset($item['route']) ? (Request::url() === $item['route'] ? 'active' : null) : null }}">
+                  <a href="{{ $item['route'] or '#' }}">{{ $item['name'] }}</a>
+                </li>
 
               @endforeach
             </ul>
