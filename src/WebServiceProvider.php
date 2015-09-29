@@ -23,6 +23,7 @@ namespace Seat\Web;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use Seat\Web\Http\Composers\Sidebar;
 use Seat\Web\Http\Composers\User;
 use Seat\Web\Http\Middleware\Authenticate;
 
@@ -115,10 +116,14 @@ class WebServiceProvider extends ServiceProvider
     public function add_view_composers()
     {
 
+        // User information view composer
         $this->app['view']->composer([
             'web::includes.sidebar',
             'web::includes.header'
         ], User::class);
+
+        // Sidebar menu view composer
+        $this->app['view']->composer('web::includes.sidebar', Sidebar::class);
 
     }
 

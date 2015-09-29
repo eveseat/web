@@ -30,16 +30,38 @@
     <!-- Sidebar Menu -->
     <ul class="sidebar-menu">
       <li class="header">Main Menu</li>
-      <!-- Optionally, you can add icons to the links -->
-      <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-      <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-      <li class="treeview">
-        <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span> <i class="fa fa-angle-left pull-right"></i></a>
-        <ul class="treeview-menu">
-          <li><a href="#">Link in level 2</a></li>
-          <li><a href="#">Link in level 2</a></li>
-        </ul>
-      </li>
+
+      @foreach($menu as $entry)
+
+        {{-- determine if we should pop a treeview --}}
+        @if(isset($entry['entries']))
+
+          <li class="treeview {{ Request::segment(1) === $entry['route_segment'] ? 'active' : null }}">
+            <a href="#">
+              <i class="fa {{ $entry['icon'] }}"></i>
+              <span>{{ $entry['name'] }}</span> <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+
+              @foreach($entry['entries'] as $item)
+                <li><a href="{{ $item['route'] or '#' }}">{{ $item['name'] }}</a></li>
+
+              @endforeach
+            </ul>
+          </li>
+
+          {{-- no entries, so this looks like a single menu --}}
+        @else
+
+          <li class="{{ Request::segment(1) === $entry['route_segment'] ? 'active' : null }}">
+            <a href="{{ $entry['route'] or '#' }}">
+              <i class="fa {{ $entry['icon'] }}"></i> <span>{{ $entry['name'] }}</span>
+            </a>
+          </li>
+
+        @endif
+
+      @endforeach
     </ul>
     <!-- /.sidebar-menu -->
 

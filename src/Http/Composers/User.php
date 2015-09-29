@@ -32,7 +32,7 @@ class User
 {
 
     /**
-     * Create a new sidebar composer.
+     * Create a new user composer.
      */
     public function __construct()
     {
