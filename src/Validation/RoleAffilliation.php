@@ -24,10 +24,10 @@ namespace Seat\Web\Validation;
 use App\Http\Requests\Request;
 
 /**
- * Class RoleAffliliation
+ * Class RoleAffilliation
  * @package Seat\Web\Validation
  */
-class RoleAffliliation extends Request
+class RoleAffilliation extends Request
 {
 
     /**

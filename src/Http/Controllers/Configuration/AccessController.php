@@ -30,7 +30,7 @@ use Seat\Services\Repositories\Corporation\CorporationRepository;
 use Seat\Web\Acl\Pillow;
 use Seat\Web\Validation\Permission;
 use Seat\Web\Validation\Role;
-use Seat\Web\Validation\RoleAffliliation;
+use Seat\Web\Validation\RoleAffilliation;
 use Seat\Web\Validation\RolePermission;
 use Seat\Web\Validation\RoleUser;
 
@@ -186,11 +186,11 @@ class AccessController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\RoleAffliliation $request
+     * @param \Seat\Web\Validation\RoleAffilliation $request
      *
      * @return mixed
      */
-    public function addAffiliations(RoleAffliliation $request)
+    public function addAffiliations(RoleAffilliation $request)
     {
 
         if ($request->input('corporations'))
