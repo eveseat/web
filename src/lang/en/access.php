@@ -53,4 +53,14 @@ return [
 
     'impersonate'            => 'Impersonate',
 
+    // Flash messages in Configuration/AccessController
+    'role_added'             => 'Role has been added',
+    'role_removed'           => 'Role has been removed',
+    'permissions_granted'    => 'Permissions have been granted',
+    'permission_revoked'     => 'Permission has been revoked',
+    'user_added'             => 'Users were added to this role',
+    'user_removed'           => 'User has been removed from this role',
+    'affiliations_added'     => 'Affiliations were added to this role',
+    'affiliation_removed'    => 'Affiliation has been removed from this role'
+
 ];

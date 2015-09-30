@@ -66,7 +66,7 @@ class AccessController extends Controller
         $this->addRole($request->input('title'));
 
         return Redirect::back()
-            ->with('success', 'Role has been added');
+            ->with('success', trans('web::access.role_added'));
     }
 
     /**
@@ -80,7 +80,7 @@ class AccessController extends Controller
         $this->removeRole($role_id);
 
         return Redirect::back()
-            ->with('success', 'Role has been removed');
+            ->with('success', trans('web::access.role_removed'));
     }
 
     /**
@@ -136,7 +136,7 @@ class AccessController extends Controller
             $request->input('role_id'), $request->input('permissions'));
 
         return Redirect::back()
-            ->with('success', 'Permission(s) have been granted');
+            ->with('success', trans('web::access.permissions_granted'));
     }
 
     /**
@@ -151,7 +151,7 @@ class AccessController extends Controller
         $this->removePermissionFromRole($permission_id, $role_id);
 
         return Redirect::back()
-            ->with('success', 'Permission has been revoked');
+            ->with('success', trans('web::access.permission_revoked'));
     }
 
     /**
@@ -166,7 +166,7 @@ class AccessController extends Controller
             $request->input('users'), $request->input('role_id'));
 
         return Redirect::back()
-            ->with('success', 'Users were added to this role');
+            ->with('success', trans('web::access.user_added'));
 
     }
 
@@ -182,7 +182,7 @@ class AccessController extends Controller
         $this->removeUserFromRole($user_id, $role_id);
 
         return Redirect::back()
-            ->with('success', 'User has been removed from role');
+            ->with('success', trans('web::access.user_removed'));
     }
 
     /**
@@ -217,6 +217,6 @@ class AccessController extends Controller
         $this->removeAffiliationFromRole($role_id, $affiliation_id);
 
         return Redirect::back()
-            ->with('success', 'Affiliation has been removed from role');
+            ->with('success', trans('web::access.affiliation_removed'));
     }
 }
