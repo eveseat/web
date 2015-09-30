@@ -19,12 +19,33 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-return [
+namespace Seat\Web\Events;
 
-    'home'          => 'Home',
-    'configuration' => 'Configuration',
-    'users'         => 'Users',
-    'access'        => 'Role Management',
-    'other'         => 'Other'
+use Illuminate\Support\Facades\Request;
+use Seat\Web\Models\UserLoginHistory;
 
-];
+/**
+ * Class Logout
+ * @package Seat\Web\Events
+ */
+class Logout
+{
+
+    /**
+     * Write a logout history item for this user
+     *
+     * @param $user
+     */
+    public static function handle($user)
+    {
+
+        $user->login_history()->save(new UserLoginHistory([
+            'source'     => Request::getClientIp(),
+            'user_agent' => Request::header('User-Agent'),
+            'action'     => 'logout'
+        ]));
+
+        return;
+
+    }
+}

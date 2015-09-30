@@ -19,12 +19,39 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-return [
+namespace Seat\Web\Events;
 
-    'home'          => 'Home',
-    'configuration' => 'Configuration',
-    'users'         => 'Users',
-    'access'        => 'Role Management',
-    'other'         => 'Other'
+use DateTime;
+use Illuminate\Support\Facades\Request;
+use Seat\Web\Models\UserLoginHistory;
 
-];
+/**
+ * Class Login
+ * @package Seat\Web\Events
+ */
+class Login
+{
+
+    /**
+     * Update the last login values and write a new
+     * login history item
+     *
+     * @param $user
+     */
+    public static function handle($user)
+    {
+
+        $user->last_login_source = Request::getClientIp();
+        $user->last_login = new DateTime();
+        $user->save();
+
+        $user->login_history()->save(new UserLoginHistory([
+            'source'     => Request::getClientIp(),
+            'user_agent' => Request::header('User-Agent'),
+            'action'     => 'login'
+        ]));
+
+        return;
+
+    }
+}

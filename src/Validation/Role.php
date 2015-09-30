@@ -19,12 +19,27 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-return [
+namespace Seat\Web\Validation;
 
-    'home'          => 'Home',
-    'configuration' => 'Configuration',
-    'users'         => 'Users',
-    'access'        => 'Role Management',
-    'other'         => 'Other'
+use App\Http\Requests\Request;
 
-];
+/**
+ * Class Role
+ * @package Seat\Web\Validation
+ */
+class Role extends Request
+{
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+
+        return [
+            'title' => 'required|unique:roles,title|max:255'
+        ];
+    }
+}

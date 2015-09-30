@@ -19,12 +19,33 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-return [
+namespace Seat\Web\Models\Acl;
 
-    'home'          => 'Home',
-    'configuration' => 'Configuration',
-    'users'         => 'Users',
-    'access'        => 'Role Management',
-    'other'         => 'Other'
+use Illuminate\Database\Eloquent\Model;
 
-];
+/**
+ * Class Permission
+ * @package Seat\Web\Models\Acl
+ */
+class Permission extends Model
+{
+
+    /**
+     * @var array
+     */
+    protected $fillable = ['title'];
+
+    /**
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles()
+    {
+
+        return $this->belongsToMany(Role::class);
+    }
+}

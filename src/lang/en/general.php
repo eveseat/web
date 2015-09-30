@@ -21,10 +21,22 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 return [
 
-    'home'          => 'Home',
-    'configuration' => 'Configuration',
-    'users'         => 'Users',
-    'access'        => 'Role Management',
-    'other'         => 'Other'
+    'user'        => 'user|users',
+    'username'    => 'username|usernames',
+    'name'        => 'name|names',
+    'password'    => 'password|passwords',
+    'email'       => 'email',
+    'role'        => 'role|roles',
+    'permission'  => 'permission|permissions',
+    'affiliation' => 'affiliation|affiliations',
+
+    'edit'        => 'edit',
+    'add'         => 'add',
+    'remove'      => 'remove',
+    'delete'      => 'delete',
+
+    'status'      => 'status|statuses',
+    'from'        => 'from',
+    'key'         => 'key|keys',
 
 ];

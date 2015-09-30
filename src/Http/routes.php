@@ -40,6 +40,28 @@ Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
     // user is authenticated.
     Route::group(['middleware' => 'auth'], function () {
 
+        // The home route does not need any prefixes
+        // and or namespacing modifications, so we will
+        // just include it
         include __DIR__ . '/Routes/Home.php';
+
+        // Configuration Routes
+        Route::group(['namespace' => 'Configuration', 'prefix' => 'configuration'], function () {
+
+            // User Management
+            Route::group(['prefix' => 'users'], function () {
+
+                include __DIR__ . '/Routes/Configuration/User.php';
+            });
+
+            // Access Mangement
+            Route::group(['prefix' => 'access'], function () {
+
+                include __DIR__ . '/Routes/Configuration/Access.php';
+            });
+
+        });
+
     });
+
 });
