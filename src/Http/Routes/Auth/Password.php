@@ -19,27 +19,22 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-// Namespace all of the routes for this package.
-Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
+// Password reset link request routes
+Route::get('email', [
+    'as'   => 'password.email',
+    'uses' => 'PasswordController@getEmail'
+]);
+Route::post('email', [
+        'as'   => 'password.email.post',
+        'uses' => 'PasswordController@postEmail']
+);
 
-    // Authentication & Registration Routes.
-    Route::group(['namespace' => 'Auth'], function () {
-
-        Route::group(['prefix' => 'auth'], function () {
-
-            include __DIR__ . '/Routes/Auth/Auth.php';
-        });
-
-        Route::group(['prefix' => 'password'], function () {
-
-            include __DIR__ . '/Routes/Auth/Password.php';
-        });
-    });
-
-    // All routes from here require *at least* that the
-    // user is authenticated.
-    Route::group(['middleware' => 'auth'], function () {
-
-        include __DIR__ . '/Routes/Home.php';
-    });
-});
+// Password reset routes
+Route::get('reset/{token}', [
+    'as'   => 'password.reset',
+    'uses' => 'PasswordController@getReset'
+]);
+Route::post('reset', [
+    'as'   => 'password.reset.post',
+    'uses' => 'PasswordController@postReset'
+]);

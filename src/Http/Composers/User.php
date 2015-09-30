@@ -19,26 +19,36 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-// Authentication routes
-Route::get('login', [
-    'as'   => 'auth.login',
-    'uses' => 'AuthController@getLogin'
-]);
-Route::post('login', [
-    'as'   => 'auth.login.post',
-    'uses' => 'AuthController@postLogin'
-]);
-Route::get('logout', [
-    'as'   => 'auth.logout',
-    'uses' => 'AuthController@getLogout'
-]);
+namespace Seat\Web\Http\Composers;
 
-// Registration routes
-Route::get('register', [
-    'as'   => 'auth.register',
-    'uses' => 'AuthController@getRegister'
-]);
-Route::post('register', [
-    'as'   => 'auth.register.post',
-    'uses' => 'AuthController@postRegister'
-]);
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
+
+/**
+ * Class User
+ * @package Seat\Web\Http\Composers
+ */
+class User
+{
+
+    /**
+     * Create a new user composer.
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Bind data to the view.
+     *
+     * @param  View $view
+     *
+     * @return void
+     */
+    public function compose(View $view)
+    {
+
+        $view->with('user', Auth::user());
+    }
+}

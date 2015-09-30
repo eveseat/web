@@ -43,7 +43,7 @@
 
     <div class="box-footer">
       <div class="pull-left">
-        <a href="#">{{ trans('web::auth.forgot') }}</a><br>
+        <a href="{{ route('password.email') }}">{{ trans('web::auth.forgot') }}</a><br>
         <a href="{{ route('auth.register') }}" class="text-center">{{ trans('web::auth.register') }}</a>
       </div>
       <button type="submit" class="btn btn-primary pull-right">{{ trans('web::auth.sign_in') }}</button>
