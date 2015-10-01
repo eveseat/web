@@ -19,12 +19,31 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-return [
+namespace Seat\Web\Models;
 
-    'home'          => 'Home',
-    'configuration' => 'Configuration',
-    'users'         => 'Users',
-    'access'        => 'Role Management',
-    'other'         => 'Other'
+use Illuminate\Database\Eloquent\Model;
 
-];
+/**
+ * Class UserLoginHistory
+ * @package Seat\Web\Models
+ */
+class UserLoginHistory extends Model
+{
+
+    /**
+     * @var array
+     */
+    protected $fillable = [
+        'user_id', 'source', 'user_agent', 'action'];
+
+    /**
+     * Each login history item belongs to a user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+
+        return $this->belongsTo(User::class);
+    }
+}

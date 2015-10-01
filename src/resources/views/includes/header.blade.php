@@ -53,8 +53,8 @@
               <img src="http://image.eveonline.com/Character/1_128.jpg" class="img-circle" alt="User Image">
 
               <p>
-                Player Name
-                <small>Member since Nov. 2012</small>
+                {{ $user->name }}
+                <small>Joined: {{ human_diff($user->created_at) }} </small>
               </p>
             </li>
             <!-- Menu Body -->

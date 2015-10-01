@@ -46,7 +46,8 @@
               @foreach($entry['entries'] as $item)
 
                 <li class="{{ isset($item['route']) ? (Request::url() === $item['route'] ? 'active' : null) : null }}">
-                  <a href="{{ $item['route'] or '#' }}">{{ $item['name'] }}</a>
+                  <a href="{{ $item['route'] or '#' }}">
+                    <i class="fa {{ $item['icon'] or 'fa-circle-o' }}"></i> {{ $item['name'] }}</a>
                 </li>
 
               @endforeach

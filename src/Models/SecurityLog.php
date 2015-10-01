@@ -19,12 +19,16 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-return [
+namespace App;
 
-    'home'          => 'Home',
-    'configuration' => 'Configuration',
-    'users'         => 'Users',
-    'access'        => 'Role Management',
-    'other'         => 'Other'
+use Illuminate\Database\Eloquent\Model;
 
-];
+/**
+ * Class SecurityLog
+ * @package App
+ */
+class SecurityLog extends Model
+{
+
+    //
+}

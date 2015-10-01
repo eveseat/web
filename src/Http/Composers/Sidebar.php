@@ -53,34 +53,32 @@ class Sidebar
 
         $menu = [
 
-            // Home
-            [
+            [   // Home
                 'name'          => trans('web::sidebar.home'),
                 'icon'          => 'fa-home',
                 'route_segment' => 'home',
                 'route'         => route('home')
             ],
-
-            // Configuration
-            [
+            [   // Configuration
                 'name'          => trans('web::sidebar.configuration'),
                 'icon'          => 'fa-cogs',
                 'route_segment' => 'configuration',
                 'acl_slug'      => 'admin',
                 'entries'       => [
-                    [
+
+                    [   // Users
                         'name'  => trans('web::sidebar.users'),
-                        'route' => route('home')
+                        'icon'  => 'fa-user',
+                        'route' => route('configuration.users')
                     ],
-                    [
-                        'name'  => trans('web::sidebar.permissions'),
-                        'route' => route('home')
+                    [   // Access
+                        'name'  => trans('web::sidebar.access'),
+                        'icon'  => 'fa-shield',
+                        'route' => route('configuration.access.roles')
                     ]
                 ]
             ],
-
-            // Other
-            [
+            [   // Other
                 'name'          => trans('web::sidebar.other'),
                 'icon'          => 'fa-circle',
                 'route_segment' => 'other',

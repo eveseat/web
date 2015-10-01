@@ -23,6 +23,11 @@ namespace Seat\Web;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use Seat\Web\Events\Attempt;
+use Seat\Web\Events\Auth;
+use Seat\Web\Events\Login;
+use Seat\Web\Events\Logout;
+use Seat\Web\Events\Security;
 use Seat\Web\Http\Composers\Sidebar;
 use Seat\Web\Http\Composers\User;
 use Seat\Web\Http\Middleware\Authenticate;
@@ -60,6 +65,9 @@ class WebServiceProvider extends ServiceProvider
         // Add middleware
         $this->add_middleware($router);
 
+        // Add event listeners
+        $this->add_events();
+
     }
 
     /**
@@ -73,6 +81,8 @@ class WebServiceProvider extends ServiceProvider
         // Merge the config with anything in the main app
         $this->mergeConfigFrom(
             __DIR__ . '/Config/web.config.php', 'web.config');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/web.permissions.php', 'web.permissions');
     }
 
     /**
@@ -145,5 +155,17 @@ class WebServiceProvider extends ServiceProvider
     {
 
         $router->middleware('auth', Authenticate::class);
+    }
+
+    /**
+     * Register the custom events that may fire for
+     * this package
+     */
+    public function add_events()
+    {
+
+        $this->app->events->listen('auth.login', Login::class);
+        $this->app->events->listen('auth.logout', Logout::class);
+        $this->app->events->listen('auth.attempt', Attempt::class);
     }
 }

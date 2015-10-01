@@ -19,12 +19,29 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-return [
+namespace Seat\Web\Http\Controllers\Configuration;
 
-    'home'          => 'Home',
-    'configuration' => 'Configuration',
-    'users'         => 'Users',
-    'access'        => 'Role Management',
-    'other'         => 'Other'
+use App\Http\Controllers\Controller;
+use App\Http\Requests;
+use Seat\Services\Repositories\Configuration\UserRespository;
 
-];
+/**
+ * Class UserController
+ * @package Seat\Web\Http\Controllers\Configuration
+ */
+class UserController extends Controller
+{
+
+    use UserRespository;
+
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function getAll()
+    {
+
+        $users = $this->getAllUsersWithKeys();
+
+        return view('web::configuration.users.list', compact('users'));
+    }
+}

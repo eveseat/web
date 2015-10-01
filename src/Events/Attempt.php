@@ -19,12 +19,21 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-return [
+namespace Seat\Web\Events;
 
-    'home'          => 'Home',
-    'configuration' => 'Configuration',
-    'users'         => 'Users',
-    'access'        => 'Role Management',
-    'other'         => 'Other'
+/**
+ * Class Attempt
+ * @package Seat\Web\Events
+ */
+class Attempt
+{
 
-];
+    /**
+     * @param $data
+     */
+    public static function handle($data)
+    {
+
+        // TODO: Matchup the attmempt to write to the sec log
+    }
+}

@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="{{ asset('web/css/bootstrap.min.css') }}">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ asset('web/css/font-awesome.min.css') }}">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="{{ asset('web/css/select2.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('web/css/adminlte.min.css') }}">
   <!-- Skin -->
@@ -47,7 +49,10 @@
     <!-- Main content -->
     <section class="content">
 
-      <!-- Your Page Content Here -->
+      <!-- Notifications -->
+      @include('web::includes.notifications')
+
+      <!-- Page Content Here -->
       @yield('content')
 
     </section>
@@ -68,6 +73,8 @@
 <script src="{{ asset('web/js/jquery.min.js') }}"></script>
 <!-- Bootstrap 3.3.5 -->
 <script src="{{ asset('web/js/bootstrap.min.js') }}"></script>
+<!-- Select2 -->
+<script src="{{ asset('web/js/select2.full.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('web/js/app.min.js') }}"></script>
 
