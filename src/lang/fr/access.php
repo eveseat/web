@@ -21,46 +21,46 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 return [
 
-    'access_mangement'       => 'Gestion des droits',
+    'access_mangement'       => "Gestion des droits",
 
-    'quick_add_role'         => 'Quick Add Role',
-    'role_name'              => 'Nom du rôle',
-    'add_new_role'           => 'Ajouter un rôle',
-    'available_roles'        => 'Rôles disponibles',
+    'quick_add_role'         => "Ajout rapide de rôle",
+    'role_name'              => "Nom du rôle",
+    'add_new_role'           => "Ajouter un rôle",
+    'available_roles'        => "Rôles disponibles",
 
-    'quick_add_user'         => 'Quick Add User',
-    'add_new_user'           => 'Ajouter un utilisateur',
+    'quick_add_user'         => "Ajout rapide d'utilisateur",
+    'add_new_user'           => "Ajouter un utilisateur",
 
-    'edit_role'              => 'Modifier le rôle',
-    'available_permissions'  => 'Autorisations disponibles',
-    'grant_permissions'      => 'Ajouter des autorisations',
-    'current_permissions'    => 'Autorisations actuelles',
-    'has_superuser'          => 'Est administrateur',
-    'permission_inherit'     => 'Hériter de toutes les autorisations',
+    'edit_role'              => "Modifier le rôle",
+    'available_permissions'  => "Autorisations disponibles",
+    'grant_permissions'      => "Ajouter des autorisations",
+    'current_permissions'    => "Autorisations actuelles",
+    'has_superuser'          => "Est administrateur",
+    'permission_inherit'     => "Hériter de toutes les autorisations",
 
-    'available_corporations' => 'Corporations disponibles',
-    'available_characters'   => 'Personnages disponibles',
+    'available_corporations' => "Corporations disponibles",
+    'available_characters'   => "Personnages disponibles",
 
-    'add_affiliations'       => 'Ajouter des relations',
-    'current_affiliations'   => 'Relations actuelles',
+    'add_affiliations'       => "Ajouter des affiliations",
+    'current_affiliations'   => "Affiliations actuelles",
 
-    'available_users'        => 'Utilisateurs disponibles',
-    'add_users'              => 'Ajouter des utilisateurs',
-    'current_users'          => 'Utilisateurs actuelles',
+    'available_users'        => "Utilisateurs disponibles",
+    'add_users'              => "Ajouter des utilisateurs",
+    'current_users'          => "Utilisateurs actuelles",
 
-    'select_item_add'        => 'Choisissez un élément à ajouter',
-    'last_login'             => 'Dernière connexion',
+    'select_item_add'        => "Choisissez un élément à ajouter",
+    'last_login'             => "Dernière connexion",
 
-    'impersonate'            => 'Impersonate',
+    'impersonate'            => "Incarner",
 
     // Flash messages in Configuration/AccessController
-    'role_added'             => 'Le rôle a été ajouté',
-    'role_removed'           => 'Le rôle a été supprimé',
-    'permissions_granted'    => 'L\'autorisation a été accordée',
-    'permission_revoked'     => 'L\'autorisation a été révoquée',
-    'user_added'             => 'Les utilisateurs ont été ajoutés à ce rôle',
-    'user_removed'           => 'L\'utilisateur a été retiré de ce rôle',
-    'affiliations_added'     => 'Les relations ont été ajoutées à ce rôle',
-    'affiliation_removed'    => 'Les relations ont été retirées de ce rôle'
+    'role_added'             => "Le rôle a été ajouté",
+    'role_removed'           => "Le rôle a été supprimé",
+    'permissions_granted'    => "L'autorisation a été accordée",
+    'permission_revoked'     => "L'autorisation a été révoquée",
+    'user_added'             => "Les utilisateurs ont été ajoutés à ce rôle",
+    'user_removed'           => "L'utilisateur a été retiré de ce rôle",
+    'affiliations_added'     => "Les affiliations ont été ajoutées à ce rôle",
+    'affiliation_removed'    => "L'affiliations ont été retirées de ce rôle"
 
 ];
