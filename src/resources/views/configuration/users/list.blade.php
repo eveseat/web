@@ -60,6 +60,7 @@
         <th>{{ ucwords(trans('web::access.last_login')) }}</th>
         <th>{{ ucfirst(trans('web::general.from')) }}</th>
         <th>{{ ucfirst(trans_choice('web::general.key', 2)) }}</th>
+        <th>{{ ucfirst(trans_choice('web::general.role', 2)) }}</th>
         <th></th>
       </tr>
 
@@ -80,9 +81,12 @@
           </td>
           <td>{{ $user->last_login_source }}</td>
           <td>{{ count($user->keys) }}</td>
+          <td>{{ count($user->roles) }}</td>
           <td>
             <div class="btn-group">
-              <a href="#" type="button" class="btn btn-warning btn-xs">{{ ucfirst(trans('web::general.edit')) }}</a>
+              <a href="{{ route('configuration.users.edit', ['user_id' => $user->id]) }}" type="button" class="btn btn-warning btn-xs">
+                {{ ucfirst(trans('web::general.edit')) }}
+              </a>
               <a href="#" type="button" class="btn btn-danger btn-xs">{{ ucfirst(trans('web::general.delete')) }}</a>
             </div>
               <a href="#" type="button" class="btn btn-success btn-xs">{{ ucfirst(trans('web::access.impersonate')) }}</a>

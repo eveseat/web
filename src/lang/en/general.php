@@ -21,22 +21,27 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 return [
 
-    'user'        => 'user|users',
-    'username'    => 'username|usernames',
-    'name'        => 'name|names',
-    'password'    => 'password|passwords',
-    'email'       => 'email',
-    'role'        => 'role|roles',
-    'permission'  => 'permission|permissions',
-    'affiliation' => 'affiliation|affiliations',
+    'user'             => 'user|users',
+    'username'         => 'username|usernames',
+    'name'             => 'name|names',
+    'password'         => 'password|passwords',
+    'password_confirm' => 'confirm password',
+    'email'            => 'email',
+    'role'             => 'role|roles',
+    'permission'       => 'permission|permissions',
+    'affiliation'      => 'affiliation|affiliations',
 
-    'edit'        => 'edit',
-    'add'         => 'add',
-    'remove'      => 'remove',
-    'delete'      => 'delete',
+    'edit'             => 'edit',
+    'add'              => 'add',
+    'remove'           => 'remove',
+    'delete'           => 'delete',
 
-    'status'      => 'status|statuses',
-    'from'        => 'from',
-    'key'         => 'key|keys',
+    'status'           => 'status|statuses',
+    'from'             => 'from',
+    'key'              => 'key|keys',
+
+    'date'             => 'date|dates',
+    'source'           => 'source|sources',
+    'action'           => 'action|actions'
 
 ];

@@ -24,3 +24,12 @@ Route::get('/', [
     'uses' => 'UserController@getAll'
 ]);
 
+Route::get('/edit/{user_id}', [
+    'as'   => 'configuration.users.edit',
+    'uses' => 'UserController@editUser'
+]);
+
+Route::get('/edit/{user_id}/account_status', [
+    'as'   => 'configuration.users.edit.account_status',
+    'uses' => 'UserController@editUserAccountStatus'
+]);

@@ -23,6 +23,7 @@ namespace Seat\Web\Http\Controllers\Configuration;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
+use Illuminate\Support\Facades\Redirect;
 use Seat\Services\Repositories\Configuration\UserRespository;
 
 /**
@@ -40,8 +41,41 @@ class UserController extends Controller
     public function getAll()
     {
 
-        $users = $this->getAllUsersWithKeys();
+        $users = $this->getAllFullUsers();
 
         return view('web::configuration.users.list', compact('users'));
+    }
+
+    /**
+     * @param $user_id
+     *
+     * @return \Illuminate\View\View
+     */
+    public function editUser($user_id)
+    {
+
+        $user = $this->getFullUser($user_id);
+
+        $login_history = $user->login_history()
+            ->orderBy('created_at', 'desc')
+            ->take(15)
+            ->get();
+
+        return view('web::configuration.users.edit',
+            compact('user', 'login_history'));
+    }
+
+    /**
+     * @param $user_id
+     *
+     * @return mixed
+     */
+    public function editUserAccountStatus($user_id)
+    {
+
+        $this->flipUserAccountStatus($user_id);
+
+        return Redirect::back()
+            ->with('success', trans('web::access.account_status_change'));
     }
 }
