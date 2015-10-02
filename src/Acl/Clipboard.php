@@ -22,10 +22,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Acl;
 
 /**
- * Class Cushion
+ * Class Clipboard
  * @package Seat\Web\Acl
  */
-trait Cushion
+trait Clipboard
 {
 
     /**
