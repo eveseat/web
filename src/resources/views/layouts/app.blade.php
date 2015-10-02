@@ -75,8 +75,12 @@
 <script src="{{ asset('web/js/bootstrap.min.js') }}"></script>
 <!-- Select2 -->
 <script src="{{ asset('web/js/select2.full.min.js') }}"></script>
-<!-- AdminLTE App -->
+<!-- Bootbox -->
+<script src="{{ asset('web/js/bootbox.min.js') }}"></script>
+<!-- Theme JS -->
 <script src="{{ asset('web/js/app.min.js') }}"></script>
+<!-- SeAT JS -->
+<script src="{{ asset('web/js/seat.js') }}"></script>
 
 @yield('javascript')
 

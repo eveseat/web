@@ -1,4 +1,4 @@
-@extends('web::layouts.grids.3-9')
+@extends('web::layouts.grids.4-8')
 
 @section('title', 'User Management')
 @section('page_header', 'User Management')
@@ -11,28 +11,37 @@
     </div>
     <div class="panel-body">
 
-      <form role="form">
+      <form role="form" action="{{ route('configuration.access.users.add') }}" method="post">
+        {{ csrf_field() }}
+
         <div class="box-body">
 
           <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+            <label for="username">{{ ucfirst(trans_choice('web::general.username', 1)) }}</label>
+            <input type="text" name="username" class="form-control" id="username" value="{{ old('username') }}" placeholder="Username">
           </div>
 
           <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <label for="email">{{ ucfirst(trans_choice('web::general.email', 1)) }}</label>
+            <input type="email" name ="email" class="form-control" id="email" value="{{ old('email') }}"  placeholder="Email">
           </div>
 
           <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <label for="password">{{ ucfirst(trans_choice('web::general.password', 1)) }}</label>
+            <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+          </div>
+
+          <div class="form-group">
+            <label for="password_confirm">{{ ucwords(trans_choice('web::general.password_confirm', 1)) }}</label>
+            <input type="password" name="password_confirmation" class="form-control" id="password_confirmation" placeholder="Password">
           </div>
 
         </div><!-- /.box-body -->
 
         <div class="box-footer">
-          <button type="submit" class="btn btn-primary pull-right">{{ trans('web::access.add_new_user') }}</button>
+          <button type="submit" class="btn btn-primary pull-right">
+            {{ trans('web::access.update_user') }}
+          </button>
         </div>
       </form>
 
@@ -60,6 +69,7 @@
         <th>{{ ucwords(trans('web::access.last_login')) }}</th>
         <th>{{ ucfirst(trans('web::general.from')) }}</th>
         <th>{{ ucfirst(trans_choice('web::general.key', 2)) }}</th>
+        <th>{{ ucfirst(trans_choice('web::general.role', 2)) }}</th>
         <th></th>
       </tr>
 
@@ -80,12 +90,17 @@
           </td>
           <td>{{ $user->last_login_source }}</td>
           <td>{{ count($user->keys) }}</td>
+          <td>{{ count($user->roles) }}</td>
           <td>
             <div class="btn-group">
-              <a href="#" type="button" class="btn btn-warning btn-xs">{{ ucfirst(trans('web::general.edit')) }}</a>
-              <a href="#" type="button" class="btn btn-danger btn-xs">{{ ucfirst(trans('web::general.delete')) }}</a>
+              <a href="{{ route('configuration.users.edit', ['user_id' => $user->id]) }}" type="button" class="btn btn-warning btn-xs">
+                {{ ucfirst(trans('web::general.edit')) }}
+              </a>
+              <a href="{{ route('configuration.users.delete', ['user_id' => $user->id]) }}" type="button" class="btn btn-danger btn-xs confirmlink">
+                {{ ucfirst(trans('web::general.delete')) }}
+              </a>
             </div>
-              <a href="#" type="button" class="btn btn-success btn-xs">{{ ucfirst(trans('web::access.impersonate')) }}</a>
+              <a href="{{ route('configuration.users.impersonate', ['user_id' => $user->id]) }}" type="button" class="btn btn-success btn-xs">{{ ucfirst(trans('web::access.impersonate')) }}</a>
           </td>
         </tr>
 

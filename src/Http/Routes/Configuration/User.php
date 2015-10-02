@@ -24,3 +24,32 @@ Route::get('/', [
     'uses' => 'UserController@getAll'
 ]);
 
+Route::post('/add', [
+    'as'   => 'configuration.access.users.add',
+    'uses' => 'UserController@addUser'
+]);
+
+Route::post('/update', [
+    'as'   => 'configuration.access.users.update',
+    'uses' => 'UserController@updateUser'
+]);
+
+Route::get('/delete/{user_id}', [
+    'as'   => 'configuration.users.delete',
+    'uses' => 'UserController@deleteUser'
+]);
+
+Route::get('/edit/{user_id}', [
+    'as'   => 'configuration.users.edit',
+    'uses' => 'UserController@editUser'
+]);
+
+Route::get('/edit/{user_id}/account_status', [
+    'as'   => 'configuration.users.edit.account_status',
+    'uses' => 'UserController@editUserAccountStatus'
+]);
+
+Route::get('/impersonate/{user_id}', [
+    'as'   => 'configuration.users.impersonate',
+    'uses' => 'UserController@impersonate'
+]);

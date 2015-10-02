@@ -22,7 +22,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Http\Controllers\Configuration;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use Seat\Services\Repositories\Character\CharacterRepository;
 use Seat\Services\Repositories\Configuration\UserRespository;

@@ -19,12 +19,29 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-return [
+namespace Seat\Web\Validation;
 
-    'home'          => 'Home',
-    'configuration' => 'Configuration',
-    'users'         => 'Users',
-    'access'        => 'Access Management',
-    'other'         => 'Other'
+use App\Http\Requests\Request;
 
-];
+/**
+ * Class NewUser
+ * @package Seat\Web\Validation
+ */
+class NewUser extends Request
+{
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+
+        return [
+            'username' => 'required|max:255|unique:users,name',
+            'email'    => 'required|email|unique:users,email',
+            'password' => 'required|min:6|confirmed'
+        ];
+    }
+}

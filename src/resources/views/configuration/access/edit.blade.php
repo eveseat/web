@@ -24,7 +24,7 @@
 
               @if(!in_array($permission, $role_permissions))
                 <option value="{{ $permission }}">
-                  {{ $permission }}
+                  {{ studly_case($permission) }}
                 </option>
               @endif
 
@@ -51,7 +51,7 @@
         @foreach($role->permissions as $permission)
 
           <tr>
-            <td>{{ $permission->title }}</td>
+            <td>{{ studly_case($permission->title) }}</td>
             <td>
               <a href="{{ route('configuration.access.roles.edit.remove.permission', ['role_id' => $role->id, 'permission_id' => $permission->id]) }}" type="button" class="btn btn-danger btn-xs pull-right">
                 {{ ucfirst(trans('web::general.remove')) }}

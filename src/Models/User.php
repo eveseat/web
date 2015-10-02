@@ -52,7 +52,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = ['name', 'email', 'password', 'active'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -60,6 +60,26 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    /**
+     * Make sure we cleanup on delete
+     *
+     * @return bool|null
+     * @throws \Exception
+     */
+    public function delete()
+    {
+
+        // Cleanup the user
+        $this->login_history()->delete();
+        $this->roles()->detach();
+        $this->affiliations()->detach();
+
+        // Return keys to the super user
+        $this->keys()->update(['user_id' => 0]);
+
+        return parent::delete();
+    }
 
     /**
      * Users have a login history

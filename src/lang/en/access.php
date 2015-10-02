@@ -53,6 +53,22 @@ return [
 
     'impersonate'            => 'Impersonate',
 
+    'edit_user'              => 'Edit User',
+    'update_user'            => 'Update User',
+    'activate_user'          => 'Activate User',
+    'deactivate_user'        => 'Deactivate User',
+    'account_status_change'  => 'The account status has been changed',
+
+    'user_agent'             => 'User Agent String',
+    'login_history'          => 'Login History',
+
+    'role_summary'           => 'Role Summary',
+    'user_updated'           => 'The user has been updated',
+    'user_deleted'           => 'The user has been deleted',
+    'self_delete_warning'    => 'You can not delete yourself!',
+    'impersonating'          => 'Impersonating :user',
+    'user_created'           => 'User Created',
+
     // Flash messages in Configuration/AccessController
     'role_added'             => 'Role has been added',
     'role_removed'           => 'Role has been removed',
