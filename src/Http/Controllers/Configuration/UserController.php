@@ -85,7 +85,7 @@ class UserController extends Controller
         ]);
 
         // Update the password if it was set.
-        if ($request->input('password'))
+        if ($request->has('password'))
             $user->password = bcrypt($request->input('password'));
 
         $user->save();
