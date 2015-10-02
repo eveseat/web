@@ -45,7 +45,7 @@ return [
     'current_affiliations'   => 'Current Affiliations',
 
     'available_users'        => 'Available Users',
-    'add_users'              => 'Add Users',
+    'add_user'               => 'Add User|Add Users',
     'current_users'          => 'Current Users',
 
     'select_item_add'        => 'Select a Item to Add',
@@ -54,7 +54,6 @@ return [
     'impersonate'            => 'Impersonate',
 
     'edit_user'              => 'Edit User',
-    'update_user'            => 'Update User',
     'activate_user'          => 'Activate User',
     'deactivate_user'        => 'Deactivate User',
     'account_status_change'  => 'The account status has been changed',

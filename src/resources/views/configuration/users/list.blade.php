@@ -40,7 +40,7 @@
 
         <div class="box-footer">
           <button type="submit" class="btn btn-primary pull-right">
-            {{ trans('web::access.update_user') }}
+            {{ trans_choice('web::access.add_user', 1) }}
           </button>
         </div>
       </form>

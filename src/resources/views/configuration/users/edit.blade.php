@@ -49,7 +49,7 @@
             @endif
           </a>
           <button type="submit" class="btn btn-primary pull-right">
-            {{ trans('web::access.update_user') }}
+            {{ trans('web::access.edit_user') }}
           </button>
         </div>
       </form>

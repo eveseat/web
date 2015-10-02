@@ -94,6 +94,11 @@ class UserController extends Controller
             ->with('success', trans('web::access.user_updated'));
     }
 
+    /**
+     * @param \Seat\Web\Validation\NewUser $request
+     *
+     * @return mixed
+     */
     public function addUser(NewUser $request)
     {
 

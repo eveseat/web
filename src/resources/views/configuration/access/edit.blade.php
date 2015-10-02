@@ -184,7 +184,7 @@
           </select>
         </div>
 
-        <button type="submit" class="btn btn-success btn-block">{{ trans('web::access.add_users') }}</button>
+        <button type="submit" class="btn btn-success btn-block">{{ trans_choice('web::access.add_user', 2) }}</button>
 
       </form>
 
