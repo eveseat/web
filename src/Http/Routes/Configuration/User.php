@@ -29,6 +29,11 @@ Route::post('/update', [
     'uses' => 'UserController@updateUser'
 ]);
 
+Route::get('/delete/{user_id}', [
+    'as'   => 'configuration.users.delete',
+    'uses' => 'UserController@deleteUser'
+]);
+
 Route::get('/edit/{user_id}', [
     'as'   => 'configuration.users.edit',
     'uses' => 'UserController@editUser'

@@ -64,6 +64,8 @@ return [
 
     'role_summary'           => 'Role Summary',
     'user_updated'           => 'The user has been updated',
+    'user_deleted'           => 'The user has been deleted',
+    'self_delete_warning'    => 'You can not delete yourself!',
 
     // Flash messages in Configuration/AccessController
     'role_added'             => 'Role has been added',

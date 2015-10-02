@@ -22,7 +22,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Http\Controllers\Configuration;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Web\Validation\EditUser;
@@ -103,5 +103,24 @@ class UserController extends Controller
 
         return Redirect::back()
             ->with('success', trans('web::access.account_status_change'));
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param                          $user_id
+     *
+     * @return mixed
+     */
+    public function deleteUser(Request $request, $user_id)
+    {
+
+        if ($request->user()->id == $user_id)
+            return Redirect::back()
+                ->with('warning', trans('web::access.self_delete_warning'));
+
+        $this->getUser($user_id)->delete();
+
+        return Redirect::back()
+            ->with('success', trans('web::access.user_deleted'));
     }
 }

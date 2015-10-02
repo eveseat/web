@@ -87,7 +87,9 @@
               <a href="{{ route('configuration.users.edit', ['user_id' => $user->id]) }}" type="button" class="btn btn-warning btn-xs">
                 {{ ucfirst(trans('web::general.edit')) }}
               </a>
-              <a href="#" type="button" class="btn btn-danger btn-xs">{{ ucfirst(trans('web::general.delete')) }}</a>
+              <a href="{{ route('configuration.users.delete', ['user_id' => $user->id]) }}" type="button" class="btn btn-danger btn-xs confirmlink">
+                {{ ucfirst(trans('web::general.delete')) }}
+              </a>
             </div>
               <a href="#" type="button" class="btn btn-success btn-xs">{{ ucfirst(trans('web::access.impersonate')) }}</a>
           </td>
