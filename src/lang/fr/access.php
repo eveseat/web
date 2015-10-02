@@ -54,7 +54,6 @@ return [
     'impersonate'            => "Incarner",
 
     'edit_user'              => "Modifier le compte",
-    'update_user'            => 'Update User',
     'activate_user'          => "Activer le compte",
     'deactivate_user'        => "Désactiver le compte",
     'account_status_change'  => "Le statut du compte a été modifié",
