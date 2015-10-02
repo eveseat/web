@@ -67,6 +67,7 @@ return [
     'user_deleted'           => 'The user has been deleted',
     'self_delete_warning'    => 'You can not delete yourself!',
     'impersonating'          => 'Impersonating :user',
+    'user_created'           => 'User Created',
 
     // Flash messages in Configuration/AccessController
     'role_added'             => 'Role has been added',

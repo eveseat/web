@@ -26,7 +26,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Seat\Services\Repositories\Configuration\UserRespository;
+use Seat\Web\Models\User;
 use Seat\Web\Validation\EditUser;
+use Seat\Web\Validation\NewUser;
 
 /**
  * Class UserController
@@ -90,6 +92,20 @@ class UserController extends Controller
 
         return Redirect::back()
             ->with('success', trans('web::access.user_updated'));
+    }
+
+    public function addUser(NewUser $request)
+    {
+
+        User::create([
+            'name'     => $request->input('username'),
+            'email'    => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
+            'active'   => true
+        ]);
+
+        return Redirect::back()
+            ->with('success', trans('web::access.user_created'));
     }
 
     /**
