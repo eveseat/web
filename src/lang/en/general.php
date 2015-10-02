@@ -42,6 +42,7 @@ return [
 
     'date'             => 'date|dates',
     'source'           => 'source|sources',
-    'action'           => 'action|actions'
+    'action'           => 'action|actions',
 
+    'back'             => 'back'
 ];

@@ -27,7 +27,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Model;
 use Seat\Eveapi\Models\Eve\ApiKey;
-use Seat\Web\Acl\Cushion;
+use Seat\Web\Acl\Clipboard;
 use Seat\Web\Models\Acl\Affiliation;
 use Seat\Web\Models\Acl\Role;
 
@@ -38,7 +38,7 @@ use Seat\Web\Models\Acl\Role;
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
 
-    use Authenticatable, CanResetPassword, Cushion;
+    use Authenticatable, CanResetPassword, Clipboard;
 
     /**
      * The database table used by the model.
