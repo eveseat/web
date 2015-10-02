@@ -91,7 +91,7 @@
                 {{ ucfirst(trans('web::general.delete')) }}
               </a>
             </div>
-              <a href="#" type="button" class="btn btn-success btn-xs">{{ ucfirst(trans('web::access.impersonate')) }}</a>
+              <a href="{{ route('configuration.users.impersonate', ['user_id' => $user->id]) }}" type="button" class="btn btn-success btn-xs">{{ ucfirst(trans('web::access.impersonate')) }}</a>
           </td>
         </tr>
 

@@ -23,6 +23,7 @@ namespace Seat\Web\Http\Controllers\Configuration;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Web\Validation\EditUser;
@@ -122,5 +123,21 @@ class UserController extends Controller
 
         return Redirect::back()
             ->with('success', trans('web::access.user_deleted'));
+    }
+
+    /**
+     * @param $user_id
+     *
+     * @return mixed
+     */
+    public function impersonate($user_id)
+    {
+
+        $user = $this->getUser($user_id);
+        Auth::login($user);
+
+        return redirect()->route('home')
+            ->with('success',
+                trans('web::access.impersonating', ['user' => $user->name]));
     }
 }

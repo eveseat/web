@@ -43,3 +43,8 @@ Route::get('/edit/{user_id}/account_status', [
     'as'   => 'configuration.users.edit.account_status',
     'uses' => 'UserController@editUserAccountStatus'
 ]);
+
+Route::get('/impersonate/{user_id}', [
+    'as'   => 'configuration.users.impersonate',
+    'uses' => 'UserController@impersonate'
+]);
