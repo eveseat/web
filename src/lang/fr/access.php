@@ -53,6 +53,22 @@ return [
 
     'impersonate'            => "Incarner",
 
+    'edit_user'              => "Modifier le compte",
+    'update_user'            => 'Update User',
+    'activate_user'          => "Activer le compte",
+    'deactivate_user'        => "Désactiver le compte",
+    'account_status_change'  => "Le statut du compte a été modifié",
+
+    'user_agent'             => 'User Agent String',
+    'login_history'          => "Historique de connexion",
+
+    'role_summary'           => "Résumé des rôles",
+    'user_updated'           => "Le compte a été modifié",
+    'user_deleted'           => "Le compte a été supprimé",
+    'self_delete_warning'    => "Vous ne pouvez pas supprimer votre propre compte",
+    'impersonating'          => "Incarner :user",
+    'user_created'           => 'Compte crée',
+
     // Flash messages in Configuration/AccessController
     'role_added'             => "Le rôle a été ajouté",
     'role_removed'           => "Le rôle a été supprimé",

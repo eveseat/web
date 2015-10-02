@@ -21,22 +21,27 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 return [
 
-    'user'        => 'utilisateur|utilisateurs',
-    'username'    => 'nom d\'utilisateur|noms d\'utilisateur',
-    'name'        => 'nom|noms',
-    'password'    => 'mot de passe|mots de passe',
-    'email'       => 'adresse mail',
-    'role'        => 'rôle|rôles',
-    'permission'  => 'autorisation|autorisations',
-    'affiliation' => 'relation|relations',
+    'user'              => 'utilisateur|utilisateurs',
+    'username'          => 'nom d\'utilisateur|noms d\'utilisateur',
+    'name'              => 'nom|noms',
+    'password'          => 'mot de passe|mots de passe',
+    'password_confirm'  => 'confirmation du mot de passe',
+    'email'             => 'adresse mail',
+    'role'              => 'rôle|rôles',
+    'permission'        => 'autorisation|autorisations',
+    'affiliation'       => 'relation|relations',
 
-    'edit'        => 'modifier',
-    'add'         => 'ajouter',
-    'remove'      => 'retirer',
-    'delete'      => 'supprimer',
+    'edit'              => 'modifier',
+    'add'               => 'ajouter',
+    'remove'            => 'retirer',
+    'delete'            => 'supprimer',
 
-    'status'      => 'statut|statuts',
-    'from'        => 'de',
-    'key'         => 'clé|clés',
+    'status'            => 'statut|statuts',
+    'from'              => 'de',
+    'key'               => 'clé|clés',
+
+    'date'             => 'date|dates',
+    'source'           => 'source|sources',
+    'action'           => 'action|actions'
 
 ];
