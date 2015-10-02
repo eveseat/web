@@ -12,7 +12,10 @@
     </div>
     <div class="panel-body">
 
-      <form role="form">
+      <form role="form" action="{{ route('configuration.access.users.update') }}" method="post">
+        {{ csrf_field() }}
+        <input type="hidden" name="user_id" value="{{ $user->id }}">
+
         <div class="box-body">
 
           <div class="form-group">
@@ -22,7 +25,7 @@
 
           <div class="form-group">
             <label for="email">{{ ucfirst(trans_choice('web::general.email', 1)) }}</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" value="{{ $user->email }}">
+            <input type="email" name ="email" class="form-control" id="email" value="{{ $user->email }}">
           </div>
 
           <div class="form-group">
@@ -32,7 +35,7 @@
 
           <div class="form-group">
             <label for="password_confirm">{{ ucwords(trans_choice('web::general.password_confirm', 1)) }}</label>
-            <input type="password" name="password_again" class="form-control" id="password_confirm" placeholder="Password">
+            <input type="password" name="password_confirmation" class="form-control" id="password_confirmation" placeholder="Password">
           </div>
 
         </div><!-- /.box-body -->

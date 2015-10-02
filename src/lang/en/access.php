@@ -63,6 +63,7 @@ return [
     'login_history'          => 'Login History',
 
     'role_summary'           => 'Role Summary',
+    'user_updated'           => 'The user has been updated',
 
     // Flash messages in Configuration/AccessController
     'role_added'             => 'Role has been added',

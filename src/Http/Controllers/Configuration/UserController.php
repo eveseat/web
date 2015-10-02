@@ -25,6 +25,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use Seat\Services\Repositories\Configuration\UserRespository;
+use Seat\Web\Validation\EditUser;
 
 /**
  * Class UserController
@@ -63,6 +64,31 @@ class UserController extends Controller
 
         return view('web::configuration.users.edit',
             compact('user', 'login_history'));
+    }
+
+    /**
+     * @param \Seat\Web\Validation\EditUser $request
+     *
+     * @return mixed
+     */
+    public function updateUser(EditUser $request)
+    {
+
+        $user = $this->getUser($request->input('user_id'));
+
+        $user->fill([
+            'name'  => $request->input('username'),
+            'email' => $request->input('email'),
+        ]);
+
+        // Update the password if it was set.
+        if ($request->input('password'))
+            $user->password = bcrypt($request->input('password'));
+
+        $user->save();
+
+        return Redirect::back()
+            ->with('success', trans('web::access.user_updated'));
     }
 
     /**

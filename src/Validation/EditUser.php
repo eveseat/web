@@ -19,22 +19,29 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-Route::get('/', [
-    'as'   => 'configuration.users',
-    'uses' => 'UserController@getAll'
-]);
+namespace Seat\Web\Validation;
 
-Route::post('/update', [
-    'as'   => 'configuration.access.users.update',
-    'uses' => 'UserController@updateUser'
-]);
+use App\Http\Requests\Request;
 
-Route::get('/edit/{user_id}', [
-    'as'   => 'configuration.users.edit',
-    'uses' => 'UserController@editUser'
-]);
+/**
+ * Class EditUser
+ * @package Seat\Web\Validation
+ */
+class EditUser extends Request
+{
 
-Route::get('/edit/{user_id}/account_status', [
-    'as'   => 'configuration.users.edit.account_status',
-    'uses' => 'UserController@editUserAccountStatus'
-]);
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+
+        return [
+            'user_id'  => 'required|exists:users,id',
+            'email'    => 'required|email',
+            'password' => 'min:6|confirmed'
+        ];
+    }
+}
