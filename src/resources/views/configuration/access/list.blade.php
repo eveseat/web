@@ -1,4 +1,4 @@
-@extends('web::layouts.grids.3-9')
+@extends('web::layouts.grids.4-8')
 
 @section('title', trans('web::access.access_mangement'))
 @section('page_header', trans('web::access.access_mangement'))
