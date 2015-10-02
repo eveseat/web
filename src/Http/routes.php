@@ -45,8 +45,14 @@ Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
         // just include it
         include __DIR__ . '/Routes/Home.php';
 
-        // Configuration Routes
-        Route::group(['namespace' => 'Configuration', 'prefix' => 'configuration'], function () {
+        // Configuration Routes. In the context of seat,
+        // all configuration should only be possible if
+        // a user has the 'superuser' role.
+        Route::group([
+            'namespace'  => 'Configuration',
+            'prefix'     => 'configuration',
+            'middleware' => 'bouncer:superuser'
+        ], function () {
 
             // User Management
             Route::group(['prefix' => 'users'], function () {

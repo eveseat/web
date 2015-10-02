@@ -31,6 +31,7 @@ use Seat\Web\Events\Security;
 use Seat\Web\Http\Composers\Sidebar;
 use Seat\Web\Http\Composers\User;
 use Seat\Web\Http\Middleware\Authenticate;
+use Seat\Web\Http\Middleware\Bouncer;
 
 /**
  * Class EveapiServiceProvider
@@ -154,7 +155,15 @@ class WebServiceProvider extends ServiceProvider
     public function add_middleware($router)
     {
 
+        // Authenticate checks that the session is
+        // simply authenticated
         $router->middleware('auth', Authenticate::class);
+
+        // The Bouncer is responsible for checking hes
+        // Clipboard and ensuring that every request
+        // that comes in is authorized
+        $router->middleware('bouncer', Bouncer::class);
+
     }
 
     /**

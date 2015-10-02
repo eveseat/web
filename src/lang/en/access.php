@@ -21,61 +21,64 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 return [
 
-    'access_mangement'       => 'Access Management',
+    'access_mangement'            => 'Access Management',
 
-    'quick_add_role'         => 'Quick Add Role',
-    'role_name'              => 'Role Name',
-    'add_new_role'           => 'Add New Role',
-    'available_roles'        => 'Available Roles',
+    'quick_add_role'              => 'Quick Add Role',
+    'role_name'                   => 'Role Name',
+    'add_new_role'                => 'Add New Role',
+    'available_roles'             => 'Available Roles',
 
-    'quick_add_user'         => 'Quick Add User',
-    'add_new_user'           => 'Add New User',
+    'quick_add_user'              => 'Quick Add User',
+    'add_new_user'                => 'Add New User',
 
-    'edit_role'              => 'Edit Role',
-    'available_permissions'  => 'Available Permissions',
-    'grant_permissions'      => 'Grant Permissions',
-    'current_permissions'    => 'Current Permissions',
-    'has_superuser'          => 'Has Superuser',
-    'permission_inherit'     => 'Inherits All Permissions',
+    'edit_role'                   => 'Edit Role',
+    'available_permissions'       => 'Available Permissions',
+    'grant_permissions'           => 'Grant Permissions',
+    'current_permissions'         => 'Current Permissions',
+    'has_superuser'               => 'Has Superuser',
+    'permission_inherit'          => 'Inherits All Permissions',
 
-    'available_corporations' => 'Available Corporations',
-    'available_characters'   => 'Available Characters',
+    'available_corporations'      => 'Available Corporations',
+    'available_characters'        => 'Available Characters',
 
-    'add_affiliations'       => 'Add Affiliations',
-    'current_affiliations'   => 'Current Affiliations',
+    'add_affiliations'            => 'Add Affiliations',
+    'current_affiliations'        => 'Current Affiliations',
 
-    'available_users'        => 'Available Users',
-    'add_user'               => 'Add User|Add Users',
-    'current_users'          => 'Current Users',
+    'available_users'             => 'Available Users',
+    'add_user'                    => 'Add User|Add Users',
+    'current_users'               => 'Current Users',
 
-    'select_item_add'        => 'Select a Item to Add',
-    'last_login'             => 'Last Login',
+    'select_item_add'             => 'Select a Item to Add',
+    'last_login'                  => 'Last Login',
 
-    'impersonate'            => 'Impersonate',
+    'impersonate'                 => 'Impersonate',
 
-    'edit_user'              => 'Edit User',
-    'activate_user'          => 'Activate User',
-    'deactivate_user'        => 'Deactivate User',
-    'account_status_change'  => 'The account status has been changed',
+    'edit_user'                   => 'Edit User',
+    'activate_user'               => 'Activate User',
+    'deactivate_user'             => 'Deactivate User',
+    'account_status_change'       => 'The account status has been changed',
 
-    'user_agent'             => 'User Agent String',
-    'login_history'          => 'Login History',
+    'user_agent'                  => 'User Agent String',
+    'login_history'               => 'Login History',
 
-    'role_summary'           => 'Role Summary',
-    'user_updated'           => 'The user has been updated',
-    'user_deleted'           => 'The user has been deleted',
-    'self_delete_warning'    => 'You can not delete yourself!',
-    'impersonating'          => 'Impersonating :user',
-    'user_created'           => 'User Created',
+    'role_summary'                => 'Role Summary',
+    'user_updated'                => 'The user has been updated',
+    'user_deleted'                => 'The user has been deleted',
+    'self_delete_warning'         => 'You can not delete yourself!',
+    'impersonating'               => 'Impersonating :user',
+    'user_created'                => 'User Created',
+
+    'unauthorized_request'        => 'Unauthorized Request',
+    'unauthorized_request_logged' => 'This attempt has been logged.',
 
     // Flash messages in Configuration/AccessController
-    'role_added'             => 'Role has been added',
-    'role_removed'           => 'Role has been removed',
-    'permissions_granted'    => 'Permissions have been granted',
-    'permission_revoked'     => 'Permission has been revoked',
-    'user_added'             => 'Users were added to this role',
-    'user_removed'           => 'User has been removed from this role',
-    'affiliations_added'     => 'Affiliations were added to this role',
-    'affiliation_removed'    => 'Affiliation has been removed from this role'
+    'role_added'                  => 'Role has been added',
+    'role_removed'                => 'Role has been removed',
+    'permissions_granted'         => 'Permissions have been granted',
+    'permission_revoked'          => 'Permission has been revoked',
+    'user_added'                  => 'Users were added to this role',
+    'user_removed'                => 'User has been removed from this role',
+    'affiliations_added'          => 'Affiliations were added to this role',
+    'affiliation_removed'         => 'Affiliation has been removed from this role'
 
 ];
