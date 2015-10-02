@@ -62,6 +62,26 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected $hidden = ['password', 'remember_token'];
 
     /**
+     * Make sure we cleanup on delete
+     *
+     * @return bool|null
+     * @throws \Exception
+     */
+    public function delete()
+    {
+
+        // Cleanup the user
+        $this->login_history()->delete();
+        $this->roles()->detach();
+        $this->affiliations()->detach();
+
+        // Return keys to the super user
+        $this->keys()->update(['user_id' => 0]);
+
+        return parent::delete();
+    }
+
+    /**
      * Users have a login history
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
