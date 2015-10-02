@@ -85,7 +85,7 @@ class UserController extends Controller
         ]);
 
         // Update the password if it was set.
-        if ($request->input('password'))
+        if ($request->has('password'))
             $user->password = bcrypt($request->input('password'));
 
         $user->save();
@@ -94,6 +94,11 @@ class UserController extends Controller
             ->with('success', trans('web::access.user_updated'));
     }
 
+    /**
+     * @param \Seat\Web\Validation\NewUser $request
+     *
+     * @return mixed
+     */
     public function addUser(NewUser $request)
     {
 
