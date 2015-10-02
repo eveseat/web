@@ -24,7 +24,7 @@ return [
     'home'          => 'Home',
     'configuration' => 'Configuration',
     'users'         => 'Users',
-    'access'        => 'Role Management',
+    'access'        => 'Access Management',
     'other'         => 'Other'
 
 ];
