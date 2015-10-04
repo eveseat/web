@@ -43,39 +43,130 @@ trait Clipboard
     protected $corporation_id;
 
     /**
-     * @return mixed
+     * Has.
+     *
+     * This is probably *the* most important function in
+     * the ACL logic. It's sole purpose is to ensure that
+     * a logged in user has a specific permission.
+     *
+     * @param      $permission
+     * @param bool $need_affiliation
+     *
+     * @return bool
      */
-    public function getCorporationId()
+    public function has($permission, $need_affiliation = true)
     {
 
-        return $this->corporation_id;
+        if ($this->hasSuperUser())
+            return true;
+
+        if (!$need_affiliation) {
+
+            if ($this->hasPermissions($permission))
+                return true;
+
+        } else {
+
+            if ($this->hasAffiliationAndPermission($permission))
+                return true;
+        }
+
+        return false;
+
     }
 
     /**
-     * @param mixed $corporation_id
+     * Determine of the current user has the
+     * superuser permission
      */
-    public function setCorporationId($corporation_id)
+    public function hasSuperUser()
     {
 
-        $this->corporation_id = $corporation_id;
+        $permissions = $this->getAllPermissions();
+
+        foreach ($permissions as $permission)
+            if ($permission === 'superuser') return true;
+
+        return false;
     }
 
     /**
-     * @return mixed
+     * Return an array of all the of the permissions
+     * that the user has.
+     *
+     * @return array
      */
-    public function getCharacterId()
+    public function getAllPermissions()
     {
 
-        return $this->character_id;
+        $permissions = [];
+
+        $roles = $this
+            ->roles()
+            ->with('permissions')
+            ->get();
+
+        // Go through every role...
+        foreach ($roles as $role) {
+
+            // ... in every defined permission
+            foreach ($role->permissions as $permission)
+                array_push($permissions, $permission->title);
+
+        }
+
+        return $permissions;
     }
 
     /**
-     * @param mixed $character_id
+     * Check if a user has the permission, ignoring
+     * affiliation completely.
+     *
+     * @param $permission
+     *
+     * @return bool
      */
-    public function setCharacterId($character_id)
+    public function hasPermissions($permission)
     {
 
-        $this->character_id = $character_id;
+        $permissions = $this->getAllPermissions();
+
+        if (in_array($permission, $permissions))
+            return true;
+
+        return false;
+    }
+
+    /**
+     * Check if the user is correctly affiliated
+     * *and* has the requested permission on that
+     * affiliation.
+     *
+     * @param $permission
+     *
+     * @return bool
+     */
+    public function hasAffiliationAndPermission($permission)
+    {
+
+        $map = $this->getAffiliationMap();
+
+        // Owning a key grants you '*' permissions. In this
+        // context, '*' acts as a wildard for *all* permissions
+        // for this character / corporation ID
+        foreach ($map['char'] as $char => $permissions)
+            if ($char == $this->getCharacterId() && (
+                    in_array($permission, $permissions) || in_array('*', $permissions))
+            )
+                return true;
+
+        foreach ($map['corp'] as $corp => $permissions)
+            if ($corp == $this->getCorporationId() && (
+                    in_array($permission, $permissions) || in_array('*', $permissions))
+            )
+                return true;
+
+        return false;
     }
 
     /**
@@ -142,129 +233,38 @@ trait Clipboard
     }
 
     /**
-     * Check if the user is correctly affiliated
-     * *and* has the requested permission on that
-     * affiliation.
-     *
-     * @param $permission
-     *
-     * @return bool
+     * @return mixed
      */
-    public function hasAffiliationAndPermission($permission)
+    public function getCharacterId()
     {
 
-        $map = $this->getAffiliationMap();
-
-        // Owning a key grants you '*' permissions. In this
-        // context, '*' acts as a wildard for *all* permissions
-        // for this character / corporation ID
-        foreach ($map['char'] as $char => $permissions)
-            if ($char == $this->getCharacterId() && (
-                    in_array($permission, $permissions) || in_array('*', $permissions))
-            )
-                return true;
-
-        foreach ($map['corp'] as $corp => $permissions)
-            if ($corp == $this->getCorporationId() && (
-                    in_array($permission, $permissions) || in_array('*', $permissions))
-            )
-                return true;
-
-        return false;
+        return $this->character_id;
     }
 
     /**
-     * Check if a user has the permission, ignoring
-     * affiliation completely.
-     *
-     * @param $permission
-     *
-     * @return bool
+     * @param mixed $character_id
      */
-    public function hasPermissions($permission)
+    public function setCharacterId($character_id)
     {
 
-        $permissions = $this->getAllPermissions();
-
-        if (in_array($permission, $permissions))
-            return true;
-
-        return false;
+        $this->character_id = $character_id;
     }
 
     /**
-     * Return an array of all the of the permissions
-     * that the user has.
-     *
-     * @return array
+     * @return mixed
      */
-    public function getAllPermissions()
+    public function getCorporationId()
     {
 
-        $permissions = [];
-
-        $roles = $this
-            ->roles()
-            ->with('permissions')
-            ->get();
-
-        // Go through every role...
-        foreach ($roles as $role) {
-
-            // ... in every defined permission
-            foreach ($role->permissions as $permission)
-                array_push($permissions, $permission->title);
-
-        }
-
-        return $permissions;
+        return $this->corporation_id;
     }
 
     /**
-     * Determine of the current user has the
-     * superuser permission
+     * @param mixed $corporation_id
      */
-    public function hasSuperUser()
+    public function setCorporationId($corporation_id)
     {
 
-        $permissions = $this->getAllPermissions();
-
-        foreach ($permissions as $permission)
-            if ($permission === 'superuser') return true;
-
-        return false;
-    }
-
-    /**
-     * Has.
-     *
-     * This is probably *the* most important function in
-     * the ACL logic. It's sole purpose is to ensure that
-     * a logged in user has a specific permission.
-     *
-     * @param      $permission
-     * @param bool $need_affiliation
-     *
-     * @return bool
-     */
-    public function has($permission, $need_affiliation = true)
-    {
-
-        if ($this->hasSuperUser())
-            return true;
-
-        if (!$need_affiliation) {
-
-            if ($this->hasPermissions($permission))
-                return true;
-
-        } else {
-
-            if ($this->hasAffiliationAndPermission($permission))
-                return true;
-        }
-
-        return false;
-
+        $this->corporation_id = $corporation_id;
     }
 }

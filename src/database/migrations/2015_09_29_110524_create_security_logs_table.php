@@ -1,10 +1,11 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateSecurityLogsTable extends Migration
 {
+
     /**
      * Run the migrations.
      *
@@ -12,7 +13,9 @@ class CreateSecurityLogsTable extends Migration
      */
     public function up()
     {
+
         Schema::create('security_logs', function (Blueprint $table) {
+
             $table->increments('id');
             $table->timestamps();
         });
@@ -25,6 +28,7 @@ class CreateSecurityLogsTable extends Migration
      */
     public function down()
     {
+
         Schema::drop('security_logs');
     }
 }
