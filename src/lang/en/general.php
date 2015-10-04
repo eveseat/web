@@ -44,5 +44,6 @@ return [
     'source'           => 'source|sources',
     'action'           => 'action|actions',
 
-    'back'             => 'back'
+    'back'             => 'back',
+    'note'             => 'note'
 ];

@@ -45,6 +45,12 @@ Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
         // just include it
         include __DIR__ . '/Routes/Home.php';
 
+        // Api Key Routes
+        Route::group(['namespace' => 'Api', 'prefix' => 'api-key'], function () {
+
+            include __DIR__ . '/Routes/Api/Key.php';
+        });
+
         // Configuration Routes. In the context of seat,
         // all configuration should only be possible if
         // a user has the 'superuser' role.

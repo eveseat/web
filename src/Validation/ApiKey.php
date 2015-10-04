@@ -19,19 +19,28 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-return [
+namespace Seat\Web\Validation;
 
-    'home'           => 'Home',
+use App\Http\Requests\Request;
 
-    // Key Mangement
-    'key_management' => 'API Key Management',
-    'add_api_key'    => 'Add a EVE API Key',
-    'list_keys'      => 'List EVE API Keys',
+/**
+ * Class ApiKey
+ * @package Seat\Web\Validation
+ */
+class ApiKey extends Request
+{
 
-    // Configuration
-    'configuration'  => 'Configuration',
-    'users'          => 'Users',
-    'access'         => 'Access Management',
-    'other'          => 'Other',
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
 
-];
+        return [
+            'key_id' => 'required|numeric|unique:eve_api_keys,key_id',
+            'v_code'    => 'required|size:64|alpha_num',
+        ];
+    }
+}

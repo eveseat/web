@@ -19,19 +19,18 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-return [
+Route::get('/add', [
+    'as'   => 'api.key',
+    'uses' => 'KeyController@getAdd'
+]);
 
-    'home'           => 'Home',
+Route::post('/add', [
+    'as'   => 'api.key.add',
+    'uses' => 'KeyController@addKey'
+]);
 
-    // Key Mangement
-    'key_management' => 'API Key Management',
-    'add_api_key'    => 'Add a EVE API Key',
-    'list_keys'      => 'List EVE API Keys',
+Route::post('/check', [
+    'as'   => 'api.key.check',
+    'uses' => 'KeyController@checkKey'
+]);
 
-    // Configuration
-    'configuration'  => 'Configuration',
-    'users'          => 'Users',
-    'access'         => 'Access Management',
-    'other'          => 'Other',
-
-];

@@ -62,6 +62,27 @@ class Sidebar
             ]
         ];
 
+        // Key Management
+        array_push($menu, [
+
+            'name'          => trans('web::sidebar.key_management'),
+            'icon'          => 'fa-key',
+            'route_segment' => 'api-key',
+            'entries'       => [
+
+                [   // Add Api Key
+                    'name'  => trans('web::sidebar.add_api_key'),
+                    'icon'  => 'fa-plus',
+                    'route' => route('api.key')
+                ],
+                [
+                    'name'  => trans('web::sidebar.list_keys'),
+                    'icon'  => 'fa-list',
+                    'route' => route('home')
+                ]
+            ]
+        ]);
+
         // Configuration
         if (auth()->user()->has('superuser')) {
 
@@ -69,7 +90,6 @@ class Sidebar
                 'name'          => trans('web::sidebar.configuration'),
                 'icon'          => 'fa-cogs',
                 'route_segment' => 'configuration',
-                'acl'           => 'supersuer',
                 'entries'       => [
 
                     [   // Users
