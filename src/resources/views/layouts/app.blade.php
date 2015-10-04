@@ -18,6 +18,8 @@
   <link rel="stylesheet" href="{{ asset('web/css/adminlte.min.css') }}">
   <!-- Skin -->
   <link rel="stylesheet" href="{{ asset('web/css/skins/skin-black.min.css') }}">
+  <!-- SeAT CSS -->
+  <link rel="stylesheet" href="{{ asset('web/css/seat.css') }}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -77,6 +79,8 @@
 <script src="{{ asset('web/js/select2.full.min.js') }}"></script>
 <!-- Bootbox -->
 <script src="{{ asset('web/js/bootbox.min.js') }}"></script>
+<!-- jQuery Unveil -->
+<script src="{{ asset('web/js/jquery.unveil.js') }}"></script>
 <!-- Theme JS -->
 <script src="{{ asset('web/js/app.min.js') }}"></script>
 <!-- SeAT JS -->

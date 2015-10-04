@@ -22,3 +22,12 @@ $(document).on("click", "a.confirmlink", function (event) {
         }
     });
 });
+
+// Init the jQuery unveil plugin. If the
+// viewport come into 100px, start loading
+// the image
+//
+// http://luis-almeida.github.io/unveil/
+$(document).ready(function() {
+    $("img").unveil(100);
+});
