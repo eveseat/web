@@ -51,19 +51,25 @@ class Sidebar
         // TODO: Allow plugins to add menu items
         // Menus are structured as follows:
 
+        // Home. This menu item declares the menu and
+        // sets it as an array of arrays.
         $menu = [
-
-            [   // Home
+            [
                 'name'          => trans('web::sidebar.home'),
                 'icon'          => 'fa-home',
                 'route_segment' => 'home',
                 'route'         => route('home')
-            ],
-            [   // Configuration
+            ]
+        ];
+
+        // Configuration
+        if (auth()->user()->has('superuser')) {
+
+            array_push($menu, [
                 'name'          => trans('web::sidebar.configuration'),
                 'icon'          => 'fa-cogs',
                 'route_segment' => 'configuration',
-                'acl_slug'      => 'admin',
+                'acl'           => 'supersuer',
                 'entries'       => [
 
                     [   // Users
@@ -77,13 +83,14 @@ class Sidebar
                         'route' => route('configuration.access.roles')
                     ]
                 ]
-            ],
-            [   // Other
-                'name'          => trans('web::sidebar.other'),
-                'icon'          => 'fa-circle',
-                'route_segment' => 'other',
-            ]
-        ];
+            ]);
+        }
+
+        array_push($menu, [
+            'name'          => trans('web::sidebar.other'),
+            'icon'          => 'fa-circle',
+            'route_segment' => 'other',
+        ]);
 
         $view->with('menu', $menu);
     }
