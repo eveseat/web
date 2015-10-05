@@ -24,6 +24,7 @@ namespace Seat\Web\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Pheal\Pheal;
 use Seat\Eveapi\Models\Eve\ApiKey as ApiKeyModel;
+use Seat\Eveapi\Models\JobTracking;
 use Seat\Web\Validation\ApiKey;
 use Seat\Web\Validation\Permission;
 
@@ -107,7 +108,7 @@ class KeyController extends Controller
 
         $keys = ApiKeyModel::with('info', 'characters');
 
-        if (!auth()->user()->hasSuperUser())
+        if (!auth()->user()->has('api_key_list', false))
             $keys = $keys
                 ->where('user_id', auth()->user()->id);
 
@@ -121,20 +122,41 @@ class KeyController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function delete($key_id)
+    public function getDelete($key_id)
     {
 
-        if (auth()->user()->hasSuperUser() || auth()->user()->has('api_key_delete', false))
-            ApiKeyModel::where('key_id', $key_id)
-                ->delete();
-        else
-            ApiKeyModel::where('user_id', auth()->user()->id)
-                ->where('key_id', $key_id)
-                ->delete();
+        ApiKeyModel::where('key_id', $key_id)
+            ->delete();
 
         return redirect()->back()
             ->with('success', 'Key Successfully deleted');
 
+    }
+
+    /**
+     * @param $api_key
+     *
+     * @return \Illuminate\View\View
+     */
+    public function getDetail($api_key)
+    {
+
+        $key = ApiKeyModel::with('info', 'characters')
+            ->where('key_id', $api_key)
+            ->firstOrFail();
+
+        $access_map = null;
+
+        if ($key->info)
+            $access_map = ($key->info->type == 'Corporation' ?
+                config('eveapi.access_bits.corp') : config('eveapi.access_bits.char'));
+
+        $jobs = JobTracking::where('owner_id', $api_key)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('web::api.detail',
+            compact('key', 'access_map', 'jobs'));
     }
 
 }

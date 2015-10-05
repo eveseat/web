@@ -36,10 +36,17 @@ Route::post('/check', [
 
 Route::get('/list', [
     'as'   => 'api.key.list',
-    'uses' => 'KeyController@listAll'
+    'uses' => 'KeyController@listAll',
 ]);
 
 Route::get('/delete/{key_id}', [
-    'as'   => 'api.key.delete',
-    'uses' => 'KeyController@delete'
+    'as'         => 'api.key.delete',
+    'uses'       => 'KeyController@getDelete',
+    'middleware' => 'keybouncer:api_key_delete'
+]);
+
+Route::get('/detail/{key_id}', [
+    'as'   => 'api.key.detail',
+    'uses' => 'KeyController@getDetail',
+    'middleware' => 'keybouncer:api_key_detail'
 ]);

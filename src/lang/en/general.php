@@ -35,6 +35,7 @@ return [
     'add'              => 'add',
     'remove'           => 'remove',
     'delete'           => 'delete',
+    'detail'           => 'detail|details',
 
     'status'           => 'status|statuses',
     'from'             => 'from',
@@ -50,6 +51,8 @@ return [
     'type'             => 'type|types',
     'expire'           => 'expire',
     'unknown'          => 'unknown',
-    'never'            => 'never'
+    'never'            => 'never',
+    'enabled'          => 'enabled',
+    'disabled'         => 'disabled'
 
 ];

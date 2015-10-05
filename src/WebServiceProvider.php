@@ -32,6 +32,7 @@ use Seat\Web\Http\Composers\Sidebar;
 use Seat\Web\Http\Composers\User;
 use Seat\Web\Http\Middleware\Authenticate;
 use Seat\Web\Http\Middleware\Bouncer;
+use Seat\Web\Http\Middleware\KeyBouncer;
 
 /**
  * Class EveapiServiceProvider
@@ -163,6 +164,7 @@ class WebServiceProvider extends ServiceProvider
         // Clipboard and ensuring that every request
         // that comes in is authorized
         $router->middleware('bouncer', Bouncer::class);
+        $router->middleware('keybouncer', KeyBouncer::class);
 
     }
 

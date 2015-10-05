@@ -22,7 +22,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 return [
 
     'add'               => 'Add a New Api Key',
+    'all'               => 'All Api Keys',
+    'detail'            => 'Api Key Detail',
     'key_id'            => 'Key ID',
+    'key_status'        => 'Key Status',
     'verification_code' => 'Verification Code',
     'check_key'         => 'Check Key',
     'create_new_key'    => 'Create a New Api Key',
@@ -37,6 +40,13 @@ return [
     'min_mask'          => 'Min. Mask',
     'access'            => 'Access',
     'granted'           => 'Granted',
-    'denied'            => 'Denied'
+    'denied'            => 'Denied',
+    'job_update'        => 'Queue a Update Job',
+    'owner_info'        => 'Owner Information',
+    'no_owner'          => 'This key has no owner',
+    'mask_breakdown'    => 'Access Mask Breakdown',
+    'recent_jobs'       => 'Recent Update Jobs',
+    'scheduled'         => 'Scheduled',
+    'scope'             => 'Scope'
 
 ];

@@ -1,7 +1,7 @@
 @extends('web::layouts.grids.12')
 
-@section('title', trans('web::api.add'))
-@section('page_header', trans('web::api.add'))
+@section('title', trans('web::api.all'))
+@section('page_header', trans('web::api.all'))
 
 @section('full')
 
@@ -57,8 +57,8 @@
             </td>
             <td>
               <div class="btn-group">
-                <a href="#" type="button" class="btn btn-primary btn-xs">
-                  {{ ucfirst(trans('web::general.edit')) }}
+                <a href="{{ route('api.key.detail', ['key_id' => $key->key_id]) }}" type="button" class="btn btn-primary btn-xs">
+                  {{ ucfirst(trans_choice('web::general.detail', 2)) }}
                 </a>
                 <a href="{{ route('api.key.delete', ['key_id' => $key->key_id]) }}" type="button" class="btn btn-danger btn-xs confirmlink">
                   {{ ucfirst(trans('web::general.delete')) }}
