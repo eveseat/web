@@ -99,4 +99,42 @@ class KeyController extends Controller
 
     }
 
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function listAll()
+    {
+
+        $keys = ApiKeyModel::with('info', 'characters');
+
+        if (!auth()->user()->hasSuperUser())
+            $keys = $keys
+                ->where('user_id', auth()->user()->id);
+
+        $keys = $keys->get();
+
+        return view('web::api.list', compact('keys'));
+    }
+
+    /**
+     * @param $key_id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function delete($key_id)
+    {
+
+        if (auth()->user()->hasSuperUser() || auth()->user()->has('api_key_delete', false))
+            ApiKeyModel::where('key_id', $key_id)
+                ->delete();
+        else
+            ApiKeyModel::where('user_id', auth()->user()->id)
+                ->where('key_id', $key_id)
+                ->delete();
+
+        return redirect()->back()
+            ->with('success', 'Key Successfully deleted');
+
+    }
+
 }

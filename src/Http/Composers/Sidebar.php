@@ -78,7 +78,7 @@ class Sidebar
                 [
                     'name'  => trans('web::sidebar.list_keys'),
                     'icon'  => 'fa-list',
-                    'route' => route('home')
+                    'route' => route('api.key.list')
                 ]
             ]
         ]);

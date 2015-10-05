@@ -19,27 +19,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-Route::get('/add', [
-    'as'   => 'api.key',
-    'uses' => 'KeyController@getAdd'
-]);
+return [
 
-Route::post('/add', [
-    'as'   => 'api.key.add',
-    'uses' => 'KeyController@addKey'
-]);
-
-Route::post('/check', [
-    'as'   => 'api.key.check',
-    'uses' => 'KeyController@checkKey'
-]);
-
-Route::get('/list', [
-    'as'   => 'api.key.list',
-    'uses' => 'KeyController@listAll'
-]);
-
-Route::get('/delete/{key_id}', [
-    'as'   => 'api.key.delete',
-    'uses' => 'KeyController@delete'
-]);
+    'character' => 'character|characters'
+];

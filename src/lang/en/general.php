@@ -45,5 +45,11 @@ return [
     'action'           => 'action|actions',
 
     'back'             => 'back',
-    'note'             => 'note'
+    'note'             => 'note',
+    'id'               => 'id|ids',
+    'type'             => 'type|types',
+    'expire'           => 'expire',
+    'unknown'          => 'unknown',
+    'never'            => 'never'
+
 ];
