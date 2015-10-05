@@ -23,8 +23,10 @@ namespace Seat\Web\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Pheal\Pheal;
+use Seat\Eveapi\Helpers\JobContainer;
 use Seat\Eveapi\Models\Eve\ApiKey as ApiKeyModel;
 use Seat\Eveapi\Models\JobTracking;
+use Seat\Eveapi\Traits\JobManager;
 use Seat\Web\Validation\ApiKey;
 use Seat\Web\Validation\Permission;
 
@@ -34,6 +36,8 @@ use Seat\Web\Validation\Permission;
  */
 class KeyController extends Controller
 {
+
+    use JobManager;
 
     /**
      * @return \Illuminate\View\View
@@ -157,6 +161,29 @@ class KeyController extends Controller
 
         return view('web::api.detail',
             compact('key', 'access_map', 'jobs'));
+    }
+
+    /**
+     * @param \Seat\Eveapi\Helpers\JobContainer $job
+     * @param                                   $api_key
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function queueUpdateJob(JobContainer $job, $api_key)
+    {
+
+        $key = ApiKeyModel::findOrFail($api_key);
+
+        $job->scope = 'Key';
+        $job->api = 'Scheduler';
+        $job->owner_id = $key->key_id;
+        $job->eve_api_key = $key;
+
+        $job_id = $this->addUniqueJob(
+            'Seat\Eveapi\Jobs\CheckAndQueueKey', $job);
+
+        return redirect()->back()
+            ->with('success', 'Update job ' . $job_id . ' Queued');
     }
 
 }

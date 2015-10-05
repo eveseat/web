@@ -59,7 +59,7 @@
     </div>
   </div>
 
-  <a href="#" class="btn btn-success btn-block">
+  <a href="{{ route('api.key.queue', ['key_id' => $key->key_id]) }}" class="btn btn-success btn-block">
     {{ trans('web::api.job_update') }}
   </a>
 @stop

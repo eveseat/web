@@ -46,7 +46,13 @@ Route::get('/delete/{key_id}', [
 ]);
 
 Route::get('/detail/{key_id}', [
-    'as'   => 'api.key.detail',
-    'uses' => 'KeyController@getDetail',
+    'as'         => 'api.key.detail',
+    'uses'       => 'KeyController@getDetail',
     'middleware' => 'keybouncer:api_key_detail'
+]);
+
+Route::get('/update/{key_id}', [
+    'as'         => 'api.key.queue',
+    'uses'       => 'KeyController@queueUpdateJob',
+    'middleware' => 'keybouncer:api_key_update'
 ]);
