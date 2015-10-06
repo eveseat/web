@@ -19,7 +19,42 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
+Route::get('/status', [
+    'as'   => 'queue.status',
+    'uses' => 'QueueController@getStatus'
+]);
+
 Route::get('/short-status', [
     'as'   => 'queue.status.short',
     'uses' => 'QueueController@getShortStatus'
+]);
+
+Route::get('/run/{command_name}', [
+    'as'   => 'queue.command.run',
+    'uses' => 'QueueController@getSubmitJob'
+]);
+
+Route::get('/errors', [
+    'as'   => 'queue.errors',
+    'uses' => 'QueueController@getErrors'
+]);
+
+Route::get('/errors/detail/{job_id}', [
+    'as'   => 'queue.errors.detail',
+    'uses' => 'QueueController@getErrorDetail'
+]);
+
+Route::get('/errors/clear', [
+    'as'   => 'queue.errors.clear',
+    'uses' => 'QueueController@getClearErrors'
+]);
+
+Route::get('/history', [
+    'as'   => 'queue.history',
+    'uses' => 'QueueController@getHistory'
+]);
+
+Route::get('/history/clear', [
+    'as'   => 'queue.history.clear',
+    'uses' => 'QueueController@getClearHistory'
 ]);

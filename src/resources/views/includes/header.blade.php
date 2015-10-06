@@ -20,19 +20,19 @@
 
         <!-- Queue information -->
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="tooltip" data-placement="bottom" title="Queued">
+          <a href="{{ route('queue.status') }}" class="dropdown-toggle" data-toggle="tooltip" data-placement="bottom" title="Queued">
             <i class="fa fa-truck"></i>
             <span class="label label-success" id="queue_count">0</span>
           </a>
         </li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="tooltip" data-placement="bottom" title="Working">
+          <a href="{{ route('queue.status') }}" class="dropdown-toggle" data-toggle="tooltip" data-placement="bottom" title="Working">
             <i class="fa fa-exchange"></i>
             <span class="label label-warning" id="working_count">0</span>
           </a>
         </li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="tooltip" data-placement="bottom" title="Error">
+          <a href="{{ route('queue.status') }}" class="dropdown-toggle" data-toggle="tooltip" data-placement="bottom" title="Error">
             <i class="fa fa-exclamation"></i>
             <span class="label label-danger" id="error_count">0</span>
           </a>

@@ -53,6 +53,8 @@ return [
     'unknown'          => 'unknown',
     'never'            => 'never',
     'enabled'          => 'enabled',
-    'disabled'         => 'disabled'
+    'disabled'         => 'disabled',
+
+    'view'             => 'view|views'
 
 ];
