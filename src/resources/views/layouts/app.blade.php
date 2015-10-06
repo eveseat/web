@@ -86,6 +86,26 @@
 <!-- SeAT JS -->
 <script src="{{ asset('web/js/seat.js') }}"></script>
 
+{{-- This script is here as we need Laravel to generate the route --}}
+<script>
+  // Periodic Queue Status Updates
+  (function worker() {
+    $.ajax({
+      type: "get",
+      url: "{{ route('queue.status.short') }}",
+      success: function(data) {
+        $("span#queue_count").text(data.queued_jobs);
+        $("span#working_count").text(data.working_jobs);
+        $("span#error_count").text(data.error_jobs);
+      },
+      complete: function() {
+        // Schedule the next request when the current one's complete
+        setTimeout(worker, 10000); // 10 Seconds
+      }
+    });
+  })();
+</script>
+
 @yield('javascript')
 
 </body>

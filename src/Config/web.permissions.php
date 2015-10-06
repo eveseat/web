@@ -65,6 +65,7 @@ return [
     'people_groups_create',
     'people_groups_edit',
     'people_groups_view_all',
+    'queue_manager',
     'search_all_character_assets',
     'search_all_character_contact_lists',
     'search_all_character_mail',
