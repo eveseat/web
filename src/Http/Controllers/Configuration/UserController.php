@@ -23,7 +23,6 @@ namespace Seat\Web\Http\Controllers\Configuration;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Web\Models\User;
 use Seat\Web\Validation\EditUser;
@@ -89,7 +88,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return Redirect::back()
+        return redirect()->back()
             ->with('success', trans('web::access.user_updated'));
     }
 
@@ -108,7 +107,7 @@ class UserController extends Controller
             'active'   => true
         ]);
 
-        return Redirect::back()
+        return redirect()->back()
             ->with('success', trans('web::access.user_created'));
     }
 
@@ -122,7 +121,7 @@ class UserController extends Controller
 
         $this->flipUserAccountStatus($user_id);
 
-        return Redirect::back()
+        return redirect()->back()
             ->with('success', trans('web::access.account_status_change'));
     }
 
@@ -136,12 +135,12 @@ class UserController extends Controller
     {
 
         if ($request->user()->id == $user_id)
-            return Redirect::back()
+            return redirect()->back()
                 ->with('warning', trans('web::access.self_delete_warning'));
 
         $this->getUser($user_id)->delete();
 
-        return Redirect::back()
+        return redirect()->back()
             ->with('success', trans('web::access.user_deleted'));
     }
 
