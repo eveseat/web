@@ -15,9 +15,17 @@
         <dt>{{ trans('web::api.key_id') }}</dt>
         <dd>{{ $key->key_id }}</dd>
         <dt>{{ trans('web::api.key_type') }}</dt>
-        <dd>{{ $key->info->type }}</dd>
+        <dd>
+          @if($key->info)
+            {{ $key->info->type }}
+          @endif
+        </dd>
         <dt>{{ trans('web::api.access_mask') }}</dt>
-        <dd>{{ $key->info->accessMask }}</dd>
+        <dd>
+          @if($key->info)
+            {{ $key->info->accessMask }}
+          @endif
+        </dd>
         <dt>{{ trans('web::api.key_status') }}</dt>
         <dd>
           @if($key->enabled)
@@ -40,7 +48,6 @@
       <h3 class="panel-title">{{ ucfirst(trans_choice('web::character.character', 2)) }}</h3>
     </div>
     <div class="panel-body">
-
       <ul class="users-list clearfix">
 
         @foreach($key->characters as $character)
@@ -52,7 +59,6 @@
         @endforeach
 
       </ul><!-- /.users-list -->
-
     </div>
     <div class="panel-footer">
       {{ count($key->characters) }} {{ trans_choice('web::character.character', count($key->characters)) }}
@@ -116,25 +122,31 @@
           <th>{{ trans('web::api.access') }}</th>
         </tr>
 
-        @foreach($access_map as $name => $bitmask)
+        @if($access_map)
 
-          <tr>
-            <td>{{ ucfirst($name) }}</td>
-            <td>{{ $bitmask }}</td>
-            <td>
-              @if($key->info->accessMask & $bitmask)
-                <span class="label label-success">
-                      {{ trans('web::api.granted') }}
-                    </span>
-              @else
-                <span class="label label-danger">
+          @foreach($access_map as $name => $bitmask)
+
+            <tr>
+              <td>{{ ucfirst($name) }}</td>
+              <td>{{ $bitmask }}</td>
+              <td>
+                @if($key->info->accessMask & $bitmask)
+                  <span class="label label-success">
+                    {{ trans('web::api.granted') }}
+                  </span>
+                @else
+                  <span class="label label-danger">
                     {{ trans('web::api.denied') }}
-                    </span>
-              @endif
-            </td>
-          </tr>
+                  </span>
+                @endif
+              </td>
+            </tr>
 
-        @endforeach
+          @endforeach
+
+        @else
+          <span class="text-muted">Unable to load the access mask map</span>
+        @endif
 
         </tbody>
       </table>
