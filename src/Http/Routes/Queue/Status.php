@@ -20,41 +20,49 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 */
 
 Route::get('/status', [
-    'as'   => 'queue.status',
-    'uses' => 'QueueController@getStatus'
+    'as'         => 'queue.status',
+    'middleware' => 'bouncer:queue_manager',
+    'uses'       => 'QueueController@getStatus'
+
 ]);
 
 Route::get('/short-status', [
-    'as'   => 'queue.status.short',
-    'uses' => 'QueueController@getShortStatus'
+    'as'         => 'queue.status.short',
+    'uses'       => 'QueueController@getShortStatus'
 ]);
 
 Route::get('/run/{command_name}', [
-    'as'   => 'queue.command.run',
-    'uses' => 'QueueController@getSubmitJob'
+    'as'         => 'queue.command.run',
+    'middleware' => 'bouncer:queue_manager',
+    'uses'       => 'QueueController@getSubmitJob'
 ]);
 
 Route::get('/errors', [
-    'as'   => 'queue.errors',
-    'uses' => 'QueueController@getErrors'
+    'as'         => 'queue.errors',
+    'middleware' => 'bouncer:queue_manager',
+    'uses'       => 'QueueController@getErrors'
 ]);
 
 Route::get('/errors/detail/{job_id}', [
-    'as'   => 'queue.errors.detail',
-    'uses' => 'QueueController@getErrorDetail'
+    'as'         => 'queue.errors.detail',
+    'middleware' => 'bouncer:queue_manager',
+    'uses'       => 'QueueController@getErrorDetail'
 ]);
 
 Route::get('/errors/clear', [
-    'as'   => 'queue.errors.clear',
-    'uses' => 'QueueController@getClearErrors'
+    'as'         => 'queue.errors.clear',
+    'middleware' => 'bouncer:queue_manager',
+    'uses'       => 'QueueController@getClearErrors'
 ]);
 
 Route::get('/history', [
-    'as'   => 'queue.history',
-    'uses' => 'QueueController@getHistory'
+    'as'         => 'queue.history',
+    'middleware' => 'bouncer:queue_manager',
+    'uses'       => 'QueueController@getHistory'
 ]);
 
 Route::get('/history/clear', [
-    'as'   => 'queue.history.clear',
-    'uses' => 'QueueController@getClearHistory'
+    'as'         => 'queue.history.clear',
+    'middleware' => 'bouncer:queue_manager',
+    'uses'       => 'QueueController@getClearHistory'
 ]);

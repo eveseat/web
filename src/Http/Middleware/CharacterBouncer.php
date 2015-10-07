@@ -23,12 +23,13 @@ namespace Seat\Web\Http\Middleware;
 
 use Closure;
 use Seat\Web\Acl\Clipboard;
+use Seat\Web\Exceptions\BouncerException;
 
 /**
- * Class KeyBouncer
+ * Class CharacterBouncer
  * @package Seat\Web\Http\Middleware
  */
-class KeyBouncer
+class CharacterBouncer
 {
 
     use Clipboard;
@@ -36,8 +37,9 @@ class KeyBouncer
     /**
      * Handle an incoming request.
      *
-     * This filter checks the required permissions or
-     * key ownership for a API key.
+     * This filter checks if a specific permission exists as
+     * well as ensures that an affiliation to a character
+     * exists.
      *
      * @param  \Illuminate\Http\Request $request
      * @param  \Closure                 $next
@@ -45,6 +47,7 @@ class KeyBouncer
      * @param null                      $permission
      *
      * @return mixed
+     * @throws \Seat\Web\Exceptions\BouncerException
      */
     public function handle($request, Closure $next, $permission = null)
     {
@@ -52,14 +55,16 @@ class KeyBouncer
         // Get the currently logged in user
         $user = auth()->user();
 
-        // Having the permission / superuser here means
-        // your access is fine.
-        if ($user->has('apikey.' . $permission, false))
-            return $next($request);
+        if (!$request->character_id)
+            throw new BouncerException(
+                'CharacterBouncer was unable to determine a character_id');
 
-        // If we dont have the required permission, check
-        // if the current user owns the key.
-        if (in_array($request->key_id, $user->keys->lists('key_id')->all()))
+        // Set the request charID
+        $user->setCharacterId($request->character_id);
+
+        // Check on the clipboard if this permission
+        // should be granted.
+        if ($user->has('character.' . $permission))
             return $next($request);
 
         return view('web::auth.unauthorized');

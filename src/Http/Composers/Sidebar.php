@@ -83,8 +83,10 @@ class Sidebar
             ]
         ]);
 
+        // Character
+
         // Configuration
-        if (auth()->user()->has('superuser')) {
+        if (auth()->user()->hasSuperuser()) {
 
             array_push($menu, [
                 'name'          => trans('web::sidebar.configuration'),

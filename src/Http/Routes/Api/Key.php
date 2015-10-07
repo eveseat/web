@@ -42,17 +42,17 @@ Route::get('/list', [
 Route::get('/delete/{key_id}', [
     'as'         => 'api.key.delete',
     'uses'       => 'KeyController@getDelete',
-    'middleware' => 'keybouncer:api_key_delete'
+    'middleware' => 'keybouncer:delete'
 ]);
 
 Route::get('/detail/{key_id}', [
     'as'         => 'api.key.detail',
     'uses'       => 'KeyController@getDetail',
-    'middleware' => 'keybouncer:api_key_detail'
+    'middleware' => 'keybouncer:detail'
 ]);
 
 Route::get('/update/{key_id}', [
     'as'         => 'api.key.queue',
     'uses'       => 'KeyController@queueUpdateJob',
-    'middleware' => 'keybouncer:api_key_update'
+    'middleware' => 'keybouncer:update'
 ]);

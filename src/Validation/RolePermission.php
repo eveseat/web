@@ -57,8 +57,43 @@ class RolePermission extends Request
         // Add each permission in the multi select dynamically
         foreach ($this->request->get('permissions') as $key => $value)
 
-            $rules['permissions.' . $key] = 'required|in:' .
-                implode(',', config('web.permissions'));
+            // Permissions can be written in . notation. If this is
+            // the case, we need to build the filter so that the
+            // actual value we got from the form request exists in the
+            // 'in' constraint on the validation rules. We do this by
+            // running array map on the categorized permissions and
+            // appending the category to the rule to match the value
+            // the form requets would have sent.
+            if (str_contains($value, '.')) {
+
+                $category = explode('.', $value)[0];
+
+                $rules['permissions.' . $key] = 'required|in:' .
+                    implode(',', array_filter(
+                        array_map(function ($web_perm) use ($category) {
+
+                            return $category . '.' . $web_perm;
+
+                        }, config('web.permissions.' . $category))));
+
+            } else {
+
+                // If the string does not have . notation,
+                // then we can assume its flat and no category needs
+                // appending to the permission name
+                $rules['permissions.' . $key] = 'required|in:' .
+                    implode(',', array_filter(
+                        array_map(function ($web_perm) {
+
+                            // If the permission is an array, then
+                            // we just return null
+                            if (is_array($web_perm))
+                                return null;
+
+                            return $web_perm;
+
+                        }, config('web.permissions'))));
+            }
 
         return $rules;
     }

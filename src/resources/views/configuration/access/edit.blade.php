@@ -20,12 +20,24 @@
           <label for="permissions">{{ trans('web::access.available_permissions') }}</label>
           <select name="permissions[]" id="available_permissions" style="width: 100%" multiple>
 
-            @foreach(config('web.permissions') as $permission)
+            @foreach(config('web.permissions') as $type => $permission)
 
-              @if(!in_array($permission, $role_permissions))
+              @if(is_array($permission))
+
+                @foreach($permission as $category_permission)
+
+                  <option value="{{ $type }}.{{ $category_permission }}">
+                    {{ studly_case($type) }}{{ studly_case($category_permission) }}
+                  </option>
+
+                @endforeach
+
+              @else
+
                 <option value="{{ $permission }}">
                   {{ studly_case($permission) }}
                 </option>
+
               @endif
 
             @endforeach

@@ -112,7 +112,7 @@ class KeyController extends Controller
 
         $keys = ApiKeyModel::with('info', 'characters');
 
-        if (!auth()->user()->has('api_key_list', false))
+        if (!auth()->user()->has('apikey.list', false))
             $keys = $keys
                 ->where('user_id', auth()->user()->id);
 
