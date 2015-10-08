@@ -55,6 +55,9 @@ return [
     'enabled'          => 'enabled',
     'disabled'         => 'disabled',
 
-    'view'             => 'view|views'
+    'view'             => 'view|views',
+    'filter'           => 'filter|filters',
+
+    'clear_filters'    => 'Clear Filters'
 
 ];

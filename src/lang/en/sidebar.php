@@ -28,6 +28,10 @@ return [
     'add_api_key'    => 'Add a EVE API Key',
     'list_keys'      => 'List EVE API Keys',
 
+    // Characters
+    'characters'     => 'Characters',
+    'all_char'       => 'All Characters',
+
     // Configuration
     'configuration'  => 'Configuration',
     'users'          => 'Users',

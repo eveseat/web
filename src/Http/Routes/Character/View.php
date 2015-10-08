@@ -19,10 +19,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-return [
-
-    'character'        => 'character|characters',
-    'corporation'      => 'Corporation',
-    'corporation_name' => 'Corporation Name',
-    'last_location'    => 'Last Known Location'
-];
+Route::any('/list', [
+    'as'         => 'character.list',
+    'uses'       => 'ViewController@getCharacters'
+]);

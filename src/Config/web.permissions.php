@@ -39,7 +39,7 @@ return [
         'contracts',
         'industry',
         'killmails',
-        'list_all',
+        'list',
         'mail',
         'market_orders',
         'notifications',

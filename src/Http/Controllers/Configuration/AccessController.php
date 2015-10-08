@@ -110,7 +110,7 @@ class AccessController extends Controller
             ->lists('name')
             ->toArray();
 
-        $all_characters = $this->getAllCharacaters();
+        $all_characters = $this->getAllCharacters();
 
         $all_corporations = $this->getAllCorporations();
 

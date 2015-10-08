@@ -84,6 +84,18 @@ class Sidebar
         ]);
 
         // Character
+        array_push($menu, [
+            'name'          => trans('web::sidebar.characters'),
+            'icon'          => 'fa-user',
+            'route_segment' => 'character',
+            'entries'       => [
+                [
+                    'name'  => trans('web::sidebar.all_char'),
+                    'icon'  => 'fa-group',
+                    'route' => route('character.list')
+                ]
+            ]
+        ]);
 
         // Configuration
         if (auth()->user()->hasSuperuser()) {

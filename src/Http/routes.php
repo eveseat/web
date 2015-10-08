@@ -47,8 +47,8 @@ Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
 
         // Queue Jobs
         Route::group([
-            'namespace'  => 'Queue',
-            'prefix'     => 'queue',
+            'namespace' => 'Queue',
+            'prefix'    => 'queue',
         ], function () {
 
             include __DIR__ . '/Routes/Queue/Status.php';
@@ -56,9 +56,21 @@ Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
         });
 
         // Api Key Routes
-        Route::group(['namespace' => 'Api', 'prefix' => 'api-key'], function () {
+        Route::group([
+            'namespace' => 'Api',
+            'prefix'    => 'api-key'
+        ], function () {
 
             include __DIR__ . '/Routes/Api/Key.php';
+        });
+
+        // Character Routes
+        Route::group([
+            'namespace' => 'Character',
+            'prefix'    => 'character'
+        ], function () {
+
+            include __DIR__ . '/Routes/Character/View.php';
         });
 
         // Configuration Routes. In the context of seat,

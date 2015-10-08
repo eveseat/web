@@ -23,7 +23,6 @@ Route::get('/status', [
     'as'         => 'queue.status',
     'middleware' => 'bouncer:queue_manager',
     'uses'       => 'QueueController@getStatus'
-
 ]);
 
 Route::get('/short-status', [
