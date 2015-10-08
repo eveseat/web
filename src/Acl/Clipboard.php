@@ -25,6 +25,10 @@ namespace Seat\Web\Acl;
  * Class Clipboard
  * @package Seat\Web\Acl
  */
+/**
+ * Class Clipboard
+ * @package Seat\Web\Acl
+ */
 trait Clipboard
 {
 
@@ -73,6 +77,25 @@ trait Clipboard
 
         return false;
 
+    }
+
+    /**
+     * Checks if the user has any of the required
+     * permissions
+     *
+     * @param array      $permissions
+     * @param bool|false $need_affiliation
+     *
+     * @return bool
+     */
+    public function hasAny(array $permissions, $need_affiliation = true)
+    {
+
+        foreach ($permissions as $permission)
+            if ($this->has($permission, $need_affiliation))
+                return true;
+
+        return false;
     }
 
     /**
