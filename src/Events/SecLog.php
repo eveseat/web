@@ -21,35 +21,28 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Events;
 
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Request;
-use Seat\Web\Models\UserLoginHistory;
 
-/**
- * Class Logout
- * @package Seat\Web\Events
- */
-class Logout
+use Seat\Web\Models\SecurityLog;
+
+class SecLog
 {
 
     /**
-     * Write a logout history item for this user
+     * Write an entry in the security log.
      *
-     * @param $user
+     * @param $message
+     * @param $category
      */
-    public static function handle($user)
+    public static function handle($message, $category = null)
     {
 
-        $user->login_history()->save(new UserLoginHistory([
-            'source'     => Request::getClientIp(),
-            'user_agent' => Request::header('User-Agent'),
-            'action'     => 'logout'
-        ]));
-
-        $message = 'User logged out from ' . Request::getClientIp();
-        Event::fire('security.log', [$message, 'authentication']);
+        SecurityLog::create([
+            'message'  => $message,
+            'category' => $category,
+            'user_id'  => auth()->user() ?
+                auth()->user()->id : null
+        ]);
 
         return;
-
     }
 }

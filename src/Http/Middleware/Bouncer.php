@@ -22,6 +22,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Event;
 use Seat\Web\Acl\Clipboard;
 
 /**
@@ -58,7 +59,10 @@ class Bouncer
         if ($user->has($permission, false))
             return $next($request);
 
-        // TODO: Log this when the global security log is up.
+        $message = 'Request to ' . $request->path() . ' was ' .
+            'denied by the bouncer. The permission required is ' .
+            $permission . '.';
+        Event::fire('security.log', [$message, 'authorization']);
 
         return view('web::auth.unauthorized');
 

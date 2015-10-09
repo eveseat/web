@@ -22,6 +22,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Event;
 use Seat\Web\Acl\Clipboard;
 use Seat\Web\Exceptions\BouncerException;
 
@@ -66,6 +67,11 @@ class CorporationBouncer
         // should be granted.
         if ($user->has('corporation.' . $permission))
             return $next($request);
+
+        $message = 'Request to ' . $request->path() . ' was ' .
+            'denied by the corporationbouncer. The permission required is ' .
+            'corporation.' . $permission . '.';
+        Event::fire('security.log', [$message, 'authorization']);
 
         return view('web::auth.unauthorized');
 

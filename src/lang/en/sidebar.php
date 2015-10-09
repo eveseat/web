@@ -37,5 +37,6 @@ return [
     'users'          => 'Users',
     'access'         => 'Access Management',
     'other'          => 'Other',
+    'security_logs'  => 'Security Logs'
 
 ];

@@ -94,6 +94,12 @@ Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
                 include __DIR__ . '/Routes/Configuration/Access.php';
             });
 
+            // Security
+            Route::group(['prefix' => 'security'], function () {
+
+                include __DIR__ . '/Routes/Configuration/Security.php';
+            });
+
         });
 
     });

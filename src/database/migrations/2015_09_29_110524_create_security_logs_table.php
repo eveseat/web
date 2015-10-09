@@ -17,6 +17,13 @@ class CreateSecurityLogsTable extends Migration
         Schema::create('security_logs', function (Blueprint $table) {
 
             $table->increments('id');
+            $table->integer('user_id')->nullable();
+            $table->text('message');
+            $table->string('category')->nullable();
+
+            // Indexes
+            $table->index('category');
+
             $table->timestamps();
         });
     }

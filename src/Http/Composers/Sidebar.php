@@ -115,7 +115,12 @@ class Sidebar
                         'name'  => trans('web::sidebar.access'),
                         'icon'  => 'fa-shield',
                         'route' => route('configuration.access.roles')
-                    ]
+                    ],
+                    [   // Security
+                    'name'  => trans('web::sidebar.security_logs'),
+                    'icon'  => 'fa-list',
+                    'route' => route('configuration.security.logs')
+                ]
                 ]
             ]);
         }

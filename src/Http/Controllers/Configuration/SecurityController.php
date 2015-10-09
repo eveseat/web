@@ -19,37 +19,30 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Events;
+namespace Seat\Web\Http\Controllers\Configuration;
 
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Request;
-use Seat\Web\Models\UserLoginHistory;
+use App\Http\Controllers\Controller;
+use Seat\Services\Repositories\Configuration\SecurityRepository;
 
 /**
- * Class Logout
- * @package Seat\Web\Events
+ * Class SecurityController
+ * @package Seat\Web\Http\Controllers\Configuration
  */
-class Logout
+class SecurityController extends Controller
 {
 
+    use SecurityRepository;
+
     /**
-     * Write a logout history item for this user
-     *
-     * @param $user
+     * @return \Illuminate\View\View
      */
-    public static function handle($user)
+    public function getLogs()
     {
 
-        $user->login_history()->save(new UserLoginHistory([
-            'source'     => Request::getClientIp(),
-            'user_agent' => Request::header('User-Agent'),
-            'action'     => 'logout'
-        ]));
+        $logs = $this->getAllSecurityLogs(50);
 
-        $message = 'User logged out from ' . Request::getClientIp();
-        Event::fire('security.log', [$message, 'authentication']);
-
-        return;
+        return view('web::configuration.security.logs',
+            compact('logs'));
 
     }
 }

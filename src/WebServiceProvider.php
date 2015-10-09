@@ -27,6 +27,7 @@ use Seat\Web\Events\Attempt;
 use Seat\Web\Events\Auth;
 use Seat\Web\Events\Login;
 use Seat\Web\Events\Logout;
+use Seat\Web\Events\SecLog;
 use Seat\Web\Events\Security;
 use Seat\Web\Http\Composers\CharacterSummary;
 use Seat\Web\Http\Composers\Sidebar;
@@ -188,5 +189,7 @@ class WebServiceProvider extends ServiceProvider
         $this->app->events->listen('auth.login', Login::class);
         $this->app->events->listen('auth.logout', Logout::class);
         $this->app->events->listen('auth.attempt', Attempt::class);
+
+        $this->app->events->listen('security.log', SecLog::class);
     }
 }

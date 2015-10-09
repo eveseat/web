@@ -22,6 +22,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Event;
 use Seat\Web\Acl\Clipboard;
 
 /**
@@ -61,6 +62,11 @@ class KeyBouncer
         // if the current user owns the key.
         if (in_array($request->key_id, $user->keys->lists('key_id')->all()))
             return $next($request);
+
+        $message = 'Request to ' . $request->path() . ' was ' .
+            'denied by the keybouncer. The permission required is ' .
+            'key.' . $permission . '.';
+        Event::fire('security.log', [$message, 'authorization']);
 
         return view('web::auth.unauthorized');
 
