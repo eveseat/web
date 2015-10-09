@@ -11,7 +11,7 @@
     </div>
     <div class="panel-body">
 
-      <table class="table table-condensed table-hover">
+      <table class="table table-condensed table-hover table-responsive">
         <tbody>
         <tr>
           <th>{{ ucfirst(trans_choice('web::general.id', 1)) }}</th>
@@ -57,10 +57,12 @@
             </td>
             <td>
               <div class="btn-group">
-                <a href="{{ route('api.key.detail', ['key_id' => $key->key_id]) }}" type="button" class="btn btn-primary btn-xs">
+                <a href="{{ route('api.key.detail', ['key_id' => $key->key_id]) }}" type="button"
+                   class="btn btn-primary btn-xs col-xs-6">
                   {{ ucfirst(trans_choice('web::general.detail', 2)) }}
                 </a>
-                <a href="{{ route('api.key.delete', ['key_id' => $key->key_id]) }}" type="button" class="btn btn-danger btn-xs confirmlink">
+                <a href="{{ route('api.key.delete', ['key_id' => $key->key_id]) }}" type="button"
+                   class="btn btn-danger btn-xs confirmlink col-xs-6">
                   {{ ucfirst(trans('web::general.delete')) }}
                 </a>
               </div>
