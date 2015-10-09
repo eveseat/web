@@ -83,8 +83,11 @@
         @foreach($characters as $character)
 
           <tr>
-            <td>{!! img('character', $character->characterID, 64, ['class' => 'img-circle eve-icon medium-icon']) !!}
-              {{ $character->characterName }}
+            <td>
+              <a href="{{ route('character.view.sheet', ['character_id' => $character->characterID]) }}">
+                {!! img('character', $character->characterID, 64, ['class' => 'img-circle eve-icon medium-icon']) !!}
+                {{ $character->characterName }}
+              </a>
             </td>
             <td>{{ $character->corporationName }}</td>
             <td>{{ $character->lastKnownLocation }}</td>

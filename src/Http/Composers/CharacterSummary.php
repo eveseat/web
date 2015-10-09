@@ -19,47 +19,55 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Http\Controllers\Character;
+namespace Seat\Web\Http\Composers;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Seat\Services\Repositories\Character\CharacterRepository;
-use Seat\Web\Validation\Permission;
 
 /**
- * Class ViewController
- * @package Seat\Web\Http\Controllers\Character
+ * Class CharacterSummary
+ * @package Seat\Web\Http\Composers
  */
-class ViewController extends Controller
+class CharacterSummary
 {
 
     use CharacterRepository;
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\View\View
+     * @var \Illuminate\Http\Request
      */
-    public function getCharacters(Request $request)
+    protected $request;
+
+    /**
+     * Create a new character summary composer.
+     *
+     * @param \Illuminate\Http\Request $request
+     */
+    public function __construct(Request $request)
     {
 
-        $characters = $this->getAllCharactersWithAffiliationsAndFilters($request);
-        $corporations = $this->getCharacterCorporations();
-
-        return view('web::character.list',
-            compact('characters', 'corporations'));
-
+        $this->request = $request;
     }
 
     /**
-     * @param $character_id
+     * Bind data to the view.
      *
-     * @return \Illuminate\View\View
+     * @param  View $view
+     *
+     * @return void
      */
-    public function getSheet($character_id)
+    public function compose(View $view)
     {
 
-        return view('web::character.character-sheet');
-    }
+        $summary = $this->getCharacterInformation(
+            $this->request->character_id);
 
+        $characters = $this->getCharactersOnApiKey(
+            $summary->keyID);
+
+        $view->with('summary', $summary);
+        $view->with('characters', $characters);
+
+    }
 }

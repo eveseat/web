@@ -47,7 +47,7 @@ return [
         'research_agents',
         'skills',
         'standings',
-        'view_summary',
+        'sheet',
         'wallet_journal',
         'wallet_transactions',
     ],

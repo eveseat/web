@@ -20,6 +20,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 */
 
 Route::any('/list', [
-    'as'         => 'character.list',
-    'uses'       => 'ViewController@getCharacters'
+    'as'   => 'character.list',
+    'uses' => 'ViewController@getCharacters'
+]);
+
+Route::get('/view/sheet/{character_id}', [
+    'as'         => 'character.view.sheet',
+    'middleware' => 'characterbouncer:sheet',
+    'uses'       => 'ViewController@getSheet'
 ]);

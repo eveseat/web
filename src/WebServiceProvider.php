@@ -28,6 +28,7 @@ use Seat\Web\Events\Auth;
 use Seat\Web\Events\Login;
 use Seat\Web\Events\Logout;
 use Seat\Web\Events\Security;
+use Seat\Web\Http\Composers\CharacterSummary;
 use Seat\Web\Http\Composers\Sidebar;
 use Seat\Web\Http\Composers\User;
 use Seat\Web\Http\Middleware\Authenticate;
@@ -137,7 +138,12 @@ class WebServiceProvider extends ServiceProvider
         ], User::class);
 
         // Sidebar menu view composer
-        $this->app['view']->composer('web::includes.sidebar', Sidebar::class);
+        $this->app['view']->composer(
+            'web::includes.sidebar', Sidebar::class);
+
+        // Character info composser
+        $this->app['view']->composer(
+            'web::character.includes.summary', CharacterSummary::class);
 
     }
 
