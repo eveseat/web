@@ -35,6 +35,7 @@ return [
     'add'               => 'ajouter',
     'remove'            => 'retirer',
     'delete'            => 'supprimer',
+    'detail'            => 'détail|détails',
 
     'status'            => 'statut|statuts',
     'from'              => 'de',
@@ -42,6 +43,21 @@ return [
 
     'date'             => 'date|dates',
     'source'           => 'source|sources',
-    'action'           => 'action|actions'
+    'action'           => 'action|actions',
+
+    'back'             => 'retour',
+    'note'             => 'note',
+    'id'               => 'id|ids',
+    'type'             => 'type|types',
+    'expire'           => 'expiré',
+    'unknown'          => 'inconnu',
+    'never'            => 'jamais',
+    'enabled'          => 'activé',
+    'disabled'         => 'désactivé',
+
+    'view'             => 'vue|vues',
+    'filter'           => 'filtre|filtres',
+
+    'clear_filters'    => 'Vider les filtres'
 
 ];
