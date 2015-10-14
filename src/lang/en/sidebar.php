@@ -21,10 +21,22 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 return [
 
-    'home'          => 'Home',
-    'configuration' => 'Configuration',
-    'users'         => 'Users',
-    'access'        => 'Access Management',
-    'other'         => 'Other'
+    'home'           => 'Home',
+
+    // Key Mangement
+    'key_management' => 'API Key Management',
+    'add_api_key'    => 'Add a EVE API Key',
+    'list_keys'      => 'List EVE API Keys',
+
+    // Characters
+    'characters'     => 'Characters',
+    'all_char'       => 'All Characters',
+
+    // Configuration
+    'configuration'  => 'Configuration',
+    'users'          => 'Users',
+    'access'         => 'Access Management',
+    'other'          => 'Other',
+    'security_logs'  => 'Security Logs'
 
 ];

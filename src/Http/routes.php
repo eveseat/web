@@ -45,6 +45,34 @@ Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
         // just include it
         include __DIR__ . '/Routes/Home.php';
 
+        // Queue Jobs
+        Route::group([
+            'namespace' => 'Queue',
+            'prefix'    => 'queue',
+        ], function () {
+
+            include __DIR__ . '/Routes/Queue/Status.php';
+
+        });
+
+        // Api Key Routes
+        Route::group([
+            'namespace' => 'Api',
+            'prefix'    => 'api-key'
+        ], function () {
+
+            include __DIR__ . '/Routes/Api/Key.php';
+        });
+
+        // Character Routes
+        Route::group([
+            'namespace' => 'Character',
+            'prefix'    => 'character'
+        ], function () {
+
+            include __DIR__ . '/Routes/Character/View.php';
+        });
+
         // Configuration Routes. In the context of seat,
         // all configuration should only be possible if
         // a user has the 'superuser' role.
@@ -64,6 +92,12 @@ Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
             Route::group(['prefix' => 'access'], function () {
 
                 include __DIR__ . '/Routes/Configuration/Access.php';
+            });
+
+            // Security
+            Route::group(['prefix' => 'security'], function () {
+
+                include __DIR__ . '/Routes/Configuration/Security.php';
             });
 
         });

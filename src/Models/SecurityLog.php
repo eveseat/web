@@ -19,7 +19,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace App;
+namespace Seat\Web\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -30,5 +30,17 @@ use Illuminate\Database\Eloquent\Model;
 class SecurityLog extends Model
 {
 
-    //
+    /**
+     * @var array
+     */
+    protected $fillable = ['user_id', 'message', 'category'];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function user()
+    {
+
+        return $this->belongsTo(User::class);
+    }
 }

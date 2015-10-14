@@ -51,19 +51,59 @@ class Sidebar
         // TODO: Allow plugins to add menu items
         // Menus are structured as follows:
 
+        // Home. This menu item declares the menu and
+        // sets it as an array of arrays.
         $menu = [
-
-            [   // Home
+            [
                 'name'          => trans('web::sidebar.home'),
                 'icon'          => 'fa-home',
                 'route_segment' => 'home',
                 'route'         => route('home')
-            ],
-            [   // Configuration
+            ]
+        ];
+
+        // Key Management
+        array_push($menu, [
+
+            'name'          => trans('web::sidebar.key_management'),
+            'icon'          => 'fa-key',
+            'route_segment' => 'api-key',
+            'entries'       => [
+
+                [   // Add Api Key
+                    'name'  => trans('web::sidebar.add_api_key'),
+                    'icon'  => 'fa-plus',
+                    'route' => route('api.key')
+                ],
+                [
+                    'name'  => trans('web::sidebar.list_keys'),
+                    'icon'  => 'fa-list',
+                    'route' => route('api.key.list')
+                ]
+            ]
+        ]);
+
+        // Character
+        array_push($menu, [
+            'name'          => trans('web::sidebar.characters'),
+            'icon'          => 'fa-user',
+            'route_segment' => 'character',
+            'entries'       => [
+                [
+                    'name'  => trans('web::sidebar.all_char'),
+                    'icon'  => 'fa-group',
+                    'route' => route('character.list')
+                ]
+            ]
+        ]);
+
+        // Configuration
+        if (auth()->user()->hasSuperuser()) {
+
+            array_push($menu, [
                 'name'          => trans('web::sidebar.configuration'),
                 'icon'          => 'fa-cogs',
                 'route_segment' => 'configuration',
-                'acl_slug'      => 'admin',
                 'entries'       => [
 
                     [   // Users
@@ -75,15 +115,21 @@ class Sidebar
                         'name'  => trans('web::sidebar.access'),
                         'icon'  => 'fa-shield',
                         'route' => route('configuration.access.roles')
-                    ]
+                    ],
+                    [   // Security
+                    'name'  => trans('web::sidebar.security_logs'),
+                    'icon'  => 'fa-list',
+                    'route' => route('configuration.security.logs')
                 ]
-            ],
-            [   // Other
-                'name'          => trans('web::sidebar.other'),
-                'icon'          => 'fa-circle',
-                'route_segment' => 'other',
-            ]
-        ];
+                ]
+            ]);
+        }
+
+        array_push($menu, [
+            'name'          => trans('web::sidebar.other'),
+            'icon'          => 'fa-circle',
+            'route_segment' => 'other',
+        ]);
 
         $view->with('menu', $menu);
     }

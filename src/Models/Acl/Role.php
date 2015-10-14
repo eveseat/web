@@ -32,14 +32,13 @@ class Role extends Model
 {
 
     /**
-     * @var array
-     */
-    protected $fillable = ['title'];
-
-    /**
      * @var bool
      */
     public $timestamps = false;
+    /**
+     * @var array
+     */
+    protected $fillable = ['title'];
 
     /**
      * Make sure we cleanup on delete
@@ -69,6 +68,15 @@ class Role extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function permissions()
+    {
+
+        return $this->belongsToMany(Permission::class);
+    }
+
+    /**
      * This role may be affiliated manually to
      * other characterID's and or corporations
      *
@@ -78,14 +86,5 @@ class Role extends Model
     {
 
         return $this->belongsToMany(Affiliation::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function permissions()
-    {
-
-        return $this->belongsToMany(Permission::class);
     }
 }

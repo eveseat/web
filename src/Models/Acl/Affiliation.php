@@ -32,14 +32,13 @@ class Affiliation extends Model
 {
 
     /**
-     * @var array
-     */
-    protected $fillable = ['affiliation', 'type'];
-
-    /**
      * @var bool
      */
     public $timestamps = false;
+    /**
+     * @var array
+     */
+    protected $fillable = ['affiliation', 'type'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

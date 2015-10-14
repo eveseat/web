@@ -1,0 +1,33 @@
+img.eve-icon {
+
+}
+
+img.eve-icon.small-icon {
+    margin-top: -3px;
+    width: 16px;
+    height: 16px;
+}
+
+img.eve-icon.medium-icon {
+    margin-top: -3px;
+    width: 32px;
+    height: 32px;
+}
+
+img.eve-icon.large-icon {
+    margin-top: -3px;
+    width: 64px;
+    height: 64px;
+}
+
+img.eve-icon.xlarge-icon {
+    margin-top: -3px;
+    width: 128px;
+    height: 128px;
+}
+
+img.eve-icon.xxlarge-icon {
+    margin-top: -3px;
+    width: 256px;
+    height: 256px;
+}

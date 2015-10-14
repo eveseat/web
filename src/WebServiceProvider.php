@@ -27,11 +27,16 @@ use Seat\Web\Events\Attempt;
 use Seat\Web\Events\Auth;
 use Seat\Web\Events\Login;
 use Seat\Web\Events\Logout;
+use Seat\Web\Events\SecLog;
 use Seat\Web\Events\Security;
+use Seat\Web\Http\Composers\CharacterSummary;
 use Seat\Web\Http\Composers\Sidebar;
 use Seat\Web\Http\Composers\User;
 use Seat\Web\Http\Middleware\Authenticate;
 use Seat\Web\Http\Middleware\Bouncer;
+use Seat\Web\Http\Middleware\CharacterBouncer;
+use Seat\Web\Http\Middleware\CorporationBouncer;
+use Seat\Web\Http\Middleware\KeyBouncer;
 
 /**
  * Class EveapiServiceProvider
@@ -134,7 +139,12 @@ class WebServiceProvider extends ServiceProvider
         ], User::class);
 
         // Sidebar menu view composer
-        $this->app['view']->composer('web::includes.sidebar', Sidebar::class);
+        $this->app['view']->composer(
+            'web::includes.sidebar', Sidebar::class);
+
+        // Character info composser
+        $this->app['view']->composer(
+            'web::character.includes.summary', CharacterSummary::class);
 
     }
 
@@ -163,6 +173,9 @@ class WebServiceProvider extends ServiceProvider
         // Clipboard and ensuring that every request
         // that comes in is authorized
         $router->middleware('bouncer', Bouncer::class);
+        $router->middleware('characterbouncer', CharacterBouncer::class);
+        $router->middleware('corporationBouncer', CorporationBouncer::class);
+        $router->middleware('keybouncer', KeyBouncer::class);
 
     }
 
@@ -176,5 +189,7 @@ class WebServiceProvider extends ServiceProvider
         $this->app->events->listen('auth.login', Login::class);
         $this->app->events->listen('auth.logout', Logout::class);
         $this->app->events->listen('auth.attempt', Attempt::class);
+
+        $this->app->events->listen('security.log', SecLog::class);
     }
 }

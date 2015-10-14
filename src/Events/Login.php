@@ -22,6 +22,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Events;
 
 use DateTime;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Request;
 use Seat\Web\Models\UserLoginHistory;
 
@@ -50,6 +51,9 @@ class Login
             'user_agent' => Request::header('User-Agent'),
             'action'     => 'login'
         ]));
+
+        $message = 'User logged in from ' . Request::getClientIp();
+        Event::fire('security.log', [$message, 'authentication']);
 
         return;
 

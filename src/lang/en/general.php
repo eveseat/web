@@ -35,6 +35,7 @@ return [
     'add'              => 'add',
     'remove'           => 'remove',
     'delete'           => 'delete',
+    'detail'           => 'detail|details',
 
     'status'           => 'status|statuses',
     'from'             => 'from',
@@ -44,5 +45,19 @@ return [
     'source'           => 'source|sources',
     'action'           => 'action|actions',
 
-    'back'             => 'back'
+    'back'             => 'back',
+    'note'             => 'note',
+    'id'               => 'id|ids',
+    'type'             => 'type|types',
+    'expire'           => 'expire',
+    'unknown'          => 'unknown',
+    'never'            => 'never',
+    'enabled'          => 'enabled',
+    'disabled'         => 'disabled',
+
+    'view'             => 'view|views',
+    'filter'           => 'filter|filters',
+
+    'clear_filters'    => 'Clear Filters'
+
 ];

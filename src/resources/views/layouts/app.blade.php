@@ -18,6 +18,8 @@
   <link rel="stylesheet" href="{{ asset('web/css/adminlte.min.css') }}">
   <!-- Skin -->
   <link rel="stylesheet" href="{{ asset('web/css/skins/skin-black.min.css') }}">
+  <!-- SeAT CSS -->
+  <link rel="stylesheet" href="{{ asset('web/css/seat.css') }}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -32,10 +34,10 @@
   <!-- Main Header -->
   @include('web::includes.header')
 
-  <!-- Left side column. contains the logo and sidebar -->
+          <!-- Left side column. contains the logo and sidebar -->
   @include('web::includes.sidebar')
 
-  <!-- Content Wrapper. Contains page content -->
+          <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
 
     <!-- Content Header (Page header) -->
@@ -52,7 +54,7 @@
       <!-- Notifications -->
       @include('web::includes.notifications')
 
-      <!-- Page Content Here -->
+              <!-- Page Content Here -->
       @yield('content')
 
     </section>
@@ -77,10 +79,32 @@
 <script src="{{ asset('web/js/select2.full.min.js') }}"></script>
 <!-- Bootbox -->
 <script src="{{ asset('web/js/bootbox.min.js') }}"></script>
+<!-- jQuery Unveil -->
+<script src="{{ asset('web/js/jquery.unveil.js') }}"></script>
 <!-- Theme JS -->
 <script src="{{ asset('web/js/app.min.js') }}"></script>
 <!-- SeAT JS -->
 <script src="{{ asset('web/js/seat.js') }}"></script>
+
+{{-- This script is here as we need Laravel to generate the route --}}
+<script>
+  // Periodic Queue Status Updates
+  (function worker() {
+    $.ajax({
+      type: "get",
+      url: "{{ route('queue.status.short') }}",
+      success: function(data) {
+        $("span#queue_count").text(data.queued_jobs);
+        $("span#working_count").text(data.working_jobs);
+        $("span#error_count").text(data.error_jobs);
+      },
+      complete: function() {
+        // Schedule the next request when the current one's complete
+        setTimeout(worker, 10000); // 10 Seconds
+      }
+    });
+  })();
+</script>
 
 @yield('javascript')
 

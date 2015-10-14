@@ -21,6 +21,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Events;
 
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Request;
 use Seat\Web\Models\UserLoginHistory;
 
@@ -44,6 +45,9 @@ class Logout
             'user_agent' => Request::header('User-Agent'),
             'action'     => 'logout'
         ]));
+
+        $message = 'User logged out from ' . Request::getClientIp();
+        Event::fire('security.log', [$message, 'authentication']);
 
         return;
 

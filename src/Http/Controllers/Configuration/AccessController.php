@@ -22,7 +22,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Http\Controllers\Configuration;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Redirect;
 use Seat\Services\Repositories\Character\CharacterRepository;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Services\Repositories\Corporation\CorporationRepository;
@@ -64,7 +63,7 @@ class AccessController extends Controller
 
         $this->addRole($request->input('title'));
 
-        return Redirect::back()
+        return redirect()->back()
             ->with('success', trans('web::access.role_added'));
     }
 
@@ -78,7 +77,7 @@ class AccessController extends Controller
 
         $this->removeRole($role_id);
 
-        return Redirect::back()
+        return redirect()->back()
             ->with('success', trans('web::access.role_removed'));
     }
 
@@ -111,7 +110,7 @@ class AccessController extends Controller
             ->lists('name')
             ->toArray();
 
-        $all_characters = $this->getAllCharacaters();
+        $all_characters = $this->getAllCharacters();
 
         $all_corporations = $this->getAllCorporations();
 
@@ -134,7 +133,7 @@ class AccessController extends Controller
         $this->giveRolePermissions(
             $request->input('role_id'), $request->input('permissions'));
 
-        return Redirect::back()
+        return redirect()->back()
             ->with('success', trans('web::access.permissions_granted'));
     }
 
@@ -149,7 +148,7 @@ class AccessController extends Controller
 
         $this->removePermissionFromRole($permission_id, $role_id);
 
-        return Redirect::back()
+        return redirect()->back()
             ->with('success', trans('web::access.permission_revoked'));
     }
 
@@ -164,7 +163,7 @@ class AccessController extends Controller
         $this->giveUsernamesRole(
             $request->input('users'), $request->input('role_id'));
 
-        return Redirect::back()
+        return redirect()->back()
             ->with('success', trans('web::access.user_added'));
 
     }
@@ -180,7 +179,7 @@ class AccessController extends Controller
 
         $this->removeUserFromRole($user_id, $role_id);
 
-        return Redirect::back()
+        return redirect()->back()
             ->with('success', trans('web::access.user_removed'));
     }
 
@@ -200,7 +199,7 @@ class AccessController extends Controller
             $this->giveRoleCharacterAffiliations(
                 $request->input('role_id'), $request->input('characters'));
 
-        return Redirect::back()
+        return redirect()->back()
             ->with('success', 'Affiliations were added to this role');
     }
 
@@ -215,7 +214,7 @@ class AccessController extends Controller
 
         $this->removeAffiliationFromRole($role_id, $affiliation_id);
 
-        return Redirect::back()
+        return redirect()->back()
             ->with('success', trans('web::access.affiliation_removed'));
     }
 }

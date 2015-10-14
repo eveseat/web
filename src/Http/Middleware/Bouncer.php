@@ -22,8 +22,13 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Event;
 use Seat\Web\Acl\Clipboard;
 
+/**
+ * Class Bouncer
+ * @package Seat\Web\Http\Middleware
+ */
 class Bouncer
 {
 
@@ -31,6 +36,10 @@ class Bouncer
 
     /**
      * Handle an incoming request.
+     *
+     * This filter simply checks if a specific permission
+     * exists, and does not take any affiliation rules
+     * into account
      *
      * @param  \Illuminate\Http\Request $request
      * @param  \Closure                 $next
@@ -45,31 +54,15 @@ class Bouncer
         // Get the currently logged in user
         $user = auth()->user();
 
-        // Set the request char / corp ID
-        $user->setCharacterId($request->character_id);
-        $user->setCorporationId($request->corporation_id);
-
-        // By adding |false to the acl parameters the
-        // permission will pass regardless of any
-        // affiliation requirements. We need to split
-        // and (bool) the value to check.
-        $permission = explode('|', $permission);
-
-        // The first exploded value is the name, the
-        // second is the bool indicating the importance
-        // of an affiliation requirement too.
-        $permission_name = $permission[0];
-        $require_affiliation = isset($permission[1]) ? (bool)$permission[1] : true;
-
         // Check on the clipboard if this permission
         // should be granted.
-        if ($user->has($permission_name, $require_affiliation))
+        if ($user->has($permission, false))
             return $next($request);
 
-        // TODO: Log this when the global security log is up.
-//        dd('dont have ' . $permission_name . '|charID: ' .
-//            $user->getCharacterID() . '|corpID: ' .
-//            $user->getCorporationId());
+        $message = 'Request to ' . $request->path() . ' was ' .
+            'denied by the bouncer. The permission required is ' .
+            $permission . '.';
+        Event::fire('security.log', [$message, 'authorization']);
 
         return view('web::auth.unauthorized');
 

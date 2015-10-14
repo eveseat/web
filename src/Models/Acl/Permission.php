@@ -31,14 +31,13 @@ class Permission extends Model
 {
 
     /**
-     * @var array
-     */
-    protected $fillable = ['title'];
-
-    /**
      * @var bool
      */
     public $timestamps = false;
+    /**
+     * @var array
+     */
+    protected $fillable = ['title'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
