@@ -63,7 +63,7 @@ class ViewController extends Controller
         $skills = $this->getCharacterSkillsInformation($character_id);
         $skill_groups = $this->getCharacterSkillsGroups();
 
-        return view('web::character.character-sheet',
+        return view('web::character.sheet',
             compact('skills', 'skill_groups'));
     }
 

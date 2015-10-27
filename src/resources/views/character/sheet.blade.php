@@ -1,15 +1,6 @@
-@extends('web::layouts.grids.3-9')
+@extends('web::character.layouts.view')
 
-@section('title', ucfirst(trans_choice('web::character.character', 2)))
-@section('page_header', ucfirst(trans_choice('web::character.character', 2)))
-
-@section('left')
-
-  @include('web::character.includes.summary')
-
-@stop
-
-@section('right')
+@section('character_content')
 
   <div class="row">
 
