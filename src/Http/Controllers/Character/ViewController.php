@@ -24,6 +24,7 @@ namespace Seat\Web\Http\Controllers\Character;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Seat\Services\Repositories\Character\CharacterRepository;
+use Seat\Services\Repositories\Eve\EveRepository;
 use Seat\Web\Validation\Permission;
 
 /**
@@ -33,7 +34,7 @@ use Seat\Web\Validation\Permission;
 class ViewController extends Controller
 {
 
-    use CharacterRepository;
+    use CharacterRepository, EveRepository;
 
     /**
      * @param \Illuminate\Http\Request $request
@@ -59,7 +60,11 @@ class ViewController extends Controller
     public function getSheet($character_id)
     {
 
-        return view('web::character.character-sheet');
+        $skills = $this->getCharacterSkillsInformation($character_id);
+        $skill_groups = $this->getCharacterSkillsGroups();
+
+        return view('web::character.character-sheet',
+            compact('skills', 'skill_groups'));
     }
 
 }
