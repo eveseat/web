@@ -143,8 +143,10 @@ class WebServiceProvider extends ServiceProvider
             'web::includes.sidebar', Sidebar::class);
 
         // Character info composser
-        $this->app['view']->composer(
-            'web::character.includes.summary', CharacterSummary::class);
+        $this->app['view']->composer([
+            'web::character.includes.summary',
+            'web::character.includes.menu'
+        ], CharacterSummary::class);
 
     }
 

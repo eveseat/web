@@ -29,3 +29,9 @@ Route::get('/view/sheet/{character_id}', [
     'middleware' => 'characterbouncer:sheet',
     'uses'       => 'ViewController@getSheet'
 ]);
+
+Route::get('/view/skills/{character_id}', [
+    'as'         => 'character.view.skills',
+    'middleware' => 'characterbouncer:skills',
+    'uses'       => 'ViewController@getSkills'
+]);

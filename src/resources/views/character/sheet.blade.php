@@ -1,4 +1,4 @@
-@extends('web::character.layouts.view')
+@extends('web::character.layouts.view', ['viewname' => 'sheet'])
 
 @section('character_content')
 
@@ -8,79 +8,114 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Skills</h3>
+          <h3 class="panel-title">Skills Summary</h3>
         </div>
         <div class="panel-body">
 
-          @foreach($skill_groups as $skill_group)
+          <dl class="dl-horizontal">
 
-            @if(count($skills->where('groupID', $skill_group->groupID)) > 0)
+            <dt>Currently Training</dt>
+            <dd>
+              @if($skill_in_training && strlen($skill_in_training->typeName) > 0)
+                {{ $skill_in_training->typeName }}
+              @else
+                No skill in training.
+              @endif
+            </dd>
 
-              <div class="box box-solid">
-                <div class="box-header with-border">
-                  <h3 class="box-title">
-                    {{ $skill_group->groupName }}
-                  </h3>
-                    <span class="pull-right">
-                      {{ count($skills->where('groupID', $skill_group->groupID)) }}
-                      skills
-                    </span>
-                </div>
-                <div class="box-body">
+            <dt>Skill Training End</dt>
+            <dd>
+              @if($skill_in_training)
+                {{ human_diff($skill_in_training->trainingEndTime) }} at {{ $skill_in_training->trainingEndTime }}
+              @else
+                No skill in training.
+              @endif
+            </dd>
 
-                  <ul class="list-unstyled">
+            <dt>Skill Queue</dt>
+            <dd>
+              @if($skill_queue && count($skill_queue) > 0)
+                <ol class="list-unstyled">
 
-                    @foreach($skills->where('groupID', $skill_group->groupID) as $skill)
+                  @foreach($skill_queue as $skill)
 
-                      <li>
-                        <i class="fa fa-book"></i> {{ $skill->typeName }}
-                        <span class="pull-right">
+                    <li data-toggle="tooltip" title=""
+                        data-original-title="Ends {{ human_diff($skill->endTime) }} at {{ $skill->endTime }}">
+                      {{ $skill->typeName }} {{ $skill->level }}</li>
 
-                          @if($skill->level == 0)
+                  @endforeach
 
-                            <i class="fa fa-star-o"></i>
+                </ol>
+              @else
+                The skill queue us empty.
+              @endif
+            </dd>
 
-                          @elseif($skill->level == 5)
-
-                            <span class="text-green">
-                              <i class="fa fa-star"></i>
-                              <i class="fa fa-star"></i>
-                              <i class="fa fa-star"></i>
-                              <i class="fa fa-star"></i>
-                              <i class="fa fa-star"></i>
-                            </span>
-
-                          @else
-
-                            @for ($i=0; $i < $skill->level ; $i++)
-
-                              <i class="fa fa-star"></i>
-
-                            @endfor
-
-                          @endif
-
-                          | {{ $skill->level }}
-                        </span>
-                      </li>
-
-                    @endforeach
-
-                  </ul>
-                </div><!-- /.box-body -->
-                <div class="box-footer">
-                  {{ $skills->where('groupID', $skill_group->groupID)->sum('skillpoints') }}
-                  total skillpoints
-                </div>
-              </div>
-
-            @endif
-
-          @endforeach
+          </dl>
 
         </div>
       </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Account Information</h3>
+        </div>
+        <div class="panel-body">
+
+          <dl class="dl-horizontal">
+
+            <dt>Key ID</dt>
+            <dd>{{ $account_info->keyID }}</dd>
+
+            <dt>Paid Until</dt>
+            <dd>{{ $account_info->paidUntil }} | Due {{ human_diff($account_info->paidUntil) }}</dd>
+
+            <dt>Logon Count</dt>
+            <dd>{{ $account_info->logonCount }} logins to Eve related services</dd>
+
+            <dt>Online Time</dt>
+            <dd>
+              {{ $account_info->logonMinutes }} minutes,
+              {{ round(((int)$account_info->logonMinutes/60),0) }} hours or
+              {{ round(((int)$account_info->logonMinutes/60)/24,0) }} days
+            </dd>
+
+          </dl>
+
+        </div>
+      </div>
+
     </div>
+
+    <div class="col-md-6">
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Exployment History</h3>
+        </div>
+        <div class="panel-body">
+
+          <ul class="list-unstyled">
+
+            @foreach($employment as $history)
+
+              <li>
+                {!! img('corporation', $history->corporationID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
+                {{ $history->corporationName }} {{ human_diff($history->startDate) }}
+              </li>
+
+            @endforeach
+
+          </ul>
+
+        </div>
+        <div class="panel-footer">
+          {{ count($employment) }} corporations
+        </div>
+      </div>
+
+    </div>
+
   </div>
 
 @stop

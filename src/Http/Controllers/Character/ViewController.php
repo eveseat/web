@@ -60,10 +60,27 @@ class ViewController extends Controller
     public function getSheet($character_id)
     {
 
+        $account_info = $this->getCharacterAccountInfo($character_id);
+        $employment = $this->getCharacterEmploymentHistory($character_id);
+        $skill_in_training = $this->getCharacterSkillInTraining($character_id);
+        $skill_queue = $this->getCharacterSkilQueue($character_id);
+
+        return view('web::character.sheet',
+            compact('account_info', 'employment', 'skill_in_training', 'skill_queue'));
+    }
+
+    /**
+     * @param $character_id
+     *
+     * @return \Illuminate\View\View
+     */
+    public function getSkills($character_id)
+    {
+
         $skills = $this->getCharacterSkillsInformation($character_id);
         $skill_groups = $this->getCharacterSkillsGroups();
 
-        return view('web::character.sheet',
+        return view('web::character.skills',
             compact('skills', 'skill_groups'));
     }
 
