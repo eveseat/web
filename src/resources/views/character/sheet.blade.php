@@ -92,6 +92,90 @@
         </div>
       </div>
 
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Jump Fatigue &amp; Jump Clones</h3>
+        </div>
+        <div class="panel-body">
+
+          <dl>
+            <dt>Jump Fatigue</dt>
+            <dd>
+
+              @if(carbon($character_sheet->jumpFatigue)->gt(carbon(null)))
+                {{ $character_sheet->jumpFatigue }}
+                <span class="pull-right">Ends approx {{ human_diff($character_sheet->jumpFatigue) }}</span>
+              @else
+                None
+              @endif
+
+            </dd>
+
+            <dt>Jump Activation Timer</dt>
+            <dd>
+              @if(carbon($character_sheet->jumpActivation)->gt(carbon(null)))
+                {{ $character_sheet->jumpActivation }}
+                <span class="pull-right">Ends approx {{ human_diff($character_sheet->jumpActivation) }}</span>
+              @else
+                None
+              @endif
+            </dd>
+
+            <dt>Jump Clones</dt>
+            <dd>
+
+              @if(count($jump_clones) > 0)
+
+                <ul>
+
+                  @foreach($jump_clones as $clone)
+
+                    <li>
+                      <i>{{ $clone->typeName }}</i> located at <b>{{ $clone->location }}</b>
+                    </li>
+
+                  @endforeach
+
+                </ul>
+
+              @else
+                No Jump Clones
+              @endif
+
+            </dd>
+
+          </dl>
+
+        </div>
+
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Implants</h3>
+        </div>
+        <div class="panel-body">
+
+          @if(count($implants) > 0)
+
+            <ul>
+
+              @foreach($implants as $implant)
+                <li>{{ $implant->typeName }}</li>
+              @endforeach
+
+            </ul>
+
+          @else
+            No Implants
+          @endif
+
+        </div>
+        <div class="panel-footer">
+          {{ count($implants) }} implants
+        </div>
+      </div>
+
     </div>
 
     <div class="col-md-6">

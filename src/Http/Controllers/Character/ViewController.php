@@ -61,12 +61,17 @@ class ViewController extends Controller
     {
 
         $account_info = $this->getCharacterAccountInfo($character_id);
+        $character_sheet = $this->getCharacterSheet($character_id);
         $employment = $this->getCharacterEmploymentHistory($character_id);
+        $implants = $this->getCharacterImplants($character_id);
+        $jump_clones = $this->getCharacterJumpClones($character_id);
         $skill_in_training = $this->getCharacterSkillInTraining($character_id);
         $skill_queue = $this->getCharacterSkilQueue($character_id);
 
         return view('web::character.sheet',
-            compact('account_info', 'employment', 'skill_in_training', 'skill_queue'));
+            compact('account_info', 'character_sheet', 'employment',
+                'implants', 'jump_clones', 'skill_in_training',
+                'skill_queue'));
     }
 
     /**
