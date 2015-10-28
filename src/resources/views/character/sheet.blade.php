@@ -1,5 +1,8 @@
 @extends('web::character.layouts.view', ['viewname' => 'sheet'])
 
+@section('title', ucfirst(trans_choice('web::character.character', 1)) . ' sheet')
+@section('page_header', ucfirst(trans_choice('web::character.character', 1)) . ' sheet')
+
 @section('character_content')
 
   <div class="row">
@@ -12,12 +15,12 @@
         </div>
         <div class="panel-body">
 
-          <dl class="dl-horizontal">
+          <dl>
 
             <dt>Currently Training</dt>
             <dd>
               @if($skill_in_training && strlen($skill_in_training->typeName) > 0)
-                {{ $skill_in_training->typeName }}
+                {{ $skill_in_training->typeName }} to level <b>{{ $skill_in_training->trainingToLevel }}</b>
               @else
                 No skill in training.
               @endif
@@ -35,13 +38,17 @@
             <dt>Skill Queue</dt>
             <dd>
               @if($skill_queue && count($skill_queue) > 0)
-                <ol class="list-unstyled">
+                <ol>
 
                   @foreach($skill_queue as $skill)
 
                     <li data-toggle="tooltip" title=""
-                        data-original-title="Ends {{ human_diff($skill->endTime) }} at {{ $skill->endTime }}">
-                      {{ $skill->typeName }} {{ $skill->level }}</li>
+                        @if($skill->endTime != '0000-00-00 00:00:00')
+                          data-original-title="Ends {{ human_diff($skill->endTime) }} at {{ $skill->endTime }}"
+                        @endif
+                    >
+                      {{ $skill->typeName }} {{ $skill->level }}
+                    </li>
 
                   @endforeach
 
@@ -62,13 +69,13 @@
         </div>
         <div class="panel-body">
 
-          <dl class="dl-horizontal">
+          <dl>
 
             <dt>Key ID</dt>
             <dd>{{ $account_info->keyID }}</dd>
 
             <dt>Paid Until</dt>
-            <dd>{{ $account_info->paidUntil }} | Due {{ human_diff($account_info->paidUntil) }}</dd>
+            <dd>{{ $account_info->paidUntil }} ( payment due {{ human_diff($account_info->paidUntil) }} )</dd>
 
             <dt>Logon Count</dt>
             <dd>{{ $account_info->logonCount }} logins to Eve related services</dd>
@@ -101,7 +108,10 @@
 
               <li>
                 {!! img('corporation', $history->corporationID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-                {{ $history->corporationName  }} {{ human_diff($history->startDate) }}
+                <b>{{ $history->corporationName  }}</b> on {{ carbon($history->startDate)->toDateString() }}
+                <span class="pull-right">
+                 {{ human_diff($history->startDate) }}
+                </span>
               </li>
 
             @endforeach
