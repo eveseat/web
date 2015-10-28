@@ -1,15 +1,32 @@
-@extends('web::layouts.grids.3-9')
+@extends('web::layouts.grids.12')
 
-@section('left')
+@section('full')
 
-  @include('web::character.includes.summary')
+  <div class="row">
 
-@stop
+    <div class="col-md-12">
 
-@section('right')
+      @include('web::character.includes.menu')
 
-    @include('web::character.includes.menu')
+    </div>
 
-    @yield('character_content')
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-3">
+
+      @include('web::character.includes.summary')
+
+    </div>
+
+    <div class="col-md-9">
+
+      @yield('character_content')
+
+    </div>
+
+  </div>
+
 
 @stop

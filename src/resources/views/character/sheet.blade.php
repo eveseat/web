@@ -101,7 +101,7 @@
 
               <li>
                 {!! img('corporation', $history->corporationID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-                {{ $history->corporationName }} {{ human_diff($history->startDate) }}
+                {{ $history->corporationName  }} {{ human_diff($history->startDate) }}
               </li>
 
             @endforeach
