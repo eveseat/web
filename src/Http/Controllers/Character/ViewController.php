@@ -89,4 +89,21 @@ class ViewController extends Controller
             compact('skills', 'skill_groups'));
     }
 
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param                          $character_id
+     *
+     * @return \Illuminate\View\View
+     */
+    public function getJournal(Request $request, $character_id)
+    {
+
+        $journal = $this->getCharacterWalletJournal(
+            $character_id, 50, $request);
+        $transaction_types = $this->getEveTransactionTypes();
+
+        return view('web::character.journal',
+            compact('journal', 'transaction_types'));
+    }
+
 }

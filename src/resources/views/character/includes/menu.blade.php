@@ -15,9 +15,10 @@
     <li role="presentation" class="@if ($viewname == 'sheet') active @endif">
       <a href="{{ route('character.view.sheet', $summary->characterID) }}">Sheet</a></li>
     <li role="presentation" class="@if ($viewname == 'skills') active @endif">
-      <a href="{{ route('character.view.skills', $summary->characterID) }}">Skills</a> </li>
+      <a href="{{ route('character.view.skills', $summary->characterID) }}">Skills</a></li>
     <li role="presentation"><a href="{{ route('character.view.skills', $summary->characterID) }}">Standings</a></li>
-    <li role="presentation"><a href="{{ route('character.view.skills', $summary->characterID) }}">Wallet Journal</a></li>
+    <li role="presentation" class="@if ($viewname == 'journal') active @endif">
+      <a href="{{ route('character.view.journal', $summary->characterID) }}">Wallet Journal</a></li>
     <li role="presentation"><a href="{{ route('character.view.skills', $summary->characterID) }}">Wallet Transactions</a></li>
   </ul>
 

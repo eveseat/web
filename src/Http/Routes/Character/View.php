@@ -24,6 +24,12 @@ Route::any('/list', [
     'uses' => 'ViewController@getCharacters'
 ]);
 
+Route::get('/view/journal/{character_id}', [
+    'as'         => 'character.view.journal',
+    'middleware' => 'characterbouncer:journal',
+    'uses'       => 'ViewController@getJournal'
+]);
+
 Route::get('/view/sheet/{character_id}', [
     'as'         => 'character.view.sheet',
     'middleware' => 'characterbouncer:sheet',
