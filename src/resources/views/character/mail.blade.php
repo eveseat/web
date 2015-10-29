@@ -11,7 +11,7 @@
     </div>
     <div class="panel-body">
 
-      <table class="table table-condensed table-hover">
+      <table class="table table-condensed table-hover table-responsive">
         <tbody>
         <tr>
           <th>Sent</th>
