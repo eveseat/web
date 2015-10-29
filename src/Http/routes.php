@@ -45,6 +45,15 @@ Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
         // just include it
         include __DIR__ . '/Routes/Home.php';
 
+        // Support Routes
+        Route::group([
+            'namespace' => 'Support',
+            'prefix'    => 'support',
+        ], function () {
+
+            include __DIR__ . '/Routes/Support/List.php';
+        });
+
         // Queue Jobs
         Route::group([
             'namespace' => 'Queue',
@@ -52,7 +61,6 @@ Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
         ], function () {
 
             include __DIR__ . '/Routes/Queue/Status.php';
-
         });
 
         // Api Key Routes

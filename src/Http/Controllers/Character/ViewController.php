@@ -53,6 +53,23 @@ class ViewController extends Controller
     }
 
     /**
+     * @param \Illuminate\Http\Request $request
+     * @param                          $character_id
+     *
+     * @return \Illuminate\View\View
+     */
+    public function getJournal(Request $request, $character_id)
+    {
+
+        $journal = $this->getCharacterWalletJournal(
+            $character_id, 50, $request);
+        $transaction_types = $this->getEveTransactionTypes();
+
+        return view('web::character.journal',
+            compact('journal', 'transaction_types'));
+    }
+
+    /**
      * @param $character_id
      *
      * @return \Illuminate\View\View
@@ -95,15 +112,13 @@ class ViewController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function getJournal(Request $request, $character_id)
+    public function getTransactions(Request $request, $character_id)
     {
 
-        $journal = $this->getCharacterWalletJournal(
+        $transactions = $this->getCharacterWalletTransactions(
             $character_id, 50, $request);
-        $transaction_types = $this->getEveTransactionTypes();
 
-        return view('web::character.journal',
-            compact('journal', 'transaction_types'));
+        return view('web::character.transactions', compact('transactions'));
     }
 
 }
