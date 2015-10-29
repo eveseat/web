@@ -101,7 +101,6 @@
               <th>Type</th>
               <th>Owner1</th>
               <th>Owner2</th>
-              <th>Detail</th>
               <th>Amount</th>
               <th>Balance</th>
             </tr>
@@ -110,7 +109,14 @@
 
               <tr>
                 <td>{{ human_diff($transaction->date) }}</td>
-                <td>{{ $transaction->refTypeName }}</td>
+                <td>
+                  {{ $transaction->refTypeName }}
+                  @if($transaction->argName1)
+                    <i class="fa fa-info-circle pull-right" data-toggle="tooltip"
+                       title="" data-original-title="{{ $transaction->argName1 }}">
+                    </i>
+                  @endif
+                </td>
                 <td>
                   @if($transaction->ownerID1 != 0)
                     {!! img('auto', $transaction->ownerID1, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
@@ -123,13 +129,6 @@
                   @if($transaction->ownerID2 != 0)
                     {!! img('auto', $transaction->ownerID2, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
                     {{ $transaction->ownerName2 }}
-                  @else
-                    n/a
-                  @endif
-                </td>
-                <td>
-                  @if($transaction->argName1)
-                    {{ $transaction->argName1 }}
                   @else
                     n/a
                   @endif

@@ -53,6 +53,20 @@ class ViewController extends Controller
     }
 
     /**
+     * @param $character_id
+     *
+     * @return \Illuminate\View\View
+     */
+    public function getMail($character_id)
+    {
+
+        $mail = $this->getCharacterMail($character_id);
+
+        return view('web::character.mail', compact('mail'));
+
+    }
+
+    /**
      * @param \Illuminate\Http\Request $request
      * @param                          $character_id
      *

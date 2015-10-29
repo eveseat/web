@@ -30,6 +30,12 @@ Route::get('/view/journal/{character_id}', [
     'uses'       => 'ViewController@getJournal'
 ]);
 
+Route::get('/view/mail/{character_id}', [
+    'as'         => 'character.view.mail',
+    'middleware' => 'characterbouncer:mail',
+    'uses'       => 'ViewController@getMail'
+]);
+
 Route::get('/view/sheet/{character_id}', [
     'as'         => 'character.view.sheet',
     'middleware' => 'characterbouncer:sheet',

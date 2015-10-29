@@ -31,3 +31,6 @@ $(document).on("click", "a.confirmlink", function (event) {
 $(document).ready(function() {
     $("img").unveil(100);
 });
+
+// Enable bootstrap popovers
+$("[data-toggle=popover]").popover();
