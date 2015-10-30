@@ -88,6 +88,8 @@ class WebServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__ . '/Config/web.config.php', 'web.config');
         $this->mergeConfigFrom(
+            __DIR__ . '/Config/web.filter.rules.php', 'web.filter.rules');
+        $this->mergeConfigFrom(
             __DIR__ . '/Config/web.permissions.php', 'web.permissions');
     }
 
