@@ -83,6 +83,20 @@ class ViewController extends Controller
     /**
      * @param $character_id
      *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getContacts($character_id)
+    {
+
+        $contacts = collect($this->getCharacterContacts($character_id));
+        $labels = collect($this->getCharacterContactLabels($character_id));
+
+        return view('web::character.contacts', compact('contacts', 'labels'));
+    }
+
+    /**
+     * @param $character_id
+     *
      * @return \Illuminate\View\View
      */
     public function getMail($character_id)
