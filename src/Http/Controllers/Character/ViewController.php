@@ -37,6 +37,20 @@ class ViewController extends Controller
     use CharacterRepository, EveRepository;
 
     /**
+     * @param $character_id
+     *
+     * @return \Illuminate\View\View
+     */
+    public function getAssets($character_id)
+    {
+
+        $assets = collect($this->getCharacterAssets($character_id));
+        // TODO: Asset List Contents
+
+        return view('web::character.assets', compact('assets'));
+    }
+
+    /**
      * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\View\View

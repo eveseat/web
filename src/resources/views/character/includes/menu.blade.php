@@ -1,7 +1,8 @@
 <div style="padding-bottom: 15px;">
 
   <ul class="nav nav-pills">
-    <li role="presentation"><a href="{{ route('character.view.skills', $summary->characterID) }}">Assets</a></li>
+    <li role="presentation" class="@if ($viewname == 'assets') active @endif">
+      <a href="{{ route('character.view.assets', $summary->characterID) }}">Assets</a></li>
     <li role="presentation"><a href="{{ route('character.view.skills', $summary->characterID) }}">Calender</a></li>
     <li role="presentation"><a href="{{ route('character.view.skills', $summary->characterID) }}">Contacts</a></li>
     <li role="presentation"><a href="{{ route('character.view.skills', $summary->characterID) }}">Contracts</a></li>
