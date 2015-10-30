@@ -70,6 +70,19 @@ class ViewController extends Controller
     /**
      * @param $character_id
      *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getCalendar($character_id)
+    {
+
+        $events = $this->getCharacterUpcomingCalendarEvents($character_id);
+
+        return view('web::character.calendar', compact('events'));
+    }
+
+    /**
+     * @param $character_id
+     *
      * @return \Illuminate\View\View
      */
     public function getMail($character_id)

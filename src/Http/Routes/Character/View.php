@@ -30,6 +30,12 @@ Route::get('/view/assets/{character_id}', [
     'uses'       => 'ViewController@getAssets'
 ]);
 
+Route::get('/view/calendar/{character_id}', [
+    'as'         => 'character.view.calendar',
+    'middleware' => 'characterbouncer:calendar',
+    'uses'       => 'ViewController@getCalendar'
+]);
+
 Route::get('/view/journal/{character_id}', [
     'as'         => 'character.view.journal',
     'middleware' => 'characterbouncer:journal',

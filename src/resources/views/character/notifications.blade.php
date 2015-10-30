@@ -7,7 +7,7 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">Heading</h3>
+      <h3 class="panel-title">Notifications</h3>
     </div>
     <div class="panel-body">
 
@@ -44,7 +44,6 @@
       </table>
 
     </div>
-    <div class="panel-footer">Footer</div>
   </div>
 
 @stop
