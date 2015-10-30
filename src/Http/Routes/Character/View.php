@@ -42,6 +42,12 @@ Route::get('/view/mail/{character_id}', [
     'uses'       => 'ViewController@getMail'
 ]);
 
+Route::get('/view/notifications/{character_id}', [
+    'as'         => 'character.view.notifications',
+    'middleware' => 'characterbouncer:notifications',
+    'uses'       => 'ViewController@getNotifications'
+]);
+
 Route::get('/view/sheet/{character_id}', [
     'as'         => 'character.view.sheet',
     'middleware' => 'characterbouncer:sheet',

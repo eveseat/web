@@ -45,6 +45,7 @@ class ViewController extends Controller
     {
 
         $assets = collect($this->getCharacterAssets($character_id));
+
         // TODO: Asset List Contents
 
         return view('web::character.assets', compact('assets'));
@@ -78,6 +79,19 @@ class ViewController extends Controller
 
         return view('web::character.mail', compact('mail'));
 
+    }
+
+    /**
+     * @param $character_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getNotifications($character_id)
+    {
+
+        $notifications = $this->getCharacterNotifications($character_id);
+
+        return view('web::character.notifications', compact('notifications'));
     }
 
     /**
