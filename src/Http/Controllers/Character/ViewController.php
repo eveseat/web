@@ -97,6 +97,20 @@ class ViewController extends Controller
     /**
      * @param $character_id
      *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getKillmails($character_id)
+    {
+
+        $killmails = $this->getCharacterKillmails($character_id);
+
+        return view('web::character.killmails', compact('killmails'));
+
+    }
+
+    /**
+     * @param $character_id
+     *
      * @return \Illuminate\View\View
      */
     public function getMail($character_id)

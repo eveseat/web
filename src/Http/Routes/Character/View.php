@@ -42,6 +42,12 @@ Route::get('/view/contacts/{character_id}', [
     'uses'       => 'ViewController@getContacts'
 ]);
 
+Route::get('/view/killmails/{character_id}', [
+    'as'         => 'character.view.killmails',
+    'middleware' => 'characterbouncer:killmails',
+    'uses'       => 'ViewController@getKillmails'
+]);
+
 Route::get('/view/journal/{character_id}', [
     'as'         => 'character.view.journal',
     'middleware' => 'characterbouncer:journal',
