@@ -7,7 +7,8 @@
       <a href="{{ route('character.view.calendar', $summary->characterID) }}">Calender</a></li>
     <li role="presentation" class="@if ($viewname == 'contacts') active @endif">
       <a href="{{ route('character.view.contacts', $summary->characterID) }}">Contacts</a></li>
-    <li role="presentation"><a href="{{ route('character.view.skills', $summary->characterID) }}">Contracts</a></li>
+    <li role="presentation" class="@if ($viewname == 'contracts') active @endif">
+      <a href="{{ route('character.view.contracts', $summary->characterID) }}">Contracts</a></li>
     <li role="presentation"><a href="{{ route('character.view.skills', $summary->characterID) }}">Industry</a></li>
     <li role="presentation" class="@if ($viewname == 'killmails') active @endif">
       <a href="{{ route('character.view.killmails', $summary->characterID) }}">Killmails</a></li>
