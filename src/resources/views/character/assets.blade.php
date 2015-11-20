@@ -11,56 +11,52 @@
     </div>
     <div class="panel-body">
 
+      <table class="table table-condensed table-hover table-responsive">
+        <tbody>
+        <tr>
+          <th>Qty</th>
+          <th>Type</th>
+          <th>Volume</th>
+          <th>Group</th>
+        </tr>
+
       @foreach($assets->unique('location')->groupBy('location') as $location => $data)
 
-        <div class="box box-solid">
-          <div class="box-header with-border">
-            <h3 class="box-title">
-              {{ $location }}
-            </h3>
+        <tr class="active">
+          <td colspan="4">
+            <b>{{ $location }}</b>
             <span class="pull-right">
+              <i>
               {{ count($assets->where('locationID', $data[0]->locationID)) }} items taking
               {{ number_metric($assets
                   ->where('locationID', $data[0]->locationID)->map(function($item) {
                     return $item->quantity * $item->volume;
                   })->sum()) }} m&sup3;
+              </i>
             </span>
-          </div>
-          <div class="box-body">
+          </td>
+        </tr>
 
-            <table class="table table-condensed table-hover table-responsive">
-              <tbody>
-              <tr>
-                <th>Qty</th>
-                <th>Type</th>
-                <th>Volume</th>
-                <th>Group</th>
-              </tr>
+        @foreach($assets->where('locationID', $data[0]->locationID) as $asset)
 
-              @foreach($assets->where('locationID', $data[0]->locationID) as $asset)
+          <tr>
+            <td>{{ $asset->quantity }}</td>
+            <td>
+              {!! img('type', $asset->typeID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
+              {{ $asset->typeName }}
+            </td>
+            <td>{{ number_metric($asset->quantity * $asset->volume) }} m&sup3;</td>
+            <td>{{ $asset->groupName }}</td>
+          </tr>
 
-                <tr>
-                  <td>{{ $asset->quantity }}</td>
-                  <td>
-                    {!! img('type', $asset->typeID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-                    {{ $asset->typeName }}
-                  </td>
-                  <td>{{ number_metric($asset->quantity * $asset->volume) }} m&sup3;</td>
-                  <td>{{ $asset->groupName }}</td>
-                </tr>
-
-              @endforeach
-
-              </tbody>
-            </table>
-
-          </div><!-- /.box-body -->
-        </div>
+        @endforeach
 
       @endforeach
 
-    </div>
-    <div class="panel-footer">Footer</div>
+      </tbody>
+      </table>
+
+    </div><!-- /.box-body -->
   </div>
 
 @stop
