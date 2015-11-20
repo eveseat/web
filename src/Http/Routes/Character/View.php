@@ -48,6 +48,12 @@ Route::get('/view/contracts/{character_id}', [
     'uses'       => 'ViewController@getContracts'
 ]);
 
+Route::get('/view/industry/{character_id}', [
+    'as'         => 'character.view.industry',
+    'middleware' => 'characterbouncer:industry',
+    'uses'       => 'ViewController@getIndustry'
+]);
+
 Route::get('/view/killmails/{character_id}', [
     'as'         => 'character.view.killmails',
     'middleware' => 'characterbouncer:killmails',
