@@ -53,7 +53,10 @@
         @foreach($key->characters as $character)
           <li>
             {!! img('character', $character->characterID, 128, ['class' => 'img-circle'])  !!}
-            <a class="text-muted" href="#">{{ $character->characterName }}</a>
+            <a class="text-muted"
+               href="{{ route('character.view.sheet', ['character_id' => $character->characterID]) }}">
+              {{ $character->characterName }}
+            </a>
             <span class="users-list-date">{{ $character->corporationName }}</span>
           </li>
         @endforeach
