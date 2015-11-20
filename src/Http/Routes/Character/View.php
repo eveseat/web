@@ -54,22 +54,28 @@ Route::get('/view/industry/{character_id}', [
     'uses'       => 'ViewController@getIndustry'
 ]);
 
-Route::get('/view/killmails/{character_id}', [
-    'as'         => 'character.view.killmails',
-    'middleware' => 'characterbouncer:killmails',
-    'uses'       => 'ViewController@getKillmails'
-]);
-
 Route::get('/view/journal/{character_id}', [
     'as'         => 'character.view.journal',
     'middleware' => 'characterbouncer:journal',
     'uses'       => 'ViewController@getJournal'
 ]);
 
+Route::get('/view/killmails/{character_id}', [
+    'as'         => 'character.view.killmails',
+    'middleware' => 'characterbouncer:killmails',
+    'uses'       => 'ViewController@getKillmails'
+]);
+
 Route::get('/view/mail/{character_id}', [
     'as'         => 'character.view.mail',
     'middleware' => 'characterbouncer:mail',
     'uses'       => 'ViewController@getMail'
+]);
+
+Route::get('/view/market/{character_id}', [
+    'as'         => 'character.view.market',
+    'middleware' => 'characterbouncer:market',
+    'uses'       => 'ViewController@getMarket'
 ]);
 
 Route::get('/view/notifications/{character_id}', [

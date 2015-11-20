@@ -154,6 +154,21 @@ class ViewController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+    public function getMarket($character_id)
+    {
+
+        $orders = collect($this->getCharacterMarketOrders($character_id));
+        $states = $this->getEveMarketOrderStates();
+
+        return view('web::character.market', compact('orders', 'states'));
+
+    }
+
+    /**
+     * @param $character_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getNotifications($character_id)
     {
 
