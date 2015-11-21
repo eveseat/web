@@ -193,6 +193,20 @@ class ViewController extends Controller
     }
 
     /**
+     * @param $character_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getResearch($character_id)
+    {
+
+        $agents = $this->getCharacterResearchAgents($character_id);
+
+        return view('web::character.research', compact('agents'));
+
+    }
+
+    /**
      * @param \Illuminate\Http\Request $request
      * @param                          $character_id
      *

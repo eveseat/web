@@ -90,6 +90,12 @@ Route::get('/view/pi/{character_id}', [
     'uses'       => 'ViewController@getPi'
 ]);
 
+Route::get('/view/research/{character_id}', [
+    'as'         => 'character.view.research',
+    'middleware' => 'characterbouncer:research',
+    'uses'       => 'ViewController@getResearch'
+]);
+
 Route::get('/view/sheet/{character_id}', [
     'as'         => 'character.view.sheet',
     'middleware' => 'characterbouncer:sheet',
