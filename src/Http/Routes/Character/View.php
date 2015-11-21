@@ -84,6 +84,12 @@ Route::get('/view/notifications/{character_id}', [
     'uses'       => 'ViewController@getNotifications'
 ]);
 
+Route::get('/view/pi/{character_id}', [
+    'as'         => 'character.view.pi',
+    'middleware' => 'characterbouncer:pi',
+    'uses'       => 'ViewController@getPi'
+]);
+
 Route::get('/view/sheet/{character_id}', [
     'as'         => 'character.view.sheet',
     'middleware' => 'characterbouncer:sheet',

@@ -178,6 +178,21 @@ class ViewController extends Controller
     }
 
     /**
+     * @param $character_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getPi($character_id)
+    {
+
+        $colonies = $this->getCharacterPlanetaryColonies($character_id);
+
+        // TODO: Complete the Links and stuff™
+
+        return view('web::character.pi', compact('colonies'));
+    }
+
+    /**
      * @param \Illuminate\Http\Request $request
      * @param                          $character_id
      *

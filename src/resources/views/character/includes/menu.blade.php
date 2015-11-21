@@ -19,7 +19,8 @@
       <a href="{{ route('character.view.market', $summary->characterID) }}">Market</a></li>
     <li role="presentation" class="@if ($viewname == 'notifications') active @endif">
       <a href="{{ route('character.view.notifications', $summary->characterID) }}">Notifications</a></li>
-    <li role="presentation"><a href="{{ route('character.view.skills', $summary->characterID) }}">PI</a></li>
+    <li role="presentation" class="@if ($viewname == 'pi') active @endif">
+      <a href="{{ route('character.view.pi', $summary->characterID) }}">PI</a></li>
     <li role="presentation"><a href="{{ route('character.view.skills', $summary->characterID) }}">Research</a></li>
     <li role="presentation" class="@if ($viewname == 'sheet') active @endif">
       <a href="{{ route('character.view.sheet', $summary->characterID) }}">Sheet</a></li>
