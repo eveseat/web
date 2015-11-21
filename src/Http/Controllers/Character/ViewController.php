@@ -261,6 +261,19 @@ class ViewController extends Controller
     }
 
     /**
+     * @param $character_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getStandings($character_id)
+    {
+
+        $standings = $this->getCharacterStandings($character_id);
+
+        return view('web::character.standings', compact('standings'));
+    }
+
+    /**
      * @param \Illuminate\Http\Request $request
      * @param                          $character_id
      *

@@ -108,6 +108,12 @@ Route::get('/view/skills/{character_id}', [
     'uses'       => 'ViewController@getSkills'
 ]);
 
+Route::get('/view/standings/{character_id}', [
+    'as'         => 'character.view.standings',
+    'middleware' => 'characterbouncer:standings',
+    'uses'       => 'ViewController@getStandings'
+]);
+
 Route::get('/view/transactions/{character_id}', [
     'as'         => 'character.view.transactions',
     'middleware' => 'characterbouncer:transactions',

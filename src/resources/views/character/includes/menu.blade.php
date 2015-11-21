@@ -27,7 +27,8 @@
       <a href="{{ route('character.view.sheet', $summary->characterID) }}">Sheet</a></li>
     <li role="presentation" class="@if ($viewname == 'skills') active @endif">
       <a href="{{ route('character.view.skills', $summary->characterID) }}">Skills</a></li>
-    <li role="presentation"><a href="{{ route('character.view.skills', $summary->characterID) }}">Standings</a></li>
+    <li role="presentation" class="@if ($viewname == 'standings') active @endif">
+      <a href="{{ route('character.view.standings', $summary->characterID) }}">Standings</a></li>
     <li role="presentation" class="@if ($viewname == 'journal') active @endif">
       <a href="{{ route('character.view.journal', $summary->characterID) }}">Wallet Journal</a></li>
     <li role="presentation" class="@if ($viewname == 'transactions') active @endif">
