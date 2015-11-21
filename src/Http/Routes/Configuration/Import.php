@@ -19,25 +19,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-return [
+Route::get('/', [
+    'as'   => 'configuration.import.list',
+    'uses' => 'ImportController@getIndex'
+]);
 
-    'home'           => 'Home',
-
-    // Key Mangement
-    'key_management' => 'API Key Management',
-    'add_api_key'    => 'Add a EVE API Key',
-    'list_keys'      => 'List EVE API Keys',
-
-    // Characters
-    'characters'     => 'Characters',
-    'all_char'       => 'All Characters',
-
-    // Configuration
-    'configuration'  => 'Configuration',
-    'users'          => 'Users',
-    'access'         => 'Access Management',
-    'other'          => 'Other',
-    'security_logs'  => 'Security Logs',
-    'import'         => 'Import API Keys'
-
-];
+Route::post('/csv', [
+    'as'   => 'configuration.import.csv',
+    'uses' => 'ImportController@postCsv'
+]);

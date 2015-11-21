@@ -117,10 +117,16 @@ class Sidebar
                         'route' => route('configuration.access.roles')
                     ],
                     [   // Security
-                    'name'  => trans('web::sidebar.security_logs'),
-                    'icon'  => 'fa-list',
-                    'route' => route('configuration.security.logs')
-                ]
+                        'name'  => trans('web::sidebar.security_logs'),
+                        'icon'  => 'fa-list',
+                        'route' => route('configuration.security.logs')
+                    ],
+                    [   // Import
+                        'name'  => trans('web::sidebar.import'),
+                        'icon'  => 'fa-upload',
+                        'route' => route('configuration.import.list')
+                    ]
+
                 ]
             ]);
         }

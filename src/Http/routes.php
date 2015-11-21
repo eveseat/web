@@ -108,6 +108,12 @@ Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
                 include __DIR__ . '/Routes/Configuration/Security.php';
             });
 
+            // Import
+            Route::group(['prefix' => 'import'], function () {
+
+                include __DIR__ . '/Routes/Configuration/Import.php';
+            });
+
         });
 
     });
