@@ -19,29 +19,30 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-return [
+namespace Seat\Web\Http\Controllers\Corporation;
 
-    'home'           => 'Home',
+use App\Http\Controllers\Controller;
+use Seat\Services\Repositories\Corporation\CorporationRepository;
 
-    // Key Mangement
-    'key_management' => 'API Key Management',
-    'add_api_key'    => 'Add a EVE API Key',
-    'list_keys'      => 'List EVE API Keys',
+/**
+ * Class ViewController
+ * @package Seat\Web\Http\Controllers\Corporation
+ */
+class ViewController extends Controller
+{
 
-    // Characters
-    'characters'     => 'Characters',
-    'all_char'       => 'All Characters',
+    use CorporationRepository;
 
-    // Corporations
-    'corporations'   => 'Corporations',
-    'all_corp'       => 'All Corporations',
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getCorporations()
+    {
 
-    // Configuration
-    'configuration'  => 'Configuration',
-    'users'          => 'Users',
-    'access'         => 'Access Management',
-    'other'          => 'Other',
-    'security_logs'  => 'Security Logs',
-    'import'         => 'Import API Keys'
+        $corporations = $this->getAllCorporationsWithAffiliationsAndFilters();
 
-];
+        return view('web::corporation.list', compact('corporations'));
+
+    }
+
+}

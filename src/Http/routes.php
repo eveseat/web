@@ -72,6 +72,15 @@ Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
             include __DIR__ . '/Routes/Api/Key.php';
         });
 
+        // Corporation Routes
+        Route::group([
+            'namespace' => 'Corporation',
+            'prefix'    => 'corporation'
+        ], function () {
+
+            include __DIR__ . '/Routes/Corporation/View.php';
+        });
+
         // Character Routes
         Route::group([
             'namespace' => 'Character',

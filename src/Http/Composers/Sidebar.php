@@ -83,6 +83,20 @@ class Sidebar
             ]
         ]);
 
+        // Corporation
+        array_push($menu, [
+            'name'          => trans('web::sidebar.corporations'),
+            'icon'          => 'fa-building',
+            'route_segment' => 'corporation',
+            'entries'       => [
+                [
+                    'name'  => trans('web::sidebar.all_corp'),
+                    'icon'  => 'fa-group',
+                    'route' => route('corporation.list')
+                ]
+            ]
+        ]);
+
         // Character
         array_push($menu, [
             'name'          => trans('web::sidebar.characters'),
