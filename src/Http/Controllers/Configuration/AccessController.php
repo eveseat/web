@@ -40,7 +40,14 @@ class AccessController extends Controller
 {
 
     use Pillow, UserRespository, CharacterRepository,
-        CorporationRepository;
+        CorporationRepository {
+
+        // Resolve the where_filter method conflict that comes from the
+        // Seat\Services\Helpers\Filterable trait that they both use.
+        // Technically, this actually does not mean anything when
+        // looked at from the perspective of the AccessController.
+        CharacterRepository::where_filter insteadof CorporationRepository;
+    }
 
     /**
      * @return \Illuminate\View\View
