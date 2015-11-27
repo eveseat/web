@@ -25,8 +25,10 @@
 
           <tr>
             <td>
-              {!! img('corporation', $corporation->corporationID, 64, ['class' => 'img-circle eve-icon medium-icon']) !!}
-              {{ $corporation->corporationName }}
+              <a href="{{ route('corporation.view.summary', ['corporation_id' => $corporation->corporationID]) }}">
+                {!! img('corporation', $corporation->corporationID, 64, ['class' => 'img-circle eve-icon medium-icon']) !!}
+                {{ $corporation->corporationName }}
+              </a>
             </td>
             <td>
               <a href="{{ route('character.view.sheet', ['character_id' => $corporation->ceoID]) }}">

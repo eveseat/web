@@ -23,3 +23,9 @@ Route::any('/list', [
     'as'   => 'corporation.list',
     'uses' => 'ViewController@getCorporations'
 ]);
+
+Route::get('/view/summary/{corporation_id}', [
+    'as'         => 'corporation.view.summary',
+    'middleware' => 'corporationbouncer:summary',
+    'uses'       => 'ViewController@getSummary'
+]);

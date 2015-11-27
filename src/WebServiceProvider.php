@@ -30,6 +30,7 @@ use Seat\Web\Events\Logout;
 use Seat\Web\Events\SecLog;
 use Seat\Web\Events\Security;
 use Seat\Web\Http\Composers\CharacterSummary;
+use Seat\Web\Http\Composers\CorporationSummary;
 use Seat\Web\Http\Composers\Sidebar;
 use Seat\Web\Http\Composers\User;
 use Seat\Web\Http\Middleware\Authenticate;
@@ -150,6 +151,12 @@ class WebServiceProvider extends ServiceProvider
             'web::character.includes.menu'
         ], CharacterSummary::class);
 
+        // Corporation info composer
+        $this->app['view']->composer([
+            'web::corporation.includes.summary',
+            'web::corporation.includes.menu'
+        ], CorporationSummary::class);
+
     }
 
     /**
@@ -178,7 +185,7 @@ class WebServiceProvider extends ServiceProvider
         // that comes in is authorized
         $router->middleware('bouncer', Bouncer::class);
         $router->middleware('characterbouncer', CharacterBouncer::class);
-        $router->middleware('corporationBouncer', CorporationBouncer::class);
+        $router->middleware('corporationbouncer', CorporationBouncer::class);
         $router->middleware('keybouncer', KeyBouncer::class);
 
     }

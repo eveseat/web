@@ -65,6 +65,7 @@ return [
         'member_tracking',
         'poco',
         'star_bases',
+        'summary',
         'wallet_journal',
         'transactions',
     ],

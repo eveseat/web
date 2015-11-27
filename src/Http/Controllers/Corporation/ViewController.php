@@ -45,4 +45,21 @@ class ViewController extends Controller
 
     }
 
+    /**
+     * @param $corporation_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getSummary($corporation_id)
+    {
+
+        $divisions = $this->getCorporationDivisions($corporation_id);
+        $sheet = $this->getCorporationSheet($corporation_id);
+        $wallet_divisions = $this->getCorporationWalletDivisions($corporation_id);
+
+        return view('web::corporation.summary',
+            compact('divisions', 'sheet', 'wallet_divisions'));
+
+    }
+
 }
