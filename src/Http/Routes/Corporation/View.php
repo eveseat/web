@@ -65,3 +65,9 @@ Route::get('/view/summary/{corporation_id}', [
     'middleware' => 'corporationbouncer:summary',
     'uses'       => 'ViewController@getSummary'
 ]);
+
+Route::get('/view/standings/{corporation_id}', [
+    'as'         => 'corporation.view.standings',
+    'middleware' => 'corporationbouncer:standings',
+    'uses'       => 'ViewController@getStandings'
+]);

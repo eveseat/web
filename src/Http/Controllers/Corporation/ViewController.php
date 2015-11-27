@@ -129,6 +129,19 @@ class ViewController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+    public function getStandings($corporation_id)
+    {
+
+        $standings = $this->getCorporationStandings($corporation_id);
+
+        return view('web::corporation.standings', compact('standings'));
+    }
+
+    /**
+     * @param $corporation_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getSummary($corporation_id)
     {
 
