@@ -47,6 +47,20 @@ class ViewController extends Controller
     }
 
     /**
+     * @param $corporation_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getContacts($corporation_id)
+    {
+
+        $contacts = $this->getCorporationContacts($corporation_id);
+        $labels = $this->getCorporationContactsLabels($corporation_id);
+
+        return view('web::corporation.contacts', compact('contacts', 'labels'));
+    }
+
+    /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getCorporations()
