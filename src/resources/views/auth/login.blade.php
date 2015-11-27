@@ -20,7 +20,7 @@
 
     <div class="box-body">
       <div class="form-group has-feedback">
-        <input type="text" name="email" class="form-control" value="{{ old('email') }}" placeholder="{{ trans('web::auth.username') }}">
+        <input type="text" name="name" class="form-control" value="{{ old('name') }}" placeholder="{{ trans('web::auth.username') }}">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
 

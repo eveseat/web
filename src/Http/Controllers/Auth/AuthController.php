@@ -54,6 +54,14 @@ class AuthController extends Controller
     protected $redirectAfterLogout = '/home';
 
     /**
+     * Set the login username to name instead of the
+     * default which is email
+     *
+     * @var string
+     */
+    protected $username = 'name';
+
+    /**
      * Create a new authentication controller instance.
      */
     public function __construct()
@@ -73,7 +81,7 @@ class AuthController extends Controller
     {
 
         return Validator::make($data, [
-            'name'     => 'required|max:255',
+            'name'     => 'required|max:255|unique:users',
             'email'    => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
         ]);
