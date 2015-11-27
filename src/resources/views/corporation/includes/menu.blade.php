@@ -11,6 +11,8 @@
       <a href="{{ route('corporation.view.industry', $sheet->corporationID) }}">Industry</a></li>
     <li role="presentation" class="@if ($viewname == 'killmails') active @endif">
       <a href="{{ route('corporation.view.killmails', $sheet->corporationID) }}">Killmails</a></li>
+    <li role="presentation" class="@if ($viewname == 'market') active @endif">
+      <a href="{{ route('corporation.view.market', $sheet->corporationID) }}">Market</a></li>
     <li role="presentation" class="@if ($viewname == 'summary') active @endif">
       <a href="{{ route('corporation.view.summary', $sheet->corporationID) }}">Summary</a></li>
   </ul>
