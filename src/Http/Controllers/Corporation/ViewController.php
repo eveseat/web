@@ -157,6 +157,19 @@ class ViewController extends Controller
     }
 
     /**
+     * @param $corporation_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getTracking($corporation_id)
+    {
+
+        $tracking = $this->getCorporationMemberTracking($corporation_id);
+
+        return view('web::corporation.tracking', compact('tracking'));
+    }
+
+    /**
      * @param \Illuminate\Http\Request $request
      * @param                          $corporation_id
      *

@@ -72,6 +72,12 @@ Route::get('/view/standings/{corporation_id}', [
     'uses'       => 'ViewController@getStandings'
 ]);
 
+Route::get('/view/tracking/{corporation_id}', [
+    'as'         => 'corporation.view.tracking',
+    'middleware' => 'corporationbouncer:tracking',
+    'uses'       => 'ViewController@getTracking'
+]);
+
 Route::get('/view/journal/{corporation_id}', [
     'as'         => 'corporation.view.journal',
     'middleware' => 'corporationbouncer:journal',
