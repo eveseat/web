@@ -29,3 +29,9 @@ Route::get('/char/tran/client_names/{character_id}', [
     'middleware' => 'characterbouncer:transactions',
     'uses'       => 'ListController@getCharacterTransactionClientNames'
 ]);
+
+Route::get('/corp/tran/client_names/{corporation_id}', [
+    'as'         => 'support.corp.tran.client_names',
+    'middleware' => 'corporationbouncer:transactions',
+    'uses'       => 'ListController@getCorporationTransactionClientNames'
+]);

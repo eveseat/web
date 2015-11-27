@@ -19,6 +19,8 @@
       <a href="{{ route('corporation.view.standings', $sheet->corporationID) }}">Standings</a></li>
     <li role="presentation" class="@if ($viewname == 'journal') active @endif">
       <a href="{{ route('corporation.view.journal', $sheet->corporationID) }}">Journal</a></li>
+    <li role="presentation" class="@if ($viewname == 'transactions') active @endif">
+      <a href="{{ route('corporation.view.transactions', $sheet->corporationID) }}">Transactions</a></li>
   </ul>
 
 </div>

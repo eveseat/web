@@ -165,12 +165,28 @@ class ViewController extends Controller
     public function getJournal(Request $request, $corporation_id)
     {
 
-        $journal = $this->getCorporationWalletJournal($corporation_id, 50, $request);
+        $journal = $this->getCorporationWalletJournal(
+            $corporation_id, 50, $request);
         $transaction_types = $this->getEveTransactionTypes();
 
         return view('web::corporation.journal',
             compact('journal', 'transaction_types'));
 
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param                          $corporation_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getTransactions(Request $request, $corporation_id)
+    {
+
+        $transactions = $this->getCorporationWalletTransactions(
+            $corporation_id, 50, $request);
+
+        return view('web::corporation.transactions', compact('transactions'));
     }
 
 }

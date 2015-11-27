@@ -25,5 +25,6 @@ return [
     'character_journal' => ['refTypeName'],
     'character_transactions' => ['typeName', 'clientName'],
 
-    'corporation_journal' => ['refTypeName']
+    'corporation_journal' => ['refTypeName'],
+    'corporation_transactions' => ['typeName', 'clientName'],
 ];
