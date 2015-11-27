@@ -60,6 +60,28 @@ Route::get('/view/market/{corporation_id}', [
     'uses'       => 'ViewController@getMarket'
 ]);
 
+Route::group(['prefix' => 'view/security'], function () {
+
+    Route::get('roles/{corporation_id}', [
+        'as'         => 'corporation.view.security.roles',
+        'middleware' => 'corporationbouncer:security',
+        'uses'       => 'SecurityController@getRoles'
+    ]);
+
+    Route::get('titles/{corporation_id}', [
+        'as'         => 'corporation.view.security.titles',
+        'middleware' => 'corporationbouncer:security',
+        'uses'       => 'SecurityController@getTitles'
+    ]);
+
+    Route::get('log/{corporation_id}', [
+        'as'         => 'corporation.view.security.log',
+        'middleware' => 'corporationbouncer:security',
+        'uses'       => 'SecurityController@getLog'
+    ]);
+
+});
+
 Route::get('/view/summary/{corporation_id}', [
     'as'         => 'corporation.view.summary',
     'middleware' => 'corporationbouncer:summary',

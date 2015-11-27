@@ -154,7 +154,8 @@ class WebServiceProvider extends ServiceProvider
         // Corporation info composer
         $this->app['view']->composer([
             'web::corporation.includes.summary',
-            'web::corporation.includes.menu'
+            'web::corporation.includes.menu',
+            'web::corporation.security.includes.menu'
         ], CorporationSummary::class);
 
     }
