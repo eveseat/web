@@ -90,6 +90,19 @@ class ViewController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+    public function getIndustry($corporation_id)
+    {
+
+        $jobs = $this->getCorporationIndustry($corporation_id);
+
+        return view('web::corporation.industry', compact('jobs'));
+    }
+
+    /**
+     * @param $corporation_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getSummary($corporation_id)
     {
 

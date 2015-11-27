@@ -7,6 +7,8 @@
       <a href="{{ route('corporation.view.contacts', $sheet->corporationID) }}">Contacts</a></li>
     <li role="presentation" class="@if ($viewname == 'contracts') active @endif">
       <a href="{{ route('corporation.view.contracts', $sheet->corporationID) }}">Contracts</a></li>
+    <li role="presentation" class="@if ($viewname == 'industry') active @endif">
+      <a href="{{ route('corporation.view.industry', $sheet->corporationID) }}">Industry</a></li>
     <li role="presentation" class="@if ($viewname == 'summary') active @endif">
       <a href="{{ route('corporation.view.summary', $sheet->corporationID) }}">Summary</a></li>
   </ul>
