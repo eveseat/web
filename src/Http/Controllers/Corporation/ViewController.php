@@ -34,6 +34,19 @@ class ViewController extends Controller
     use CorporationRepository;
 
     /**
+     * @param $corporation_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getAssets($corporation_id)
+    {
+
+        $assets = collect($this->getCorporationAssets($corporation_id));
+
+        return view('web::corporation.assets', compact('assets'));
+    }
+
+    /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getCorporations()
