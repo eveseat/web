@@ -85,11 +85,14 @@
           <tr>
             <td>
               <a href="{{ route('character.view.sheet', ['character_id' => $character->characterID]) }}">
-                {!! img('character', $character->characterID, 64, ['class' => 'img-circle eve-icon medium-icon']) !!}
+                {!! img('character', $character->characterID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                 {{ $character->characterName }}
               </a>
             </td>
-            <td>{{ $character->corporationName }}</td>
+            <td>
+              {!! img('corporation', $character->corporationID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+              {{ $character->corporationName }}
+            </td>
             <td>{{ $character->lastKnownLocation }}</td>
           </tr>
 
