@@ -1,7 +1,7 @@
 <header class="main-header">
 
   <!-- Logo -->
-  <a href="index2.html" class="logo">
+  <a href="{{ route('home') }}" class="logo">
     <span class="logo-mini"><b>S</b>T</span>
     <span class="logo-lg">S<b>e</b>AT</span>
   </a>
@@ -56,18 +56,6 @@
                 {{ $user->name }}
                 <small>Joined: {{ human_diff($user->created_at) }} </small>
               </p>
-            </li>
-            <!-- Menu Body -->
-            <li class="user-body">
-              <div class="col-xs-4 text-center">
-                <a href="#">Followers</a>
-              </div>
-              <div class="col-xs-4 text-center">
-                <a href="#">Sales</a>
-              </div>
-              <div class="col-xs-4 text-center">
-                <a href="#">Friends</a>
-              </div>
             </li>
             <!-- Menu Footer-->
             <li class="user-footer">
