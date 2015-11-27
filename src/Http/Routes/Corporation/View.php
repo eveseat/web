@@ -48,6 +48,12 @@ Route::get('/view/industry/{corporation_id}', [
     'uses'       => 'ViewController@getIndustry'
 ]);
 
+Route::get('/view/killmails/{corporation_id}', [
+    'as'         => 'corporation.view.killmails',
+    'middleware' => 'corporationbouncer:killmails',
+    'uses'       => 'ViewController@getKillmails'
+]);
+
 Route::get('/view/summary/{corporation_id}', [
     'as'         => 'corporation.view.summary',
     'middleware' => 'corporationbouncer:summary',

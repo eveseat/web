@@ -103,6 +103,19 @@ class ViewController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+    public function getKillmails($corporation_id)
+    {
+
+        $killmails = $this->getCorporationKillmails($corporation_id);
+
+        return view('web::corporation.killmails', compact('killmails'));
+    }
+
+    /**
+     * @param $corporation_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getSummary($corporation_id)
     {
 
