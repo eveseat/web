@@ -71,3 +71,9 @@ Route::get('/view/standings/{corporation_id}', [
     'middleware' => 'corporationbouncer:standings',
     'uses'       => 'ViewController@getStandings'
 ]);
+
+Route::get('/view/journal/{corporation_id}', [
+    'as'         => 'corporation.view.journal',
+    'middleware' => 'corporationbouncer:journal',
+    'uses'       => 'ViewController@getJournal'
+]);

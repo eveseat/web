@@ -23,5 +23,7 @@ return [
 
     'characters' => ['corporationName'],
     'character_journal' => ['refTypeName'],
-    'character_transactions' => ['typeName', 'clientName']
+    'character_transactions' => ['typeName', 'clientName'],
+
+    'corporation_journal' => ['refTypeName']
 ];

@@ -22,7 +22,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Http\Controllers\Corporation;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Seat\Services\Repositories\Corporation\CorporationRepository;
+use Seat\Services\Repositories\Eve\EveRepository;
 
 /**
  * Class ViewController
@@ -31,7 +33,7 @@ use Seat\Services\Repositories\Corporation\CorporationRepository;
 class ViewController extends Controller
 {
 
-    use CorporationRepository;
+    use CorporationRepository, EveRepository;
 
     /**
      * @param $corporation_id
@@ -151,6 +153,23 @@ class ViewController extends Controller
 
         return view('web::corporation.summary',
             compact('divisions', 'sheet', 'wallet_divisions'));
+
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param                          $corporation_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getJournal(Request $request, $corporation_id)
+    {
+
+        $journal = $this->getCorporationWalletJournal($corporation_id, 50, $request);
+        $transaction_types = $this->getEveTransactionTypes();
+
+        return view('web::corporation.journal',
+            compact('journal', 'transaction_types'));
 
     }
 
