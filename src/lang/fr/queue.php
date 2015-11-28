@@ -22,39 +22,39 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 return [
 
     'queue_manage'       => "Gestion de la fil d'attente",
-    'total_jobs'         => 'Nb. processus total',
-    'queued_jobs'        => "Nb. processus dans la fil d'attente",
-    'working_jobs'       => 'Nb. processus en cours',
-    'error_jobs'         => 'Nb. processus en Èchec',
+    'total_jobs'         => 'Nb. t√¢che total',
+    'queued_jobs'        => "Nb. t√¢che dans la fil d'attente",
+    'working_jobs'       => 'Nb. t√¢che en cours',
+    'error_jobs'         => 'Nb. t√¢che en √©chec',
 
-    'complete'           => ' terminÈ.',
+    'complete'           => ' termin√©.',
     'history'            => 'Historique',
-    'submit_jobs'        => 'Processus soumis',
-    'job_submit_desc'    => 'Ces bouttons vous permettent de planifier manuellement des processus. La commande ' .
-        'lancÈe est exactement la mÍme que celle que vous lanceriez en ligne de commande ou par le planificateur.',
-    'no_working'         => "Il n'y a actuellement aucun processus en cours",
-    'no_queue'           => "Il n'y a actuellement aucun processus dans la fil d'attente",
-    'job_error_detail'   => "DÈtails sur l'erreur du processus",
-    'error_details_desc' => "Il s'agit d'un traÁage complet pour l'erreur de ce processus. Si Áa ne vous parle pas, " .
-        "ou qu'un dÈveloppeur vous l'a demandÈ, veuillez copier l'ensemble de la section ci-dessous " .
-        'et collez l‡ sur un site tel que pastebin puis transmettez le lien.',
-    'full_job_error'     => "DÈtails complet sur l'erreur du processus",
+    'submit_jobs'        => 'Envoyer une t√¢che',
+    'job_submit_desc'    => 'Ces bouttons vous permettent de planifier manuellement des t√¢ches. La commande ' .
+        'lanc√©e est exactement la m√™me que celle que vous lanceriez en ligne de commande ou par le planificateur.',
+    'no_working'         => "Il n'y a actuellement aucune t√¢che en cours",
+    'no_queue'           => "Il n'y a actuellement aucune t√¢che dans la fil d'attente",
+    'job_error_detail'   => "D√©tails sur l'erreur du processus",
+    'error_details_desc' => "Il s'agit d'un tra√ßage complet pour l'erreur de ce processus. Si √ßa ne vous parle pas, " .
+        "ou qu'un d√©veloppeur vous l'a demand√©, veuillez copier l'ensemble de la section ci-dessous " .
+        'et collez l√† sur un site tel que pastebin puis transmettez le lien.',
+    'full_job_error'     => "D√©tails complet sur l'erreur de la t√¢che",
 
-    'job_id'             => 'ID du processus',
+    'job_id'             => 'ID de la t√¢che',
     'api'                => 'API',
     'scope'              => 'Cadre',
-    'status'             => '…tat',
+    'status'             => '√âtat',
     'actions'            => 'Actions',
-    'owner_id'           => 'ID du processus hÙte',
+    'owner_id'           => 'ID du processus h√¥te',
     'clear_all_errors'   => 'Vider toutes les erreurs',
-    'created'            => 'CrÈe',
-    'updated'            => 'Mis ‡ jour',
-    'output'             => 'RÈsultat',
-    'last_output'        => 'Dernier rÈsultat',
+    'created'            => 'Cr√©e',
+    'updated'            => 'Mis √† jour',
+    'output'             => 'R√©sultat',
+    'last_output'        => 'Dernier r√©sultat',
     'view_full'          => "Voir l'ensemble",
     'no_errors'          => "Il n'existe aucunes erreurs",
     'clear_all_history'  => 'Vider tous les historiques',
-    'job_history'        => 'Historique des processus',
-    'no_history'         => "Il n'y a pas d'historique de processus"
+    'job_history'        => 'Historique des t√¢ches',
+    'no_history'         => "Il n'y a pas d'historique des t√¢ches"
 
 ];

@@ -23,20 +23,20 @@ return [
 
     'access_mangement'              => "Gestion des droits",
 
-    'quick_add_role'                => "Ajout rapide de rÙle",
-    'role_name'                     => "Nom du rÙle",
-    'add_new_role'                  => "Ajouter un rÙle",
-    'available_roles'               => "RÙles disponibles",
+    'quick_add_role'                => "Ajout rapide de r√¥le",
+    'role_name'                     => "Nom du r√¥le",
+    'add_new_role'                  => "Ajouter un r√¥le",
+    'available_roles'               => "R√¥les disponibles",
 
     'quick_add_user'                => "Ajout rapide d'utilisateur",
     'add_new_user'                  => "Ajouter un utilisateur",
 
-    'edit_role'                     => "Modifier le rÙle",
+    'edit_role'                     => "Modifier le r√¥le",
     'available_permissions'         => "Autorisations disponibles",
     'grant_permissions'             => "Ajouter des autorisations",
     'current_permissions'           => "Autorisations actuelles",
     'has_superuser'                 => "Est administrateur",
-    'permission_inherit'            => "HÈriter de toutes les autorisations",
+    'permission_inherit'            => "H√©riter de toutes les autorisations",
 
     'available_corporations'        => "Corporations disponibles",
     'available_characters'          => "Personnages disponibles",
@@ -48,38 +48,38 @@ return [
     'add_users'                     => "Ajouter des utilisateurs",
     'current_users'                 => "Utilisateurs actuelles",
 
-    'select_item_add'               => "Choisissez un ÈlÈment ‡ ajouter",
-    'last_login'                    => "DerniËre connexion",
+    'select_item_add'               => "Choisissez un √©l√©ment √† ajouter",
+    'last_login'                    => "Derni√®re connexion",
 
     'impersonate'                   => "Incarner",
 
     'edit_user'                     => "Modifier le compte",
     'activate_user'                 => "Activer le compte",
-    'deactivate_user'               => "DÈsactiver le compte",
-    'account_status_change'         => "Le statut du compte a ÈtÈ modifiÈ",
+    'deactivate_user'               => "D√©sactiver le compte",
+    'account_status_change'         => "Le statut du compte a √©t√© modifi√©",
 
     'user_agent'                    => 'User Agent String',
     'login_history'                 => "Historique de connexion",
 
-    'role_summary'                  => "RÈsumÈ des rÙles",
-    'user_updated'                  => "Le compte a ÈtÈ modifiÈ",
-    'user_deleted'                  => "Le compte a ÈtÈ supprimÈ",
+    'role_summary'                  => "R√©sum√© des r√¥les",
+    'user_updated'                  => "Le compte a √©t√© modifi√©",
+    'user_deleted'                  => "Le compte a √©t√© supprim√©",
     'self_delete_warning'           => "Vous ne pouvez pas supprimer votre propre compte",
     'impersonating'                 => "Incarner :user",
-    'user_created'                  => 'Compte crÈe',
+    'user_created'                  => 'Compte cr√©e',
 
 
-    'unauthorized_request'          => 'RequÍte non autorisÈe',
-    'unauthorized_request_logged'   => 'Cette tentative a ÈtÈ enregistrÈe dans les journaux.',
+    'unauthorized_request'          => 'Requ√™te non autoris√©e',
+    'unauthorized_request_logged'   => 'Cette tentative a √©t√© enregistr√©e dans les journaux.',
 
     // Flash messages in Configuration/AccessController
-    'role_added'                    => "Le rÙle a ÈtÈ ajoutÈ",
-    'role_removed'                  => "Le rÙle a ÈtÈ supprimÈ",
-    'permissions_granted'           => "L'autorisation a ÈtÈ accordÈe",
-    'permission_revoked'            => "L'autorisation a ÈtÈ rÈvoquÈe",
-    'user_added'                    => "Les utilisateurs ont ÈtÈ ajoutÈs ‡ ce rÙle",
-    'user_removed'                  => "L'utilisateur a ÈtÈ retirÈ de ce rÙle",
-    'affiliations_added'            => "Les affiliations ont ÈtÈ ajoutÈes ‡ ce rÙle",
-    'affiliation_removed'           => "L'affiliations ont ÈtÈ retirÈes de ce rÙle"
+    'role_added'                    => "Le r√¥le a √©t√© ajout√©",
+    'role_removed'                  => "Le r√¥le a √©t√© supprim√©",
+    'permissions_granted'           => "L'autorisation a √©t√© accord√©e",
+    'permission_revoked'            => "L'autorisation a √©t√© r√©voqu√©e",
+    'user_added'                    => "Les utilisateurs ont √©t√© ajout√©s √† ce r√¥le",
+    'user_removed'                  => "L'utilisateur a √©t√© retir√© de ce r√¥le",
+    'affiliations_added'            => "Les affiliations ont √©t√© ajout√©es √† ce r√¥le",
+    'affiliation_removed'           => "L'affiliations ont √©t√© retir√©es de ce r√¥le"
 
 ];

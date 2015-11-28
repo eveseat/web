@@ -32,7 +32,7 @@ return [
     |
     */
 
-    'previous' => "&laquo; Précédent",
+    'previous' => "&laquo; PrÃ©cÃ©dent",
     'next'     => "Suivant &raquo;",
 
 ];

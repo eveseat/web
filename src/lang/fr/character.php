@@ -24,5 +24,5 @@ return [
     'character'        => 'personnage|personnages',
     'corporation'      => 'Corporation',
     'corporation_name' => 'Nom de la corporation',
-    'last_location'    => 'DerniËre position connue'
+    'last_location'    => 'Derni√®re position connue'
 ];

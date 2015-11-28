@@ -20,8 +20,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 */
 
 return [
-    'security_logs' => 'Journaux de sécurité',
+    'security_logs' => 'Journaux de sÃ©curitÃ©',
     'user'          => 'Utilisateur',
-    'category'      => 'Catégorie',
+    'category'      => 'CatÃ©gorie',
     'message'       => 'Message'
 ];

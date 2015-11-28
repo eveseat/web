@@ -27,7 +27,7 @@ return [
     'password'          => 'mot de passe|mots de passe',
     'password_confirm'  => 'confirmation du mot de passe',
     'email'             => 'adresse mail',
-    'role'              => 'rôle|rôles',
+    'role'              => 'rÃ´le|rÃ´les',
     'permission'        => 'autorisation|autorisations',
     'affiliation'       => 'relation|relations',
 
@@ -35,11 +35,11 @@ return [
     'add'               => 'ajouter',
     'remove'            => 'retirer',
     'delete'            => 'supprimer',
-    'detail'            => 'détail|détails',
+    'detail'            => 'dÃ©tail|dÃ©tails',
 
-    'status'            => 'statut|statuts',
+    'status'            => 'Ã©tat|Ã©tats',
     'from'              => 'de',
-    'key'               => 'clé|clés',
+    'key'               => 'clÃ©|clÃ©s',
 
     'date'             => 'date|dates',
     'source'           => 'source|sources',
@@ -49,11 +49,11 @@ return [
     'note'             => 'note',
     'id'               => 'id|ids',
     'type'             => 'type|types',
-    'expire'           => 'expiré',
+    'expire'           => 'expire',
     'unknown'          => 'inconnu',
     'never'            => 'jamais',
-    'enabled'          => 'activé',
-    'disabled'         => 'désactivé',
+    'enabled'          => 'activÃ©',
+    'disabled'         => 'dÃ©sactivÃ©',
 
     'view'             => 'vue|vues',
     'filter'           => 'filtre|filtres',

@@ -21,28 +21,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 return [
 
-    'home'           => 'Accueil',
-
-    // Key Mangement
-    'key_management' => 'Gestion clé API',
-    'add_api_key'    => 'Ajouter une clé API EVE',
-    'list_keys'      => 'Liste des clés API EVE',
-
-    // Characters
-    'characters'     => 'Personnages',
-    'all_char'       => 'Tous les personnages',
-
-    // Corporations
-    'corporations'   => 'Corporations',
-    'all_corp'       => 'Toutes les corporations',
-
-    // Configuration
-    'configuration'  => 'Configuration',
-    'users'          => 'Utilisateurs',
-    'access'         => 'Gestion des rôles',
-    'other'          => 'Autre',
-    'security_logs'  => 'Journaux de sécurité',
-    'import'         => 'Importer des clés API',
-    'settings'       => 'Paramètres SeAT'
-
+    'corporation'   => "corporation|corporations",
+    'ceo_name'      => "Nom du PDG",
+    'alliance_name' => "Nom de l'alliance",
+    'tax_rate'      => "Taux de taxation",
+    'member_limit'  => "Limite de membre"
 ];
