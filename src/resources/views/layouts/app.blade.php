@@ -17,7 +17,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('web/css/adminlte.min.css') }}">
   <!-- Skin -->
-  <link rel="stylesheet" href="{{ asset('web/css/skins/skin-black.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('web/css/skins/' . setting('skin') . '.min.css') }}">
   <!-- SeAT CSS -->
   <link rel="stylesheet" href="{{ asset('web/css/seat.css') }}">
 
