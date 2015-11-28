@@ -6,10 +6,17 @@
     <!-- Sidebar user panel -->
     <div class="user-panel">
       <div class="pull-left image">
-        <img src="http://image.eveonline.com/Character/1_128.jpg" class="img-circle" alt="User Image">
+        <img src="http://image.eveonline.com/Character/{{ setting('main_character_id') }}_128.jpg"
+             class="img-circle" alt="User Image">
       </div>
       <div class="pull-left info">
-        <p>{{ $user->name }}</p>
+        <p>
+          @if(is_null(setting('main_character_name')))
+            <a href="{{ route('profile.view') }}">No Main Character!</a>
+          @else
+           Hello, {{ setting('main_character_name') }}
+          @endif
+        </p>
         <!-- Status -->
         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
       </div>

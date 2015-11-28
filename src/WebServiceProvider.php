@@ -137,7 +137,6 @@ class WebServiceProvider extends ServiceProvider
 
         // User information view composer
         $this->app['view']->composer([
-            'web::includes.sidebar',
             'web::includes.header'
         ], User::class);
 

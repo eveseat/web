@@ -22,6 +22,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Validation;
 
 use App\Http\Requests\Request;
+use Seat\Eveapi\Models\Account\ApiKeyInfoCharacters;
 use Seat\Services\Settings\Profile;
 
 class ProfileSettings extends Request
@@ -35,10 +36,28 @@ class ProfileSettings extends Request
     public function rules()
     {
 
-        $allowed_skins = implode(',', (new Profile())->options['skins']);
+        $user_id = auth()->user()->id;
+
+        // For some fail reson I cant get the UserRepository trait
+        // to be happy here.
+        // TODO: Fix that!
+        $allowed_main_character_ids = implode(',', ApiKeyInfoCharacters::with('key')
+            ->whereHas('key', function ($query) use ($user_id) {
+
+                $query->where('user_id', $user_id);
+            })
+            ->lists('characterID')
+            ->toArray());
+
+        $allowed_skins = implode(',', Profile::$options['skins']);
+        $allowed_sidebar = implode(',', Profile::$options['sidebar']);
 
         return [
-            'skin' => 'required|in:' . $allowed_skins
+            'main_character_id'  => 'required|in:' . $allowed_main_character_ids,
+            'skin'               => 'required|in:' . $allowed_skins,
+            'sidebar'            => 'required|in:' . $allowed_sidebar,
+            'thousand_seperator' => 'in:" ",",","."|size:1',
+            'decimal_seperator'  => 'required|in:",","."|size:1',
         ];
     }
 }

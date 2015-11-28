@@ -22,6 +22,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
+use Seat\Services\Repositories\Character\CharacterRepository;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Services\Settings\Profile;
 use Seat\Services\Settings\UserSettings;
@@ -34,7 +35,7 @@ use Seat\Web\Validation\ProfileSettings;
 class ProfileController extends Controller
 {
 
-    use UserRespository;
+    use UserRespository, CharacterRepository;
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -45,7 +46,17 @@ class ProfileController extends Controller
         $user = $this->getFullUser(auth()->user()->id);
         $history = auth()->user()->login_history->take(50);
 
-        return view('web::profile.view', compact('user', 'history'));
+        // Settings value possibilities
+        $characters = $this->getUserCharacters(auth()->user()->id);
+        $skins = Profile::$options['skins'];
+        $sidebar = Profile::$options['sidebar'];
+
+        $thousand = Profile::$options['thousand_seperator'];
+        $decimal = Profile::$options['decimal_seperator'];
+
+        return view('web::profile.view',
+            compact('user', 'history', 'characters', 'skins', 'sidebar',
+                'thousand', 'decimal'));
     }
 
     /**
@@ -57,7 +68,14 @@ class ProfileController extends Controller
     {
 
         // Update the settings
+        Profile::set('main_character_id', $request->main_character_id);
+        Profile::set('main_character_name', $this->getCharacterNameById(
+            $request->main_character_id));
         Profile::set('skin', $request->skin);
+        Profile::set('sidebar', $request->sidebar);
+
+        Profile::set('thousand_seperator', $request->thousand_seperator);
+        Profile::set('decimal_seperator', $request->decimal_seperator);
 
         return redirect()->back()
             ->with('success', 'Profile settings updated!');
