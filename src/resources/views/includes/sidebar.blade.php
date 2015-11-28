@@ -14,7 +14,7 @@
           @if(is_null(setting('main_character_name')))
             <a href="{{ route('profile.view') }}">No Main Character!</a>
           @else
-           Hello, {{ setting('main_character_name') }}
+            Hello, {{ setting('main_character_name') }}
           @endif
         </p>
         <!-- Status -->

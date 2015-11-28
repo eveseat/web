@@ -26,8 +26,8 @@ Route::get('/status', [
 ]);
 
 Route::get('/short-status', [
-    'as'         => 'queue.status.short',
-    'uses'       => 'QueueController@getShortStatus'
+    'as'   => 'queue.status.short',
+    'uses' => 'QueueController@getShortStatus'
 ]);
 
 Route::get('/run/{command_name}', [

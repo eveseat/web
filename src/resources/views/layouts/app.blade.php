@@ -94,12 +94,12 @@
     $.ajax({
       type: "get",
       url: "{{ route('queue.status.short') }}",
-      success: function(data) {
+      success: function (data) {
         $("span#queue_count").text(data.queued_jobs);
         $("span#working_count").text(data.working_jobs);
         $("span#error_count").text(data.error_jobs);
       },
-      complete: function() {
+      complete: function () {
         // Schedule the next request when the current one's complete
         setTimeout(worker, 10000); // 10 Seconds
       }

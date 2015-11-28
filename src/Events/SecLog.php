@@ -21,7 +21,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Events;
 
-
 use Seat\Web\Models\SecurityLog;
 
 class SecLog
