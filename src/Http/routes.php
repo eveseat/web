@@ -54,6 +54,15 @@ Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
             include __DIR__ . '/Routes/Support/List.php';
         });
 
+        // User Profile Routes
+        Route::group([
+            'namespace' => 'Profile',
+            'prefix'    => 'profile'
+        ], function () {
+
+            include __DIR__ . '/Routes/Profile/View.php';
+        });
+
         // Queue Jobs
         Route::group([
             'namespace' => 'Queue',
