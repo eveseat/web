@@ -42,6 +42,7 @@ return [
     'access'         => 'Access Management',
     'other'          => 'Other',
     'security_logs'  => 'Security Logs',
-    'import'         => 'Import API Keys'
+    'import'         => 'Import API Keys',
+    'settings'       => 'SeAT Settings'
 
 ];

@@ -120,26 +120,31 @@ class Sidebar
                 'route_segment' => 'configuration',
                 'entries'       => [
 
+                    [   // Access
+                        'name'  => trans('web::sidebar.access'),
+                        'icon'  => 'fa-shield',
+                        'route' => route('configuration.access.roles')
+                    ],
+                    [   // Import
+                        'name'  => trans('web::sidebar.import'),
+                        'icon'  => 'fa-upload',
+                        'route' => route('configuration.import.list')
+                    ],
                     [   // Users
                         'name'  => trans('web::sidebar.users'),
                         'icon'  => 'fa-user',
                         'route' => route('configuration.users')
                     ],
-                    [   // Access
-                        'name'  => trans('web::sidebar.access'),
-                        'icon'  => 'fa-shield',
-                        'route' => route('configuration.access.roles')
+                    [   // SeAT Setting
+                        'name'  => trans('web::sidebar.settings'),
+                        'icon'  => 'fa-cog',
+                        'route' => route('seat.settings.view')
                     ],
                     [   // Security
                         'name'  => trans('web::sidebar.security_logs'),
                         'icon'  => 'fa-list',
                         'route' => route('configuration.security.logs')
                     ],
-                    [   // Import
-                        'name'  => trans('web::sidebar.import'),
-                        'icon'  => 'fa-upload',
-                        'route' => route('configuration.import.list')
-                    ]
 
                 ]
             ]);

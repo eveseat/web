@@ -38,6 +38,7 @@ use Seat\Web\Http\Middleware\Bouncer;
 use Seat\Web\Http\Middleware\CharacterBouncer;
 use Seat\Web\Http\Middleware\CorporationBouncer;
 use Seat\Web\Http\Middleware\KeyBouncer;
+use Seat\Web\Http\Middleware\RegistrationAllowed;
 
 /**
  * Class EveapiServiceProvider
@@ -179,6 +180,10 @@ class WebServiceProvider extends ServiceProvider
         // Authenticate checks that the session is
         // simply authenticated
         $router->middleware('auth', Authenticate::class);
+
+        // Registration Middleware checks of the app is
+        // allowing new user registration to occur.
+        $router->middleware('registration.status', RegistrationAllowed::class);
 
         // The Bouncer is responsible for checking hes
         // Clipboard and ensuring that every request

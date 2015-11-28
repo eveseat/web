@@ -132,6 +132,12 @@ Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
                 include __DIR__ . '/Routes/Configuration/Import.php';
             });
 
+            // SeAT Settings
+            Route::group(['prefix' => 'settings'], function () {
+
+                include __DIR__ . '/Routes/Configuration/Seat.php';
+            });
+
         });
 
     });

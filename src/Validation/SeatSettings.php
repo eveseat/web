@@ -19,29 +19,30 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-// Authentication routes
-Route::get('login', [
-    'as'   => 'auth.login',
-    'uses' => 'AuthController@getLogin'
-]);
-Route::post('login', [
-    'as'   => 'auth.login.post',
-    'uses' => 'AuthController@postLogin'
-]);
-Route::get('logout', [
-    'as'   => 'auth.logout',
-    'uses' => 'AuthController@getLogout'
-]);
+namespace Seat\Web\Validation;
 
-Route::group(['middleware' => 'registration.status'], function () {
+use App\Http\Requests\Request;
+use Seat\Services\Settings\Seat;
 
-    // Registration routes
-    Route::get('register', [
-        'as'   => 'auth.register',
-        'uses' => 'AuthController@getRegister'
-    ]);
-    Route::post('register', [
-        'as'   => 'auth.register.post',
-        'uses' => 'AuthController@postRegister'
-    ]);
-});
+/**
+ * Class SeatSettings
+ * @package Seat\Web\Validation
+ */
+class SeatSettings extends Request
+{
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+
+        $allowed_registration = implode(',', Seat::$options['registration']);
+
+        return [
+            'registration' => 'required|in:' . $allowed_registration
+        ];
+    }
+}

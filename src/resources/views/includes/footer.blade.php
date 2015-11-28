@@ -2,7 +2,7 @@
 
   <!-- To the right -->
   <div class="pull-right hidden-xs">
-    <b>Version</b> {{ config('web.config.version') }}
+    <b>Web Version</b> {{ config('web.config.version') }}
   </div>
 
   <!-- Default to the left -->

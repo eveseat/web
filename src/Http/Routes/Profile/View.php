@@ -24,7 +24,7 @@ Route::get('/view', [
     'uses' => 'ProfileController@getView'
 ]);
 
-Route::post('/update/user/settings', [
-    'as'   => 'profile.update.user.settings',
+Route::post('/update/settings', [
+    'as'   => 'profile.update.settings',
     'uses' => 'ProfileController@getUpdateUserSettings'
 ]);

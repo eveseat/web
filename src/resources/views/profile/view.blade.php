@@ -11,7 +11,7 @@
     </div>
     <div class="panel-body">
 
-      <form role="form" action="{{ route('profile.update.user.settings') }}" method="post"
+      <form role="form" action="{{ route('profile.update.settings') }}" method="post"
             class="form-horizontal">
         {{ csrf_field() }}
 

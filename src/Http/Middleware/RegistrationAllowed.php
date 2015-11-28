@@ -19,29 +19,28 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-// Authentication routes
-Route::get('login', [
-    'as'   => 'auth.login',
-    'uses' => 'AuthController@getLogin'
-]);
-Route::post('login', [
-    'as'   => 'auth.login.post',
-    'uses' => 'AuthController@postLogin'
-]);
-Route::get('logout', [
-    'as'   => 'auth.logout',
-    'uses' => 'AuthController@getLogout'
-]);
+namespace Seat\Web\Http\Middleware;
 
-Route::group(['middleware' => 'registration.status'], function () {
+use Closure;
 
-    // Registration routes
-    Route::get('register', [
-        'as'   => 'auth.register',
-        'uses' => 'AuthController@getRegister'
-    ]);
-    Route::post('register', [
-        'as'   => 'auth.register.post',
-        'uses' => 'AuthController@postRegister'
-    ]);
-});
+class RegistrationAllowed
+{
+
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Closure                 $next
+     *
+     * @return mixed
+     */
+    public function handle($request, Closure $next)
+    {
+
+        if (setting('registration', true) == 'no')
+            return redirect()->guest('auth/login')
+                ->with('error', 'Registration is administratively disabled.');
+
+        return $next($request);
+    }
+}
