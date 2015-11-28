@@ -27,6 +27,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Model;
 use Seat\Eveapi\Models\Eve\ApiKey;
+use Seat\Services\Models\UserSetting;
 use Seat\Web\Acl\Clipboard;
 use Seat\Web\Models\Acl\Affiliation;
 use Seat\Web\Models\Acl\Role;
@@ -122,5 +123,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
 
         return $this->hasMany(ApiKey::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function settings()
+    {
+
+        return $this->hasMany(UserSetting::class);
     }
 }
