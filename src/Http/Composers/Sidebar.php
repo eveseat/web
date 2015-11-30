@@ -22,6 +22,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Http\Composers;
 
 use Illuminate\Contracts\View\View;
+use Seat\Web\Exceptions\PackageMenuBuilderException;
 
 /**
  * Class User
@@ -47,9 +48,6 @@ class Sidebar
      */
     public function compose(View $view)
     {
-
-        // TODO: Allow plugins to add menu items
-        // Menus are structured as follows:
 
         // Home. This menu item declares the menu and
         // sets it as an array of arrays.
@@ -150,6 +148,16 @@ class Sidebar
             ]);
         }
 
+        // Load any menus from any registered packages
+        $package_menus = config('package.sidebar');
+        foreach ($package_menus as $package_name => $menu_data) {
+
+            $prepared_menu = $this->load_plugin_menu($package_name, $menu_data);
+
+            if (!empty($prepared_menu))
+                array_push($menu, $prepared_menu);
+        }
+
         array_push($menu, [
             'name'          => trans('web::sidebar.other'),
             'icon'          => 'fa-circle',
@@ -157,5 +165,97 @@ class Sidebar
         ]);
 
         $view->with('menu', $menu);
+    }
+
+    /**
+     * Load menus from any registered plugins.
+     *
+     * This may end up being quite a complex method, as we need
+     * to validate a lot of the menu structure that is set
+     * out.
+     *
+     * Packages should register menu items in a config file,
+     * loaded in a ServiceProvider's register() method in the
+     * 'package.sidebar' namespace. The structure of these
+     * menus can be seen in the SeAT Wiki.
+     *
+     * @param $package_name
+     * @param $menu_data
+     *
+     * @return array
+     * @throws \Seat\Web\Exceptions\PackageMenuBuilderException
+     */
+    public function load_plugin_menu($package_name, $menu_data)
+    {
+
+        // Validate the package menu
+        $this->validate_menu($package_name, $menu_data);
+
+        // Check if the current user has the permission
+        // required to see the menu
+        if (!auth()->user()->has($menu_data['permission']))
+            return;
+
+        // Resolve the routes in the menu
+        // TODO: Move this to the view.
+        // We can simply use route($entry['route'])
+        //in the view to generate links.
+        foreach ($menu_data['entries'] as &$data)
+            $data['route'] = route($data['route']);
+
+        return $menu_data;
+    }
+
+    /**
+     * The actual menu valiation logic.
+     *
+     * @param $package_name
+     * @param $menu_data
+     *
+     * @throws \Seat\Web\Exceptions\PackageMenuBuilderException
+     */
+    public function validate_menu($package_name, $menu_data)
+    {
+
+        if (!is_string($package_name))
+            throw new PackageMenuBuilderException(
+                'Package root menu items should be named by string type');
+
+        if (!is_array($menu_data))
+            throw new PackageMenuBuilderException(
+                'Package menu data should be defined in an array');
+
+        if (!array_key_exists('name', $menu_data))
+            throw new PackageMenuBuilderException(
+                'Root menu must define a name');
+
+        if (!array_key_exists('route_segment', $menu_data))
+            throw new PackageMenuBuilderException(
+                'Root menu must define a route segement');
+
+        if (!array_key_exists('entries', $menu_data))
+            throw new PackageMenuBuilderException(
+                'Root menu must define entries');
+
+        if (!is_array($menu_data['entries']))
+            throw new PackageMenuBuilderException(
+                'Sub-menu items must be defined as an array');
+
+        // Loop over the sub menu entries, validating the
+        // required fields
+        foreach ($menu_data['entries'] as $entry) {
+
+            if (!array_key_exists('name', $entry))
+                throw new PackageMenuBuilderException(
+                    'A sub menu entry failed to define a name');
+
+            if (!array_key_exists('icon', $entry))
+                throw new PackageMenuBuilderException(
+                    'A sub menu entry failed to define an icon');
+
+            if (!array_key_exists('route', $entry))
+                throw new PackageMenuBuilderException(
+                    'A sub menu entry failed to define a route');
+        }
     }
 }
