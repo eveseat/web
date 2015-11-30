@@ -40,7 +40,7 @@
             </td>
             <td>
               @if($key->info)
-                @if($key->info->expires))
+                @if($key->info->expires)
                   {{ human_diff($key->info->expires) }}
                 @else
                   {{ ucfirst(trans('web::general.never')) }}
