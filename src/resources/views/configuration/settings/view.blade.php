@@ -63,12 +63,22 @@
     <div class="panel-body">
 
       <dl class="">
-        <dt>SeAT Web</dt>
+
+        <dt>SeAT Api</dt>
         <dd>
           <ul>
-            <li>Installed: <b>v{{ config('web.config.version') }}</b></li>
-            <li>Current: <img src="https://poser.pugx.org/eveseat/web/v/stable"></li>
-            <li>Repository Url: <a href="https://github.com/eveseat/web" target="_blank">https://github.com/eveseat/web</a></li>
+            <li>Installed: <b>v{{ config('api.config.version') }}</b></li>
+            <li>Current: <img src="https://poser.pugx.org/eveseat/api/v/stable"></li>
+            <li>Repository Url: <a href="https://github.com/eveseat/api" target="_blank">https://github.com/eveseat/api</a></li>
+          </ul>
+        </dd>
+
+        <dt>SeAT Console</dt>
+        <dd>
+          <ul>
+            <li>Installed: <b>v{{ config('console.config.version') }}</b></li>
+            <li>Current: <img src="https://poser.pugx.org/eveseat/console/v/stable"></li>
+            <li>Repository Url: <a href="https://github.com/eveseat/console" target="_blank">https://github.com/eveseat/console</a></li>
           </ul>
         </dd>
 
@@ -81,12 +91,12 @@
           </ul>
         </dd>
 
-        <dt>SeAT Console</dt>
+        <dt>SeAT Web</dt>
         <dd>
           <ul>
-            <li>Installed: <b>v{{ config('console.config.version') }}</b></li>
-            <li>Current: <img src="https://poser.pugx.org/eveseat/console/v/stable"></li>
-            <li>Repository Url: <a href="https://github.com/eveseat/console" target="_blank">https://github.com/eveseat/console</a></li>
+            <li>Installed: <b>v{{ config('web.config.version') }}</b></li>
+            <li>Current: <img src="https://poser.pugx.org/eveseat/web/v/stable"></li>
+            <li>Repository Url: <a href="https://github.com/eveseat/web" target="_blank">https://github.com/eveseat/web</a></li>
           </ul>
         </dd>
 
