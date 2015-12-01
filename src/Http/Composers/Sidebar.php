@@ -56,7 +56,7 @@ class Sidebar
                 'name'          => trans('web::sidebar.home'),
                 'icon'          => 'fa-home',
                 'route_segment' => 'home',
-                'route'         => route('home')
+                'route'         => 'home'
             ]
         ];
 
@@ -71,12 +71,12 @@ class Sidebar
                 [   // Add Api Key
                     'name'  => trans('web::sidebar.add_api_key'),
                     'icon'  => 'fa-plus',
-                    'route' => route('api.key')
+                    'route' => 'api.key'
                 ],
                 [
                     'name'  => trans('web::sidebar.list_keys'),
                     'icon'  => 'fa-list',
-                    'route' => route('api.key.list')
+                    'route' => 'api.key.list'
                 ]
             ]
         ]);
@@ -90,7 +90,7 @@ class Sidebar
                 [
                     'name'  => trans('web::sidebar.all_corp'),
                     'icon'  => 'fa-group',
-                    'route' => route('corporation.list')
+                    'route' => 'corporation.list'
                 ]
             ]
         ]);
@@ -104,7 +104,7 @@ class Sidebar
                 [
                     'name'  => trans('web::sidebar.all_char'),
                     'icon'  => 'fa-group',
-                    'route' => route('character.list')
+                    'route' => 'character.list'
                 ]
             ]
         ]);
@@ -121,27 +121,27 @@ class Sidebar
                     [   // Access
                         'name'  => trans('web::sidebar.access'),
                         'icon'  => 'fa-shield',
-                        'route' => route('configuration.access.roles')
+                        'route' => 'configuration.access.roles'
                     ],
                     [   // Import
                         'name'  => trans('web::sidebar.import'),
                         'icon'  => 'fa-upload',
-                        'route' => route('configuration.import.list')
+                        'route' => 'configuration.import.list'
                     ],
                     [   // Users
                         'name'  => trans('web::sidebar.users'),
                         'icon'  => 'fa-user',
-                        'route' => route('configuration.users')
+                        'route' => 'configuration.users'
                     ],
                     [   // SeAT Setting
                         'name'  => trans('web::sidebar.settings'),
                         'icon'  => 'fa-cog',
-                        'route' => route('seat.settings.view')
+                        'route' => 'seat.settings.view'
                     ],
                     [   // Security
                         'name'  => trans('web::sidebar.security_logs'),
                         'icon'  => 'fa-list',
-                        'route' => route('configuration.security.logs')
+                        'route' => 'configuration.security.logs'
                     ],
 
                 ]
@@ -195,13 +195,6 @@ class Sidebar
         // required to see the menu
         if (!auth()->user()->has($menu_data['permission']))
             return;
-
-        // Resolve the routes in the menu
-        // TODO: Move this to the view.
-        // We can simply use route($entry['route'])
-        //in the view to generate links.
-        foreach ($menu_data['entries'] as &$data)
-            $data['route'] = route($data['route']);
 
         return $menu_data;
     }

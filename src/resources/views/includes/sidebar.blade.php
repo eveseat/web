@@ -52,8 +52,8 @@
 
               @foreach($entry['entries'] as $item)
 
-                <li class="{{ isset($item['route']) ? (Request::url() === $item['route'] ? 'active' : null) : null }}">
-                  <a href="{{ $item['route'] or '#' }}">
+                <li class="{{ isset($item['route']) ? (Request::url() === route($item['route']) ? 'active' : null) : null }}">
+                  <a href="{{ isset($item['route']) ? route($item['route']) : '#' }}">
                     <i class="fa {{ $item['icon'] or 'fa-circle-o' }}"></i> {{ $item['name'] }}</a>
                 </li>
 
@@ -65,7 +65,7 @@
         @else
 
           <li class="{{ Request::segment(1) === $entry['route_segment'] ? 'active' : null }}">
-            <a href="{{ $entry['route'] or '#' }}">
+            <a href="{{ isset($entry['route']) ? route($entry['route']) : '#' }}">
               <i class="fa {{ $entry['icon'] }}"></i> <span>{{ $entry['name'] }}</span>
             </a>
           </li>
