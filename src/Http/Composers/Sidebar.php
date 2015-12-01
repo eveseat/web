@@ -226,29 +226,37 @@ class Sidebar
             throw new PackageMenuBuilderException(
                 'Root menu must define a route segement');
 
+        // Check if we have sub entries. If not, we have to
+        // check if we have a route defined in the parent
+        // menu.
         if (!array_key_exists('entries', $menu_data))
+            if (!array_key_exists('route', $menu_data))
+                throw new PackageMenuBuilderException(
+                    'A parent or sub-menu route is required.');
+
+        // Ensure that the entries is actually an array
+        if (array_key_exists('entries', $menu_data) && !is_array($menu_data['entries']))
             throw new PackageMenuBuilderException(
                 'Root menu must define entries');
 
-        if (!is_array($menu_data['entries']))
-            throw new PackageMenuBuilderException(
-                'Sub-menu items must be defined as an array');
-
         // Loop over the sub menu entries, validating the
         // required fields
-        foreach ($menu_data['entries'] as $entry) {
+        if (isset($menu_data['entries'])) {
 
-            if (!array_key_exists('name', $entry))
-                throw new PackageMenuBuilderException(
-                    'A sub menu entry failed to define a name');
+            foreach ($menu_data['entries'] as $entry) {
 
-            if (!array_key_exists('icon', $entry))
-                throw new PackageMenuBuilderException(
-                    'A sub menu entry failed to define an icon');
+                if (!array_key_exists('name', $entry))
+                    throw new PackageMenuBuilderException(
+                        'A sub menu entry failed to define a name');
 
-            if (!array_key_exists('route', $entry))
-                throw new PackageMenuBuilderException(
-                    'A sub menu entry failed to define a route');
+                if (!array_key_exists('icon', $entry))
+                    throw new PackageMenuBuilderException(
+                        'A sub menu entry failed to define an icon');
+
+                if (!array_key_exists('route', $entry))
+                    throw new PackageMenuBuilderException(
+                        'A sub menu entry failed to define a route');
+            }
         }
     }
 }
