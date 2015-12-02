@@ -6,5 +6,5 @@
   </div>
 
   <!-- Default to the left -->
-  <strong>Copyright &copy; 2015 | <a href="https://github.com/eveseat/seat">SeAT</a></strong>
+  <strong>Copyright &copy; {{ date('Y') }} | <a href="https://github.com/eveseat/seat">SeAT</a></strong>
 </footer>
