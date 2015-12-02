@@ -91,6 +91,15 @@
           </ul>
         </dd>
 
+        <dt>SeAT Notifications</dt>
+        <dd>
+          <ul>
+            <li>Installed: <b>v{{ config('notifications.config.version') }}</b></li>
+            <li>Current: <img src="https://poser.pugx.org/eveseat/notifications/v/stable"></li>
+            <li>Repository Url: <a href="https://github.com/eveseat/notifications" target="_blank">https://github.com/eveseat/notifications</a></li>
+          </ul>
+        </dd>
+
         <dt>SeAT Web</dt>
         <dd>
           <ul>
