@@ -198,8 +198,9 @@ class Sidebar
 
         // Check if the current user has the permission
         // required to see the menu
-        if (!auth()->user()->has($menu_data['permission']))
-            return;
+        if (isset($menu_data['permission']))
+            if (!auth()->user()->has($menu_data['permission']))
+                return;
 
         return $menu_data;
     }
