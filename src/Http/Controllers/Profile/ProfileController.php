@@ -77,6 +77,8 @@ class ProfileController extends Controller
         Profile::set('thousand_seperator', $request->thousand_seperator);
         Profile::set('decimal_seperator', $request->decimal_seperator);
 
+        Profile::set('email_notifications', $request->email_notifications);
+
         return redirect()->back()
             ->with('success', 'Profile settings updated!');
 

@@ -108,6 +108,27 @@
             </div>
           </div>
 
+          <legend>Notifications</legend>
+
+          <!-- Select Basic -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="email_notifications">Email Notifications</label>
+            <div class="col-md-6">
+              <div class="form-inline input-group">
+                <select id="email_notifications" name="email_notifications" class="form-control">
+                  <option value="yes"
+                          @if(setting('email_notifications') == "yes") selected @endif>
+                    Yes
+                  </option>
+                  <option value="no"
+                          @if(setting('email_notifications') == "no") selected @endif>
+                    No
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
         </div>
         <!-- /.box-body -->
 

@@ -53,11 +53,12 @@ class ProfileSettings extends Request
         $allowed_sidebar = implode(',', Profile::$options['sidebar']);
 
         return [
-            'main_character_id'  => 'required|in:' . $allowed_main_character_ids,
-            'skin'               => 'required|in:' . $allowed_skins,
-            'sidebar'            => 'required|in:' . $allowed_sidebar,
-            'thousand_seperator' => 'in:" ",",","."|size:1',
-            'decimal_seperator'  => 'required|in:",","."|size:1',
+            'main_character_id'   => 'required|in:' . $allowed_main_character_ids,
+            'skin'                => 'required|in:' . $allowed_skins,
+            'sidebar'             => 'required|in:' . $allowed_sidebar,
+            'thousand_seperator'  => 'in:" ",",","."|size:1',
+            'decimal_seperator'   => 'required|in:",","."|size:1',
+            'email_notifications' => 'required|in:yes,no'
         ];
     }
 }
