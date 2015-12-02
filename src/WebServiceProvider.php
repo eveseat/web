@@ -39,6 +39,7 @@ use Seat\Web\Http\Middleware\CharacterBouncer;
 use Seat\Web\Http\Middleware\CorporationBouncer;
 use Seat\Web\Http\Middleware\KeyBouncer;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
+use Validator;
 
 /**
  * Class EveapiServiceProvider
@@ -75,6 +76,9 @@ class WebServiceProvider extends ServiceProvider
 
         // Add event listeners
         $this->add_events();
+
+        // Add Validators
+        $this->add_custom_validators();
 
     }
 
@@ -207,5 +211,14 @@ class WebServiceProvider extends ServiceProvider
         $this->app->events->listen('auth.attempt', Attempt::class);
 
         $this->app->events->listen('security.log', SecLog::class);
+    }
+
+    /**
+     * Add custom validators that are not part of Laravel core
+     */
+    public function add_custom_validators()
+    {
+
+        Validator::extend('cron', 'Seat\Web\Validation\Custom\Cron@validate');
     }
 }

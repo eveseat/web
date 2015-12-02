@@ -126,6 +126,12 @@ Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
                 include __DIR__ . '/Routes/Configuration/Security.php';
             });
 
+            // Schedule
+            Route::group(['prefix' => 'schedule'], function () {
+
+                include __DIR__ . '/Routes/Configuration/Schedule.php';
+            });
+
             // Import
             Route::group(['prefix' => 'import'], function () {
 

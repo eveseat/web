@@ -133,6 +133,11 @@ class Sidebar
                         'icon'  => 'fa-user',
                         'route' => 'configuration.users'
                     ],
+                    [   // Schedule
+                        'name'  => trans('web::sidebar.schedule'),
+                        'icon'  => 'fa-clock-o',
+                        'route' => 'configuration.schedule'
+                    ],
                     [   // SeAT Setting
                         'name'  => trans('web::sidebar.settings'),
                         'icon'  => 'fa-cog',
