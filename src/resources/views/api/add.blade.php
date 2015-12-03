@@ -55,7 +55,7 @@
 
     <ul>
       <li>
-        <a href="https://support.eveonline.com/api/key/CreatePredefined/{{ config('web.config.max_access_mask') }}"
+        <a href="https://community.eveonline.com/support/api-key/CreatePredefined?accessMask={{ config('web.config.max_access_mask') }}"
            target="_blank">
           {{ trans('web::api.full_link') }}
         </a>
