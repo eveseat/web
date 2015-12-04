@@ -1,3 +1,4 @@
+![SeAT](http://i.imgur.com/aPPOxSK.png)
 # web
 
 [![Code Climate](https://codeclimate.com/github/eveseat/web/badges/gpa.svg)](https://codeclimate.com/github/eveseat/web)
