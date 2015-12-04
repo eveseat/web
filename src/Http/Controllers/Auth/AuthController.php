@@ -22,6 +22,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Support\Facades\Lang;
@@ -136,6 +137,24 @@ class AuthController extends Controller
     {
 
         return Lang::get('web::auth.failed');
+    }
+
+    /**
+     * Log the user out of the application.
+     * We override this method to add the session
+     * flushing.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getLogout()
+    {
+
+        Auth::logout();
+
+        // Flush all of the session data
+        session()->flush();
+
+        return redirect('/');
     }
 
 }

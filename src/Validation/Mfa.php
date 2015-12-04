@@ -19,12 +19,23 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-Route::get('/', [
-    'as'   => 'profile.view',
-    'uses' => 'ProfileController@getView'
-]);
+namespace Seat\Web\Validation;
 
-Route::post('/update', [
-    'as'   => 'profile.update.settings',
-    'uses' => 'ProfileController@getUpdateUserSettings'
-]);
+use App\Http\Requests\Request;
+
+class Mfa extends Request
+{
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+
+        return [
+            'confirm_code' => 'required|int'
+        ];
+    }
+}

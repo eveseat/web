@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password', 60);
             $table->boolean('active')->default(false);
+            $table->string('mfa_token')->nullable();
             $table->dateTime('last_login')->nullable();
             $table->string('last_login_source')->nullable();
             $table->rememberToken();

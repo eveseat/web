@@ -37,113 +37,135 @@ Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
     });
 
     // All routes from here require *at least* that the
-    // user is authenticated.
+    // user is authenticated. The mfa middleware checks
+    // a setting for the user
     Route::group(['middleware' => 'auth'], function () {
 
-        // The home route does not need any prefixes
-        // and or namespacing modifications, so we will
-        // just include it
-        include __DIR__ . '/Routes/Home.php';
+        Route::group(['namespace' => 'Auth', 'prefix' => 'auth'], function () {
 
-        // Support Routes
-        Route::group([
-            'namespace' => 'Support',
-            'prefix'    => 'support',
-        ], function () {
-
-            include __DIR__ . '/Routes/Support/List.php';
+            include __DIR__ . '/Routes/Auth/Mfa.php';
         });
 
-        // User Profile Routes
-        Route::group([
-            'namespace' => 'Profile',
-            'prefix'    => 'profile'
-        ], function () {
+        // Routes from here on may optionally have a multifactor
+        // authentication requirement
+        Route::group(['middleware' => 'mfa'], function () {
 
-            include __DIR__ . '/Routes/Profile/View.php';
-        });
+            // The home route does not need any prefixes
+            // and or namespacing modifications, so we will
+            // just include it
+            include __DIR__ . '/Routes/Home.php';
 
-        // Queue Jobs
-        Route::group([
-            'namespace' => 'Queue',
-            'prefix'    => 'queue',
-        ], function () {
+            // Support Routes
+            Route::group([
+                'namespace' => 'Support',
+                'prefix'    => 'support',
+            ], function () {
 
-            include __DIR__ . '/Routes/Queue/Status.php';
-        });
-
-        // Api Key Routes
-        Route::group([
-            'namespace' => 'Api',
-            'prefix'    => 'api-key'
-        ], function () {
-
-            include __DIR__ . '/Routes/Api/Key.php';
-        });
-
-        // Corporation Routes
-        Route::group([
-            'namespace' => 'Corporation',
-            'prefix'    => 'corporation'
-        ], function () {
-
-            include __DIR__ . '/Routes/Corporation/View.php';
-        });
-
-        // Character Routes
-        Route::group([
-            'namespace' => 'Character',
-            'prefix'    => 'character'
-        ], function () {
-
-            include __DIR__ . '/Routes/Character/View.php';
-        });
-
-        // Configuration Routes. In the context of seat,
-        // all configuration should only be possible if
-        // a user has the 'superuser' role.
-        Route::group([
-            'namespace'  => 'Configuration',
-            'prefix'     => 'configuration',
-            'middleware' => 'bouncer:superuser'
-        ], function () {
-
-            // User Management
-            Route::group(['prefix' => 'users'], function () {
-
-                include __DIR__ . '/Routes/Configuration/User.php';
+                include __DIR__ . '/Routes/Support/List.php';
             });
 
-            // Access Mangement
-            Route::group(['prefix' => 'access'], function () {
+            // User Profile Routes
+            Route::group([
+                'namespace' => 'Profile',
+                'prefix'    => 'profile'
+            ], function () {
 
-                include __DIR__ . '/Routes/Configuration/Access.php';
+                // Preferences
+                Route::group(['prefix' => 'settings'], function () {
+
+                    include __DIR__ . '/Routes/Profile/View.php';
+                });
+
+                // Mfa configuration
+                Route::group(['prefix' => 'mfa'], function () {
+
+                    include __DIR__ . '/Routes/Profile/Mfa.php';
+                });
+
             });
 
-            // Security
-            Route::group(['prefix' => 'security'], function () {
+            // Queue Jobs
+            Route::group([
+                'namespace' => 'Queue',
+                'prefix'    => 'queue',
+            ], function () {
 
-                include __DIR__ . '/Routes/Configuration/Security.php';
+                include __DIR__ . '/Routes/Queue/Status.php';
             });
 
-            // Schedule
-            Route::group(['prefix' => 'schedule'], function () {
+            // Api Key Routes
+            Route::group([
+                'namespace' => 'Api',
+                'prefix'    => 'api-key'
+            ], function () {
 
-                include __DIR__ . '/Routes/Configuration/Schedule.php';
+                include __DIR__ . '/Routes/Api/Key.php';
             });
 
-            // Import
-            Route::group(['prefix' => 'import'], function () {
+            // Corporation Routes
+            Route::group([
+                'namespace' => 'Corporation',
+                'prefix'    => 'corporation'
+            ], function () {
 
-                include __DIR__ . '/Routes/Configuration/Import.php';
+                include __DIR__ . '/Routes/Corporation/View.php';
             });
 
-            // SeAT Settings
-            Route::group(['prefix' => 'settings'], function () {
+            // Character Routes
+            Route::group([
+                'namespace' => 'Character',
+                'prefix'    => 'character'
+            ], function () {
 
-                include __DIR__ . '/Routes/Configuration/Seat.php';
+                include __DIR__ . '/Routes/Character/View.php';
             });
 
+            // Configuration Routes. In the context of seat,
+            // all configuration should only be possible if
+            // a user has the 'superuser' role.
+            Route::group([
+                'namespace'  => 'Configuration',
+                'prefix'     => 'configuration',
+                'middleware' => 'bouncer:superuser'
+            ], function () {
+
+                // User Management
+                Route::group(['prefix' => 'users'], function () {
+
+                    include __DIR__ . '/Routes/Configuration/User.php';
+                });
+
+                // Access Mangement
+                Route::group(['prefix' => 'access'], function () {
+
+                    include __DIR__ . '/Routes/Configuration/Access.php';
+                });
+
+                // Security
+                Route::group(['prefix' => 'security'], function () {
+
+                    include __DIR__ . '/Routes/Configuration/Security.php';
+                });
+
+                // Schedule
+                Route::group(['prefix' => 'schedule'], function () {
+
+                    include __DIR__ . '/Routes/Configuration/Schedule.php';
+                });
+
+                // Import
+                Route::group(['prefix' => 'import'], function () {
+
+                    include __DIR__ . '/Routes/Configuration/Import.php';
+                });
+
+                // SeAT Settings
+                Route::group(['prefix' => 'settings'], function () {
+
+                    include __DIR__ . '/Routes/Configuration/Seat.php';
+                });
+
+            });
         });
 
     });

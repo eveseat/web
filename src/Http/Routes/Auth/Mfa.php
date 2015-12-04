@@ -19,12 +19,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-Route::get('/', [
-    'as'   => 'profile.view',
-    'uses' => 'ProfileController@getView'
+Route::get('/mfa', [
+    'as'   => 'auth.login.mfa',
+    'uses' => 'MfaController@getPrompt'
 ]);
 
-Route::post('/update', [
-    'as'   => 'profile.update.settings',
-    'uses' => 'ProfileController@getUpdateUserSettings'
+Route::post('/mfa', [
+    'as'   => 'auth.login.mfa.check',
+    'uses' => 'MfaController@postVerify'
 ]);

@@ -67,6 +67,13 @@ class ProfileController extends Controller
     public function getUpdateUserSettings(ProfileSettings $request)
     {
 
+        // If the multifactor authentication is being disabled,
+        // clear out the token we have on record too.
+        if ($request->require_mfa == "no" && Profile::get('require_mfa') == "yes") {
+
+            auth()->user()->update(['mfa_token' => null]);
+        }
+
         // Update the settings
         Profile::set('main_character_id', $request->main_character_id);
         Profile::set('main_character_name', $this->getCharacterNameById(
@@ -78,6 +85,8 @@ class ProfileController extends Controller
         Profile::set('decimal_seperator', $request->decimal_seperator);
 
         Profile::set('email_notifications', $request->email_notifications);
+
+        Profile::set('require_mfa', $request->require_mfa);
 
         return redirect()->back()
             ->with('success', 'Profile settings updated!');

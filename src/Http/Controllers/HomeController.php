@@ -3,7 +3,6 @@
 namespace Seat\Web\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests;
 
 /**
  * Class HomeController
@@ -13,6 +12,7 @@ class HomeController extends Controller
 {
 
     /**
+     *
      * @return \Illuminate\View\View
      */
     public function getHome()

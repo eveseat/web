@@ -23,6 +23,7 @@ namespace Seat\Web;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use PragmaRX\Google2FA\Google2FA;
 use Seat\Web\Events\Attempt;
 use Seat\Web\Events\Auth;
 use Seat\Web\Events\Login;
@@ -38,6 +39,7 @@ use Seat\Web\Http\Middleware\Bouncer;
 use Seat\Web\Http\Middleware\CharacterBouncer;
 use Seat\Web\Http\Middleware\CorporationBouncer;
 use Seat\Web\Http\Middleware\KeyBouncer;
+use Seat\Web\Http\Middleware\Mfa;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
 use Validator;
 
@@ -97,6 +99,12 @@ class WebServiceProvider extends ServiceProvider
             __DIR__ . '/Config/web.filter.rules.php', 'web.filter.rules');
         $this->mergeConfigFrom(
             __DIR__ . '/Config/web.permissions.php', 'web.permissions');
+
+        // Register the Google2FA into the IoC
+        $this->app->bind('google_2fa', function () {
+
+            return new Google2FA;
+        });
     }
 
     /**
@@ -184,6 +192,9 @@ class WebServiceProvider extends ServiceProvider
         // Authenticate checks that the session is
         // simply authenticated
         $router->middleware('auth', Authenticate::class);
+
+        // Optional multifactor authentication if required
+        $router->middleware('mfa', Mfa::class);
 
         // Registration Middleware checks of the app is
         // allowing new user registration to occur.

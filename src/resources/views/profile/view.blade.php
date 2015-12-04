@@ -129,6 +129,39 @@
             </div>
           </div>
 
+          <legend>Multifactor Authentication</legend>
+
+          <!-- Select Basic -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="require_mfa">Require MFA</label>
+            <div class="col-md-6">
+              <div class="form-inline input-group">
+                <select id="require_mfa" name="require_mfa" class="form-control">
+                  <option value="yes"
+                          @if(setting('require_mfa') == "yes") selected @endif>
+                    Yes
+                  </option>
+                  <option value="no"
+                          @if(setting('require_mfa') == "no") selected @endif>
+                    No
+                  </option>
+                </select>
+                <span class="help-block">
+                  <p>
+                    <b>Warning:</b> To use the two factor authentication, you
+                                    will have to install a Google Authenticator
+                                    compatible app on your smartphone.
+                  </p>
+                  <p>
+                    @if(setting('require_mfa') == "yes")
+                      <a href="{{ route('profile.mfa.new') }}">Setup Token Now</a>
+                    @endif
+                  </p>
+                </span>
+              </div>
+            </div>
+          </div>
+
         </div>
         <!-- /.box-body -->
 

@@ -58,7 +58,8 @@ class ProfileSettings extends Request
             'sidebar'             => 'required|in:' . $allowed_sidebar,
             'thousand_seperator'  => 'in:" ",",","."|size:1',
             'decimal_seperator'   => 'required|in:",","."|size:1',
-            'email_notifications' => 'required|in:yes,no'
+            'email_notifications' => 'required|in:yes,no',
+            'require_mfa'         => 'required|in:yes,no'
         ];
     }
 }
