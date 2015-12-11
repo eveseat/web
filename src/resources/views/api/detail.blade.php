@@ -109,6 +109,54 @@
       @endif
 
     </div>
+
+    @if(auth()->user()->hasSuperUser())
+      <div class="panel-footer">
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#ownerModal">
+          Transfer Ownership
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="ownerModal" tabindex="-1" role="dialog" aria-labelledby="ownerModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Transfer Key Ownership</h4>
+              </div>
+              <div class="modal-body">
+
+                <form role="form" action="{{ route('api.key.transfer', ['key_id' => $key->key_id]) }}" method="post">
+                  {{ csrf_field() }}
+
+                  <div class="box-body">
+
+                    <div class="form-group">
+                      <label>SeAT User</label>
+                      <select name="user_id" id="user_id" class="form-control select2" style="width: 100%;">
+                      </select>
+                    </div>
+                    <!-- /.form-group -->
+
+                  </div>
+                  <!-- /.box-body -->
+
+                  <div class="box-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary pull-right">
+                      Transfer
+                    </button>
+                  </div>
+
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    @endif
   </div>
 
   <div class="panel panel-default">
@@ -194,5 +242,27 @@
 
     </div>
   </div>
+
+@stop
+
+@section('javascript')
+
+  <script>
+
+    $("#user_id").select2({
+      ajax: {
+        url: "{{ route('support.api-key.userlist') }}",
+        dataType: 'json',
+        delay: 250,
+        data: function (params) {
+          return {
+            q: params.term, // search term
+            page: params.page
+          };
+        },
+      }
+    });
+
+  </script>
 
 @stop

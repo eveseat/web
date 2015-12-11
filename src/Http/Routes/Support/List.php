@@ -35,3 +35,9 @@ Route::get('/corp/tran/client_names/{corporation_id}', [
     'middleware' => 'corporationbouncer:transactions',
     'uses'       => 'ListController@getCorporationTransactionClientNames'
 ]);
+
+Route::get('/api-key/userlist', [
+    'as'         => 'support.api-key.userlist',
+    'middleware' => 'bouncer:superuser',
+    'uses'       => 'ListController@getSeatUserList'
+]);

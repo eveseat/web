@@ -85,4 +85,21 @@ class ListController extends Controller
 
     }
 
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getSeatUserList(Request $request)
+    {
+
+        return response()->json([
+            'results' => DB::table('users')
+                ->select('id', 'name as text')
+                ->where('name', 'like', '%' . $request->q . '%')
+                ->orderBy('name', 'asc')
+                ->get()
+        ]);
+    }
+
 }

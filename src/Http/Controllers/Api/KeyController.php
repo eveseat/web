@@ -22,11 +22,13 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Pheal\Pheal;
 use Seat\Eveapi\Helpers\JobContainer;
 use Seat\Eveapi\Models\Eve\ApiKey as ApiKeyModel;
 use Seat\Eveapi\Models\JobTracking;
 use Seat\Eveapi\Traits\JobManager;
+use Seat\Web\Models\User;
 use Seat\Web\Validation\ApiKey;
 use Seat\Web\Validation\Permission;
 
@@ -184,6 +186,25 @@ class KeyController extends Controller
 
         return redirect()->back()
             ->with('success', 'Update job ' . $job_id . ' Queued');
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param                          $key_id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function transfer(Request $request, $key_id)
+    {
+
+        $key = ApiKeyModel::findOrFail($key_id);
+        $user = User::findOrFail($request->user_id);
+        $key->user_id = $user->id;
+        $key->save();
+
+        return redirect()->back()
+            ->with('success', 'Key successfully transferred to ' . $user->name);
+
     }
 
 }

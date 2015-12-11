@@ -56,3 +56,9 @@ Route::get('/update/{key_id}', [
     'uses'       => 'KeyController@queueUpdateJob',
     'middleware' => 'keybouncer:update'
 ]);
+
+Route::post('/transfer/{key_id}', [
+    'as'         => 'api.key.transfer',
+    'uses'       => 'KeyController@transfer',
+    'middleware' => 'keybouncer:update'
+]);
