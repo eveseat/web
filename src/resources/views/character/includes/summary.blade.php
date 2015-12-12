@@ -80,4 +80,36 @@
     </div>
 
   </div>
+  <div class="panel-footer">
+    <span class="text-center center-block">
+      <a href="http://eveboard.com/pilot/{{ $summary->characterName }}"
+         target="_blank">
+        <img src="{{ asset('web/img/eveboard.png') }}">
+      </a>
+      <a href="https://gate.eveonline.com/Profile/{{ $summary->characterName }}"
+         target="_blank">
+        <img src="{{ asset('web/img/evegate.png') }}">
+      </a>
+      <a href="https://eve-kill.net/?a=pilot_detail&plt_external_id={{ $summary->characterID }}"
+         target="_blank">
+        <img src="{{ asset('web/img/evekill.png') }}">
+      </a>
+      <a href="http://eve-search.com/search/author/{{ $summary->characterName }}"
+         target="_blank">
+        <img src="{{ asset('web/img/evesearch.png') }}">
+      </a>
+      <a href="http://evewho.com/pilot/{{ $summary->characterName }}"
+         target="_blank">
+        <img src="{{ asset('web/img/evewho.png') }}">
+      </a>
+      <a href="https://zkillboard.com/character/{{ $summary->characterName }}"
+         target="_blank">
+        <img src="{{ asset('web/img/zkillboard.png') }}">
+      </a>
+      <a href="http://eve-hunt.net/hunt/{{ $summary->characterName }}"
+         target="_blank">
+        <img src="{{ asset('web/img/evehunt.png') }}">
+      </a>
+    </span>
+  </div>
 </div>
