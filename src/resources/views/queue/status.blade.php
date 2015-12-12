@@ -63,6 +63,52 @@
   <div class="row">
 
     <div class="col-md-4">
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Eve Api Status</h3>
+        </div>
+        <div class="panel-body">
+
+          <dl>
+            <dt>Eve Online XML API Status</dt>
+            <dd>
+              @if(Cache::get(config('eveapi.config.cache_keys.down')))
+                <span class="text-danger">
+                  <b>Offline</b>,
+                  recheck at {{ Cache::get(config('eveapi.config.cache_keys.down_until')) }}
+                </span>
+              @else
+                <span class="text-success">
+                  Online
+                </span>
+              @endif
+            </dd>
+
+            <dt>EVE API Error Threshold</dt>
+            <dd>
+              @if(!is_null(Cache::get(config('eveapi.config.cache_keys.api_error_count'))))
+                {{ Cache::get(config('eveapi.config.cache_keys.api_error_count')) }}
+              @else
+                0
+              @endif
+              / {{ config('eveapi.config.limits.eveapi_errors')}}
+            </dd>
+
+            <dt>EVE Connection Error Threshold</dt>
+            <dd>
+              @if(!is_null(Cache::get(config('eveapi.config.cache_keys.connection_error_count'))))
+                {{ Cache::get(config('eveapi.config.cache_keys.connection_error_count')) }}
+              @else
+                0
+              @endif
+              / {{ config('eveapi.config.limits.connection_errors')}}
+            </dd>
+          </dl>
+
+        </div>
+      </div>
+
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">{{ trans('web::queue.submit_jobs') }}</h3>
