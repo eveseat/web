@@ -37,6 +37,7 @@
             <th>{{ trans('web::queue.created') }}</th>
             <th>{{ trans('web::queue.api') }}</th>
             <th>{{ trans('web::queue.scope') }}</th>
+            <th>{{ trans('web::queue.output') }}</th>
           </tr>
 
           @foreach($history as $job)
@@ -47,6 +48,7 @@
               <td>{{ $job->created_at }}</td>
               <td>{{ $job->api }}</td>
               <td>{{ $job->scope }}</td>
+              <td>{{ str_limit($job->output, 50, '...') }}</td>
             </tr>
 
           @endforeach
