@@ -42,7 +42,8 @@ class SeatSettings extends Request
         $allowed_registration = implode(',', Seat::$options['registration']);
 
         return [
-            'registration' => 'required|in:' . $allowed_registration
+            'registration'  => 'required|in:' . $allowed_registration,
+            'admin_contact' => 'required|email'
         ];
     }
 }

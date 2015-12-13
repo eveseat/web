@@ -17,6 +17,20 @@
 
         <div class="box-body">
 
+          <legend>Administrator Email</legend>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="admin_contact">Admin Email</label>
+            <div class="col-md-6">
+              <input id="admin_contact" name="admin_contact" type="email"
+                     class="form-control input-md" value="{{ setting('admin_contact', true) }}">
+              <span class="help-block">
+                Please enter the email address of the administrator of this SeAT installation.
+              </span>
+            </div>
+          </div>
+
           <legend>Registration</legend>
 
           <!-- Select Basic -->

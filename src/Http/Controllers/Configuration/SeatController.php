@@ -50,6 +50,7 @@ class SeatController extends Controller
     {
 
         Seat::set('registration', $request->registration);
+        Seat::set('admin_contact', $request->admin_contact);
 
         return redirect()->back()
             ->with('success', 'SeAT settings updated!');
