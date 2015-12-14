@@ -60,7 +60,8 @@
                 </span>
               @endif
             </td>
-            <td><a href="#" class="btn btn-xs btn-primary"><i class="fa fa-envelope"></i> Read</a></td>
+            <td><a href="{{ route('character.view.mail.read', ['characterID' => $message->characterID, 'message_id' => $message->messageID]) }}"
+                   class="btn btn-xs btn-primary"><i class="fa fa-envelope"></i> Read</a></td>
           </tr>
 
         @endforeach

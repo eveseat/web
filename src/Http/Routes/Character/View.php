@@ -72,6 +72,12 @@ Route::get('/view/mail/{character_id}', [
     'uses'       => 'ViewController@getMail'
 ]);
 
+Route::get('/view/mail/{character_id}/read/{message_id}', [
+    'as'         => 'character.view.mail.read',
+    'middleware' => 'characterbouncer:mail',
+    'uses'       => 'ViewController@getMailRead'
+]);
+
 Route::get('/view/market/{character_id}', [
     'as'         => 'character.view.market',
     'middleware' => 'characterbouncer:market',

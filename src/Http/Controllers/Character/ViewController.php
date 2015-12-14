@@ -151,6 +151,21 @@ class ViewController extends Controller
 
     /**
      * @param $character_id
+     * @param $message_id
+     *
+     * @return \Illuminate\View\View
+     */
+    public function getMailRead($character_id, $message_id)
+    {
+
+        $message = $this->getCharacterMailMessage($character_id, $message_id);
+
+        return view('web::character.mail-read', compact('message'));
+
+    }
+
+    /**
+     * @param $character_id
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
