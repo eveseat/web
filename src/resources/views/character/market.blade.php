@@ -47,8 +47,8 @@
               @endif
             </td>
             <td>{{ $states[$order->orderState] }}</td>
-            <td>{{ $order->price }}</td>
-            <td>{{ $order->price * $order->volEntered }}</td>
+            <td>{{ number($order->price) }}</td>
+            <td>{{ number($order->price * $order->volEntered) }}</td>
             <td>
               <span data-toggle="tooltip"
                     title="" data-original-title="{{ $order->stationName }}">

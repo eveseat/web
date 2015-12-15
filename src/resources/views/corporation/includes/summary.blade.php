@@ -46,7 +46,7 @@
         </dd>
 
         <dt>Tax Rate</dt>
-        <dd>{{ $sheet->taxRate }}%</dd>
+        <dd>{{ number($sheet->taxRate) }}%</dd>
 
         <dt>Member Count</dt>
         <dd>

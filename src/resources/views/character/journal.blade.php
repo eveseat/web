@@ -133,8 +133,8 @@
                     n/a
                   @endif
                 </td>
-                <td>{{ $transaction->amount }}</td>
-                <td>{{ $transaction->balance }}</td>
+                <td>{{ number($transaction->amount) }}</td>
+                <td>{{ number($transaction->balance) }}</td>
               </tr>
 
             @endforeach

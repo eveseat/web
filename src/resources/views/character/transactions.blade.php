@@ -152,8 +152,8 @@
                 <td>
                   {{ $transaction->quantity }}
                 </td>
-                <td>{{ $transaction->price }}</td>
-                <td>{{ $transaction->price * $transaction->quantity }}</td>
+                <td>{{ number($transaction->price) }}</td>
+                <td>{{ number($transaction->price * $transaction->quantity) }}</td>
                 <td>
                   {!! img('auto', $transaction->clientID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
                   {{ $transaction->clientName }}
