@@ -45,7 +45,8 @@ class ProfileController extends Controller
     {
 
         $user = $this->getFullUser(auth()->user()->id);
-        $history = auth()->user()->login_history->take(50);
+        $history = auth()->user()->login_history
+            ->take(50)->sortByDesc('created_at');
 
         // Settings value possibilities
         $characters = $this->getUserCharacters(auth()->user()->id);

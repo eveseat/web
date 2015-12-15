@@ -202,20 +202,20 @@
             <li>
 
               <!-- Button trigger modal -->
-              <a type="button" data-toggle="modal" data-target="#ownerModal">
+              <a type="button" data-toggle="modal" data-target="#passwordModal">
                 <i class="fa fa-lock"></i>
                 Change Password
               </a>
 
               <!-- Modal -->
-              <div class="modal fade" id="ownerModal" tabindex="-1" role="dialog" aria-labelledby="ownerModalLabel">
+              <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
-                      <h4 class="modal-title" id="myModalLabel">Change Password</h4>
+                      <h4 class="modal-title" id="passwordModalLabel">Change Password</h4>
                     </div>
                     <div class="modal-body">
 
@@ -255,10 +255,58 @@
 
             </li>
             <li>
-              <a href="#">
-                <i class="fa fa-list"></i>
+
+              <!-- Button trigger modal -->
+              <a type="button" data-toggle="modal" data-target="#historyModal">
+                <i class="fa fa-lock"></i>
                 View Login History
               </a>
+
+              <!-- Modal -->
+              <div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="historyModalLabel">
+                <div class="modal-dialog modal-lg" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      <h4 class="modal-title" id="historyModalLabel">Login History</h4>
+                    </div>
+                    <div class="modal-body">
+
+                      <table class="table table-condensed table-hover table-responsive">
+                        <tbody>
+                        <tr>
+                          <th>Date</th>
+                          <th>Action</th>
+                          <th>Source</th>
+                          <th>User Agent</th>
+                        </tr>
+
+                        @foreach($history as $entry)
+
+                          <tr>
+                            <td>
+                              <span data-toggle="tooltip"
+                                 title="" data-original-title="{{ $entry->created_at }}">
+                                {{ human_diff($entry->created_at) }}
+                              </span>
+                            </td>
+                            <td>{{ ucfirst($entry->action) }}</td>
+                            <td>{{ $entry->source }}</td>
+                            <td>{{ str_limit($entry->user_agent) }}</td>
+                          </tr>
+
+                        @endforeach
+
+                        </tbody>
+                      </table>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </li>
           </ul>
 
