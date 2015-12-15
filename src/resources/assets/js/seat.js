@@ -1,3 +1,11 @@
+// Add the X-CSRF Token header to ajax requests
+// Ref: http://laravel.com/docs/5.1/routing#csrf-x-csrf-token
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
 // Generic 'confirm' dialog code for forms.
 // Make your submit button part of class confirmform, and viola
 var currentForm;
