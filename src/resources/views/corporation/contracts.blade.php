@@ -34,9 +34,7 @@
             </td>
             <td>
               {!! img('auto', $contract->issuerID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-              <span rel="id-to-name">
-                {{ $contract->issuerID }}
-              </span>
+              <span rel="id-to-name">{{ $contract->issuerID }}</span>
             </td>
             <td>
               <i class="fa @if($contract->type == 'ItemExchange') fa-exchange @else fa-truck @endif"
@@ -61,5 +59,11 @@
 
     </div>
   </div>
+
+@stop
+
+@section('javascript')
+
+  @include('web::includes.javascript.id-to-name')
 
 @stop
