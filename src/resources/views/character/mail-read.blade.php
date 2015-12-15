@@ -36,9 +36,7 @@
             <li>
               <b>To Corporation / Alliance:</b>
               {!! img('auto', $message->toCorpOrAllianceID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-              <span rel="id-to-name">
-                {{ $message->toCorpOrAllianceID }}
-              </span>
+              <span rel="id-to-name">{{ $message->toCorpOrAllianceID }}</span>
             </li>
           @endif
 
@@ -49,9 +47,7 @@
               @foreach(explode(',', $message->toCharacterIDs) as $char_id)
                 <a href="{{ route('character.view.sheet', ['character_id' => $char_id]) }}">
                   {!! img('character', $char_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                  <span rel="id-to-name">
-                    {{ $char_id }}
-                  </span>
+                  <span rel="id-to-name">{{ $char_id }}</span>
                 </a>
               @endforeach
 
@@ -69,5 +65,11 @@
 
     </div>
   </div>
+
+@stop
+
+@section('javascript')
+
+  @include('web::includes.javascript.id-to-name')
 
 @stop

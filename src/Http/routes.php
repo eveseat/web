@@ -62,6 +62,7 @@ Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
             ], function () {
 
                 include __DIR__ . '/Routes/Support/List.php';
+                include __DIR__ . '/Routes/Support/Resolve.php';
             });
 
             // User Profile Routes
