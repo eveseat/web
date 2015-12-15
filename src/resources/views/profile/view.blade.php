@@ -200,10 +200,59 @@
           <ul class="list-unstyled">
             <li class="list-header">Account Settings</li>
             <li>
-              <a href="#">
+
+              <!-- Button trigger modal -->
+              <a type="button" data-toggle="modal" data-target="#ownerModal">
                 <i class="fa fa-lock"></i>
                 Change Password
               </a>
+
+              <!-- Modal -->
+              <div class="modal fade" id="ownerModal" tabindex="-1" role="dialog" aria-labelledby="ownerModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      <h4 class="modal-title" id="myModalLabel">Change Password</h4>
+                    </div>
+                    <div class="modal-body">
+
+                      <form role="form" action="{{ route('profile.update.password') }}" method="post">
+                        {{ csrf_field() }}
+
+                        <div class="box-body">
+
+                          <div class="form-group">
+                            <label for="current_password">Current Password</label>
+                            <input type="password" name="current_password" class="form-control" placeholder="Password">
+                          </div>
+
+                          <div class="form-group">
+                            <label for="new_password">New Password</label>
+                            <input type="password" name="new_password" class="form-control" placeholder="Password">
+                          </div>
+
+                          <div class="form-group">
+                            <label for="new_password_confirmation">Confirm New Password</label>
+                            <input type="password" name="new_password_confirmation" class="form-control" id="password_confirmation" placeholder="Password">
+                          </div>
+
+                        </div><!-- /.box-body -->
+
+                        <div class="box-footer">
+                          <button type="submit" class="btn btn-primary pull-right">
+                            Change Password
+                          </button>
+                        </div>
+                      </form>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </li>
             <li>
               <a href="#">

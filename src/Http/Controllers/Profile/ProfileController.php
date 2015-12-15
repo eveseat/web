@@ -26,6 +26,7 @@ use Seat\Services\Repositories\Character\CharacterRepository;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Services\Settings\Profile;
 use Seat\Services\Settings\UserSettings;
+use Seat\Web\Validation\PasswordUpdate;
 use Seat\Web\Validation\ProfileSettings;
 
 /**
@@ -91,6 +92,30 @@ class ProfileController extends Controller
         return redirect()->back()
             ->with('success', 'Profile settings updated!');
 
+    }
+
+    /**
+     * @param \Seat\Web\Validation\PasswordUpdate $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postUpdatePassword(PasswordUpdate $request)
+    {
+
+        if (!auth()->validate([
+            'name'     => auth()->user()->name,
+            'password' => $request->current_password])
+        )
+            return redirect()->back()
+                ->with('error',
+                    'Your current password is incorrect, please try again.');
+
+        $user = auth()->user();
+        $user->password = bcrypt($request->new_password);
+        $user->save();
+
+        return redirect()->back()
+            ->with('success', 'Password updated!');
     }
 
 }

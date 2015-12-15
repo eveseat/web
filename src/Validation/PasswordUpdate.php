@@ -19,17 +19,24 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-Route::get('/', [
-    'as'   => 'profile.view',
-    'uses' => 'ProfileController@getView'
-]);
+namespace Seat\Web\Validation;
 
-Route::post('/update', [
-    'as'   => 'profile.update.settings',
-    'uses' => 'ProfileController@getUpdateUserSettings'
-]);
+use App\Http\Requests\Request;
 
-Route::post('/update/password', [
-    'as'   => 'profile.update.password',
-    'uses' => 'ProfileController@postUpdatePassword'
-]);
+class PasswordUpdate extends Request
+{
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+
+        return [
+            'current_password' => 'required',
+            'new_password'     => 'required|min:6|confirmed'
+        ];
+    }
+}
