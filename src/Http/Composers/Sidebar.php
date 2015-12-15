@@ -105,6 +105,11 @@ class Sidebar
                     'name'  => trans('web::sidebar.all_char'),
                     'icon'  => 'fa-group',
                     'route' => 'character.list'
+                ],
+                [
+                    'name'  => trans('web::sidebar.mail_timeline'),
+                    'icon'  => 'fa-envelope',
+                    'route' => 'character.view.mail.timeline'
                 ]
             ]
         ]);

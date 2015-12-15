@@ -24,5 +24,6 @@ return [
     'character'        => 'character|characters',
     'corporation'      => 'Corporation',
     'corporation_name' => 'Corporation Name',
-    'last_location'    => 'Last Known Location'
+    'last_location'    => 'Last Known Location',
+    'mail_timeline'    => 'Mail Timeline'
 ];

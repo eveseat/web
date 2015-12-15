@@ -66,6 +66,11 @@ Route::get('/view/killmails/{character_id}', [
     'uses'       => 'ViewController@getKillmails'
 ]);
 
+Route::get('/view/mail/timeline', [
+    'as'         => 'character.view.mail.timeline',
+    'uses'       => 'ViewController@getMailTimeline'
+]);
+
 Route::get('/view/mail/{character_id}', [
     'as'         => 'character.view.mail',
     'middleware' => 'characterbouncer:mail',

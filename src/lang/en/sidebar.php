@@ -31,6 +31,7 @@ return [
     // Characters
     'characters'     => 'Characters',
     'all_char'       => 'All Characters',
+    'mail_timeline'  => 'Mail Timeline',
 
     // Corporations
     'corporations'   => 'Corporations',
