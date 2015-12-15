@@ -18,7 +18,6 @@
         </span>
       </li>
 
-
       @foreach($digest as $message)
 
         <li>
@@ -28,13 +27,36 @@
               <i class="fa fa-clock-o"></i>
               {{ $message->sentDate }} ({{ human_diff($message->sentDate) }})
             </span>
-            <h3 class="timeline-header">
+            <h2 class="timeline-header">
               <b>From: </b>
               <a href="{{ route('character.view.sheet', ['character_id' => $message->senderID]) }}">
                 {!! img('character', $message->senderID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                 {{ $message->senderName }}
               </a>
-            </h3>
+
+              @if($message->toCorpOrAllianceID != '')
+                <li>
+                  <b>To Corporation / Alliance:</b>
+                  {!! img('auto', $message->toCorpOrAllianceID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  <span rel="id-to-name">{{ $message->toCorpOrAllianceID }}</span>
+                </li>
+              @endif
+
+              @if($message->toCharacterIDs != '')
+                <li>
+                  <b>To Characters:</b>
+
+                  @foreach(explode(',', $message->toCharacterIDs) as $char_id)
+                    <a href="{{ route('character.view.sheet', ['character_id' => $char_id]) }}">
+                      {!! img('character', $char_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                      <span rel="id-to-name">{{ $char_id }}</span>
+                    </a>
+                  @endforeach
+
+                </li>
+              @endif
+
+            </h2>
             <div class="timeline-body">
               {!! clean_ccp_html($message->body) !!}
             </div>
@@ -54,5 +76,11 @@
   </ul>
 
   {!! $messages->render() !!}
+
+@stop
+
+@section('javascript')
+
+  @include('web::includes.javascript.id-to-name')
 
 @stop
