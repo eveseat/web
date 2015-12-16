@@ -347,7 +347,7 @@ return [
 
     // Corporation
     'alliance'                     => 'Alliance',
-    'ticker'                       => 'Ticket',
+    'ticker'                       => 'Ticker',
     'ceo'                          => 'CEO',
     'home_station'                 => 'Home Station',
     'tax_rate'                     => 'Tax Rate',

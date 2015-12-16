@@ -26,6 +26,10 @@ return [
 
     'languages'       => [
         [
+            'short' => 'af',
+            'full'  => 'Afrikaans'
+        ],
+        [
             'short' => 'en',
             'full'  => 'English'
         ]
