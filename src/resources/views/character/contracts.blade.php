@@ -1,26 +1,26 @@
 @extends('web::character.layouts.view', ['viewname' => 'contracts'])
 
-@section('title', ucfirst(trans_choice('web::character.character', 1)) . ' Contracts')
-@section('page_header', ucfirst(trans_choice('web::character.character', 1)) . ' Contracts')
+@section('title', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.contracts'))
+@section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.contracts'))
 
 @section('character_content')
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">Contracts</h3>
+      <h3 class="panel-title">{{ trans('web::seat.contracts') }}</h3>
     </div>
     <div class="panel-body">
 
       <table class="table table-condensed table-hover table-responsive">
         <tbody>
         <tr>
-          <th>Created</th>
-          <th>Issuer</th>
-          <th>Type</th>
-          <th>Status</th>
-          <th>Title</th>
-          <th>Price</th>
-          <th>Reward</th>
+          <th>{{ trans('web::seat.created') }}</th>
+          <th>{{ trans('web::seat.issuer') }}</th>
+          <th>{{ trans_choice('web::seat.type', 1) }}</th>
+          <th>{{ trans('web::seat.status') }}</th>
+          <th>{{ trans('web::seat.title') }}</th>
+          <th>{{ trans('web::seat.price') }}</th>
+          <th>{{ trans('web::seat.reward') }}</th>
         </tr>
 
         @foreach($contracts as $contract)

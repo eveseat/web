@@ -1,6 +1,6 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">Summary</h3>
+    <h3 class="panel-title">{{ trans('web::seat.summary') }}</h3>
   </div>
   <div class="panel-body">
 
@@ -22,14 +22,14 @@
       <dl>
 
         @if($sheet->allianceID)
-          <dt>Alliance</dt>
+          <dt>{{ trans('web::seat.alliance') }}</dt>
           <dd>{{ $sheet->allianceName }}</dd>
         @endif
 
-        <dt>Ticker</dt>
+        <dt>{{ trans('web::seat.ticker') }}</dt>
         <dd>{{ $sheet->ticker }}</dd>
 
-        <dt>CEO</dt>
+        <dt>{{ trans('web::seat.ceo') }}</dt>
         <dd>
           <a href="{{ route('character.view.sheet', ['character_id' => $sheet->ceoID]) }}">
             {!! img('character', $sheet->ceoID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
@@ -37,18 +37,18 @@
           </a>
         </dd>
 
-        <dt>Home Station</dt>
+        <dt>{{ trans('web::seat.home_station') }}</dt>
         <dd>{{ $sheet->stationName }}</dd>
 
-        <dt>URL</dt>
+        <dt>{{ trans('web::seat.url') }}</dt>
         <dd>
           <a href="{{ $sheet->url }}" target="_blank">{{ $sheet->url }}</a>
         </dd>
 
-        <dt>Tax Rate</dt>
+        <dt>{{ trans('web::seat.tax_rate') }}</dt>
         <dd>{{ number($sheet->taxRate) }}%</dd>
 
-        <dt>Member Count</dt>
+        <dt>{{ trans('web::seat.member_count') }}</dt>
         <dd>
           {{ $sheet->memberCount }} / {{ $sheet->memberLimit }}
         </dd>

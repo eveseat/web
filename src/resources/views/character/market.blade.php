@@ -1,26 +1,26 @@
 @extends('web::character.layouts.view', ['viewname' => 'market'])
 
-@section('title', ucfirst(trans_choice('web::character.character', 1)) . ' Market')
-@section('page_header', ucfirst(trans_choice('web::character.character', 1)) . ' Market')
+@section('title', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.market'))
+@section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.market'))
 
 @section('character_content')
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">Market</h3>
+      <h3 class="panel-title">{{ trans('web::seat.market') }}</h3>
     </div>
     <div class="panel-body">
 
       <table class="table table-condensed table-hover table-responsive">
         <tbody>
         <tr>
-          <th>Issued</th>
-          <th>Type</th>
-          <th>Vol.</th>
-          <th>State</th>
-          <th>Price</th>
-          <th>Total</th>
-          <th>Item Type</th>
+          <th>{{ trans('web::seat.date') }}</th>
+          <th></th>
+          <th>{{ trans('web::seat.volume') }}</th>
+          <th>{{ trans('web::seat.status') }}</th>
+          <th>{{ trans('web::seat.price') }}</th>
+          <th>{{ trans('web::seat.total') }}</th>
+          <th>{{ trans_choice('web::seat.type', 1) }}</th>
         </tr>
 
         @foreach($orders as $order)

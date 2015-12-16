@@ -1,18 +1,18 @@
 @extends('web::layouts.grids.3-9')
 
-@section('title', 'Job History')
-@section('page_header', 'Job History')
+@section('title', trans('web::seat.job_history'))
+@section('page_header', trans('web::seat.job_history'))
 
 @section('left')
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::queue.actions') }}</h3>
+      <h3 class="panel-title">{{ trans('web::seat.actions') }}</h3>
     </div>
     <div class="panel-body">
 
       <a href="{{ route('queue.history.clear') }}" class="btn btn-danger btn-xs btn-block confirmlink">
-        {{ trans('web::queue.clear_all_history') }}
+        {{ trans('web::seat.clear_all_history') }}
       </a>
 
     </div>
@@ -24,7 +24,7 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::queue.job_history') }}</h3>
+      <h3 class="panel-title">{{ trans('web::seat.job_history') }}</h3>
     </div>
     <div class="panel-body">
 
@@ -32,12 +32,12 @@
         <table class="table table-condensed table-hover">
           <tbody>
           <tr>
-            <th>{{ trans('web::queue.status') }}</th>
-            <th>{{ trans('web::queue.owner_id') }}</th>
-            <th>{{ trans('web::queue.created') }}</th>
-            <th>{{ trans('web::queue.api') }}</th>
-            <th>{{ trans('web::queue.scope') }}</th>
-            <th>{{ trans('web::queue.output') }}</th>
+            <th>{{ trans('web::seat.status') }}</th>
+            <th>{{ trans('web::seat.owner_id') }}</th>
+            <th>{{ trans('web::seat.created') }}</th>
+            <th>{{ trans('web::seat.api') }}</th>
+            <th>{{ trans('web::seat.scope') }}</th>
+            <th>{{ trans('web::seat.output') }}</th>
           </tr>
 
           @foreach($history as $job)
@@ -59,7 +59,7 @@
       @else
 
         <span class="text-muted">
-          {{ trans('web::queue.no_history') }}
+          {{ trans('web::seat.no_history') }}
         </span>
 
       @endif

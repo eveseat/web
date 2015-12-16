@@ -1,7 +1,7 @@
 @extends('web::corporation.layouts.view', ['viewname' => 'summary'])
 
-@section('title', ucfirst(trans_choice('web::corporation.corporation', 1)) . ' Summary')
-@section('page_header', ucfirst(trans_choice('web::corporation.corporation', 1)) . ' Summary')
+@section('title', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.summary'))
+@section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.summary'))
 
 @section('corporation_content')
 
@@ -11,25 +11,24 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Summary</h3>
+          <h3 class="panel-title">{{ trans('web::seat.summary') }}</h3>
         </div>
         <div class="panel-body">
 
           <dl>
-            <dt>Shares</dt>
+            <dt>{{ trans('web::seat.shares') }}</dt>
             <dd>{{ $sheet->shares }}</dd>
 
-            <dt>Member Capacity</dt>
+            <dt>{{ trans('web::seat.member_capacity') }}</dt>
             <dd>{{ number( ($sheet->memberCount / $sheet->memberLimit) * 100 ,2) }}% Full</dd>
           </dl>
 
         </div>
-        <div class="panel-footer">Footer</div>
       </div>
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Description</h3>
+          <h3 class="panel-title">{{ trans('web::seat.description') }}</h3>
         </div>
         <div class="panel-body">
 
@@ -42,17 +41,17 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Divisional Information</h3>
+          <h3 class="panel-title">{{ trans('web::seat.divisional_information') }}</h3>
         </div>
         <div class="panel-body">
 
           <ul>
-            <li class="list-header list-unstyled">Corporation Divisions</li>
+            <li class="list-header list-unstyled">{{ trans('web::seat.corporation_divisions') }}</li>
             @foreach($divisions as $division)
               <li>{{ $division->description }}</li>
             @endforeach
 
-            <li class="list-header list-unstyled">Corporation Wallet Divisions</li>
+            <li class="list-header list-unstyled">{{ trans('web::seat.wallet_divisions') }}</li>
             @foreach($wallet_divisions as $wallet_division)
               <li>{{ $wallet_division->description }}</li>
             @endforeach

@@ -1,22 +1,22 @@
 @extends('web::character.layouts.view', ['viewname' => 'notifications'])
 
-@section('title', ucfirst(trans_choice('web::character.character', 1)) . ' Notifications')
-@section('page_header', ucfirst(trans_choice('web::character.character', 1)) . ' Notifications')
+@section('title', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.notifications'))
+@section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.notifications'))
 
 @section('character_content')
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">Notifications</h3>
+      <h3 class="panel-title">{{ trans('web::seat.notifications') }}</h3>
     </div>
     <div class="panel-body">
 
       <table class="table table-condensed table-hover table-responsive">
         <tbody>
         <tr>
-          <th>Sent</th>
-          <th>From</th>
-          <th>Info</th>
+          <th>{{ trans('web::seat.date') }}</th>
+          <th>{{ trans('web::seat.from') }}</th>
+          <th>{{ trans('web::seat.info') }}</th>
         </tr>
 
         @foreach($notifications as $notification)
@@ -33,7 +33,7 @@
             </td>
             <td>
               <i class="fa fa-comment" data-toggle="popover" data-placement="top" title="" data-html="true"
-                 data-trigger="hover" data-content="{{ $notification->text }}"></i>
+                 data-trigger="hover" data-content="{{ clean_ccp_html($notification->text) }}"></i>
               {{ $notification->desc }}
             </td>
           </tr>

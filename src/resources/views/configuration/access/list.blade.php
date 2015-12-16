@@ -1,13 +1,13 @@
 @extends('web::layouts.grids.4-8')
 
-@section('title', trans('web::access.access_mangement'))
-@section('page_header', trans('web::access.access_mangement'))
+@section('title', trans('web::seat.access_mangement'))
+@section('page_header', trans('web::seat.access_mangement'))
 
 @section('left')
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::access.quick_add_role') }}</h3>
+      <h3 class="panel-title">{{ trans('web::seat.quick_add_role') }}</h3>
     </div>
     <div class="panel-body">
 
@@ -17,14 +17,14 @@
         <div class="box-body">
 
           <div class="form-group">
-            <label for="exampleInputEmail1">{{ trans('web::access.role_name') }}</label>
+            <label for="exampleInputEmail1">{{ trans('web::seat.role_name') }}</label>
             <input type="text" name="title" class="form-control" id="title" placeholder="Enter role name">
           </div>
 
         </div><!-- /.box-body -->
 
         <div class="box-footer">
-          <button type="submit" class="btn btn-primary pull-right">{{ trans('web::access.add_new_role') }}</button>
+          <button type="submit" class="btn btn-primary pull-right">{{ trans('web::seat.add_new_role') }}</button>
         </div>
       </form>
 
@@ -37,17 +37,17 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::access.available_roles') }}</h3>
+      <h3 class="panel-title">{{ trans('web::seat.available_roles') }}</h3>
     </div>
     <div class="panel-body">
 
       <table class="table table-hover table-condensed">
         <tbody>
         <tr>
-          <th>{{ ucfirst(trans_choice('web::general.name', 2)) }}</th>
-          <th>{{ ucfirst(trans_choice('web::general.user', 2)) }}</th>
-          <th>{{ ucfirst(trans_choice('web::general.permission', 2)) }}</th>
-          <th>{{ ucfirst(trans_choice('web::general.affiliation', 2)) }}</th>
+          <th>{{ trans_choice('web::seat.name', 2) }}</th>
+          <th>{{ trans_choice('web::seat.user', 2) }}</th>
+          <th>{{ trans_choice('web::seat.permission', 2) }}</th>
+          <th>{{ trans_choice('web::seat.affiliation', 2) }}</th>
           <th></th>
         </tr>
 
@@ -60,10 +60,10 @@
             <td>{{ count($role->affiliations) }}</td>
             <td>
               <a href="{{ route('configuration.access.roles.edit', ['id' => $role->id]) }}" type="button" class="btn btn-primary btn-xs">
-                {{ ucfirst(trans('web::general.edit')) }}
+                {{ trans('web::seat.edit') }}
               </a>
               <a href="{{ route('configuration.access.roles.delete', ['id' => $role->id]) }}" type="button" class="btn btn-danger btn-xs">
-                {{ ucfirst(trans('web::general.delete')) }}
+                {{ trans('web::seat.delete') }}
               </a>
             </td>
           </tr>
@@ -75,7 +75,7 @@
 
     </div>
     <div class="panel-footer">
-      <b>{{ count($roles) }}</b> {{ ucfirst(trans_choice('web::general.role', count($roles))) }}
+      <b>{{ count($roles) }}</b> {{ trans_choice('web::seat.role', count($roles)) }}
     </div>
   </div>
 

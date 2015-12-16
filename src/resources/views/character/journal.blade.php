@@ -1,7 +1,7 @@
 @extends('web::character.layouts.view', ['viewname' => 'journal'])
 
-@section('title', ucfirst(trans_choice('web::character.character', 1)) . ' Wallet Journal')
-@section('page_header', ucfirst(trans_choice('web::character.character', 1)) . ' Wallet Journal')
+@section('title', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.wallet_journal'))
+@section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.wallet_journal'))
 
 @inject('request', 'Illuminate\Http\Request')
 
@@ -12,7 +12,7 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Filters</h3>
+          <h3 class="panel-title">{{ trans_choice('web::seat.filter', 2) }}</h3>
         </div>
         <div class="panel-body">
 
@@ -23,7 +23,7 @@
             <div class="box-body">
 
               <div class="form-group">
-                <label>Transaction Type</label>
+                <label>{{ trans('web::seat.transaction_type') }}</label>
                 <select id="refTypeName" class="form-control" name="filter[refTypeName][]" multiple>
 
                   @foreach($transaction_types as $type)
@@ -49,11 +49,11 @@
 
               <a href="{{ route('character.view.journal', ['character_id' => $request->character_id]) }}"
                  class="btn btn-warning pull-left">
-                {{ trans('web::general.clear_filters') }}
+                {{ trans('web::seat.clear') }}
               </a>
 
               <button type="submit" class="btn btn-primary pull-right">
-                {{ ucfirst(trans_choice('web::general.filter', 1)) }}
+                {{ trans_choice('web::seat.filter', 1) }}
               </button>
 
             </div>
@@ -90,19 +90,19 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Wallet Journal</h3>
+          <h3 class="panel-title">{{ trans('web::seat.wallet_journal') }}</h3>
         </div>
         <div class="panel-body">
 
           <table class="table table-condensed table-hover">
             <tbody>
             <tr>
-              <th>Date</th>
-              <th>Type</th>
-              <th>Owner1</th>
-              <th>Owner2</th>
-              <th>Amount</th>
-              <th>Balance</th>
+              <th>{{ trans('web::seat.date') }}</th>
+              <th>{{ trans_choice('web::seat.type', 1) }}</th>
+              <th>{{ trans('web::seat.owner_1') }}</th>
+              <th>{{ trans('web::seat.owner_2') }}</th>
+              <th>{{ trans('web::seat.amount') }}</th>
+              <th>{{ trans('web::seat.balance') }}</th>
             </tr>
 
             @foreach($journal as $transaction)

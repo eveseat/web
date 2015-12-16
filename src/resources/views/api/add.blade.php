@@ -1,13 +1,13 @@
 @extends('web::layouts.grids.4-8')
 
-@section('title', trans('web::api.add'))
-@section('page_header', trans('web::api.add'))
+@section('title', trans('web::seat.api_key_add'))
+@section('page_header', trans('web::seat.api_key_add'))
 
 @section('left')
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::api.add') }}</h3>
+      <h3 class="panel-title">{{ trans('web::seat.api_key_add') }}</h3>
     </div>
   <div class="panel-body">
 
@@ -17,15 +17,15 @@
       <div class="box-body">
 
         <div class="form-group">
-          <label for="key_id">{{ trans('web::api.key_id') }}</label>
+          <label for="key_id">{{ trans('web::seat.key_id') }}</label>
           <input type="text" name="key_id" class="form-control" id="key_id" value="{{ old('key_id') }}"
-                 placeholder="{{ trans('web::api.key_id') }}">
+                 placeholder="{{ trans('web::seat.key_id') }}">
         </div>
 
         <div class="form-group">
-          <label for="text">{{ trans('web::api.verification_code') }}</label>
+          <label for="text">{{ trans('web::seat.v_code') }}</label>
           <input type="text" name="v_code" class="form-control" id="v_code" value=""
-                 placeholder="{{ trans('web::api.verification_code') }}">
+                 placeholder="{{ trans('web::seat.v_code') }}">
         </div>
 
       </div>
@@ -33,7 +33,7 @@
 
       <div class="box-footer">
         <button type="submit" class="btn btn-primary pull-right">
-          {{ trans('web::api.check_key') }}
+          {{ trans('web::seat.check_key') }}
         </button>
       </div>
     </form>
@@ -43,13 +43,13 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::api.create_new_key') }}</h3>
+      <h3 class="panel-title">{{ trans('web::seat.api_new_key') }}</h3>
     </div>
     <div class="panel-body">
 
     <p>
       <span class="text-muted">
-        {{ trans('web::api.use_links') }}
+        {{ trans('web::seat.api_use_link') }}
       </span>
     </p>
 
@@ -57,7 +57,7 @@
       <li>
         <a href="https://community.eveonline.com/support/api-key/CreatePredefined?accessMask={{ config('web.config.max_access_mask') }}"
            target="_blank">
-          {{ trans('web::api.full_link') }}
+          {{ trans('web::seat.api_full_link') }}
         </a>
       </li>
     </ul>

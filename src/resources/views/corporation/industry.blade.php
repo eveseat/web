@@ -1,7 +1,7 @@
 @extends('web::corporation.layouts.view', ['viewname' => 'industry'])
 
-@section('title', ucfirst(trans_choice('web::corporation.corporation', 1)) . ' Industry')
-@section('page_header', ucfirst(trans_choice('web::corporation.corporation', 1)) . ' Industry')
+@section('title', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.industry'))
+@section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.industry'))
 
 @inject('carbon', 'Carbon\Carbon')
 
@@ -9,20 +9,20 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">Industry</h3>
+      <h3 class="panel-title">{{ trans('web::seat.industry') }}</h3>
     </div>
     <div class="panel-body">
 
       <table class="table table-condensed table-hover table-responsive">
         <tbody>
         <tr>
-          <th>Start</th>
-          <th>Installer</th>
-          <th>System</th>
-          <th>Activity</th>
-          <th>Runs</th>
-          <th>Bueprint</th>
-          <th>Product</th>
+          <th>{{ trans('web::seat.date') }}</th>
+          <th>{{ trans('web::seat.installer') }}</th>
+          <th>{{ trans('web::seat.system') }}</th>
+          <th>{{ trans('web::seat.activity') }}</th>
+          <th>{{ trans_choice('web::seat.run', 2) }}</th>
+          <th>{{ trans('web::seat.blueprint') }}</th>
+          <th>{{ trans('web::seat.product') }}</th>
           <th></th>
         </tr>
 

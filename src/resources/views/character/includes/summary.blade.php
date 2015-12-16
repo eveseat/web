@@ -1,6 +1,6 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">Summary</h3>
+    <h3 class="panel-title">{{ trans('web::seat.summary') }}</h3>
   </div>
   <div class="panel-body">
 
@@ -47,22 +47,22 @@
 
       <dl>
 
-        <dt>Joined Current Corp</dt>
+        <dt>{{ trans('web::seat.joined_curr_corp') }}</dt>
         <dd>{{ human_diff($summary->corporationDate) }}</dd>
 
-        <dt>Skillpoints</dt>
+        <dt>{{ trans_choice('web::seat.skillpoint', 2) }}</dt>
         <dd>{{ number($summary->skillPoints, 0) }}</dd>
 
-        <dt>Account Balance</dt>
+        <dt>{{ trans('web::seat.account_balance') }}</dt>
         <dd>{{ number($summary->accountBalance) }}</dd>
 
-        <dt>Current Ship</dt>
+        <dt>{{ trans('web::seat.current_ship') }}</dt>
         <dd>{{ $summary->shipTypeName }} called <i>{{ $summary->shipName }}</i></dd>
 
-        <dt>Last Location</dt>
+        <dt>{{ trans('web::seat.last_location') }}</dt>
         <dd>{{ $summary->lastKnownLocation }}</dd>
 
-        <dt>Security Status</dt>
+        <dt>{{ trans('web::seat.security_status') }}</dt>
         <dd>
           @if($summary->securityStatus < 0)
             <span class="text-danger">

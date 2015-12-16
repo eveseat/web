@@ -12,20 +12,20 @@
       <div class="pull-left info">
         <p>
           @if(is_null(setting('main_character_name')))
-            <a href="{{ route('profile.view') }}">No Main Character!</a>
+            <a href="{{ route('profile.view') }}">{{ trans('web::seat.no_main_char') }}!</a>
           @else
-            Hello, {{ setting('main_character_name') }}
+            {{ trans('web::seat.hello') }}, {{ setting('main_character_name') }}
           @endif
         </p>
         <!-- Status -->
-        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        <a href="#"><i class="fa fa-circle text-success"></i> {{ trans('web::seat.online') }}</a>
       </div>
     </div>
 
     <!-- search form -->
     <form action="#" method="get" class="sidebar-form">
       <div class="input-group">
-        <input type="text" name="q" class="form-control" placeholder="Search...">
+        <input type="text" name="q" class="form-control" placeholder="{{ trans('web::seat.search') }}...">
           <span class="input-group-btn">
             <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
             </button>
@@ -36,7 +36,7 @@
 
     <!-- Sidebar Menu -->
     <ul class="sidebar-menu">
-      <li class="header">Main Menu</li>
+      <li class="header">{{ trans('web::seat.main_menu') }}</li>
 
       @foreach($menu as $entry)
 

@@ -1,13 +1,13 @@
 @extends('web::corporation.security.layouts.view', ['sub_viewname' => 'titles'])
 
-@section('title', ucfirst(trans_choice('web::corporation.corporation', 1)) . ' Titles')
-@section('page_header', ucfirst(trans_choice('web::corporation.corporation', 1)) . ' Titles')
+@section('title', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.title', 2))
+@section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.title', 2))
 
 @section('security_content')
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">Member Titles</h3>
+      <h3 class="panel-title">{{ trans_choice('web::seat.title', 2) }}</h3>
     </div>
     <div class="panel-body">
 
@@ -23,6 +23,7 @@
               </b>
               <span class="pull-right">
                 {{ count($titles->where('titleID', $titleID)) }}
+                {{ trans_choice('web::seat.character', count($titles->where('titleID', $titleID))) }}
               </span>
             </td>
           </tr>

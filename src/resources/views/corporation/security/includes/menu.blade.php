@@ -2,11 +2,20 @@
 
   <ul class="nav nav-pills">
     <li role="presentation" class="@if ($sub_viewname == 'roles') active @endif">
-      <a href="{{ route('corporation.view.security.roles', $sheet->corporationID) }}">Roles</a></li>
+      <a href="{{ route('corporation.view.security.roles', $sheet->corporationID) }}">
+        {{ trans_choice('web::seat.role', 2) }}
+      </a>
+    </li>
     <li role="presentation" class="@if ($sub_viewname == 'titles') active @endif">
-      <a href="{{ route('corporation.view.security.titles', $sheet->corporationID) }}">Titles</a></li>
+      <a href="{{ route('corporation.view.security.titles', $sheet->corporationID) }}">
+        {{ trans_choice('web::seat.title', 2) }}
+      </a>
+    </li>
     <li role="presentation" class="@if ($sub_viewname == 'log') active @endif">
-      <a href="{{ route('corporation.view.security.log', $sheet->corporationID) }}">Log</a></li>
+      <a href="{{ route('corporation.view.security.log', $sheet->corporationID) }}">
+        {{ trans_choice('web::seat.log', 2) }}
+      </a>
+    </li>
   </ul>
 
 </div>

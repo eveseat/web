@@ -1,6 +1,6 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">{{ trans('web::api.key_info') }}</h3>
+    <h3 class="panel-title">{{ trans('web::seat.api_key_info') }}</h3>
   </div>
   <div class="panel-body">
 
@@ -8,9 +8,9 @@
       <div class="col-md-5">
 
         <dl class="dl-horizontal">
-          <dt>{{ trans('web::api.key_type') }}</dt>
+          <dt>{{ trans('web::seat.api_key_type') }}</dt>
           <dd>{{ $key_type }}</dd>
-          <dt>{{ trans('web::api.access_mask') }}</dt>
+          <dt>{{ trans('web::seat.api_access_mask') }}</dt>
           <dd>{{ $access_mask }}</dd>
         </dl>
         <hr>
@@ -44,15 +44,15 @@
 
           <div class="box-footer">
             <button type="submit" class="btn btn-block btn-success">
-              {{ trans('web::api.add_type_key', ['type' => $key_type]) }}
+              {{ trans('web::seat.api_add_type_key', ['type' => $key_type]) }}
             </button>
           </div>
         </form>
 
         <div class="text-muted">
           <i class="fa fa-info"></i>
-          <span class="text-bold">{{ ucfirst(trans('web::general.note')) }}:</span>
-          {{ trans('web::api.add_job_notice') }}
+          <span class="text-bold">{{ trans('web::seat.note') }}:</span>
+          {{ trans('web::seat.api_add_job') }}
         </div>
 
       </div>
@@ -62,9 +62,9 @@
         <table class="table table-condensed table-hover">
           <tbody>
           <tr>
-            <th>{{ ucfirst(trans_choice('web::general.name', 1)) }}</th>
-            <th>{{ trans('web::api.min_mask') }}</th>
-            <th>{{ trans('web::api.access') }}</th>
+            <th>{{ trans_choice('web::seat.name', 1) }}</th>
+            <th>{{ trans('web::seat.api_min_mask') }}</th>
+            <th>{{ trans('web::seat.api_access') }}</th>
           </tr>
 
           @foreach($access_map as $name => $bitmask)
@@ -75,11 +75,11 @@
               <td>
                 @if($access_mask & $bitmask)
                   <span class="label label-success">
-                      {{ trans('web::api.granted') }}
+                      {{ trans('web::seat.granted') }}
                     </span>
                 @else
                   <span class="label label-danger">
-                    {{ trans('web::api.denied') }}
+                    {{ trans('web::seat.denied') }}
                     </span>
                 @endif
               </td>
@@ -92,7 +92,6 @@
 
       </div>
     </div>
-
 
   </div>
 </div>

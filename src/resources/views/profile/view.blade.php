@@ -1,13 +1,13 @@
 @extends('web::layouts.grids.6-6')
 
-@section('title', 'User Profile')
-@section('page_header', 'User Profile')
+@section('title', trans('web::seat.user_profile'))
+@section('page_header', trans('web::seat.user_profile'))
 
 @section('left')
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">User Preferces</h3>
+      <h3 class="panel-title">{{ trans('web::seat.user_preferences') }}</h3>
     </div>
     <div class="panel-body">
 
@@ -17,11 +17,11 @@
 
         <div class="box-body">
 
-          <legend>User Interface</legend>
+          <legend>{{ trans('web::seat.user_interface') }}</legend>
 
           <!-- Select Basic -->
           <div class="form-group">
-            <label class="col-md-4 control-label" for="main_character_id">Main Character</label>
+            <label class="col-md-4 control-label" for="main_character_id">{{ trans('web::seat.main_character') }}</label>
             <div class="col-md-6">
               <select id="main_character_id" name="main_character_id" class="form-control">
                 @foreach($characters as $character)
@@ -37,7 +37,7 @@
 
           <!-- Select Basic -->
           <div class="form-group">
-            <label class="col-md-4 control-label" for="skin">SeAT Skin</label>
+            <label class="col-md-4 control-label" for="skin">{{ trans('web::seat.seat_skin') }}</label>
             <div class="col-md-6">
               <select id="skin" name="skin" class="form-control">
                 @foreach($skins as $skin)
@@ -53,7 +53,7 @@
 
           <!-- Select Basic -->
           <div class="form-group">
-            <label class="col-md-4 control-label" for="sidebar">Sidebar Size</label>
+            <label class="col-md-4 control-label" for="sidebar">{{ trans('web::seat.sidebar_size') }}</label>
             <div class="col-md-6">
               <select id="sidebar" name="sidebar" class="form-control">
                 @foreach($sidebar as $style)
@@ -67,11 +67,11 @@
             </div>
           </div>
 
-          <legend>Number Format</legend>
+          <legend>{{ trans('web::seat.number_format') }}</legend>
 
           <!-- Select Basic -->
           <div class="form-group">
-            <label class="col-md-4 control-label" for="thousand_seperator">Thousands Seperator</label>
+            <label class="col-md-4 control-label" for="thousand_seperator">{{ trans('web::seat.thousands_seperator') }}</label>
             <div class="col-md-6">
               <div class="form-inline input-group">
                 <select id="thousand_seperator" name="thousand_seperator" class="form-control">
@@ -91,7 +91,7 @@
 
           <!-- Select Basic -->
           <div class="form-group">
-            <label class="col-md-4 control-label" for="decimal_seperator">Decimal Seperator</label>
+            <label class="col-md-4 control-label" for="decimal_seperator">{{ trans('web::seat.decimal_seperator') }}</label>
             <div class="col-md-6">
               <div class="form-inline input-group">
                 <select id="decimal_seperator" name="decimal_seperator" class="form-control">
@@ -103,47 +103,47 @@
                 </select>
               </div>
               <span class="help-block">
-                Current format: {{ number(10000000.00) }}
+                {{ trans('web::seat.current_format') }}: {{ number(10000000.00) }}
               </span>
             </div>
           </div>
 
-          <legend>Notifications</legend>
+          <legend>{{ trans('web::seat.notifications') }}</legend>
 
           <!-- Select Basic -->
           <div class="form-group">
-            <label class="col-md-4 control-label" for="email_notifications">Email Notifications</label>
+            <label class="col-md-4 control-label" for="email_notifications">{{ trans('web::seat.email_notifications') }}</label>
             <div class="col-md-6">
               <div class="form-inline input-group">
                 <select id="email_notifications" name="email_notifications" class="form-control">
                   <option value="yes"
                           @if(setting('email_notifications') == "yes") selected @endif>
-                    Yes
+                    {{ trans('web::seat.yes') }}
                   </option>
                   <option value="no"
                           @if(setting('email_notifications') == "no") selected @endif>
-                    No
+                    {{ trans('web::seat.no') }}
                   </option>
                 </select>
               </div>
             </div>
           </div>
 
-          <legend>Multifactor Authentication</legend>
+          <legend>{{ trans('web::seat.mfa') }}</legend>
 
           <!-- Select Basic -->
           <div class="form-group">
-            <label class="col-md-4 control-label" for="require_mfa">Require MFA</label>
+            <label class="col-md-4 control-label" for="require_mfa">{{ trans('web::seat.require_mfa') }}</label>
             <div class="col-md-6">
               <div class="form-inline input-group">
                 <select id="require_mfa" name="require_mfa" class="form-control">
                   <option value="yes"
                           @if(setting('require_mfa') == "yes") selected @endif>
-                    Yes
+                    {{ trans('web::seat.yes') }}
                   </option>
                   <option value="no"
                           @if(setting('require_mfa') == "no") selected @endif>
-                    No
+                    {{ trans('web::seat.no') }}
                   </option>
                 </select>
                 <span class="help-block">
@@ -154,7 +154,9 @@
                   </p>
                   <p>
                     @if(setting('require_mfa') == "yes")
-                      <a href="{{ route('profile.mfa.new') }}">Setup Token Now</a>
+                      <a href="{{ route('profile.mfa.new') }}">
+                        {{ trans('web::seat.setup_token_now') }}
+                      </a>
                     @endif
                   </p>
                 </span>
@@ -169,7 +171,9 @@
           <div class="form-group">
             <label class="col-md-4 control-label" for="submit"></label>
             <div class="col-md-4">
-              <button id="submit" type="submit" class="btn btn-primary">Update</button>
+              <button id="submit" type="submit" class="btn btn-primary">
+                {{ trans('web::seat.update') }}
+              </button>
             </div>
           </div>
         </div>
@@ -185,9 +189,9 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">
-        User Account
+        {{ trans('web::seat.user_account') }}
         <span class="pull-right">
-          Last Login: {{ auth()->user()->last_login }}
+          {{ trans('web::seat.last_login') }}: {{ auth()->user()->last_login }}
           ({{ human_diff(auth()->user()->last_login) }})
         </span>
       </h3>
@@ -198,13 +202,13 @@
         <div class="col-md-6">
 
           <ul class="list-unstyled">
-            <li class="list-header">Account Settings</li>
+            <li class="list-header">{{ trans('web::seat.account_settings') }}</li>
             <li>
 
               <!-- Button trigger modal -->
               <a type="button" data-toggle="modal" data-target="#passwordModal">
                 <i class="fa fa-lock"></i>
-                Change Password
+                {{ trans('web::seat.change_password') }}
               </a>
 
               <!-- Modal -->
@@ -215,7 +219,7 @@
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
-                      <h4 class="modal-title" id="passwordModalLabel">Change Password</h4>
+                      <h4 class="modal-title" id="passwordModalLabel">{{ trans('web::seat.change_password') }}</h4>
                     </div>
                     <div class="modal-body">
 
@@ -225,17 +229,17 @@
                         <div class="box-body">
 
                           <div class="form-group">
-                            <label for="current_password">Current Password</label>
+                            <label for="current_password">{{ trans('web::seat.current_password') }}</label>
                             <input type="password" name="current_password" class="form-control" placeholder="Password">
                           </div>
 
                           <div class="form-group">
-                            <label for="new_password">New Password</label>
+                            <label for="new_password">{{ trans('web::seat.new_password') }}</label>
                             <input type="password" name="new_password" class="form-control" placeholder="Password">
                           </div>
 
                           <div class="form-group">
-                            <label for="new_password_confirmation">Confirm New Password</label>
+                            <label for="new_password_confirmation">{{ trans('web::seat.confirm_new_password') }}</label>
                             <input type="password" name="new_password_confirmation" class="form-control" id="password_confirmation" placeholder="Password">
                           </div>
 
@@ -243,7 +247,7 @@
 
                         <div class="box-footer">
                           <button type="submit" class="btn btn-primary pull-right">
-                            Change Password
+                            {{ trans('web::seat.change_password') }}
                           </button>
                         </div>
                       </form>
@@ -259,7 +263,7 @@
               <!-- Button trigger modal -->
               <a type="button" data-toggle="modal" data-target="#historyModal">
                 <i class="fa fa-lock"></i>
-                View Login History
+                {{ trans('web::seat.login_history') }}
               </a>
 
               <!-- Modal -->
@@ -270,17 +274,17 @@
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
-                      <h4 class="modal-title" id="historyModalLabel">Login History</h4>
+                      <h4 class="modal-title" id="historyModalLabel">{{ trans('web::seat.login_history') }}</h4>
                     </div>
                     <div class="modal-body">
 
                       <table class="table table-condensed table-hover table-responsive">
                         <tbody>
                         <tr>
-                          <th>Date</th>
-                          <th>Action</th>
-                          <th>Source</th>
-                          <th>User Agent</th>
+                          <th>{{ trans('web::seat.date') }}</th>
+                          <th>{{ trans('web::seat.action') }}</th>
+                          <th>{{ trans('web::seat.source') }}</th>
+                          <th>{{ trans('web::seat.user_agent') }}</th>
                         </tr>
 
                         @foreach($history as $entry)
@@ -314,7 +318,7 @@
         <div class="col-md-6">
 
           <ul class="list-unstyled">
-            <li class="list-header">Roles</li>
+            <li class="list-header">{{ trans_choice('web::seat.role', 2) }}</li>
             @foreach($user->roles as $role)
               <li>
                 <i class="fa fa-group"></i>
@@ -332,18 +336,18 @@
     <div class="panel-footer">
       @if(auth()->user()->hasSuperUser())
         <span class="label label-danger">
-          Superuser
+          {{ trans('web::seat.superuser') }}
         </span>
       @endif
 
       <span class="pull-right">
-        {{ count($user->keys) }} owned keys.
+        {{ count($user->keys) }} {{ trans('web::seat.owned_keys') }}
       </span>
     </div>
   </div>
 
   <span class="text-center">
-    For any account related enquiries, including permissions amendments, please contact the SeAT administrator.
+    {{ trans('web::seat.account_help') }}
   </span>
 
 @stop

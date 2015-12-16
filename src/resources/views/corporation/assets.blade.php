@@ -1,23 +1,23 @@
 @extends('web::corporation.layouts.view', ['viewname' => 'assets'])
 
-@section('title', ucfirst(trans_choice('web::corporation.corporation', 1)) . ' Assets')
-@section('page_header', ucfirst(trans_choice('web::corporation.corporation', 1)) . ' Assets')
+@section('title', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.assets'))
+@section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.assets'))
 
 @section('corporation_content')
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">Assets</h3>
+      <h3 class="panel-title">{{ trans('web::seat.assets') }}</h3>
     </div>
     <div class="panel-body">
 
       <table class="table table-condensed table-hover table-responsive">
         <tbody>
         <tr>
-          <th>Qty</th>
-          <th>Type</th>
-          <th>Volume</th>
-          <th>Group</th>
+          <th>{{ trans('web::seat.quantity') }}</th>
+          <th>{{ trans_choice('web::seat.type', 1) }}</th>
+          <th>{{ trans('web::seat.volume') }}</th>
+          <th>{{ trans('web::seat.group') }}</th>
         </tr>
 
         @foreach($assets->unique('location')->groupBy('location') as $location => $data)
@@ -28,12 +28,13 @@
                 @if($location)
                   {{ $location }}
                 @else
-                  Unknown
+                  {{ trans('web::seat.unknown') }}
                 @endif
               </b>
             <span class="pull-right">
               <i>
-                {{ count($assets->where('locationID', $data[0]->locationID)) }} items taking
+                {{ count($assets->where('locationID', $data[0]->locationID)) }}
+                {{ trans('web::seat.items_taking') }}
                 {{ number_metric($assets
                     ->where('locationID', $data[0]->locationID)->map(function($item) {
                       return $item->quantity * $item->volume;

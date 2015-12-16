@@ -1,23 +1,23 @@
 @extends('web::character.layouts.view', ['viewname' => 'killmails'])
 
-@section('title', ucfirst(trans_choice('web::character.character', 1)) . ' Killmails')
-@section('page_header', ucfirst(trans_choice('web::character.character', 1)) . ' Killmails')
+@section('title', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.killmails'))
+@section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.killmails'))
 
 @section('character_content')
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">Killmails</h3>
+      <h3 class="panel-title">{{ trans('web::seat.killmails') }}</h3>
     </div>
     <div class="panel-body">
 
       <table class="table table-condensed table-hover table-responsive">
         <tbody>
         <tr>
-          <th>Date</th>
-          <th>Victim</th>
-          <th>Ship Type</th>
-          <th>Location</th>
+          <th>{{ trans('web::seat.date') }}</th>
+          <th>{{ trans('web::seat.victim') }}</th>
+          <th>{{ trans('web::seat.ship_type') }}</th>
+          <th>{{ trans('web::seat.location') }}</th>
           <th></th>
         </tr>
 

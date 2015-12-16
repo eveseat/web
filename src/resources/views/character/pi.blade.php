@@ -1,24 +1,24 @@
 @extends('web::character.layouts.view', ['viewname' => 'pi'])
 
-@section('title', ucfirst(trans_choice('web::character.character', 1)) . ' Planetary Interaction')
-@section('page_header', ucfirst(trans_choice('web::character.character', 1)) . ' Planetary Interaction')
+@section('title', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.pi'))
+@section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.pi'))
 
 @section('character_content')
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">Planetary Interaction</h3>
+      <h3 class="panel-title">{{ trans('web::seat.pi') }}</h3>
     </div>
     <div class="panel-body">
 
       <table class="table table-condensed table-hover table-responsive">
         <tbody>
         <tr>
-          <th>Updated</th>
-          <th>System</th>
-          <th>Planet</th>
-          <th>Upgrade Lvl.</th>
-          <th># Pins</th>
+          <th>{{ trans('web::seat.updated') }}</th>
+          <th>{{ trans('web::seat.system') }}</th>
+          <th>{{ trans('web::seat.planet') }}</th>
+          <th>{{ trans('web::seat.upgrade_level') }}</th>
+          <th>{{ trans('web::seat.no_pins') }}</th>
         </tr>
 
         @foreach($colonies as $colony)

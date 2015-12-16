@@ -1,24 +1,24 @@
 @extends('web::corporation.layouts.view', ['viewname' => 'tracking'])
 
-@section('title', ucfirst(trans_choice('web::corporation.corporation', 1)) . ' Member Tracking')
-@section('page_header', ucfirst(trans_choice('web::corporation.corporation', 1)) . ' Member Tracking')
+@section('title', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.tracking'))
+@section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.tracking'))
 
 @section('corporation_content')
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">Member Tracking</h3>
+      <h3 class="panel-title">{{ trans('web::seat.tracking') }}</h3>
     </div>
     <div class="panel-body">
 
       <table class="table table-condensed table-hover table-responsive">
         <tbody>
         <tr>
-          <th>Name</th>
-          <th>Joined</th>
-          <th>Location</th>
-          <th>Last Login</th>
-          <th>Key</th>
+          <th>{{ trans_choice('web::seat.name', 1) }}</th>
+          <th>{{ trans('web::seat.joined') }}</th>
+          <th>{{ trans('web::seat.location') }}</th>
+          <th>{{ trans('web::seat.last_login') }}</th>
+          <th>{{ trans('web::seat.key') }}</th>
         </tr>
 
         @foreach($tracking as $character)

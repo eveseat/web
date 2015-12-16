@@ -1,23 +1,23 @@
 @extends('web::character.layouts.view', ['viewname' => 'mail'])
 
-@section('title', ucfirst(trans_choice('web::character.character', 1)) . ' Mail')
-@section('page_header', ucfirst(trans_choice('web::character.character', 1)) . ' Mail')
+@section('title', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.mail'))
+@section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.mail'))
 
 @section('character_content')
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">Mail</h3>
+      <h3 class="panel-title">{{ trans('web::seat.mail') }}</h3>
     </div>
     <div class="panel-body">
 
       <table class="table table-condensed table-hover table-responsive">
         <tbody>
         <tr>
-          <th>Sent</th>
-          <th>From</th>
-          <th>Title</th>
-          <th>To</th>
+          <th>{{ trans('web::seat.date') }}</th>
+          <th>{{ trans('web::seat.from') }}</th>
+          <th>{{ trans('web::seat.title') }}</th>
+          <th>{{ trans('web::seat.to') }}</th>
           <th></th>
         </tr>
 

@@ -1,7 +1,7 @@
 @extends('web::character.layouts.view', ['viewname' => 'sheet'])
 
-@section('title', ucfirst(trans_choice('web::character.character', 1)) . ' sheet')
-@section('page_header', ucfirst(trans_choice('web::character.character', 1)) . ' sheet')
+@section('title', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.sheet'))
+@section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.sheet'))
 
 @section('character_content')
 
@@ -11,31 +11,31 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Skills Summary</h3>
+          <h3 class="panel-title">{{ trans('web::seat.skills_summary') }}</h3>
         </div>
         <div class="panel-body">
 
           <dl>
 
-            <dt>Currently Training</dt>
+            <dt>{{ trans('web::seat.curr_training') }}</dt>
             <dd>
               @if($skill_in_training && strlen($skill_in_training->typeName) > 0)
                 {{ $skill_in_training->typeName }} to level <b>{{ $skill_in_training->trainingToLevel }}</b>
               @else
-                No skill in training.
+                {{ trans('web::seat.no_skill_training') }}
               @endif
             </dd>
 
-            <dt>Skill Training End</dt>
+            <dt>{{ trans('web::seat.skill_training_end') }}</dt>
             <dd>
               @if($skill_in_training)
                 {{ human_diff($skill_in_training->trainingEndTime) }} at {{ $skill_in_training->trainingEndTime }}
               @else
-                No skill in training.
+                {{ trans('web::seat.no_skill_training') }}
               @endif
             </dd>
 
-            <dt>Skill Queue</dt>
+            <dt>{{ trans('web::seat.skill_queue') }}</dt>
             <dd>
               @if($skill_queue && count($skill_queue) > 0)
                 <ol>
@@ -54,7 +54,7 @@
 
                 </ol>
               @else
-                The skill queue us empty.
+                {{ trans('web::seat.empty_skill_queue') }}
               @endif
             </dd>
 
@@ -65,22 +65,22 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Account Information</h3>
+          <h3 class="panel-title">{{ trans('web::seat.account_info') }}</h3>
         </div>
         <div class="panel-body">
 
           <dl>
 
-            <dt>Key ID</dt>
+            <dt>{{ trans('web::seat.key_id') }}</dt>
             <dd>{{ $account_info->keyID }}</dd>
 
-            <dt>Paid Until</dt>
+            <dt>{{ trans('web::seat.paid_until') }}</dt>
             <dd>{{ $account_info->paidUntil }} ( payment due {{ human_diff($account_info->paidUntil) }} )</dd>
 
-            <dt>Logon Count</dt>
+            <dt>{{ trans('web::seat.logon_count') }}</dt>
             <dd>{{ $account_info->logonCount }} logins to Eve related services</dd>
 
-            <dt>Online Time</dt>
+            <dt>{{ trans('web::seat.online_time') }}</dt>
             <dd>
               {{ $account_info->logonMinutes }} minutes,
               {{ round(((int)$account_info->logonMinutes/60),0) }} hours or
@@ -94,12 +94,12 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Jump Fatigue &amp; Jump Clones</h3>
+          <h3 class="panel-title">{{ trans('web::seat.jump_fatigue') }} &amp; {{ trans('web::seat.jump_clones') }}</h3>
         </div>
         <div class="panel-body">
 
           <dl>
-            <dt>Jump Fatigue</dt>
+            <dt>{{ trans('web::seat.jump_fatigue') }}</dt>
             <dd>
 
               @if(carbon($character_sheet->jumpFatigue)->gt(carbon(null)))
@@ -111,17 +111,17 @@
 
             </dd>
 
-            <dt>Jump Activation Timer</dt>
+            <dt>{{ trans('web::seat.jump_act_timer') }}</dt>
             <dd>
               @if(carbon($character_sheet->jumpActivation)->gt(carbon(null)))
                 {{ $character_sheet->jumpActivation }}
                 <span class="pull-right">Ends approx {{ human_diff($character_sheet->jumpActivation) }}</span>
               @else
-                None
+                {{ trans('web::seat.none') }}
               @endif
             </dd>
 
-            <dt>Jump Clones</dt>
+            <dt>{{ trans('web::seat.jump_clones') }}</dt>
             <dd>
 
               @if(count($jump_clones) > 0)
@@ -139,7 +139,7 @@
                 </ul>
 
               @else
-                No Jump Clones
+                {{ trans('web::seat.no_jump_clones') }}
               @endif
 
             </dd>
@@ -152,7 +152,7 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Implants</h3>
+          <h3 class="panel-title">{{ trans('web::seat.implants') }}</h3>
         </div>
         <div class="panel-body">
 
@@ -167,12 +167,12 @@
             </ul>
 
           @else
-            No Implants
+            {{ trans('web::seat.no_implants') }}
           @endif
 
         </div>
         <div class="panel-footer">
-          {{ count($implants) }} implants
+          {{ count($implants) }} {{ trans('web::seat.implants') }}
         </div>
       </div>
 
@@ -182,7 +182,7 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Exployment History</h3>
+          <h3 class="panel-title">{{ trans('web::seat.employment_history') }}</h3>
         </div>
         <div class="panel-body">
 
@@ -204,7 +204,7 @@
 
         </div>
         <div class="panel-footer">
-          {{ count($employment) }} corporations
+          {{ count($employment) }} {{ trans_choice('web::seat.corporation', count($employment)) }}
         </div>
       </div>
 

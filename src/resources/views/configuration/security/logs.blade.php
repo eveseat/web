@@ -1,23 +1,23 @@
 @extends('web::layouts.grids.12')
 
-@section('title', trans('web::security.security_logs'))
-@section('page_header', trans('web::security.security_logs'))
+@section('title', trans('web::seat.security_logs'))
+@section('page_header', trans('web::seat.security_logs'))
 
 @section('full')
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::security.security_logs') }}</h3>
+      <h3 class="panel-title">{{ trans('web::seat.security_logs') }}</h3>
     </div>
     <div class="panel-body">
 
       <table class="table table-condensed table-hover table-responsive">
         <tbody>
         <tr>
-          <th>{{ trans('web::security.security_logs') }}</th>
-          <th>{{ trans('web::security.user') }}</th>
-          <th>{{ trans('web::security.category') }}</th>
-          <th>{{ trans('web::security.message') }}</th>
+          <th>{{ trans('web::seat.date') }}</th>
+          <th>{{ trans_choice('web::seat.user', 1) }}</th>
+          <th>{{ trans('web::seat.category') }}</th>
+          <th>{{ trans('web::seat.message') }}</th>
         </tr>
 
         @foreach($logs as $log)

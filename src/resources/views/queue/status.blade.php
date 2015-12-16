@@ -1,7 +1,7 @@
 @extends('web::layouts.grids.12')
 
-@section('title', trans('web::queue.queue_manage'))
-@section('page_header', trans('web::queue.queue_manage'))
+@section('title', trans('web::seat.queue_manage'))
+@section('page_header', trans('web::seat.queue_manage'))
 
 @section('full')
 
@@ -10,10 +10,10 @@
       <div class="info-box">
         <span class="info-box-icon bg-aqua"><i class="fa fa-check-circle"></i></span>
         <div class="info-box-content">
-          <span class="info-box-text">{{ trans('web::queue.total_jobs') }}</span>
+          <span class="info-box-text">{{ trans('web::seat.total_jobs') }}</span>
           <span class="info-box-number">{{ $totals['total_jobs'] }}</span>
           <a href="{{ route('queue.history') }}" class="btn btn-info btn-sm pull-right">
-            {{ trans('web::queue.history') }}
+            {{ trans('web::seat.history') }}
           </a>
         </div><!-- /.info-box-content -->
       </div><!-- /.info-box -->
@@ -22,13 +22,13 @@
       <div class="info-box">
         <span class="info-box-icon bg-green"><i class="fa fa-truck"></i></span>
         <div class="info-box-content">
-          <span class="info-box-text">{{ trans('web::queue.queued_jobs') }}</span>
+          <span class="info-box-text">{{ trans('web::seat.queued_jobs') }}</span>
           <span class="info-box-number">{{ $totals['queued_jobs'] }}</span>
 
           @if($totals['total_jobs'] > 0)
             {{
               number_format(((($totals['total_jobs'] - $totals['queued_jobs']) / $totals['total_jobs']) *100),2)
-            }}% {{ trans('web::queue.complete') }}
+            }}% {{ trans('web::seat.complete') }}
           @endif
         </div><!-- /.info-box-content -->
       </div><!-- /.info-box -->
@@ -41,7 +41,7 @@
       <div class="info-box">
         <span class="info-box-icon bg-yellow"><i class="fa fa-exchange"></i></span>
         <div class="info-box-content">
-          <span class="info-box-text">{{ trans('web::queue.working_jobs') }}</span>
+          <span class="info-box-text">{{ trans('web::seat.working_jobs') }}</span>
           <span class="info-box-number">{{ $totals['working_jobs'] }}</span>
         </div><!-- /.info-box-content -->
       </div><!-- /.info-box -->
@@ -50,10 +50,10 @@
       <div class="info-box">
         <span class="info-box-icon bg-red"><i class="fa fa-exclamation"></i></span>
         <div class="info-box-content">
-          <span class="info-box-text">{{ trans('web::queue.error_jobs') }}</span>
+          <span class="info-box-text">{{ trans('web::seat.error_jobs') }}</span>
           <span class="info-box-number">{{ $totals['error_jobs'] }}</span>
           <a href="{{ route('queue.errors') }}" class="btn btn-danger btn-sm pull-right">
-            {{ trans_choice('web::general.view', 1) }}
+            {{ trans_choice('web::seat.view', 1) }}
           </a>
         </div><!-- /.info-box-content -->
       </div><!-- /.info-box -->
@@ -66,26 +66,26 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Eve Api Status</h3>
+          <h3 class="panel-title">{{ trans('web::seat.eve_api_status') }}</h3>
         </div>
         <div class="panel-body">
 
           <dl>
-            <dt>Eve Online XML API Status</dt>
+            <dt>{{ trans('web::seat.eve_api_status') }}</dt>
             <dd>
               @if(Cache::get(config('eveapi.config.cache_keys.down')))
                 <span class="text-danger">
-                  <b>Offline</b>,
+                  <b>{{ trans('web::seat.offline') }}</b>,
                   recheck at {{ Cache::get(config('eveapi.config.cache_keys.down_until')) }}
                 </span>
               @else
                 <span class="text-success">
-                  Online
+                  {{ trans('web::seat.online') }}
                 </span>
               @endif
             </dd>
 
-            <dt>EVE API Error Threshold</dt>
+            <dt>{{ trans('web::seat.eve_api_error_threshold') }}</dt>
             <dd>
               @if(!is_null(Cache::get(config('eveapi.config.cache_keys.api_error_count'))))
                 {{ Cache::get(config('eveapi.config.cache_keys.api_error_count')) }}
@@ -95,7 +95,7 @@
               / {{ config('eveapi.config.limits.eveapi_errors')}}
             </dd>
 
-            <dt>EVE Connection Error Threshold</dt>
+            <dt>{{ trans('web::seat.eve_api_connection_threshold') }}</dt>
             <dd>
               @if(!is_null(Cache::get(config('eveapi.config.cache_keys.connection_error_count'))))
                 {{ Cache::get(config('eveapi.config.cache_keys.connection_error_count')) }}
@@ -111,7 +111,7 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ trans('web::queue.submit_jobs') }}</h3>
+          <h3 class="panel-title">{{ trans('web::seat.submit_jobs') }}</h3>
         </div>
         <div class="panel-body">
 
@@ -138,7 +138,7 @@
 
         </div>
         <div class="panel-footer">
-          {{ trans('web::queue.job_submit_desc') }}
+          {{ trans('web::seat.job_submit_desc') }}
         </div>
       </div>
     </div>
@@ -149,7 +149,7 @@
         <div class="panel-heading">
           <h3 class="panel-title">
             <i class="fa fa-exchange"></i>
-            {{ trans('web::queue.working_jobs') }}
+            {{ trans('web::seat.working_jobs') }}
           </h3>
         </div>
         <div class="panel-body">
@@ -159,13 +159,13 @@
             <table class="table table-condensed table-hover">
               <tbody>
               <tr>
-                <th>{{ trans('web::queue.created') }}</th>
-                <th>{{ trans('web::queue.updated') }}</th>
-                <th>{{ trans('web::queue.owner_id') }}</th>
-                <th>{{ trans('web::queue.api') }}</th>
-                <th>{{ trans('web::queue.scope') }}</th>
-                <th>{{ trans('web::queue.output') }}</th>
-                <th>{{ trans('web::queue.status') }}</th>
+                <th>{{ trans('web::seat.created') }}</th>
+                <th>{{ trans('web::seat.updated') }}</th>
+                <th>{{ trans('web::seat.owner_id') }}</th>
+                <th>{{ trans('web::seat.api') }}</th>
+                <th>{{ trans('web::seat.scope') }}</th>
+                <th>{{ trans('web::seat.output') }}</th>
+                <th>{{ trans('web::seat.status') }}</th>
               </tr>
 
               @foreach($working as $job)
@@ -193,7 +193,7 @@
             @else
 
               <span class="text-muted">
-                {{ trans('web::queue.no_working') }}
+                {{ trans('web::seat.no_working') }}
               </span>
 
             @endif
@@ -208,7 +208,7 @@
         <div class="panel-heading">
           <h3 class="panel-title">
             <i class="fa fa-truck"></i>
-            {{ trans('web::queue.queued_jobs') }}
+            {{ trans('web::seat.queued_jobs') }}
           </h3>
         </div>
         <div class="panel-body">
@@ -218,11 +218,11 @@
             <table class="table table-condensed table-hover">
               <tbody>
               <tr>
-                <th>{{ trans('web::queue.created') }}</th>
-                <th>{{ trans('web::queue.owner_id') }}</th>
-                <th>{{ trans('web::queue.api') }}</th>
-                <th>{{ trans('web::queue.scope') }}</th>
-                <th>{{ trans('web::queue.status') }}</th>
+                <th>{{ trans('web::seat.created') }}</th>
+                <th>{{ trans('web::seat.owner_id') }}</th>
+                <th>{{ trans('web::seat.api') }}</th>
+                <th>{{ trans('web::seat.scope') }}</th>
+                <th>{{ trans('web::seat.status') }}</th>
               </tr>
 
               @foreach($queued as $job)
@@ -244,7 +244,7 @@
             @else
 
               <span class="text-muted">
-                {{ trans('web::queue.no_queue') }}
+                {{ trans('web::seat.no_queue') }}
               </span>
 
             @endif

@@ -1,18 +1,18 @@
 @extends('web::layouts.app-mini')
 
-@section('title', 'Multifactor Authentication')
+@section('title', trans('web::seat.mfa'))
 
 @section('content')
 
   <div class="login-logo">
-    S<b>e</b>AT | Multifactor Auth
+    S<b>e</b>AT | {{ trans('web::seat.mfa') }}
   </div>
 
   <hr>
 
   <div class="login-box-body">
     <p class="login-box-msg">
-      Please enter an Authentication Code to proceed.
+      {{ trans('web::seat.mfa_welcome') }}
     </p>
 
     <form action="{{ route('auth.login.mfa.check') }}" class="form-horizontal" method="post">
@@ -20,14 +20,16 @@
 
       <div class="box-body">
         <div class="form-group has-feedback">
-          <input type="text" name="confirm_code" class="form-control" placeholder="Verification Code">
+          <input type="text" name="confirm_code" class="form-control" placeholder="{{ trans('web::seat.v_code') }}">
           <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
       </div>
       <!-- /.box-body -->
 
       <div class="box-footer">
-        <button type="submit" class="btn btn-primary pull-right">Verify</button>
+        <button type="submit" class="btn btn-primary pull-right">
+          {{ trans('web::seat.verify') }}
+        </button>
       </div>
       <!-- /.box-footer -->
 

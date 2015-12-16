@@ -1,23 +1,23 @@
 @extends('web::corporation.security.layouts.view', ['sub_viewname' => 'log'])
 
-@section('title', ucfirst(trans_choice('web::corporation.corporation', 1)) . ' Logs')
-@section('page_header', ucfirst(trans_choice('web::corporation.corporation', 1)) . ' Logs')
+@section('title', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.log', 1))
+@section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.log', 1))
 
 @section('security_content')
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">Roles Change Log</h3>
+      <h3 class="panel-title">{{ trans('web::seat.roles_change_log') }}</h3>
     </div>
     <div class="panel-body">
 
       <table class="table table-condensed table-hover table-responsive">
         <tbody>
         <tr>
-          <th>Date</th>
-          <th>Issuer</th>
-          <th>Affected</th>
-          <th>Role Location Type</th>
+          <th>{{ trans('web::seat.date') }}</th>
+          <th>{{ trans('web::seat.issuer') }}</th>
+          <th>{{ trans('web::seat.affected') }}</th>
+          <th>{{ trans_choice('web::seat.type', 1) }}</th>
         </tr>
 
         @foreach($logs as $log)

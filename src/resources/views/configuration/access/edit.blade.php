@@ -1,14 +1,14 @@
 @extends('web::layouts.grids.4-4-4')
 
-@section('title', trans('web::access.edit_role'))
-@section('page_header', trans('web::access.edit_role'))
+@section('title', trans('web::seat.edit_role'))
+@section('page_header', trans('web::seat.edit_role'))
 @section('page_description', $role->title)
 
 @section('left')
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ ucfirst(trans_choice('web::general.permission', 2)) }}</h3>
+      <h3 class="panel-title">{{ trans_choice('web::seat.permission', 2) }}</h3>
     </div>
     <div class="panel-body">
 
@@ -17,7 +17,7 @@
         <input type="hidden" name="role_id" value="{{ $role->id }}">
 
         <div class="form-group">
-          <label for="permissions">{{ trans('web::access.available_permissions') }}</label>
+          <label for="permissions">{{ trans('web::seat.available_permissions') }}</label>
           <select name="permissions[]" id="available_permissions" style="width: 100%" multiple>
 
             @foreach(config('web.permissions') as $type => $permission)
@@ -46,7 +46,7 @@
         </div>
 
         <button type="submit" class="btn btn-success btn-block">
-          {{ trans('web::access.grant_permissions') }}
+          {{ trans('web::seat.grant_permissions') }}
         </button>
 
       </form>
@@ -57,7 +57,7 @@
         <tbody>
 
         <tr>
-          <th colspan="2" class="text-center">{{ trans('web::access.current_permissions') }}</th>
+          <th colspan="2" class="text-center">{{ trans('web::seat.current_permissions') }}</th>
         </tr>
 
         @foreach($role->permissions as $permission)
@@ -66,7 +66,7 @@
             <td>{{ studly_case($permission->title) }}</td>
             <td>
               <a href="{{ route('configuration.access.roles.edit.remove.permission', ['role_id' => $role->id, 'permission_id' => $permission->id]) }}" type="button" class="btn btn-danger btn-xs pull-right">
-                {{ ucfirst(trans('web::general.remove')) }}
+                {{ trans('web::seat.remove') }}
               </a>
             </td>
           </tr>
@@ -78,11 +78,11 @@
 
     </div>
     <div class="panel-footer">
-      <b>{{ count($role->permissions) }}</b> {{ trans_choice('web::general.permission', count($role->permissions)) }}
+      <b>{{ count($role->permissions) }}</b> {{ trans_choice('web::seat.permission', count($role->permissions)) }}
 
       @if(in_array('superuser', $role_permissions))
-        <span class="label label-danger pull-right" data-toggle="tooltip" title="{{ trans('web::access.permission_inherit') }}">
-          {{ trans('web::access.has_superuser') }}
+        <span class="label label-danger pull-right" data-toggle="tooltip" title="{{ trans('web::seat.permission_inherit') }}">
+          {{ trans('web::seat.has_superuser') }}
         </span>
       @endif
 
@@ -95,7 +95,7 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ ucfirst(trans_choice('web::general.affiliation', 2)) }}</h3>
+      <h3 class="panel-title">{{ trans_choice('web::seat.affiliation', 2) }}</h3>
     </div>
     <div class="panel-body">
 
@@ -104,7 +104,7 @@
         <input type="hidden" name="role_id" value="{{ $role->id }}">
 
         <div class="form-group">
-          <label for="corporations">{{ trans('web::access.available_corporations') }}</label>
+          <label for="corporations">{{ trans('web::seat.available_corporations') }}</label>
           <select name="corporations[]" id="available_corporations" style="width: 100%" multiple>
 
             @foreach($all_corporations as $corporation)
@@ -117,7 +117,7 @@
         </div>
 
         <div class="form-group">
-          <label for="characters">{{ trans('web::access.available_characters') }}</label>
+          <label for="characters">{{ trans('web::seat.available_characters') }}</label>
           <select name="characters[]" id="available_characters" style="width: 100%" multiple>
 
             @foreach($all_characters as $character)
@@ -130,7 +130,7 @@
         </div>
 
         <button type="submit" class="btn btn-success btn-block">
-          {{ trans('web::access.add_affiliations') }}
+          {{ trans('web::seat.add_affiliations') }}
         </button>
 
       </form>
@@ -141,7 +141,7 @@
         <tbody>
 
         <tr>
-          <th colspan="2" class="text-center">{{ trans('web::access.current_affiliations') }}</th>
+          <th colspan="2" class="text-center">{{ trans('web::seat.current_affiliations') }}</th>
         </tr>
 
         @foreach($role->affiliations as $affiliation)
@@ -151,7 +151,7 @@
             <td>{{ $affiliation->type }}</td>
             <td>
               <a href="{{ route('configuration.access.roles.edit.remove.affiliation', ['role_id' => $role->id, 'user_id' => $affiliation->id]) }}" type="button" class="btn btn-danger btn-xs pull-right">
-                {{ ucfirst(trans('web::general.remove')) }}
+                {{ trans('web::seat.remove') }}
               </a>
             </td>
           </tr>
@@ -163,7 +163,7 @@
 
     </div>
     <div class="panel-footer">
-      <b>{{ count($role->affiliations) }}</b> {{ trans_choice('web::general.affiliation', count($role->affiliations)) }}
+      <b>{{ count($role->affiliations) }}</b> {{ trans_choice('web::seat.affiliation', count($role->affiliations)) }}
     </div>
   </div>
 
@@ -173,7 +173,7 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ ucfirst(trans_choice('web::general.user', 2)) }}</h3>
+      <h3 class="panel-title">{{ trans_choice('web::seat.user', 2) }}</h3>
     </div>
     <div class="panel-body">
 
@@ -182,7 +182,7 @@
         <input type="hidden" name="role_id" value="{{ $role->id }}">
 
         <div class="form-group">
-          <label for="users">{{ trans('web::access.available_users') }}</label>
+          <label for="users">{{ trans('web::seat.available_users') }}</label>
           <select name="users[]" id="available_users" style="width: 100%" multiple>
 
             @foreach($all_users as $user)
@@ -196,7 +196,7 @@
           </select>
         </div>
 
-        <button type="submit" class="btn btn-success btn-block">{{ trans_choice('web::access.add_user', 2) }}</button>
+        <button type="submit" class="btn btn-success btn-block">{{ trans_choice('web::seat.add_user', 2) }}</button>
 
       </form>
 
@@ -206,7 +206,7 @@
         <tbody>
 
         <tr>
-          <th colspan="2" class="text-center">{{ trans('web::access.current_users') }}</th>
+          <th colspan="2" class="text-center">{{ trans('web::seat.current_users') }}</th>
         </tr>
 
         @foreach($role->users as $user)
@@ -215,7 +215,7 @@
             <td>{{ $user->name }}</td>
             <td>
               <a href="{{ route('configuration.access.roles.edit.remove.user', ['role_id' => $role->id, 'user_id' => $user->id]) }}" type="button" class="btn btn-danger btn-xs pull-right">
-                {{ ucfirst(trans('web::general.remove')) }}
+                {{ trans('web::seat.remove') }}
               </a>
             </td>
           </tr>
@@ -227,7 +227,7 @@
 
     </div>
     <div class="panel-footer">
-      <b>{{ count($role->users) }}</b> {{ trans_choice('web::general.user', count($role->users)) }}
+      <b>{{ count($role->users) }}</b> {{ trans_choice('web::seat.user', count($role->users)) }}
     </div>
   </div>
 
@@ -240,7 +240,7 @@
       "#available_users," +
       "#available_characters," +
       "#available_corporations").select2({
-       placeholder: "{{ trans('web::access.select_item_add') }}"
+       placeholder: "{{ trans('web::seat.select_item_add') }}"
     });
   </script>
 

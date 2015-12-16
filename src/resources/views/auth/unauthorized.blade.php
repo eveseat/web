@@ -1,6 +1,6 @@
 @extends('web::layouts.app-mini')
 
-@section('title', trans('web::access.unauthorized_request'))
+@section('title', trans('web::seat.unauthorized_request'))
 
 @section('content')
 
@@ -8,7 +8,7 @@
     S<b>e</b>AT <br>
     <hr>
     <i class="fa fa-exclamation-triangle"></i>
-    {{ trans('web::access.unauthorized_request') }}
+    {{ trans('web::seat.unauthorized_request') }}
   </div>
 
   <hr>
@@ -16,11 +16,11 @@
   <div class="login-box-body">
     <p class="login-box-msg">
 
-      {{ trans('web::access.unauthorized_request_logged') }}
+      {{ trans('web::seat.unauthorized_request_logged') }}
     </p>
 
     <a href="#" class="btn btn-primary btn-block" onclick="window.history.back()">
-      {{ ucfirst(trans('web::general.back')) }}
+      {{ trans('web::seat.back') }}
     </a>
 
   </div>

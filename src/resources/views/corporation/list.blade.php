@@ -1,24 +1,24 @@
 @extends('web::layouts.grids.12')
 
-@section('title', ucfirst(trans_choice('web::corporation.corporation', 2)))
-@section('page_header', ucfirst(trans_choice('web::corporation.corporation', 2)))
+@section('title', trans_choice('web::seat.corporation', 1) )
+@section('page_header', trans_choice('web::seat.corporation', 1))
 
 @section('full')
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ ucfirst(trans_choice('web::corporation.corporation', 2)) }}</h3>
+      <h3 class="panel-title">{{ trans_choice('web::seat.corporation', 2) }}</h3>
     </div>
     <div class="panel-body">
 
       <table class="table table-condensed table-hover">
         <tbody>
         <tr>
-          <th>{{ ucfirst(trans_choice('web::general.name', 1)) }}</th>
-          <th>{{ trans('web::corporation.ceo_name') }}</th>
-          <th>{{ trans('web::corporation.alliance_name') }}</th>
-          <th>{{ trans('web::corporation.tax_rate') }}</th>
-          <th>{{ trans('web::corporation.member_limit') }}</th>
+          <th>{{ trans_choice('web::seat.name', 1) }}</th>
+          <th>{{ trans('web::seat.ceo') }}</th>
+          <th>{{ trans('web::seat.alliance') }}</th>
+          <th>{{ trans('web::seat.tax_rate') }}</th>
+          <th>{{ trans('web::seat.member_limit') }}</th>
         </tr>
 
         @foreach($corporations as $corporation)
@@ -56,7 +56,7 @@
       <span class="text-bold">
         {{ count($corporations) }}
       </span>
-      {{ ucfirst(trans_choice('web::character.character', count($corporations))) }}
+      {{ trans_choice('web::seat.corporation', count($corporations)) }}
     </div>
   </div>
 

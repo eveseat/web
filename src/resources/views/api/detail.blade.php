@@ -1,40 +1,40 @@
 @extends('web::layouts.grids.4-4-4')
 
-@section('title', trans('web::api.detail'))
-@section('page_header', trans('web::api.detail'))
+@section('title', trans('web::seat.api_detail'))
+@section('page_header', trans('web::seat.api_detail'))
 
 @section('left')
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::api.detail') }}</h3>
+      <h3 class="panel-title">{{ trans('web::seat.api_detail') }}</h3>
     </div>
     <div class="panel-body">
 
       <dl class="dl-horizontal">
-        <dt>{{ trans('web::api.key_id') }}</dt>
+        <dt>{{ trans('web::seat.key_id') }}</dt>
         <dd>{{ $key->key_id }}</dd>
-        <dt>{{ trans('web::api.key_type') }}</dt>
+        <dt>{{ trans('web::seat.api_key_type') }}</dt>
         <dd>
           @if($key->info)
             {{ $key->info->type }}
           @endif
         </dd>
-        <dt>{{ trans('web::api.access_mask') }}</dt>
+        <dt>{{ trans('web::seat.api_access_mask') }}</dt>
         <dd>
           @if($key->info)
             {{ $key->info->accessMask }}
           @endif
         </dd>
-        <dt>{{ trans('web::api.key_status') }}</dt>
+        <dt>{{ trans('web::seat.api_key_status') }}</dt>
         <dd>
           @if($key->enabled)
             <span class="label label-success">
-              {{ ucfirst(trans('web::general.enabled')) }}
+              {{ ucfirst(trans('web::seat.enabled')) }}
             </span>
           @else
             <span class="label label-danger">
-              {{ ucfirst(trans('web::general.disabled')) }}
+              {{ ucfirst(trans('web::seat.disabled')) }}
             </span>
           @endif
         </dd>
@@ -45,7 +45,7 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ ucfirst(trans_choice('web::character.character', 2)) }}</h3>
+      <h3 class="panel-title">{{ trans_choice('web::seat.character', 2) }}</h3>
     </div>
     <div class="panel-body">
       <ul class="users-list clearfix">
@@ -64,12 +64,12 @@
       </ul><!-- /.users-list -->
     </div>
     <div class="panel-footer">
-      {{ count($key->characters) }} {{ trans_choice('web::character.character', count($key->characters)) }}
+      {{ count($key->characters) }} {{ trans_choice('web::seat.character', count($key->characters)) }}
     </div>
   </div>
 
   <a href="{{ route('api.key.queue', ['key_id' => $key->key_id]) }}" class="btn btn-success btn-block">
-    {{ trans('web::api.job_update') }}
+    {{ trans('web::seat.api_job_update') }}
   </a>
 @stop
 
@@ -77,31 +77,31 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::api.owner_info') }}</h3>
+      <h3 class="panel-title">{{ trans('web::seat.owner_info') }}</h3>
     </div>
     <div class="panel-body">
 
       @if(!$key->owner)
         <span class="text-muted">
-          {{ trans('web::api.no_owner') }}
+          {{ trans('web::seat.no_owner') }}
         </span>
       @else
         <dl class="dl-horizontal">
-          <dt>{{ ucfirst(trans_choice('web::general.username', 1)) }}</dt>
+          <dt>{{ trans('web::seat.username') }}</dt>
           <dd>{{ $key->owner->name }}</dd>
-          <dt>{{ ucfirst(trans_choice('web::general.email', 1)) }}</dt>
+          <dt>{{ trans('web::seat.email') }}</dt>
           <dd>{{ $key->owner->email }}</dd>
-          <dt>{{ trans('web::access.last_login') }}</dt>
+          <dt>{{ trans('web::seat.last_login') }}</dt>
           <dd>{{ human_diff($key->owner->last_login) }}</dd>
-          <dt>Account Status</dt>
+          <dt>{{ trans('web::seat.account_status') }}</dt>
           <dd>
             @if($key->owner->active)
               <span class="label label-success">
-                {{ ucfirst(trans('web::general.enabled')) }}
+                {{ ucfirst(trans('web::seat.enabled')) }}
               </span>
             @else
               <span class="label label-danger">
-                {{ ucfirst(trans('web::general.disabled')) }}
+                {{ ucfirst(trans('web::seat.disabled')) }}
               </span>
             @endif
           </dd>
@@ -115,7 +115,7 @@
 
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#ownerModal">
-          Transfer Ownership
+          {{ trans('web::seat.transfer_ownership') }}
         </button>
 
         <!-- Modal -->
@@ -124,7 +124,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Transfer Key Ownership</h4>
+                <h4 class="modal-title" id="myModalLabel">{{ trans('web::seat.transfer_ownership') }}</h4>
               </div>
               <div class="modal-body">
 
@@ -134,7 +134,7 @@
                   <div class="box-body">
 
                     <div class="form-group">
-                      <label>SeAT User</label>
+                      <label>{{ trans('web::seat.seat_user') }}</label>
                       <select name="user_id" id="user_id" class="form-control select2" style="width: 100%;">
                       </select>
                     </div>
@@ -144,9 +144,11 @@
                   <!-- /.box-body -->
 
                   <div class="box-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">
+                      {{ trans('web::seat.close') }}
+                    </button>
                     <button type="submit" class="btn btn-primary pull-right">
-                      Transfer
+                      {{ trans('web::seat.transfer') }}
                     </button>
                   </div>
 
@@ -161,16 +163,16 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::api.mask_breakdown') }}</h3>
+      <h3 class="panel-title">{{ trans('web::seat.api_access') }}</h3>
     </div>
     <div class="panel-body">
 
       <table class="table table-condensed table-hover">
         <tbody>
         <tr>
-          <th>{{ ucfirst(trans_choice('web::general.name', 1)) }}</th>
-          <th>{{ trans('web::api.min_mask') }}</th>
-          <th>{{ trans('web::api.access') }}</th>
+          <th>{{ trans_choice('web::seat.name', 1) }}</th>
+          <th>{{ trans('web::seat.api_min_mask') }}</th>
+          <th>{{ trans('web::seat.api_access') }}</th>
         </tr>
 
         @if($access_map)
@@ -183,11 +185,11 @@
               <td>
                 @if($key->info->accessMask & $bitmask)
                   <span class="label label-success">
-                    {{ trans('web::api.granted') }}
+                    {{ trans('web::seat.granted') }}
                   </span>
                 @else
                   <span class="label label-danger">
-                    {{ trans('web::api.denied') }}
+                    {{ trans('web::seat.denied') }}
                   </span>
                 @endif
               </td>
@@ -196,7 +198,7 @@
           @endforeach
 
         @else
-          <span class="text-muted">Unable to load the access mask map</span>
+          <span class="text-muted">{{ trans('web::seat.mask_map_fail') }}</span>
         @endif
 
         </tbody>
@@ -211,16 +213,16 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::api.recent_jobs') }}</h3>
+      <h3 class="panel-title">{{ trans('web::seat.recent_jobs') }}</h3>
     </div>
     <div class="panel-body">
 
       <table class="table table-condensed table-hover">
         <tbody>
         <tr>
-          <th>{{ trans('web::api.scheduled') }}</th>
-          <th>{{ trans('web::api.scope') }}</th>
-          <th>{{ ucfirst(trans_choice('web::general.status', 1)) }}</th>
+          <th>{{ trans('web::seat.date') }}</th>
+          <th>{{ trans('web::seat.scope') }}</th>
+          <th>{{ trans('web::seat.status') }}</th>
         </tr>
 
         @foreach($jobs as $job)

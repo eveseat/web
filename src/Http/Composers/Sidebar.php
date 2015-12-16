@@ -53,7 +53,7 @@ class Sidebar
         // sets it as an array of arrays.
         $menu = [
             [
-                'name'          => trans('web::sidebar.home'),
+                'name'          => trans('web::seat.home'),
                 'icon'          => 'fa-home',
                 'route_segment' => 'home',
                 'route'         => 'home'
@@ -63,18 +63,18 @@ class Sidebar
         // Key Management
         array_push($menu, [
 
-            'name'          => trans('web::sidebar.key_management'),
+            'name'          => trans('web::seat.api_key_management'),
             'icon'          => 'fa-key',
             'route_segment' => 'api-key',
             'entries'       => [
 
                 [   // Add Api Key
-                    'name'  => trans('web::sidebar.add_api_key'),
+                    'name'  => trans('web::seat.add_api_key'),
                     'icon'  => 'fa-plus',
                     'route' => 'api.key'
                 ],
                 [
-                    'name'  => trans('web::sidebar.list_keys'),
+                    'name'  => trans('web::seat.list_keys'),
                     'icon'  => 'fa-list',
                     'route' => 'api.key.list'
                 ]
@@ -83,12 +83,12 @@ class Sidebar
 
         // Corporation
         array_push($menu, [
-            'name'          => trans('web::sidebar.corporations'),
+            'name'          => trans_choice('web::seat.corporation', 2),
             'icon'          => 'fa-building',
             'route_segment' => 'corporation',
             'entries'       => [
                 [
-                    'name'  => trans('web::sidebar.all_corp'),
+                    'name'  => trans('web::seat.all_corp'),
                     'icon'  => 'fa-group',
                     'route' => 'corporation.list'
                 ]
@@ -97,17 +97,17 @@ class Sidebar
 
         // Character
         array_push($menu, [
-            'name'          => trans('web::sidebar.characters'),
+            'name'          => trans_choice('web::seat.character', 2),
             'icon'          => 'fa-user',
             'route_segment' => 'character',
             'entries'       => [
                 [
-                    'name'  => trans('web::sidebar.all_char'),
+                    'name'  => trans('web::seat.all_char'),
                     'icon'  => 'fa-group',
                     'route' => 'character.list'
                 ],
                 [
-                    'name'  => trans('web::sidebar.mail_timeline'),
+                    'name'  => trans('web::seat.mail_timeline'),
                     'icon'  => 'fa-envelope',
                     'route' => 'character.view.mail.timeline'
                 ]
@@ -118,38 +118,38 @@ class Sidebar
         if (auth()->user()->hasSuperuser()) {
 
             array_push($menu, [
-                'name'          => trans('web::sidebar.configuration'),
+                'name'          => trans('web::seat.configuration'),
                 'icon'          => 'fa-cogs',
                 'route_segment' => 'configuration',
                 'entries'       => [
 
                     [   // Access
-                        'name'  => trans('web::sidebar.access'),
+                        'name'  => trans('web::seat.access'),
                         'icon'  => 'fa-shield',
                         'route' => 'configuration.access.roles'
                     ],
                     [   // Import
-                        'name'  => trans('web::sidebar.import'),
+                        'name'  => trans('web::seat.import'),
                         'icon'  => 'fa-upload',
                         'route' => 'configuration.import.list'
                     ],
                     [   // Users
-                        'name'  => trans('web::sidebar.users'),
+                        'name'  => trans_choice('web::seat.user', 2),
                         'icon'  => 'fa-user',
                         'route' => 'configuration.users'
                     ],
                     [   // Schedule
-                        'name'  => trans('web::sidebar.schedule'),
+                        'name'  => trans('web::seat.schedule'),
                         'icon'  => 'fa-clock-o',
                         'route' => 'configuration.schedule'
                     ],
                     [   // SeAT Setting
-                        'name'  => trans('web::sidebar.settings'),
+                        'name'  => trans('web::seat.settings'),
                         'icon'  => 'fa-cog',
                         'route' => 'seat.settings.view'
                     ],
                     [   // Security
-                        'name'  => trans('web::sidebar.security_logs'),
+                        'name'  => trans('web::seat.security_logs'),
                         'icon'  => 'fa-list',
                         'route' => 'configuration.security.logs'
                     ],
@@ -169,7 +169,7 @@ class Sidebar
         }
 
         array_push($menu, [
-            'name'          => trans('web::sidebar.other'),
+            'name'          => trans('web::seat.other'),
             'icon'          => 'fa-circle',
             'route_segment' => 'other',
         ]);

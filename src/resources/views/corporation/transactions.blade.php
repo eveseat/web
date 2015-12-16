@@ -1,7 +1,7 @@
 @extends('web::corporation.layouts.view', ['viewname' => 'transactions'])
 
-@section('title', ucfirst(trans_choice('web::corporation.corporation', 1)) . ' Transactions')
-@section('page_header', ucfirst(trans_choice('web::corporation.corporation', 1)) . ' Transactions')
+@section('title', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.wallet_transactions'))
+@section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.wallet_transactions'))
 
 @inject('request', 'Illuminate\Http\Request')
 
@@ -12,7 +12,7 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Filters</h3>
+          <h3 class="panel-title">{{ trans_choice('web::seat.filter', 2) }}</h3>
         </div>
         <div class="panel-body">
 
@@ -25,7 +25,7 @@
                 <div class="col-md-6">
 
                   <div class="form-group">
-                    <label>Item Type</label>
+                    <label>{{ trans('web::seat.item_type') }}</label>
                     <select id="typeName" class="form-control" name="filter[typeName][]" multiple>
 
                       @if($request->filter)
@@ -49,7 +49,7 @@
                 <div class="col-md-6">
 
                   <div class="form-group">
-                    <label>Client Name</label>
+                    <label>{{ trans('web::seat.client_name') }}</label>
                     <select id="clientName" class="form-control" name="filter[clientName][]" multiple>
 
                       @if($request->filter)
@@ -78,11 +78,11 @@
 
               <a href="{{ route('corporation.view.transactions', ['corporation_id' => $request->corporation_id]) }}"
                  class="btn btn-warning pull-left">
-                {{ trans('web::general.clear_filters') }}
+                {{ trans('web::seat.clear') }}
               </a>
 
               <button type="submit" class="btn btn-primary pull-right">
-                {{ ucfirst(trans_choice('web::general.filter', 1)) }}
+                {{ trans_choice('web::seat.filter', 1) }}
               </button>
 
             </div>
@@ -119,19 +119,19 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Wallet Transactions</h3>
+          <h3 class="panel-title">{{ trans('web::seat.wallet_transactions') }}</h3>
         </div>
         <div class="panel-body">
 
           <table class="table table-condensed table-hover">
             <tbody>
             <tr>
-              <th>Date</th>
-              <th>Type</th>
-              <th>#</th>
-              <th>Price</th>
-              <th>Total</th>
-              <th>Client</th>
+              <th>{{ trans('web::seat.date') }}</th>
+              <th>{{ trans_choice('web::seat.type', 1) }}</th>
+              <th>{{ trans('web::seat.qty') }}</th>
+              <th>{{ trans('web::seat.price') }}</th>
+              <th>{{ trans('web::seat.total') }}</th>
+              <th>{{ trans('web::seat.client') }}</th>
             </tr>
 
             @foreach($transactions as $transaction)

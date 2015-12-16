@@ -1,23 +1,23 @@
 @extends('web::layouts.grids.12')
 
-@section('title', trans('web::api.all'))
-@section('page_header', trans('web::api.all'))
+@section('title', trans('web::seat.api_all'))
+@section('page_header', trans('web::seat.api_all'))
 
 @section('full')
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">All Api Keys</h3>
+      <h3 class="panel-title">{{ trans('web::seat.api_all') }}</h3>
     </div>
     <div class="panel-body">
 
       <table class="table table-condensed table-hover table-responsive">
         <tbody>
         <tr>
-          <th>{{ ucfirst(trans_choice('web::general.id', 1)) }}</th>
-          <th>{{ ucfirst(trans_choice('web::general.type', 1)) }}</th>
-          <th>{{ ucfirst(trans('web::general.expire')) }}</th>
-          <th>{{ ucfirst(trans_choice('web::character.character', 1)) }}</th>
+          <th>{{ trans_choice('web::seat.id', 1) }}</th>
+          <th>{{ trans_choice('web::seat.type', 1) }}</th>
+          <th>{{ trans('web::seat.expiry') }}</th>
+          <th>{{ trans_choice('web::seat.character', 1) }}</th>
           <th></th>
         </tr>
 
@@ -35,7 +35,7 @@
               @if($key->info)
                 {{ $key->info->type }}
               @else
-                {{ ucfirst(trans('web::general.never')) }}
+                {{ trans('web::seat.never') }}
               @endif
             </td>
             <td>
@@ -43,10 +43,10 @@
                 @if($key->info->expires)
                   {{ human_diff($key->info->expires) }}
                 @else
-                  {{ ucfirst(trans('web::general.never')) }}
+                  {{ trans('web::seat.never') }}
                 @endif
               @else
-                {{ ucfirst(trans('web::general.unknown')) }}
+                {{ trans('web::seat.unknown') }}
               @endif
             </td>
             <td>
@@ -61,11 +61,11 @@
               <div class="btn-group">
                 <a href="{{ route('api.key.detail', ['key_id' => $key->key_id]) }}" type="button"
                    class="btn btn-primary btn-xs col-xs-6">
-                  {{ ucfirst(trans_choice('web::general.detail', 2)) }}
+                  {{ trans_choice('web::seat.detail', 2) }}
                 </a>
                 <a href="{{ route('api.key.delete', ['key_id' => $key->key_id]) }}" type="button"
                    class="btn btn-danger btn-xs confirmlink col-xs-6">
-                  {{ ucfirst(trans('web::general.delete')) }}
+                  {{ trans('web::seat.delete') }}
                 </a>
               </div>
             </td>

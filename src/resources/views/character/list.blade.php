@@ -1,7 +1,7 @@
 @extends('web::layouts.grids.3-9')
 
-@section('title', ucfirst(trans_choice('web::character.character', 2)))
-@section('page_header', ucfirst(trans_choice('web::character.character', 2)))
+@section('title', trans_choice('web::seat.character', 2))
+@section('page_header', trans_choice('web::seat.character', 2))
 
 @inject('request', 'Illuminate\Http\Request')
 
@@ -9,7 +9,7 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ ucfirst(trans_choice('web::general.filter', 2)) }}</h3>
+      <h3 class="panel-title">{{ trans_choice('web::seat.filter', 2) }}</h3>
     </div>
     <div class="panel-body">
 
@@ -18,7 +18,7 @@
         <div class="box-body">
 
           <div class="form-group">
-            <label>{{ ucfirst(trans('web::character.corporation_name')) }}</label>
+            <label>{{ trans('web::seat.corporation_name') }}</label>
             <select id="corporationName" class="form-control"
                     name="filter[corporationName][]" multiple>
               @foreach($corporations as $corporation)
@@ -41,10 +41,10 @@
 
         <div class="box-footer">
           <a href="{{ route('character.list') }}" class="btn btn-warning pull-left">
-            {{ trans('web::general.clear_filters') }}
+            {{ trans('web::seat.clear') }}
           </a>
           <button type="submit" class="btn btn-primary pull-right">
-            {{ ucfirst(trans_choice('web::general.filter', 1)) }}
+            {{ ucfirst(trans_choice('web::seat.filter', 1)) }}
           </button>
         </div>
       </form>
@@ -68,16 +68,16 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ ucfirst(trans_choice('web::character.character', 2)) }}</h3>
+      <h3 class="panel-title">{{ trans_choice('web::seat.character', 2) }}</h3>
     </div>
     <div class="panel-body">
 
       <table class="table table-condensed table-hover">
         <tbody>
         <tr>
-          <th>{{ trans_choice('web::general.name', 1) }}</th>
-          <th>{{ trans('web::character.corporation') }}</th>
-          <th>{{ trans('web::character.last_location') }}</th>
+          <th>{{ trans_choice('web::seat.name', 1) }}</th>
+          <th>{{ trans_choice('web::seat.corporation', 1) }}</th>
+          <th>{{ trans('web::seat.last_location') }}</th>
         </tr>
 
         @foreach($characters as $character)
@@ -106,7 +106,7 @@
       <span class="text-bold">
         {{ count($characters) }}
       </span>
-        {{ ucfirst(trans_choice('web::character.character', count($characters))) }}
+        {{ trans_choice('web::seat.character', count($characters)) }}
     </div>
   </div>
 

@@ -1,21 +1,21 @@
 @extends('web::character.layouts.view', ['viewname' => 'standings'])
 
-@section('title', ucfirst(trans_choice('web::character.character', 1)) . ' Standings')
-@section('page_header', ucfirst(trans_choice('web::character.character', 1)) . ' Standings')
+@section('title', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.standings'))
+@section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.standings'))
 
 @section('character_content')
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">Standings</h3>
+      <h3 class="panel-title">{{ trans('web::seat.standings') }}</h3>
     </div>
     <div class="panel-body">
 
       <table class="table table-condensed table-hover table-responsive">
         <tbody>
         <tr>
-          <th>From</th>
-          <th>Standing</th>
+          <th>{{ trans('web::seat.from') }}</th>
+          <th>{{ trans('web::seat.standings') }}</th>
         </tr>
 
         @foreach($standings->unique('type')->groupBy('type') as $type => $data)

@@ -1,13 +1,13 @@
 @extends('web::character.layouts.view', ['viewname' => 'mail'])
 
-@section('title', ucfirst(trans_choice('web::character.character', 1)) . ' Read Mail')
-@section('page_header', ucfirst(trans_choice('web::character.character', 1)) . ' Read Mail')
+@section('title', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.mail'))
+@section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.mail'))
 
 @section('character_content')
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">Read Mail</h3>
+      <h3 class="panel-title">{{ trans('web::seat.mail') }}</h3>
     </div>
     <div class="panel-body">
 

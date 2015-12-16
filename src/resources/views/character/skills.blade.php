@@ -1,13 +1,13 @@
 @extends('web::character.layouts.view', ['viewname' => 'skills'])
 
-@section('title', ucfirst(trans_choice('web::character.character', 1)) . ' skills')
-@section('page_header', ucfirst(trans_choice('web::character.character', 1)) . ' skills')
+@section('title', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.skills'))
+@section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.skills'))
 
 @section('character_content')
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">Skills</h3>
+      <h3 class="panel-title">{{ trans('web::seat.skills') }}</h3>
     </div>
     <div class="panel-body">
 

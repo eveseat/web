@@ -1,13 +1,13 @@
 @extends('web::layouts.grids.3-9')
 
-@section('title', 'Schedule')
-@section('page_header', 'Schedule')
+@section('title', trans('web::seat.schedule'))
+@section('page_header', trans('web::seat.schedule'))
 
 @section('left')
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">New Schedule</h3>
+      <h3 class="panel-title">{{ trans('web::seat.new_schedule') }}</h3>
     </div>
     <div class="panel-body">
 
@@ -17,7 +17,7 @@
         <div class="box-body">
 
           <div class="form-group">
-            <label for="command">Available Commands</label>
+            <label for="command">{{ trans('web::seat.available_commands') }}</label>
             <select name="command" id="available_commands" style="width: 100%">
 
               @foreach($commands as $name => $data)
@@ -36,7 +36,7 @@
           </div>
 
           <div class="form-group">
-            <label for="expression">Cron Expression</label>
+            <label for="expression">{{ trans('web::seat.cron_expression') }}</label>
             <select name="expression" id="available_expressions" style="width: 100%">
 
               @foreach($expressions as $name => $expression)
@@ -54,7 +54,7 @@
             </select>
             <span class="help-block">
               <span id="expression"></span><br>
-              Choose a pre-populated cron expression, or write your own.
+              {{ trans('web::seat.choose_prepop') }}
             </span>
           </div>
 
@@ -63,7 +63,7 @@
 
         <div class="box-footer">
           <button type="submit" class="btn btn-primary pull-right">
-            Add Scheduled Command
+            {{ trans('web::seat.add_scheduled') }}
           </button>
         </div>
       </form>
@@ -77,17 +77,17 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">Current Schedule</h3>
+      <h3 class="panel-title">{{ trans('web::seat.current_schedule') }}</h3>
     </div>
     <div class="panel-body">
 
       <table class="table table-condensed table-hover table-responsive">
         <tbody>
         <tr>
-          <th>Command</th>
-          <th>Cron</th>
-          <th>Allow Overlap</th>
-          <th>Allow in Maintenance</th>
+          <th>{{ trans('web::seat.command') }}</th>
+          <th>{{ trans('web::seat.cron') }}</th>
+          <th>{{ trans('web::seat.allow_overlap') }}</th>
+          <th>{{ trans('web::seat.allow_maintenance') }}</th>
           <th></th>
         </tr>
 
@@ -101,7 +101,7 @@
             <td>
               <a href="{{ route('configuration.schedule.delete', ['schedule_id' => $job->id]) }}" type="button"
                 class="btn btn-danger btn-xs confirmlink">
-                {{ ucfirst(trans('web::general.delete')) }}
+                {{ trans('web::seat.delete') }}
               </a>
             </td>
           </tr>
@@ -113,7 +113,7 @@
 
     </div>
     <div class="panel-footer">
-      {{ count($schedule) }} scheduled commands
+      {{ count($schedule) }} {{ trans('web::seat.scheduled_commands') }}
     </div>
   </div>
 
