@@ -50,11 +50,16 @@ class ProfileSettings extends Request
             ->toArray());
 
         $allowed_skins = implode(',', Profile::$options['skins']);
+        $allowed_languages = implode(',', array_map(function ($entry) {
+
+            return $entry['short'];
+        }, config('web.config.languages')));
         $allowed_sidebar = implode(',', Profile::$options['sidebar']);
 
         return [
             'main_character_id'   => 'required|in:' . $allowed_main_character_ids,
             'skin'                => 'required|in:' . $allowed_skins,
+            'language'            => 'required|in:' . $allowed_languages,
             'sidebar'             => 'required|in:' . $allowed_sidebar,
             'thousand_seperator'  => 'in:" ",",","."|size:1',
             'decimal_seperator'   => 'required|in:",","."|size:1',

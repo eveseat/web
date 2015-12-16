@@ -39,6 +39,7 @@ use Seat\Web\Http\Middleware\Bouncer;
 use Seat\Web\Http\Middleware\CharacterBouncer;
 use Seat\Web\Http\Middleware\CorporationBouncer;
 use Seat\Web\Http\Middleware\KeyBouncer;
+use Seat\Web\Http\Middleware\Locale;
 use Seat\Web\Http\Middleware\Mfa;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
 use Validator;
@@ -192,6 +193,9 @@ class WebServiceProvider extends ServiceProvider
         // Authenticate checks that the session is
         // simply authenticated
         $router->middleware('auth', Authenticate::class);
+
+        // Localization support
+        $router->middleware('locale', Locale::class);
 
         // Optional multifactor authentication if required
         $router->middleware('mfa', Mfa::class);

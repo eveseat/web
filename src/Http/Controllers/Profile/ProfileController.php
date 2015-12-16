@@ -51,14 +51,15 @@ class ProfileController extends Controller
         // Settings value possibilities
         $characters = $this->getUserCharacters(auth()->user()->id);
         $skins = Profile::$options['skins'];
+        $languages = config('web.config.languages');
         $sidebar = Profile::$options['sidebar'];
 
         $thousand = Profile::$options['thousand_seperator'];
         $decimal = Profile::$options['decimal_seperator'];
 
         return view('web::profile.view',
-            compact('user', 'history', 'characters', 'skins', 'sidebar',
-                'thousand', 'decimal'));
+            compact('user', 'history', 'characters', 'skins', 'languages',
+                'sidebar', 'thousand', 'decimal'));
     }
 
     /**
@@ -81,6 +82,7 @@ class ProfileController extends Controller
         Profile::set('main_character_name', $this->getCharacterNameById(
             $request->main_character_id));
         Profile::set('skin', $request->skin);
+        Profile::set('language', $request->language);
         Profile::set('sidebar', $request->sidebar);
 
         Profile::set('thousand_seperator', $request->thousand_seperator);

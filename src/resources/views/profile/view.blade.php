@@ -53,6 +53,22 @@
 
           <!-- Select Basic -->
           <div class="form-group">
+            <label class="col-md-4 control-label" for="language">{{ trans('web::seat.language') }}</label>
+            <div class="col-md-6">
+              <select id="language" name="language" class="form-control">
+                @foreach($languages as $language)
+                  <option value="{{ $language['short'] }}"
+                          @if(setting('language') == $language['short'])
+                          selected
+                          @endif>
+                    {{ $language['full'] }}</option>
+                @endforeach
+              </select>
+            </div>
+          </div>
+
+          <!-- Select Basic -->
+          <div class="form-group">
             <label class="col-md-4 control-label" for="sidebar">{{ trans('web::seat.sidebar_size') }}</label>
             <div class="col-md-6">
               <select id="sidebar" name="sidebar" class="form-control">

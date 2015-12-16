@@ -19,16 +19,27 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-return [
+namespace Seat\Web\Http\Middleware;
 
-    'version'         => '1.0.5',
-    'max_access_mask' => 1073741823,
+use App;
+use Closure;
 
-    'languages'       => [
-        [
-            'short' => 'en',
-            'full'  => 'English'
-        ]
-    ]
+class Locale
+{
 
-];
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Closure                 $next
+     *
+     * @return mixed
+     */
+    public function handle($request, Closure $next)
+    {
+
+        App::setLocale(setting('language'));
+
+        return $next($request);
+    }
+}

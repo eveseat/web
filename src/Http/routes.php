@@ -38,8 +38,9 @@ Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
 
     // All routes from here require *at least* that the
     // user is authenticated. The mfa middleware checks
-    // a setting for the user
-    Route::group(['middleware' => 'auth'], function () {
+    // a setting for the user. We also run the localization
+    // related logic here for translation support
+    Route::group(['middleware' => ['auth', 'locale']], function () {
 
         Route::group(['namespace' => 'Auth', 'prefix' => 'auth'], function () {
 
