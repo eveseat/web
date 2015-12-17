@@ -53,6 +53,9 @@
           {{ $sheet->memberCount }} / {{ $sheet->memberLimit }}
         </dd>
 
+        <dt>{{ trans('web::seat.last_update') }}</dt>
+        <dd>{{ $sheet->updated_at }}</dd>
+
         <dt></dt>
       </dl>
     </div>

@@ -75,6 +75,9 @@
           @endif
         </dd>
 
+        <dt>{{ trans('web::seat.last_update') }}</dt>
+        <dd>{{ $summary->updated_at }}</dd>
+
         <dt></dt>
       </dl>
     </div>
