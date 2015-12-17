@@ -75,6 +75,7 @@ return [
     'action'                       => 'Action',
     'key'                          => 'Key',
     'log'                          => 'Log|Logs',
+    'view'                         => 'View',
 
     // Auth
     'failed'                       => 'These credentials do not match our records.',
