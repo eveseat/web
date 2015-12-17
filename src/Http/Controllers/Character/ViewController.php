@@ -257,8 +257,16 @@ class ViewController extends Controller
     public function getSheet($character_id)
     {
 
-        $account_info = $this->getCharacterAccountInfo($character_id);
         $character_sheet = $this->getCharacterSheet($character_id);
+
+        // Check if we managed to get any records for
+        // this character. If not, redirect back with
+        // an error.
+        if(empty($character_sheet))
+            return redirect()->back()
+                ->with('error', trans('web::seat.unknown_character'));
+
+        $account_info = $this->getCharacterAccountInfo($character_id);
         $employment = $this->getCharacterEmploymentHistory($character_id);
         $implants = $this->getCharacterImplants($character_id);
         $jump_clones = $this->getCharacterJumpClones($character_id);

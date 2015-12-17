@@ -345,6 +345,7 @@ return [
     'client_name'                  => 'Client Name',
     'client'                       => 'Client',
     'qty'                          => '#',
+    'unknown_character'            => 'Unknown Character. Is the API Key on record and updated?',
 
     // Corporation
     'alliance'                     => 'Alliance',
@@ -361,6 +362,7 @@ return [
     'divisional_information'       => 'Divisional Information',
     'corporation_divisions'        => 'Corporation Divisions',
     'wallet_divisions'             => 'Wallet Divisions',
+    'unknown_corporation'          => 'Unknown Corporation. Is the API Key on record and updated?',
 
     // Profile
     'user_profile'                 => 'User Profile',

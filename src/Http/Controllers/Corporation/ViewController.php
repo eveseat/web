@@ -148,8 +148,16 @@ class ViewController extends Controller
     public function getSummary($corporation_id)
     {
 
-        $divisions = $this->getCorporationDivisions($corporation_id);
         $sheet = $this->getCorporationSheet($corporation_id);
+
+        // Check if we managed to get any records for
+        // this character. If not, redirect back with
+        // an error.
+        if(empty($sheet))
+            return redirect()->back()
+                ->with('error', trans('web::seat.unknown_corporation'));
+
+        $divisions = $this->getCorporationDivisions($corporation_id);
         $wallet_divisions = $this->getCorporationWalletDivisions($corporation_id);
 
         return view('web::corporation.summary',
