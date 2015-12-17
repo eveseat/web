@@ -6,7 +6,7 @@
     <!-- Sidebar user panel -->
     <div class="user-panel">
       <div class="pull-left image">
-        <img src="http://image.eveonline.com/Character/{{ setting('main_character_id') }}_128.jpg"
+        <img src="//image.eveonline.com/Character/{{ setting('main_character_id') }}_128.jpg"
              class="img-circle" alt="User Image">
       </div>
       <div class="pull-left info">
