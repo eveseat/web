@@ -346,6 +346,7 @@ return [
     'client'                       => 'Client',
     'qty'                          => '#',
     'unknown_character'            => 'Unknown Character. Is the API Key on record and updated?',
+    'no_account_info'              => 'No Account Information Available',
 
     // Corporation
     'alliance'                     => 'Alliance',

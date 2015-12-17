@@ -69,25 +69,33 @@
         </div>
         <div class="panel-body">
 
-          <dl>
+          @if(!empty($account_info))
 
-            <dt>{{ trans('web::seat.key_id') }}</dt>
-            <dd>{{ $account_info->keyID }}</dd>
+            <dl>
 
-            <dt>{{ trans('web::seat.paid_until') }}</dt>
-            <dd>{{ $account_info->paidUntil }} ( payment due {{ human_diff($account_info->paidUntil) }} )</dd>
+              <dt>{{ trans('web::seat.key_id') }}</dt>
+              <dd>{{ $account_info->keyID }}</dd>
 
-            <dt>{{ trans('web::seat.logon_count') }}</dt>
-            <dd>{{ $account_info->logonCount }} logins to Eve related services</dd>
+              <dt>{{ trans('web::seat.paid_until') }}</dt>
+              <dd>{{ $account_info->paidUntil }} ( payment due {{ human_diff($account_info->paidUntil) }} )</dd>
 
-            <dt>{{ trans('web::seat.online_time') }}</dt>
-            <dd>
-              {{ $account_info->logonMinutes }} minutes,
-              {{ round(((int)$account_info->logonMinutes/60),0) }} hours or
-              {{ round(((int)$account_info->logonMinutes/60)/24,0) }} days
-            </dd>
+              <dt>{{ trans('web::seat.logon_count') }}</dt>
+              <dd>{{ $account_info->logonCount }} logins to Eve related services</dd>
 
-          </dl>
+              <dt>{{ trans('web::seat.online_time') }}</dt>
+              <dd>
+                {{ $account_info->logonMinutes }} minutes,
+                {{ round(((int)$account_info->logonMinutes/60),0) }} hours or
+                {{ round(((int)$account_info->logonMinutes/60)/24,0) }} days
+              </dd>
+
+            </dl>
+
+          @else
+
+            <p>{{ trans('web::seat.no_account_info') }}</p>
+
+          @endif
 
         </div>
       </div>
