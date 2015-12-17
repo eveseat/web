@@ -122,8 +122,9 @@ class ViewController extends Controller
     {
 
         $orders = $this->getCorporationMarketOrders($corporation_id);
+        $states = $this->getEveMarketOrderStates();
 
-        return view('web::corporation.market', compact('orders'));
+        return view('web::corporation.market', compact('orders', 'states'));
     }
 
     /**
