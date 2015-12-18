@@ -11,6 +11,11 @@
         {{ trans('web::seat.calendar') }}
       </a>
     </li>
+    <li role="presentation" class="@if ($viewname == 'channels') active @endif">
+      <a href="{{ route('character.view.channels', $summary->characterID) }}">
+        {{ trans('web::seat.channels') }}
+      </a>
+    </li>
     <li role="presentation" class="@if ($viewname == 'contacts') active @endif">
       <a href="{{ route('character.view.contacts', $summary->characterID) }}">
         {{ trans('web::seat.contacts') }}

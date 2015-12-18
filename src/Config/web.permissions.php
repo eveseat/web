@@ -35,6 +35,7 @@ return [
     'character'   => [
         'assets',
         'calendar',
+        'channels',
         'contacts',
         'contracts',
         'industry',

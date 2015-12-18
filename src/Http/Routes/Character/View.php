@@ -36,6 +36,12 @@ Route::get('/view/calendar/{character_id}', [
     'uses'       => 'ViewController@getCalendar'
 ]);
 
+Route::get('/view/channels/{character_id}', [
+    'as'         => 'character.view.channels',
+    'middleware' => 'characterbouncer:channels',
+    'uses'       => 'ViewController@getChannels'
+]);
+
 Route::get('/view/contacts/{character_id}', [
     'as'         => 'character.view.contacts',
     'middleware' => 'characterbouncer:contacts',

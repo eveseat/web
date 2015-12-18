@@ -143,6 +143,7 @@ return [
 
     'assets'                       => 'Assets',
     'calendar'                     => 'Calendar',
+    'channels'                     => 'Channels',
     'contacts'                     => 'Contacts',
     'contracts'                    => 'Contracts',
     'industry'                     => 'Industry',
@@ -347,6 +348,8 @@ return [
     'qty'                          => '#',
     'unknown_character'            => 'Unknown Character. Is the API Key on record and updated?',
     'no_account_info'              => 'No Account Information Available',
+    'channel_members'              => 'Channel Members',
+    'motd'                         => 'MoTD',
 
     // Corporation
     'alliance'                     => 'Alliance',

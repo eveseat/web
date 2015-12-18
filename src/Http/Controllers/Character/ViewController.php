@@ -72,6 +72,19 @@ class ViewController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+    public function getChannels($character_id)
+    {
+
+        $channels = $this->getCharacterChatChannelsFull($character_id);
+
+        return view('web::character.channels', compact('channels'));
+    }
+
+    /**
+     * @param $character_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getCalendar($character_id)
     {
 
