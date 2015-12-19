@@ -34,6 +34,7 @@ return [
 
     'character'   => [
         'assets',
+        'bookmarks',
         'calendar',
         'channels',
         'contacts',

@@ -350,6 +350,9 @@ return [
     'no_account_info'              => 'No Account Information Available',
     'channel_members'              => 'Channel Members',
     'motd'                         => 'MoTD',
+    'bookmark'                     => 'Bookmark|Bookmarks',
+    'coordinates'                  => 'Coordinates',
+    'folder'                       => 'Folder',
 
     // Corporation
     'alliance'                     => 'Alliance',

@@ -52,6 +52,19 @@ class ViewController extends Controller
     }
 
     /**
+     * @param $character_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getBookmarks($character_id)
+    {
+
+        $bookmarks = collect($this->getCharacterBookmarks($character_id));
+
+        return view('web::character.bookmarks', compact('bookmarks'));
+    }
+
+    /**
      * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\View\View

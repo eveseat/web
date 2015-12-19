@@ -30,6 +30,12 @@ Route::get('/view/assets/{character_id}', [
     'uses'       => 'ViewController@getAssets'
 ]);
 
+Route::get('/view/bookmarks/{character_id}', [
+    'as'         => 'character.view.bookmarks',
+    'middleware' => 'characterbouncer:bookmarks',
+    'uses'       => 'ViewController@getBookmarks'
+]);
+
 Route::get('/view/calendar/{character_id}', [
     'as'         => 'character.view.calendar',
     'middleware' => 'characterbouncer:calendar',
