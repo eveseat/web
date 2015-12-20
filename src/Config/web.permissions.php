@@ -56,6 +56,7 @@ return [
 
     'corporation' => [
         'assets',
+        'bookmarks',
         'contracts',
         'industry',
         'killmails',

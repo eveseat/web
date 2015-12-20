@@ -53,6 +53,19 @@ class ViewController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+    public function getBookmarks($corporation_id)
+    {
+
+        $bookmarks = collect($this->getCorporationBookmarks($corporation_id));
+
+        return view('web::corporation.bookmarks', compact('bookmarks'));
+    }
+
+    /**
+     * @param $corporation_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getContacts($corporation_id)
     {
 
@@ -153,7 +166,7 @@ class ViewController extends Controller
         // Check if we managed to get any records for
         // this character. If not, redirect back with
         // an error.
-        if(empty($sheet))
+        if (empty($sheet))
             return redirect()->back()
                 ->with('error', trans('web::seat.unknown_corporation'));
 

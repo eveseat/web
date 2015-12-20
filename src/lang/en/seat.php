@@ -370,6 +370,7 @@ return [
     'corporation_divisions'        => 'Corporation Divisions',
     'wallet_divisions'             => 'Wallet Divisions',
     'unknown_corporation'          => 'Unknown Corporation. Is the API Key on record and updated?',
+    'created_by'                   => 'Created By',
 
     // Profile
     'user_profile'                 => 'User Profile',

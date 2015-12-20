@@ -6,6 +6,11 @@
         {{ trans('web::seat.assets') }}
       </a>
     </li>
+    <li role="presentation" class="@if ($viewname == 'bookmarks') active @endif">
+      <a href="{{ route('corporation.view.bookmarks', $sheet->corporationID) }}">
+        {{ trans_choice('web::seat.bookmark', 2) }}
+      </a>
+    </li>
     <li role="presentation" class="@if ($viewname == 'contacts') active @endif">
       <a href="{{ route('corporation.view.contacts', $sheet->corporationID) }}">
         {{ trans('web::seat.contacts') }}

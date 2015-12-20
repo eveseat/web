@@ -30,6 +30,12 @@ Route::get('/view/assets/{corporation_id}', [
     'uses'       => 'ViewController@getAssets'
 ]);
 
+Route::get('/view/bookmarks/{corporation_id}', [
+    'as'         => 'corporation.view.bookmarks',
+    'middleware' => 'corporationbouncer:bookmarks',
+    'uses'       => 'ViewController@getBookmarks'
+]);
+
 Route::get('/view/contacts/{corporation_id}', [
     'as'         => 'corporation.view.contacts',
     'middleware' => 'corporationbouncer:contacts',
