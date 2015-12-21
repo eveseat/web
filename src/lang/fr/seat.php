@@ -143,6 +143,7 @@ return [
 
     'assets'                       => 'Biens',
     'calendar'                     => 'Calendrier',
+    'channels'                     => 'Canaux',
     'contacts'                     => 'Contacts',
     'contracts'                    => 'Contrats',
     'industry'                     => 'Industrie',
@@ -348,6 +349,11 @@ return [
     'qty'                          => '#',
     'unknown_character'            => 'Personnage inconnu. La clé est-elle enregistrée et à jour ?',
     'no_account_info'              => 'Aucune information de compte disponible',
+    'channel_members'              => 'Membres sur le canal',
+    'motd'                         => 'Message du jour',
+    'bookmark'                     => 'Emplacements',
+    'coordinates'                  => 'Coordonnées',
+    'folder'                       => 'Dossier',
 
     // Corporation
     'alliance'                     => 'Alliance',
@@ -365,6 +371,7 @@ return [
     'corporation_divisions'        => 'Divisions de corporation',
     'wallet_divisions'             => 'Divisions du portefeuille',
     'unknown_corporation'          => 'Corporation inconnue. La clé est-elle enregistrée et à jour ?',
+    'created_by'                   => 'Crée par',
 
     // Profile
     'user_profile'                 => 'Profil utilisateur',
