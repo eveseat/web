@@ -38,6 +38,38 @@
             </span>
           @endif
         </dd>
+        <dt>{{ trans('web::seat.v_code') }}</dt>
+        <dd>
+
+          <!-- Button trigger modal -->
+          <a type="button" data-toggle="modal" data-target="#vcodeModal">
+            {{ trans_choice('web::seat.reveal', 1) }}
+          </a>
+
+          <!-- Modal -->
+          <div class="modal fade" id="vcodeModal" tabindex="-1" role="dialog" aria-labelledby="vcodeModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <h4 class="modal-title" id="vcodeModalLabel">
+                    {{ trans('web::seat.v_code') }}
+                  </h4>
+                </div>
+                <div class="modal-body">
+
+                  <p class="text-center">
+                    <b>{{ $key->v_code }}</b>
+                  </p>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </dd>
       </dl>
 
     </div>

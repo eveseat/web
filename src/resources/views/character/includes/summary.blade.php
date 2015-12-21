@@ -76,7 +76,20 @@
         </dd>
 
         <dt>{{ trans('web::seat.last_update') }}</dt>
-        <dd>{{ $summary->updated_at }}</dd>
+        <dd>
+          <span data-toggle="tooltip"
+                title="" data-original-title="{{ $summary->updated_at }}">
+            {{ human_diff($summary->updated_at) }}
+          </span>
+        </dd>
+
+        <dt>{{ trans('web::seat.api_detail') }}</dt>
+        <dd>
+          <a href="{{ route('api.key.detail', ['key_id' => $summary->keyID]) }}" type="button">
+            <i class="fa fa-key"></i>
+            {{ trans('web::seat.view') }}
+          </a>
+        </dd>
 
         <dt></dt>
       </dl>

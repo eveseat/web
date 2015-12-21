@@ -193,6 +193,7 @@ return [
     'recent_jobs'                  => 'Recent Jobs',
     'scope'                        => 'Scope',
     'api_all'                      => 'All API Keys',
+    'reveal'                       => 'Reveal',
 
     // Access
     'access_mangement'             => 'Access Management',
