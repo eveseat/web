@@ -108,7 +108,12 @@
             @foreach($journal as $transaction)
 
               <tr>
-                <td>{{ human_diff($transaction->date) }}</td>
+                <td>
+                  <span data-toggle="tooltip"
+                        title="" data-original-title="{{ $transaction->date }}">
+                    {{ human_diff($transaction->date) }}
+                  </span>
+                </td>
                 <td>
                   {{ $transaction->refTypeName }}
                   @if($transaction->argName1)
@@ -142,6 +147,9 @@
             </tbody>
           </table>
 
+        </div>
+        <div class="panel-footer">
+          {!! $journal->render() !!}
         </div>
       </div>
 

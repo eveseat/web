@@ -137,7 +137,12 @@
             @foreach($transactions as $transaction)
 
               <tr @if($transaction->transactionType == 'buy') class="danger" @endif>
-                <td>{{ human_diff($transaction->transactionDateTime) }}</td>
+                <td>
+                  <span data-toggle="tooltip"
+                        title="" data-original-title="{{ $transaction->transactionDateTime }}">
+                    {{ human_diff($transaction->transactionDateTime) }}
+                  </span>
+                </td>
                 <td>
                   @if($transaction->transactionType == 'buy')
                     Bought
@@ -166,7 +171,9 @@
           </table>
 
         </div>
-        <div class="panel-footer">Footer</div>
+        <div class="panel-footer">
+          {!! $transactions->render() !!}
+        </div>
       </div>
 
     </div>
