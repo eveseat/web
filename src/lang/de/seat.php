@@ -1,36 +1,42 @@
 <?php
 /*
 This file is part of SeAT
+
 Copyright (C) 2015  Leon Jacobs
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
+
 You should have received a copy of the GNU General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
+
 return [
+        
     // General
     'home'                         => 'Home',
-    'character'                    => 'Character|Characters',
+    'character'                    => 'Charakter|Charaktere',
     'corporation'                  => 'Corporation|Corporations',
-    'user'                         => 'User|Users',
-    'last_update'                  => 'Letztes Update',
-    'unknown'                      => 'Unbekannt',
+    'user'                         => 'Benutzer|Benutzer',
+    'last_update'                  => 'letztes Update',
+    'unknown'                      => 'unbekannt',
     'note'                         => 'Notiz',
-    'name'                         => 'Name|Names',
-    'granted'                      => 'Gestattet',
-    'denied'                       => 'Verweigert',
-    'enabled'                      => 'Aktiviert',
-    'disabled'                     => 'Deaktiviert',
+    'name'                         => 'Name|Namen',
+    'granted'                      => 'gestattet',
+    'denied'                       => 'verweigert',
+    'enabled'                      => 'aktiviert',
+    'disabled'                     => 'deaktiviert',
     'username'                     => 'Benutzername',
     'email'                        => 'Email',
-    'close'                        => 'Schließen',
+    'close'                        => 'schließen',
     'date'                         => 'Datum',
     'status'                       => 'Status',
     'id'                           => 'ID|IDs',
@@ -40,8 +46,8 @@ return [
     'detail'                       => 'Detail|Details',
     'delete'                       => 'löschen',
     'verify'                       => 'Überprüfen',
-    'reset'                        => 'Zurücsetzen',
-    'back'                         => 'Zurück',
+    'reset'                        => 'zurücsetzen',
+    'back'                         => 'zurück',
     'summary'                      => 'Zusammenfassung',
     'quantity'                     => 'Menge',
     'volume'                       => 'Volumen',
@@ -50,31 +56,32 @@ return [
     'description'                  => 'Beschreibung',
     'labels'                       => 'Labels',
     'created'                      => 'erstellt',
-    'issuer'                       => 'Issuer',
-    'title'                        => 'Title|Titles',
+    'issuer'                       => 'Anbieter',
+    'title'                        => 'Titel|Titel',
     'price'                        => 'Preis',
     'reward'                       => 'Belohnung',
     'location'                     => 'Ort',
-    'filter'                       => 'Filter|Filters',
-    'clear'                        => 'Leeren',
-    'none'                         => 'None',
-    'permission'                   => 'Permission|Permissions',
-    'affiliation'                  => 'Affiliation|Affiliations',
+    'filter'                       => 'Filter|Filter',
+    'clear'                        => 'leeren',
+    'none'                         => 'keine',
+    'permission'                   => 'Berechtigung|Berechtigungen',
+    'affiliation'                  => 'Mitgliedschaft|Mitgliedschaften',
     'role'                         => 'Rolle|Rolen',
-    'edit'                         => 'Bearbeiten',
-    'remove'                       => 'Entfernen',
+    'edit'                         => 'bearbeiten',
+    'remove'                       => 'entfernen',
     'yes'                          => 'Ja',
     'no'                           => 'Nein',
     'update'                       => 'Update',
     'action'                       => 'Aktion',
-    'key'                          => 'Key',
+    'key'                          => 'Schlüssel',
     'log'                          => 'Log|Logs',
     'view'                         => 'ansehen',
+    
     // Auth
     'failed'                       => 'Die eingegebenen Anmeldeinformationen wurden nicht gefunden',
     'throttle'                     => 'Zu viele fehlgeschlagene Loginversuche. Bitte versuch es erneut in :seconds sekunden.',
     'login_welcome'                => 'Willkommen, bitte trage hier deine Anmeldeinformationen ein.',
-    'remember_me'                  => 'Remember me',
+    'remember_me'                  => 'Auf diesem Computer/Browser merken',
     'password'                     => 'Passwort',
     'password_again'               => 'Passwort (erneut)',
     'forgot'                       => 'Ich habe mein Passwort vergessen',
@@ -82,31 +89,36 @@ return [
     'sign_in'                      => 'Einloggen',
     'mfa_welcome'                  => 'Bitte gib deinen Authentifizierungscode ein um fortzufahren.',
     'mfa'                          => 'Multifaktor-Authentifizierung',
+    
     // Registration
     'new_account'                  => 'Neuer Account',
     'register_welcome'             => 'Bitte wähle einen Benutzernamen und ein starkes Passwort.',
     'register_eve_warn'            => 'Nim keinesfalls das gleiche Passwort, mit welchem du dich auch im Spiel einloggst!',
     'existing_account'             => 'Ich habe bereits einen Account',
     'register_account'             => 'Account erstellen',
+    
     // Passwords
     'password_reset'               => 'Passwort zurücksetzen',
     'reset_welcome'                => 'Bitte gib die Mailadresse des Accounts ein, dessen Passwort du vergessen hast.',
     'remember'                     => 'Ich kenne meine Logindaten!',
     'reset_topic'                  => 'Passwort zurücksetzen',
     'reset_token_welcome'          => 'Bitte gib deine Mailadresse und dein neues Passwort ein.',
+    
     // Header
-    'toggle_navigation'            => 'Toggle Navigation',
+    'toggle_navigation'            => 'Navigationsmenü minimieren',
     'queued'                       => 'Warteschlange',
     'working'                      => 'in Arbeit',
     'joined'                       => 'Beigetreten',
     'profile'                      => 'Profil',
     'sign_out'                     => 'Ausloggen',
+    
     // Notifications
     'error'                        => 'Fehler',
     'success'                      => 'Erfolg',
     'warning'                      => 'Warnung',
     'notice'                       => 'Notiz',
     'info'                         => 'Info',
+    
     // Menu
     'api_key_management'           => 'API Keys verwalten',
     'add_api_key'                  => 'EVE API Key hinzufügen',
@@ -128,27 +140,29 @@ return [
     'main_menu'                    => 'Hauptmenü',
     'security'                     => 'Sicherheit',
     'tracking'                     => 'Tracking',
-    'assets'                       => 'Assets',
+    'assets'                       => 'Besitztümer',
     'calendar'                     => 'Kalender',
     'channels'                     => 'Channels',
     'contacts'                     => 'Kontakte',
-    'contracts'                    => 'Contracts',
-    'industry'                     => 'Industry',
+    'contracts'                    => 'Verträge',
+    'industry'                     => 'Industrie',
     'killmails'                    => 'Killmails',
     'mail'                         => 'Mail',
     'market'                       => 'Market',
-    'notifications'                => 'Notifications',
+    'notifications'                => 'Benachrichtigungen',
     'pi'                           => 'PI',
-    'research'                     => 'Research',
+    'research'                     => 'Forschung',
     'sheet'                        => 'Sheet',
     'skills'                       => 'Skills',
-    'standings'                    => 'Standings',
-    'wallet_journal'               => 'Wallet Journal',
-    'wallet_transactions'          => 'Wallet Transactions',
+    'standings'                    => 'Ansehen',
+    'wallet_journal'               => 'Konto Logbuch',
+    'wallet_transactions'          => 'Konto Transaktionen',
+    
     // Dashboard
     'home_page'                    => 'The Home Page',
     'online_layers'                => 'Spieler online',
-    'owned_api_keys'               => 'Eigene API Keys',
+    'owned_api_keys'               => 'eigene API Keys',
+    
     // Api Keys
     'api_key_add'                  => 'Einen neuen API Key hinzufügen',
     'key_id'                       => 'Key ID',
@@ -156,13 +170,13 @@ return [
     'check_key'                    => 'Key überprüfen',
     'api_new_key'                  => 'Erstelle einen neuen API Key',
     'api_use_link'                 => 'Benutze den folgenden Link um einen neuen API Key zu erstellen',
-    'api_full_link'                => 'Full API Key für alle Charactere',
+    'api_full_link'                => 'Full API Key für alle Charaktere',
     'api_key_info'                 => 'API Key Info',
     'api_key_type'                 => 'API Key Typ',
     'api_access_mask'              => 'API Zugriffs Maske',
     'api_add_type_key'             => 'Add :type Api Key',
     'api_add_job'                  => 'Wenn du einen neuen API Key hinzufügst, werd automatisch ein Update-Job in die Warteschlange für das nächste Charakter Update gesetzt.',
-    'api_min_mask'                 => 'Min. Mask',
+    'api_min_mask'                 => 'Min. Maske',
     'api_access'                   => 'Zugriff',
     'api_detail'                   => 'API Key Details',
     'api_key_status'               => 'API Key Status',
@@ -179,21 +193,22 @@ return [
     'scope'                        => 'Scope',
     'api_all'                      => 'Alle API Keys',
     'reveal'                       => 'Reveal',
+    
     // Access
-    'access_mangement'             => 'Zugriffs Management',
-    'quick_add_role'               => 'Quick Add Role',
+    'access_mangement'             => 'Zugriffsverwaltung',
+    'quick_add_role'               => 'neue Rolle hinzufügen',
     'role_name'                    => 'Rollen Name',
-    'add_new_role'                 => 'Neue Rolle hinzufügen',
+    'add_new_role'                 => 'neue Rolle hinzufügen',
     'available_roles'              => 'Verfügbare Rollen',
-    'quick_add_user'               => 'Quick Add User',
-    'add_new_user'                 => 'Neuen Benutzer hinzufügen',
+    'quick_add_user'               => 'neuen Benutzer hinzufügen',
+    'add_new_user'                 => 'neuen Benutzer hinzufügen',
     'edit_role'                    => 'Rolle bearbeiten',
     'available_permissions'        => 'Verfügbare Berechtigungen',
     'grant_permissions'            => 'Berechtigung erteilen',
     'current_permissions'          => 'Aktuelle Berechtigungen',
     'has_superuser'                => 'ist Superuser',
-    'permission_inherit'           => 'Inherits All Permissions',
-    'available_corporations'       => 'verfügbare Corporations',
+    'permission_inherit'           => 'erbt alle Berechtigungen',
+    'available_corporations'       => 'verfügbare Corporationen',
     'available_characters'         => 'verfügbare Charaktere',
     'add_affiliations'             => 'Mitgliedschaften hinzufügen',
     'current_affiliations'         => 'aktuelle Mitgliedschaften',
@@ -207,7 +222,7 @@ return [
     'deactivate_user'              => 'Benutzer sperren',
     'account_status_change'        => 'Der Account Status wurde geändert',
     'user_agent'                   => 'User Agent String',
-    'login_history'                => 'Login History',
+    'login_history'                => 'letzte Logins',
     'role_summary'                 => 'Rollenzusammenfassung',
     'user_updated'                 => 'Der Benutzer wurde aktualisiert',
     'user_deleted'                 => 'Der Benutzer wurde gelöscht',
@@ -222,37 +237,42 @@ return [
     'permission_revoked'           => 'Permission has been revoked',
     'user_added'                   => 'Benutzer wurde von dieser Rolle hinzugefügt',
     'user_removed'                 => 'Benutzer wurde von dieser Rolle entfernt',
-    'affiliations_added'           => 'Affiliations were added to this role',
-    'affiliation_removed'          => 'Affiliation has been removed from this role',
+    'affiliations_added'           => 'Mitgliedschaften wurden der Rolle hinzugefügt',
+    'affiliation_removed'          => 'Mitgliedschaften wurden von der Rolle entfernt',
+    
     // Import
-    'api_import_title'             => 'Import Eve Online API Keys',
-    'csv_data_source'              => 'CSV Data Source File',
-    'help'                         => 'Help',
-    'importing_csv_data'           => 'Import CSV Data',
+    'api_import_title'             => 'Eve Online API Schlüssel importieren',
+    'csv_data_source'              => 'CSV Quelldatei',
+    'help'                         => 'Hilfe',
+    'importing_csv_data'           => 'CSV Daten importieren',
     'csv_format_explained'         => 'The file format for the CSV is keyID,vCode and sampled below',
-    'important_notes'              => 'Important Notes',
-    'curr_user_becomes_owner'      => 'The current user (:user) will become the owner of the API keys.',
+    'important_notes'              => 'Wichtige Information',
+    'curr_user_becomes_owner'      => 'Der Benutzer (:user) bekommt die API Schlüssel zugeordnet.',
     'only_format_is_checked'       => 'Only API key format is checked here. No checking is done to ensure that ' .
         'minimum api masks are configured.',
     'update_with_next_job'         => 'Key data will only populate once the next updater job comes by, or is manuall started.',
+    
     // Schedule
-    'new_schedule'                 => 'New Schedule',
-    'available_commands'           => 'Available Commands',
+    'new_schedule'                 => 'neuer Zeitplan',
+    'available_commands'           => 'verfügbare Befehle',
     'cron_expression'              => 'Cron Expression',
-    'current_schedule'             => 'Current Schedule',
-    'command'                      => 'Command',
+    'current_schedule'             => 'aktueller Zeitplan',
+    'command'                      => 'Befehl',
     'cron'                         => 'Cron',
-    'allow_overlap'                => 'Allow Overlap',
-    'allow_maintenance'            => 'Allow in Maintenance Mode',
-    'scheduled_commands'           => 'Scheduled Commands',
+    'allow_overlap'                => 'Überschneidung erlauben',
+    'allow_maintenance'            => 'im Wartungsmodus erlauben',
+    'scheduled_commands'           => 'geplante Befehle',
     'choose_prepop'                => 'Choose a pre-populated cron expression, or write your own.',
-    'add_scheduled'                => 'Add Scheduled Command',
+    'add_scheduled'                => 'Befehl zur Planung hinzufügen',
+    
     // Security
-    'category'                     => 'Category',
-    'message'                      => 'Message',
-    'source'                       => 'Source',
+    'category'                     => 'Kategorie',
+    'message'                      => 'Nachricht',
+    'source'                       => 'Quelle',
+    
     // Users
-    'user_management'              => 'User Management',
+    'user_management'              => 'Benutzerverwaltung',
+    
     // Settings
     'admin_email'                  => 'Administrator Email',
     'admin_email_help'             => 'Please enter the email address of the administrator of this SeAT installation.',
@@ -262,6 +282,7 @@ return [
     'installed'                    => 'Installed',
     'current'                      => 'Current',
     'url'                          => 'Url',
+    
     // Character
     'joined_curr_corp'             => 'Joined Current Corporation',
     'skillpoint'                   => 'Skillpoint|Skillpoints',
@@ -331,6 +352,7 @@ return [
     'bookmark'                     => 'Bookmark|Bookmarks',
     'coordinates'                  => 'Coordinates',
     'folder'                       => 'Folder',
+    
     // Corporation
     'alliance'                     => 'Alliance',
     'ticker'                       => 'Ticker',
@@ -348,6 +370,7 @@ return [
     'wallet_divisions'             => 'Wallet Divisions',
     'unknown_corporation'          => 'Unknown Corporation. Is the API Key on record and updated?',
     'created_by'                   => 'Created By',
+    
     // Profile
     'user_profile'                 => 'User Profile',
     'user_preferences'             => 'User Preferences',
@@ -385,6 +408,7 @@ return [
         'by your authentication application.',
     'code'                         => 'Code',
     'confirm_setup'                => 'Confirm Setup',
+    
     // Queue
     'queue_manage'                 => 'Queue Mangement',
     'total_jobs'                   => 'Total Jobs',
@@ -418,6 +442,7 @@ return [
     'eve_api_status'               => 'Eve Api Status',
     'eve_api_error_threshold'      => 'EVE API Error Threshold',
     'eve_api_connection_threshold' => 'EVE API Connection Error Threshold',
+    
     // Footer
     'web_version'                  => 'Web Version',
     'copyright'                    => 'Copyright',
