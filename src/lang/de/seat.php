@@ -22,7 +22,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 return [
         
     // General
-    'home'                         => 'Home',
+    'home'                         => 'Start',
     'character'                    => 'Charakter|Charaktere',
     'corporation'                  => 'Corporation|Corporations',
     'user'                         => 'Benutzer|Benutzer',
