@@ -67,7 +67,7 @@ return [
         'standings',
         'tracking',
         'poco',
-        'star_bases',
+        'starbases',
         'summary',
         'wallet_journal',
         'transactions',

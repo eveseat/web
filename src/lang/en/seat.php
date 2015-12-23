@@ -372,6 +372,10 @@ return [
     'wallet_divisions'             => 'Wallet Divisions',
     'unknown_corporation'          => 'Unknown Corporation. Is the API Key on record and updated?',
     'created_by'                   => 'Created By',
+    'starbase'                     => 'Starbase|Starbases',
+    'state'                        => 'State',
+    'fuel_level'                   => 'Fuel Level',
+    'offline'                      => 'Offline Est.',
 
     // Profile
     'user_profile'                 => 'User Profile',

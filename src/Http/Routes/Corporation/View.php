@@ -100,6 +100,12 @@ Route::get('/view/standings/{corporation_id}', [
     'uses'       => 'ViewController@getStandings'
 ]);
 
+Route::get('/view/starbases/{corporation_id}', [
+    'as'         => 'corporation.view.starbases',
+    'middleware' => 'corporationbouncer:starbases',
+    'uses'       => 'ViewController@getStarbases'
+]);
+
 Route::get('/view/tracking/{corporation_id}', [
     'as'         => 'corporation.view.tracking',
     'middleware' => 'corporationbouncer:tracking',
