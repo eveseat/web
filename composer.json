@@ -17,8 +17,8 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
-        "eveseat/eveapi": "1.*",
-        "eveseat/services": "1.*",
+        "eveseat/eveapi": "~1.0",
+        "eveseat/services": "~1.0",
         "pragmarx/google2fa": "0.7.*"
     },
     "require-dev": {
