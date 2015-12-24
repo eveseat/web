@@ -75,7 +75,7 @@ return [
     'action'                       => 'Action',
     'key'                          => 'Clé',
     'log'                          => 'Journal|Journaux',
-    'view'                         => 'Vue|Vues',
+    'view'                         => 'Voir',
 
     // Auth
     'failed'                       => 'Ces identifiants ne correspondent pas à nos informations.',
