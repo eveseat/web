@@ -198,7 +198,7 @@
                   {{ trans('web::seat.blocks_p_h') }}
                 </dd>
 
-                <dt>Strontium {{ trans('web::seat.usage') }}</dt>
+                <dt>{{ trans('web::seat.stront_usage') }}</dt>
                 <dd>
                   @if($starbase->inSovSystem)
                     {{ $starbase->baseStrontUsage * 0.75}}
