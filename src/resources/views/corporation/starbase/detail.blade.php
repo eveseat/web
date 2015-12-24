@@ -98,36 +98,36 @@
                 <dt>{{ trans('web::seat.attack_on_agression') }}:</dt>
                 <dd>
                   @if($starbase->onAggression)
-                    Yes
+                    {{ trans('web::seat.yes') }}
                   @else
-                    No
+                    {{ trans('web::seat.no') }}
                   @endif
                 </dd>
 
                 <dt>{{ trans('web::seat.attack_on_war') }}:</dt>
                 <dd>
                   @if($starbase->onCorporationWarn)
-                    Yes
+                    {{ trans('web::seat.yes') }}
                   @else
-                    No
+                    {{ trans('web::seat.no') }}
                   @endif
                 </dd>
 
                 <dt>{{ trans('web::seat.corp_member_access') }}:</dt>
                 <dd>
                   @if($starbase->allowCorporationMembersn)
-                    Yes
+                    {{ trans('web::seat.yes') }}
                   @else
-                    No
+                    {{ trans('web::seat.no') }}
                   @endif
                 </dd>
 
                 <dt>{{ trans('web::seat.alliance_member_access') }}:</dt>
                 <dd>
                   @if($starbase->allowAllianceMembers)
-                    Yes
+                    {{ trans('web::seat.yes') }}
                   @else
-                    No
+                    {{ trans('web::seat.no') }}
                   @endif
                 </dd>
 
@@ -181,10 +181,10 @@
                 <dd>
                   @if($starbase->inSovSystem)
                     <span class="text-success">
-                      Yes
+                      {{ trans('web::seat.yes') }}
                     </span>
                   @else
-                    No
+                    {{ trans('web::seat.no') }}
                   @endif
                 </dd>
 
@@ -290,12 +290,18 @@
                       <b>{{ number(100 * (
                             $asset_contents->where('parentAssetItemID', $asset->itemID)->sum(function($_) {
                               return $_->quantity * $_->volume;
-                            })/$asset->capacity)) }}%
+                            })/
+                            (in_array($asset->typeID, $cargo_types_with_bonus) ?
+                              $asset->capacity*(1 + $starbase->siloCapacityBonus / 100) : $asset->capacity)))
+                         }}%
                       </b>
                       <i>({{ number($asset_contents->where('parentAssetItemID', $asset->itemID)->sum(function($_) {
                                 return $_->quantity * $_->volume;
                               })) }}  m&sup3; /
-                        {{ number($asset->capacity) }} m&sup3;)
+                        {{
+                          number(in_array($asset->typeID, $cargo_types_with_bonus) ?
+                            $asset->capacity*(1 + $starbase->siloCapacityBonus / 100) : $asset->capacity)
+                        }} m&sup3;)
                         {{ number($asset_contents->where('parentAssetItemID', $asset->itemID)->sum('quantity'), 0) }}
                         {{ trans_choice('web::seat.item', $asset_contents->where('parentAssetItemID', $asset->itemID)->sum('quantity')) }}
                       </i>
@@ -309,7 +315,9 @@
                                 100 * (
                                   $asset_contents->where('parentAssetItemID', $asset->itemID)->sum(function($_) {
                                     return $_->quantity * $_->volume;
-                                  })/$asset->capacity)
+                                  })/
+                                  (in_array($asset->typeID, $cargo_types_with_bonus) ?
+                                    $asset->capacity*(1 + $starbase->siloCapacityBonus / 100) : $asset->capacity))
                              }}%">
                         </div>
                       </div>
@@ -354,7 +362,11 @@
                                       {{ $content->typeName }}
                                     </td>
                                     <td>
-                                      {{ number(100 * (($content->volume * $content->quantity)/$asset->capacity)) }}%
+                                      {{
+                                        number(100 * (($content->volume * $content->quantity)/
+                                          (in_array($asset->typeID, $cargo_types_with_bonus) ?
+                                            $asset->capacity*(1 + $starbase->siloCapacityBonus / 100) : $asset->capacity)))
+                                      }}%
                                     </td>
                                   </tr>
 
