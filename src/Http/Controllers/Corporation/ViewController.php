@@ -158,6 +158,42 @@ class ViewController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+    public function getStarbases($corporation_id)
+    {
+
+        // The basic strategy here is that we will first try and get
+        // as much information as possible about the starbases.
+        // After that we will take the list of starbases and
+        // attempt to determine the fuel usage as well as
+        // the tower name as per the assets list.
+        $starbases = $this->getCorporationStarbases($corporation_id);
+        $starbase_states = $this->getEveStarbaseTowerStates();
+
+        // When calculating *actual* silo capacity, we need
+        // to keep in mind that certain towers have bonusses
+        // to silo cargo capacity, like amarr & gallente
+        // towers do now. To calculate this, we will get the
+        // bay_bonusses that all towerTypeIDs give, and add the
+        // % based cpacity to actual modules that benefit from
+        // the bonusses. Eg:
+        //  $bay_bonusses[towerTypeID] *= (1 + $cargo_types_with_bonus[1] / 100)
+        $bay_bonusses = $this->getEveBayBonusses();
+        $cargo_types_with_bonus = [14343, 17982]; // Silo, Coupling Array
+
+        $assetlist_locations = $this->getCorporationAssetByLocation($corporation_id);
+        $asset_contents = $this->getCorporationAssetContents($corporation_id);
+
+        return view('web::corporation.starbases', compact(
+            'starbases', 'starbase_states', 'bay_bonusses',
+            'cargo_types_with_bonus', 'assetlist_locations',
+            'asset_contents'));
+    }
+
+    /**
+     * @param $corporation_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getSummary($corporation_id)
     {
 

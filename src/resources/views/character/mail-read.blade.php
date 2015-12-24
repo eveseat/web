@@ -32,7 +32,7 @@
             </a>
           </li>
 
-          @if($message->toCorpOrAllianceID != '')
+          @if($message->toCorpOrAllianceID)
             <li>
               <b>To Corporation / Alliance:</b>
               {!! img('auto', $message->toCorpOrAllianceID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
@@ -40,7 +40,7 @@
             </li>
           @endif
 
-          @if($message->toCharacterIDs != '')
+          @if($message->toCharacterIDs)
             <li>
               <b>To Characters:</b>
 

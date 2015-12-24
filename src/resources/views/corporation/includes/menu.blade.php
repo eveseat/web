@@ -41,6 +41,11 @@
         {{ trans('web::seat.security') }}
       </a>
     </li>
+    <li role="presentation" class="@if ($viewname == 'starbases') active @endif">
+      <a href="{{ route('corporation.view.starbases', $sheet->corporationID) }}">
+        {{ trans_choice('web::seat.starbase', 2) }}
+      </a>
+    </li>
     <li role="presentation" class="@if ($viewname == 'summary') active @endif">
       <a href="{{ route('corporation.view.summary', $sheet->corporationID) }}">
         {{ trans('web::seat.summary') }}
