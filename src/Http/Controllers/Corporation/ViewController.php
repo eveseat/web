@@ -173,11 +173,9 @@ class ViewController extends Controller
         // to keep in mind that certain towers have bonusses
         // to silo cargo capacity, like amarr & gallente
         // towers do now. To calculate this, we will get the
-        // bay_bonusses that all towerTypeIDs give, and add the
-        // % based cpacity to actual modules that benefit from
-        // the bonusses. Eg:
-        //  $bay_bonusses[towerTypeID] *= (1 + $cargo_types_with_bonus[1] / 100)
-        $bay_bonusses = $this->getEveBayBonusses();
+        // siloCapacityBonus value from the starbase and add the
+        // % capacity to actual modules that benefit from
+        // the bonusses.
         $cargo_types_with_bonus = [14343, 17982]; // Silo, Coupling Array
 
         $assetlist_locations = $this->getCorporationAssetByLocation($corporation_id);
