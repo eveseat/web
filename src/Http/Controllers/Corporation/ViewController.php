@@ -169,13 +169,17 @@ class ViewController extends Controller
         $starbases = $this->getCorporationStarbases($corporation_id);
         $starbase_states = $this->getEveStarbaseTowerStates();
 
-        // Some bays have bonussed size based on the type
-        // of tower. Get those.
+        // When calculating *actual* silo capacity, we need
+        // to keep in mind that certain towers have bonusses
+        // to silo cargo capacity, like amarr & gallente
+        // towers do now. To calculate this, we will get the
+        // bay_bonusses that all towerTypeIDs give, and add the
+        // % based cpacity to actual modules that benefit from
+        // the bonusses. Eg:
+        //  $bay_bonusses[towerTypeID] *= (1 + $cargo_types_with_bonus[1] / 100)
         $bay_bonusses = $this->getEveBayBonusses();
-
-        // Certain types of cargo also get bonusses. As far as I can
-        // tell, these are only Silos and coupling arrays.
         $cargo_types_with_bonus = [14343, 17982]; // Silo, Coupling Array
+
         $assetlist_locations = $this->getCorporationAssetByLocation($corporation_id);
         $asset_contents = $this->getCorporationAssetContents($corporation_id);
 

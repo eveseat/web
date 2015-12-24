@@ -76,6 +76,9 @@ return [
     'key'                          => 'Key',
     'log'                          => 'Log|Logs',
     'view'                         => 'View',
+    'item'                         => 'Item|Items',
+    'usage'                        => 'Usage',
+    'unit'                         => 'Unit|Units',
 
     // Auth
     'failed'                       => 'These credentials do not match our records.',
@@ -376,6 +379,23 @@ return [
     'state'                        => 'State',
     'fuel_level'                   => 'Fuel Level',
     'offline'                      => 'Offline Est.',
+    'cargo_usage'                  => 'Cargo Usage',
+    'onlined_at'                   => 'Onlined At',
+    'moon'                         => 'Moon',
+    'use_standings_from'           => 'Use Standings From',
+    'attack_on_agression'          => 'Attack On Agression',
+    'attack_on_war'                => 'Attack On War',
+    'corp_member_access'           => 'Corp Member Acces',
+    'alliance_member_access'       => 'Alliance Member Access',
+    'fuel_levels'                  => 'Fuel Levels',
+    'fuel_blocks'                  => 'Fuel Blocks',
+    'fuel_usage'                   => 'Fuel Usage',
+    'blocks_p_h'                   => 'Blocks p/h',
+    'units_p_h'                    => 'Units p/h',
+    'sov_bonus'                    => 'Sovereignty Bonus',
+    'reinforce_estimate'           => 'Reinforcement Estimate',
+    'module'                       => 'Module|Modules',
+    'content'                      => 'Content',
 
     // Profile
     'user_profile'                 => 'User Profile',
