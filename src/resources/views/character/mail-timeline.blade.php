@@ -34,7 +34,7 @@
                 {{ $message->senderName }}
               </a>
 
-              @if($message->toCorpOrAllianceID != '')
+              @if($message->toCorpOrAllianceID)
                 <li>
                   <b>{{ trans('web::seat.to_corp_alliance') }}:</b>
                   {!! img('auto', $message->toCorpOrAllianceID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
@@ -42,7 +42,7 @@
                 </li>
               @endif
 
-              @if($message->toCharacterIDs != '')
+              @if($message->toCharacterIDs)
                 <li>
                   <b>{{ trans('web::seat.to_char') }}:</b>
 
