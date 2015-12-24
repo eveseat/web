@@ -397,6 +397,7 @@ return [
     'reinforce_estimate'           => 'Reinforcement Estimate',
     'module'                       => 'Module|Modules',
     'content'                      => 'Content',
+    'no_known_assets'              => 'No Known Assets',
 
     // Profile
     'user_profile'                 => 'User Profile',

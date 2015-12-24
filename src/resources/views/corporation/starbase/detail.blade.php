@@ -260,137 +260,141 @@
           <div class="row">
             <div class="col-md-12">
 
-              <table class="table table-condensed table-hover table-responsive">
-                <tbody>
-                <tr>
-                  <th>{{ trans_choice('web::seat.type', 1) }}</th>
-                  <th colspan="2">{{ trans('web::seat.content') }}</th>
-                  <th>{{ trans('web::seat.cargo_usage') }}</th>
-                </tr>
+              @if(!$assetlist_locations->has($starbase->moonID))
 
-                @forelse($assetlist_locations->get($starbase->moonID) as $asset)
+                {{ trans('web::seat.no_known_assets') }}
 
+              @else
+
+                <table class="table table-condensed table-hover table-responsive">
+                  <tbody>
                   <tr>
-                    <td>
-                      {!! img('type', $asset->typeID, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-                      {{ $asset->typeName }}
-                      @if($asset->typeName !== $asset->itemName)
-                        <i>({{ $asset->itemName }})</i>
-                      @endif
-                    </td>
-                    <td>
-                      @foreach($asset_contents->where('parentAssetItemID', $asset->itemID)->take(5) as $content)
-                        <span data-toggle="tooltip"
-                              title="" data-original-title="{{ $content->typeName }}">
-                          {!! img('type', $content->typeID, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-                        </span>
-                      @endforeach
-                    </td>
-                    <td>
-                      <b>{{ number(100 * (
-                            $asset_contents->where('parentAssetItemID', $asset->itemID)->sum(function($_) {
-                              return $_->quantity * $_->volume;
-                            })/
-                            (in_array($asset->typeID, $cargo_types_with_bonus) ?
-                              $asset->capacity*(1 + $starbase->siloCapacityBonus / 100) : $asset->capacity)))
-                         }}%
-                      </b>
-                      <i>({{ number($asset_contents->where('parentAssetItemID', $asset->itemID)->sum(function($_) {
+                    <th>{{ trans_choice('web::seat.type', 1) }}</th>
+                    <th colspan="2">{{ trans('web::seat.content') }}</th>
+                    <th>{{ trans('web::seat.cargo_usage') }}</th>
+                  </tr>
+
+
+                  @foreach($assetlist_locations->get($starbase->moonID) as $asset)
+
+                    <tr>
+                      <td>
+                        {!! img('type', $asset->typeID, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
+                        {{ $asset->typeName }}
+                        @if($asset->typeName !== $asset->itemName)
+                          <i>({{ $asset->itemName }})</i>
+                        @endif
+                      </td>
+                      <td>
+                        @foreach($asset_contents->where('parentAssetItemID', $asset->itemID)->take(5) as $content)
+                          <span data-toggle="tooltip"
+                                title="" data-original-title="{{ $content->typeName }}">
+                            {!! img('type', $content->typeID, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
+                          </span>
+                        @endforeach
+                      </td>
+                      <td>
+                        <b>{{ number(100 * (
+                              $asset_contents->where('parentAssetItemID', $asset->itemID)->sum(function($_) {
                                 return $_->quantity * $_->volume;
-                              })) }}  m&sup3; /
-                        {{
-                          number(in_array($asset->typeID, $cargo_types_with_bonus) ?
-                            $asset->capacity*(1 + $starbase->siloCapacityBonus / 100) : $asset->capacity)
-                        }} m&sup3;)
-                        {{ number($asset_contents->where('parentAssetItemID', $asset->itemID)->sum('quantity'), 0) }}
-                        {{ trans_choice('web::seat.item', $asset_contents->where('parentAssetItemID', $asset->itemID)->sum('quantity')) }}
-                      </i>
-                    </td>
-                    <td>
-                      <div class="progress">
-                        <div class="progress-bar" role="progressbar"
-                             aria-valuenow="60" aria-valuemin="0"
-                             aria-valuemax="100"
-                             style="width: {{
-                                100 * (
-                                  $asset_contents->where('parentAssetItemID', $asset->itemID)->sum(function($_) {
-                                    return $_->quantity * $_->volume;
-                                  })/
-                                  (in_array($asset->typeID, $cargo_types_with_bonus) ?
-                                    $asset->capacity*(1 + $starbase->siloCapacityBonus / 100) : $asset->capacity))
-                             }}%">
+                              })/
+                              (in_array($asset->typeID, $cargo_types_with_bonus) ?
+                                $asset->capacity*(1 + $starbase->siloCapacityBonus / 100) : $asset->capacity)))
+                           }}%
+                        </b>
+                        <i>({{ number($asset_contents->where('parentAssetItemID', $asset->itemID)->sum(function($_) {
+                                  return $_->quantity * $_->volume;
+                                })) }}  m&sup3; /
+                          {{
+                            number(in_array($asset->typeID, $cargo_types_with_bonus) ?
+                              $asset->capacity*(1 + $starbase->siloCapacityBonus / 100) : $asset->capacity)
+                          }} m&sup3;)
+                          {{ number($asset_contents->where('parentAssetItemID', $asset->itemID)->sum('quantity'), 0) }}
+                          {{ trans_choice('web::seat.item', $asset_contents->where('parentAssetItemID', $asset->itemID)->sum('quantity')) }}
+                        </i>
+                      </td>
+                      <td>
+                        <div class="progress">
+                          <div class="progress-bar" role="progressbar"
+                               aria-valuenow="60" aria-valuemin="0"
+                               aria-valuemax="100"
+                               style="width: {{
+                                        100 * (
+                                        $asset_contents->where('parentAssetItemID', $asset->itemID)->sum(function($_) {
+                                        return $_->quantity * $_->volume;
+                                        })/
+                                        (in_array($asset->typeID, $cargo_types_with_bonus) ?
+                                        $asset->capacity*(1 + $starbase->siloCapacityBonus / 100) : $asset->capacity))
+                                        }}%">
+                          </div>
                         </div>
-                      </div>
-                    </td>
-                    <td>
+                      </td>
+                      <td>
 
-                      <!-- Button trigger modal -->
-                      <a type="button" data-toggle="modal" data-target="#assetModal{{ $asset->itemID }}">
-                        <i class="fa fa-cube"></i>
-                      </a>
+                        <!-- Button trigger modal -->
+                        <a type="button" data-toggle="modal" data-target="#assetModal{{ $asset->itemID }}">
+                          <i class="fa fa-cube"></i>
+                        </a>
 
-                      <!-- Modal -->
-                      <div class="modal fade" id="assetModal{{ $asset->itemID }}" tabindex="-1"
-                           role="dialog" aria-labelledby="assetModalLabel">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                              <h4 class="modal-title" id="assetModalLabel">
-                                {{ trans_choice('web::seat.detail', 2) }}:
-                                {{ $asset->typeName }}
-                              </h4>
-                            </div>
-                            <div class="modal-body">
+                        <!-- Modal -->
+                        <div class="modal fade" id="assetModal{{ $asset->itemID }}" tabindex="-1"
+                             role="dialog" aria-labelledby="assetModalLabel">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title" id="assetModalLabel">
+                                  {{ trans_choice('web::seat.detail', 2) }}:
+                                  {{ $asset->typeName }}
+                                </h4>
+                              </div>
+                              <div class="modal-body">
 
-                              <table class="table table-condensed table-hover table-responsive">
-                                <tbody>
-                                <tr>
-                                  <th>#</th>
-                                  <th></th>
-                                  <th></th>
-                                </tr>
-
-                                @foreach($asset_contents->where('parentAssetItemID', $asset->itemID) as $content)
-
+                                <table class="table table-condensed table-hover table-responsive">
+                                  <tbody>
                                   <tr>
-                                    <td>{{ $content->quantity }}</td>
-                                    <td>
-                                      {!! img('type', $content->typeID, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-                                      {{ $content->typeName }}
-                                    </td>
-                                    <td>
-                                      {{
-                                        number(100 * (($content->volume * $content->quantity)/
-                                          (in_array($asset->typeID, $cargo_types_with_bonus) ?
-                                            $asset->capacity*(1 + $starbase->siloCapacityBonus / 100) : $asset->capacity)))
-                                      }}%
-                                    </td>
+                                    <th>#</th>
+                                    <th></th>
+                                    <th></th>
                                   </tr>
 
-                                @endforeach
+                                  @foreach($asset_contents->where('parentAssetItemID', $asset->itemID) as $content)
 
-                                </tbody>
-                              </table>
+                                    <tr>
+                                      <td>{{ $content->quantity }}</td>
+                                      <td>
+                                        {!! img('type', $content->typeID, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
+                                        {{ $content->typeName }}
+                                      </td>
+                                      <td>
+                                        {{
+                                          number(100 * (($content->volume * $content->quantity)/
+                                            (in_array($asset->typeID, $cargo_types_with_bonus) ?
+                                              $asset->capacity*(1 + $starbase->siloCapacityBonus / 100) : $asset->capacity)))
+                                        }}%
+                                      </td>
+                                    </tr>
 
+                                  @endforeach
+
+                                  </tbody>
+                                </table>
+
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
 
-                    </td>
-                  </tr>
+                      </td>
+                    </tr>
 
-                @empty
+                  @endforeach
+                  </tbody>
+                </table>
 
-                  {{ trans('web::seat.no_known_assets') }}
-
-                @endforelse
-
-                </tbody>
-              </table>
+              @endif
 
             </div>
 
