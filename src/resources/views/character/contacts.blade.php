@@ -55,7 +55,10 @@
               {{ $contact->contactName }}
             </td>
             <td>{{ $contact->standing }}</td>
-            <td>{{ $contact->name }}</td>
+            <td>
+              {{ $labels->filter(function($item) use ($contact) {
+                return $item->labelID & $contact->labelMask; })->implode('name', ', ') }}
+            </td>
           </tr>
 
         @endforeach
@@ -74,7 +77,10 @@
               {{ $contact->contactName }}
             </td>
             <td>{{ $contact->standing }}</td>
-            <td>{{ $contact->name }}</td>
+            <td>
+              {{ $labels->filter(function($item) use ($contact) {
+                return $item->labelID & $contact->labelMask; })->implode('name', ', ') }}
+            </td>
           </tr>
 
         @endforeach
