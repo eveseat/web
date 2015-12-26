@@ -19,97 +19,101 @@
 
           @foreach($starbase->modules as $module)
 
-            <tr>
-              <td>
-                {!! img('type', $module['detail']->typeID, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-                {{ $module['detail']->typeName }}
-                @if($module['detail']->typeName !== $module['detail']->itemName)
-                  <i>({{ $module['detail']->itemName }})</i>
-                @endif
-              </td>
-              <td>
-                @foreach($module_contents->where('parentAssetItemID', $module['detail']->itemID)->take(5) as $content)
-                  <span data-toggle="tooltip"
-                        title="" data-original-title="{{ $content->typeName }}">
-                    {!! img('type', $content->typeID, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-                  </span>
-                @endforeach
-              </td>
-              <td>
-                <b>
-                  @if($module['used_volume'] == 0 || $module['available_volume'] == 0)
-                    0%
-                  @else
-                    {{ number(100 * ($module['used_volume']) / ($module['available_volume']), 0) }}%
+            {{-- If the current module is not the Tower itself --}}
+            @if($module['detail']->itemID !== $starbase->itemID)
+
+              <tr>
+                <td>
+                  {!! img('type', $module['detail']->typeID, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
+                  {{ $module['detail']->typeName }}
+                  @if($module['detail']->typeName !== $module['detail']->itemName)
+                    <i>({{ $module['detail']->itemName }})</i>
                   @endif
-                </b>
-                <i>
-                  ({{ number($module['used_volume']) }} m&sup3; / {{ number($module['available_volume']) }} m&sup3;)
-                  {{ number($module['total_items']) }}
-                  {{ trans_choice('web::seat.item', $module['total_items']) }}
-                </i>
-              </td>
-              <td>
-                @include('web::macros.progressbar',
-                  ['partial' => $module['used_volume'],'full' => $module['available_volume']])
-              </td>
-              <td>
+                </td>
+                <td>
+                  @foreach($module_contents->where('parentAssetItemID', $module['detail']->itemID)->take(5) as $content)
+                    <span data-toggle="tooltip"
+                          title="" data-original-title="{{ $content->typeName }}">
+                      {!! img('type', $content->typeID, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
+                    </span>
+                  @endforeach
+                </td>
+                <td>
+                  <b>
+                    @if($module['used_volume'] == 0 || $module['available_volume'] == 0)
+                      0%
+                    @else
+                      {{ number(100 * ($module['used_volume']) / ($module['available_volume']), 0) }}%
+                    @endif
+                  </b>
+                  <i>
+                    ({{ number($module['used_volume']) }} m&sup3; / {{ number($module['available_volume']) }} m&sup3;)
+                    {{ number($module['total_items']) }}
+                    {{ trans_choice('web::seat.item', $module['total_items']) }}
+                  </i>
+                </td>
+                <td>
+                  @include('web::macros.progressbar',
+                    ['partial' => $module['used_volume'],'full' => $module['available_volume']])
+                </td>
+                <td>
 
-                <!-- Button trigger modal -->
-                <a type="button" data-toggle="modal" data-target="#assetModal{{ $module['detail']->itemID }}">
-                  <i class="fa fa-cube"></i>
-                </a>
+                  <!-- Button trigger modal -->
+                  <a type="button" data-toggle="modal" data-target="#assetModal{{ $module['detail']->itemID }}">
+                    <i class="fa fa-cube"></i>
+                  </a>
 
-                <!-- Modal -->
-                <div class="modal fade" id="assetModal{{ $module['detail']->itemID }}" tabindex="-1"
-                     role="dialog" aria-labelledby="assetModalLabel">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 class="modal-title" id="assetModalLabel">
-                          {{ trans_choice('web::seat.detail', 2) }}:
-                          {{ $module['detail']->typeName }}
-                        </h4>
-                      </div>
-                      <div class="modal-body">
+                  <!-- Modal -->
+                  <div class="modal fade" id="assetModal{{ $module['detail']->itemID }}" tabindex="-1"
+                       role="dialog" aria-labelledby="assetModalLabel">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                          <h4 class="modal-title" id="assetModalLabel">
+                            {{ trans_choice('web::seat.detail', 2) }}:
+                            {{ $module['detail']->typeName }}
+                          </h4>
+                        </div>
+                        <div class="modal-body">
 
-                        <table class="table table-condensed table-hover table-responsive">
-                          <tbody>
-                          <tr>
-                            <th>#</th>
-                            <th></th>
-                            <th>{{ trans('web::seat.volume_usage') }}</th>
-                          </tr>
-
-                          @foreach($module_contents->where('parentAssetItemID', $module['detail']->itemID) as $content)
-
+                          <table class="table table-condensed table-hover table-responsive">
+                            <tbody>
                             <tr>
-                              <td>{{ $content->quantity }}</td>
-                              <td>
-                                {!! img('type', $content->typeID, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-                                {{ $content->typeName }}
-                              </td>
-                              <td>
-                                @include('web::macros.progressbar',
-                                  ['partial' => $content->quantity * $content->volume,'full' => $module['available_volume']])
-                              </td>
+                              <th>#</th>
+                              <th></th>
+                              <th>{{ trans('web::seat.volume_usage') }}</th>
                             </tr>
 
-                          @endforeach
+                            @foreach($module_contents->where('parentAssetItemID', $module['detail']->itemID) as $content)
 
-                          </tbody>
-                        </table>
+                              <tr>
+                                <td>{{ $content->quantity }}</td>
+                                <td>
+                                  {!! img('type', $content->typeID, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
+                                  {{ $content->typeName }}
+                                </td>
+                                <td>
+                                  @include('web::macros.progressbar',
+                                    ['partial' => $content->quantity * $content->volume,'full' => $module['available_volume']])
+                                </td>
+                              </tr>
 
+                            @endforeach
+
+                            </tbody>
+                          </table>
+
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-              </td>
-            </tr>
+                </td>
+              </tr>
+            @endif
 
           @endforeach
 
