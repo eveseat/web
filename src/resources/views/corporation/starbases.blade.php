@@ -7,7 +7,9 @@
 
   <div class="row">
     <div class="col-md-12">
+
       @include('web::corporation.starbase.summary')
+
     </div>
   </div> <!-- ./row -->
 
@@ -15,7 +17,40 @@
 
     <div class="row">
       <div class="col-md-12">
-        @include('web::corporation.starbase.detail')
+
+        <div class="panel panel-default" id="starbaseDetail{{ $starbase->itemID }}">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              {{ $starbase->starbaseName }} <i>({{ $starbase->moonName }})</i>
+            </h3>
+          </div>
+          <div class="panel-body">
+            <div>
+
+              <!-- Nav tabs -->
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                  <a href="#status{{ $starbase->itemID }}" aria-controls="status{{ $starbase->itemID }}"
+                     role="tab" data-toggle="tab">Status</a>
+                </li>
+                <li role="presentation">
+                  <a href="#modules{{ $starbase->itemID }}" aria-controls="modules{{ $starbase->itemID }}"
+                     role="tab" data-toggle="tab">{{ trans_choice('web::seat.module', 2) }}</a>
+                </li>
+              </ul>
+
+              <div class="tab-content">
+
+                @include('web::corporation.starbase.status-tab')
+
+                @include('web::corporation.starbase.modules-tab')
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 

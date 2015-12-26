@@ -179,12 +179,45 @@ class ViewController extends Controller
         $cargo_types_with_bonus = [14343, 17982]; // Silo, Coupling Array
 
         $assetlist_locations = $this->getCorporationAssetByLocation($corporation_id);
-        $asset_contents = $this->getCorporationAssetContents($corporation_id);
+        $module_contents = $this->getCorporationAssetContents($corporation_id);
+
+        // Prep the module data for the view. The general idea
+        // is that we are going to assume that modules at the same
+        // moon belongs to a POS.
+        foreach ($starbases as $starbase) {
+
+            // Check if we know of *any* assets at this moon.
+            if (!$assetlist_locations->has($starbase->moonID))
+                continue;
+
+            $starbase->modules = collect($assetlist_locations->get($starbase->moonID)
+                ->map(function ($asset) use (
+                    $starbase,
+                    $cargo_types_with_bonus,
+                    $module_contents
+                ) {
+
+                    // Return a collection with module related info.
+                    return collect([
+                        'detail'           => $asset,
+                        'used_volume'      => $module_contents->where(
+                            'parentAssetItemID', $asset->itemID)->sum(function ($_) {
+
+                            return $_->quantity * $_->volume;
+                        }),
+                        'available_volume' => in_array($asset->typeID, $cargo_types_with_bonus) ?
+                            $asset->capacity * (1 + $starbase->siloCapacityBonus / 100) :
+                            $asset->capacity,
+                        'total_items'      => $module_contents->where(
+                            'parentAssetItemID', $asset->itemID)->sum('quantity')
+                    ]);
+                }));
+        }
 
         return view('web::corporation.starbases', compact(
-            'starbases', 'starbase_states', 'bay_bonusses',
+            'starbases', 'starbase_states',
             'cargo_types_with_bonus', 'assetlist_locations',
-            'asset_contents'));
+            'module_contents'));
     }
 
     /**

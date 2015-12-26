@@ -398,6 +398,7 @@ return [
     'module'                       => 'Module|Modules',
     'content'                      => 'Content',
     'no_known_assets'              => 'No Known Assets',
+    'volume_usage'                 => 'Volume Usage',
 
     // Profile
     'user_profile'                 => 'User Profile',
