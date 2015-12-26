@@ -37,7 +37,11 @@
               </td>
               <td>
                 <b>
-                  {{ number(100 * ($module['used_volume']) / ($module['available_volume']), 0) }}%
+                  @if($module['used_volume'] == 0 || $module['available_volume'] == 0)
+                    0%
+                  @else
+                    {{ number(100 * ($module['used_volume']) / ($module['available_volume']), 0) }}%
+                  @endif
                 </b>
                 <i>
                   ({{ number($module['used_volume']) }} m&sup3; / {{ number($module['available_volume']) }} m&sup3;)
@@ -46,13 +50,8 @@
                 </i>
               </td>
               <td>
-                <div class="progress">
-                  <div class="progress-bar" role="progressbar"
-                       aria-valuenow="60" aria-valuemin="0"
-                       aria-valuemax="100"
-                       style="width: {{ 100 * ($module['used_volume']) / ($module['available_volume']) }}%">
-                  </div>
-                </div>
+                @include('web::macros.progressbar',
+                  ['partial' => $module['used_volume'],'full' => $module['available_volume']])
               </td>
               <td>
 
@@ -94,7 +93,8 @@
                                 {{ $content->typeName }}
                               </td>
                               <td>
-                                {{ number(100 * ($content->quantity * $content->volume) / $module['available_volume']) }} %
+                                @include('web::macros.progressbar',
+                                  ['partial' => $content->quantity * $content->volume,'full' => $module['available_volume']])
                               </td>
                             </tr>
 
