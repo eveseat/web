@@ -215,9 +215,7 @@ class ViewController extends Controller
         }
 
         return view('web::corporation.starbases', compact(
-            'starbases', 'starbase_states',
-            'cargo_types_with_bonus', 'assetlist_locations',
-            'module_contents'));
+            'starbases', 'starbase_states', 'module_contents'));
     }
 
     /**
