@@ -91,6 +91,11 @@
         {{ trans('web::seat.wallet_transactions') }}
       </a>
     </li>
+    <li role="presentation" class="@if ($viewname == 'notes') active @endif">
+      <a href="{{ route('notes.list', $summary->characterID) }}">
+        {{ trans_choice('notes::seat.note',2) }}
+      </a>
+    </li>
   </ul>
 
 </div>
