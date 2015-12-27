@@ -25,6 +25,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Seat\Services\Repositories\Corporation\CorporationRepository;
 use Seat\Services\Repositories\Eve\EveRepository;
+use Seat\Web\Validation\StarbaseModule;
 
 /**
  * Class ViewController
@@ -169,6 +170,21 @@ class ViewController extends Controller
         $starbases = $this->getCorporationStarbases($corporation_id);
         $starbase_states = $this->getEveStarbaseTowerStates();
 
+        return view('web::corporation.starbases',
+            compact('starbases', 'starbase_states'));
+    }
+
+    /**
+     * @param \Seat\Web\Validation\StarbaseModule $request
+     * @param                                     $corporation_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function postStarbaseModules(StarbaseModule $request, $corporation_id)
+    {
+
+        $starbase = $this->getCorporationStarbases($corporation_id, $request->starbase_id);
+
         // When calculating *actual* silo capacity, we need
         // to keep in mind that certain towers have bonusses
         // to silo cargo capacity, like amarr & gallente
@@ -177,20 +193,13 @@ class ViewController extends Controller
         // % capacity to actual modules that benefit from
         // the bonusses.
         $cargo_types_with_bonus = [14343, 17982]; // Silo, Coupling Array
-
         $assetlist_locations = $this->getCorporationAssetByLocation($corporation_id);
         $module_contents = $this->getCorporationAssetContents($corporation_id);
 
-        // Prep the module data for the view. The general idea
-        // is that we are going to assume that modules at the same
-        // moon belongs to a POS.
-        foreach ($starbases as $starbase) {
+        // Check if we know of *any* assets at this moon.
+        if ($assetlist_locations->has($starbase->moonID)) {
 
-            // Check if we know of *any* assets at this moon.
-            if (!$assetlist_locations->has($starbase->moonID))
-                continue;
-
-            $starbase->modules = collect($assetlist_locations->get($starbase->moonID)
+            $starbase->modules = $assetlist_locations->get($starbase->moonID)
                 ->map(function ($asset) use (
                     $starbase,
                     $cargo_types_with_bonus,
@@ -198,7 +207,7 @@ class ViewController extends Controller
                 ) {
 
                     // Return a collection with module related info.
-                    return collect([
+                    return [
                         'detail'           => $asset,
                         'used_volume'      => $module_contents->where(
                             'parentAssetItemID', $asset->itemID)->sum(function ($_) {
@@ -210,12 +219,14 @@ class ViewController extends Controller
                             $asset->capacity,
                         'total_items'      => $module_contents->where(
                             'parentAssetItemID', $asset->itemID)->sum('quantity')
-                    ]);
-                }));
+                    ];
+                });
+
         }
 
-        return view('web::corporation.starbases', compact(
-            'starbases', 'starbase_states', 'module_contents'));
+        return view('web::corporation.starbase.ajax.modules-tab',
+            compact('starbase', 'module_contents'));
+
     }
 
     /**

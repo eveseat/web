@@ -3,6 +3,8 @@
 @section('title', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.starbase', 2))
 @section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.starbase', 2))
 
+@inject('request', 'Illuminate\Http\Request')
+
 @section('corporation_content')
 
   <div class="row">
@@ -35,6 +37,7 @@
                 </li>
                 <li role="presentation">
                   <a href="#modules{{ $starbase->itemID }}" aria-controls="modules{{ $starbase->itemID }}"
+                     id="modules-tab" a-starbase-id="{{ $starbase->itemID }}"
                      role="tab" data-toggle="tab">{{ trans_choice('web::seat.module', 2) }}</a>
                 </li>
               </ul>
@@ -43,7 +46,10 @@
 
                 @include('web::corporation.starbase.status-tab')
 
-                @include('web::corporation.starbase.modules-tab')
+                <div role="tabpanel" class="tab-pane" id="modules{{ $starbase->itemID }}"
+                     a-ajax-loaded="false">
+                  <!-- ajax placeholder div -->
+                </div>
 
               </div>
 
@@ -59,6 +65,42 @@
 @stop
 
 @section('javascript')
+
+  <script>
+    $("a#modules-tab").click(function() {
+
+      // Grab the starbaseID
+      var starbase_id = $(this).attr('a-starbase-id');
+
+      // Prevent loading the request *again* if its already been
+      // successfully loaded!
+      if($("div#modules" + starbase_id).attr('a-ajax-loaded') === "false") {
+
+        // 'Loading' animation
+        $("div#modules" + starbase_id)
+                .html('<i class="fa fa-cog fa fa-spin"></i> {{ trans('web::seat.loading_modules') }}</p>');
+
+        $.ajax({
+          type: 'POST',
+          url: "{{ route('corporation.view.starbase.modules',
+          ['corporation_id' => $request->corporation_id]) }}",
+          data: {
+            'starbase_id': starbase_id
+          },
+          success: function (result) {
+            $("div#modules" + starbase_id)
+                    .html(result)
+                    .attr('a-ajax-loaded', 'true');
+          },
+          error: function (xhr, textStatus, errorThrown) {
+            console.log(xhr);
+            console.log(textStatus);
+            console.log(errorThrown);
+          }
+        });
+      }
+    });
+  </script>
 
   @include('web::includes.javascript.id-to-name')
 

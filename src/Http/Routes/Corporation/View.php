@@ -106,6 +106,12 @@ Route::get('/view/starbases/{corporation_id}', [
     'uses'       => 'ViewController@getStarbases'
 ]);
 
+Route::post('/view/starbase/modules/{corporation_id}', [
+    'as'         => 'corporation.view.starbase.modules',
+    'middleware' => 'corporationbouncer:starbases',
+    'uses'       => 'ViewController@postStarbaseModules'
+]);
+
 Route::get('/view/tracking/{corporation_id}', [
     'as'         => 'corporation.view.tracking',
     'middleware' => 'corporationbouncer:tracking',

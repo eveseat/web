@@ -399,6 +399,7 @@ return [
     'content'                      => 'Content',
     'no_known_assets'              => 'No Known Assets',
     'volume_usage'                 => 'Volume Usage',
+    'loading_modules'              => 'Loading Module Information...',
 
     // Profile
     'user_profile'                 => 'User Profile',
