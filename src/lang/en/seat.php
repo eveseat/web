@@ -474,5 +474,6 @@ return [
 
     // Footer
     'web_version'                  => 'Web Version',
+    'render_in'                    => 'Rendered In',
     'copyright'                    => 'Copyright',
 ];
