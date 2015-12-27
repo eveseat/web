@@ -21,7 +21,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 return [
 
-    'version'         => '1.0.14',
+    'version'         => '1.0.15',
     'max_access_mask' => 1073741823,
 
     'languages'       => [
