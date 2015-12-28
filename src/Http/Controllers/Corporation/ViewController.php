@@ -299,6 +299,20 @@ class ViewController extends Controller
     }
 
     /**
+     * @param $corporation_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getLedger($corporation_id)
+    {
+
+        $ledger = $this->getCorporationWalletLedger($corporation_id);
+
+        return view('web::corporation.ledger', compact('ledger'));
+
+    }
+
+    /**
      * @param \Illuminate\Http\Request $request
      * @param                          $corporation_id
      *

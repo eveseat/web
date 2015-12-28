@@ -161,6 +161,7 @@ return [
     'standings'                    => 'Standings',
     'wallet_journal'               => 'Wallet Journal',
     'wallet_transactions'          => 'Wallet Transactions',
+    'wallet_ledger'                => 'Wallet Ledger',
 
     // Dashboard
     'home_page'                    => 'The Home Page',
@@ -405,6 +406,10 @@ return [
     'standing_level'               => 'Standing Level',
     'tax_alliance_corp'            => 'Tax: Alliance/Corp',
     'tax_standings'                => 'Tax: Standings',
+    'year'                         => 'Year',
+    'month'                        => 'Month',
+    'account_key'                  => 'Account',
+    'wallet_balance'               => 'Balance',
 
     // Profile
     'user_profile'                 => 'User Profile',

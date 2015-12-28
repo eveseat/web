@@ -71,6 +71,11 @@
         {{ trans('web::seat.wallet_journal') }}
       </a>
     </li>
+    <li role="presentation" class="@if ($viewname == 'ledger') active @endif">
+      <a href="{{ route('corporation.view.ledger', $sheet->corporationID) }}">
+        {{ trans('web::seat.wallet_ledger') }}
+      </a>
+    </li>   
     <li role="presentation" class="@if ($viewname == 'transactions') active @endif">
       <a href="{{ route('corporation.view.transactions', $sheet->corporationID) }}">
         {{ trans('web::seat.wallet_transactions') }}

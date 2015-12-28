@@ -130,6 +130,13 @@ Route::get('/view/journal/{corporation_id}', [
     'uses'       => 'ViewController@getJournal'
 ]);
 
+Route::get('/view/ledger/{corporation_id}', [
+    'as'         => 'corporation.view.ledger',
+    'middleware' => 'corporationbouncer:ledger',
+    'uses'       => 'ViewController@getLedger'
+]);
+
+
 Route::get('/view/transactions/{corporation_id}', [
     'as'         => 'corporation.view.transactions',
     'middleware' => 'corporationbouncer:transactions',

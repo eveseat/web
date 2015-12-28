@@ -70,6 +70,7 @@ return [
         'starbases',
         'summary',
         'wallet_journal',
+        'wallet_ledger',
         'transactions',
     ],
 
