@@ -26,6 +26,10 @@
 
           <tr>
             <td>
+              <span data-toggle="tooltip"
+                    title="" data-original-title="{{ $poco->planetTypeName }}">
+                {!! img('type', $poco->planetTypeID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+              </span>
               {{ $poco->planetName }}
             </td>
             <td>{{ $poco->reinforceHour }}</td>
