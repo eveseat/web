@@ -36,6 +36,11 @@
         {{ trans('web::seat.market') }}
       </a>
     </li>
+    <li role="presentation" class="@if ($viewname == 'pocos') active @endif">
+      <a href="{{ route('corporation.view.pocos', $sheet->corporationID) }}">
+        {{ trans('web::seat.pocos') }}
+      </a>
+    </li>
     <li role="presentation" class="@if ($viewname == 'security') active @endif">
       <a href="{{ route('corporation.view.security.roles', $sheet->corporationID) }}">
         {{ trans('web::seat.security') }}

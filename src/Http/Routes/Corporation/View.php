@@ -66,6 +66,12 @@ Route::get('/view/market/{corporation_id}', [
     'uses'       => 'ViewController@getMarket'
 ]);
 
+Route::get('/view/pocos/{corporation_id}', [
+    'as'         => 'corporation.view.pocos',
+    'middleware' => 'corporationbouncer:pocos',
+    'uses'       => 'ViewController@getPoco'
+]);
+
 Route::group(['prefix' => 'view/security'], function () {
 
     Route::get('roles/{corporation_id}', [

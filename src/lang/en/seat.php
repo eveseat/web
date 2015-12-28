@@ -400,6 +400,11 @@ return [
     'no_known_assets'              => 'No Known Assets',
     'volume_usage'                 => 'Volume Usage',
     'loading_modules'              => 'Loading Module Information...',
+    'pocos'                        => 'Pocos',
+    'reinforcement'                => 'Reinforcement',
+    'standing_level'               => 'Standing Level',
+    'tax_alliance_corp'            => 'Tax: Alliance/Corp',
+    'tax_standings'                => 'Tax: Standings',
 
     // Profile
     'user_profile'                 => 'User Profile',

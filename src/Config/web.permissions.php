@@ -66,7 +66,7 @@ return [
         'security',
         'standings',
         'tracking',
-        'poco',
+        'pocos',
         'starbases',
         'summary',
         'wallet_journal',
