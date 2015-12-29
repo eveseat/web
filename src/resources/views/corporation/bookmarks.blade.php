@@ -12,15 +12,17 @@
     <div class="panel-body">
 
       <table class="table table-condensed table-hover table-responsive">
+        <thead>
+          <tr>
+            <th>{{ trans('web::seat.created') }}</th>
+            <th>{{ trans('web::seat.created_by') }}</th>
+            <th>{{ trans_choice('web::seat.name', 1) }}</th>
+            <th>{{ trans('web::seat.location') }}</th>
+            <th>{{ trans('web::seat.note') }}</th>
+            <th></th>
+          </tr>
+        </thead>
         <tbody>
-        <tr>
-          <th>{{ trans('web::seat.created') }}</th>
-          <th>{{ trans('web::seat.created_by') }}</th>
-          <th>{{ trans_choice('web::seat.name', 1) }}</th>
-          <th>{{ trans('web::seat.location') }}</th>
-          <th>{{ trans('web::seat.note') }}</th>
-          <th></th>
-        </tr>
 
         @forelse($bookmarks->unique('folderID')->groupBy('folderID') as $folder_id => $data)
 

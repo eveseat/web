@@ -11,15 +11,17 @@
     </div>
     <div class="panel-body">
 
-      <table class="table table-condensed table-hover">
+      <table class="table datatable compact table-condensed table-hover table-responsive">
+        <thead>
+          <tr>
+            <th>{{ trans_choice('web::seat.name', 1) }}</th>
+            <th>{{ trans('web::seat.ceo') }}</th>
+            <th>{{ trans('web::seat.alliance') }}</th>
+            <th>{{ trans('web::seat.tax_rate') }}</th>
+            <th>{{ trans('web::seat.member_limit') }}</th>
+          </tr>
+        </thead>
         <tbody>
-        <tr>
-          <th>{{ trans_choice('web::seat.name', 1) }}</th>
-          <th>{{ trans('web::seat.ceo') }}</th>
-          <th>{{ trans('web::seat.alliance') }}</th>
-          <th>{{ trans('web::seat.tax_rate') }}</th>
-          <th>{{ trans('web::seat.member_limit') }}</th>
-        </tr>
 
         @foreach($corporations as $corporation)
 
@@ -51,12 +53,6 @@
         </tbody>
       </table>
 
-    </div>
-    <div class="panel-footer">
-      <span class="text-bold">
-        {{ count($corporations) }}
-      </span>
-      {{ trans_choice('web::seat.corporation', count($corporations)) }}
     </div>
   </div>
 

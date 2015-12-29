@@ -13,23 +13,24 @@
     </div>
     <div class="panel-body">
 
-      <table class="table table-condensed table-hover table-responsive">
+      <table class="table datatable compact table-condensed table-hover table-responsive">
+        <thead>
+          <tr>
+            <th>{{ trans('web::seat.start') }}</th>
+            <th>{{ trans('web::seat.installer') }}</th>
+            <th>{{ trans('web::seat.system') }}</th>
+            <th>{{ trans('web::seat.activity') }}</th>
+            <th>{{ trans_choice('web::seat.run', 2) }}</th>
+            <th>{{ trans('web::seat.blueprint') }}</th>
+            <th>{{ trans('web::seat.product') }}</th>
+          </tr>
+        </thead>
         <tbody>
-        <tr>
-          <th>{{ trans('web::seat.start') }}</th>
-          <th>{{ trans('web::seat.installer') }}</th>
-          <th>{{ trans('web::seat.system') }}</th>
-          <th>{{ trans('web::seat.activity') }}</th>
-          <th>{{ trans_choice('web::seat.run', 2) }}</th>
-          <th>{{ trans('web::seat.blueprint') }}</th>
-          <th>{{ trans('web::seat.product') }}</th>
-          <th></th>
-        </tr>
 
         @foreach($jobs as $job)
 
           <tr>
-            <td>
+            <td data-order="{{ $job->startDate }}">
               <span>
                 <i class="fa
                     @if($carbon->parse($job->endDate)->gte($carbon->now()))

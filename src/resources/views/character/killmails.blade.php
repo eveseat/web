@@ -11,20 +11,22 @@
     </div>
     <div class="panel-body">
 
-      <table class="table table-condensed table-hover table-responsive">
+      <table class="table datatable compact table-condensed table-hover table-responsive">
+        <thead>
+          <tr>
+            <th>{{ trans('web::seat.date') }}</th>
+            <th>{{ trans('web::seat.victim') }}</th>
+            <th>{{ trans('web::seat.ship_type') }}</th>
+            <th>{{ trans('web::seat.location') }}</th>
+            <th data-orderable="false"></th>
+          </tr>
+        </thead>
         <tbody>
-        <tr>
-          <th>{{ trans('web::seat.date') }}</th>
-          <th>{{ trans('web::seat.victim') }}</th>
-          <th>{{ trans('web::seat.ship_type') }}</th>
-          <th>{{ trans('web::seat.location') }}</th>
-          <th></th>
-        </tr>
 
         @foreach($killmails as $killmail)
 
           <tr>
-            <td>
+            <td data-order="{{ $killmail->killTime }}">
               <span data-toggle="tooltip"
                     title="" data-original-title="{{ $killmail->killTime }}">
                 {{ human_diff($killmail->killTime) }}

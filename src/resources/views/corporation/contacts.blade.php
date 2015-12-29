@@ -11,86 +11,49 @@
     </div>
     <div class="panel-body">
 
-      <table class="table table-condensed table-hover table-responsive">
-        <tbody>
-        <tr>
-          <th>{{ trans('web::seat.name') }}</th>
-          <th>{{ trans('web::seat.standings') }}</th>
-          <th>{{ trans('web::seat.labels') }}</th>
-        </tr>
-
-        <tr>
-          <th class="text-center text-green" colspan="3">
-            {{ trans('web::seat.positive_standings') }}
-          </th>
-        </tr>
-
-        @foreach($contacts->filter(function($item) { return $item->standing > 0; }) as $contact)
-
-          <tr class="success">
-            <td>
-              {!! img('auto', $contact->contactID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-              {{ $contact->contactName }}
-            </td>
-            <td>{{ $contact->standing }}</td>
-            <td>
-              {{ $labels->filter(function($item) use ($contact) {
-                return $item->labelID & $contact->labelMask; })->implode('name', ', ') }}
-            </td>
-          </tr>
-
-        @endforeach
-
-        <tr>
-          <th class="text-center" colspan="3">
-            {{ trans('web::seat.neutral_standings') }}
-          </th>
-        </tr>
-
-        @foreach($contacts->filter(function($item) { return $item->standing == 0; }) as $contact)
-
+      <table class="table datatable compact table-condensed table-hover table-responsive">
+        <thead>
           <tr>
+            <th>{{ trans_choice('web::seat.name', 1) }}</th>
+            <th>{{ trans('web::seat.standings') }}</th>
+            <th>{{ trans('web::seat.labels') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+
+        @foreach($contacts->sortByDesc('standing') as $contact)
+          <tr class="
+            @if($contact->standing > 0)
+                  success
+                @elseif($contact->standing < 0)
+                  danger
+                @endif
+                  ">
             <td>
               {!! img('auto', $contact->contactID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
               {{ $contact->contactName }}
             </td>
-            <td>{{ $contact->standing }}</td>
+            <td>
+              <span class="
+                @if($contact->standing > 0)
+                      text-success
+                @elseif($contact->standing < 0)
+                      text-danger
+                @endif
+                      ">
+                <b>{{ $contact->standing }}</b>
+              </span>
+            </td>
             <td>
               {{ $labels->filter(function($item) use ($contact) {
                 return $item->labelID & $contact->labelMask; })->implode('name', ', ') }}
             </td>
           </tr>
-
-        @endforeach
-
-        <tr>
-          <th class="text-center text-red" colspan="3">
-            {{ trans('web::seat.negative_standings') }}
-          </th>
-        </tr>
-
-        @foreach($contacts->filter(function($item) { return $item->standing < 0; }) as $contact)
-
-          <tr class="danger">
-            <td>
-              {!! img('auto', $contact->contactID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-              {{ $contact->contactName }}
-            </td>
-            <td>{{ $contact->standing }}</td>
-            <td>
-              {{ $labels->filter(function($item) use ($contact) {
-                return $item->labelID & $contact->labelMask; })->implode('name', ', ') }}
-            </td>
-          </tr>
-
         @endforeach
 
         </tbody>
       </table>
 
-    </div>
-    <div class="panel-footer">
-      {{ count($contacts) }} {{ trans_choice('web::seat.contacts', count($contacts)) }}
     </div>
   </div>
 

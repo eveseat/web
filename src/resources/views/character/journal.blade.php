@@ -94,21 +94,23 @@
         </div>
         <div class="panel-body">
 
-          <table class="table table-condensed table-hover">
+          <table class="table datatable compact table-condensed table-hover table-responsive">
+            <thead>
+              <tr>
+                <th>{{ trans('web::seat.date') }}</th>
+                <th>{{ trans_choice('web::seat.type', 1) }}</th>
+                <th>{{ trans('web::seat.owner_1') }}</th>
+                <th>{{ trans('web::seat.owner_2') }}</th>
+                <th>{{ trans('web::seat.amount') }}</th>
+                <th>{{ trans('web::seat.balance') }}</th>
+              </tr>
+            </thead>
             <tbody>
-            <tr>
-              <th>{{ trans('web::seat.date') }}</th>
-              <th>{{ trans_choice('web::seat.type', 1) }}</th>
-              <th>{{ trans('web::seat.owner_1') }}</th>
-              <th>{{ trans('web::seat.owner_2') }}</th>
-              <th>{{ trans('web::seat.amount') }}</th>
-              <th>{{ trans('web::seat.balance') }}</th>
-            </tr>
 
             @foreach($journal as $transaction)
 
               <tr>
-                <td>
+                <td data-order="{{ $transaction->date }}">
                   <span data-toggle="tooltip"
                         title="" data-original-title="{{ $transaction->date }}">
                     {{ human_diff($transaction->date) }}

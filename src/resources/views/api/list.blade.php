@@ -11,15 +11,17 @@
     </div>
     <div class="panel-body">
 
-      <table class="table table-condensed table-hover table-responsive">
+      <table class="table datatable compact table-condensed table-hover table-responsive">
+        <thead>
+          <tr>
+            <th>{{ trans_choice('web::seat.id', 1) }}</th>
+            <th>{{ trans_choice('web::seat.type', 1) }}</th>
+            <th>{{ trans('web::seat.expiry') }}</th>
+            <th data-orderable="false">{{ trans_choice('web::seat.character', 1) }}</th>
+            <th data-orderable="false"></th>
+          </tr>
+        </thead>
         <tbody>
-        <tr>
-          <th>{{ trans_choice('web::seat.id', 1) }}</th>
-          <th>{{ trans_choice('web::seat.type', 1) }}</th>
-          <th>{{ trans('web::seat.expiry') }}</th>
-          <th>{{ trans_choice('web::seat.character', 1) }}</th>
-          <th></th>
-        </tr>
 
         @foreach($keys as $key)
 

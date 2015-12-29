@@ -11,22 +11,24 @@
     </div>
     <div class="panel-body">
 
-      <table class="table table-condensed table-hover table-responsive">
+      <table class="table datatable compact table-condensed table-hover table-responsive">
+        <thead>
+          <tr>
+            <th>{{ trans('web::seat.date') }}</th>
+            <th></th>
+            <th>{{ trans('web::seat.volume') }}</th>
+            <th>{{ trans('web::seat.status') }}</th>
+            <th>{{ trans('web::seat.price') }}</th>
+            <th>{{ trans('web::seat.total') }}</th>
+            <th>{{ trans_choice('web::seat.type', 1) }}</th>
+          </tr>
+        </thead>
         <tbody>
-        <tr>
-          <th>{{ trans('web::seat.date') }}</th>
-          <th></th>
-          <th>{{ trans('web::seat.volume') }}</th>
-          <th>{{ trans('web::seat.status') }}</th>
-          <th>{{ trans('web::seat.price') }}</th>
-          <th>{{ trans('web::seat.total') }}</th>
-          <th>{{ trans_choice('web::seat.type', 1) }}</th>
-        </tr>
 
         @foreach($orders as $order)
 
           <tr>
-            <td>
+            <td data-order="{{ $order->issued }}">
               <span data-toggle="tooltip"
                     title="" data-original-title="{{ $order->issued }}">
                 {{ human_diff($order->issued) }}
@@ -58,7 +60,6 @@
               {!! img('type', $order->typeID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
               {{ $order->typeName }}
             </td>
-            <td></td>
 
           </tr>
 

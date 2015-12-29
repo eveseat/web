@@ -16,6 +16,7 @@
       </p>
 
       <table class="table table-condensed table-hover">
+        <thead></thead>
         <tbody>
 
         @foreach($characters as $character)

@@ -11,15 +11,17 @@
     </div>
     <div class="panel-body">
 
-      <table class="table table-condensed table-hover table-responsive">
+      <table class="table datatable compact table-condensed table-hover table-responsive">
+        <thead>
+          <tr>
+            <th>{{ trans_choice('web::seat.name', 1) }}</th>
+            <th>{{ trans('web::seat.joined') }}</th>
+            <th>{{ trans('web::seat.location') }}</th>
+            <th>{{ trans('web::seat.last_login') }}</th>
+            <th>{{ trans('web::seat.key') }}</th>
+          </tr>
+        </thead>
         <tbody>
-        <tr>
-          <th>{{ trans_choice('web::seat.name', 1) }}</th>
-          <th>{{ trans('web::seat.joined') }}</th>
-          <th>{{ trans('web::seat.location') }}</th>
-          <th>{{ trans('web::seat.last_login') }}</th>
-          <th>{{ trans('web::seat.key') }}</th>
-        </tr>
 
         @foreach($tracking as $character)
 
@@ -30,7 +32,7 @@
                 {{ $character->name }}
               </a>
             </td>
-            <td>
+            <td data-order="{{ $character->startDateTime }}">
               <span data-toggle="tooltip"
                     title="" data-original-title="{{ $character->startDateTime }}">
                 {{ human_diff($character->startDateTime) }}
@@ -43,13 +45,13 @@
                    title="" data-original-title="{{ $character->shipType }}"></i>
               @endif
             </td>
-            <td>
+            <td data-order="{{ $character->logonDateTime }}">
               <span data-toggle="tooltip"
                     title="" data-original-title="{{ $character->logonDateTime }}">
                 {{ human_diff($character->logonDateTime) }}
               </span>
             </td>
-            <td>
+            <td data-order="{{ $character->enabled }}">
               @if($character->enabled)
                 <i class="fa fa-check"></i>
               @else

@@ -72,13 +72,15 @@
     </div>
     <div class="panel-body">
 
-      <table class="table table-condensed table-hover">
+      <table class="table datatable compact table-condensed table-hover table-responsive">
+        <thead>
+          <tr>
+            <th>{{ trans_choice('web::seat.name', 1) }}</th>
+            <th>{{ trans_choice('web::seat.corporation', 1) }}</th>
+            <th>{{ trans('web::seat.last_location') }}</th>
+          </tr>
+        </thead>
         <tbody>
-        <tr>
-          <th>{{ trans_choice('web::seat.name', 1) }}</th>
-          <th>{{ trans_choice('web::seat.corporation', 1) }}</th>
-          <th>{{ trans('web::seat.last_location') }}</th>
-        </tr>
 
         @foreach($characters as $character)
 
@@ -101,12 +103,6 @@
         </tbody>
       </table>
 
-    </div>
-    <div class="panel-footer">
-      <span class="text-bold">
-        {{ count($characters) }}
-      </span>
-        {{ trans_choice('web::seat.character', count($characters)) }}
     </div>
   </div>
 

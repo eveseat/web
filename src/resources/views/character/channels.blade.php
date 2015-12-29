@@ -14,13 +14,15 @@
     <div class="panel-body">
 
       <table class="table table-condensed table-hover table-responsive">
+        <thead>
+          <tr>
+            <th>{{ trans_choice('web::seat.name', 1) }}</th>
+            <th>{{ trans('web::seat.owner') }}</th>
+            <th>{{ trans_choice('web::seat.role', 1) }}</th>
+            <th>{{ trans('web::seat.password') }}</th>
+          </tr>
+        </thead>
         <tbody>
-        <tr>
-          <th>{{ trans_choice('web::seat.name', 1) }}</th>
-          <th>{{ trans('web::seat.owner') }}</th>
-          <th>{{ trans_choice('web::seat.role', 1) }}</th>
-          <th>{{ trans('web::seat.password') }}</th>
-        </tr>
 
         @foreach($channels as $channel)
 
@@ -78,11 +80,13 @@
                       <p class="text-muted">{{ trans('web::seat.channel_members') }}</p>
 
                       <table class="table table-condensed table-hover table-responsive">
-                        <tbody>
+                        <thead>
                           <tr>
                             <th>{{ trans_choice('web::seat.name', 1) }}</th>
                             <td>{{ trans_choice('web::seat.role', 1) }}</td>
                           </tr>
+                        </thead>
+                        <tbody>
 
                           @foreach($channel->members as $member)
 

@@ -123,21 +123,23 @@
         </div>
         <div class="panel-body">
 
-          <table class="table table-condensed table-hover">
+          <table class="table datatable compact table-condensed table-hover table-responsive">
+            <thead>
+              <tr>
+                <th>{{ trans('web::seat.date') }}</th>
+                <th>{{ trans_choice('web::seat.type', 1) }}</th>
+                <th>{{ trans('web::seat.qty') }}</th>
+                <th>{{ trans('web::seat.price') }}</th>
+                <th>{{ trans('web::seat.total') }}</th>
+                <th>{{ trans('web::seat.client') }}</th>
+              </tr>
+            </thead>
             <tbody>
-            <tr>
-              <th>{{ trans('web::seat.date') }}</th>
-              <th>{{ trans_choice('web::seat.type', 1) }}</th>
-              <th>{{ trans('web::seat.qty') }}</th>
-              <th>{{ trans('web::seat.price') }}</th>
-              <th>{{ trans('web::seat.total') }}</th>
-              <th>{{ trans('web::seat.client') }}</th>
-            </tr>
 
             @foreach($transactions as $transaction)
 
               <tr @if($transaction->transactionType == 'buy') class="danger" @endif>
-                <td>
+                <td data-order="{{ $transaction->transactionDateTime }}">
                   <span data-toggle="tooltip"
                         title="" data-original-title="{{ $transaction->transactionDateTime }}">
                     {{ human_diff($transaction->transactionDateTime) }}
@@ -171,9 +173,11 @@
           </table>
 
         </div>
-        <div class="panel-footer">
-          {!! $transactions->render() !!}
-        </div>
+        @if($transactions->render())
+          <div class="panel-footer">
+            {!! $transactions->render() !!}
+          </div>
+        @endif
       </div>
 
     </div>

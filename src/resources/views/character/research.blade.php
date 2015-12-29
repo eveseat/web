@@ -11,20 +11,22 @@
     </div>
     <div class="panel-body">
 
-      <table class="table table-condensed table-hover table-responsive">
+      <table class="table datatable compact table-condensed table-hover table-responsive">
+        <thead>
+          <tr>
+            <th>{{ trans('web::seat.start') }}</th>
+            <th>{{ trans('web::seat.agent') }}</th>
+            <th>{{ trans_choice('web::seat.skill', 1) }}</th>
+            <th>{{ trans('web::seat.points_p_day') }}</th>
+            <th>{{ trans('web::seat.remainder') }}</th>
+          </tr>
+        </thead>
         <tbody>
-        <tr>
-          <th>{{ trans('web::seat.start') }}</th>
-          <th>{{ trans('web::seat.agent') }}</th>
-          <th>{{ trans_choice('web::seat.skill', 1) }}</th>
-          <th>{{ trans('web::seat.points_p_day') }}</th>
-          <th>{{ trans('web::seat.remainder') }}</th>
-        </tr>
 
         @foreach($agents as $agent)
 
           <tr>
-            <td>
+            <td data-order="{{ $agent->researchStartDate }}">
               <span data-toggle="tooltip"
                     title="" data-original-title="{{ $agent->researchStartDate }}">
                 {{ human_diff($agent->researchStartDate) }}
