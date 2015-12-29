@@ -11,18 +11,20 @@
     </div>
     <div class="panel-body">
 
-      <table class="table table-condensed table-hover table-responsive">
+      <table class="table datatable compact table-condensed table-hover table-responsive">
+        <thead>
+          <tr>
+            <th>{{ trans('web::seat.date') }}</th>
+            <th>{{ trans('web::seat.from') }}</th>
+            <th>{{ trans('web::seat.info') }}</th>
+          </tr>
+        </thead>
         <tbody>
-        <tr>
-          <th>{{ trans('web::seat.date') }}</th>
-          <th>{{ trans('web::seat.from') }}</th>
-          <th>{{ trans('web::seat.info') }}</th>
-        </tr>
 
         @foreach($notifications as $notification)
 
           <tr>
-            <td>
+            <td data-order="{{ $notification->sentDate }}">
               <span data-toggle="tooltip" title="" data-original-title="{{ $notification->sentDate }}">
                 {{ human_diff($notification->sentDate) }}
               </span>

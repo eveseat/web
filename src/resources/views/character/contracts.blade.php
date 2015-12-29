@@ -11,22 +11,24 @@
     </div>
     <div class="panel-body">
 
-      <table class="table table-condensed table-hover table-responsive">
+      <table class="table datatable compact table-condensed table-hover table-responsive">
+        <thead>
+          <tr>
+            <th>{{ trans('web::seat.created') }}</th>
+            <th>{{ trans('web::seat.issuer') }}</th>
+            <th>{{ trans_choice('web::seat.type', 1) }}</th>
+            <th>{{ trans('web::seat.status') }}</th>
+            <th>{{ trans_choice('web::seat.title', 1) }}</th>
+            <th>{{ trans('web::seat.price') }}</th>
+            <th>{{ trans('web::seat.reward') }}</th>
+          </tr>
+        </thead>
         <tbody>
-        <tr>
-          <th>{{ trans('web::seat.created') }}</th>
-          <th>{{ trans('web::seat.issuer') }}</th>
-          <th>{{ trans_choice('web::seat.type', 1) }}</th>
-          <th>{{ trans('web::seat.status') }}</th>
-          <th>{{ trans('web::seat.title') }}</th>
-          <th>{{ trans('web::seat.price') }}</th>
-          <th>{{ trans('web::seat.reward') }}</th>
-        </tr>
 
         @foreach($contracts as $contract)
 
           <tr>
-            <td>
+            <td data-order="{{ $contract->dateIssued }}">
               <span data-toggle="tooltip"
                     title="" data-original-title="{{ $contract->dateIssued }}">
                 {{ human_diff($contract->dateIssued) }}
@@ -36,7 +38,7 @@
               {!! img('auto', $contract->issuerID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
               <span rel="id-to-name">{{ $contract->issuerID }}</span>
             </td>
-            <td>
+            <td data-search="{{ $contract->type }}" data-order="{{ $contract->type }}">
               <i class="fa @if($contract->type == 'ItemExchange') fa-exchange @else fa-truck @endif"
                  data-toggle="tooltip"
                  title="" data-original-title="{{ $contract->type }}">

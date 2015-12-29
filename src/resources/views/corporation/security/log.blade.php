@@ -11,19 +11,22 @@
     </div>
     <div class="panel-body">
 
-      <table class="table table-condensed table-hover table-responsive">
+      <table class="table datatable compact table-condensed table-hover table-responsive">
+        <thead>
+          <tr>
+            <th>{{ trans('web::seat.date') }}</th>
+            <th>{{ trans('web::seat.issuer') }}</th>
+            <th>{{ trans('web::seat.affected') }}</th>
+            <th>{{ trans_choice('web::seat.type', 1) }}</th>
+            <th></th>
+          </tr>
+        </thead>
         <tbody>
-        <tr>
-          <th>{{ trans('web::seat.date') }}</th>
-          <th>{{ trans('web::seat.issuer') }}</th>
-          <th>{{ trans('web::seat.affected') }}</th>
-          <th>{{ trans_choice('web::seat.type', 1) }}</th>
-        </tr>
 
         @foreach($logs as $log)
 
           <tr>
-            <td>
+            <td data-order="{{ $log->changeTime }}">
               {{ human_diff($log->changeTime) }}
             </td>
             <td>

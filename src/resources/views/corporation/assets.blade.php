@@ -12,13 +12,15 @@
     <div class="panel-body">
 
       <table class="table table-condensed table-hover table-responsive">
+        <thead>
+          <tr>
+            <th>{{ trans('web::seat.quantity') }}</th>
+            <th>{{ trans_choice('web::seat.type', 1) }}</th>
+            <th>{{ trans('web::seat.volume') }}</th>
+            <th>{{ trans('web::seat.group') }}</th>
+          </tr>
+        </thead>
         <tbody>
-        <tr>
-          <th>{{ trans('web::seat.quantity') }}</th>
-          <th>{{ trans_choice('web::seat.type', 1) }}</th>
-          <th>{{ trans('web::seat.volume') }}</th>
-          <th>{{ trans('web::seat.group') }}</th>
-        </tr>
 
         @foreach($assets->unique('location')->groupBy('location') as $location => $data)
 

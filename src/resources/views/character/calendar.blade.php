@@ -11,19 +11,21 @@
     </div>
     <div class="panel-body">
 
-      <table class="table table-condensed table-hover table-responsive">
+      <table class="table datatable compact table-condensed table-hover table-responsive">
+        <thead>
+          <tr>
+            <th>{{ trans('web::seat.date') }}</th>
+            <th>{{ trans('web::seat.owner') }}</th>
+            <th>{{ trans('web::seat.description') }}</th>
+            <th>{{ trans('web::seat.status') }}</th>
+          </tr>
+        </thead>
         <tbody>
-        <tr>
-          <th>{{ trans('web::seat.date') }}</th>
-          <th>{{ trans('web::seat.owner') }}</th>
-          <th>{{ trans('web::seat.description') }}</th>
-          <th>{{ trans('web::seat.status') }}</th>
-        </tr>
 
         @foreach($events as $event)
 
           <tr>
-            <td>
+            <td data-order="{{ $event->eventDate }}">
               <span data-toggle="tooltip" title="" data-original-title="{{ $event->eventDate }}">
                 {{ human_diff($event->eventDate) }}
               </span>

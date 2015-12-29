@@ -11,50 +11,51 @@
     </div>
     <div class="panel-body">
 
-      <table class="table table-condensed table-hover table-responsive">
-        <tbody>
-        <tr>
-          <th>{{ trans('web::seat.quantity') }}</th>
-          <th>{{ trans_choice('web::seat.type', 1) }}</th>
-          <th>{{ trans('web::seat.volume') }}</th>
-          <th>{{ trans('web::seat.group') }}</th>
-        </tr>
-
-      @foreach($assets->unique('location')->groupBy('location') as $location => $data)
-
-        <tr class="active">
-          <td colspan="4">
-            <b>{{ $location }}</b>
-            <span class="pull-right">
-              <i>
-              {{ count($assets->where('locationID', $data[0]->locationID)) }}
-                {{ trans('web::seat.items_taking') }}
-              {{ number_metric($assets
-                  ->where('locationID', $data[0]->locationID)->map(function($item) {
-                    return $item->quantity * $item->volume;
-                  })->sum()) }} m&sup3;
-              </i>
-            </span>
-          </td>
-        </tr>
-
-        @foreach($assets->where('locationID', $data[0]->locationID) as $asset)
-
+      <table class="table compact table-condensed table-hover table-responsive">
+        <thead>
           <tr>
-            <td>{{ $asset->quantity }}</td>
-            <td>
-              {!! img('type', $asset->typeID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-              {{ $asset->typeName }}
+            <th>{{ trans('web::seat.quantity') }}</th>
+            <th>{{ trans_choice('web::seat.type', 1) }}</th>
+            <th>{{ trans('web::seat.volume') }}</th>
+            <th>{{ trans('web::seat.group') }}</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        @foreach($assets->unique('location')->groupBy('location') as $location => $data)
+
+          <tr class="active">
+            <td colspan="4">
+              <b>{{ $location }}</b>
+              <span class="pull-right">
+                <i>
+                {{ count($assets->where('locationID', $data[0]->locationID)) }}
+                  {{ trans('web::seat.items_taking') }}
+                {{ number_metric($assets
+                    ->where('locationID', $data[0]->locationID)->map(function($item) {
+                      return $item->quantity * $item->volume;
+                    })->sum()) }} m&sup3;
+                </i>
+              </span>
             </td>
-            <td>{{ number_metric($asset->quantity * $asset->volume) }} m&sup3;</td>
-            <td>{{ $asset->groupName }}</td>
           </tr>
 
+          @foreach($assets->where('locationID', $data[0]->locationID) as $asset)
+
+            <tr>
+              <td>{{ $asset->quantity }}</td>
+              <td>
+                {!! img('type', $asset->typeID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
+                {{ $asset->typeName }}
+              </td>
+              <td>{{ number_metric($asset->quantity * $asset->volume) }} m&sup3;</td>
+              <td>{{ $asset->groupName }}</td>
+            </tr>
+
+          @endforeach
+
         @endforeach
-
-      @endforeach
-
-      </tbody>
+        </tbody>
       </table>
 
     </div><!-- /.box-body -->

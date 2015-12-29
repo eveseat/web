@@ -11,20 +11,22 @@
     </div>
     <div class="panel-body">
 
-      <table class="table table-condensed table-hover table-responsive">
+      <table class="table datatable compact table-condensed table-hover table-responsive">
+        <thead>
+          <tr>
+            <th>{{ trans('web::seat.updated') }}</th>
+            <th>{{ trans('web::seat.system') }}</th>
+            <th>{{ trans('web::seat.planet') }}</th>
+            <th>{{ trans('web::seat.upgrade_level') }}</th>
+            <th>{{ trans('web::seat.no_pins') }}</th>
+          </tr>
+        </thead>
         <tbody>
-        <tr>
-          <th>{{ trans('web::seat.updated') }}</th>
-          <th>{{ trans('web::seat.system') }}</th>
-          <th>{{ trans('web::seat.planet') }}</th>
-          <th>{{ trans('web::seat.upgrade_level') }}</th>
-          <th>{{ trans('web::seat.no_pins') }}</th>
-        </tr>
 
         @foreach($colonies as $colony)
 
           <tr>
-            <td>
+            <td data-order="{{ $colony->lastUpdate }}">
               <span data-toggle="tooltip"
                     title="" data-original-title="{{ $colony->lastUpdate }}">
                 {{ human_diff($colony->lastUpdate) }}

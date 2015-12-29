@@ -36,9 +36,20 @@ $(document).on("click", "a.confirmlink", function (event) {
 // the image
 //
 // http://luis-almeida.github.io/unveil/
-$(document).ready(function() {
+$(document).ready(function () {
     $("img").unveil(100);
 });
 
 // Enable bootstrap popovers
 $("[data-toggle=popover]").popover();
+
+// Initialize DataTables on <table> tags
+// with the 'datatable' class.
+//
+// https://www.datatables.net/
+$(document).ready(function () {
+    $("table.datatable").DataTable({
+        paging: false,
+        order: []
+    });
+});

@@ -15,6 +15,8 @@
   <link rel="stylesheet" href="{{ asset('web/css/font-awesome.min.css') }}">
   <!-- Select2 -->
   <link rel="stylesheet" href="{{ asset('web/css/select2.min.css') }}">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{{ asset('web/css/datatables.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('web/css/adminlte.min.css') }}">
   <!-- Skin -->
@@ -83,6 +85,8 @@
 <script src="{{ asset('web/js/bootbox.min.js') }}"></script>
 <!-- jQuery Unveil -->
 <script src="{{ asset('web/js/jquery.unveil.js') }}"></script>
+<!-- DataTables -->
+<script src="{{ asset('web/js/datatables.min.js') }}"></script>
 <!-- Theme JS -->
 <script src="{{ asset('web/js/app.min.js') }}"></script>
 <!-- SeAT JS -->

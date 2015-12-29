@@ -11,20 +11,22 @@
     </div>
     <div class="panel-body">
 
-      <table class="table table-condensed table-hover table-responsive">
+      <table class="table datatable compact table-condensed table-hover table-responsive">
+        <thead>
+          <tr>
+            <th>{{ trans('web::seat.date') }}</th>
+            <th>{{ trans('web::seat.from') }}</th>
+            <th>{{ trans_choice('web::seat.title', 1) }}</th>
+            <th data-orderable="false">{{ trans('web::seat.to') }}</th>
+            <th data-orderable="false"></th>
+          </tr>
+        </thead>
         <tbody>
-        <tr>
-          <th>{{ trans('web::seat.date') }}</th>
-          <th>{{ trans('web::seat.from') }}</th>
-          <th>{{ trans('web::seat.title') }}</th>
-          <th>{{ trans('web::seat.to') }}</th>
-          <th></th>
-        </tr>
 
         @foreach($mail as $message)
 
           <tr>
-            <td>
+            <td data-order="{{ $message->sentDate }}">
               <span data-toggle="tooltip" title="" data-original-title="{{ $message->sentDate }}">
                 {{ human_diff($message->sentDate) }}
               </span>
