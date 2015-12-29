@@ -4,24 +4,26 @@
   </div>
   <div class="panel-body">
 
-    <table class="table table-condensed table-hover table-responsive">
+    <table class="table datatable compact table-condensed table-hover table-responsive">
+      <thead>
+        <tr>
+          <th>{{ trans_choice('web::seat.state', 1) }}</th>
+          <th>{{ trans_choice('web::seat.type', 1) }}</th>
+          <th>{{ trans_choice('web::seat.location', 1) }}</th>
+          <th>
+            {!! img('type', 4051, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+            {{ trans('web::seat.fuel_level') }}
+          </th>
+          <th>{{ trans_choice('web::seat.offline', 1) }}</th>
+          <th data-orderable="false"></th>
+        </tr>
+      </thead>
       <tbody>
-      <tr>
-        <th>{{ trans_choice('web::seat.state', 1) }}</th>
-        <th>{{ trans_choice('web::seat.type', 1) }}</th>
-        <th>{{ trans_choice('web::seat.location', 1) }}</th>
-        <th>
-          {!! img('type', 4051, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-          {{ trans('web::seat.fuel_level') }}
-        </th>
-        <th>{{ trans_choice('web::seat.offline', 1) }}</th>
-        <th></th>
-      </tr>
 
       @foreach($starbases as $starbase)
 
         <tr>
-          <td>
+          <td data-order="{{ $starbase->updated_at }}">
               <span data-toggle="tooltip"
                     title="" data-original-title="Last Update: {{ $starbase->updated_at }}">
                 <span class="label
@@ -54,7 +56,7 @@
                 <i>({{ round($starbase->mapSecurity,  2) }})</i>
               </span>
           </td>
-          <td>
+          <td data-order="{{ 100 * (($starbase->fuelBlocks * 5)/$starbase->fuelBaySize) }}">
             <div class="progress">
               <div class="progress-bar" role="progressbar"
                    aria-valuenow="60" aria-valuemin="0"
@@ -63,7 +65,13 @@
               </div>
             </div>
           </td>
-          <td>
+          <td data-order="
+            @if($starbase->inSovSystem)
+              {{ carbon('now')->addHours(($starbase->fuelBlocks/$starbase->baseFuelUsage) * 0.75) }}
+            @else
+              {{ carbon('now')->addHours(($starbase->fuelBlocks/$starbase->baseFuelUsage))  }}
+            @endif
+              ">
             @if($starbase->inSovSystem)
               {{
                 carbon('now')->addHours(($starbase->fuelBlocks/$starbase->baseFuelUsage) * 0.75)
@@ -86,8 +94,5 @@
       </tbody>
     </table>
 
-  </div>
-  <div class="panel-footer">
-    {{ count($starbases) }} {{ trans_choice('web::seat.starbase', count($starbases)) }}
   </div>
 </div>
