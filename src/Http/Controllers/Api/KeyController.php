@@ -25,6 +25,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Pheal\Pheal;
 use Seat\Eveapi\Helpers\JobContainer;
+use Seat\Eveapi\Jobs\CheckAndQueueKey;
 use Seat\Eveapi\Models\Eve\ApiKey as ApiKeyModel;
 use Seat\Eveapi\Models\JobTracking;
 use Seat\Eveapi\Traits\JobManager;
@@ -87,11 +88,12 @@ class KeyController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\ApiKey $request
+     * @param \Seat\Web\Validation\ApiKey       $request
+     * @param \Seat\Eveapi\Helpers\JobContainer $job
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function addKey(ApiKey $request)
+    public function addKey(ApiKey $request, JobContainer $job)
     {
 
         ApiKeyModel::create([
@@ -101,8 +103,22 @@ class KeyController extends Controller
             'enabled' => true,
         ]);
 
+        // Get a fresh instance of the API Key
+        $api_key = ApiKeyModel::find(
+            $request->input('key_id'));
+
+        $job->scope = 'Key';
+        $job->api = 'Scheduler';
+        $job->owner_id = $request->input('key_id');
+        $job->eve_api_key = $api_key;
+
+        // Queue the update Job
+        $job_id = $this->addUniqueJob(
+            CheckAndQueueKey::class, $job);
+
         return redirect()->route('api.key')
-            ->with('success', trans('web::api.add_success'));
+            ->with('success', trans('web::seat.add_success',
+                ['jobid' => $job_id]));
 
     }
 

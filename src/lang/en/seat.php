@@ -197,6 +197,7 @@ return [
     'scope'                        => 'Scope',
     'api_all'                      => 'All API Keys',
     'reveal'                       => 'Reveal',
+    'add_success'                  => 'Api Key Successfully Added. Update Job :jobid Dispatced',
 
     // Access
     'access_mangement'             => 'Access Management',
