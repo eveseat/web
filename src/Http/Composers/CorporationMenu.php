@@ -25,10 +25,10 @@ use Illuminate\Contracts\View\View;
 use Seat\Web\Exceptions\PackageMenuBuilderException;
 
 /**
- * Class CharacterMenu
+ * Class CorporationMenu
  * @package Seat\Web\Http\Composers
  */
-class CharacterMenu
+class CorporationMenu
 {
 
     /**
@@ -62,118 +62,101 @@ class CharacterMenu
         $menu = [
             [
                 'name'           => trans('web::seat.assets'),
-                'permission'     => 'character.assets',
+                'permission'     => 'corporation.assets',
                 'highlight_view' => 'assets',
-                'route'          => 'character.view.assets'
+                'route'          => 'corporation.view.assets'
             ],
             [
                 'name'           => trans_choice('web::seat.bookmark', 2),
-                'permission'     => 'character.bookmarks',
+                'permission'     => 'corporation.bookmarks',
                 'highlight_view' => 'bookmarks',
-                'route'          => 'character.view.bookmarks'
-            ],
-            [
-                'name'           => trans('web::seat.calendar'),
-                'permission'     => 'character.calendar',
-                'highlight_view' => 'calendar',
-                'route'          => 'character.view.calendar'
-            ],
-            [
-                'name'           => trans('web::seat.channels'),
-                'permission'     => 'character.channels',
-                'highlight_view' => 'channels',
-                'route'          => 'character.view.channels'
+                'route'          => 'corporation.view.bookmarks'
             ],
             [
                 'name'           => trans('web::seat.contacts'),
-                'permission'     => 'character.contacts',
+                'permission'     => 'corporation.contacts',
                 'highlight_view' => 'contacts',
-                'route'          => 'character.view.contacts'
+                'route'          => 'corporation.view.contacts'
             ],
             [
                 'name'           => trans('web::seat.contracts'),
-                'permission'     => 'character.contracts',
+                'permission'     => 'corporation.contracts',
                 'highlight_view' => 'contracts',
-                'route'          => 'character.view.contracts'
+                'route'          => 'corporation.view.contracts'
             ],
             [
                 'name'           => trans('web::seat.industry'),
-                'permission'     => 'character.industry',
+                'permission'     => 'corporation.industry',
                 'highlight_view' => 'industry',
-                'route'          => 'character.view.industry'
+                'route'          => 'corporation.view.industry'
             ],
             [
                 'name'           => trans('web::seat.killmails'),
-                'permission'     => 'character.killmails',
+                'permission'     => 'corporation.killmails',
                 'highlight_view' => 'killmails',
-                'route'          => 'character.view.killmails'
-            ],
-            [
-                'name'           => trans('web::seat.mail'),
-                'permission'     => 'character.mail',
-                'highlight_view' => 'mail',
-                'route'          => 'character.view.mail'
+                'route'          => 'corporation.view.killmails'
             ],
             [
                 'name'           => trans('web::seat.market'),
-                'permission'     => 'character.market',
+                'permission'     => 'corporation.market',
                 'highlight_view' => 'market',
-                'route'          => 'character.view.market'
+                'route'          => 'corporation.view.market'
             ],
             [
-                'name'           => trans('web::seat.notifications'),
-                'permission'     => 'character.notifications',
-                'highlight_view' => 'notifications',
-                'route'          => 'character.view.notifications'
+                'name'           => trans('web::seat.pocos'),
+                'permission'     => 'corporation.pocos',
+                'highlight_view' => 'pocos',
+                'route'          => 'corporation.view.pocos'
             ],
             [
-                'name'           => trans('web::seat.pi'),
-                'permission'     => 'character.pi',
-                'highlight_view' => 'pi',
-                'route'          => 'character.view.pi'
+                'name'           => trans('web::seat.security'),
+                'permission'     => 'corporation.security',
+                'highlight_view' => 'security',
+                'route'          => 'corporation.view.security.roles'
             ],
             [
-                'name'           => trans('web::seat.research'),
-                'permission'     => 'character.research',
-                'highlight_view' => 'research',
-                'route'          => 'character.view.research'
+                'name'           => trans_choice('web::seat.starbase', 2),
+                'permission'     => 'corporation.starbases',
+                'highlight_view' => 'starbases',
+                'route'          => 'corporation.view.starbases'
             ],
             [
-                'name'           => trans('web::seat.sheet'),
-                'permission'     => 'character.sheet',
-                'highlight_view' => 'sheet',
-                'route'          => 'character.view.sheet'
-            ],
-            [
-                'name'           => trans('web::seat.skills'),
-                'permission'     => 'character.skills',
-                'highlight_view' => 'skills',
-                'route'          => 'character.view.skills'
+                'name'           => trans('web::seat.summary'),
+                'permission'     => 'corporation.summary',
+                'highlight_view' => 'summary',
+                'route'          => 'corporation.view.summary'
             ],
             [
                 'name'           => trans('web::seat.standings'),
-                'permission'     => 'character.standings',
+                'permission'     => 'corporation.standings',
                 'highlight_view' => 'standings',
-                'route'          => 'character.view.standings'
+                'route'          => 'corporation.view.standings'
+            ],
+            [
+                'name'           => trans('web::seat.tracking'),
+                'permission'     => 'corporation.tracking',
+                'highlight_view' => 'tracking',
+                'route'          => 'corporation.view.tracking'
             ],
             [
                 'name'           => trans('web::seat.wallet_journal'),
-                'permission'     => 'character.journal',
+                'permission'     => 'corporation.journal',
                 'highlight_view' => 'journal',
-                'route'          => 'character.view.journal'
+                'route'          => 'corporation.view.journal'
             ],
             [
                 'name'           => trans('web::seat.wallet_transactions'),
-                'permission'     => 'character.transactions',
+                'permission'     => 'corporation.transactions',
                 'highlight_view' => 'transactions',
-                'route'          => 'character.view.transactions'
+                'route'          => 'corporation.view.transactions'
             ],
+
         ];
 
         // Load any package menus
-        if (!empty(config('package.character.menu'))) {
+        if (!empty(config('package.corporation.menu'))) {
 
-            foreach (config('package.character.menu') as $menu_data) {
+            foreach (config('package.corporation.menu') as $menu_data) {
 
                 $prepared_menu = $this->load_plugin_menu($menu_data);
                 array_push($menu, $prepared_menu);
@@ -194,7 +177,7 @@ class CharacterMenu
      *
      * Packages should register menu items in a config file,
      * loaded in a ServiceProvider's register() method in the
-     * 'package.character.menu' namespace. The structure of these
+     * 'package.corporation.menu' namespace. The structure of these
      * menus can be seen in the SeAT Wiki.
      *
      * @param $menu_data
@@ -208,7 +191,7 @@ class CharacterMenu
         // Validate the package menu
         if (count(array_diff_key($menu_data, $this->required_keys)) == 0)
             throw new PackageMenuBuilderException(
-                'Not all keys for a character menu is set!');
+                'Not all keys for a corporation menu is set!');
 
         return $menu_data;
 
