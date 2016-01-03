@@ -30,6 +30,7 @@ use Seat\Web\Events\Login;
 use Seat\Web\Events\Logout;
 use Seat\Web\Events\SecLog;
 use Seat\Web\Events\Security;
+use Seat\Web\Http\Composers\CharacterMenu;
 use Seat\Web\Http\Composers\CharacterSummary;
 use Seat\Web\Http\Composers\CorporationSummary;
 use Seat\Web\Http\Composers\Sidebar;
@@ -163,6 +164,11 @@ class WebServiceProvider extends ServiceProvider
             'web::character.includes.summary',
             'web::character.includes.menu'
         ], CharacterSummary::class);
+
+        // Character menu composser
+        $this->app['view']->composer([
+            'web::character.includes.menu'
+        ], CharacterMenu::class);
 
         // Corporation info composer
         $this->app['view']->composer([
