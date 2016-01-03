@@ -171,14 +171,17 @@ class CharacterMenu
         ];
 
         // Load any package menus
-        foreach (config('package.character.menu') as $menu_data) {
+        if (!empty(config('package.character.menu'))) {
 
-            $prepared_menu = $this->load_plugin_menu($menu_data);
-            array_push($menu, $prepared_menu);
+            foreach (config('package.character.menu') as $menu_data) {
+
+                $prepared_menu = $this->load_plugin_menu($menu_data);
+                array_push($menu, $prepared_menu);
+            }
         }
 
         // Sort the menu alphabetically.
-        $menu = array_values(array_sort($menu, function($value) {
+        $menu = array_values(array_sort($menu, function ($value) {
 
             return $value['name'];
         }));
@@ -207,7 +210,7 @@ class CharacterMenu
     {
 
         // Validate the package menu
-        if(count(array_diff_key($menu_data, $this->required_keys)) == 0)
+        if (count(array_diff_key($menu_data, $this->required_keys)) == 0)
             throw new PackageMenuBuilderException(
                 'Not all keys for a character menu is set!');
 
