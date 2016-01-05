@@ -446,7 +446,7 @@ return [
     'confirm_setup'                => 'Confirm Setup',
 
     // Queue
-    'queue_manage'                 => 'Queue Mangement',
+    'queue_manage'                 => 'Queue Management',
     'total_jobs'                   => 'Total Jobs',
     'queued_jobs'                  => 'Queued Jobs',
     'working_jobs'                 => 'Working Jobs',
