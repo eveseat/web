@@ -20,22 +20,22 @@
 
         <!-- Queue information -->
         <li class="dropdown">
-          <a href="{{ route('queue.status') }}" class="dropdown-toggle" data-toggle="tooltip" data-placement="bottom"
-             title="{{ trans('web::seat.queued') }}">
+          <a href="{{ auth()->user()->has('queue_manager') ? route('queue.status') : '#queue_count' }}"
+             class="dropdown-toggle" data-toggle="tooltip" data-placement="bottom" title="{{ trans('web::seat.queued') }}">
             <i class="fa fa-truck"></i>
             <span class="label label-success" id="queue_count">0</span>
           </a>
         </li>
         <li class="dropdown">
-          <a href="{{ route('queue.status') }}" class="dropdown-toggle" data-toggle="tooltip" data-placement="bottom"
-             title="{{ trans('web::seat.working') }}">
+          <a href="{{ auth()->user()->has('queue_manager') ? route('queue.status') : '#working_count' }}"
+             class="dropdown-toggle" data-toggle="tooltip" data-placement="bottom" title="{{ trans('web::seat.working') }}">
             <i class="fa fa-exchange"></i>
             <span class="label label-warning" id="working_count">0</span>
           </a>
         </li>
         <li class="dropdown">
-          <a href="{{ route('queue.status') }}" class="dropdown-toggle" data-toggle="tooltip" data-placement="bottom"
-             title="{{ trans('web::seat.error') }}">
+          <a href="{{ auth()->user()->has('queue_manager') ? route('queue.status') : '#error_count' }}"
+             class="dropdown-toggle" data-toggle="tooltip" data-placement="bottom" title="{{ trans('web::seat.error') }}">
             <i class="fa fa-exclamation"></i>
             <span class="label label-danger" id="error_count">0</span>
           </a>
