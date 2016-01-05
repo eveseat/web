@@ -34,6 +34,10 @@ return [
             'full'  => 'English'
         ],
         [
+            'short' => 'de',
+            'full'  => 'German'
+        ],
+        [
             'short' => 'fr',
             'full'  => 'French'
         ]

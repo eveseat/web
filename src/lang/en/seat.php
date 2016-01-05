@@ -197,7 +197,7 @@ return [
     'scope'                        => 'Scope',
     'api_all'                      => 'All API Keys',
     'reveal'                       => 'Reveal',
-    'add_success'                  => 'Api Key Successfully Added. Update Job :jobid Dispatced',
+    'add_success'                  => 'Api Key Successfully Added. Update Job :jobid Dispatched',
 
     // Access
     'access_mangement'             => 'Access Management',
@@ -446,7 +446,7 @@ return [
     'confirm_setup'                => 'Confirm Setup',
 
     // Queue
-    'queue_manage'                 => 'Queue Mangement',
+    'queue_manage'                 => 'Queue Management',
     'total_jobs'                   => 'Total Jobs',
     'queued_jobs'                  => 'Queued Jobs',
     'working_jobs'                 => 'Working Jobs',
