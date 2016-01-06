@@ -65,10 +65,12 @@
             <!-- Menu Footer-->
             <li class="user-footer">
               <div class="pull-left">
-                <a href="{{ route('profile.view') }}" class="btn btn-default btn-flat">{{ trans('web::seat.profile') }}</a>
+                <a href="{{ route('profile.view') }}"
+                   class="btn btn-default btn-flat">{{ trans('web::seat.profile') }}</a>
               </div>
               <div class="pull-right">
-                <a href="{{ route('auth.logout') }}" class="btn btn-default btn-flat">{{ trans('web::seat.sign_out') }}</a>
+                <a href="{{ route('auth.logout') }}"
+                   class="btn btn-default btn-flat">{{ trans('web::seat.sign_out') }}</a>
               </div>
             </li>
           </ul>

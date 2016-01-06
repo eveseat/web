@@ -20,6 +20,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 */
 
 Route::post('/names/resolve', [
-    'as'         => 'support.names.resolve',
-    'uses'       => 'ResolveController@resolveIdsToNames'
+    'as'   => 'support.names.resolve',
+    'uses' => 'ResolveController@resolveIdsToNames'
 ]);

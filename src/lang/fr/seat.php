@@ -256,7 +256,7 @@ return [
     'curr_user_becomes_owner'      => 'L\'utilisateur actuel (:user) deviendra le propriétaire de toutes les clés.',
     'only_format_is_checked'       => 'Seul le format des clés est contrôlé ici. Aucune vérification n\'est faite ' .
         'pour assurer que le masque correspond au masque minimum configuré.',
-    'update_with_next_job'         => 'Les données des clés seront récupérées au lancement du prochain processus, ou '.
+    'update_with_next_job'         => 'Les données des clés seront récupérées au lancement du prochain processus, ou ' .
         'lors d\'une mise à jour manuelle.',
 
     // Schedule
@@ -399,7 +399,7 @@ return [
     'reinforce_estimate'           => 'Estimation du renforcement',
     'module'                       => 'Module|Modules',
     'content'                      => 'Contenu',
-    'no_known_assets'               => 'Aucuns biens',
+    'no_known_assets'              => 'Aucuns biens',
     'volume_usage'                 => 'Utilisation',
     'loading_modules'              => 'Chargement des informations...',
     'pocos'                        => 'Pocos',

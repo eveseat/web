@@ -14,7 +14,7 @@
 
 @include('web::emails.layouts.style')
 
-<!-- HEADER -->
+        <!-- HEADER -->
 <table class="head-wrap">
   <tr>
     <td></td>

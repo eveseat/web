@@ -95,28 +95,6 @@ trait Clipboard
     }
 
     /**
-     * Determine if the current user has a specific
-     * role
-     *
-     * @param $role_name
-     *
-     * @return bool
-     */
-    public function hasRole($role_name)
-    {
-
-        if ($this->hasSuperUser())
-            return true;
-
-        foreach ($this->roles() as $role)
-            if ($role->title == $role_name)
-                return true;
-
-        return false;
-
-    }
-
-    /**
      * Determine of the current user has the
      * superuser permission
      */
@@ -307,5 +285,27 @@ trait Clipboard
     {
 
         $this->corporation_id = $corporation_id;
+    }
+
+    /**
+     * Determine if the current user has a specific
+     * role
+     *
+     * @param $role_name
+     *
+     * @return bool
+     */
+    public function hasRole($role_name)
+    {
+
+        if ($this->hasSuperUser())
+            return true;
+
+        foreach ($this->roles() as $role)
+            if ($role->title == $role_name)
+                return true;
+
+        return false;
+
     }
 }
