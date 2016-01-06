@@ -96,14 +96,24 @@ class KeyController extends Controller
     public function addKey(ApiKey $request, JobContainer $job)
     {
 
-        ApiKeyModel::create([
-            'key_id'  => $request->input('key_id'),
-            'v_code'  => $request->input('v_code'),
+        // Get or create the API Key
+        $api_key = ApiKeyModel::firstOrCreate([
+            'key_id' => $request->input('key_id')
+        ]);
+
+        // Set the current user as the owner of the key
+        // and enable it.
+        $api_key->fill([
+            'v_code' => $request->input('v_code'),
             'user_id' => auth()->user()->id,
             'enabled' => true,
         ]);
 
-        // Get a fresh instance of the API Key
+        $api_key->save();
+
+        // Get a fresh instance of the API Key so that
+        // we can have a fully populated JobContainer
+        // instance to send to the queue.
         $api_key = ApiKeyModel::find(
             $request->input('key_id'));
 

@@ -39,7 +39,7 @@ class ApiKey extends Request
     {
 
         return [
-            'key_id' => 'required|numeric|unique:eve_api_keys,key_id',
+            'key_id' => 'required|numeric',
             'v_code' => 'required|size:64|alpha_num',
         ];
     }
