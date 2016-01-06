@@ -196,6 +196,8 @@ return [
     'recent_jobs'                  => 'Derniers processus de mise à jour',
     'scope'                        => 'Contexte',
     'api_all'                      => 'Toutes les clés',
+    'reveal'                       => 'Montrer',
+    'add_success'                  => 'La clé d\'API a été ajoutée avec succès. La tâche de mise à jour :jobid a été ajoutée',
 
     // Access
     'access_mangement'             => 'Gestion des droits',
@@ -375,7 +377,7 @@ return [
     'wallet_divisions'             => 'Divisions du portefeuille',
     'unknown_corporation'          => 'Corporation inconnue. La clé est-elle enregistrée et à jour ?',
     'created_by'                   => 'Crée par',
-    'starbase'                     => 'Base stellaire|Bases stellaires',
+    'starbase'                     => 'Tour de contrôle|Tours de contrôle',
     'state'                        => 'Statut',
     'fuel_level'                   => 'Niveau de carburant',
     'offline'                      => 'Est. hors ligne.',
@@ -397,6 +399,14 @@ return [
     'reinforce_estimate'           => 'Estimation du renforcement',
     'module'                       => 'Module|Modules',
     'content'                      => 'Contenu',
+    'no_known_assets'               => 'Aucuns biens',
+    'volume_usage'                 => 'Utilisation',
+    'loading_modules'              => 'Chargement des informations...',
+    'pocos'                        => 'Pocos',
+    'reinforcement'                => 'Renforcé',
+    'standing_level'               => 'Niveau de réputation',
+    'tax_alliance_corp'            => 'Taxes: Alliance/Corp',
+    'tax_standings'                => 'Taxes: Réputations',
 
     // Profile
     'user_profile'                 => 'Profil utilisateur',
@@ -471,6 +481,7 @@ return [
     'eve_api_connection_threshold' => 'EVE API Connection Error Threshold',
 
     // Footer
-    'web_version'                  => 'Web',
+    'web_version'                  => 'Version du package web',
+    'render_in'                    => 'Généré en',
     'copyright'                    => 'Copyright',
 ];
