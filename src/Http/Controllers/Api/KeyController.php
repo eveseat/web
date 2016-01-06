@@ -98,28 +98,23 @@ class KeyController extends Controller
 
         // Get or create the API Key
         $api_key = ApiKeyModel::firstOrCreate([
-            'key_id' => $request->input('key_id')
+            'key_id' => $request->input('key_id'),
         ]);
 
         // Set the current user as the owner of the key
         // and enable it.
         $api_key->fill([
-            'v_code' => $request->input('v_code'),
+            'v_code'  => $request->input('v_code'),
             'user_id' => auth()->user()->id,
             'enabled' => true,
         ]);
 
         $api_key->save();
 
-        // Get a fresh instance of the API Key so that
-        // we can have a fully populated JobContainer
-        // instance to send to the queue.
-        $api_key = ApiKeyModel::find(
-            $request->input('key_id'));
-
+        // Prepare the JonContainer for the update job
         $job->scope = 'Key';
         $job->api = 'Scheduler';
-        $job->owner_id = $request->input('key_id');
+        $job->owner_id = $api_key->key_id;
         $job->eve_api_key = $api_key;
 
         // Queue the update Job
