@@ -67,14 +67,14 @@
           </td>
           <td data-order="
             @if($starbase->inSovSystem)
-          {{ carbon('now')->addHours(($starbase->fuelBlocks/$starbase->baseFuelUsage) * 0.75) }}
+          {{ carbon('now')->addHours($starbase->fuelBlocks / ceil($starbase->baseFuelUsage * 0.75)) }}
           @else
-          {{ carbon('now')->addHours(($starbase->fuelBlocks/$starbase->baseFuelUsage))  }}
+          {{ carbon('now')->addHours($starbase->fuelBlocks/$starbase->baseFuelUsage)  }}
           @endif
                   ">
             @if($starbase->inSovSystem)
               {{
-                carbon('now')->addHours(($starbase->fuelBlocks/$starbase->baseFuelUsage) * 0.75)
+                carbon('now')->addHours($starbase->fuelBlocks/ ceil($starbase->baseFuelUsage * 0.75))
                   ->diffForHumans()
               }}
             @else
