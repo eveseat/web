@@ -23,7 +23,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
 
     // Authentication & Registration Routes.
-    Route::group(['namespace' => 'Auth'], function () {
+    Route::group([
+        'namespace'  => 'Auth',
+        'middleware' => 'requirements'
+    ], function () {
 
         Route::group(['prefix' => 'auth'], function () {
 

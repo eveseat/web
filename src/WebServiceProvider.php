@@ -44,6 +44,7 @@ use Seat\Web\Http\Middleware\KeyBouncer;
 use Seat\Web\Http\Middleware\Locale;
 use Seat\Web\Http\Middleware\Mfa;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
+use Seat\Web\Http\Middleware\Requirements;
 use Validator;
 
 /**
@@ -205,6 +206,9 @@ class WebServiceProvider extends ServiceProvider
         // Authenticate checks that the session is
         // simply authenticated
         $router->middleware('auth', Authenticate::class);
+
+        // Ensure that all of the SeAT required modules is installed.
+        $router->middleware('requirements', Requirements::class);
 
         // Localization support
         $router->middleware('locale', Locale::class);

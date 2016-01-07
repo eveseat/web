@@ -80,6 +80,16 @@ return [
     'usage'                        => 'Usage',
     'unit'                         => 'Unit|Units',
 
+    // Requirements
+    'requirements'                 => 'Requirements',
+    'requirements_message'         => 'The following list shows missing PHP extentions. Please install' .
+        ' them first before you can continue.',
+    'php_version'                  => 'PHP Version',
+    'php_version_message'          => 'The installed version of PHP does not meet the minimum version' .
+        ' requirement for SeAT. Please upgrade your PHP installation.',
+    'installed_version'            => 'Installed Version',
+    'min_version'                  => 'Minimum Version',
+
     // Auth
     'failed'                       => 'These credentials do not match our records.',
     'throttle'                     => 'Too many login attempts. Please try again in :seconds seconds.',
