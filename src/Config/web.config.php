@@ -21,10 +21,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 return [
 
-    'version'         => '1.0.18',
-    'max_access_mask' => 1073741823,
+    'version'                  => '1.0.18',
+    'max_access_mask'          => 1073741823,
+    'queue_status_update_time' => 10 * 1000, // milliseconds = seconds x 1,000
 
-    'languages'       => [
+    'languages'                => [
         [
             'short' => 'af',
             'full'  => 'Afrikaans'
