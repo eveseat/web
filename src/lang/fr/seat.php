@@ -80,6 +80,16 @@ return [
     'usage'                        => 'Utilisation',
     'unit'                         => 'Unité|Unités',
 
+    // Requirements
+    'requirements'                 => 'Prérequis',
+    'requirements_message'         => 'La liste suivante montre les extensions PHP manquantes. Veuillez les installer ' .
+        'avant de continuer.',
+    'php_version'                  => 'Version PHP',
+    'php_version_message'          => 'La version PHP installée ne respecte pas la version minimum ' .
+        'requise pour SeAT. Veuillez mettre votre installation de PHP à jour.',
+    'installed_version'            => 'Version installée',
+    'min_version'                  => 'Version minimum',
+
     // Auth
     'failed'                       => 'Ces identifiants ne correspondent pas à nos informations.',
     'throttle'                     => 'Trop de tentatives de connexion. Veuillez essayer de nouveau dans :seconds secondes.',
@@ -198,6 +208,12 @@ return [
     'api_all'                      => 'Toutes les clés',
     'reveal'                       => 'Montrer',
     'add_success'                  => 'La clé d\'API a été ajoutée avec succès. La tâche de mise à jour :jobid a été ajoutée',
+
+    // People
+    'people_groups'                => 'Groupes de personnage',
+    'unaffiliated_keys'            => 'Clés non liées',
+    'add_to_existing_group'        => 'Ajouter au groupe existant',
+    'new_group_with_main'          => 'Nouveau groupe avec :name comme personnage principal',
 
     // Access
     'access_mangement'             => 'Gestion des droits',
