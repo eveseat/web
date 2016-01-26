@@ -50,8 +50,8 @@
             </td>
             <td>{{ $contract->status }}</td>
             <td>{{ $contract->title }}</td>
-            <td>{{ number($contract->price) }}</td>
-            <td>{{ number($contract->reward) }}</td>
+            <td data-order="{{ $contract->price }}">{{ number($contract->price) }}</td>
+            <td data-order="{{ $contract->reward }}">{{ number($contract->reward) }}</td>
           </tr>
 
         @endforeach

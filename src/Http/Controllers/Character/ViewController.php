@@ -2,7 +2,7 @@
 /*
 This file is part of SeAT
 
-Copyright (C) 2015  Leon Jacobs
+Copyright (C) 2015, 2016  Leon Jacobs
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -288,7 +288,7 @@ class ViewController extends Controller
         // Check if we managed to get any records for
         // this character. If not, redirect back with
         // an error.
-        if(empty($character_sheet))
+        if (empty($character_sheet))
             return redirect()->back()
                 ->with('error', trans('web::seat.unknown_character'));
 

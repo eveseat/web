@@ -2,7 +2,7 @@
 /*
 This file is part of SeAT
 
-Copyright (C) 2015  Leon Jacobs
+Copyright (C) 2015, 2016  Leon Jacobs
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Http\Middleware;
+namespace Seat\Web\Http\Middleware\Bouncer;
 
 use Closure;
 use Illuminate\Support\Facades\Event;

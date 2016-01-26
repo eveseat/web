@@ -46,12 +46,12 @@
         <dt>{{ trans('web::seat.security') }}</dt>
         <dd>
           <span class="@if($starbase->mapSecurity >= 0.5)
-                        text-green
-                       @elseif($starbase->mapSecurity < 0.5 && $starbase->mapSecurity > 0.0)
-                        text-warning
-                       @else
-                        text-red
-                       @endif">
+                  text-green
+                 @elseif($starbase->mapSecurity < 0.5 && $starbase->mapSecurity > 0.0)
+                  text-warning
+                 @else
+                  text-red
+                 @endif">
             <i>({{ round($starbase->mapSecurity,  2) }})</i>
           </span>
         </dd>
@@ -163,7 +163,7 @@
         <dt>{{ trans('web::seat.fuel_usage') }}</dt>
         <dd>
           @if($starbase->inSovSystem)
-            {{ $starbase->baseFuelUsage * 0.75 }}
+            {{ ceil($starbase->baseFuelUsage * 0.75) }}
           @else
             {{ $starbase->baseFuelUsage }}
           @endif
@@ -173,7 +173,7 @@
         <dt>{{ trans('web::seat.stront_usage') }}</dt>
         <dd>
           @if($starbase->inSovSystem)
-            {{ $starbase->baseStrontUsage * 0.75}}
+            {{ ceil($starbase->baseStrontUsage * 0.75) }}
           @else
             {{ $starbase->baseStrontUsage }}
           @endif
@@ -185,11 +185,11 @@
         <dd>
           @if($starbase->inSovSystem)
             {{
-              carbon('now')->addHours(($starbase->fuelBlocks/$starbase->baseFuelUsage) * 0.75)
+              carbon('now')->addHours($starbase->fuelBlocks / ceil($starbase->baseFuelUsage * 0.75))
                 ->diffForHumans()
             }} at
             {{
-              carbon('now')->addHours(($starbase->fuelBlocks/$starbase->baseFuelUsage) * 0.75)
+              carbon('now')->addHours($starbase->fuelBlocks / ceil($starbase->baseFuelUsage * 0.75))
             }}
           @else
             {{
@@ -206,10 +206,10 @@
         <dd>
           @if($starbase->inSovSystem)
             {{
-              round(($starbase->strontium/$starbase->baseStrontUsage) * 0.75)
+              round($starbase->strontium/ ceil($starbase->baseStrontUsage * 0.75))
             }} hours at
             {{
-              carbon('now')->addHours(($starbase->strontium/$starbase->baseStrontUsage) * 0.75)
+              carbon('now')->addHours($starbase->strontium / ceil($starbase->baseStrontUsage * 0.75))
             }}
           @else
             {{

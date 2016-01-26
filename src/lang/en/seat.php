@@ -2,7 +2,7 @@
 /*
 This file is part of SeAT
 
-Copyright (C) 2015  Leon Jacobs
+Copyright (C) 2015, 2016  Leon Jacobs
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -79,6 +79,16 @@ return [
     'item'                         => 'Item|Items',
     'usage'                        => 'Usage',
     'unit'                         => 'Unit|Units',
+
+    // Requirements
+    'requirements'                 => 'Requirements',
+    'requirements_message'         => 'The following list shows missing PHP extentions. Please install' .
+        ' them first before you can continue.',
+    'php_version'                  => 'PHP Version',
+    'php_version_message'          => 'The installed version of PHP does not meet the minimum version' .
+        ' requirement for SeAT. Please upgrade your PHP installation.',
+    'installed_version'            => 'Installed Version',
+    'min_version'                  => 'Minimum Version',
 
     // Auth
     'failed'                       => 'These credentials do not match our records.',
@@ -197,7 +207,13 @@ return [
     'scope'                        => 'Scope',
     'api_all'                      => 'All API Keys',
     'reveal'                       => 'Reveal',
-    'add_success'                  => 'Api Key Successfully Added. Update Job :jobid Dispatced',
+    'add_success'                  => 'Api Key Successfully Added. Update Job :jobid Dispatched',
+
+    // People
+    'people_groups'                => 'People Groups',
+    'unaffiliated_keys'            => 'Unaffiliated Keys',
+    'add_to_existing_group'        => 'Add to Existing Group',
+    'new_group_with_main'          => 'New Group with :name as Main',
 
     // Access
     'access_mangement'             => 'Access Management',
@@ -446,7 +462,7 @@ return [
     'confirm_setup'                => 'Confirm Setup',
 
     // Queue
-    'queue_manage'                 => 'Queue Mangement',
+    'queue_manage'                 => 'Queue Management',
     'total_jobs'                   => 'Total Jobs',
     'queued_jobs'                  => 'Queued Jobs',
     'working_jobs'                 => 'Working Jobs',

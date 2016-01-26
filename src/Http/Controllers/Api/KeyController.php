@@ -2,7 +2,7 @@
 /*
 This file is part of SeAT
 
-Copyright (C) 2015  Leon Jacobs
+Copyright (C) 2015, 2016  Leon Jacobs
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -96,20 +96,25 @@ class KeyController extends Controller
     public function addKey(ApiKey $request, JobContainer $job)
     {
 
-        ApiKeyModel::create([
-            'key_id'  => $request->input('key_id'),
+        // Get or create the API Key
+        $api_key = ApiKeyModel::firstOrCreate([
+            'key_id' => $request->input('key_id'),
+        ]);
+
+        // Set the current user as the owner of the key
+        // and enable it.
+        $api_key->fill([
             'v_code'  => $request->input('v_code'),
             'user_id' => auth()->user()->id,
             'enabled' => true,
         ]);
 
-        // Get a fresh instance of the API Key
-        $api_key = ApiKeyModel::find(
-            $request->input('key_id'));
+        $api_key->save();
 
+        // Prepare the JonContainer for the update job
         $job->scope = 'Key';
         $job->api = 'Scheduler';
-        $job->owner_id = $request->input('key_id');
+        $job->owner_id = $api_key->key_id;
         $job->eve_api_key = $api_key;
 
         // Queue the update Job

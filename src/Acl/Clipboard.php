@@ -2,7 +2,7 @@
 /*
 This file is part of SeAT
 
-Copyright (C) 2015  Leon Jacobs
+Copyright (C) 2015, 2016  Leon Jacobs
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -89,28 +89,6 @@ trait Clipboard
             if ($this->hasAffiliationAndPermission($permission))
                 return true;
         }
-
-        return false;
-
-    }
-
-    /**
-     * Determine if the current user has a specific
-     * role
-     *
-     * @param $role_name
-     *
-     * @return bool
-     */
-    public function hasRole($role_name)
-    {
-
-        if ($this->hasSuperUser())
-            return true;
-
-        foreach ($this->roles() as $role)
-            if ($role->title == $role_name)
-                return true;
 
         return false;
 
@@ -307,5 +285,27 @@ trait Clipboard
     {
 
         $this->corporation_id = $corporation_id;
+    }
+
+    /**
+     * Determine if the current user has a specific
+     * role
+     *
+     * @param $role_name
+     *
+     * @return bool
+     */
+    public function hasRole($role_name)
+    {
+
+        if ($this->hasSuperUser())
+            return true;
+
+        foreach ($this->roles() as $role)
+            if ($role->title == $role_name)
+                return true;
+
+        return false;
+
     }
 }

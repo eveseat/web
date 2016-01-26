@@ -2,7 +2,7 @@
 /*
 This file is part of SeAT
 
-Copyright (C) 2015  Leon Jacobs
+Copyright (C) 2015, 2016  Leon Jacobs
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -37,13 +37,14 @@ use Seat\Web\Http\Composers\CorporationSummary;
 use Seat\Web\Http\Composers\Sidebar;
 use Seat\Web\Http\Composers\User;
 use Seat\Web\Http\Middleware\Authenticate;
-use Seat\Web\Http\Middleware\Bouncer;
-use Seat\Web\Http\Middleware\CharacterBouncer;
-use Seat\Web\Http\Middleware\CorporationBouncer;
-use Seat\Web\Http\Middleware\KeyBouncer;
+use Seat\Web\Http\Middleware\Bouncer\Bouncer;
+use Seat\Web\Http\Middleware\Bouncer\CharacterBouncer;
+use Seat\Web\Http\Middleware\Bouncer\CorporationBouncer;
+use Seat\Web\Http\Middleware\Bouncer\KeyBouncer;
 use Seat\Web\Http\Middleware\Locale;
 use Seat\Web\Http\Middleware\Mfa;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
+use Seat\Web\Http\Middleware\Requirements;
 use Validator;
 
 /**
@@ -205,6 +206,9 @@ class WebServiceProvider extends ServiceProvider
         // Authenticate checks that the session is
         // simply authenticated
         $router->middleware('auth', Authenticate::class);
+
+        // Ensure that all of the SeAT required modules is installed.
+        $router->middleware('requirements', Requirements::class);
 
         // Localization support
         $router->middleware('locale', Locale::class);

@@ -2,7 +2,7 @@
 /*
 This file is part of SeAT
 
-Copyright (C) 2015  Leon Jacobs
+Copyright (C) 2015, 2016  Leon Jacobs
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -21,10 +21,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 return [
 
-    'version'         => '1.0.18',
-    'max_access_mask' => 1073741823,
+    'version'                  => '1.0.19',
+    'max_access_mask'          => 1073741823,
+    'queue_status_update_time' => 10 * 1000, // milliseconds = seconds x 1,000
 
-    'languages'       => [
+    'languages'                => [
         [
             'short' => 'af',
             'full'  => 'Afrikaans'
@@ -32,6 +33,10 @@ return [
         [
             'short' => 'en',
             'full'  => 'English'
+        ],
+        [
+            'short' => 'de',
+            'full'  => 'German'
         ],
         [
             'short' => 'fr',

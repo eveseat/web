@@ -13,7 +13,7 @@
             {{ $menu_entry['name'] }}
           </a>
 
-       </li>
+        </li>
 
       @endif
 

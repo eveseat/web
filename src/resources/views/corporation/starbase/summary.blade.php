@@ -6,17 +6,17 @@
 
     <table class="table datatable compact table-condensed table-hover table-responsive">
       <thead>
-        <tr>
-          <th>{{ trans_choice('web::seat.state', 1) }}</th>
-          <th>{{ trans_choice('web::seat.type', 1) }}</th>
-          <th>{{ trans_choice('web::seat.location', 1) }}</th>
-          <th>
-            {!! img('type', 4051, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-            {{ trans('web::seat.fuel_level') }}
-          </th>
-          <th>{{ trans_choice('web::seat.offline', 1) }}</th>
-          <th data-orderable="false"></th>
-        </tr>
+      <tr>
+        <th>{{ trans_choice('web::seat.state', 1) }}</th>
+        <th>{{ trans_choice('web::seat.type', 1) }}</th>
+        <th>{{ trans_choice('web::seat.location', 1) }}</th>
+        <th>
+          {!! img('type', 4051, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+          {{ trans('web::seat.fuel_level') }}
+        </th>
+        <th>{{ trans_choice('web::seat.offline', 1) }}</th>
+        <th data-orderable="false"></th>
+      </tr>
       </thead>
       <tbody>
 
@@ -67,14 +67,14 @@
           </td>
           <td data-order="
             @if($starbase->inSovSystem)
-              {{ carbon('now')->addHours(($starbase->fuelBlocks/$starbase->baseFuelUsage) * 0.75) }}
-            @else
-              {{ carbon('now')->addHours(($starbase->fuelBlocks/$starbase->baseFuelUsage))  }}
-            @endif
-              ">
+          {{ carbon('now')->addHours($starbase->fuelBlocks / ceil($starbase->baseFuelUsage * 0.75)) }}
+          @else
+          {{ carbon('now')->addHours($starbase->fuelBlocks/$starbase->baseFuelUsage)  }}
+          @endif
+                  ">
             @if($starbase->inSovSystem)
               {{
-                carbon('now')->addHours(($starbase->fuelBlocks/$starbase->baseFuelUsage) * 0.75)
+                carbon('now')->addHours($starbase->fuelBlocks/ ceil($starbase->baseFuelUsage * 0.75))
                   ->diffForHumans()
               }}
             @else

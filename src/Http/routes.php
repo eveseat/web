@@ -2,7 +2,7 @@
 /*
 This file is part of SeAT
 
-Copyright (C) 2015  Leon Jacobs
+Copyright (C) 2015, 2016  Leon Jacobs
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -23,7 +23,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
 
     // Authentication & Registration Routes.
-    Route::group(['namespace' => 'Auth'], function () {
+    Route::group([
+        'namespace'  => 'Auth',
+        'middleware' => 'requirements'
+    ], function () {
 
         Route::group(['prefix' => 'auth'], function () {
 
@@ -102,6 +105,14 @@ Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
             ], function () {
 
                 include __DIR__ . '/Routes/Api/Key.php';
+
+                // People Group Routes
+                Route::group([
+                    'prefix' => 'people'
+                ], function () {
+
+                    include __DIR__ . '/Routes/Api/People.php';
+                });
             });
 
             // Corporation Routes

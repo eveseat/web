@@ -2,7 +2,7 @@
 /*
 This file is part of SeAT
 
-Copyright (C) 2015  Leon Jacobs
+Copyright (C) 2015, 2016  Leon Jacobs
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ namespace Seat\Web\Http\Controllers\Configuration;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
+use League\Csv\Reader;
 use Seat\Eveapi\Models\Eve\ApiKey;
 use Seat\Web\Validation\CsvImport;
 use Validator;
@@ -51,10 +52,8 @@ class ImportController extends Controller
     public function postCsv(CsvImport $request)
     {
 
-        // Grab the Data out of the CSV
-        $file = $request->file('csv');
-        $data = explode("\n",
-            $file->openFile()->fread($file->getSize()));
+        $csv = Reader::createFromFileObject(
+            $request->file('csv')->openFile());
 
         // Keep tabs on the amount of keys that have
         // been inserted, and how many have been
@@ -64,21 +63,15 @@ class ImportController extends Controller
 
         // Loop the CSV, validating the lines
         // and inserting into the database
-        foreach ($data as $k => $key) {
+        foreach ($csv as $k => $data) {
 
-            $parts = explode(",", $key);
+            // Assign the $data to readable names
+            $key_id = $data[0];
+            $v_code = $data[1];
 
-            // Ensure we have 2 entries in the $parts array
-            if (count($parts) != 2) {
-
-                $errored++;
-                continue;
-            }
-
-            // Assign the $parts to readable names
-            $key_id = $parts[0];
-            $v_code = $parts[1];
-
+            // Validate the keys. We check that we dont
+            // already have this key in the database to ensure
+            // that we dont mess up the ownership by accident.
             $validator = Validator::make([
                 'key_id' => $key_id,
                 'v_code' => $v_code

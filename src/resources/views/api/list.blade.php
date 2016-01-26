@@ -79,9 +79,6 @@
       </table>
 
     </div>
-    <div class="panel-footer">
-      <b>{{ count($keys) }}</b> {{ trans_choice('web::general.key', count($keys)) }}
-    </div>
   </div>
 
 @stop

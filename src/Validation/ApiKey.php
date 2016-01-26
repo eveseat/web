@@ -2,7 +2,7 @@
 /*
 This file is part of SeAT
 
-Copyright (C) 2015  Leon Jacobs
+Copyright (C) 2015, 2016  Leon Jacobs
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ class ApiKey extends Request
     {
 
         return [
-            'key_id' => 'required|numeric|unique:eve_api_keys,key_id',
+            'key_id' => 'required|numeric',
             'v_code' => 'required|size:64|alpha_num',
         ];
     }

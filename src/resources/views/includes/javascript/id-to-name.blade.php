@@ -1,21 +1,21 @@
 <script>
 
-  $(document).ready(function() {
+  $(document).ready(function () {
 
     var items = [];
     var arrays = [], size = 250;
 
-    $('[rel="id-to-name"]').each( function(){
+    $('[rel="id-to-name"]').each(function () {
       //add item to array
-      items.push( $(this).text() );
+      items.push($(this).text());
     });
 
-    var items = $.unique( items );
+    var items = $.unique(items);
 
     while (items.length > 0)
       arrays.push(items.splice(0, size));
 
-    $.each(arrays, function( index, value ) {
+    $.each(arrays, function (index, value) {
 
       $.ajax({
         type: 'POST',
@@ -23,13 +23,13 @@
         data: {
           'ids': value.join(',')
         },
-        success: function(result){
-          $.each(result, function(id, name) {
+        success: function (result) {
+          $.each(result, function (id, name) {
 
             $("span:contains('" + id + "')").html(name);
           })
         },
-        error: function(xhr, textStatus, errorThrown){
+        error: function (xhr, textStatus, errorThrown) {
           console.log(xhr);
           console.log(textStatus);
           console.log(errorThrown);

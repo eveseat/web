@@ -106,7 +106,7 @@
       },
       complete: function () {
         // Schedule the next request when the current one's complete
-        setTimeout(worker, 10000); // 10 Seconds
+        setTimeout(worker, {{ config('web.config.queue_status_update_time') }});
       }
     });
   })();
