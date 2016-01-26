@@ -19,17 +19,18 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Http\Middleware;
+namespace Seat\Web\Http\Middleware\Bouncer;
 
 use Closure;
 use Illuminate\Support\Facades\Event;
 use Seat\Web\Acl\Clipboard;
+use Seat\Web\Exceptions\BouncerException;
 
 /**
- * Class Bouncer
+ * Class CharacterBouncer
  * @package Seat\Web\Http\Middleware
  */
-class Bouncer
+class CharacterBouncer
 {
 
     use Clipboard;
@@ -37,9 +38,9 @@ class Bouncer
     /**
      * Handle an incoming request.
      *
-     * This filter simply checks if a specific permission
-     * exists, and does not take any affiliation rules
-     * into account
+     * This filter checks if a specific permission exists as
+     * well as ensures that an affiliation to a character
+     * exists.
      *
      * @param  \Illuminate\Http\Request $request
      * @param  \Closure                 $next
@@ -47,6 +48,7 @@ class Bouncer
      * @param null                      $permission
      *
      * @return mixed
+     * @throws \Seat\Web\Exceptions\BouncerException
      */
     public function handle($request, Closure $next, $permission = null)
     {
@@ -54,14 +56,21 @@ class Bouncer
         // Get the currently logged in user
         $user = auth()->user();
 
+        if (!$request->character_id)
+            throw new BouncerException(
+                'CharacterBouncer was unable to determine a character_id');
+
+        // Set the request charID
+        $user->setCharacterId($request->character_id);
+
         // Check on the clipboard if this permission
         // should be granted.
-        if ($user->has($permission, false))
+        if ($user->has('character.' . $permission))
             return $next($request);
 
         $message = 'Request to ' . $request->path() . ' was ' .
-            'denied by the bouncer. The permission required is ' .
-            $permission . '.';
+            'denied by the characterbouncer. The permission required is ' .
+            'character.' . $permission . '.';
         Event::fire('security.log', [$message, 'authorization']);
 
         return view('web::auth.unauthorized');

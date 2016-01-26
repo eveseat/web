@@ -19,17 +19,17 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Http\Middleware;
+namespace Seat\Web\Http\Middleware\Bouncer;
 
 use Closure;
 use Illuminate\Support\Facades\Event;
 use Seat\Web\Acl\Clipboard;
 
 /**
- * Class KeyBouncer
+ * Class Bouncer
  * @package Seat\Web\Http\Middleware
  */
-class KeyBouncer
+class Bouncer
 {
 
     use Clipboard;
@@ -37,8 +37,9 @@ class KeyBouncer
     /**
      * Handle an incoming request.
      *
-     * This filter checks the required permissions or
-     * key ownership for a API key.
+     * This filter simply checks if a specific permission
+     * exists, and does not take any affiliation rules
+     * into account
      *
      * @param  \Illuminate\Http\Request $request
      * @param  \Closure                 $next
@@ -53,19 +54,14 @@ class KeyBouncer
         // Get the currently logged in user
         $user = auth()->user();
 
-        // Having the permission / superuser here means
-        // your access is fine.
-        if ($user->has('apikey.' . $permission, false))
-            return $next($request);
-
-        // If we dont have the required permission, check
-        // if the current user owns the key.
-        if (in_array($request->key_id, $user->keys->lists('key_id')->all()))
+        // Check on the clipboard if this permission
+        // should be granted.
+        if ($user->has($permission, false))
             return $next($request);
 
         $message = 'Request to ' . $request->path() . ' was ' .
-            'denied by the keybouncer. The permission required is ' .
-            'key.' . $permission . '.';
+            'denied by the bouncer. The permission required is ' .
+            $permission . '.';
         Event::fire('security.log', [$message, 'authorization']);
 
         return view('web::auth.unauthorized');
