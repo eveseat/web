@@ -77,6 +77,11 @@ class Sidebar
                     'name'  => trans('web::seat.list_keys'),
                     'icon'  => 'fa-list',
                     'route' => 'api.key.list'
+                ],
+                [
+                    'name'  => trans('web::seat.people_groups'),
+                    'icon'  => 'fa-group',
+                    'route' => 'people.list'
                 ]
             ]
         ]);

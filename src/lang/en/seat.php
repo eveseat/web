@@ -209,6 +209,12 @@ return [
     'reveal'                       => 'Reveal',
     'add_success'                  => 'Api Key Successfully Added. Update Job :jobid Dispatched',
 
+    // People
+    'people_groups'                => 'People Groups',
+    'unaffiliated_keys'            => 'Unaffiliated Keys',
+    'add_to_existing_group'        => 'Add to Existing Group',
+    'new_group_with_main'          => 'New Group with :name as Main',
+
     // Access
     'access_mangement'             => 'Access Management',
     'quick_add_role'               => 'Quick Add Role',

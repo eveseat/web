@@ -105,6 +105,14 @@ Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
             ], function () {
 
                 include __DIR__ . '/Routes/Api/Key.php';
+
+                // People Group Routes
+                Route::group([
+                    'prefix' => 'people'
+                ], function () {
+
+                    include __DIR__ . '/Routes/Api/People.php';
+                });
             });
 
             // Corporation Routes
