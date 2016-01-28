@@ -66,11 +66,9 @@
 
     </div>
 
-    @if(count($history) == 20)
-      <div class="panel-footer">
-        {!! $history->render() !!}
-      </div>
-    @endif
+    <div class="panel-footer">
+      {!! $history->render() !!}
+    </div>
   </div>
 
 @stop
