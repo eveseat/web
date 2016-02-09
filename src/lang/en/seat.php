@@ -208,6 +208,7 @@ return [
     'api_all'                      => 'All API Keys',
     'reveal'                       => 'Reveal',
     'add_success'                  => 'Api Key Successfully Added. Update Job :jobid Dispatched',
+    're_enable'                    => 'Re-enable Key',
 
     // People
     'people_groups'                => 'People Groups',

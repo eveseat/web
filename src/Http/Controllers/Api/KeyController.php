@@ -161,6 +161,23 @@ class KeyController extends Controller
     }
 
     /**
+     * @param $key_id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function getEnable($key_id)
+    {
+
+        $key = ApiKeyModel::findOrFail($key_id);
+
+        $key->enabled = 1;
+        $key->save();
+
+        return redirect()->back()
+            ->with('success', 'Key re-enabled');
+    }
+
+    /**
      * @param $api_key
      *
      * @return \Illuminate\View\View

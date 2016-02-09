@@ -29,12 +29,17 @@
         <dt>{{ trans('web::seat.api_key_status') }}</dt>
         <dd>
           @if($key->enabled)
-            <span class="label label-success">
+            <span class="text-success">
               {{ ucfirst(trans('web::seat.enabled')) }}
             </span>
           @else
-            <span class="label label-danger">
+            <span class="text-danger">
               {{ ucfirst(trans('web::seat.disabled')) }}
+            </span>
+            <span class="pull-right">
+              <a href="{{ route('api.key.enable', ['key_id' => $key->key_id]) }}" class="label label-primary">
+                {{ trans('web::seat.re_enable') }}
+              </a>
             </span>
           @endif
         </dd>
