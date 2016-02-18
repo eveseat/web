@@ -40,7 +40,7 @@ class EditUser extends Request
 
         return [
             'user_id'  => 'required|exists:users,id',
-            'email'    => 'required|email',
+            'email'    => 'required|email|unique:users,email',
             'password' => 'min:6|confirmed'
         ];
     }

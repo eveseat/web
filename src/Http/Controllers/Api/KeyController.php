@@ -97,7 +97,7 @@ class KeyController extends Controller
     {
 
         // Get or create the API Key
-        $api_key = ApiKeyModel::firstOrCreate([
+        $api_key = ApiKeyModel::firstOrNew([
             'key_id' => $request->input('key_id'),
         ]);
 
@@ -158,6 +158,23 @@ class KeyController extends Controller
         return redirect()->back()
             ->with('success', 'Key Successfully deleted');
 
+    }
+
+    /**
+     * @param $key_id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function getEnable($key_id)
+    {
+
+        $key = ApiKeyModel::findOrFail($key_id);
+
+        $key->enabled = 1;
+        $key->save();
+
+        return redirect()->back()
+            ->with('success', 'Key re-enabled');
     }
 
     /**
