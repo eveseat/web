@@ -38,7 +38,7 @@ class Role extends Model
     /**
      * @var array
      */
-    protected $fillable = ['title'];
+    protected $fillable = ['title','invertedAffiliations'];
 
     /**
      * Make sure we cleanup on delete

@@ -68,3 +68,8 @@ Route::get('/roles/edit/{role_id}/delete/affiliation/{affiliation_id}', [
     'as'   => 'configuration.access.roles.edit.remove.affiliation',
     'uses' => 'AccessController@removeAffiliation'
 ]);
+
+Route::get('/roles/edit/{role_id}/invertion/{invert}', [
+    'as'   => 'configuration.access.roles.edit.invertion',
+    'uses' => 'AccessController@invertAffiliations'
+]);

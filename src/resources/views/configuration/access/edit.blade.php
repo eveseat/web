@@ -128,7 +128,7 @@
 
           </select>
         </div>
-
+        
         <button type="submit" class="btn btn-success btn-block">
           {{ trans('web::seat.add_affiliations') }}
         </button>
@@ -136,12 +136,26 @@
       </form>
 
       <hr>
+        @if ($role->invertedAffiliations)
+            <a href="{{ route('configuration.access.roles.edit.invertion', ['role_id' => $role->id, 'invert' => 0])}}" type="submit" class="btn btn-danger">
+                {{ trans('web::seat.invert_turn_off') }}
+            </a>  
+        @else 
+            <a href="{{ route('configuration.access.roles.edit.invertion', ['role_id' => $role->id, 'invert' => 1])}}" type="submit" class="btn btn-success">
+                {{ trans('web::seat.invert_turn_on') }}
+            </a>  
+        @endif
+      <hr>
 
       <table class="table table-hover table-condensed">
         <tbody>
 
         <tr>
-          <th colspan="2" class="text-center">{{ trans('web::seat.current_affiliations') }}</th>
+          <th colspan="2" class="text-center">{{ trans('web::seat.current_affiliations') }}
+              @if ($role->invertedAffiliations)
+                <mark>({{ trans('web::seat.inverted') }})</mark>
+              @endif
+          </th>
         </tr>
 
         @foreach($role->affiliations as $affiliation)
