@@ -165,13 +165,14 @@ class Sidebar
 
         // Load any menus from any registered packages
         $package_menus = config('package.sidebar');
-        foreach ($package_menus as $package_name => $menu_data) {
+        if (!is_null($package_menus))
+            foreach ($package_menus as $package_name => $menu_data) {
 
-            $prepared_menu = $this->load_plugin_menu($package_name, $menu_data);
+                $prepared_menu = $this->load_plugin_menu($package_name, $menu_data);
 
-            if (!empty($prepared_menu))
-                array_push($menu, $prepared_menu);
-        }
+                if (!empty($prepared_menu))
+                    array_push($menu, $prepared_menu);
+            }
 
         array_push($menu, [
             'name'          => trans('web::seat.other'),
