@@ -79,6 +79,7 @@ return [
     'item'                         => 'Item|Items',
     'usage'                        => 'Usage',
     'unit'                         => 'Unit|Units',
+    'add'                          => 'Add',
 
     // Requirements
     'requirements'                 => 'Requirements',
@@ -213,7 +214,9 @@ return [
     // People
     'people_groups'                => 'People Groups',
     'unaffiliated_keys'            => 'Unaffiliated Keys',
+    'add_to_existing'              => 'Add to Existing',
     'add_to_existing_group'        => 'Add to Existing Group',
+    'group_main'                   => 'Group Main',
     'new_group_with_main'          => 'New Group with :name as Main',
 
     // Access
