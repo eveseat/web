@@ -10,20 +10,22 @@
       <h3 class="panel-title">Available Ledgers</h3>
     </div>
     <div class="panel-body">
-	@for ($i = 0; $i < count($pidates); $i++)
-		<span style="padding-left: 4em; font-weight: bold">
-                <a href="{{ route('corporation.view.ledger.planetaryinteraction', ['corporation_id' => $corporation_id, 'year' => $pidates[$i]->year, 'month' => $pidates[$i]->month]) }}">{{ date("M Y", strtotime($pidates[$i]->year."-".$pidates[$i]->month."-01")) }} </a>
-		</span>
-		@if ((($i + 1) % 4) == 0)
-			<p>
-		@endif
-        @endfor
+        @foreach ($pidates->chunk(3) as $chunk)
+        <div class="row">
+                @foreach ($chunk as $prize)
+                        <div class="col-xs-4">
+                                <span style="font-weight: bold">                                        <a href="{{ route('corporation.view.ledger.planetaryinteraction', ['corporation_id' => $corporation_id, 'year' => $prize->year, 'month' => $prize->month]) }}">{{ date("M Y", strtotime($prize->year."-".$prize->month."-01")) }} </a>
+                                </span>
+                        </div>
+                @endforeach
+        </div>
+        @endforeach
     </div>
   </div>
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ trans_choice('web::seat.planetaryinteraction', 2) }} - {{ date("M Y", strtotime($year."-".$month."-01")) }}</h3>
+      <h3 class="panel-title">{{ trans_choice('web::seat.pi', 2) }} - {{ date("M Y", strtotime($year."-".$month."-01")) }}</h3>
     </div>
     <div class="panel-body">
       <div>

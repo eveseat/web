@@ -10,14 +10,17 @@
       <h3 class="panel-title">Available Ledgers</h3>
     </div>
     <div class="panel-body">
-	@for ($i = 0; $i < count($bountyprizes); $i++)
-		<span style="padding-left: 4em; font-weight: bold">
-                <a href="{{ route('corporation.view.ledger.bountyprizesbymonth', ['corporation_id' => $corporation_id, 'year' => $bountyprizes[$i]->year, 'month' => $bountyprizes[$i]->month]) }}">{{ date("M Y", strtotime($bountyprizes[$i]->year."-".$bountyprizes[$i]->month."-01")) }} </a>
-		</span>
-		@if ((($i + 1) % 4) == 0)
-			<p>
-		@endif
-        @endfor
+	@foreach ($bountyprizes->chunk(3) as $chunk)
+	<div class="row">
+		@foreach ($chunk as $prize)
+			<div class="col-xs-4">
+				<span style="font-weight: bold">
+                			<a href="{{ route('corporation.view.ledger.bountyprizesbymonth', ['corporation_id' => $corporation_id, 'year' => $prize->year, 'month' => $prize->month]) }}">{{ date("M Y", strtotime($prize->year."-".$prize->month."-01")) }} </a>
+				</span>
+			</div>
+		@endforeach
+	</div>
+	@endforeach
     </div>
   </div>
 

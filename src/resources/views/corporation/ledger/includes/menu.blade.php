@@ -13,7 +13,7 @@
     </li>
     <li role="presentation" class="@if ($sub_viewname == 'planetaryinteraction') active @endif">
       <a href="{{ route('corporation.view.ledger.planetaryinteraction', $sheet->corporationID) }}">
-        {{ trans_choice('web::seat.planetaryinteraction', 2) }}
+        {{ trans_choice('web::seat.pi', 2) }}
       </a> 
     </li>
   </ul>

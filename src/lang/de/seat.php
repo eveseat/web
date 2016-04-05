@@ -279,13 +279,6 @@ return [
     'source'                       => 'Quelle',
 
     // Ledger
-    'wallet_journal'               => 'Wallet Journal',
-    'wallet_transactions'          => 'Wallet Transactions',
-    'ledger'                       => 'Wallet Ledger',
-    'bountyprizesbymonth'          => 'Bounty Prizes By Month',
-    'bountyprizetotal'             => 'Prize Total',
-    'planetaryinteraction'         => 'Planetary Interaction',
-    'pitotals'                     => 'PI Total Taxes',
 
     // Users
     'user_management'              => 'Benutzerverwaltung',
