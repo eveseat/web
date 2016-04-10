@@ -54,15 +54,10 @@ class LedgerController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getBountyPrizesByMonth($corporation_id, $year = 0, $month = 0)
+    public function getBountyPrizesByMonth($corporation_id, $year = null, $month = null)
     {
-
-        if ($year == 0) {
-                $year = date("Y", time());
-        }
-        if ($month == 0) {
-                $month = date("m", time());
-        }
+	(!is_null($year)) ? $year : $year=date("Y"); 
+	(!is_null($month)) ? $year : $month=date("m"); 
 
         $bountyprizes = $this->getCorporationLedgerBountyPrizeDates(
             $corporation_id);
@@ -80,15 +75,10 @@ class LedgerController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getPlanetaryInteractionByMonth($corporation_id, $year = 0, $month = 0)
+    public function getPlanetaryInteractionByMonth($corporation_id, $year = null, $month = null)
     {
-
-        if ($year == 0) {
-                $year = date("Y", time());
-        }
-        if ($month == 0) {
-                $month = date("m", time());
-        }
+	(!is_null($year)) ? $year : $year=date("Y"); 
+	(!is_null($month)) ? $year : $month=date("m"); 
 
         $pidates = $this->getCorporationLedgerPIDates($corporation_id);
 
