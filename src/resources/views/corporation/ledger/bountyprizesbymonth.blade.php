@@ -12,19 +12,19 @@
     <div class="panel-body">
 
       @foreach ($bountyprizes->chunk(3) as $chunk)
-	      <div class="row">
+        <div class="row">
 
-		      @foreach ($chunk as $prize)
-			      <div class="col-xs-4">
+          @foreach ($chunk as $prize)
+            <div class="col-xs-4">
               <span class="text-bold">
                 <a href="{{ route('corporation.view.ledger.bountyprizesbymonth', ['corporation_id' => $corporation_id, 'year' => $prize->year, 'month' => $prize->month]) }}">
                   {{ date("M Y", strtotime($prize->year."-".$prize->month."-01")) }}
                 </a>
               </span>
             </div>
-		      @endforeach
+          @endforeach
 
-	      </div>
+        </div>
       @endforeach
     </div>
   </div>
@@ -39,9 +39,9 @@
         <table class="table datatable table-condensed table-hover table-responsive">
           <thead>
             <tr>
-	            <th>{{ trans_choice('web::seat.name', 1) }}</th>
+              <th>{{ trans_choice('web::seat.name', 1) }}</th>
               <th>{{ trans_choice('web::seat.bountyprizetotal', 1) }}</th>
-	          </tr>
+            </tr>
           </thead>
           <tbody>
 

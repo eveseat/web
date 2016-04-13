@@ -40,7 +40,7 @@
           <tr>
             <th>{{ trans_choice('web::seat.name', 1) }}</th>
             <th>{{ trans_choice('web::seat.pitotals', 1) }}</th>
-	        </tr>
+          </tr>
         </thead>
         <tbody>
 

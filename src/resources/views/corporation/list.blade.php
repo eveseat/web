@@ -13,13 +13,13 @@
 
       <table class="table datatable compact table-condensed table-hover table-responsive">
         <thead>
-          <tr>
-            <th>{{ trans_choice('web::seat.name', 1) }}</th>
-            <th>{{ trans('web::seat.ceo') }}</th>
-            <th>{{ trans('web::seat.alliance') }}</th>
-            <th>{{ trans('web::seat.tax_rate') }}</th>
-            <th>{{ trans('web::seat.member_limit') }}</th>
-          </tr>
+        <tr>
+          <th>{{ trans_choice('web::seat.name', 1) }}</th>
+          <th>{{ trans('web::seat.ceo') }}</th>
+          <th>{{ trans('web::seat.alliance') }}</th>
+          <th>{{ trans('web::seat.tax_rate') }}</th>
+          <th>{{ trans('web::seat.member_limit') }}</th>
+        </tr>
         </thead>
         <tbody>
 

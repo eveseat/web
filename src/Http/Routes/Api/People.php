@@ -30,26 +30,26 @@ Route::get('/search', [
 ]);
 
 Route::get('/new/group/{character_id}', [
-    'as'         => 'people.new.group',
-    'uses'       => 'PeopleController@getNewGroup'
+    'as'   => 'people.new.group',
+    'uses' => 'PeopleController@getNewGroup'
 ]);
 
 Route::post('/add/existing', [
-    'as'         => 'people.add.group.existing',
-    'uses'       => 'PeopleController@getAddToExisting'
+    'as'   => 'people.add.group.existing',
+    'uses' => 'PeopleController@getAddToExisting'
 ]);
 
 Route::get('/set/main/key/{group_id}/{character_id}', [
-    'as'         => 'people.set.main',
-    'uses'       => 'PeopleController@setGroupMain'
+    'as'   => 'people.set.main',
+    'uses' => 'PeopleController@setGroupMain'
 ]);
 
 Route::get('/remove/group/{group_id}', [
-    'as'         => 'people.remove.group',
-    'uses'       => 'PeopleController@removeGroup'
+    'as'   => 'people.remove.group',
+    'uses' => 'PeopleController@removeGroup'
 ]);
 
 Route::get('/remove/group/key/{group_id}/{key_id}', [
-    'as'         => 'people.remove.group.key',
-    'uses'       => 'PeopleController@removeKeyFromGroup'
+    'as'   => 'people.remove.group.key',
+    'uses' => 'PeopleController@removeKeyFromGroup'
 ]);
