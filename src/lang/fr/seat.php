@@ -293,6 +293,12 @@ return [
     'message'                      => 'Message',
     'source'                       => 'Origine',
 
+    // Ledger
+    'ledger'                       => 'Bilan',
+    'bountyprizesbymonth'          => 'Primes par mois',
+    'bountyprizetotal'             => 'Primes total',
+    'pitotals'                     => 'Total taxes Infra. Planéire',
+
     // Users
     'user_management'              => 'Gestion utilisateur',
 

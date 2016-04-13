@@ -296,6 +296,14 @@ return [
     'message'                      => 'Message',
     'source'                       => 'Source',
 
+    // Ledger
+    'ledger'                       => 'Wallet Ledger',
+    'bountyprizesbymonth'          => 'Bounty Prizes By Month',
+    'bountyprizetotal'             => 'Prize Total',
+    'pitotals'                     => 'PI Total Taxes',
+    'wallet_division_account'      => 'Wallet Division Account',
+    'wallet_division_name'         => 'Wallet Division Name',
+
     // Users
     'user_management'              => 'User Management',
 
@@ -504,3 +512,4 @@ return [
     'render_in'                    => 'Rendered In',
     'copyright'                    => 'Copyright',
 ];
+

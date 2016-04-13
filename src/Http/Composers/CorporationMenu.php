@@ -139,6 +139,12 @@ class CorporationMenu
                 'route'          => 'corporation.view.tracking'
             ],
             [
+                'name'           => trans('web::seat.ledger'),
+                'permission'     => 'corporation.journal',
+                'highlight_view' => 'ledger',
+                'route'          => 'corporation.view.ledger.summary'
+            ],
+            [
                 'name'           => trans('web::seat.wallet_journal'),
                 'permission'     => 'corporation.journal',
                 'highlight_view' => 'journal',

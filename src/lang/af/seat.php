@@ -270,6 +270,8 @@ return [
     'message'                      => 'Boodskap',
     'source'                       => 'Bron',
 
+    // Ledger
+
     // Users
     'user_management'              => 'Gebruiker Bestuur',
 
