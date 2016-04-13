@@ -303,6 +303,7 @@ return [
     'pitotals'                     => 'PI Total Taxes',
     'wallet_division_account'      => 'Wallet Division Account',
     'wallet_division_name'         => 'Wallet Division Name',
+    'wallet_summary'               => 'Wallet Summary|Wallet Summaries',
 
     // Users
     'user_management'              => 'User Management',

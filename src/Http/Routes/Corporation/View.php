@@ -99,7 +99,7 @@ Route::group(['prefix' => 'view/ledger'], function () {
     Route::get('summary/{corporation_id}', [
         'as'         => 'corporation.view.ledger.summary',
         'middleware' => 'corporationbouncer:journal',
-        'uses'       => 'LedgerController@getSummary'
+        'uses'       => 'LedgerController@getWalletSummary'
     ]);
 
     Route::get('bountyprizes/{corporation_id}/{year?}/{month?}', [

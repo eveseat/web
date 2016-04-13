@@ -278,8 +278,6 @@ return [
     'message'                      => 'Nachricht',
     'source'                       => 'Quelle',
 
-    // Ledger
-
     // Users
     'user_management'              => 'Benutzerverwaltung',
 

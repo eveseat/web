@@ -2,7 +2,7 @@
 /*
 This file is part of SeAT
 
-Copyright (C) 2015  Leon Jacobs
+Copyright (C) 2015, 2016  Leon Jacobs
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -38,54 +38,61 @@ class LedgerController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getSummary($corporation_id)
+    public function getWalletSummary($corporation_id)
     {
+
         $ledger = $this->getCorporationMemberSecurity($corporation_id);
+        $divisions = $this->getCorporationWalletDivisionSummary($corporation_id);
 
-        $divisions = $this->getCorporationWalletDivisionSummary($corporation_id);	
-
-        return view('web::corporation.ledger.summary', compact('ledger', 'divisions'));
+        return view('web::corporation.ledger.walletsummary',
+            compact('ledger', 'divisions'));
     }
 
     /**
-     * @param                          $corporation_id
-     * @param                          $year
-     * @param                          $month
+     * @param      $corporation_id
+     * @param null $year
+     * @param null $month
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getBountyPrizesByMonth($corporation_id, $year = null, $month = null)
     {
-	(!is_null($year)) ? $year : $year=date("Y"); 
-	(!is_null($month)) ? $year : $month=date("m"); 
 
-        $bountyprizes = $this->getCorporationLedgerBountyPrizeDates(
-            $corporation_id);
+        !is_null($year) ? $year : $year = date("Y");
+        !is_null($month) ? $year : $month = date("m");
 
-        $bountyprizedates = $this->getCorporationLedgerBountyPrizeByMonth(
-            $corporation_id, $year, $month);
+        $bountyprizes = collect($this->getCorporationLedgerBountyPrizeDates(
+            $corporation_id));
 
-        return view('web::corporation.ledger.bountyprizesbymonth', compact('bountyprizes','bountyprizedates','corporation_id', 'month', 'year'));
+        $bountyprizedates = collect($this->getCorporationLedgerBountyPrizeByMonth(
+            $corporation_id, $year, $month));
+
+        return view('web::corporation.ledger.bountyprizesbymonth',
+            compact('bountyprizes', 'bountyprizedates',
+                'corporation_id', 'month', 'year'));
     }
 
     /**
-     * @param                          $corporation_id
-     * @param                          $year
-     * @param                          $month
+     * @param      $corporation_id
+     * @param null $year
+     * @param null $month
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getPlanetaryInteractionByMonth($corporation_id, $year = null, $month = null)
     {
-	(!is_null($year)) ? $year : $year=date("Y"); 
-	(!is_null($month)) ? $year : $month=date("m"); 
 
-        $pidates = $this->getCorporationLedgerPIDates($corporation_id);
+        !is_null($year) ? $year : $year = date("Y");
+        !is_null($month) ? $year : $month = date("m");
 
-        $pitotals = $this->getCorporationLedgerPITotalsByMonth(
-            $corporation_id, $year, $month);
+        $pidates = collect($this->getCorporationLedgerPIDates($corporation_id));
 
-        return view('web::corporation.ledger.planetaryinteraction', compact('pidates','pitotals','piimport','piexport','corporation_id', 'month', 'year'));
+        $pitotals = collect($this->getCorporationLedgerPITotalsByMonth(
+            $corporation_id, $year, $month));
+
+        return view('web::corporation.ledger.planetaryinteraction',
+            compact('pidates', 'pitotals', 'piimport', 'piexport',
+                'corporation_id', 'month', 'year'));
     }
 
 }

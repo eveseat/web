@@ -13,18 +13,22 @@
       <div>
         <table class="table datatable table-condensed table-hover table-responsive">
           <tbody>
-          <tr class="active">
-            <th>{{ trans_choice('web::seat.wallet_division_account', 2) }}</th>
-            <th>{{ trans_choice('web::seat.wallet_division_name', 2) }}</th>
-            <th>{{ trans_choice('web::seat.balance', 2) }}</th>
-          </tr>
-	  @foreach ($divisions as $division)
-  	  <tr>
-            <td>{{ $division->accountid }}</td>
-            <td>{{ $division->description }}</td>
-            <td>{{ $division->balance }} ISK</td>
-	  </tr>
-          @endforeach
+            <tr class="active">
+              <th>{{ trans_choice('web::seat.wallet_division_account', 2) }}</th>
+              <th>{{ trans_choice('web::seat.wallet_division_name', 2) }}</th>
+              <th>{{ trans_choice('web::seat.balance', 2) }}</th>
+            </tr>
+
+        	  @foreach ($divisions as $division)
+
+          	  <tr>
+                <td>{{ $division->accountid }}</td>
+                <td>{{ $division->description }}</td>
+                <td>{{ number($division->balance) }}</td>
+          	  </tr>
+
+            @endforeach
+
           </tbody>
         </table>
       </div>
