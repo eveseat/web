@@ -35,7 +35,7 @@ class Mfa extends Request
     {
 
         return [
-            'confirm_code' => 'required|int'
+            'confirm_code' => 'required|numeric'
         ];
     }
 }
