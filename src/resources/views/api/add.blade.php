@@ -54,12 +54,25 @@
     </p>
 
     <ul>
-      <li>
-        <a href="https://community.eveonline.com/support/api-key/CreatePredefined?accessMask={{ config('web.config.max_access_mask') }}"
-           target="_blank">
-          {{ trans('web::seat.api_full_link') }}
-        </a>
-      </li>
+      @if(setting('force_min_mask', true) == 'yes')
+
+        <li>
+          <a href="https://community.eveonline.com/support/api-key/CreatePredefined?accessMask={{ setting('min_access_mask', true) }}"
+             target="_blank">
+            {{ trans('web::seat.api_full_min_mask') }}
+          </a>
+        </li>
+
+      @else
+
+        <li>
+          <a href="https://community.eveonline.com/support/api-key/CreatePredefined?accessMask={{ config('web.config.max_access_mask') }}"
+             target="_blank">
+            {{ trans('web::seat.api_full_link') }}
+          </a>
+        </li>
+
+      @endif
     </ul>
 
     </div>

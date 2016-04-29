@@ -13,6 +13,15 @@
           <dt>{{ trans('web::seat.api_access_mask') }}</dt>
           <dd>{{ $access_mask }}</dd>
         </dl>
+
+        @if(setting('force_min_mask', true) == 'yes' && $access_mask < setting('min_access_mask', true))
+
+          <div class="text-danger">
+            {{ trans('web::seat.insufficient_access_mask') }}
+          </div>
+
+        @endif
+
         <hr>
         <ul class="clearfix">
 
@@ -36,24 +45,28 @@
 
         </ul>
 
-        <form role="form" action="{{ route('api.key.add') }}" method="post">
-          {{ csrf_field() }}
+        @if(! (setting('force_min_mask', true) == 'yes' && $access_mask < setting('min_access_mask', true)))
 
-          <input type="hidden" name="key_id" value="{{ $key_id }}">
-          <input type="hidden" name="v_code" value="{{ $v_code }}">
+          <form role="form" action="{{ route('api.key.add') }}" method="post">
+            {{ csrf_field() }}
 
-          <div class="box-footer">
-            <button type="submit" class="btn btn-block btn-success">
-              {{ trans('web::seat.api_add_type_key', ['type' => $key_type]) }}
-            </button>
+            <input type="hidden" name="key_id" value="{{ $key_id }}">
+            <input type="hidden" name="v_code" value="{{ $v_code }}">
+
+            <div class="box-footer">
+              <button type="submit" class="btn btn-block btn-success">
+                {{ trans('web::seat.api_add_type_key', ['type' => $key_type]) }}
+              </button>
+            </div>
+          </form>
+
+          <div class="text-muted">
+            <i class="fa fa-info"></i>
+            <span class="text-bold">{{ trans('web::seat.note') }}:</span>
+            {{ trans('web::seat.api_add_job') }}
           </div>
-        </form>
 
-        <div class="text-muted">
-          <i class="fa fa-info"></i>
-          <span class="text-bold">{{ trans('web::seat.note') }}:</span>
-          {{ trans('web::seat.api_add_job') }}
-        </div>
+        @endif
 
       </div>
 

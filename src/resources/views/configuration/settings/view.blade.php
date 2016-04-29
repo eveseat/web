@@ -50,6 +50,34 @@
             </div>
           </div>
 
+          <legend>{{ trans('web::seat.min_access_mask') }}</legend>
+
+          <!-- Select Basic -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="force_min_mask">{{ trans('web::seat.force_min_mask') }}</label>
+            <div class="col-md-6">
+              <select id="min_access_mask" name="force_min_mask" class="form-control">
+                <option value="yes"
+                        @if(setting('force_min_mask', true) == "yes") selected @endif>
+                  {{ trans('web::seat.yes') }}
+                </option>
+                <option value="no"
+                        @if(setting('force_min_mask', true) == "no") selected @endif>
+                  {{ trans('web::seat.no') }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="min_access_mask">{{ trans('web::seat.min_access_mask') }}</label>
+            <div class="col-md-6">
+              <input id="min_access_mask" name="min_access_mask" type="text"
+                     class="form-control input-md" value="{{ setting('min_access_mask', true) }}">
+            </div>
+          </div>
+
         </div>
         <!-- /.box-body -->
 
