@@ -90,6 +90,8 @@ return [
         ' requirement for SeAT. Please upgrade your PHP installation.',
     'installed_version'            => 'Installed Version',
     'min_version'                  => 'Minimum Version',
+    'admin_contact_warning'        => 'An administrative contact for this install has not been set.' .
+        ' No jobs will be queued because of this. Please configure it in the SeAT settings.',
 
     // Auth
     'failed'                       => 'These credentials do not match our records.',
