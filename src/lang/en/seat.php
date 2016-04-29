@@ -303,7 +303,6 @@ return [
     'bountyprizesbymonth'          => 'Bounty Prizes By Month',
     'bountyprizetotal'             => 'Prize Total',
     'pitotals'                     => 'PI Total Taxes',
-    'wallet_division_account'      => 'Wallet Division Account',
     'wallet_division_name'         => 'Wallet Division Name',
     'wallet_summary'               => 'Wallet Summary|Wallet Summaries',
 
