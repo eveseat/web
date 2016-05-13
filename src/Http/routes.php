@@ -31,6 +31,7 @@ Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
         Route::group(['prefix' => 'auth'], function () {
 
             include __DIR__ . '/Routes/Auth/Auth.php';
+            include __DIR__ . '/Routes/Auth/Sso.php';
         });
 
         Route::group(['prefix' => 'password'], function () {

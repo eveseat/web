@@ -50,6 +50,13 @@
     </div>
     <!-- /.box-footer -->
 
+    <div class="box-footer text-center">
+      <a href="{{ route('auth.eve') }}">
+        <img src="{{ asset('web/img/evesso.png') }}">
+      </a>
+    </div>
+    <!-- /.box-footer -->
+
   </form>
 
 </div>

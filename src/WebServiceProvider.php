@@ -23,6 +23,7 @@ namespace Seat\Web;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Socialite\SocialiteManager;
 use PragmaRX\Google2FA\Google2FA;
 use Seat\Web\Events\Attempt;
 use Seat\Web\Events\Auth;
@@ -30,6 +31,7 @@ use Seat\Web\Events\Login;
 use Seat\Web\Events\Logout;
 use Seat\Web\Events\SecLog;
 use Seat\Web\Events\Security;
+use Seat\Web\Extentions\EveOnlineProvider;
 use Seat\Web\Http\Composers\CharacterMenu;
 use Seat\Web\Http\Composers\CharacterSummary;
 use Seat\Web\Http\Composers\CorporationMenu;
@@ -109,6 +111,25 @@ class WebServiceProvider extends ServiceProvider
 
             return new Google2FA;
         });
+
+        // Register the Socialite Factory.
+        // From: Laravel\Socialite\SocialiteServiceProvider
+        $this->app->singleton('Laravel\Socialite\Contracts\Factory', function ($app) {
+
+            return new SocialiteManager($app);
+        });
+
+        // Slap in the Eveonline Socialite Provider
+        $eveonline = $this->app->make('Laravel\Socialite\Contracts\Factory');
+        $eveonline->extend('eveonline',
+            function ($app) use ($eveonline) {
+
+                $config = $app['config']['services.eveonline'];
+
+                return $eveonline->buildProvider(EveOnlineProvider::class, $config);
+            }
+        );
+
     }
 
     /**
