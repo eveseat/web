@@ -24,6 +24,7 @@ namespace Seat\Web\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Laravel\Socialite\Contracts\Factory as Socialite;
 use Seat\Services\Settings\Profile;
+use Seat\Services\Settings\Seat;
 use Seat\Web\Models\User;
 
 /**
@@ -42,6 +43,11 @@ class SsoController extends Controller
      */
     public function redirectToProvider(Socialite $social)
     {
+
+        // Prevent dropping into this route is SSO
+        // is disabled.
+        if (Seat::get('allow_sso') !== 'yes')
+            abort(404);
 
         return $social->driver('eveonline')->redirect();
     }

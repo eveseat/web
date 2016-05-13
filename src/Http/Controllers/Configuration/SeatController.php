@@ -38,7 +38,16 @@ class SeatController extends Controller
     public function getView()
     {
 
-        return view('web::configuration.settings.view');
+        // Validate SSO Environment settings
+        if (is_null(env('EVE_CLIENT_ID')) or
+            is_null(env('EVE_CLIENT_SECRET')) or
+            is_null(env('EVE_CALLBACK_URL'))
+        )
+            $warn_sso = true;
+        else
+            $warn_sso = false;
+
+        return view('web::configuration.settings.view', compact('warn_sso'));
     }
 
     /**
@@ -53,6 +62,7 @@ class SeatController extends Controller
         Seat::set('admin_contact', $request->admin_contact);
         Seat::set('force_min_mask', $request->force_min_mask);
         Seat::set('min_access_mask', $request->min_access_mask);
+        Seat::set('allow_sso', $request->allow_sso);
 
         return redirect()->back()
             ->with('success', 'SeAT settings updated!');

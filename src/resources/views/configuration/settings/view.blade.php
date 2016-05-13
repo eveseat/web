@@ -50,6 +50,32 @@
             </div>
           </div>
 
+          <legend>{{ trans('web::seat.single_signon') }}</legend>
+
+          <!-- Select Basic -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="allow_sso">{{ trans('web::seat.allow_sso') }}</label>
+            <div class="col-md-6">
+              <select id="allow_sso" name="allow_sso" class="form-control">
+                <option value="yes"
+                        @if(setting('allow_sso', true) == "yes") selected @endif>
+                  {{ trans('web::seat.yes') }}
+                </option>
+                <option value="no"
+                        @if(setting('allow_sso', true) == "no") selected @endif>
+                  {{ trans('web::seat.no') }}
+                </option>
+              </select>
+              @if($warn_sso)
+                <span class="help-block">
+                  <span class="text text-danger">
+                    {{ trans('web::seat.admin_warn_sso') }}
+                  </span>
+                </span>
+              @endif
+            </div>
+          </div>
+
           <legend>{{ trans('web::seat.min_access_mask') }}</legend>
 
           <!-- Select Basic -->

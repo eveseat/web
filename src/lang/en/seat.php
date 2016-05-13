@@ -317,6 +317,10 @@ return [
     'min_access_mask'              => 'Minimum Required Access Mask',
     'force_min_mask'               => 'Force Min. Access Mask',
     'registration'                 => 'Registration',
+    'single_signon'                => 'Eve Online Single Signon',
+    'admin_warn_sso'               => 'Double check you EVE_CLIENT_ID, EVE_CLIENT_SECRET and EVE_CALLBACK_URL' .
+        ' values in the .env file as they may be empty or invalid. SSO can fail because of this!',
+    'allow_sso'                    => 'Allow Single Signon',
     'allow_registration'           => 'Allow Registration',
     'module_versions'              => 'SeAT Module Versions',
     'installed'                    => 'Installed',
