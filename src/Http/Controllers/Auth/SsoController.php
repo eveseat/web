@@ -86,6 +86,7 @@ class SsoController extends Controller
 
         return User::create([
             'name'   => $user->name,
+            'email'  => str_random(8) . '@seat.local',  // Temp Address
             'eve_id' => $user->eve_id,
             'active' => 1,
             'token'  => $user->token

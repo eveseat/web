@@ -82,6 +82,11 @@
             <span class="label label-{{ $user->active == 1 ? 'success' : 'warning' }}">
               {{ $user->active == 1 ? 'Active' : 'Inactive' }}
             </span>
+            @if(!is_null($user->eve_id))
+              <span class="label label-info">
+                Sso
+              </span>
+            @endif
           </td>
           <td>
             <span data-toggle="tooltip" title="" data-original-title="{{ $user->last_login }}">
