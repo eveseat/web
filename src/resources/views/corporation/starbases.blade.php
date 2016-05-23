@@ -12,8 +12,6 @@
 
       @include('web::corporation.starbase.tabs')
 
-      @include('web::corporation.starbase.summary')
-
     </div>
   </div> <!-- ./row -->
 
