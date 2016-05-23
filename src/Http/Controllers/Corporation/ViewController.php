@@ -188,6 +188,7 @@ class ViewController extends Controller
     }
 
     /**
+<<<<<<< HEAD
      * @param $corporation_id
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -208,8 +209,8 @@ class ViewController extends Controller
         // siloCapacityBonus value from the starbase and add the
         // % capacity to actual modules that benefit from
         // the bonusses.
-        $cargo_types_with_bonus = [14343]; // Silo, Coupling Array
-        $assetlist_locations = $this->getCorporationSilosByLocation($corporation_id);
+        $cargo_types_with_bonus = [14343]; // Silo
+        $assetlist_locations = $this->getCorporationSilosByLocation($corporation_id); // you need the updated services repo for this
         $module_contents = $this->getCorporationAssetContents($corporation_id);
 
         foreach($starbases as $key => $starbase) {
@@ -270,7 +271,6 @@ class ViewController extends Controller
         // the bonusses.
         $cargo_types_with_bonus = [14343, 17982]; // Silo, Coupling Array
         $assetlist_locations = $this->getCorporationAssetByLocation($corporation_id);
-
         $module_contents = $this->getCorporationAssetContents($corporation_id);
 
         // Check if we know of *any* assets at this moon.

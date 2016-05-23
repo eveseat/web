@@ -10,7 +10,11 @@
   <div class="row">
     <div class="col-md-12">
 
+<<<<<<< HEAD
       @include('web::corporation.starbase.tabs')
+=======
+      @include('web::corporation.starbase.summary')
+>>>>>>> 981ccc486853b1d891e21fc6615e0c346be4abf4
 
     </div>
   </div> <!-- ./row -->
@@ -132,6 +136,7 @@
         });
       }
     });
+
   </script>
 
   @include('web::includes.javascript.id-to-name')

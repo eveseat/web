@@ -134,6 +134,7 @@ Route::get('/view/starbases/{corporation_id}', [
     'uses'       => 'ViewController@getStarbases'
 ]);
 
+
 Route::get('/view/starbases/silos/{corporation_id}', [
     'as'         => 'corporation.view.starbases.silos',
     'middleware' => 'corporationbouncer:starbases',

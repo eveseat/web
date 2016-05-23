@@ -1,3 +1,8 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{ trans_choice('web::seat.starbase', 2) }}</h3>
+  </div>
+  <div class="panel-body">
 
     <table class="table datatable compact table-condensed table-hover table-responsive">
       <thead>
@@ -90,3 +95,6 @@
 
       </tbody>
     </table>
+
+  </div>
+</div>
