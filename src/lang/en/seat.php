@@ -79,6 +79,7 @@ return [
     'item'                         => 'Item|Items',
     'usage'                        => 'Usage',
     'unit'                         => 'Unit|Units',
+    'add'                          => 'Add',
 
     // Requirements
     'requirements'                 => 'Requirements',
@@ -89,6 +90,8 @@ return [
         ' requirement for SeAT. Please upgrade your PHP installation.',
     'installed_version'            => 'Installed Version',
     'min_version'                  => 'Minimum Version',
+    'admin_contact_warning'        => 'An administrative contact for this install has not been set.' .
+        ' No jobs will be queued because of this. Please configure it in the SeAT settings.',
 
     // Auth
     'failed'                       => 'These credentials do not match our records.',
@@ -185,6 +188,8 @@ return [
     'api_new_key'                  => 'Create a New API Key',
     'api_use_link'                 => 'Use the following link to create a new API Key',
     'api_full_link'                => 'Full API Key for All Characters',
+    'api_full_min_mask'            => 'API Key with minimum Mask needed',
+    'insufficient_access_mask'     => 'This API Key does not meet the minimum Access Mask required',
     'api_key_info'                 => 'API Key Info',
     'api_key_type'                 => 'API Key Type',
     'api_access_mask'              => 'API Access Mask',
@@ -213,7 +218,9 @@ return [
     // People
     'people_groups'                => 'People Groups',
     'unaffiliated_keys'            => 'Unaffiliated Keys',
+    'add_to_existing'              => 'Add to Existing',
     'add_to_existing_group'        => 'Add to Existing Group',
+    'group_main'                   => 'Group Main',
     'new_group_with_main'          => 'New Group with :name as Main',
 
     // Access
@@ -293,13 +300,27 @@ return [
     'message'                      => 'Message',
     'source'                       => 'Source',
 
+    // Ledger
+    'ledger'                       => 'Wallet Ledger',
+    'bountyprizesbymonth'          => 'Bounty Prizes By Month',
+    'bountyprizetotal'             => 'Prize Total',
+    'pitotals'                     => 'PI Total Taxes',
+    'wallet_division_name'         => 'Wallet Division Name',
+    'wallet_summary'               => 'Wallet Summary|Wallet Summaries',
+
     // Users
     'user_management'              => 'User Management',
 
     // Settings
     'admin_email'                  => 'Administrator Email',
     'admin_email_help'             => 'Please enter the email address of the administrator of this SeAT installation.',
+    'min_access_mask'              => 'Minimum Required Access Mask',
+    'force_min_mask'               => 'Force Min. Access Mask',
     'registration'                 => 'Registration',
+    'single_signon'                => 'Eve Online Single Signon',
+    'admin_warn_sso'               => 'Double check you EVE_CLIENT_ID, EVE_CLIENT_SECRET and EVE_CALLBACK_URL' .
+        ' values in the .env file as they may be empty or invalid. SSO can fail because of this!',
+    'allow_sso'                    => 'Allow Single Signon',
     'allow_registration'           => 'Allow Registration',
     'module_versions'              => 'SeAT Module Versions',
     'installed'                    => 'Installed',
@@ -501,3 +522,4 @@ return [
     'render_in'                    => 'Rendered In',
     'copyright'                    => 'Copyright',
 ];
+

@@ -19,33 +19,37 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Validation;
+namespace Seat\Web\Http\Controllers\Support;
 
-use App\Http\Requests\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Seat\Services\Search\Search;
 
 /**
- * Class EditUser
- * @package Seat\Web\Validation
+ * Class SearchController
+ * @package Seat\Web\Http\Controllers\Support
  */
-class EditUser extends Request
+class SearchController extends Controller
 {
 
+    use Search;
+
     /**
-     * Get the validation rules that apply to the request.
+     * @param \Illuminate\Http\Request $request
      *
-     * @return array
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function rules()
+    public function searchAll(Request $request)
     {
 
-        // Get the id of the user that will be used to ignore
-        // the email constraint on.
-        $user_id = $this->request->get('user_id');
+        $query = $request->q;
 
-        return [
-            'user_id'  => 'required|exists:users,id',
-            'email'    => 'required|email|unique:users,email,' . $user_id,
-            'password' => 'min:6|confirmed'
-        ];
+        $characters = $this->doSearchCharacters($query);
+        $corporations = $this->doSearchCorporations($query);
+        $mail = $this->doSearchCharacterMail($query);
+
+        return view('web::search.result', compact(
+            'query', 'characters', 'corporations', 'mail'));
     }
+
 }

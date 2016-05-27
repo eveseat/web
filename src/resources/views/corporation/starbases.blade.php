@@ -67,14 +67,14 @@
 @section('javascript')
 
   <script>
-    $("a#modules-tab").click(function() {
+    $("a#modules-tab").click(function () {
 
       // Grab the starbaseID
       var starbase_id = $(this).attr('a-starbase-id');
 
       // Prevent loading the request *again* if its already been
       // successfully loaded!
-      if($("div#modules" + starbase_id).attr('a-ajax-loaded') === "false") {
+      if ($("div#modules" + starbase_id).attr('a-ajax-loaded') === "false") {
 
         // 'Loading' animation
         $("div#modules" + starbase_id)

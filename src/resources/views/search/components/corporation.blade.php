@@ -1,13 +1,8 @@
-@extends('web::layouts.grids.12')
-
-@section('title', trans_choice('web::seat.corporation', 1) )
-@section('page_header', trans_choice('web::seat.corporation', 1))
-
-@section('full')
+@if(count($corporations) > 0)
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ trans_choice('web::seat.corporation', 2) }}</h3>
+      <h3 class="panel-title">Corporations Results</h3>
     </div>
     <div class="panel-body">
 
@@ -15,10 +10,7 @@
         <thead>
         <tr>
           <th>{{ trans_choice('web::seat.name', 1) }}</th>
-          <th>{{ trans('web::seat.ceo') }}</th>
-          <th>{{ trans('web::seat.alliance') }}</th>
-          <th>{{ trans('web::seat.tax_rate') }}</th>
-          <th>{{ trans('web::seat.member_limit') }}</th>
+          <th>{{ trans_choice('web::seat.ceo', 1) }}</th>
         </tr>
         </thead>
         <tbody>
@@ -53,7 +45,8 @@
         </tbody>
       </table>
 
+
     </div>
   </div>
 
-@stop
+@endif

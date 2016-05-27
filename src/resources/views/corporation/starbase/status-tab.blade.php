@@ -7,7 +7,14 @@
 
         <dt>{{ trans('web::seat.state') }}:</dt>
         <dd>
-          <span class="label @if($starbase->state == 4) label-success @else label-warning @endif">
+          <span class="label
+                @if($starbase->state == 4)
+                  label-success
+                @elseif($starbase->state == 0 || $starbase->state == 1)
+                  label-danger
+                @else
+                  label-warning
+                @endif">
             {{ $starbase_states[$starbase->state] }}
           </span>
         </dd>
@@ -204,6 +211,10 @@
 
         <dt>{{ trans('web::seat.reinforce_estimate') }}</dt>
         <dd>
+          @if($starbase->state == 3)
+            {{ $starbase->stateTimeStamp }}
+            <i>({{ human_diff($starbase->stateTimeStamp) }})</i>
+          @else
           @if($starbase->inSovSystem)
             {{
               round($starbase->strontium/ ceil($starbase->baseStrontUsage * 0.75))
@@ -218,6 +229,7 @@
             {{
               carbon('now')->addHours($starbase->strontium/$starbase->baseStrontUsage)
             }}
+          @endif
           @endif
         </dd>
 

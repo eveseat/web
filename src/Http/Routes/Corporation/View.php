@@ -94,6 +94,28 @@ Route::group(['prefix' => 'view/security'], function () {
 
 });
 
+Route::group(['prefix' => 'view/ledger'], function () {
+
+    Route::get('summary/{corporation_id}', [
+        'as'         => 'corporation.view.ledger.summary',
+        'middleware' => 'corporationbouncer:journal',
+        'uses'       => 'LedgerController@getWalletSummary'
+    ]);
+
+    Route::get('bountyprizes/{corporation_id}/{year?}/{month?}', [
+        'as'         => 'corporation.view.ledger.bountyprizesbymonth',
+        'middleware' => 'corporationbouncer:journal',
+        'uses'       => 'LedgerController@getBountyPrizesByMonth'
+    ]);
+
+    Route::get('planetaryinteraction/{corporation_id}/{year?}/{month?}', [
+        'as'         => 'corporation.view.ledger.planetaryinteraction',
+        'middleware' => 'corporationbouncer:journal',
+        'uses'       => 'LedgerController@getPlanetaryInteractionByMonth'
+    ]);
+
+});
+
 Route::get('/view/summary/{corporation_id}', [
     'as'         => 'corporation.view.summary',
     'middleware' => 'corporationbouncer:summary',

@@ -50,6 +50,16 @@
     </div>
     <!-- /.box-footer -->
 
+    <!-- SSO Button! -->
+    @if(setting('allow_sso', true) === 'yes')
+      <div class="box-footer text-center">
+        <a href="{{ route('auth.eve') }}">
+          <img src="{{ asset('web/img/evesso.png') }}">
+        </a>
+      </div>
+      <!-- /.box-footer -->
+    @endif
+
   </form>
 
 </div>

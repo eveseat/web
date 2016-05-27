@@ -111,7 +111,13 @@ class KeyController extends Controller
 
         $api_key->save();
 
-        // Prepare the JonContainer for the update job
+        // For *some* reason, key_id is 0 here after the
+        // fill() and save(). So, set it again so that
+        // the update job wont fail to give Pheal a
+        // key_id from the model.
+        $api_key->key_id = $request->input('key_id');
+
+        // Prepare the JobContainer for the update job
         $job->scope = 'Key';
         $job->api = 'Scheduler';
         $job->owner_id = $api_key->key_id;

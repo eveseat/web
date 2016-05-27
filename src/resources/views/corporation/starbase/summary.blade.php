@@ -29,6 +29,8 @@
                 <span class="label
                       @if($starbase->state == 4)
                         label-success
+                      @elseif($starbase->state == 0 || $starbase->state == 1)
+                        label-danger
                       @else
                         label-warning
                       @endif">

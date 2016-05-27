@@ -19,29 +19,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-return [
-
-    'version'                  => '1.0.26',
-    'max_access_mask'          => 1073741823,
-    'queue_status_update_time' => 10 * 1000, // milliseconds = seconds x 1,000
-
-    'languages'                => [
-        [
-            'short' => 'af',
-            'full'  => 'Afrikaans'
-        ],
-        [
-            'short' => 'en',
-            'full'  => 'English'
-        ],
-        [
-            'short' => 'de',
-            'full'  => 'German'
-        ],
-        [
-            'short' => 'fr',
-            'full'  => 'French'
-        ]
-    ]
-
-];
+Route::get('/eve', [
+    'as'   => 'auth.eve',
+    'uses' => 'SsoController@redirectToProvider'
+]);
+Route::get('/eve/callback', [
+    'as'   => 'auth.eve.callback',
+    'uses' => 'SsoController@handleProviderCallback'
+]);

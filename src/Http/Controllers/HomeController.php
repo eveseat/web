@@ -23,6 +23,7 @@ namespace Seat\Web\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Seat\Services\Repositories\Eve\EveRepository;
+use Seat\Services\Settings\Seat;
 
 /**
  * Class HomeController
@@ -39,6 +40,11 @@ class HomeController extends Controller
      */
     public function getHome()
     {
+
+        // Warn if the admin contact has not been set yet.
+        if (auth()->user()->hasSuperUser())
+            if (Seat::get('admin_contact') === 'seatadmin@localhost.local')
+                session()->flash('warning', trans('web::seat.admin_contact_warning'));
 
         $server_status = $this->getEveLastServerStatus();
 

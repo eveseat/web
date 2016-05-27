@@ -202,6 +202,20 @@ class ViewController extends Controller
     }
 
     /**
+     * @param $message_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getMailTimelineRead($message_id)
+    {
+
+        $message = $this->getCharacterMailTimeline($message_id);
+
+        return view('web::character.mail-timeline-read', compact('message'));
+
+    }
+
+    /**
      * @param $character_id
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

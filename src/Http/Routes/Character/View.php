@@ -83,6 +83,11 @@ Route::get('/view/mail/timeline', [
     'uses' => 'ViewController@getMailTimeline'
 ]);
 
+Route::get('/view/mail/timeline/read/{message_id}', [
+    'as'   => 'character.view.mail.timeline.read',
+    'uses' => 'ViewController@getMailTimelineRead'
+]);
+
 Route::get('/view/mail/{character_id}', [
     'as'         => 'character.view.mail',
     'middleware' => 'characterbouncer:mail',

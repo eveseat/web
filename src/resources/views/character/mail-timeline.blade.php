@@ -61,7 +61,10 @@
               {!! clean_ccp_html($message->body) !!}
             </div>
             <div class="timeline-footer">
-              <a class="btn btn-primary btn-xs">Read more</a>
+              <a href="{{ route('character.view.mail.timeline.read', ['message_id' => $message->messageID]) }}"
+                 class="btn btn-primary btn-xs">
+                Read more
+              </a>
             </div>
           </div>
         </li>
