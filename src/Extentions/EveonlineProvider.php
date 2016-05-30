@@ -135,7 +135,7 @@ class EveOnlineProvider extends AbstractProvider implements ProviderInterface
         if ($this->hasInvalidState())
             throw new InvalidStateException;
 
-        $tokens = $this->getAccessToken($this->getCode());
+        $tokens = $this->getAccessTokenResponse($this->getCode());
 
         $user = $this->mapUserToObject(
             array_merge(
