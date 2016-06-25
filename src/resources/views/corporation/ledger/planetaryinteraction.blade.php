@@ -55,7 +55,7 @@
                   {{ $pit->ownerName1 }}
                 </a>
               </td>
-              <td data-order="{{ number($pit->total) }}">{{ number($pit->total) }} ISK</td>
+              <td data-order="{{ number($pit->total) }}">{{ number($pit->total) }}</td>
 			      <?php $totalpi+=($pit->total); ?>
             </tr>
 
