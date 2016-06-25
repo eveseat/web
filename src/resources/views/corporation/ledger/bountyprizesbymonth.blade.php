@@ -45,6 +45,7 @@
           </thead>
           <tbody>
 
+			      <?php $totalbounty=0; ?>
             @foreach ($bountyprizedates as $bpbm)
               <tr>
                 <td data-order="{{ $bpbm->ownerName2 }}">
@@ -54,12 +55,17 @@
                   </a>
                 </td>
                 <td data-order="{{ number($bpbm->total) }}">{{ number($bpbm->total) }}</td>
+				      <?php $totalbounty+=($bpbm->total); ?>
               </tr>
             @endforeach
 
           </tbody>
         </table>
       </div>
+    </div>
+    
+    <div class="panel-footer">
+      <h3 class="panel-title">Total: {{ number($totalbounty) }}</h3>
     </div>
 
   </div>
