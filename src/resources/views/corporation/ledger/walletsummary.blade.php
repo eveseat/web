@@ -17,20 +17,24 @@
               <th>{{ trans_choice('web::seat.wallet_division_name', 2) }}</th>
               <th>{{ trans_choice('web::seat.balance', 2) }}</th>
             </tr>
-
+			
+			<?php $totalbalance=0; ?>
         	  @foreach ($divisions as $division)
 
           	  <tr>
                 <td>{{ $division->description }}</td>
                 <td>{{ number($division->balance) }}</td>
           	  </tr>
-
+			<?php $totalbalance+=($division->balance); ?>
             @endforeach
 
           </tbody>
         </table>
       </div>
 
+    </div>
+	<div class="panel-footer">
+      <h3 class="panel-title">Total: {{ number($totalbalance) }}</h3>
     </div>
   </div>
 
