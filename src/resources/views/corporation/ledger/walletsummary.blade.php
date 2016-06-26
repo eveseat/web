@@ -32,7 +32,7 @@
       </div>
     </div>
     <div class="panel-footer">
-     <h3 class="panel-title">Total: {{ number($divisions->sum('balance')) }}</h3>
+      <h3 class="panel-title">Total: {{ number($divisions->sum('balance')) }}</h3>
     </div>
   </div>
 
