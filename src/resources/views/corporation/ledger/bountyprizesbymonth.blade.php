@@ -61,7 +61,9 @@
         </table>
       </div>
     </div>
-
+    <div class="panel-footer">
+      <h3 class="panel-title">Total: {{ number($bountyprizedates->sum('total')) }}</h3>
+    </div>
   </div>
 
 @stop

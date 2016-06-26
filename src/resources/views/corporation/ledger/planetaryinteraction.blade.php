@@ -53,13 +53,16 @@
                   {{ $pit->ownerName1 }}
                 </a>
               </td>
-              <td data-order="{{ number($pit->total) }}">{{ number($pit->total) }} ISK</td>
+              <td data-order="{{ number($pit->total) }}">{{ number($pit->total) }}</td>
             </tr>
 
           @endforeach
 
         </tbody>
       </table>
+    </div>
+    <div class="panel-footer">
+      <h3 class="panel-title">Total: {{ number($pitotals->sum('total')) }}</h3>
     </div>
   </div>
 
