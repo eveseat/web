@@ -35,7 +35,6 @@
       <h3 class="panel-title">{{ trans_choice('web::seat.pi', 2) }} - {{ date("M Y", strtotime($year."-".$month."-01")) }}</h3>
     </div>
     <div class="panel-body">
-	
       <table class="table datatable table-condensed table-hover table-responsive">
         <thead>
           <tr>
@@ -45,7 +44,6 @@
         </thead>
         <tbody>
 
-		      <?php $totalpi=0; ?>
           @foreach ($pitotals as $pit)
 
             <tr>
@@ -56,7 +54,6 @@
                 </a>
               </td>
               <td data-order="{{ number($pit->total) }}">{{ number($pit->total) }}</td>
-			      <?php $totalpi+=($pit->total); ?>
             </tr>
 
           @endforeach
@@ -64,10 +61,9 @@
         </tbody>
       </table>
     </div>
-	<div class="panel-footer">
-      <h3 class="panel-title">Total: {{ number($totalpi) }}</h3>
+    <div class="panel-footer">
+      <h3 class="panel-title">Total: {{ number($pitotals->sum('total')) }}</h3>
     </div>
   </div>
-  
 
 @stop
