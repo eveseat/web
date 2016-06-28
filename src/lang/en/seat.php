@@ -280,7 +280,7 @@ return [
     'curr_user_becomes_owner'      => 'The current user (:user) will become the owner of the API keys.',
     'only_format_is_checked'       => 'Only API key format is checked here. No checking is done to ensure that ' .
         'minimum api masks are configured.',
-    'update_with_next_job'         => 'Key data will only populate once the next updater job comes by, or is manuall started.',
+    'update_with_next_job'         => 'Key data will only populate once the next updater job comes by, or is manually started.',
 
     // Schedule
     'new_schedule'                 => 'New Schedule',
