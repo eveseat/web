@@ -277,6 +277,63 @@
             <li>
 
               <!-- Button trigger modal -->
+              <a type="button" data-toggle="modal" data-target="#emailModal">
+                <i class="fa fa-envelope"></i>
+                {{ trans('web::seat.change_email') }}
+              </a>
+
+              <!-- Modal -->
+              <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      <h4 class="modal-title" id="emailModalLabel">{{ trans('web::seat.change_email') }}</h4>
+                    </div>
+                    <div class="modal-body">
+
+                      <form role="form" action="{{ route('profile.update.email') }}" method="post">
+                        {{ csrf_field() }}
+
+                        <div class="box-body">
+
+                          <div class="form-group">
+                            <label for="current_email">{{ trans('web::seat.current_email') }}</label>
+                            <input type="email" name="current_email" class="form-control" placeholder="Current Email"
+                                   value="{{ auth()->user()->email }}" disabled="disabled" />
+                          </div>
+
+                          <div class="form-group">
+                            <label for="new_email">{{ trans('web::seat.new_email') }}</label>
+                            <input type="email" name="new_email" class="form-control" placeholder="New Email" />
+                          </div>
+
+                          <div class="form-group">
+                            <label for="new_email_confirmation">{{ trans('web::seat.confirm_new_email') }}</label>
+                            <input type="email" name="new_email_confirmation" class="form-control"
+                                   id="email_confirmation" placeholder="New Email Confirmation" />
+                          </div>
+
+                        </div><!-- /.box-body -->
+
+                        <div class="box-footer">
+                          <button type="submit" class="btn btn-primary pull-right">
+                            {{ trans('web::seat.change_email') }}
+                          </button>
+                        </div>
+                      </form>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </li>
+            <li>
+
+              <!-- Button trigger modal -->
               <a type="button" data-toggle="modal" data-target="#historyModal">
                 <i class="fa fa-lock"></i>
                 {{ trans('web::seat.login_history') }}
