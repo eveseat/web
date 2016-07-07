@@ -1,15 +1,15 @@
   <div class="row">
     <div class="col-md-12">
 
-              <table class="table datatable compact table-condensed table-hover table-responsive dataTable no-footer" id="silo_table">
+              <table class="table datatable compact table-condensed table-hover table-responsive dataTable no-footer" id="DataTables_Table_1">
                 <thead>
                 <tr>
                     <!-- @todo - setup new words in language files -->
                   <th>{{ trans_choice('web::seat.type', 1) }}</th>
-                  <th tabindex="0" aria-controls="silo_table" rowspan="1" colspan="1" aria-label="Location: activate to sort column ascending">{{ trans_choice('web::seat.location', 1) }}</th>
-                  <th>Type</th>
-                  <th>Content</th>
-                  <th>
+                  <th class="sorting" tabindex="0" aria-controls="silo_table" rowspan="1" colspan="1" aria-label="Location: activate to sort column ascending">{{ trans_choice('web::seat.location', 1) }}</th>
+                  <th class="sorting">Type</th>
+                  <th class="sorting">Content</th>
+                  <th class="sorting">
                     {!! img('type', 4051, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                     Cargo Usage
                     <!-- @todo - setup new words in language files -->
@@ -52,13 +52,16 @@
                         {{ $starbase->starbaseName }}
                       </span>
                     </td>
-                    <td>
+
+                    @if($module['used_volume'] == 0 || $module['available_volume'] == 0)
+                    <?php $usedvolume = "0%"; ?>
+                    @else
+                    <?php  $usedvolume = number(100 * ($module['used_volume']) / ($module['available_volume']), 0)."%" ?>
+                    @endif
+
+                    <td data-order="{{ $usedvolume }}">
                       <b>
-                        @if($module['used_volume'] == 0 || $module['available_volume'] == 0)
-                          0%
-                        @else
-                          {{ number(100 * ($module['used_volume']) / ($module['available_volume']), 0) }}%
-                        @endif
+                        {{ $usedvolume }}
                       </b>
                       <i>
                         ({{ number($module['used_volume']) }} m&sup3; / {{ number($module['available_volume']) }} m&sup3;)
@@ -66,7 +69,7 @@
                         {{ trans_choice('web::seat.item', $module['total_items']) }}
                       </i>
                     </td>
-                    <td>
+                    <td data-order="{{ $usedvolume }}">
                       @include('web::macros.progressbar',
                         ['partial' => $module['used_volume'],'full' => $module['available_volume']])
                     </td>
@@ -139,3 +142,12 @@
 
     </div>
   </div>
+
+
+  <script>
+  // https://www.datatables.net/
+  $("#DataTables_Table_1").DataTable({
+      paging: false,
+      order: []
+  });
+  </script>
