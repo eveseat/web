@@ -35,7 +35,7 @@ class EmailUpdate extends Request
     {
 
         return [
-            'new_email'     => 'required|confirmed'
+            'new_email' => 'required|confirmed'
         ];
     }
 }
