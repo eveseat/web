@@ -26,8 +26,8 @@ use Seat\Services\Repositories\Character\CharacterRepository;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Services\Settings\Profile;
 use Seat\Services\Settings\UserSettings;
-use Seat\Web\Validation\PasswordUpdate;
 use Seat\Web\Validation\EmailUpdate;
+use Seat\Web\Validation\PasswordUpdate;
 use Seat\Web\Validation\ProfileSettings;
 
 /**
@@ -121,13 +121,19 @@ class ProfileController extends Controller
         return redirect()->back()
             ->with('success', 'Password updated!');
     }
-    
+
+    /**
+     * @param \Seat\Web\Validation\EmailUpdate $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function postUpdateEmail(EmailUpdate $request)
     {
+
         $user = auth()->user();
         $user->email = $request->new_email;
         $user->save();
-        
+
         return redirect()->back()
             ->with('success', 'Email updated!');
     }
