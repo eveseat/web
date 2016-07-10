@@ -7,7 +7,13 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::seat.api_all') }}</h3>
+      <h3 class="panel-title">{{ trans('web::seat.api_all') }}
+        <span class="pull-right">
+          <a href="{{ route('api.key.enable.all') }}" class="btn btn-xs btn-primary">
+            {{ trans('web::seat.reenable_all_disabled') }}
+          </a>
+        </span>
+      </h3>
     </div>
     <div class="panel-body">
 

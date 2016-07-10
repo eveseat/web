@@ -184,6 +184,28 @@ class KeyController extends Controller
     }
 
     /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function getEnableAll()
+    {
+
+        $keys = ApiKeyModel::where('enabled', '<>', 1);
+
+        if (!auth()->user()->has('apikey.list', false))
+            $keys = $keys
+                ->where('user_id', auth()->user()->id);
+
+        // Enable the keys and clear the last error
+        $keys->update([
+            'enabled'    => 1,
+            'last_error' => null,
+        ]);
+
+        return redirect()->back()
+            ->with('success', 'Keys re-enabled');
+    }
+
+    /**
      * @param $api_key
      *
      * @return \Illuminate\View\View
