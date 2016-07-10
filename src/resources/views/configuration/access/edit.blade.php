@@ -147,10 +147,14 @@
         @foreach($role->affiliations as $affiliation)
 
           <tr>
-            <td>{{ $affiliation->affiliation }}</td>
-            <td>{{ $affiliation->type }}</td>
             <td>
-              <a href="{{ route('configuration.access.roles.edit.remove.affiliation', ['role_id' => $role->id, 'user_id' => $affiliation->id]) }}" type="button" class="btn btn-danger btn-xs pull-right">
+              {!! img('auto', $affiliation->affiliation, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+              <span rel="id-to-name">{{ $affiliation->affiliation }}</span>
+            </td>
+            <td>{{ ucfirst($affiliation->type) }}</td>
+            <td>
+              <a href="{{ route('configuration.access.roles.edit.remove.affiliation', ['role_id' => $role->id, 'user_id' => $affiliation->id]) }}"
+                 type="button" class="btn btn-danger btn-xs pull-right">
                 {{ trans('web::seat.remove') }}
               </a>
             </td>
@@ -234,6 +238,8 @@
 @stop
 
 @section('javascript')
+
+  @include('web::includes.javascript.id-to-name')
 
   <script>
     $("#available_permissions," +
