@@ -84,7 +84,7 @@ class ViewController extends Controller
     public function getContracts($corporation_id)
     {
 
-        $contracts = collect($this->getCorporationContracts($corporation_id));
+        $contracts = $this->getCorporationContracts($corporation_id, 50);
 
         return view('web::corporation.contracts', compact('contracts'));
     }
