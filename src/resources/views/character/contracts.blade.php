@@ -60,6 +60,11 @@
       </table>
 
     </div>
+    @if($contracts->render())
+      <div class="panel-footer">
+        {!! $contracts->render() !!}
+      </div>
+    @endif
   </div>
 
 @stop

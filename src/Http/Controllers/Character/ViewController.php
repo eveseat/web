@@ -128,7 +128,7 @@ class ViewController extends Controller
     public function getContracts($character_id)
     {
 
-        $contracts = collect($this->getCharacterContracts($character_id));
+        $contracts = $this->getCharacterContracts($character_id, 50);
 
         return view('web::character.contracts', compact('contracts'));
 
@@ -155,7 +155,7 @@ class ViewController extends Controller
     public function getKillmails($character_id)
     {
 
-        $killmails = $this->getCharacterKillmails($character_id);
+        $killmails = $this->getCharacterKillmails($character_id, 200);
 
         return view('web::character.killmails', compact('killmails'));
 

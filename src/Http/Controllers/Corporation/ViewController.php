@@ -122,7 +122,7 @@ class ViewController extends Controller
     public function getKillmails($corporation_id)
     {
 
-        $killmails = $this->getCorporationKillmails($corporation_id);
+        $killmails = $this->getCorporationKillmails($corporation_id, 200);
 
         return view('web::corporation.killmails', compact('killmails'));
     }
