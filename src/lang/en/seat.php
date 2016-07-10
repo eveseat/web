@@ -385,6 +385,7 @@ return [
     'implants'                     => 'Implants',
     'no_implants'                  => 'No Implants',
     'employment_history'           => 'Employment History',
+    'corporation_titles'           => 'Corporation Titles',
     'item_type'                    => 'Item Type',
     'client_name'                  => 'Client Name',
     'client'                       => 'Client',

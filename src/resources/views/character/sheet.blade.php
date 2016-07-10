@@ -218,6 +218,21 @@
 
     </div>
 
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{ trans('web::seat.corporation_titles') }}</h3>
+        </div>
+        <div class="panel-body">
+          <ul class="list-unstyled">
+            @foreach($titles as $title)
+              <li>{!! clean_ccp_html($title->titleName) !!}</li>
+            @endforeach
+          </ul>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 @stop

@@ -312,11 +312,12 @@ class ViewController extends Controller
         $jump_clones = $this->getCharacterJumpClones($character_id);
         $skill_in_training = $this->getCharacterSkillInTraining($character_id);
         $skill_queue = $this->getCharacterSkilQueue($character_id);
+        $titles = $this->getCharacterCorporationTitles($character_id);
 
         return view('web::character.sheet',
             compact('account_info', 'character_sheet', 'employment',
                 'implants', 'jump_clones', 'skill_in_training',
-                'skill_queue'));
+                'skill_queue', 'titles'));
     }
 
     /**
