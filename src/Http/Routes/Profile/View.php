@@ -33,3 +33,8 @@ Route::post('/update/password', [
     'as'   => 'profile.update.password',
     'uses' => 'ProfileController@postUpdatePassword'
 ]);
+
+Route::post('/update/email', [
+    'as'   => 'profile.update.email',
+    'uses' => 'ProfileController@postUpdateEmail'
+]);

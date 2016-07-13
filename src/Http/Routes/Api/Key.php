@@ -51,6 +51,11 @@ Route::get('/detail/{key_id}', [
     'middleware' => 'keybouncer:detail'
 ]);
 
+Route::get('/enable/all', [
+    'as'   => 'api.key.enable.all',
+    'uses' => 'KeyController@getEnableAll',
+]);
+
 Route::get('/enable/{key_id}', [
     'as'         => 'api.key.enable',
     'uses'       => 'KeyController@getEnable',

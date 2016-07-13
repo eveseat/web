@@ -92,6 +92,8 @@ return [
     'min_version'                  => 'Minimum Version',
     'admin_contact_warning'        => 'An administrative contact for this install has not been set.' .
         ' No jobs will be queued because of this. Please configure it in the SeAT settings.',
+    'sso_email_warning'            => 'This profile is using an auto generated email addres due to it ' .
+        ' being an EVE SSO login. Please set a valid email address in your profile settings.',
 
     // Auth
     'failed'                       => 'These credentials do not match our records.',
@@ -214,6 +216,7 @@ return [
     'reveal'                       => 'Reveal',
     'add_success'                  => 'Api Key Successfully Added. Update Job :jobid Dispatched',
     're_enable'                    => 'Re-enable Key',
+    'reenable_all_disabled'        => 'Re-enable all disabled keys',
 
     // People
     'people_groups'                => 'People Groups',
@@ -280,7 +283,7 @@ return [
     'curr_user_becomes_owner'      => 'The current user (:user) will become the owner of the API keys.',
     'only_format_is_checked'       => 'Only API key format is checked here. No checking is done to ensure that ' .
         'minimum api masks are configured.',
-    'update_with_next_job'         => 'Key data will only populate once the next updater job comes by, or is manuall started.',
+    'update_with_next_job'         => 'Key data will only populate once the next updater job comes by, or is manually started.',
 
     // Schedule
     'new_schedule'                 => 'New Schedule',
@@ -451,6 +454,7 @@ return [
     'user_account'                 => 'User Account',
     'account_settings'             => 'Account Settings',
     'change_password'              => 'Change Password',
+    'change_email'                 => 'Change Email',
     'superuser'                    => 'Superuser',
     'user_interface'               => 'User Interface',
     'main_character'               => 'Main Character',
@@ -470,6 +474,9 @@ return [
     'current_password'             => 'Current Password',
     'new_password'                 => 'New Password',
     'confirm_new_password'         => 'Confirm New Password',
+    'current_email'                => 'Current Email',
+    'new_email'                    => 'New Email',
+    'confirm_new_email'            => 'Confirm New Email',
     'mfa_setup'                    => 'Multifactor Authentication Setup',
     'scan_qr'                      => 'Scan QR Code',
     'scan_qr_help1'                => 'Please scan the below QR code with your authenticator application.',

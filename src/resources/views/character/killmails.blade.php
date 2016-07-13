@@ -74,6 +74,13 @@
       </table>
 
     </div>
+
+    @if($killmails->render())
+      <div class="panel-footer">
+        {!! $killmails->render() !!}
+      </div>
+    @endif
+
   </div>
 
 @stop

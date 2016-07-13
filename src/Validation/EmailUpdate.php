@@ -19,29 +19,23 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-return [
+namespace Seat\Web\Validation;
 
-    'version'                  => '1.0.29',
-    'max_access_mask'          => 1073741823,
-    'queue_status_update_time' => 10 * 1000, // milliseconds = seconds x 1,000
+use App\Http\Requests\Request;
 
-    'languages'                => [
-        [
-            'short' => 'af',
-            'full'  => 'Afrikaans'
-        ],
-        [
-            'short' => 'en',
-            'full'  => 'English'
-        ],
-        [
-            'short' => 'de',
-            'full'  => 'German'
-        ],
-        [
-            'short' => 'fr',
-            'full'  => 'French'
-        ]
-    ]
+class EmailUpdate extends Request
+{
 
-];
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+
+        return [
+            'new_email' => 'required|confirmed'
+        ];
+    }
+}

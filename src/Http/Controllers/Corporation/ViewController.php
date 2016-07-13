@@ -84,7 +84,7 @@ class ViewController extends Controller
     public function getContracts($corporation_id)
     {
 
-        $contracts = collect($this->getCorporationContracts($corporation_id));
+        $contracts = $this->getCorporationContracts($corporation_id, 50);
 
         return view('web::corporation.contracts', compact('contracts'));
     }
@@ -122,7 +122,7 @@ class ViewController extends Controller
     public function getKillmails($corporation_id)
     {
 
-        $killmails = $this->getCorporationKillmails($corporation_id);
+        $killmails = $this->getCorporationKillmails($corporation_id, 200);
 
         return view('web::corporation.killmails', compact('killmails'));
     }
@@ -197,45 +197,7 @@ class ViewController extends Controller
     {
 
         $starbase = $this->getCorporationStarbases($corporation_id, $request->starbase_id);
-
-        // When calculating *actual* silo capacity, we need
-        // to keep in mind that certain towers have bonusses
-        // to silo cargo capacity, like amarr & gallente
-        // towers do now. To calculate this, we will get the
-        // siloCapacityBonus value from the starbase and add the
-        // % capacity to actual modules that benefit from
-        // the bonusses.
-        $cargo_types_with_bonus = [14343, 17982]; // Silo, Coupling Array
-        $assetlist_locations = $this->getCorporationAssetByLocation($corporation_id);
         $module_contents = $this->getCorporationAssetContents($corporation_id);
-
-        // Check if we know of *any* assets at this moon.
-        if ($assetlist_locations->has($starbase->moonID)) {
-
-            $starbase->modules = $assetlist_locations->get($starbase->moonID)
-                ->map(function ($asset) use (
-                    $starbase,
-                    $cargo_types_with_bonus,
-                    $module_contents
-                ) {
-
-                    // Return a collection with module related info.
-                    return [
-                        'detail'           => $asset,
-                        'used_volume'      => $module_contents->where(
-                            'parentAssetItemID', $asset->itemID)->sum(function ($_) {
-
-                            return $_->quantity * $_->volume;
-                        }),
-                        'available_volume' => in_array($asset->typeID, $cargo_types_with_bonus) ?
-                            $asset->capacity * (1 + $starbase->siloCapacityBonus / 100) :
-                            $asset->capacity,
-                        'total_items'      => $module_contents->where(
-                            'parentAssetItemID', $asset->itemID)->sum('quantity')
-                    ];
-                });
-
-        }
 
         return view('web::corporation.starbase.ajax.modules-tab',
             compact('starbase', 'module_contents'));

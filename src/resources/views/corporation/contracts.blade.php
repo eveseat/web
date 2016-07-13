@@ -13,15 +13,15 @@
 
       <table class="table datatable compact table-condensed table-hover table-responsive">
         <thead>
-          <tr>
-            <th>{{ trans('web::seat.date') }}</th>
-            <th>{{ trans('web::seat.issuer') }}</th>
-            <th>{{ trans_choice('web::seat.type', 1) }}</th>
-            <th>{{ trans('web::seat.status') }}</th>
-            <th>{{ trans_choice('web::seat.title', 1) }}</th>
-            <th>{{ trans('web::seat.price') }}</th>
-            <th>{{ trans('web::seat.reward') }}</th>
-          </tr>
+        <tr>
+          <th>{{ trans('web::seat.date') }}</th>
+          <th>{{ trans('web::seat.issuer') }}</th>
+          <th>{{ trans_choice('web::seat.type', 1) }}</th>
+          <th>{{ trans('web::seat.status') }}</th>
+          <th>{{ trans_choice('web::seat.title', 1) }}</th>
+          <th>{{ trans('web::seat.price') }}</th>
+          <th>{{ trans('web::seat.reward') }}</th>
+        </tr>
         </thead>
         <tbody>
 
@@ -60,6 +60,13 @@
       </table>
 
     </div>
+
+    @if($contracts->render())
+      <div class="panel-footer">
+        {!! $contracts->render() !!}
+      </div>
+    @endif
+
   </div>
 
 @stop
