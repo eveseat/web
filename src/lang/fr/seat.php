@@ -370,6 +370,7 @@ return [
     'implants'                     => 'Augmentations',
     'no_implants'                  => 'Pas d\'augmentations',
     'employment_history'           => 'Historique du travail',
+    'corporation_titles'           => 'Titres de corporation',
     'item_type'                    => 'Item Type',
     'client_name'                  => 'Client Name',
     'client'                       => 'Client',
