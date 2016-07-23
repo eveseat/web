@@ -120,6 +120,10 @@
                   {{ trans('web::seat.no') }}
                 </option>
               </select>
+              <span class="help-block">
+                {{ trans('web::seat.tracking_help') }}
+                <a href="http://seat-docs.readthedocs.io/en/latest/admin_guides/tracking/">Usage Tracking</a>
+              </span>
             </div>
           </div>
 

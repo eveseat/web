@@ -332,6 +332,8 @@ return [
     'google_analytics'             => 'Google Analytics',
     'allow_tracking'               => 'Allow Tracking',
     'tracking_id'                  => 'Unique Tracking ID',
+    'tracking_help'                => 'Before disabling the usage tracking, please refer to the below' .
+        ' document first.',
 
     // Character
     'joined_curr_corp'             => 'Joined Current Corporation',
