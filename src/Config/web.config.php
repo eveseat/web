@@ -21,7 +21,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 return [
 
-    'version'                  => '1.0.29',
+    'version'                  => '1.0.30',
     'max_access_mask'          => 4294967295,
     'queue_status_update_time' => 10 * 1000, // milliseconds = seconds x 1,000
 
