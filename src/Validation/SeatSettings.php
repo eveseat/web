@@ -42,6 +42,7 @@ class SeatSettings extends Request
         $allowed_registration = implode(',', Seat::$options['registration']);
         $allowed_force_min_mask = implode(',', Seat::$options['force_min_mask']);
         $allowed_sso = implode(',', Seat::$options['allow_sso']);
+        $allowed_tracking = implode(',', Seat::$options['allow_tracking']);
 
         return [
             'registration'    => 'required|in:' . $allowed_registration,
@@ -49,6 +50,7 @@ class SeatSettings extends Request
             'force_min_mask'  => 'required|in:' . $allowed_force_min_mask,
             'min_access_mask' => 'required|numeric',
             'allow_sso'       => 'required|in:' . $allowed_sso,
+            'allow_tracking'  => 'required|in:' . $allowed_tracking,
         ];
     }
 }

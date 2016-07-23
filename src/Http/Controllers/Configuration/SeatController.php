@@ -63,6 +63,7 @@ class SeatController extends Controller
         Seat::set('force_min_mask', $request->force_min_mask);
         Seat::set('min_access_mask', $request->min_access_mask);
         Seat::set('allow_sso', $request->allow_sso);
+        Seat::set('allow_tracking', $request->allow_tracking);
 
         return redirect()->back()
             ->with('success', 'SeAT settings updated!');

@@ -329,6 +329,9 @@ return [
     'installed'                    => 'Installed',
     'current'                      => 'Current',
     'url'                          => 'Url',
+    'google_analytics'             => 'Google Analytics',
+    'allow_tracking'               => 'Allow Tracking',
+    'tracking_id'                  => 'Unique Tracking ID',
 
     // Character
     'joined_curr_corp'             => 'Joined Current Corporation',

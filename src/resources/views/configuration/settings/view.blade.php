@@ -104,6 +104,34 @@
             </div>
           </div>
 
+          <legend>{{ trans('web::seat.google_analytics') }}</legend>
+
+          <!-- Select Basic -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="allow_tracking">{{ trans('web::seat.allow_tracking') }}</label>
+            <div class="col-md-6">
+              <select id="allow_tracking" name="allow_tracking" class="form-control">
+                <option value="yes"
+                        @if(setting('allow_tracking', true) == "yes") selected @endif>
+                  {{ trans('web::seat.yes') }}
+                </option>
+                <option value="no"
+                        @if(setting('allow_tracking', true) == "no") selected @endif>
+                  {{ trans('web::seat.no') }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="tracking_id">{{ trans('web::seat.tracking_id') }}</label>
+            <div class="col-md-6">
+              <input id="tracking_id" name="tracking_id" type="text"
+                     class="form-control input-md" value="{{ setting('analytics_id', true) }}" disabled>
+            </div>
+          </div>
+
         </div>
         <!-- /.box-body -->
 
