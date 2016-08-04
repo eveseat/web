@@ -43,6 +43,12 @@
             </span>
           @endif
         </dd>
+        <dt>{{ trans('web::seat.paid_until') }}</dt>
+        <dd>
+          <span data-toggle="tooltip" title="{{ $key->status->paidUntil }}">
+            {{ human_diff($key->status->paidUntil) }}
+          </span>
+        </dd>
         <dt>{{ trans('web::seat.v_code') }}</dt>
         <dd>
 
