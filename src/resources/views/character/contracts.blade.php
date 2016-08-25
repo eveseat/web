@@ -19,6 +19,7 @@
             <th>{{ trans_choice('web::seat.type', 1) }}</th>
             <th>{{ trans('web::seat.status') }}</th>
             <th>{{ trans_choice('web::seat.title', 1) }}</th>
+            <th>{{ trans('web::seat.collateral') }}</th>
             <th>{{ trans('web::seat.price') }}</th>
             <th>{{ trans('web::seat.reward') }}</th>
           </tr>
@@ -50,6 +51,11 @@
             </td>
             <td>{{ $contract->status }}</td>
             <td>{{ $contract->title }}</td>
+            @if ($contract->type == 'Courier')
+            <td data-order="{{ $contract->collateral }}">{{ number($contract->collateral) }}</td>
+            @else
+            <td></td>
+            @endif
             <td data-order="{{ $contract->price }}">{{ number($contract->price) }}</td>
             <td data-order="{{ $contract->reward }}">{{ number($contract->reward) }}</td>
           </tr>

@@ -60,6 +60,7 @@ return [
     'title'                        => 'Title|Titles',
     'price'                        => 'Price',
     'reward'                       => 'Reward',
+    'collateral'                   => 'Collateral',
     'location'                     => 'Location',
     'filter'                       => 'Filter|Filters',
     'clear'                        => 'Clear',
