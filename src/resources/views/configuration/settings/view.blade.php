@@ -97,10 +97,19 @@
 
           <!-- Text input-->
           <div class="form-group">
-            <label class="col-md-4 control-label" for="min_access_mask">{{ trans('web::seat.min_access_mask') }}</label>
+            <label class="col-md-4 control-label" for="min_character_access_mask">{{ trans('web::seat.min_character_access_mask') }}</label>
             <div class="col-md-6">
-              <input id="min_access_mask" name="min_access_mask" type="text"
-                     class="form-control input-md" value="{{ setting('min_access_mask', true) }}">
+              <input id="min_character_access_mask" name="min_character_access_mask" type="text"
+                     class="form-control input-md" value="{{ setting('min_character_access_mask', true) }}">
+            </div>
+          </div>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="min_corporation_access_mask">{{ trans('web::seat.min_corporation_access_mask') }}</label>
+            <div class="col-md-6">
+              <input id="min_corporation_access_mask" name="min_corporation_access_mask" type="text"
+                     class="form-control input-md" value="{{ setting('min_corporation_access_mask', true) }}">
             </div>
           </div>
 

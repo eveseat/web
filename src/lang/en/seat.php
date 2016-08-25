@@ -317,7 +317,8 @@ return [
     // Settings
     'admin_email'                  => 'Administrator Email',
     'admin_email_help'             => 'Please enter the email address of the administrator of this SeAT installation.',
-    'min_access_mask'              => 'Minimum Required Access Mask',
+    'min_character_access_mask'              => 'Minimum Required Character Access Mask',
+    'min_corporation_access_mask'              => 'Minimum Required Corporation Access Mask',
     'force_min_mask'               => 'Force Min. Access Mask',
     'registration'                 => 'Registration',
     'single_signon'                => 'Eve Online Single Signon',

@@ -61,7 +61,8 @@ class SeatController extends Controller
         Seat::set('registration', $request->registration);
         Seat::set('admin_contact', $request->admin_contact);
         Seat::set('force_min_mask', $request->force_min_mask);
-        Seat::set('min_access_mask', $request->min_access_mask);
+        Seat::set('min_character_access_mask', $request->min_character_access_mask);
+        Seat::set('min_corporation_access_mask', $request->min_corporation_access_mask);
         Seat::set('allow_sso', $request->allow_sso);
         Seat::set('allow_tracking', $request->allow_tracking);
 

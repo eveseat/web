@@ -57,7 +57,7 @@
       @if(setting('force_min_mask', true) == 'yes')
 
         <li>
-          <a href="https://community.eveonline.com/support/api-key/CreatePredefined?accessMask={{ setting('min_access_mask', true) }}"
+          <a href="https://community.eveonline.com/support/api-key/CreatePredefined?accessMask={{ setting('min_character_access_mask', true) }}"
              target="_blank">
             {{ trans('web::seat.api_full_min_mask') }}
           </a>
