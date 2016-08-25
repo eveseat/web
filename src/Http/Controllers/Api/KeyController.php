@@ -213,7 +213,7 @@ class KeyController extends Controller
     public function getDetail($api_key)
     {
 
-        $key = ApiKeyModel::with('info', 'characters')
+        $key = ApiKeyModel::with('info', 'characters', 'status')
             ->where('key_id', $api_key)
             ->firstOrFail();
 
