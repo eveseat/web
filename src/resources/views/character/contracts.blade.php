@@ -52,9 +52,9 @@
             <td>{{ $contract->status }}</td>
             <td>{{ $contract->title }}</td>
             @if ($contract->type == 'Courier')
-            <td data-order="{{ $contract->collateral }}">{{ number($contract->collateral) }}</td>
+              <td data-order="{{ $contract->collateral }}">{{ number($contract->collateral) }}</td>
             @else
-            <td></td>
+              <td></td>
             @endif
             <td data-order="{{ $contract->price }}">{{ number($contract->price) }}</td>
             <td data-order="{{ $contract->reward }}">{{ number($contract->reward) }}</td>
