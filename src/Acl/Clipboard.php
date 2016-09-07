@@ -20,6 +20,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 */
 
 namespace Seat\Web\Acl;
+use Seat\Eveapi\Models\Account\ApiKeyInfoCharacters;
 
 /**
  * Class Clipboard
@@ -171,7 +172,7 @@ trait Clipboard
         $map = $this->getAffiliationMap();
 
         // Owning a key grants you '*' permissions. In this
-        // context, '*' acts as a wildard for *all* permissions
+        // context, '*' acts as a wildcard for *all* permissions
         // for this character / corporation ID
         foreach ($map['char'] as $char => $permissions)
             if ($char == $this->getCharacterId() && (
@@ -267,6 +268,11 @@ trait Clipboard
     {
 
         $this->character_id = $character_id;
+
+        // Set corporation id field using character information
+        $characterInfo = ApiKeyInfoCharacters::where('characterID', '=', $character_id)
+            ->first(['corporationID']);
+        $this->setCorporationId($characterInfo->corporationID);
     }
 
     /**
