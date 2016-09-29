@@ -43,15 +43,15 @@ return [
         'killmails',
         'list',
         'mail',
-        'market_orders',
+        'market',
         'notifications',
         'pi',
-        'research_agents',
+        'research',
         'skills',
         'standings',
         'sheet',
-        'wallet_journal',
-        'wallet_transactions',
+        'journal',
+        'transactions',
     ],
 
     'corporation' => [
@@ -69,7 +69,7 @@ return [
         'pocos',
         'starbases',
         'summary',
-        'wallet_journal',
+        'journal',
         'transactions',
     ],
 
