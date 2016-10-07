@@ -234,4 +234,24 @@
     </div>
   </div>
 
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">{{ trans('web::seat.tp_versions') }}</h3>
+    </div>
+    <div class="panel-body">
+
+      <dl>
+
+        <dt>Eve Online SDE</dt>
+        <dd>
+          <ul>
+            <li>{{ trans('web::seat.installed') }}: <b>{{ Seat\Services\Settings\Seat::get('installed_sde') }}</b></li>
+            <li>{{ trans('web::seat.current') }}: <img src="https://img.shields.io/badge/version-{{ $sde_version }}-blue.svg"></li>
+          </ul>
+        </dd>
+
+      </dl>
+
+  </div>
+
 @stop

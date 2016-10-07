@@ -47,7 +47,11 @@ class SeatController extends Controller
         else
             $warn_sso = false;
 
-        return view('web::configuration.settings.view', compact('warn_sso'));
+        // Fetch latest SDE approved version
+        $json_sde = $this->getApprovedSDE();
+        $sde_version = str_replace('-', '.', $json_sde['version']);
+
+        return view('web::configuration.settings.view', compact('warn_sso', 'sde_version'));
     }
 
     /**
@@ -68,6 +72,28 @@ class SeatController extends Controller
 
         return redirect()->back()
             ->with('success', 'SeAT settings updated!');
+    }
+
+    /**
+     * Help to fetch latest approved SDE version file from resources repository
+     *
+     * @return string Json
+     */
+    private function getApprovedSDE()
+    {
+        $sde_uri = "https://raw.githubusercontent.com/eveseat/resources/master/sde.json";
+
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $sde_uri);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+
+        $response = curl_exec($curl);
+
+        if ($response != "") {
+            return json_decode($response, true);
+        }
+
+        return "";
     }
 
 }
