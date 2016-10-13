@@ -77,6 +77,7 @@
           <tr>
             <th>{{ trans_choice('web::seat.name', 1) }}</th>
             <th>{{ trans_choice('web::seat.corporation', 1) }}</th>
+            <th>{{ trans('web::seat.alliance') }}</th>
             <th>{{ trans('web::seat.last_location') }}</th>
           </tr>
         </thead>
@@ -94,6 +95,12 @@
             <td>
               {!! img('corporation', $character->corporationID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
               {{ $character->corporationName }}
+            </td>
+            <td>
+              @if($character->allianceID != null)
+              {!! img('alliance', $character->allianceID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+              {{ $character->alliance }}
+              @endif
             </td>
             <td>{{ $character->lastKnownLocation }}</td>
           </tr>
