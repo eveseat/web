@@ -98,19 +98,19 @@ Route::group(['prefix' => 'view/ledger'], function () {
 
     Route::get('summary/{corporation_id}', [
         'as'         => 'corporation.view.ledger.summary',
-        'middleware' => 'corporationbouncer:journal',
+        'middleware' => 'corporationbouncer:ledger',
         'uses'       => 'LedgerController@getWalletSummary'
     ]);
 
     Route::get('bountyprizes/{corporation_id}/{year?}/{month?}', [
         'as'         => 'corporation.view.ledger.bountyprizesbymonth',
-        'middleware' => 'corporationbouncer:journal',
+        'middleware' => 'corporationbouncer:ledger',
         'uses'       => 'LedgerController@getBountyPrizesByMonth'
     ]);
 
     Route::get('planetaryinteraction/{corporation_id}/{year?}/{month?}', [
         'as'         => 'corporation.view.ledger.planetaryinteraction',
-        'middleware' => 'corporationbouncer:journal',
+        'middleware' => 'corporationbouncer:ledger',
         'uses'       => 'LedgerController@getPlanetaryInteractionByMonth'
     ]);
 
