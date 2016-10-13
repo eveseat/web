@@ -72,11 +72,12 @@ class ViewController extends Controller
     public function getCharacters(Request $request)
     {
 
+        $alliances = $this->getCharacterAlliances();
         $characters = $this->getAllCharactersWithAffiliationsAndFilters($request);
         $corporations = $this->getCharacterCorporations();
 
         return view('web::character.list',
-            compact('characters', 'corporations'));
+            compact('alliances', 'characters', 'corporations'));
 
     }
 

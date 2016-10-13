@@ -21,7 +21,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 return [
 
-    'characters'               => ['corporationName'],
+    'characters'               => ['alliance','corporationName'],
     'character_journal'        => ['refTypeName'],
     'character_transactions'   => ['typeName', 'clientName'],
 
