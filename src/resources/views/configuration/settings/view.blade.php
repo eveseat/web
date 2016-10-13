@@ -245,8 +245,8 @@
         <dt>Eve Online SDE</dt>
         <dd>
           <ul>
-            <li>{{ trans('web::seat.installed') }}: <b>{{ Seat\Services\Settings\Seat::get('installed_sde') }}</b></li>
-            <li>{{ trans('web::seat.current') }}: <img src="https://img.shields.io/badge/version-{{ $sde_version }}-blue.svg"></li>
+            <li>{{ trans('web::seat.installed') }}: <b>{{ setting('installed_sde', true) }}</b></li>
+            <li id="live-sde-version">{{ trans('web::seat.current') }}: <img src="https://img.shields.io/badge/version-loading...-blue.svg"></li>
           </ul>
         </dd>
 
@@ -254,4 +254,18 @@
 
   </div>
 
+@stop
+
+@section('javascript')
+  <script type="text/javascript">
+    $(document).ready(function(){
+      jQuery.get("{{ route('check.sde') }}", function(data){
+        var live_sde = "error";
+        if (data != null) {
+          live_sde = data.version;
+        }
+        $('#live-sde-version img').attr('src', 'https://img.shields.io/badge/version-' + live_sde + '-blue.svg');
+      });
+    });
+  </script>
 @stop

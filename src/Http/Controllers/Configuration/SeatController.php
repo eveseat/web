@@ -22,6 +22,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Http\Controllers\Configuration;
 
 use App\Http\Controllers\Controller;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use Illuminate\Support\Facades\Cache;
 use Seat\Services\Settings\Seat;
 use Seat\Web\Validation\SeatSettings;
 
@@ -47,11 +50,7 @@ class SeatController extends Controller
         else
             $warn_sso = false;
 
-        // Fetch latest SDE approved version
-        $json_sde = $this->getApprovedSDE();
-        $sde_version = str_replace('-', '.', $json_sde['version']);
-
-        return view('web::configuration.settings.view', compact('warn_sso', 'sde_version'));
+        return view('web::configuration.settings.view', compact('warn_sso'));
     }
 
     /**
@@ -79,21 +78,26 @@ class SeatController extends Controller
      *
      * @return string Json
      */
-    private function getApprovedSDE()
+    public function getApprovedSDE()
     {
-        $sde_uri = "https://raw.githubusercontent.com/eveseat/resources/master/sde.json";
+        $sde_version = Cache::remember('live_sde_version', 720, function(){
+            try {
+                $sde_uri = "https://raw.githubusercontent.com/eveseat/resources/master/sde.json";
 
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $sde_uri);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+                $client = new Client();
+                $response = $client->request('GET', $sde_uri);
+                if ($response->getStatusCode() == 200) {
+                    $json_array = json_decode($response->getBody());
+                    return str_replace('-', '.', $json_array->version);
+                }
+            } catch (RequestException $e) {
+                return "error";
+            }
 
-        $response = curl_exec($curl);
+            return 'loading...';
+        });
 
-        if ($response != "") {
-            return json_decode($response, true);
-        }
-
-        return "";
+        return response()->json(['version' => $sde_version]);
     }
 
 }
