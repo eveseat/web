@@ -97,7 +97,8 @@
 
           <!-- Text input-->
           <div class="form-group">
-            <label class="col-md-4 control-label" for="min_character_access_mask">{{ trans('web::seat.min_character_access_mask') }}</label>
+            <label class="col-md-4 control-label"
+                   for="min_character_access_mask">{{ trans('web::seat.min_character_access_mask') }}</label>
             <div class="col-md-6">
               <input id="min_character_access_mask" name="min_character_access_mask" type="text"
                      class="form-control input-md" value="{{ setting('min_character_access_mask', true) }}">
@@ -106,7 +107,8 @@
 
           <!-- Text input-->
           <div class="form-group">
-            <label class="col-md-4 control-label" for="min_corporation_access_mask">{{ trans('web::seat.min_corporation_access_mask') }}</label>
+            <label class="col-md-4 control-label"
+                   for="min_corporation_access_mask">{{ trans('web::seat.min_corporation_access_mask') }}</label>
             <div class="col-md-6">
               <input id="min_corporation_access_mask" name="min_corporation_access_mask" type="text"
                      class="form-control input-md" value="{{ setting('min_corporation_access_mask', true) }}">
@@ -180,7 +182,8 @@
           <ul>
             <li>{{ trans('web::seat.installed') }}: <b>v{{ config('api.config.version') }}</b></li>
             <li>{{ trans('web::seat.current') }}: <img src="https://poser.pugx.org/eveseat/api/v/stable"></li>
-            <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/api" target="_blank">https://github.com/eveseat/api</a></li>
+            <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/api" target="_blank">https://github.com/eveseat/api</a>
+            </li>
           </ul>
         </dd>
 
@@ -189,7 +192,8 @@
           <ul>
             <li>{{ trans('web::seat.installed') }}: <b>v{{ config('console.config.version') }}</b></li>
             <li>{{ trans('web::seat.current') }}: <img src="https://poser.pugx.org/eveseat/console/v/stable"></li>
-            <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/console" target="_blank">https://github.com/eveseat/console</a></li>
+            <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/console" target="_blank">https://github.com/eveseat/console</a>
+            </li>
           </ul>
         </dd>
 
@@ -198,7 +202,8 @@
           <ul>
             <li>{{ trans('web::seat.installed') }}: <b>v{{ config('eveapi.config.version') }}</b></li>
             <li>{{ trans('web::seat.current') }}: <img src="https://poser.pugx.org/eveseat/eveapi/v/stable"></li>
-            <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/eveapi" target="_blank">https://github.com/eveseat/eveapi</a></li>
+            <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/eveapi" target="_blank">https://github.com/eveseat/eveapi</a>
+            </li>
           </ul>
         </dd>
 
@@ -207,7 +212,8 @@
           <ul>
             <li>{{ trans('web::seat.installed') }}: <b>v{{ config('notifications.config.version') }}</b></li>
             <li>{{ trans('web::seat.current') }}: <img src="https://poser.pugx.org/eveseat/notifications/v/stable"></li>
-            <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/notifications" target="_blank">https://github.com/eveseat/notifications</a></li>
+            <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/notifications" target="_blank">https://github.com/eveseat/notifications</a>
+            </li>
           </ul>
         </dd>
 
@@ -216,7 +222,8 @@
           <ul>
             <li>{{ trans('web::seat.installed') }}: <b>v{{ config('web.config.version') }}</b></li>
             <li>{{ trans('web::seat.current') }}: <img src="https://poser.pugx.org/eveseat/web/v/stable"></li>
-            <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/web" target="_blank">https://github.com/eveseat/web</a></li>
+            <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/web" target="_blank">https://github.com/eveseat/web</a>
+            </li>
           </ul>
         </dd>
 
@@ -225,7 +232,8 @@
           <ul>
             <li>{{ trans('web::seat.installed') }}: <b>v{{ config('services.config.version') }}</b></li>
             <li>{{ trans('web::seat.current') }}: <img src="https://poser.pugx.org/eveseat/services/v/stable"></li>
-            <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/services" target="_blank">https://github.com/eveseat/services</a></li>
+            <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/services" target="_blank">https://github.com/eveseat/services</a>
+            </li>
           </ul>
         </dd>
 
@@ -246,11 +254,14 @@
         <dd>
           <ul>
             <li>{{ trans('web::seat.installed') }}: <b>{{ setting('installed_sde', true) }}</b></li>
-            <li id="live-sde-version">{{ trans('web::seat.current') }}: <img src="https://img.shields.io/badge/version-loading...-blue.svg"></li>
+            <li id="live-sde-version">{{ trans('web::seat.current') }}: <img
+                      src="https://img.shields.io/badge/version-loading...-blue.svg"></li>
           </ul>
         </dd>
 
       </dl>
+
+    </div>
 
   </div>
 
@@ -258,8 +269,8 @@
 
 @section('javascript')
   <script type="text/javascript">
-    $(document).ready(function(){
-      jQuery.get("{{ route('check.sde') }}", function(data){
+    $(document).ready(function () {
+      jQuery.get("{{ route('check.sde') }}", function (data) {
         var live_sde = "error";
         if (data != null) {
           live_sde = data.version;
