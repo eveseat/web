@@ -329,6 +329,7 @@ return [
     'allow_sso'                    => 'Allow Single Signon',
     'allow_registration'           => 'Allow Registration',
     'module_versions'              => 'SeAT Module Versions',
+    'tp_versions'                  => 'Third Party Versions',
     'installed'                    => 'Installed',
     'current'                      => 'Current',
     'url'                          => 'Url',
@@ -535,6 +536,7 @@ return [
 
     // Footer
     'web_version'                  => 'Web Version',
+    'sde_version'                  => 'SDE Version',
     'render_in'                    => 'Rendered In',
     'copyright'                    => 'Copyright',
 ];

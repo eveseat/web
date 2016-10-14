@@ -22,6 +22,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Http\Controllers\Configuration;
 
 use App\Http\Controllers\Controller;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use Illuminate\Support\Facades\Cache;
 use Seat\Services\Settings\Seat;
 use Seat\Web\Validation\SeatSettings;
 
@@ -68,6 +71,33 @@ class SeatController extends Controller
 
         return redirect()->back()
             ->with('success', 'SeAT settings updated!');
+    }
+
+    /**
+     * Help to fetch latest approved SDE version file from resources repository
+     *
+     * @return string Json
+     */
+    public function getApprovedSDE()
+    {
+        $sde_version = Cache::remember('live_sde_version', 720, function(){
+            try {
+                $sde_uri = "https://raw.githubusercontent.com/eveseat/resources/master/sde.json";
+
+                $client = new Client();
+                $response = $client->request('GET', $sde_uri);
+                if ($response->getStatusCode() == 200) {
+                    $json_array = json_decode($response->getBody());
+                    return str_replace('-', '.', $json_array->version);
+                }
+            } catch (RequestException $e) {
+                return "error";
+            }
+
+            return 'loading...';
+        });
+
+        return response()->json(['version' => $sde_version]);
     }
 
 }

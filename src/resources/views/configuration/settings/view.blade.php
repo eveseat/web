@@ -234,4 +234,38 @@
     </div>
   </div>
 
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">{{ trans('web::seat.tp_versions') }}</h3>
+    </div>
+    <div class="panel-body">
+
+      <dl>
+
+        <dt>Eve Online SDE</dt>
+        <dd>
+          <ul>
+            <li>{{ trans('web::seat.installed') }}: <b>{{ setting('installed_sde', true) }}</b></li>
+            <li id="live-sde-version">{{ trans('web::seat.current') }}: <img src="https://img.shields.io/badge/version-loading...-blue.svg"></li>
+          </ul>
+        </dd>
+
+      </dl>
+
+  </div>
+
+@stop
+
+@section('javascript')
+  <script type="text/javascript">
+    $(document).ready(function(){
+      jQuery.get("{{ route('check.sde') }}", function(data){
+        var live_sde = "error";
+        if (data != null) {
+          live_sde = data.version;
+        }
+        $('#live-sde-version img').attr('src', 'https://img.shields.io/badge/version-' + live_sde + '-blue.svg');
+      });
+    });
+  </script>
 @stop
