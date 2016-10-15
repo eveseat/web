@@ -21,6 +21,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web;
 
+use Illuminate\Auth\Events\Attempting;
+use Illuminate\Auth\Events\Login as LoginEvent;
+use Illuminate\Auth\Events\Logout as LogoutEvent;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Socialite\SocialiteManager;
@@ -259,10 +262,12 @@ class WebServiceProvider extends ServiceProvider
     public function add_events()
     {
 
-        $this->app->events->listen('auth.login', Login::class);
-        $this->app->events->listen('auth.logout', Logout::class);
-        $this->app->events->listen('auth.attempt', Attempt::class);
+        // Internal Authentication Events
+        $this->app->events->listen(LoginEvent::class, Login::class);
+        $this->app->events->listen(LogoutEvent::class, Logout::class);
+        $this->app->events->listen(Attempting::class, Attempt::class);
 
+        // Custom Events
         $this->app->events->listen('security.log', SecLog::class);
     }
 

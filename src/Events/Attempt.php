@@ -21,6 +21,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Events;
 
+use Illuminate\Auth\Events\Attempting;
+
 /**
  * Class Attempt
  * @package Seat\Web\Events
@@ -29,9 +31,9 @@ class Attempt
 {
 
     /**
-     * @param $data
+     * @param \Illuminate\Auth\Events\Attempting $data
      */
-    public static function handle($data)
+    public static function handle(Attempting $data)
     {
 
         // TODO: Matchup the attmempt to write to the sec log

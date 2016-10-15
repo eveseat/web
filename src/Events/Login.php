@@ -22,7 +22,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Events;
 
 use DateTime;
-use Illuminate\Support\Facades\Event;
+use Illuminate\Auth\Events\Login as LoginEvent;
 use Illuminate\Support\Facades\Request;
 use Seat\Web\Models\UserLoginHistory;
 
@@ -37,23 +37,23 @@ class Login
      * Update the last login values and write a new
      * login history item
      *
-     * @param $user
+     * @param \Illuminate\Auth\Events\Login $event
      */
-    public static function handle($user)
+    public static function handle(LoginEvent $event)
     {
 
-        $user->last_login_source = Request::getClientIp();
-        $user->last_login = new DateTime();
-        $user->save();
+        $event->user->last_login_source = Request::getClientIp();
+        $event->user->last_login = new DateTime();
+        $event->user->save();
 
-        $user->login_history()->save(new UserLoginHistory([
+        $event->user->login_history()->save(new UserLoginHistory([
             'source'     => Request::getClientIp(),
             'user_agent' => Request::header('User-Agent'),
             'action'     => 'login'
         ]));
 
         $message = 'User logged in from ' . Request::getClientIp();
-        Event::fire('security.log', [$message, 'authentication']);
+        event('security.log', [$message, 'authentication']);
 
         return;
 
