@@ -20,7 +20,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 */
 
 // Namespace all of the routes for this package.
-Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
+Route::group([
+    'namespace'  => 'Seat\Web\Http\Controllers',
+    'middleware' => 'web'   // Web middleware for state etc since L5.3
+], function () {
 
     // Authentication & Registration Routes.
     Route::group([

@@ -21,8 +21,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Middleware;
 
-use App;
 use Closure;
+use Illuminate\Support\Facades\App;
 
 class Locale
 {

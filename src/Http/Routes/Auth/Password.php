@@ -19,22 +19,21 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-// Password reset link request routes
 Route::get('email', [
     'as'   => 'password.email',
-    'uses' => 'PasswordController@getEmail'
+    'uses' => 'ForgotPasswordController@showLinkRequestForm'
 ]);
 Route::post('email', [
         'as'   => 'password.email.post',
-        'uses' => 'PasswordController@postEmail']
+        'uses' => 'ForgotPasswordController@sendResetLinkEmail']
 );
 
 // Password reset routes
 Route::get('reset/{token}', [
     'as'   => 'password.reset',
-    'uses' => 'PasswordController@getReset'
+    'uses' => 'ResetPasswordController@showResetForm'
 ]);
 Route::post('reset', [
     'as'   => 'password.reset.post',
-    'uses' => 'PasswordController@postReset'
+    'uses' => 'ResetPasswordController@reset'
 ]);
