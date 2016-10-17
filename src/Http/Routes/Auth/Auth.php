@@ -27,7 +27,7 @@ Route::post('login', [
     'as'   => 'auth.login.post',
     'uses' => 'LoginController@login'
 ]);
-Route::get('logout', [
+Route::post('logout', [
     'as'   => 'auth.logout',
     'uses' => 'LoginController@logout'
 ]);
