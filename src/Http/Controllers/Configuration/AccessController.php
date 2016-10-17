@@ -103,18 +103,18 @@ class AccessController extends Controller
 
         $role_permissions = $role->permissions()
             ->get()
-            ->lists('title')
+            ->pluck('title')
             ->toArray();
 
         $role_affiliations = $role->affiliations();
 
         $role_users = $role->users()
             ->get()
-            ->lists('name')
+            ->pluck('name')
             ->toArray();
 
         $all_users = $this->getAllUsers()
-            ->lists('name')
+            ->pluck('name')
             ->toArray();
 
         $all_characters = $this->getAllCharacters();

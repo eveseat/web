@@ -233,7 +233,7 @@ trait Clipboard
 
             $role_permissions = $role
                 ->permissions
-                ->lists('title')
+                ->pluck('title')
                 ->toArray();
 
             // Add the permissions to the affiliations

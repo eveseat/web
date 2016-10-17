@@ -60,7 +60,7 @@ class KeyBouncer
 
         // If we dont have the required permission, check
         // if the current user owns the key.
-        if (in_array($request->key_id, $user->keys->lists('key_id')->all()))
+        if (in_array($request->key_id, $user->keys->pluck('key_id')->all()))
             return $next($request);
 
         $message = 'Request to ' . $request->path() . ' was ' .

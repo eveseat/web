@@ -46,7 +46,7 @@ class ProfileSettings extends Request
 
                 $query->where('user_id', $user_id);
             })
-            ->lists('characterID')
+            ->pluck('characterID')
             ->toArray());
 
         $allowed_skins = implode(',', Profile::$options['skins']);

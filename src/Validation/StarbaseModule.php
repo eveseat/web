@@ -37,7 +37,7 @@ class StarbaseModule extends Request
 
         $possible_corp_starbases = Starbase::where(
             'corporationID', $this->route('corporation_id'))
-            ->lists('itemID')
+            ->pluck('itemID')
             ->implode(',');
 
         return [
