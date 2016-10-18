@@ -45,9 +45,13 @@
         </dd>
         <dt>{{ trans('web::seat.paid_until') }}</dt>
         <dd>
+          @if ($key->status != null)
           <span data-toggle="tooltip" title="{{ $key->status->paidUntil }}">
             {{ human_diff($key->status->paidUntil) }}
           </span>
+          @else
+          <span>{{ trans('web::unknown') }}</span>
+          @endif
         </dd>
         <dt>{{ trans('web::seat.v_code') }}</dt>
         <dd>
