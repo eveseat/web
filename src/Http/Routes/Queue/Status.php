@@ -25,6 +25,18 @@ Route::get('/status', [
     'uses'       => 'QueueController@getStatus'
 ]);
 
+Route::get('/json/jobs/queued', [
+    'as'         => 'json.jobs.queued',
+    'middleware' => 'bouncer:queue_manager',
+    'uses'       => 'QueueController@getQueuedJobs'
+]);
+
+Route::get('/json/jobs/working', [
+    'as'         => 'json.jobs.working',
+    'middleware' => 'bouncer:queue_manager',
+    'uses'       => 'QueueController@getWorkingJobs'
+]);
+
 Route::get('/short-status', [
     'as'   => 'queue.status.short',
     'uses' => 'QueueController@getShortStatus'

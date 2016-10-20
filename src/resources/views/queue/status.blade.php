@@ -153,11 +153,9 @@
           </h3>
         </div>
         <div class="panel-body">
-
           @if(count($working) > 0)
-
-            <table class="table table-condensed table-hover">
-              <tbody>
+          <table class="table table-condensed table-hover col-md-12" id="working-jobs">
+            <thead>
               <tr>
                 <th>{{ trans('web::seat.created') }}</th>
                 <th>{{ trans('web::seat.updated') }}</th>
@@ -167,40 +165,12 @@
                 <th>{{ trans('web::seat.output') }}</th>
                 <th>{{ trans('web::seat.status') }}</th>
               </tr>
-
-              @foreach($working as $job)
-
-                <tr>
-                  <td>
-                    <span data-toggle="tooltip" title="" data-original-title="{{ $job->created_at }}">
-                      {{ human_diff($job->created_at) }}
-                    </span>
-                  </td>
-                  <td>
-                    <span data-toggle="tooltip" title="" data-original-title="{{ $job->updated_at }}">
-                      {{ human_diff($job->updated_at) }}
-                    </span>
-                  </td>
-                  <td>{{ $job->owner_id }}</td>
-                  <td>{{ $job->api }}</td>
-                  <td>{{ $job->scope }}</td>
-                  <td>{{ $job->output }}</td>
-                  <td>{{ $job->status }}</td>
-                </tr>
-
-              @endforeach
-
-            @else
-
-              <span class="text-muted">
-                {{ trans('web::seat.no_working') }}
-              </span>
-
-            @endif
-
-            </tbody>
+            </thead>
+            <tbody></tbody>
           </table>
-
+          @else
+          <span class="text-muted">{{ trans('web::seat.no_working') }}</span>
+          @endif
         </div>
       </div>
 
@@ -212,11 +182,9 @@
           </h3>
         </div>
         <div class="panel-body">
-
           @if(count($queued) > 0)
-
-            <table class="table table-condensed table-hover">
-              <tbody>
+          <table class="table table-condensed table-hover col-md-12" id="queued-jobs">
+            <thead>
               <tr>
                 <th>{{ trans('web::seat.created') }}</th>
                 <th>{{ trans('web::seat.owner_id') }}</th>
@@ -224,34 +192,12 @@
                 <th>{{ trans('web::seat.scope') }}</th>
                 <th>{{ trans('web::seat.status') }}</th>
               </tr>
-
-              @foreach($queued as $job)
-
-                <tr>
-                  <td>
-                    <span data-toggle="tooltip" title="" data-original-title="{{ $job->created_at }}">
-                      {{ human_diff($job->created_at) }}
-                    </span>
-                  </td>
-                  <td>{{ $job->owner_id }}</td>
-                  <td>{{ $job->api }}</td>
-                  <td>{{ $job->scope }}</td>
-                  <td>{{ $job->status }}</td>
-                </tr>
-
-              @endforeach
-
-            @else
-
-              <span class="text-muted">
-                {{ trans('web::seat.no_queue') }}
-              </span>
-
-            @endif
-
-            </tbody>
+            </thead>
+            <tbody></tbody>
           </table>
-
+          @else
+          <span class="text-muted">{{ trans('web::seat.no_queue') }}</span>
+          @endif
         </div>
       </div>
 
@@ -259,4 +205,84 @@
 
   </div>
 
+@stop
+
+@section('javascript')
+  <script type="text/javascript" src="{{ asset('web/js/moment-with-locales.min.js') }}"></script>
+  <script type="text/javascript">
+    jQuery(document).ready(function(){
+      /*
+       * Designing working jobs table using datatable
+       * - ajax call
+       * - search filter
+       * - column sorting
+       * - date tooltip
+       * - paginate
+       */
+      var workingJobs = jQuery('#working-jobs').DataTable({
+        'ajax': {
+          'url':'{{ route('json.jobs.working') }}',
+          'dataSrc':''
+        },
+        "columns": [
+          {
+            data:'created_at',
+            render: human_readable
+          },
+          {
+            data:'updated_at',
+            render: human_readable
+          },
+          {data:'owner_id'},
+          {data:'api'},
+          {data:'scope'},
+          {data:'output'},
+          {data:'status'}
+        ]
+      });
+
+      /*
+       * Designing queued jobs table using datatable
+       * - ajax call
+       * - search filter
+       * - column sorting
+       * - date tooltip
+       * - paginate
+       */
+      var queuedJobs = jQuery('#queued-jobs').DataTable({
+        'ajax': {
+          'url':'{{ route('json.jobs.queued') }}',
+          'dataSrc':''
+        },
+        "columns": [
+          {
+            data: 'created_at',
+            render: human_readable
+          },
+          {data:'owner_id'},
+          {data:'api'},
+          {data:'scope'},
+          {data:'status'}
+        ]
+      });
+
+      // reload jobs content table every 15 seconds
+      setInterval(function(){
+        workingJobs.ajax.reload();
+        queuedJobs.ajax.reload();
+      }, {{ config('web.config.queue_status_update_time') }});
+    });
+
+    /*
+     * This function is used by datatable in order to mimic Laravel Carbon human_readable helper
+     */
+    function human_readable(data, type, row){
+      if (type == 'display') {
+        var date = moment(data, "YYYY-MM-DD hh:mm:ss").fromNow();
+        return '<span data-toggle="tooltip" data-placement="top" title="' + data + '">' + date + "</span>";
+      }
+
+      return data;
+    }
+  </script>
 @stop
