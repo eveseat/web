@@ -41,8 +41,10 @@
             <td>
               {{ $character->location }}
               @if($character->shipType != 'Unknown Type')
-                <i class="fa fa-cab pull-right" data-toggle="tooltip"
-                   title="" data-original-title="{{ $character->shipType }}"></i>
+                <i class="pull-right" data-toggle="tooltip"
+                   title="" data-original-title="{{ $character->shipType }}">
+                  {!! img('type', $character->shipTypeID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                </i>
               @endif
             </td>
             <td data-order="{{ $character->logonDateTime }}">
