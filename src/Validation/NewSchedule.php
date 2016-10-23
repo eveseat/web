@@ -21,15 +21,26 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Validation;
 
-use App\Http\Requests\Request;
 use Artisan;
+use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * Class NewSchedule
  * @package Seat\Web\Validation
  */
-class NewSchedule extends Request
+class NewSchedule extends FormRequest
 {
+
+    /**
+     * Authorize the request by default.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+
+        return true;
+    }
 
     /**
      * The error messages.
@@ -67,7 +78,7 @@ class NewSchedule extends Request
     public function rules()
     {
 
-        $available_commands = implode(",", array_keys(Artisan::all()));
+        $available_commands = implode(',', array_keys(Artisan::all()));
 
         return [
 
