@@ -44,7 +44,7 @@ class ViewController extends Controller
     public function getAssets($character_id)
     {
 
-        $assets = collect($this->getCharacterAssets($character_id));
+        $assets = $this->getCharacterAssets($character_id);
 
         // TODO: Asset List Contents
 
@@ -59,7 +59,7 @@ class ViewController extends Controller
     public function getBookmarks($character_id)
     {
 
-        $bookmarks = collect($this->getCharacterBookmarks($character_id));
+        $bookmarks = $this->getCharacterBookmarks($character_id);
 
         return view('web::character.bookmarks', compact('bookmarks'));
     }
@@ -115,8 +115,8 @@ class ViewController extends Controller
     public function getContacts($character_id)
     {
 
-        $contacts = collect($this->getCharacterContacts($character_id));
-        $labels = collect($this->getCharacterContactLabels($character_id));
+        $contacts = $this->getCharacterContacts($character_id);
+        $labels = $this->getCharacterContactLabels($character_id);
 
         return view('web::character.contacts', compact('contacts', 'labels'));
     }
@@ -143,7 +143,7 @@ class ViewController extends Controller
     public function getIndustry($character_id)
     {
 
-        $jobs = collect($this->getCharacterIndustry($character_id));
+        $jobs = $this->getCharacterIndustry($character_id);
 
         return view('web::character.industry', compact('jobs'));
     }
@@ -224,7 +224,7 @@ class ViewController extends Controller
     public function getMarket($character_id)
     {
 
-        $orders = collect($this->getCharacterMarketOrders($character_id));
+        $orders = $this->getCharacterMarketOrders($character_id);
         $states = $this->getEveMarketOrderStates();
 
         return view('web::character.market', compact('orders', 'states'));

@@ -61,11 +61,11 @@ class LedgerController extends Controller
         !is_null($year) ? $year : $year = date("Y");
         !is_null($month) ? $year : $month = date("m");
 
-        $bountyprizes = collect($this->getCorporationLedgerBountyPrizeDates(
-            $corporation_id));
+        $bountyprizes = $this->getCorporationLedgerBountyPrizeDates(
+            $corporation_id);
 
-        $bountyprizedates = collect($this->getCorporationLedgerBountyPrizeByMonth(
-            $corporation_id, $year, $month));
+        $bountyprizedates = $this->getCorporationLedgerBountyPrizeByMonth(
+            $corporation_id, $year, $month);
 
         return view('web::corporation.ledger.bountyprizesbymonth',
             compact('bountyprizes', 'bountyprizedates',
@@ -85,10 +85,10 @@ class LedgerController extends Controller
         !is_null($year) ? $year : $year = date("Y");
         !is_null($month) ? $year : $month = date("m");
 
-        $pidates = collect($this->getCorporationLedgerPIDates($corporation_id));
+        $pidates = $this->getCorporationLedgerPIDates($corporation_id);
 
-        $pitotals = collect($this->getCorporationLedgerPITotalsByMonth(
-            $corporation_id, $year, $month));
+        $pitotals = $this->getCorporationLedgerPITotalsByMonth(
+            $corporation_id, $year, $month);
 
         return view('web::corporation.ledger.planetaryinteraction',
             compact('pidates', 'pitotals', 'piimport', 'piexport',

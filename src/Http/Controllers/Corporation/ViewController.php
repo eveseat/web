@@ -44,7 +44,7 @@ class ViewController extends Controller
     public function getAssets($corporation_id)
     {
 
-        $assets = collect($this->getCorporationAssets($corporation_id));
+        $assets = $this->getCorporationAssets($corporation_id);
 
         return view('web::corporation.assets', compact('assets'));
     }
@@ -57,7 +57,7 @@ class ViewController extends Controller
     public function getBookmarks($corporation_id)
     {
 
-        $bookmarks = collect($this->getCorporationBookmarks($corporation_id));
+        $bookmarks = $this->getCorporationBookmarks($corporation_id);
 
         return view('web::corporation.bookmarks', compact('bookmarks'));
     }
