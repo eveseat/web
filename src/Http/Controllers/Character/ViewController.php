@@ -23,7 +23,26 @@ namespace Seat\Web\Http\Controllers\Character;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Seat\Services\Repositories\Character\CharacterRepository;
+use Seat\Services\Repositories\Character\Assets;
+use Seat\Services\Repositories\Character\Bookmarks;
+use Seat\Services\Repositories\Character\Calendar;
+use Seat\Services\Repositories\Character\Character;
+use Seat\Services\Repositories\Character\ChatChannels;
+use Seat\Services\Repositories\Character\Contacts;
+use Seat\Services\Repositories\Character\Contracts;
+use Seat\Services\Repositories\Character\Implants;
+use Seat\Services\Repositories\Character\Industry;
+use Seat\Services\Repositories\Character\Info;
+use Seat\Services\Repositories\Character\JumpClone;
+use Seat\Services\Repositories\Character\Killmails;
+use Seat\Services\Repositories\Character\Mail;
+use Seat\Services\Repositories\Character\Market;
+use Seat\Services\Repositories\Character\Notifications;
+use Seat\Services\Repositories\Character\Pi;
+use Seat\Services\Repositories\Character\Research;
+use Seat\Services\Repositories\Character\Skills;
+use Seat\Services\Repositories\Character\Standings;
+use Seat\Services\Repositories\Character\Wallet;
 use Seat\Services\Repositories\Eve\EveRepository;
 use Seat\Web\Validation\Permission;
 
@@ -34,7 +53,30 @@ use Seat\Web\Validation\Permission;
 class ViewController extends Controller
 {
 
-    use CharacterRepository, EveRepository;
+    use Character, EveRepository;
+
+    use Assets;
+    use Bookmarks;
+    use Calendar;
+    use ChatChannels;
+    use Contacts;
+    use Contracts;
+    use Industry;
+    use Info;
+    use Implants;
+    use JumpClone;
+    use Killmails;
+    use Mail;
+    use Market;
+    use Notifications;
+    use Pi;
+    use Research;
+    use Standings;
+    use Skills;
+    use Wallet {
+
+        Wallet::where_filter insteadof Character;
+    }
 
     /**
      * @param $character_id

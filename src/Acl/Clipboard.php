@@ -88,6 +88,7 @@ trait Clipboard
 
             if ($this->hasAffiliationAndPermission($permission))
                 return true;
+
         }
 
         return false;

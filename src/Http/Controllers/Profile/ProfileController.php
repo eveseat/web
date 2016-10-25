@@ -22,7 +22,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
-use Seat\Services\Repositories\Character\CharacterRepository;
+use Seat\Services\Repositories\Character\Character;
+use Seat\Services\Repositories\Character\Info;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Services\Settings\Profile;
 use Seat\Services\Settings\UserSettings;
@@ -37,7 +38,9 @@ use Seat\Web\Validation\ProfileSettings;
 class ProfileController extends Controller
 {
 
-    use UserRespository, CharacterRepository;
+    use UserRespository;
+
+    use Info;
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
