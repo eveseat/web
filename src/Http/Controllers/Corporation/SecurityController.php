@@ -22,7 +22,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Http\Controllers\Corporation;
 
 use App\Http\Controllers\Controller;
-use Seat\Services\Repositories\Corporation\CorporationRepository;
+use Seat\Services\Repositories\Corporation\Corporation;
+use Seat\Services\Repositories\Corporation\Security;
 
 /**
  * Class ViewController
@@ -31,7 +32,9 @@ use Seat\Services\Repositories\Corporation\CorporationRepository;
 class SecurityController extends Controller
 {
 
-    use CorporationRepository;
+    use Corporation;
+
+    use Security;
 
     /**
      * @param $corporation_id

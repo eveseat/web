@@ -23,7 +23,19 @@ namespace Seat\Web\Http\Controllers\Corporation;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Seat\Services\Repositories\Corporation\CorporationRepository;
+use Seat\Services\Repositories\Corporation\Assets;
+use Seat\Services\Repositories\Corporation\Bookmarks;
+use Seat\Services\Repositories\Corporation\Contacts;
+use Seat\Services\Repositories\Corporation\Contracts;
+use Seat\Services\Repositories\Corporation\Corporation;
+use Seat\Services\Repositories\Corporation\Divisions;
+use Seat\Services\Repositories\Corporation\Industry;
+use Seat\Services\Repositories\Corporation\Killmails;
+use Seat\Services\Repositories\Corporation\Market;
+use Seat\Services\Repositories\Corporation\Members;
+use Seat\Services\Repositories\Corporation\Standings;
+use Seat\Services\Repositories\Corporation\Starbases;
+use Seat\Services\Repositories\Corporation\Wallet;
 use Seat\Services\Repositories\Eve\EveRepository;
 use Seat\Web\Validation\StarbaseModule;
 
@@ -34,7 +46,20 @@ use Seat\Web\Validation\StarbaseModule;
 class ViewController extends Controller
 {
 
-    use CorporationRepository, EveRepository;
+    use Corporation, EveRepository;
+
+    use Assets;
+    use Bookmarks;
+    use Contacts;
+    use Contracts;
+    use Divisions;
+    use Industry;
+    use Killmails;
+    use Market;
+    use Members;
+    use Standings;
+    use Starbases;
+    use Wallet;
 
     /**
      * @param $corporation_id

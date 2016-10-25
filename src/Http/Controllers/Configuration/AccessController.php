@@ -24,7 +24,7 @@ namespace Seat\Web\Http\Controllers\Configuration;
 use App\Http\Controllers\Controller;
 use Seat\Services\Repositories\Character\Character;
 use Seat\Services\Repositories\Configuration\UserRespository;
-use Seat\Services\Repositories\Corporation\CorporationRepository;
+use Seat\Services\Repositories\Corporation\Corporation;
 use Seat\Web\Acl\Pillow;
 use Seat\Web\Validation\Permission;
 use Seat\Web\Validation\Role;
@@ -40,13 +40,13 @@ class AccessController extends Controller
 {
 
     use Pillow, UserRespository, Character,
-        CorporationRepository {
+        Corporation {
 
         // Resolve the where_filter method conflict that comes from the
         // Seat\Services\Helpers\Filterable trait that they both use.
         // Technically, this actually does not mean anything when
         // looked at from the perspective of the AccessController.
-        Character::where_filter insteadof CorporationRepository;
+        Character::where_filter insteadof Corporation;
     }
 
     /**

@@ -23,12 +23,12 @@ namespace Seat\Web\Http\Composers;
 
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use Seat\Services\Repositories\Corporation\CorporationRepository;
+use Seat\Services\Repositories\Corporation\Corporation;
 
 class CorporationSummary
 {
 
-    use CorporationRepository;
+    use Corporation;
 
     /**
      * @var \Illuminate\Http\Request
