@@ -34,7 +34,7 @@
           </div>
 
           <div class="form-group">
-            <label for="password_confirm">{{ trans_choice('web::seat.password_confirm', 1) }}</label>
+            <label for="password_confirm">{{ trans_choice('web::seat.password_again', 1) }}</label>
             <input type="password" name="password_confirmation" class="form-control" id="password_confirmation" placeholder="Password">
           </div>
 
