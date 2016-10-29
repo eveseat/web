@@ -24,7 +24,7 @@ namespace Seat\Web\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Pheal\Pheal;
-use Seat\Eveapi\Helpers\JobContainer;
+use Seat\Eveapi\Helpers\JobPayloadContainer;
 use Seat\Eveapi\Jobs\CheckAndQueueKey;
 use Seat\Eveapi\Models\Eve\ApiKey as ApiKeyModel;
 use Seat\Eveapi\Models\JobTracking;
@@ -88,12 +88,12 @@ class KeyController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\ApiKey       $request
-     * @param \Seat\Eveapi\Helpers\JobContainer $job
+     * @param \Seat\Web\Validation\ApiKey              $request
+     * @param \Seat\Eveapi\Helpers\JobPayloadContainer $job
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function addKey(ApiKey $request, JobContainer $job)
+    public function addKey(ApiKey $request, JobPayloadContainer $job)
     {
 
         // Get or create the API Key
@@ -117,7 +117,7 @@ class KeyController extends Controller
         // key_id from the model.
         $api_key->key_id = $request->input('key_id');
 
-        // Prepare the JobContainer for the update job
+        // Prepare the JobPayloadContainer for the update job
         $job->scope = 'Key';
         $job->api = 'Scheduler';
         $job->owner_id = $api_key->key_id;
@@ -232,12 +232,12 @@ class KeyController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Helpers\JobContainer $job
+     * @param \Seat\Eveapi\Helpers\JobPayloadContainer $job
      * @param                                   $api_key
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function queueUpdateJob(JobContainer $job, $api_key)
+    public function queueUpdateJob(JobPayloadContainer $job, $api_key)
     {
 
         $key = ApiKeyModel::findOrFail($api_key);
