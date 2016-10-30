@@ -533,6 +533,8 @@ return [
     'eve_api_status'               => 'Eve Api Status',
     'eve_api_error_threshold'      => 'EVE API Error Threshold',
     'eve_api_connection_threshold' => 'EVE API Connection Error Threshold',
+    'supervisor_offline'           => 'Offline',
+    'supervisor_online'            => 'Online',
 
     // Footer
     'web_version'                  => 'Web Version',

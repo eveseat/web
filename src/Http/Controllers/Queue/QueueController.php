@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Artisan;
 use Seat\Services\Data\Queue;
 use Seat\Services\Repositories\Queue\JobRepository;
 use Seat\Web\Validation\Permission;
+use Supervisor\Supervisor;
 
 /**
  * Class QueueController
@@ -43,6 +44,83 @@ class QueueController extends Controller
     {
 
         return $this->count_summary();
+    }
+
+    /**
+     * Return Supervisor status in a json response for queue api
+     *
+     * status:true Supervisor is running
+     * status:false Supervisor is not running or dead
+     *
+     * @return mixed
+     */
+    public function getSupervisorStatus()
+    {
+        // supervisor information
+        $supervisor = new Supervisor("seat",
+            config('web.config.supervisor.rpc.address'),
+            config('web.config.supervisor.rpc.username'),
+            config('web.config.supervisor.rpc.password'),
+            config('web.config.supervisor.rpc.port')
+        );
+
+        return response()->json(
+            array('status' => $supervisor->checkConnection())
+        );
+    }
+
+    /**
+     * Return Supervisor information if supervisor is running
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getSupervisorInformation()
+    {
+        // supervisor information
+        $supervisor = new Supervisor("seat",
+            config('web.config.supervisor.rpc.address'),
+            config('web.config.supervisor.rpc.username'),
+            config('web.config.supervisor.rpc.password'),
+            config('web.config.supervisor.rpc.port')
+        );
+
+        return view('web::queue.ajax.supervisor',
+            compact('supervisor'));
+    }
+
+    /**
+     * Return Supervisor running processes related to SeAT in a json response for queue api
+     *
+     * @return mixed
+     */
+    public function getSupervisorProcesses()
+    {
+        // supervisor information
+        $supervisor = new Supervisor("seat",
+            config('web.config.supervisor.rpc.address'),
+            config('web.config.supervisor.rpc.username'),
+            config('web.config.supervisor.rpc.password'),
+            config('web.config.supervisor.rpc.port')
+        );
+
+        $processes = array();
+
+        if ($supervisor->checkConnection()) {
+            foreach ($supervisor->getProcesses() as $process) {
+                if ($process->getGroup() == config('web.config.supervisor.group')) {
+                    $processInfo = $process->getProcessInfo();
+
+                    $processes[] = array(
+                        'name' => $processInfo['name'],
+                        'pid' => $processInfo['pid'],
+                        'start' => date('Y-m-d H:i:s', $processInfo['start']),
+                        'log' => $processInfo['stdout_logfile']
+                    );
+                }
+            }
+        }
+
+        return response()->json($processes);
     }
 
     /**
