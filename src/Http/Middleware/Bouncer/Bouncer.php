@@ -22,8 +22,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Http\Middleware\Bouncer;
 
 use Closure;
-use Illuminate\Support\Facades\Event;
-use Seat\Web\Acl\Clipboard;
+use Illuminate\Http\Request;
 
 /**
  * Class Bouncer
@@ -32,8 +31,6 @@ use Seat\Web\Acl\Clipboard;
 class Bouncer
 {
 
-    use Clipboard;
-
     /**
      * Handle an incoming request.
      *
@@ -41,14 +38,13 @@ class Bouncer
      * exists, and does not take any affiliation rules
      * into account
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure                 $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
+     * @param string                   $permission
      *
-     * @param null                      $permission
-     *
-     * @return mixed
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function handle($request, Closure $next, $permission = null)
+    public function handle(Request $request, Closure $next, string $permission = null)
     {
 
         // Get the currently logged in user
@@ -62,9 +58,11 @@ class Bouncer
         $message = 'Request to ' . $request->path() . ' was ' .
             'denied by the bouncer. The permission required is ' .
             $permission . '.';
-        Event::fire('security.log', [$message, 'authorization']);
 
-        return view('web::auth.unauthorized');
+        event('security.log', [$message, 'authorization']);
+
+        // Redirect away from the original request
+        return redirect()->route('auth.unauthorized');
 
     }
 }
