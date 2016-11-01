@@ -44,3 +44,8 @@ Route::group(['middleware' => 'registration.status'], function () {
         'uses' => 'RegisterController@register'
     ]);
 });
+
+Route::get('unauthorized', [
+    'as'   => 'auth.unauthorized',
+    'uses' => 'AuthorizationController@getUnauthorized'
+]);
