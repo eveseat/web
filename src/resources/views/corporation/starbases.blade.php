@@ -10,7 +10,7 @@
   <div class="row">
     <div class="col-md-12">
 
-      @include('web::corporation.starbase.summary')
+      @include('web::corporation.starbase.tabs')
 
     </div>
   </div> <!-- ./row -->
@@ -100,6 +100,39 @@
         });
       }
     });
+
+    $("a#silos-tab").click(function () {
+
+
+      // Prevent loading the request *again* if its already been
+      // successfully loaded!
+      if ($(".tab-pane#silos").attr('a-ajax-loaded') === "false") {
+
+        // 'Loading' animation
+        $(".tab-pane#silos")
+                .html('<i class="fa fa-cog fa fa-spin"></i> {{ trans('web::seat.loading_modules') }}</p>');
+
+        $.ajax({
+          type: 'GET',
+          url: "{{ route('corporation.view.starbases.silos',
+          ['corporation_id' => $request->corporation_id]) }}",
+          data: {
+
+          },
+          success: function (result) {
+            $(".tab-pane#silos")
+                    .html(result)
+                    .attr('a-ajax-loaded', 'true');
+          },
+          error: function (xhr, textStatus, errorThrown) {
+            console.log(xhr);
+            console.log(textStatus);
+            console.log(errorThrown);
+          }
+        });
+      }
+    });
+
   </script>
 
   @include('web::includes.javascript.id-to-name')

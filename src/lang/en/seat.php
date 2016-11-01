@@ -540,4 +540,3 @@ return [
     'render_in'                    => 'Rendered In',
     'copyright'                    => 'Copyright',
 ];
-
