@@ -25,7 +25,7 @@ use App\Http\Controllers\Controller;
 use Seat\Services\Repositories\Character\Character;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Services\Repositories\Corporation\Corporation;
-use Seat\Web\Acl\Pillow;
+use Seat\Web\Acl\AccessManager;
 use Seat\Web\Validation\Permission;
 use Seat\Web\Validation\Role;
 use Seat\Web\Validation\RoleAffilliation;
@@ -39,7 +39,7 @@ use Seat\Web\Validation\RoleUser;
 class AccessController extends Controller
 {
 
-    use Pillow, UserRespository, Character,
+    use AccessManager, UserRespository, Character,
         Corporation {
 
         // Resolve the where_filter method conflict that comes from the

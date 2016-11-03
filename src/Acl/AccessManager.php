@@ -21,27 +21,28 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Acl;
 
+use Illuminate\Support\Collection;
 use Seat\Web\Models\Acl\Affiliation as AffiliationModel;
 use Seat\Web\Models\Acl\Permission as PermissionModel;
 use Seat\Web\Models\Acl\Role as RoleModel;
 use Seat\Web\Models\User as UserModel;
 
 /**
- * Class Pillow
+ * Class AccessManager
  * @package Seat\Web\Acl
  */
-trait Pillow
+trait AccessManager
 {
 
     /**
      * Return everything related to the Role
      * with eager loading
      *
-     * @param null $role_id
+     * @param int $role_id
      *
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     * @return \Illuminate\Support\Collection
      */
-    public function getCompleteRole($role_id = null)
+    public function getCompleteRole(int $role_id = null) : Collection
     {
 
         $roles = RoleModel::with(
@@ -64,11 +65,11 @@ trait Pillow
     /**
      * Get a role
      *
-     * @param $id
+     * @param int $id
      *
-     * @return mixed
+     * @return \Seat\Web\Models\Acl\Role
      */
-    public function getRole($id)
+    public function getRole(int $id) : RoleModel
     {
 
         return RoleModel::findOrFail($id);
@@ -77,9 +78,11 @@ trait Pillow
     /**
      * Add a new role
      *
-     * @param $title
+     * @param string $title
+     *
+     * @return \Illuminate\Support\Collection
      */
-    public function addRole($title)
+    public function addRole(string $title)
     {
 
         RoleModel::create([
@@ -92,11 +95,11 @@ trait Pillow
     /**
      * Remove a role
      *
-     * @param $id
+     * @param int $id
      *
      * @return int
      */
-    public function removeRole($id)
+    public function removeRole(int $id) : int
     {
 
         return RoleModel::destroy($id);
@@ -105,9 +108,11 @@ trait Pillow
     /**
      * Remove a role by title
      *
-     * @param $title
+     * @param string $title
+     *
+     * @return null
      */
-    public function removeRoleByTitle($title)
+    public function removeRoleByTitle(string $title)
     {
 
         $role = RoleModel::where('title', $title)->first();
@@ -160,10 +165,10 @@ trait Pillow
     /**
      * Remove a permission from a Role
      *
-     * @param $permission_id
-     * @param $role_id
+     * @param int $permission_id
+     * @param int $role_id
      */
-    public function removePermissionFromRole($permission_id, $role_id)
+    public function removePermissionFromRole(int $permission_id, int $role_id)
     {
 
         $role = $this->getRole($role_id);
@@ -176,10 +181,10 @@ trait Pillow
     /**
      * Give a user a Role
      *
-     * @param $user_id
-     * @param $role_id
+     * @param int $user_id
+     * @param int $role_id
      */
-    public function giveUserRole($user_id, $role_id)
+    public function giveUserRole(int $user_id, int $role_id)
     {
 
         $user = UserModel::find($user_id);
@@ -201,9 +206,9 @@ trait Pillow
      * Give an array of usernames a role
      *
      * @param array $user_names
-     * @param       $role_id
+     * @param int   $role_id
      */
-    public function giveUsernamesRole(array $user_names, $role_id)
+    public function giveUsernamesRole(array $user_names, int $role_id)
     {
 
         foreach ($user_names as $user_name) {
@@ -219,10 +224,10 @@ trait Pillow
     /**
      * Remove a user from a role
      *
-     * @param $user_id
-     * @param $role_id
+     * @param int $user_id
+     * @param int $role_id
      */
-    public function removeUserFromRole($user_id, $role_id)
+    public function removeUserFromRole(int $user_id, int $role_id)
     {
 
         $role = $this->getRole($role_id);
@@ -301,10 +306,10 @@ trait Pillow
     }
 
     /**
-     * @param $role_id
-     * @param $affiliation_id
+     * @param int $role_id
+     * @param int $affiliation_id
      */
-    public function removeAffiliationFromRole($role_id, $affiliation_id)
+    public function removeAffiliationFromRole(int $role_id, int $affiliation_id)
     {
 
         $role = $this->getRole($role_id);
