@@ -170,23 +170,92 @@ trait Clipboard
     {
 
         $map = $this->getAffiliationMap();
-
-        // Owning a key grants you '*' permissions. In this
-        // context, '*' acts as a wildard for *all* permissions
-        // for this character / corporation ID
+        
         foreach ($map['char'] as $char => $permissions)
-            if ($char == $this->getCharacterId() && (
-                    in_array($permission, $permissions) || in_array('*', $permissions))
-            )
+            if ($this->appliesToCharacter($char) && $this->permissionApplies($permission, $permissions))
                 return true;
 
         foreach ($map['corp'] as $corp => $permissions)
-            if ($corp == $this->getCorporationId() && (
-                    in_array($permission, $permissions) || in_array('*', $permissions))
-            )
+            if ($corp == $this->getCorporationId() && $this->permissionApplies($permission, $permissions))
                 return true;
+                
+        foreach ($map['inverted'] as $role_id => $inv_map) {
+            if ($this->checkInvertedMap($inv_map, $permission))
+                return true;
+        }     
+           
 
         return false;
+    }
+    
+    /**
+    * Check the inverted portion of the affiliation map
+    * 
+    * @param $map
+    * @param permission
+    * 
+    * @return bool
+    */
+    private function checkInvertedMap($map, $permission) 
+    {
+        if (!$this->permissionApplies($permission, $map['permissions']))
+            return false;
+        
+        $search_character = $this->getCharacterId();
+        $search_corp = $this->getCorporationId();
+            
+        if (!is_null($search_character)) {
+            foreach($map['char'] as $char) {
+                if ($search_character == $char)
+                    return false;
+            }
+            return true;
+        }
+        
+        
+        if (!is_null($search_corp)) {
+            foreach($map['corp'] as $corp) {
+                if ($search_corp == $corp)
+                    return false;
+            }
+            return true;
+        }
+        
+        
+        return false;
+    }
+    
+    
+    /**
+     * Check if a character variable matches the current character
+     * This can be extended when implementing negative affiliations (anyone but)
+     * 
+     * @param @char 
+     * 
+     * @return bool
+     */
+    private function appliesToCharacter($char) 
+    {
+        // $char as * mean to grant these permissions for all characters
+        if ($char == '*') return true;
+        
+        return $char == $this->getCharacterId();
+    }
+    
+    /**
+     * Check if a permission applies in the current permission set
+     *
+     * @param $permission
+     * @param $permissions
+     *
+     * @return bool 
+     **/
+    private function permissionApplies($permission, $permissions) 
+    {
+        // Owning a key grants you '*' permissions. In this
+        // context, '*' acts as a wildard for *all* permissions
+        // for this character / corporation ID
+        return (in_array($permission, $permissions) || in_array('*', $permissions));
     }
 
     /**
@@ -208,7 +277,8 @@ trait Clipboard
 
         $map = [
             'char' => [],
-            'corp' => []
+            'corp' => [],
+            'inverted' => [],
         ];
 
         // User Accounts inherit the character and
@@ -236,15 +306,31 @@ trait Clipboard
                 ->permissions
                 ->pluck('title')
                 ->toArray();
+                
+            $inverted = $role->invertedAffiliations;
+            $id = $role->id;
+            
+            if (!$inverted) {
+                // Add the permissions to the affiliations
+                // map for each respective affiliation
+                foreach ($role->affiliations as $affilition) {
 
-            // Add the permissions to the affiliations
-            // map for each respective affiliation
-            foreach ($role->affiliations as $affilition) {
+                    isset($map[$affilition->type][$affilition->affiliation]) ?
+                        $map[$affilition->type][$affilition->affiliation] += $role_permissions :
+                        $map[$affilition->type][$affilition->affiliation] = $role_permissions;
 
-                isset($map[$affilition->type][$affilition->affiliation]) ?
-                    $map[$affilition->type][$affilition->affiliation] += $role_permissions :
-                    $map[$affilition->type][$affilition->affiliation] = $role_permissions;
-
+                }
+            } else { 
+                // We cannot just stack up inverted affiliations as we want roles to only add to permissions, not subtract
+                $map['inverted'][$id] = [
+                     'permissions' => $role_permissions,
+                     'char' => [],
+                     'corp' => []
+                ];
+                    
+                foreach ($role->affiliations as $affiliation) {
+                    array_push($map['inverted'][$id][$affiliation->type], $affiliation->affiliation);    
+                }
             }
 
         }

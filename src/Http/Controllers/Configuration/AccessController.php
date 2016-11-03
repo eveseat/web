@@ -230,4 +230,16 @@ class AccessController extends Controller
         return redirect()->back()
             ->with('success', trans('web::seat.affiliation_removed'));
     }
+    
+    /**
+    * @param $role_id
+    * @param $invert
+    * 
+    * @return mixed
+    */
+    public function invertAffiliations($role_id, $invert) {
+        $this->setInvertionOnRole($role_id, $invert);
+        
+        return redirect()->back()->with('success', trans_choice('web::access.affiliation_inverted', $invert ? 1 : 2));
+    }
 }

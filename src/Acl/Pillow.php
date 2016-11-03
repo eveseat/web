@@ -312,5 +312,15 @@ trait Pillow
 
         return;
     }
+    
+    /**
+    * @param $role_id
+    * @param $invert
+    */
+    public function setInvertionOnRole($role_id, $invert) {
+        $role = $this->getRole($role_id);
+        $role->invertedAffiliations = $invert;
+        $role->save();        
+    }
 
 }
