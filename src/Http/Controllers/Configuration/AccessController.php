@@ -71,7 +71,7 @@ class AccessController extends Controller
         $this->addRole($request->input('title'));
 
         return redirect()->back()
-            ->with('success', trans('web::access.role_added'));
+            ->with('success', trans('web::seat.role_added'));
     }
 
     /**
@@ -85,7 +85,7 @@ class AccessController extends Controller
         $this->removeRole($role_id);
 
         return redirect()->back()
-            ->with('success', trans('web::access.role_removed'));
+            ->with('success', trans('web::seat.role_removed'));
     }
 
     /**
@@ -143,7 +143,7 @@ class AccessController extends Controller
             $request->input('inverse') ? true : false);
 
         return redirect()->back()
-            ->with('success', trans('web::access.permissions_granted'));
+            ->with('success', trans('web::seat.permissions_granted'));
     }
 
     /**
@@ -158,7 +158,7 @@ class AccessController extends Controller
         $this->removePermissionFromRole($permission_id, $role_id);
 
         return redirect()->back()
-            ->with('success', trans('web::access.permission_revoked'));
+            ->with('success', trans('web::seat.permission_revoked'));
     }
 
     /**
@@ -173,7 +173,7 @@ class AccessController extends Controller
             $request->input('users'), $request->input('role_id'));
 
         return redirect()->back()
-            ->with('success', trans('web::access.user_added'));
+            ->with('success', trans('web::seat.user_added'));
 
     }
 
@@ -189,7 +189,7 @@ class AccessController extends Controller
         $this->removeUserFromRole($user_id, $role_id);
 
         return redirect()->back()
-            ->with('success', trans('web::access.user_removed'));
+            ->with('success', trans('web::seat.user_removed'));
     }
 
     /**
@@ -228,6 +228,6 @@ class AccessController extends Controller
         $this->removeAffiliationFromRole($role_id, $affiliation_id);
 
         return redirect()->back()
-            ->with('success', trans('web::access.affiliation_removed'));
+            ->with('success', trans('web::seat.affiliation_removed'));
     }
 }
