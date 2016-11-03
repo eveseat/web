@@ -115,7 +115,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function affiliations()
     {
 
-        return $this->belongsToMany(Affiliation::class);
+        return $this->belongsToMany(Affiliation::class)
+            ->withPivot('not');
     }
 
     /**

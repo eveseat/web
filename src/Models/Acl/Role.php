@@ -73,7 +73,8 @@ class Role extends Model
     public function permissions()
     {
 
-        return $this->belongsToMany(Permission::class);
+        return $this->belongsToMany(Permission::class)
+            ->withPivot('not');
     }
 
     /**
@@ -85,6 +86,7 @@ class Role extends Model
     public function affiliations()
     {
 
-        return $this->belongsToMany(Affiliation::class);
+        return $this->belongsToMany(Affiliation::class)
+            ->withPivot('not');
     }
 }

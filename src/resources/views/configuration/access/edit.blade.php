@@ -43,6 +43,14 @@
             @endforeach
 
           </select>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="inverse">
+              {{ trans('web::seat.inverse_permission') }}
+            </label>
+          </div>
+
         </div>
 
         <button type="submit" class="btn btn-success btn-block">
@@ -64,6 +72,7 @@
 
           <tr>
             <td>{{ studly_case($permission->title) }}</td>
+            <td>{{ $permission->pivot->not }}</td>
             <td>
               <a href="{{ route('configuration.access.roles.edit.remove.permission', ['role_id' => $role->id, 'permission_id' => $permission->id]) }}" type="button" class="btn btn-danger btn-xs pull-right">
                 {{ trans('web::seat.remove') }}
@@ -127,6 +136,14 @@
             @endforeach
 
           </select>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="inverse">
+              {{ trans('web::seat.inverse_permission') }}
+            </label>
+          </div>
+
         </div>
 
         <button type="submit" class="btn btn-success btn-block">
@@ -152,6 +169,7 @@
               <span rel="id-to-name">{{ $affiliation->affiliation }}</span>
             </td>
             <td>{{ ucfirst($affiliation->type) }}</td>
+            <td>{{ $affiliation->pivot->not }}</td>
             <td>
               <a href="{{ route('configuration.access.roles.edit.remove.affiliation', ['role_id' => $role->id, 'user_id' => $affiliation->id]) }}"
                  type="button" class="btn btn-danger btn-xs pull-right">

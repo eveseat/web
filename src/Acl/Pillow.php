@@ -119,10 +119,11 @@ trait Pillow
     /**
      * Give a Role a permission
      *
-     * @param $role_id
-     * @param $permission_name
+     * @param int    $role_id
+     * @param string $permission_name
+     * @param bool   $inverse
      */
-    public function giveRolePermission($role_id, $permission_name)
+    public function giveRolePermission(int $role_id, string $permission_name, bool $inverse)
     {
 
         $role = $this->getRole($role_id);
@@ -132,9 +133,10 @@ trait Pillow
         ]);
 
         // If the role does not already have the permission
-        // add it.
+        // add it. We will also apply the inverse rule as an
+        // extra attrivute on save()
         if (!$role->permissions->contains($permission->id))
-            $role->permissions()->save($permission);
+            $role->permissions()->save($permission, ['not' => $inverse]);
 
         return;
     }
@@ -144,12 +146,13 @@ trait Pillow
      *
      * @param       $role_id
      * @param array $permissions
+     * @param bool  $inverse
      */
-    public function giveRolePermissions($role_id, array $permissions)
+    public function giveRolePermissions($role_id, array $permissions, bool $inverse)
     {
 
         foreach ($permissions as $key => $permission_name)
-            $this->giveRolePermission($role_id, $permission_name);
+            $this->giveRolePermission($role_id, $permission_name, $inverse);
 
         return;
     }
@@ -229,10 +232,11 @@ trait Pillow
     }
 
     /**
-     * @param $role_id
-     * @param $corporation_id
+     * @param int  $role_id
+     * @param int  $corporation_id
+     * @param bool $inverse
      */
-    public function giveRoleCorporationAffiliation($role_id, $corporation_id)
+    public function giveRoleCorporationAffiliation(int $role_id, int $corporation_id, bool $inverse)
     {
 
         $role = $this->getRole($role_id);
@@ -243,30 +247,32 @@ trait Pillow
         ]);
 
         if (!$role->affiliations->contains($affiliation))
-            $role->affiliations()->save($affiliation);
+            $role->affiliations()->save($affiliation, ['not' => $inverse]);
 
         return;
 
     }
 
     /**
-     * @param $role_id
-     * @param $affiliations
+     * @param int   $role_id
+     * @param array $affiliations
+     * @param bool  $inverse
      */
-    public function giveRoleCorporationAffiliations($role_id, $affiliations)
+    public function giveRoleCorporationAffiliations(int $role_id, array $affiliations, bool $inverse)
     {
 
         foreach ($affiliations as $affiliation)
-            $this->giveRoleCorporationAffiliation($role_id, $affiliation);
+            $this->giveRoleCorporationAffiliation($role_id, $affiliation, $inverse);
 
         return;
     }
 
     /**
-     * @param $role_id
-     * @param $character_id
+     * @param int  $role_id
+     * @param int  $character_id
+     * @param bool $inverse
      */
-    public function giveRoleCharacterAffiliation($role_id, $character_id)
+    public function giveRoleCharacterAffiliation(int $role_id, int $character_id, bool $inverse)
     {
 
         $role = $this->getRole($role_id);
@@ -277,18 +283,19 @@ trait Pillow
         ]);
 
         if (!$role->affiliations->contains($affiliation))
-            $role->affiliations()->save($affiliation);
+            $role->affiliations()->save($affiliation, ['not' => $inverse]);
     }
 
     /**
-     * @param $role_id
-     * @param $affiliations
+     * @param int   $role_id
+     * @param array $affiliations
+     * @param bool  $inverse
      */
-    public function giveRoleCharacterAffiliations($role_id, $affiliations)
+    public function giveRoleCharacterAffiliations(int $role_id, array $affiliations, bool $inverse)
     {
 
         foreach ($affiliations as $affiliation)
-            $this->giveRoleCharacterAffiliation($role_id, $affiliation);
+            $this->giveRoleCharacterAffiliation($role_id, $affiliation, $inverse);
 
         return;
     }

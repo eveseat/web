@@ -138,7 +138,9 @@ class AccessController extends Controller
     {
 
         $this->giveRolePermissions(
-            $request->input('role_id'), $request->input('permissions'));
+            $request->input('role_id'),
+            $request->input('permissions'),
+            $request->input('inverse') ? true : false);
 
         return redirect()->back()
             ->with('success', trans('web::access.permissions_granted'));
@@ -200,11 +202,15 @@ class AccessController extends Controller
 
         if ($request->input('corporations'))
             $this->giveRoleCorporationAffiliations(
-                $request->input('role_id'), $request->input('corporations'));
+                $request->input('role_id'),
+                $request->input('corporations'),
+                $request->input('inverse') ? true : false);
 
         if ($request->input('characters'))
             $this->giveRoleCharacterAffiliations(
-                $request->input('role_id'), $request->input('characters'));
+                $request->input('role_id'),
+                $request->input('characters'),
+                $request->input('inverse') ? true : false);
 
         return redirect()->back()
             ->with('success', 'Affiliations were added to this role');

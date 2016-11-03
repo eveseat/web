@@ -52,7 +52,8 @@ class RoleAffilliation extends FormRequest
         // Start with a default rules array for the
         // role_id check
         $rules = [
-            'role_id' => 'required|exists:roles,id'
+            'role_id' => 'required|exists:roles,id',
+            'inverse' => 'required|nullable|in:on'
         ];
 
         // Check that we got either a character/corp

@@ -238,6 +238,7 @@ return [
     'edit_role'                    => 'Edit Role',
     'available_permissions'        => 'Available Permissions',
     'grant_permissions'            => 'Grant Permissions',
+    'inverse_permission'           => 'Inverse Permission',
     'current_permissions'          => 'Current Permissions',
     'has_superuser'                => 'Has Superuser',
     'permission_inherit'           => 'Inherits All Permissions',
