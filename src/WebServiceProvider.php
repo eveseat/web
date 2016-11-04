@@ -246,7 +246,7 @@ class WebServiceProvider extends ServiceProvider
         $router->middleware('registration.status', RegistrationAllowed::class);
 
         // The Bouncer is responsible for checking hes
-        // Clipboard and ensuring that every request
+        // AccessChecker and ensuring that every request
         // that comes in is authorized
         $router->middleware('bouncer', Bouncer::class);
         $router->middleware('characterbouncer', CharacterBouncer::class);

@@ -29,7 +29,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Seat\Eveapi\Models\Eve\ApiKey;
 use Seat\Services\Models\UserSetting;
-use Seat\Web\Acl\Clipboard;
+use Seat\Web\Acl\AccessChecker;
 use Seat\Web\Models\Acl\Affiliation;
 use Seat\Web\Models\Acl\Role;
 
@@ -40,7 +40,7 @@ use Seat\Web\Models\Acl\Role;
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
 
-    use Authenticatable, CanResetPassword, Clipboard, Notifiable;
+    use Authenticatable, CanResetPassword, AccessChecker, Notifiable;
 
     /**
      * The database table used by the model.

@@ -22,10 +22,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Acl;
 
 /**
- * Class Clipboard
+ * Class AccessChecker
  * @package Seat\Web\Acl
  */
-trait Clipboard
+trait AccessChecker
 {
 
     /**
@@ -51,7 +51,7 @@ trait Clipboard
      *
      * @return bool
      */
-    public function hasAny(array $permissions, $need_affiliation = true)
+    public function hasAny(array $permissions, bool $need_affiliation = true) : bool
     {
 
         foreach ($permissions as $permission)
@@ -192,7 +192,7 @@ trait Clipboard
     /**
      * The affiliation map maps character / corporation
      * ID's to the permissions that they have. This allows
-     * us to simply lookup a the existance of a permission
+     * us to simply lookup the existance of a permission
      * in the context of an ID. All roles are considered
      * but strict adherence to *which* affiliation ID's are
      * applicable is kept.
@@ -206,9 +206,19 @@ trait Clipboard
     public function getAffiliationMap()
     {
 
+        // Prepare a skeleton of the final affiliation map that
+        // will be returned.
         $map = [
-            'char' => [],
-            'corp' => []
+            'char'                  => [],
+            'corp'                  => [],
+
+            // These keys keep record of the affiliations and
+            // permissions that are marked for inversion.
+            'inverted_permissions'  => [],
+            'inverted_affiliations' => [
+                'char' => [],
+                'corp' => []
+            ]
         ];
 
         // User Accounts inherit the character and
@@ -232,22 +242,76 @@ trait Clipboard
         // offer us.
         foreach ($this->roles as $role) {
 
-            $role_permissions = $role
-                ->permissions
-                ->pluck('title')
-                ->toArray();
+            // A blank array for the permissions granted to
+            // this role.
+            $role_permissions = [];
+
+            // Add the permissions, ignoring those that
+            // should be inverted.
+            foreach ($role->permissions as $permission) {
+
+                // If a specific permision shoul be be inverted,
+                // update the global array with the permission name.
+                //
+                // Also make sure the permission does not exist in
+                // any of the corp/char arrays.
+                if ($permission->pivot->not) {
+
+                    array_push($map['inverted_permissions'], $permission->title);
+
+                    continue;
+                }
+
+                // Add the permission to the existing array
+                array_push($role_permissions, $permission->title);
+            }
 
             // Add the permissions to the affiliations
-            // map for each respective affiliation
+            // map for each respective affiliation. We will also keep in
+            // mind here that affiliations can have inversions too.
             foreach ($role->affiliations as $affilition) {
 
-                isset($map[$affilition->type][$affilition->affiliation]) ?
-                    $map[$affilition->type][$affilition->affiliation] += $role_permissions :
+                if ($affilition->pivot->not) {
+
+                    array_push(
+                        $map['inverted_affiliations'][$affilition->type],
+                        $affilition->affiliation);
+
+                    continue;
+                }
+
+                // Add the affiliation to the map. As we will run this operation
+                // multiple times when multiple roles are involved, we need to
+                // check if affiliations already exist. Not using a ternary of
+                // coalesce operator here as it makes reading this really hard.
+                if (isset($map[$affilition->type][$affilition->affiliation]))
+                    $map[$affilition->type][$affilition->affiliation] += $role_permissions;
+
+                else
                     $map[$affilition->type][$affilition->affiliation] = $role_permissions;
 
             }
 
         }
+
+        // Cleanup any inverted affiliations themselves for characters..
+        foreach ($map['inverted_affiliations']['char'] as $inverted_affiliation)
+            unset($map['char'][$inverted_affiliation]);
+
+        // And corporations
+        foreach ($map['inverted_affiliations']['corp'] as $inverted_affiliation)
+            unset($map['corp'][$inverted_affiliation]);
+
+        // Cleanup the inverted affiliations' permissions from
+        // each of the affiliations.
+        //
+        // We start by processing characters
+        foreach ($map['char'] as $char => $permissions)
+            $map['char'][$char] = array_diff($map['char'][$char], $map['inverted_permissions']);
+
+        // And corporations
+        foreach ($map['corp'] as $corp => $permissions)
+            $map['corp'][$corp] = array_diff($map['corp'][$corp], $map['inverted_permissions']);
 
         return $map;
     }
