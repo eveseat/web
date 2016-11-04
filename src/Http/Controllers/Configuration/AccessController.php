@@ -60,9 +60,10 @@ class AccessController extends Controller
     public function newRole(Role $request)
     {
 
-        $this->addRole($request->input('title'));
+        $role = $this->addRole($request->input('title'));
 
-        return redirect()->back()
+        return redirect()
+            ->route('configuration.access.roles.edit', ['id' => $role->id])
             ->with('success', trans('web::seat.role_added'));
     }
 

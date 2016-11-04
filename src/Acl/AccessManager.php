@@ -80,16 +80,15 @@ trait AccessManager
      *
      * @param string $title
      *
-     * @return \Illuminate\Support\Collection
+     * @return \Seat\Web\Models\Acl\Role
      */
-    public function addRole(string $title)
+    public function addRole(string $title) : RoleModel
     {
 
-        RoleModel::create([
+        return RoleModel::create([
             'title' => $title,
         ]);
 
-        return;
     }
 
     /**
