@@ -52,36 +52,13 @@ class RoleAffilliation extends FormRequest
         // Start with a default rules array for the
         // role_id check
         $rules = [
-            'role_id' => 'required|exists:roles,id',
-            'inverse' => 'required|nullable|in:on'
+            'role_id'        => 'required|exists:roles,id',
+            'inverse'        => 'required|nullable|in:on',
+            'characters'     => 'required_without_all:corporations',
+            'corporations'   => 'required_without_all:characters',
+            'characters.*'   => 'exists:account_api_key_info_characters,characterID',
+            'corporations.*' => 'exists:corporation_sheets,corporationID'
         ];
-
-        // Check that we got either a character/corp
-        if (!$this->request->get('characters') && !$this->request->get('corporations')) {
-
-            $rules['characters'] = 'required_without_all:corporations';
-            $rules['corporations'] = 'required_without_all:characters';
-
-            return $rules;
-        }
-
-        // If we have characters, validate them
-        if ($this->request->get('characters')) {
-
-            // Add each character in the multi select dynamically
-            foreach ($this->request->get('characters') as $key => $value)
-
-                $rules['characters.' . $key] = 'required|exists:account_api_key_info_characters,characterID';
-        }
-
-        // If we have corporations, validate them
-        if ($this->request->get('corporations')) {
-
-            // Add each corporation in the multi select dynamically
-            foreach ($this->request->get('corporations') as $key => $value)
-
-                $rules['corporations.' . $key] = 'required|exists:corporation_sheets,corporationID';
-        }
 
         return $rules;
     }

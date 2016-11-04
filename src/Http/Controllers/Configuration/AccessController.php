@@ -39,8 +39,7 @@ use Seat\Web\Validation\RoleUser;
 class AccessController extends Controller
 {
 
-    use AccessManager, UserRespository, Character,
-        Corporation;
+    use AccessManager, UserRespository, Character, Corporation;
 
     /**
      * @return \Illuminate\View\View
