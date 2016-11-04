@@ -65,7 +65,7 @@
         <tbody>
 
         <tr>
-          <th colspan="2" class="text-center">{{ trans('web::seat.current_permissions') }}</th>
+          <th colspan="3" class="text-center">{{ trans('web::seat.current_permissions') }}</th>
         </tr>
 
         @foreach($role->permissions as $permission)
@@ -116,6 +116,7 @@
           <label for="corporations">{{ trans('web::seat.available_corporations') }}</label>
           <select name="corporations[]" id="available_corporations" style="width: 100%" multiple>
 
+            <option value="0">All Corporations</option>
             @foreach($all_corporations as $corporation)
               <option value="{{ $corporation->corporationID }}">
                 {{ $corporation->corporationName }}
@@ -129,6 +130,7 @@
           <label for="characters">{{ trans('web::seat.available_characters') }}</label>
           <select name="characters[]" id="available_characters" style="width: 100%" multiple>
 
+            <option value="0">All Characters</option>
             @foreach($all_characters as $character)
               <option value="{{ $character->characterID }}">
                 {{ $character->characterName }}
@@ -140,7 +142,7 @@
           <div class="checkbox">
             <label>
               <input type="checkbox" name="inverse">
-              {{ trans('web::seat.inverse_permission') }}
+              {{ trans('web::seat.inverse_affiliation') }}
             </label>
           </div>
 
@@ -158,15 +160,28 @@
         <tbody>
 
         <tr>
-          <th colspan="2" class="text-center">{{ trans('web::seat.current_affiliations') }}</th>
+          <th colspan="4" class="text-center">{{ trans('web::seat.current_affiliations') }}</th>
         </tr>
 
         @foreach($role->affiliations as $affiliation)
 
           <tr>
             <td>
-              {!! img('auto', $affiliation->affiliation, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-              <span rel="id-to-name">{{ $affiliation->affiliation }}</span>
+              @if($affiliation->affiliation === 0)
+
+                {{ trans('web::seat.all') }}
+                  @if($affiliation->type == 'corp')
+                    {{ trans_choice('web::seat.corporation', 2) }}
+                  @else
+                    {{ trans_choice('web::seat.character', 2) }}
+                  @endif
+
+              @else
+
+                {!! img('auto', $affiliation->affiliation, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                <span rel="id-to-name">{{ $affiliation->affiliation }}</span>
+
+              @endif
             </td>
             <td>{{ ucfirst($affiliation->type) }}</td>
             <td>{{ $affiliation->pivot->not }}</td>

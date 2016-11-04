@@ -21,12 +21,18 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Acl;
 
+use Seat\Services\Repositories\Character\Character;
+use Seat\Services\Repositories\Corporation\Corporation;
+
 /**
  * Class AccessChecker
  * @package Seat\Web\Acl
  */
 trait AccessChecker
 {
+
+    // Use repositories to get character & corp info
+    use Character, Corporation;
 
     /**
      * The CharacterID from the request
@@ -280,15 +286,52 @@ trait AccessChecker
                     continue;
                 }
 
-                // Add the affiliation to the map. As we will run this operation
-                // multiple times when multiple roles are involved, we need to
-                // check if affiliations already exist. Not using a ternary of
-                // coalesce operator here as it makes reading this really hard.
-                if (isset($map[$affilition->type][$affilition->affiliation]))
-                    $map[$affilition->type][$affilition->affiliation] += $role_permissions;
+                // It is possible to 'wildcard' users and corporations. This
+                // is signified by the char / corp id of 0. If we encounter
+                // this id, then we need to all of the possible corp / char
+                // in the system to the affiliation map.
+                if ($affilition->affiliation === 0) {
 
-                else
-                    $map[$affilition->type][$affilition->affiliation] = $role_permissions;
+                    if ($affilition->type == 'char') {
+
+                        // Process all of the characters
+                        foreach ($this->getAllCharacters()->pluck('characterID') as $characterID) {
+
+                            if (isset($map['char'][$characterID]))
+                                $map['char'][$characterID] += $role_permissions;
+
+                            else
+                                $map['char'][$characterID] = $role_permissions;
+
+                        }
+                    }
+
+                    if ($affilition->type == 'corp') {
+
+                        // Process all of the corporations
+                        foreach ($this->getAllCorporations()->pluck('corporationID') as $corporationID) {
+
+                            if (isset($map['corp'][$corporationID]))
+                                $map['corp'][$corporationID] += $role_permissions;
+
+                            else
+                                $map['corp'][$corporationID] = $role_permissions;
+
+                        }
+                    }
+
+                } else {
+
+                    // Add the single affiliation to the map. As we will run this operation
+                    // multiple times when multiple roles are involved, we need to check if
+                    // affiliations already exist. Not using a ternary of coalesce operator
+                    // here as it makes reading this really hard.
+                    if (isset($map[$affilition->type][$affilition->affiliation]))
+                        $map[$affilition->type][$affilition->affiliation] += $role_permissions;
+
+                    else
+                        $map[$affilition->type][$affilition->affiliation] = $role_permissions;
+                }
 
             }
 
@@ -313,7 +356,9 @@ trait AccessChecker
         foreach ($map['corp'] as $corp => $permissions)
             $map['corp'][$corp] = array_diff($map['corp'][$corp], $map['inverted_permissions']);
 
+        // Finally, return the calculated map!
         return $map;
+
     }
 
     /**

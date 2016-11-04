@@ -81,6 +81,8 @@ return [
     'usage'                        => 'Usage',
     'unit'                         => 'Unit|Units',
     'add'                          => 'Add',
+    'all'                          => 'All',
+    'inverse'                      => 'Inverse',
 
     // Requirements
     'requirements'                 => 'Requirements',
@@ -239,6 +241,7 @@ return [
     'available_permissions'        => 'Available Permissions',
     'grant_permissions'            => 'Grant Permissions',
     'inverse_permission'           => 'Inverse Permission',
+    'inverse_affiliation'          => 'Inverse Affiliation',
     'current_permissions'          => 'Current Permissions',
     'has_superuser'                => 'Has Superuser',
     'permission_inherit'           => 'Inherits All Permissions',

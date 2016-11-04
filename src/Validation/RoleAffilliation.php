@@ -22,6 +22,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Validation;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Seat\Eveapi\Models\Account\ApiKeyInfoCharacters;
+use Seat\Eveapi\Models\Corporation\CorporationSheet;
 
 /**
  * Class RoleAffilliation
@@ -49,15 +51,22 @@ class RoleAffilliation extends FormRequest
     public function rules()
     {
 
-        // Start with a default rules array for the
-        // role_id check
+        // Instead of using the 'exists' validation rule, we opt to use
+        // the 'in' rule. We do this because we want to add '0' as a valid
+        // value, which will signal a wild card for either all characters
+        // or all corporations.
+        $character_ids = implode(',',
+            array_prepend(ApiKeyInfoCharacters::pluck('characterID')->toArray(), 0));
+        $corporation_ids = implode(',',
+            array_prepend(CorporationSheet::pluck('corporationID')->toArray(), 0));
+
         $rules = [
             'role_id'        => 'required|exists:roles,id',
             'inverse'        => 'required|nullable|in:on',
             'characters'     => 'required_without_all:corporations',
             'corporations'   => 'required_without_all:characters',
-            'characters.*'   => 'exists:account_api_key_info_characters,characterID',
-            'corporations.*' => 'exists:corporation_sheets,corporationID'
+            'characters.*'   => 'in:' . $character_ids,
+            'corporations.*' => 'in:' . $corporation_ids
         ];
 
         return $rules;
