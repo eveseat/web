@@ -42,7 +42,7 @@ class LedgerController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getWalletSummary($corporation_id)
+    public function getWalletSummary(int $corporation_id)
     {
 
         $ledger = $this->getCorporationMemberSecurity($corporation_id);
@@ -59,7 +59,7 @@ class LedgerController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getBountyPrizesByMonth($corporation_id, $year = null, $month = null)
+    public function getBountyPrizesByMonth(int $corporation_id, $year = null, $month = null)
     {
 
         !is_null($year) ? $year : $year = date("Y");
@@ -83,7 +83,7 @@ class LedgerController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getPlanetaryInteractionByMonth($corporation_id, $year = null, $month = null)
+    public function getPlanetaryInteractionByMonth(int $corporation_id, $year = null, $month = null)
     {
 
         !is_null($year) ? $year : $year = date("Y");

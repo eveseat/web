@@ -21,32 +21,25 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
-use Seat\Services\Repositories\Corporation\Corporation;
-use Seat\Services\Repositories\Corporation\Security;
+use Seat\Services\Repositories\Corporation\Industry;
 use Seat\Web\Http\Controllers\Controller;
 
-/**
- * Class ViewController
- * @package Seat\Web\Http\Controllers\Corporation
- */
-class SecurityController extends Controller
+class IndustryController extends Controller
 {
 
-    use Corporation;
-
-    use Security;
+    use Industry;
 
     /**
      * @param $corporation_id
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getRoles(int $corporation_id)
+    public function getIndustry(int $corporation_id)
     {
 
-        $security = $this->getCorporationMemberSecurity($corporation_id);
+        $jobs = $this->getCorporationIndustry($corporation_id);
 
-        return view('web::corporation.security.roles', compact('security'));
+        return view('web::corporation.industry', compact('jobs'));
     }
 
     /**
@@ -54,25 +47,12 @@ class SecurityController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getTitles(int $corporation_id)
+    public function getPoco(int $corporation_id)
     {
 
-        $titles = $this->getCorporationMemberSecurityTitles($corporation_id);
+        $pocos = $this->getCorporationCustomsOffices($corporation_id);
 
-        return view('web::corporation.security.titles', compact('titles'));
-    }
-
-    /**
-     * @param $corporation_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getLog(int $corporation_id)
-    {
-
-        $logs = $this->getCorporationMemberSecurityLogs($corporation_id);
-
-        return view('web::corporation.security.log', compact('logs'));
+        return view('web::corporation.pocos', compact('pocos'));
     }
 
 }
