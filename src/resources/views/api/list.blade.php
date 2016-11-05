@@ -19,13 +19,13 @@
 
       <table class="table datatable compact table-condensed table-hover table-responsive">
         <thead>
-          <tr>
-            <th>{{ trans_choice('web::seat.id', 1) }}</th>
-            <th>{{ trans_choice('web::seat.type', 1) }}</th>
-            <th>{{ trans('web::seat.expiry') }}</th>
-            <th data-orderable="false">{{ trans_choice('web::seat.character', 1) }}</th>
-            <th data-orderable="false"></th>
-          </tr>
+        <tr>
+          <th>{{ trans_choice('web::seat.id', 1) }}</th>
+          <th>{{ trans_choice('web::seat.type', 1) }}</th>
+          <th>{{ trans('web::seat.expiry') }}</th>
+          <th data-orderable="false">{{ trans_choice('web::seat.character', 1) }}</th>
+          <th data-orderable="false"></th>
+        </tr>
         </thead>
         <tbody>
 

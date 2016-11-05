@@ -13,12 +13,12 @@
 
       <table class="table datatable compact table-condensed table-hover table-responsive">
         <thead>
-          <tr>
-            <th>{{ trans_choice('web::seat.name', 1) }}</th>
-            <th>{{ trans('web::seat.standings') }}</th>
-            <th>{{ trans('web::seat.labels') }}</th>
-            <td class="no-sort"></td>
-          </tr>
+        <tr>
+          <th>{{ trans_choice('web::seat.name', 1) }}</th>
+          <th>{{ trans('web::seat.standings') }}</th>
+          <th>{{ trans('web::seat.labels') }}</th>
+          <td class="no-sort"></td>
+        </tr>
         </thead>
         <tbody>
 

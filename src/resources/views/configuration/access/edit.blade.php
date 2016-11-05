@@ -74,7 +74,8 @@
             <td>{{ studly_case($permission->title) }}</td>
             <td>{{ $permission->pivot->not }}</td>
             <td>
-              <a href="{{ route('configuration.access.roles.edit.remove.permission', ['role_id' => $role->id, 'permission_id' => $permission->id]) }}" type="button" class="btn btn-danger btn-xs pull-right">
+              <a href="{{ route('configuration.access.roles.edit.remove.permission', ['role_id' => $role->id, 'permission_id' => $permission->id]) }}"
+                 type="button" class="btn btn-danger btn-xs pull-right">
                 {{ trans('web::seat.remove') }}
               </a>
             </td>
@@ -90,7 +91,8 @@
       <b>{{ count($role->permissions) }}</b> {{ trans_choice('web::seat.permission', count($role->permissions)) }}
 
       @if(in_array('superuser', $role_permissions))
-        <span class="label label-danger pull-right" data-toggle="tooltip" title="{{ trans('web::seat.permission_inherit') }}">
+        <span class="label label-danger pull-right" data-toggle="tooltip"
+              title="{{ trans('web::seat.permission_inherit') }}">
           {{ trans('web::seat.has_superuser') }}
         </span>
       @endif
@@ -170,11 +172,11 @@
               @if($affiliation->affiliation === 0)
 
                 {{ trans('web::seat.all') }}
-                  @if($affiliation->type == 'corp')
-                    {{ trans_choice('web::seat.corporation', 2) }}
-                  @else
-                    {{ trans_choice('web::seat.character', 2) }}
-                  @endif
+                @if($affiliation->type == 'corp')
+                  {{ trans_choice('web::seat.corporation', 2) }}
+                @else
+                  {{ trans_choice('web::seat.character', 2) }}
+                @endif
 
               @else
 
@@ -251,7 +253,8 @@
           <tr>
             <td>{{ $user->name }}</td>
             <td>
-              <a href="{{ route('configuration.access.roles.edit.remove.user', ['role_id' => $role->id, 'user_id' => $user->id]) }}" type="button" class="btn btn-danger btn-xs pull-right">
+              <a href="{{ route('configuration.access.roles.edit.remove.user', ['role_id' => $role->id, 'user_id' => $user->id]) }}"
+                 type="button" class="btn btn-danger btn-xs pull-right">
                 {{ trans('web::seat.remove') }}
               </a>
             </td>
@@ -276,10 +279,10 @@
 
   <script>
     $("#available_permissions," +
-      "#available_users," +
-      "#available_characters," +
-      "#available_corporations").select2({
-       placeholder: "{{ trans('web::seat.select_item_add') }}"
+            "#available_users," +
+            "#available_characters," +
+            "#available_corporations").select2({
+      placeholder: "{{ trans('web::seat.select_item_add') }}"
     });
   </script>
 

@@ -63,19 +63,6 @@ trait AccessManager
     }
 
     /**
-     * Get a role
-     *
-     * @param int $id
-     *
-     * @return \Seat\Web\Models\Acl\Role
-     */
-    public function getRole(int $id) : RoleModel
-    {
-
-        return RoleModel::findOrFail($id);
-    }
-
-    /**
      * Add a new role
      *
      * @param string $title
@@ -92,6 +79,22 @@ trait AccessManager
     }
 
     /**
+     * Remove a role by title
+     *
+     * @param string $title
+     *
+     * @return null
+     */
+    public function removeRoleByTitle(string $title)
+    {
+
+        $role = RoleModel::where('title', $title)->first();
+        $this->removeRole($role->id);
+
+        return;
+    }
+
+    /**
      * Remove a role
      *
      * @param int $id
@@ -105,17 +108,17 @@ trait AccessManager
     }
 
     /**
-     * Remove a role by title
+     * Give a role many permissions
      *
-     * @param string $title
-     *
-     * @return null
+     * @param       $role_id
+     * @param array $permissions
+     * @param bool  $inverse
      */
-    public function removeRoleByTitle(string $title)
+    public function giveRolePermissions($role_id, array $permissions, bool $inverse)
     {
 
-        $role = RoleModel::where('title', $title)->first();
-        $this->removeRole($role->id);
+        foreach ($permissions as $key => $permission_name)
+            $this->giveRolePermission($role_id, $permission_name, $inverse);
 
         return;
     }
@@ -146,19 +149,16 @@ trait AccessManager
     }
 
     /**
-     * Give a role many permissions
+     * Get a role
      *
-     * @param       $role_id
-     * @param array $permissions
-     * @param bool  $inverse
+     * @param int $id
+     *
+     * @return \Seat\Web\Models\Acl\Role
      */
-    public function giveRolePermissions($role_id, array $permissions, bool $inverse)
+    public function getRole(int $id) : RoleModel
     {
 
-        foreach ($permissions as $key => $permission_name)
-            $this->giveRolePermission($role_id, $permission_name, $inverse);
-
-        return;
+        return RoleModel::findOrFail($id);
     }
 
     /**
@@ -172,6 +172,25 @@ trait AccessManager
 
         $role = $this->getRole($role_id);
         $role->permissions()->detach($permission_id);
+
+        return;
+
+    }
+
+    /**
+     * Give an array of usernames a role
+     *
+     * @param array $user_names
+     * @param int   $role_id
+     */
+    public function giveUsernamesRole(array $user_names, int $role_id)
+    {
+
+        foreach ($user_names as $user_name) {
+
+            $user = UserModel::where('name', $user_name)->first();
+            $this->giveUserRole($user->id, $role_id);
+        }
 
         return;
 
@@ -202,25 +221,6 @@ trait AccessManager
     }
 
     /**
-     * Give an array of usernames a role
-     *
-     * @param array $user_names
-     * @param int   $role_id
-     */
-    public function giveUsernamesRole(array $user_names, int $role_id)
-    {
-
-        foreach ($user_names as $user_name) {
-
-            $user = UserModel::where('name', $user_name)->first();
-            $this->giveUserRole($user->id, $role_id);
-        }
-
-        return;
-
-    }
-
-    /**
      * Remove a user from a role
      *
      * @param int $user_id
@@ -231,6 +231,20 @@ trait AccessManager
 
         $role = $this->getRole($role_id);
         $role->users()->detach($user_id);
+
+        return;
+    }
+
+    /**
+     * @param int   $role_id
+     * @param array $affiliations
+     * @param bool  $inverse
+     */
+    public function giveRoleCorporationAffiliations(int $role_id, array $affiliations, bool $inverse)
+    {
+
+        foreach ($affiliations as $affiliation)
+            $this->giveRoleCorporationAffiliation($role_id, $affiliation, $inverse);
 
         return;
     }
@@ -262,11 +276,11 @@ trait AccessManager
      * @param array $affiliations
      * @param bool  $inverse
      */
-    public function giveRoleCorporationAffiliations(int $role_id, array $affiliations, bool $inverse)
+    public function giveRoleCharacterAffiliations(int $role_id, array $affiliations, bool $inverse)
     {
 
         foreach ($affiliations as $affiliation)
-            $this->giveRoleCorporationAffiliation($role_id, $affiliation, $inverse);
+            $this->giveRoleCharacterAffiliation($role_id, $affiliation, $inverse);
 
         return;
     }
@@ -288,20 +302,6 @@ trait AccessManager
 
         if (!$role->affiliations->contains($affiliation))
             $role->affiliations()->save($affiliation, ['not' => $inverse]);
-    }
-
-    /**
-     * @param int   $role_id
-     * @param array $affiliations
-     * @param bool  $inverse
-     */
-    public function giveRoleCharacterAffiliations(int $role_id, array $affiliations, bool $inverse)
-    {
-
-        foreach ($affiliations as $affiliation)
-            $this->giveRoleCharacterAffiliation($role_id, $affiliation, $inverse);
-
-        return;
     }
 
     /**

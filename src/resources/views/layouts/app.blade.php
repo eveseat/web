@@ -36,12 +36,12 @@
 <div class="wrapper">
 
   <!-- Main Header -->
-  @include('web::includes.header')
+@include('web::includes.header')
 
-          <!-- Left side column. contains the logo and sidebar -->
-  @include('web::includes.sidebar')
+<!-- Left side column. contains the logo and sidebar -->
+@include('web::includes.sidebar')
 
-          <!-- Content Wrapper. Contains page content -->
+<!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
 
     <!-- Content Header (Page header) -->
@@ -56,9 +56,9 @@
     <section class="content">
 
       <!-- Notifications -->
-      @include('web::includes.notifications')
+    @include('web::includes.notifications')
 
-              <!-- Page Content Here -->
+    <!-- Page Content Here -->
       @yield('content')
 
     </section>

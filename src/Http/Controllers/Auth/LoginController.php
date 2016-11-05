@@ -52,21 +52,21 @@ class LoginController extends Controller
     protected $redirectTo = '/home';
 
     /**
-     * @return string
-     */
-    public function username()
-    {
-
-        return 'name';
-    }
-
-    /**
      * LoginController constructor.
      */
     public function __construct()
     {
 
         $this->middleware('guest', ['except' => 'logout']);
+    }
+
+    /**
+     * @return string
+     */
+    public function username()
+    {
+
+        return 'name';
     }
 
     /**

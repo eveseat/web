@@ -26,7 +26,7 @@
     <form action="{{ route('support.search') }}" method="get" class="sidebar-form">
       <div class="input-group">
         <input type="text" name="q" class="form-control" placeholder="{{ trans('web::seat.search') }}...">
-          <span class="input-group-btn">
+        <span class="input-group-btn">
             <button type="submit" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
             </button>
           </span>

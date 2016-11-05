@@ -233,7 +233,7 @@ class KeyController extends Controller
 
     /**
      * @param \Seat\Eveapi\Helpers\JobPayloadContainer $job
-     * @param                                   $api_key
+     * @param                                          $api_key
      *
      * @return \Illuminate\Http\RedirectResponse
      */

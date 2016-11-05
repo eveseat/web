@@ -13,13 +13,13 @@
 
       <table class="table datatable compact table-condensed table-hover table-responsive">
         <thead>
-          <tr>
-            <th>{{ trans('web::seat.updated') }}</th>
-            <th>{{ trans('web::seat.system') }}</th>
-            <th>{{ trans('web::seat.planet') }}</th>
-            <th>{{ trans('web::seat.upgrade_level') }}</th>
-            <th>{{ trans('web::seat.no_pins') }}</th>
-          </tr>
+        <tr>
+          <th>{{ trans('web::seat.updated') }}</th>
+          <th>{{ trans('web::seat.system') }}</th>
+          <th>{{ trans('web::seat.planet') }}</th>
+          <th>{{ trans('web::seat.upgrade_level') }}</th>
+          <th>{{ trans('web::seat.no_pins') }}</th>
+        </tr>
         </thead>
         <tbody>
 

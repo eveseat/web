@@ -47,14 +47,14 @@
           </td>
           <td>
             <b>{{ $starbase->moonName }}</b>
-              <span class="
+            <span class="
                 @if($starbase->mapSecurity >= 0.5)
-                      text-green
-                    @elseif($starbase->mapSecurity < 0.5 && $starbase->mapSecurity > 0.0)
-                      text-warning
-                    @else
-                      text-red
-                    @endif">
+                    text-green
+                  @elseif($starbase->mapSecurity < 0.5 && $starbase->mapSecurity > 0.0)
+                    text-warning
+                  @else
+                    text-red
+                  @endif">
                 <i>({{ round($starbase->mapSecurity,  2) }})</i>
               </span>
           </td>

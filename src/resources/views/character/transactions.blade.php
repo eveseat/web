@@ -16,7 +16,8 @@
         </div>
         <div class="panel-body">
 
-          <form role="form" action="{{ route('character.view.transactions', ['character_id' => $request->character_id]) }}"
+          <form role="form"
+                action="{{ route('character.view.transactions', ['character_id' => $request->character_id]) }}"
                 method="get">
 
             <div class="box-body">
@@ -125,14 +126,14 @@
 
           <table class="table datatable compact table-condensed table-hover table-responsive">
             <thead>
-              <tr>
-                <th>{{ trans('web::seat.date') }}</th>
-                <th>{{ trans_choice('web::seat.type', 1) }}</th>
-                <th>{{ trans('web::seat.qty') }}</th>
-                <th>{{ trans('web::seat.price') }}</th>
-                <th>{{ trans('web::seat.total') }}</th>
-                <th>{{ trans('web::seat.client') }}</th>
-              </tr>
+            <tr>
+              <th>{{ trans('web::seat.date') }}</th>
+              <th>{{ trans_choice('web::seat.type', 1) }}</th>
+              <th>{{ trans('web::seat.qty') }}</th>
+              <th>{{ trans('web::seat.price') }}</th>
+              <th>{{ trans('web::seat.total') }}</th>
+              <th>{{ trans('web::seat.client') }}</th>
+            </tr>
             </thead>
             <tbody>
 

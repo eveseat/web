@@ -94,48 +94,6 @@ class WebServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-
-        // Merge the config with anything in the main app
-        $this->mergeConfigFrom(
-            __DIR__ . '/Config/web.config.php', 'web.config');
-        $this->mergeConfigFrom(
-            __DIR__ . '/Config/web.filter.rules.php', 'web.filter.rules');
-        $this->mergeConfigFrom(
-            __DIR__ . '/Config/web.permissions.php', 'web.permissions');
-
-        // Register the Google2FA into the IoC
-        $this->app->bind('google_2fa', function () {
-
-            return new Google2FA;
-        });
-
-        // Register the Socialite Factory.
-        // From: Laravel\Socialite\SocialiteServiceProvider
-        $this->app->singleton('Laravel\Socialite\Contracts\Factory', function ($app) {
-
-            return new SocialiteManager($app);
-        });
-
-        // Slap in the Eveonline Socialite Provider
-        $eveonline = $this->app->make('Laravel\Socialite\Contracts\Factory');
-        $eveonline->extend('eveonline',
-            function ($app) use ($eveonline) {
-
-                $config = $app['config']['services.eveonline'];
-
-                return $eveonline->buildProvider(EveOnlineProvider::class, $config);
-            }
-        );
-
-    }
-
-    /**
      * Include the routes
      */
     public function add_routes()
@@ -278,5 +236,47 @@ class WebServiceProvider extends ServiceProvider
     {
 
         Validator::extend('cron', 'Seat\Web\Validation\Custom\Cron@validate');
+    }
+
+    /**
+     * Register the application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+
+        // Merge the config with anything in the main app
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/web.config.php', 'web.config');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/web.filter.rules.php', 'web.filter.rules');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/web.permissions.php', 'web.permissions');
+
+        // Register the Google2FA into the IoC
+        $this->app->bind('google_2fa', function () {
+
+            return new Google2FA;
+        });
+
+        // Register the Socialite Factory.
+        // From: Laravel\Socialite\SocialiteServiceProvider
+        $this->app->singleton('Laravel\Socialite\Contracts\Factory', function ($app) {
+
+            return new SocialiteManager($app);
+        });
+
+        // Slap in the Eveonline Socialite Provider
+        $eveonline = $this->app->make('Laravel\Socialite\Contracts\Factory');
+        $eveonline->extend('eveonline',
+            function ($app) use ($eveonline) {
+
+                $config = $app['config']['services.eveonline'];
+
+                return $eveonline->buildProvider(EveOnlineProvider::class, $config);
+            }
+        );
+
     }
 }

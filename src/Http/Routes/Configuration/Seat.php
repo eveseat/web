@@ -30,6 +30,6 @@ Route::post('/update/settings', [
 ]);
 
 Route::get('/check/sde', [
-    'as' => 'check.sde',
+    'as'   => 'check.sde',
     'uses' => 'SeatController@getApprovedSDE'
 ]);

@@ -44,8 +44,8 @@
 
                     <li data-toggle="tooltip" title=""
                         @if($skill->endTime != '0000-00-00 00:00:00')
-                          data-original-title="Ends {{ human_diff($skill->endTime) }} at {{ $skill->endTime }}"
-                        @endif
+                        data-original-title="Ends {{ human_diff($skill->endTime) }} at {{ $skill->endTime }}"
+                            @endif
                     >
                       {{ $skill->typeName }} {{ $skill->level }}
                     </li>

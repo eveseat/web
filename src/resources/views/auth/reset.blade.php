@@ -16,14 +16,15 @@
     </p>
 
     <form action="{{ route('password.reset.post') }}" class="form-horizontal" method="post">
-      {{ csrf_field() }}
+    {{ csrf_field() }}
 
-      <!-- The reset token from the Email -->
+    <!-- The reset token from the Email -->
       <input type="hidden" name="token" value="{{ $token }}">
 
       <div class="box-body">
         <div class="form-group has-feedback">
-          <input type="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="{{ trans('web::seat.email') }}">
+          <input type="email" name="email" class="form-control" value="{{ old('email') }}"
+                 placeholder="{{ trans('web::seat.email') }}">
           <span class="glyphicon glyphicon-user form-control-feedback"></span>
         </div>
 
@@ -33,7 +34,8 @@
         </div>
 
         <div class="form-group has-feedback">
-          <input type="password" name="password_confirmation" class="form-control" placeholder="{{ trans('web::seat.password_again') }}">
+          <input type="password" name="password_confirmation" class="form-control"
+                 placeholder="{{ trans('web::seat.password_again') }}">
           <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
 

@@ -74,9 +74,9 @@
               <div class="pull-right">
                 <form role="form" action="{{ route('auth.logout') }}" method="post">
                   {{ csrf_field() }}
-                    <button type="submit" class="btn btn-default btn-flat">
-                      {{ trans('web::seat.sign_out') }}
-                    </button>
+                  <button type="submit" class="btn btn-default btn-flat">
+                    {{ trans('web::seat.sign_out') }}
+                  </button>
                 </form>
               </div>
             </li>
