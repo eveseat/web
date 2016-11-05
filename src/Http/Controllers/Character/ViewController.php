@@ -21,7 +21,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Character;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Seat\Services\Repositories\Character\Assets;
 use Seat\Services\Repositories\Character\Bookmarks;
@@ -44,6 +43,7 @@ use Seat\Services\Repositories\Character\Skills;
 use Seat\Services\Repositories\Character\Standings;
 use Seat\Services\Repositories\Character\Wallet;
 use Seat\Services\Repositories\Eve\EveRepository;
+use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Validation\Permission;
 
 /**

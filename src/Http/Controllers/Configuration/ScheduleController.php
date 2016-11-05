@@ -21,10 +21,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Configuration;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Artisan;
 use Seat\Services\Models\Schedule;
+use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Validation\NewSchedule;
 
 /**

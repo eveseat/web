@@ -21,7 +21,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Seat\Services\Repositories\Corporation\Assets;
 use Seat\Services\Repositories\Corporation\Bookmarks;
@@ -37,6 +36,7 @@ use Seat\Services\Repositories\Corporation\Standings;
 use Seat\Services\Repositories\Corporation\Starbases;
 use Seat\Services\Repositories\Corporation\Wallet;
 use Seat\Services\Repositories\Eve\EveRepository;
+use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Validation\StarbaseModule;
 
 /**

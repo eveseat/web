@@ -21,10 +21,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
-use App\Http\Controllers\Controller;
 use Seat\Services\Repositories\Corporation\Ledger;
 use Seat\Services\Repositories\Corporation\Security;
 use Seat\Services\Repositories\Corporation\Wallet;
+use Seat\Web\Http\Controllers\Controller;
 
 /**
  * Class ViewController

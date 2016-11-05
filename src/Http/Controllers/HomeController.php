@@ -21,7 +21,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Seat\Services\Repositories\Eve\EveRepository;
 use Seat\Services\Settings\Seat;
 

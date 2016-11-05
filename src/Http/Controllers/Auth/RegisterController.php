@@ -21,9 +21,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\User;
+use Seat\Web\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Seat\Web\Http\Controllers\Controller;
 use Validator;
 
 class RegisterController extends Controller

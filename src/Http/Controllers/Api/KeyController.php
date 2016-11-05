@@ -21,7 +21,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Pheal\Pheal;
 use Seat\Eveapi\Helpers\JobPayloadContainer;
@@ -29,6 +28,7 @@ use Seat\Eveapi\Jobs\CheckAndQueueKey;
 use Seat\Eveapi\Models\Eve\ApiKey as ApiKeyModel;
 use Seat\Eveapi\Models\JobTracking;
 use Seat\Eveapi\Traits\JobManager;
+use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\User;
 use Seat\Web\Validation\ApiKey;
 use Seat\Web\Validation\Permission;

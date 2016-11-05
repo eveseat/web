@@ -21,12 +21,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Profile;
 
-use App\Http\Controllers\Controller;
-use Seat\Services\Repositories\Character\Character;
 use Seat\Services\Repositories\Character\Info;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Services\Settings\Profile;
 use Seat\Services\Settings\UserSettings;
+use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Validation\EmailUpdate;
 use Seat\Web\Validation\PasswordUpdate;
 use Seat\Web\Validation\ProfileSettings;
@@ -38,9 +37,7 @@ use Seat\Web\Validation\ProfileSettings;
 class ProfileController extends Controller
 {
 
-    use UserRespository;
-
-    use Info;
+    use UserRespository, Info;
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

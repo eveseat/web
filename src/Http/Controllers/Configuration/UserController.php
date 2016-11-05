@@ -21,9 +21,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Configuration;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Seat\Services\Repositories\Configuration\UserRespository;
+use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\User;
 use Seat\Web\Validation\EditUser;
 use Seat\Web\Validation\NewUser;

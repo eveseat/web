@@ -21,11 +21,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Configuration;
 
-use App\Http\Controllers\Controller;
 use Seat\Services\Repositories\Character\Character;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Services\Repositories\Corporation\Corporation;
 use Seat\Web\Acl\AccessManager;
+use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Validation\Permission;
 use Seat\Web\Validation\Role;
 use Seat\Web\Validation\RoleAffilliation;

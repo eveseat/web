@@ -21,10 +21,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use Laravel\Socialite\Contracts\Factory as Socialite;
 use Seat\Services\Settings\Profile;
 use Seat\Services\Settings\Seat;
+use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\User;
 
 /**

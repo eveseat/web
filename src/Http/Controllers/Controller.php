@@ -19,23 +19,14 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Http\Controllers\Auth;
+namespace Seat\Web\Http\Controllers;
 
-use Seat\Web\Http\Controllers\Controller;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Routing\Controller as BaseController;
 
-/**
- * Class AuthorizationController
- * @package Seat\Web\Http\Controllers\Auth
- */
-class AuthorizationController extends Controller
+class Controller extends BaseController
 {
 
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getUnauthorized()
-    {
-
-        return view('web::auth.unauthorized');
-    }
+//    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use ValidatesRequests;
 }

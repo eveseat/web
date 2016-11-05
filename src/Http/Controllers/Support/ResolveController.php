@@ -21,10 +21,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Support;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Cache;
 use Illuminate\Http\Request;
+use Seat\Web\Http\Controllers\Controller;
 
 /**
  * Class ResolveController
