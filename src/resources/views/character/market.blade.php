@@ -69,6 +69,13 @@
       </table>
 
     </div>
+
+    @if($orders->render())
+      <div class="panel-footer">
+        {!! $orders->render() !!}
+      </div>
+    @endif
+
   </div>
 
 @stop
