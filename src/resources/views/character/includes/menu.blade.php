@@ -11,9 +11,13 @@
 
           <a href="{{ route($menu_entry['route'], $summary->characterID) }}">
             @if (array_key_exists('label', $menu_entry))
-            {{ trans($menu_entry['label']) }}
+              @if(array_key_exists('plural', $menu_entry))
+                {{ trans_choice($menu_entry['label'], 2) }}
+              @else
+                {{ trans($menu_entry['label']) }}
+              @endif
             @else
-            {{ $menu_entry['name'] }}
+              {{ $menu_entry['name'] }}
             @endif
           </a>
 

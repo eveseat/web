@@ -30,6 +30,7 @@ return [
     [
         'name'           => 'bookmarks',
         'label'          => 'web::seat.bookmark',
+        'plural'         => true,
         'permission'     => 'character.bookmarks',
         'highlight_view' => 'bookmarks',
         'route'          => 'character.view.bookmarks'
@@ -68,6 +69,13 @@ return [
         'permission'     => 'character.industry',
         'highlight_view' => 'industry',
         'route'          => 'character.view.industry'
+    ],
+    [
+        'name'           => 'intel',
+        'label'          => 'web::seat.intel',
+        'permission'     => 'character.intel',
+        'highlight_view' => 'intel',
+        'route'          => 'character.view.intel.summary'
     ],
     [
         'name'           => 'killmails',

@@ -30,6 +30,7 @@ return [
     [
         'name'           => 'bookmark',
         'label'          => 'web::seat.bookmark',
+        'plural'         => true,
         'permission'     => 'corporation.bookmarks',
         'highlight_view' => 'bookmarks',
         'route'          => 'corporation.view.bookmarks'
@@ -86,6 +87,7 @@ return [
     [
         'name'           => 'starbase',
         'label'          => 'web::seat.starbase',
+        'plural'         => true,
         'permission'     => 'corporation.starbases',
         'highlight_view' => 'starbases',
         'route'          => 'corporation.view.starbases'

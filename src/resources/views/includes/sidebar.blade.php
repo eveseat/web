@@ -47,9 +47,16 @@
             <a href="#">
               <i class="fa {{ $entry['icon'] }}"></i>
               @if (array_key_exists('label', $entry))
-              <span>{{ trans($entry['label']) }}</span> <i class="fa fa-angle-left pull-right"></i>
+                <span>
+                  @if(array_key_exists('plural', $entry))
+                    {{ trans_choice($entry['label'], 2) }}
+                  @else
+                    {{ trans($entry['label']) }}
+                  @endif
+                </span>
+                <i class="fa fa-angle-left pull-right"></i>
               @else
-              <span>{{ $entry['name'] }}</span> <i class="fa fa-angle-left pull-right"></i>
+                <span>{{ $entry['name'] }}</span> <i class="fa fa-angle-left pull-right"></i>
               @endif
             </a>
             <ul class="treeview-menu">
@@ -59,9 +66,9 @@
                 <li class="{{ isset($item['route']) ? (Request::url() === route($item['route']) ? 'active' : null) : null }}">
                   <a href="{{ isset($item['route']) ? route($item['route']) : '#' }}">
                     @if (array_key_exists('label', $item))
-                    <i class="fa {{ $item['icon'] or 'fa-circle-o' }}"></i> {{ trans($item['label']) }}
+                      <i class="fa {{ $item['icon'] or 'fa-circle-o' }}"></i> {{ trans($item['label']) }}
                     @else
-                    <i class="fa {{ $item['icon'] or 'fa-circle-o' }}"></i> {{ $item['name'] }}
+                      <i class="fa {{ $item['icon'] or 'fa-circle-o' }}"></i> {{ $item['name'] }}
                     @endif
                   </a>
                 </li>
@@ -76,9 +83,9 @@
           <li class="{{ Request::segment(1) === $entry['route_segment'] ? 'active' : null }}">
             <a href="{{ isset($entry['route']) ? route($entry['route']) : '#' }}">
               @if (array_key_exists('label', $entry))
-              <i class="fa {{ $entry['icon'] }}"></i> <span>{{ trans($entry['label']) }}</span>
+                <i class="fa {{ $entry['icon'] }}"></i> <span>{{ trans($entry['label']) }}</span>
               @else
-              <i class="fa {{ $entry['icon'] }}"></i> <span>{{ $entry['name'] }}</span>
+                <i class="fa {{ $entry['icon'] }}"></i> <span>{{ $entry['name'] }}</span>
               @endif
             </a>
           </li>
