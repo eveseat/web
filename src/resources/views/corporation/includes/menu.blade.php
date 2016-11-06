@@ -10,7 +10,11 @@
             class="@if ($viewname == $menu_entry['highlight_view']) active @endif">
 
           <a href="{{ route($menu_entry['route'], $sheet->corporationID) }}">
-            {{ $menu_entry['name'] }}
+              @if (array_key_exists('label', $menu_entry))
+              {{ trans($menu_entry['label']) }}
+              @else
+              {{ $menu_entry['name'] }}
+              @endif
           </a>
 
         </li>
