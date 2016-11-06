@@ -1,0 +1,135 @@
+<?php
+/*
+This file is part of SeAT
+
+Copyright (C) 2015, 2016  Leon Jacobs
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*/
+
+return [
+    [
+        'name'           => 'assets',
+        'label'          => 'web::seat.assets',
+        'permission'     => 'corporation.assets',
+        'highlight_view' => 'assets',
+        'route'          => 'corporation.view.assets'
+    ],
+    [
+        'name'           => 'bookmark',
+        'label'          => 'web::seat.bookmark',
+        'permission'     => 'corporation.bookmarks',
+        'highlight_view' => 'bookmarks',
+        'route'          => 'corporation.view.bookmarks'
+    ],
+    [
+        'name'           => 'contacts',
+        'label'          => 'web::seat.contacts',
+        'permission'     => 'corporation.contacts',
+        'highlight_view' => 'contacts',
+        'route'          => 'corporation.view.contacts'
+    ],
+    [
+        'name'           => 'contracts',
+        'label'          => 'web::seat.contracts',
+        'permission'     => 'corporation.contracts',
+        'highlight_view' => 'contracts',
+        'route'          => 'corporation.view.contracts'
+    ],
+    [
+        'name'           => 'industry',
+        'label'          => 'web::seat.industry',
+        'permission'     => 'corporation.industry',
+        'highlight_view' => 'industry',
+        'route'          => 'corporation.view.industry'
+    ],
+    [
+        'name'           => 'killmails',
+        'label'          => 'web::seat.killmails',
+        'permission'     => 'corporation.killmails',
+        'highlight_view' => 'killmails',
+        'route'          => 'corporation.view.killmails'
+    ],
+    [
+        'name'           => 'market',
+        'label'          => 'web::seat.market',
+        'permission'     => 'corporation.market',
+        'highlight_view' => 'market',
+        'route'          => 'corporation.view.market'
+    ],
+    [
+        'name'           => 'pocos',
+        'label'          => 'web::seat.pocos',
+        'permission'     => 'corporation.pocos',
+        'highlight_view' => 'pocos',
+        'route'          => 'corporation.view.pocos'
+    ],
+    [
+        'name'           => 'security',
+        'label'          => 'web::seat.security',
+        'permission'     => 'corporation.security',
+        'highlight_view' => 'security',
+        'route'          => 'corporation.view.security.roles'
+    ],
+    [
+        'name'           => 'starbase',
+        'label'          => 'web::seat.starbase',
+        'permission'     => 'corporation.starbases',
+        'highlight_view' => 'starbases',
+        'route'          => 'corporation.view.starbases'
+    ],
+    [
+        'name'           => 'summary',
+        'label'          => 'web::seat.summary',
+        'permission'     => 'corporation.summary',
+        'highlight_view' => 'summary',
+        'route'          => 'corporation.view.summary'
+    ],
+    [
+        'name'           => 'standings',
+        'label'          => 'web::seat.standings',
+        'permission'     => 'corporation.standings',
+        'highlight_view' => 'standings',
+        'route'          => 'corporation.view.standings'
+    ],
+    [
+        'name'           => 'tracking',
+        'label'          => 'web::seat.tracking',
+        'permission'     => 'corporation.tracking',
+        'highlight_view' => 'tracking',
+        'route'          => 'corporation.view.tracking'
+    ],
+    [
+        'name'           => 'ledger',
+        'label'          => 'web::seat.ledger',
+        'permission'     => 'corporation.journal',
+        'highlight_view' => 'ledger',
+        'route'          => 'corporation.view.ledger.summary'
+    ],
+    [
+        'name'           => 'wallet journal',
+        'label'          => 'web::seat.wallet_journal',
+        'permission'     => 'corporation.journal',
+        'highlight_view' => 'journal',
+        'route'          => 'corporation.view.journal'
+    ],
+    [
+        'name'           => 'wallet transactions',
+        'label'          => 'web::seat.wallet_transactions',
+        'permission'     => 'corporation.transactions',
+        'highlight_view' => 'transactions',
+        'route'          => 'corporation.view.transactions'
+    ]
+];

@@ -253,6 +253,12 @@ class WebServiceProvider extends ServiceProvider
             __DIR__ . '/Config/web.filter.rules.php', 'web.filter.rules');
         $this->mergeConfigFrom(
             __DIR__ . '/Config/web.permissions.php', 'web.permissions');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/package.sidebar.php', 'package.sidebar');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/package.character.menu.php', 'package.character.menu');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/package.corporation.menu.php', 'package.corporation.menu');
 
         // Register the Google2FA into the IoC
         $this->app->bind('google_2fa', function () {
