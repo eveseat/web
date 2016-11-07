@@ -21,12 +21,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Composers;
 
-
 use Illuminate\Contracts\View\View;
 use Seat\Web\Exceptions\PackageMenuBuilderException;
 
 abstract class AbstractMenu
 {
+
     /**
      * Return required keys in menu structure
      *
@@ -63,6 +63,7 @@ abstract class AbstractMenu
      */
     public function load_plugin_menu($package_name, $menu_data)
     {
+
         // Validate the package menu
         $this->validate_menu($package_name, $menu_data);
 
@@ -85,6 +86,7 @@ abstract class AbstractMenu
      */
     public function validate_menu($package_name, $menu_data)
     {
+
         if (!is_string($package_name))
             throw new PackageMenuBuilderException(
                 'Package root menu items should be named by string type');
