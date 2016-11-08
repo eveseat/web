@@ -150,6 +150,7 @@ return [
     'configuration'         => 'Configuration',
     'access'                => 'Access Management',
     'other'                 => 'Other',
+    'tools'                 => 'Tools',
     'security_logs'         => 'Security Logs',
     'import'                => 'Import API Keys',
     'settings'              => 'SeAT Settings',
@@ -168,6 +169,7 @@ return [
     'contacts'                    => 'Contacts',
     'contracts'                   => 'Contracts',
     'industry'                    => 'Industry',
+    'intel'                       => 'Intel',
     'killmails'                   => 'Killmails',
     'mail'                        => 'Mail',
     'market'                      => 'Market',
@@ -414,6 +416,11 @@ return [
     'coordinates'                  => 'Coordinates',
     'folder'                       => 'Folder',
 
+    // Character Intel
+    'loading_journal'              => 'Loading Journal Entries ...',
+    'loading_transactions'         => 'Loading Transaction Entries ...',
+    'loading_mail'                 => 'Loading Mail Entries...',
+
     // Corporation
     'alliance'                     => 'Alliance',
     'ticker'                       => 'Ticker',
@@ -537,6 +544,9 @@ return [
     'eve_api_status'               => 'Eve Api Status',
     'eve_api_error_threshold'      => 'EVE API Error Threshold',
     'eve_api_connection_threshold' => 'EVE API Connection Error Threshold',
+
+    // Tools
+    'standings_builder'            => 'Standings Builder',
 
     // Footer
     'web_version'                  => 'Web Version',

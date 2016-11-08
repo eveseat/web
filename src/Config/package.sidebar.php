@@ -20,14 +20,14 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 */
 
 return [
-    'web.home' => [
+    'web.home'          => [
         'name'          => 'home',
         'label'         => 'web::seat.home',
         'icon'          => 'fa-home',
         'route_segment' => 'home',
         'route'         => 'home'
     ],
-    'web.api-key' => [
+    'web.api-key'       => [
         'name'          => 'api key management',
         'label'         => 'web::seat.api_key_management',
         'icon'          => 'fa-key',
@@ -53,9 +53,10 @@ return [
             ]
         ]
     ],
-    'web.corporation' => [
+    'web.corporation'   => [
         'name'          => 'corporation',
         'label'         => 'web::seat.corporation',
+        'plural'        => true,
         'icon'          => 'fa-building',
         'route_segment' => 'corporation',
         'entries'       => [
@@ -67,9 +68,10 @@ return [
             ]
         ]
     ],
-    'web.character' => [
+    'web.character'     => [
         'name'          => 'character',
         'label'         => 'web::seat.character',
+        'plural'        => true,
         'icon'          => 'fa-user',
         'route_segment' => 'character',
         'entries'       => [
@@ -132,5 +134,19 @@ return [
                 'route' => 'configuration.security.logs'
             ],
         ]
-    ]
+    ],
+    'web.tools'         => [
+        'name'          => 'tools',
+        'label'         => 'web::seat.tools',
+        'icon'          => 'fa-wrench',
+        'route_segment' => 'tools',
+        'entries'       => [
+            [
+                'name'  => 'standing profiles',
+                'label' => 'web::seat.standings_builder',
+                'icon'  => 'fa-dot-circle-o',
+                'route' => 'tools.standings'
+            ]
+        ]
+    ],
 ];

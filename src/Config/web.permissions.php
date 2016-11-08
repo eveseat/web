@@ -40,6 +40,7 @@ return [
         'contacts',
         'contracts',
         'industry',
+        'intel',
         'killmails',
         'list',
         'mail',

@@ -22,7 +22,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Http\Composers;
 
 use Illuminate\Contracts\View\View;
-use Seat\Web\Exceptions\PackageMenuBuilderException;
 
 /**
  * Class CharacterMenu
@@ -30,6 +29,7 @@ use Seat\Web\Exceptions\PackageMenuBuilderException;
  */
 class CharacterMenu extends AbstractMenu
 {
+
     /**
      * Create a new sidebar composer.
      */
@@ -45,6 +45,7 @@ class CharacterMenu extends AbstractMenu
      */
     public function getRequiredKeys() : array
     {
+
         return [
             'name', 'permission', 'highlight_view', 'route'
         ];
@@ -59,15 +60,19 @@ class CharacterMenu extends AbstractMenu
      */
     public function compose(View $view)
     {
+
         // This menu item declares the menu and
         // sets it as an array of arrays.
         $menu = [];
 
         // Load any package menus
         if (!empty(config('package.character.menu'))) {
+
             foreach (config('package.character.menu') as $menu_data) {
+
                 $prepared_menu = $this->load_plugin_menu('character', $menu_data);
                 array_push($menu, $prepared_menu);
+
             }
         }
 
@@ -75,6 +80,7 @@ class CharacterMenu extends AbstractMenu
         $menu = array_values(array_sort($menu, function ($value) {
 
             return $value['name'];
+
         }));
 
         $view->with('menu', $menu);

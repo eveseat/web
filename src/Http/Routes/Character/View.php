@@ -66,6 +66,51 @@ Route::get('/view/industry/{character_id}', [
     'uses'       => 'IndustryController@getIndustry'
 ]);
 
+Route::group(['prefix' => 'view/intel'], function () {
+
+    Route::get('summary/{character_id}', [
+        'as'         => 'character.view.intel.summary',
+        'middleware' => 'characterbouncer:intel',
+        'uses'       => 'IntelController@getIntelSummary'
+    ]);
+
+    // Ajax Call Journal
+    Route::get('summary/ajax/journal/{character_id}', [
+        'as'         => 'character.view.intel.summary.ajax.journal',
+        'middleware' => 'characterbouncer:intel',
+        'uses'       => 'IntelController@getAjaxTopWalletJournal'
+    ]);
+
+    // Transactions
+    Route::get('summary/ajax/transactions/{character_id}', [
+        'as'         => 'character.view.intel.summary.ajax.transactions',
+        'middleware' => 'characterbouncer:intel',
+        'uses'       => 'IntelController@getAjaxTopTransactions'
+    ]);
+
+    // Mail
+    Route::get('summary/ajax/mail/{character_id}', [
+        'as'         => 'character.view.intel.summary.ajax.mail',
+        'middleware' => 'characterbouncer:intel',
+        'uses'       => 'IntelController@getAjaxTopMailFrom'
+    ]);
+
+    // Standings Comparison
+    Route::get('comparison/{character_id}', [
+        'as'         => 'character.view.intel.standingscomparison',
+        'middleware' => 'characterbouncer:intel',
+        'uses'       => 'IntelController@getStandingsComparison'
+    ]);
+
+    // Standings Comparison Ajax result
+    Route::get('comparison/ajax/{character_id}/{profile_id}', [
+        'as'         => 'character.view.intel.ajax.standingscomparison',
+        'middleware' => 'characterbouncer:intel',
+        'uses'       => 'IntelController@getAjaxCompareStandingsWithProfile'
+    ]);
+
+});
+
 Route::get('/view/journal/{character_id}', [
     'as'         => 'character.view.journal',
     'middleware' => 'characterbouncer:journal',

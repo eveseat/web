@@ -22,7 +22,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Http\Composers;
 
 use Illuminate\Contracts\View\View;
-use Seat\Web\Exceptions\PackageMenuBuilderException;
 
 /**
  * Class User
@@ -46,6 +45,7 @@ class Sidebar extends AbstractMenu
      */
     public function getRequiredKeys() : array
     {
+
         return [
             'name', 'route_segment'
         ];
