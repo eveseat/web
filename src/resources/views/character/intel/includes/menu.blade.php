@@ -11,8 +11,8 @@
         Standings Compare
       </a>
     </li>
-    <li role="presentation" class="@if ($sub_viewname == 'log') active @endif">
-      <a href="{{ route('corporation.view.security.log', $summary->characterID) }}">
+    <li role="presentation" class="@if ($sub_viewname == 'journal_detail') active @endif">
+      <a href="{{ route('character.view.intel.journaldetail', $summary->characterID) }}">
         Journal Detail
       </a>
     </li>

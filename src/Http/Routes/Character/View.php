@@ -109,6 +109,13 @@ Route::group(['prefix' => 'view/intel'], function () {
         'uses'       => 'IntelController@getAjaxCompareStandingsWithProfile'
     ]);
 
+    // Journal Detail
+    Route::get('journal-detail/{character_id}', [
+        'as'         => 'character.view.intel.journaldetail',
+        'middleware' => 'characterbouncer:intel',
+        'uses'       => 'IntelController@getStandingsJournalDetail'
+    ]);
+
 });
 
 Route::get('/view/journal/{character_id}', [

@@ -119,4 +119,12 @@ class IntelController extends Controller
 
     }
 
+    public function getStandingsJournalDetail(int $character_id)
+    {
+
+        $profiles = $this->standingsProfiles();
+
+        return view('web::character.intel.journaldetail', compact('profiles'));
+    }
+
 }
