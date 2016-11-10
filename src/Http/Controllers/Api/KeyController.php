@@ -32,6 +32,7 @@ use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\User;
 use Seat\Web\Validation\ApiKey;
 use Seat\Web\Validation\Permission;
+use Yajra\Datatables\Datatables;
 
 /**
  * Class KeyController
@@ -139,15 +140,68 @@ class KeyController extends Controller
     public function listAll()
     {
 
-        $keys = ApiKeyModel::with('info', 'characters');
+        return view('web::api.list');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function listAllData()
+    {
+
+        $keys = ApiKeyModel::with('info');
 
         if (!auth()->user()->has('apikey.list', false))
             $keys = $keys
                 ->where('user_id', auth()->user()->id);
 
-        $keys = $keys->get();
+        // Return data that datatables can understand
+        return Datatables::of($keys)
+            ->editColumn('info.expired', function ($column) {
 
-        return view('web::api.list', compact('keys'));
+                // Format dates for expired for sorting reasons
+                return carbon($column->expires)->format('d/m/y');
+            })
+            ->addColumn('characters', function ($row) {
+
+                // Include a view to show characters on a key
+                return view('web::api.partial.character', compact('row'))
+                    ->render();
+            })
+            ->addColumn('actions', function ($row) {
+
+                // Detail & Delete buttons
+                return view('web::api.partial.actions', compact('row'))
+                    ->render();
+            })
+            ->filter(function ($query) {
+
+                // Define the filter() method so on fields
+                // where it makes sense. Unfortunately this had
+                // to be done because of the way the characters
+                // are incuded on a key.
+
+                $query->whereHas('characters', function ($filter) {
+
+                    $filter->where(
+                        'characterName', 'like', '%' . request()->input('search')['value'] . '%');
+
+                })->orWhereHas('info', function ($filter) {
+
+                    $filter->where(
+                        'type', 'like', '%' . request()->input('search')['value'] . '%');
+
+                });
+            })
+            ->setRowClass(function ($row) {
+
+                // Make disabled keys red.
+                if (!$row->enabled)
+                    return 'danger';
+            })
+            ->removeColumn('v_code')
+            ->make(true);
+
     }
 
     /**

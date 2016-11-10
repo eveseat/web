@@ -24,6 +24,7 @@ namespace Seat\Web;
 use Illuminate\Auth\Events\Attempting;
 use Illuminate\Auth\Events\Login as LoginEvent;
 use Illuminate\Auth\Events\Logout as LogoutEvent;
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Socialite\SocialiteManager;
@@ -284,6 +285,15 @@ class WebServiceProvider extends ServiceProvider
                 return $eveonline->buildProvider(EveOnlineProvider::class, $config);
             }
         );
+
+        // Register the datatables package! Thanks
+        //  https://laracasts.com/discuss/channels/laravel/register-service-provider-and-facade-within-service-provider
+        $this->app->register(
+            'Yajra\Datatables\DatatablesServiceProvider'
+        );
+
+        $loader = AliasLoader::getInstance();
+        $loader->alias('Datatables', 'Yajra\Datatables\Facades\Datatables');
 
     }
 }

@@ -77,7 +77,7 @@
 
 <!-- jQuery -->
 <script src="{{ asset('web/js/jquery.min.js') }}"></script>
-<!-- Bootstrap 3.3.5 -->
+<!-- Bootstrap -->
 <script src="{{ asset('web/js/bootstrap.min.js') }}"></script>
 <!-- Select2 -->
 <script src="{{ asset('web/js/select2.full.min.js') }}"></script>
