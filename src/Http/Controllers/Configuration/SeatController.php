@@ -21,11 +21,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Configuration;
 
-use App\Http\Controllers\Controller;
 use Cache;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Seat\Services\Settings\Seat;
+use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Validation\SeatSettings;
 
 /**

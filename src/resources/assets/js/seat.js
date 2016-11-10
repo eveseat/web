@@ -22,7 +22,7 @@ $(document).on("click", ".confirmform", function (e) {
 // Generic 'confirm' dialog code for links.
 // Make your link button part of class confirmlink, and viola
 $(document).on("click", "a.confirmlink", function (event) {
-    event.preventDefault()
+    event.preventDefault();
     var url = $(this).attr("href");
     bootbox.confirm("Are you sure you want to continue?", function (confirmed) {
         if (confirmed) {

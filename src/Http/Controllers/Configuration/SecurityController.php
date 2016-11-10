@@ -21,8 +21,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Configuration;
 
-use App\Http\Controllers\Controller;
 use Seat\Services\Repositories\Configuration\SecurityRepository;
+use Seat\Web\Http\Controllers\Controller;
 
 /**
  * Class SecurityController

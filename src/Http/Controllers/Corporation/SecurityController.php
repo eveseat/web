@@ -21,9 +21,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
-use App\Http\Controllers\Controller;
 use Seat\Services\Repositories\Corporation\Corporation;
 use Seat\Services\Repositories\Corporation\Security;
+use Seat\Web\Http\Controllers\Controller;
 
 /**
  * Class ViewController
@@ -41,7 +41,7 @@ class SecurityController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getRoles($corporation_id)
+    public function getRoles(int $corporation_id)
     {
 
         $security = $this->getCorporationMemberSecurity($corporation_id);
@@ -54,7 +54,7 @@ class SecurityController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getTitles($corporation_id)
+    public function getTitles(int $corporation_id)
     {
 
         $titles = $this->getCorporationMemberSecurityTitles($corporation_id);
@@ -67,7 +67,7 @@ class SecurityController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getLog($corporation_id)
+    public function getLog(int $corporation_id)
     {
 
         $logs = $this->getCorporationMemberSecurityLogs($corporation_id);

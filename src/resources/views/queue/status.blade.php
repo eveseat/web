@@ -34,7 +34,7 @@
       </div><!-- /.info-box -->
     </div><!-- /.col -->
 
-    <!-- fix for small devices only -->
+          <!-- fix for small devices only -->
     <div class="clearfix visible-sm-block"></div>
 
     <div class="col-md-3 col-sm-6 col-xs-12">
@@ -92,7 +92,7 @@
               @else
                 0
               @endif
-              / {{ config('eveapi.config.limits.eveapi_errors')}}
+                / {{ config('eveapi.config.limits.eveapi_errors')}}
             </dd>
 
             <dt>{{ trans('web::seat.eve_api_connection_threshold') }}</dt>
@@ -102,7 +102,7 @@
               @else
                 0
               @endif
-              / {{ config('eveapi.config.limits.connection_errors')}}
+                / {{ config('eveapi.config.limits.connection_errors')}}
             </dd>
           </dl>
 
@@ -222,16 +222,16 @@
 
               @endforeach
 
-            @else
+              @else
 
-              <span class="text-muted">
+                <span class="text-muted">
                 {{ trans('web::seat.no_working') }}
               </span>
 
-            @endif
+              @endif
 
-            </tbody>
-          </table>
+              </tbody>
+            </table>
 
         </div>
       </div>
@@ -273,16 +273,16 @@
 
               @endforeach
 
-            @else
+              @else
 
-              <span class="text-muted">
+                <span class="text-muted">
                 {{ trans('web::seat.no_queue') }}
               </span>
 
-            @endif
+              @endif
 
-            </tbody>
-          </table>
+              </tbody>
+            </table>
 
         </div>
       </div>

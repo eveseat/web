@@ -56,7 +56,8 @@
               <td>{{ $job_error->scope }}</td>
               <td>{{ str_limit($job_error->output, 50, '...') }}</td>
               <td>
-                <a href="{{ route('queue.errors.detail', ['job_id' => $job_error->job_id]) }}" class="btn btn-xs btn-primary">
+                <a href="{{ route('queue.errors.detail', ['job_id' => $job_error->job_id]) }}"
+                   class="btn btn-xs btn-primary">
                   {{ trans('web::seat.view_full') }}
                 </a>
               </td>

@@ -25,7 +25,7 @@
 
           <div class="form-group">
             <label for="email">{{ trans_choice('web::seat.email', 1) }}</label>
-            <input type="email" name ="email" class="form-control" id="email" value="{{ $user->email }}">
+            <input type="email" name="email" class="form-control" id="email" value="{{ $user->email }}">
           </div>
 
           <div class="form-group">
@@ -35,13 +35,15 @@
 
           <div class="form-group">
             <label for="password_confirm">{{ trans_choice('web::seat.password_again', 1) }}</label>
-            <input type="password" name="password_confirmation" class="form-control" id="password_confirmation" placeholder="Password">
+            <input type="password" name="password_confirmation" class="form-control" id="password_confirmation"
+                   placeholder="Password">
           </div>
 
         </div><!-- /.box-body -->
 
         <div class="box-footer">
-          <a href="{{ route('configuration.users.edit.account_status', ['user_id' => $user->id]) }}" class="btn btn-{{ $user->active ? 'warning' : 'success' }} pull-left">
+          <a href="{{ route('configuration.users.edit.account_status', ['user_id' => $user->id]) }}"
+             class="btn btn-{{ $user->active ? 'warning' : 'success' }} pull-left">
             @if($user->active)
               {{ trans('web::seat.deactivate_user') }}
             @else
@@ -86,7 +88,7 @@
                 <td>{{ $role->title }}</td>
                 <td>
                   @foreach($role->permissions as $permission)
-                      <span class="label label-{{ $permission->title == 'superuser' ? 'danger' : 'info' }}">{{ studly_case($permission->title) }}</span>
+                    <span class="label label-{{ $permission->title == 'superuser' ? 'danger' : 'info' }}">{{ studly_case($permission->title) }}</span>
                   @endforeach
                 </td>
                 <td>
@@ -95,12 +97,14 @@
                   @endforeach
                 </td>
                 <td>
-                    <a href="{{ route('configuration.access.roles.edit', ['id' => $role->id]) }}" type="button" class="btn btn-warning btn-xs">
-                      {{ trans('web::seat.edit') }}
-                    </a>
-                    <a href="{{ route('configuration.access.roles.edit.remove.user', ['role_id' => $role->id, 'user_id' => $user->id]) }}" type="button" class="btn btn-danger btn-xs">
-                      {{ trans('web::seat.remove') }}
-                    </a>
+                  <a href="{{ route('configuration.access.roles.edit', ['id' => $role->id]) }}" type="button"
+                     class="btn btn-warning btn-xs">
+                    {{ trans('web::seat.edit') }}
+                  </a>
+                  <a href="{{ route('configuration.access.roles.edit.remove.user', ['role_id' => $role->id, 'user_id' => $user->id]) }}"
+                     type="button" class="btn btn-danger btn-xs">
+                    {{ trans('web::seat.remove') }}
+                  </a>
                 </td>
 
               </tr>

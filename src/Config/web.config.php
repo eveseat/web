@@ -36,7 +36,7 @@ return [
         'group'         => env('SUPERVISOR_GROUP', 'seat')
     ],
 
-    'languages'                => [
+    'languages' => [
         [
             'short' => 'af',
             'full'  => 'Afrikaans'

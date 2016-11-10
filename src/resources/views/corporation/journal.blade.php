@@ -17,7 +17,8 @@
         <div class="panel-body">
 
 
-          <form role="form" action="{{ route('corporation.view.journal', ['corporation_id' => $request->corporation_id]) }}"
+          <form role="form"
+                action="{{ route('corporation.view.journal', ['corporation_id' => $request->corporation_id]) }}"
                 method="get">
 
             <div class="box-body">
@@ -30,9 +31,9 @@
 
                     <option value="{{ $type->refTypeName }}"
                             @if(isset($request->filter['refTypeName']))
-                              @if(in_array($type->refTypeName, $request->filter['refTypeName'])))
-                                selected
-                              @endif
+                            @if(in_array($type->refTypeName, $request->filter['refTypeName'])))
+                            selected
+                            @endif
                             @endif>
                       {{ $type->refTypeName }}
                     </option>
@@ -96,14 +97,14 @@
 
           <table class="table datatable compact table-condensed table-hover table-responsive">
             <thead>
-              <tr>
-                <th>{{ trans('web::seat.date') }}</th>
-                <th>{{ trans_choice('web::seat.wallet_journal', 1) }}</th>
-                <th>{{ trans('web::seat.owner_1') }}</th>
-                <th>{{ trans('web::seat.owner_2') }}</th>
-                <th>{{ trans('web::seat.amount') }}</th>
-                <th>{{ trans('web::seat.balance') }}</th>
-              </tr>
+            <tr>
+              <th>{{ trans('web::seat.date') }}</th>
+              <th>{{ trans_choice('web::seat.wallet_journal', 1) }}</th>
+              <th>{{ trans('web::seat.owner_1') }}</th>
+              <th>{{ trans('web::seat.owner_2') }}</th>
+              <th>{{ trans('web::seat.amount') }}</th>
+              <th>{{ trans('web::seat.balance') }}</th>
+            </tr>
             </thead>
             <tbody>
 

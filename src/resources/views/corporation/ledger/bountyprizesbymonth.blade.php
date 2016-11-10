@@ -31,31 +31,32 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ trans_choice('web::seat.bountyprizesbymonth', 2) }} - {{ date("M Y", strtotime($year."-".$month."-01")) }}</h3>
+      <h3 class="panel-title">{{ trans_choice('web::seat.bountyprizesbymonth', 2) }}
+        - {{ date("M Y", strtotime($year."-".$month."-01")) }}</h3>
     </div>
 
     <div class="panel-body">
       <div>
         <table class="table datatable table-condensed table-hover table-responsive">
           <thead>
-            <tr>
-              <th>{{ trans_choice('web::seat.name', 1) }}</th>
-              <th>{{ trans_choice('web::seat.bountyprizetotal', 1) }}</th>
-            </tr>
+          <tr>
+            <th>{{ trans_choice('web::seat.name', 1) }}</th>
+            <th>{{ trans_choice('web::seat.bountyprizetotal', 1) }}</th>
+          </tr>
           </thead>
           <tbody>
 
-            @foreach ($bountyprizedates as $bpbm)
-              <tr>
-                <td data-order="{{ $bpbm->ownerName2 }}">
-                  <a href="{{ route('character.view.sheet', ['character_id' => $bpbm->ownerID2]) }}">
-                    {!! img('character', $bpbm->ownerID2, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                    {{ $bpbm->ownerName2 }}
-                  </a>
-                </td>
-                <td data-order="{{ number($bpbm->total) }}">{{ number($bpbm->total) }}</td>
-              </tr>
-            @endforeach
+          @foreach ($bountyprizedates as $bpbm)
+            <tr>
+              <td data-order="{{ $bpbm->ownerName2 }}">
+                <a href="{{ route('character.view.sheet', ['character_id' => $bpbm->ownerID2]) }}">
+                  {!! img('character', $bpbm->ownerID2, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  {{ $bpbm->ownerName2 }}
+                </a>
+              </td>
+              <td data-order="{{ number($bpbm->total) }}">{{ number($bpbm->total) }}</td>
+            </tr>
+          @endforeach
 
           </tbody>
         </table>

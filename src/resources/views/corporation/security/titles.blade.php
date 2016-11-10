@@ -19,7 +19,7 @@
           <tr class="active">
             <td colspan="4">
               <b>
-                  {{ strip_tags($data[0]->titleName) }}
+                {{ strip_tags($data[0]->titleName) }}
               </b>
               <span class="pull-right">
                 {{ count($titles->where('titleID', $titleID)) }}

@@ -47,6 +47,69 @@ class EveOnlineProvider extends AbstractProvider implements ProviderInterface
     protected $scopeSeparator = ' ';
 
     /**
+     * Get the User instance for the authenticated user.
+     *
+     * @return \Laravel\Socialite\Contracts\User
+     * @throws \Seat\Web\Extentions\InvalidStateException
+     */
+    public function user()
+    {
+
+        if ($this->hasInvalidState())
+            throw new InvalidStateException;
+
+        $tokens = $this->getAccessTokenResponse($this->getCode());
+
+        $user = $this->mapUserToObject(
+            array_merge(
+                $this->getUserByToken($tokens['access_token']), [
+                    'RefreshToken' => $tokens['refresh_token']
+                ]
+            )
+        );
+
+        return $user->setToken($tokens['access_token']);
+    }
+
+    /**
+     * Map the raw user array to a Socialite User instance.
+     *
+     * @param  array $user
+     *
+     * @return \Laravel\Socialite\Two\User
+     */
+    protected function mapUserToObject(array $user)
+    {
+
+        return (new User)->setRaw($user)->map([
+            'character_id' => $user['CharacterID'],
+            'name'         => $user['CharacterName'],
+            'eve_id'       => $user['CharacterOwnerHash'],
+            'avatar'       => $this->imageUrl . $user['CharacterID'] . '_128.jpg',
+        ]);
+    }
+
+    /**
+     * Get the raw user for the given access token.
+     *
+     * @param  string $token
+     *
+     * @return array
+     */
+    protected function getUserByToken($token)
+    {
+
+        $response = $this->getHttpClient()
+            ->get('https://login.eveonline.com/oauth/verify', [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $token
+                ],
+            ]);
+
+        return json_decode($response->getBody(), true);
+    }
+
+    /**
      * Get the authentication URL for the provider.
      *
      * @param  string $state
@@ -83,69 +146,6 @@ class EveOnlineProvider extends AbstractProvider implements ProviderInterface
     {
 
         return 'https://login.eveonline.com/oauth/token';
-    }
-
-    /**
-     * Get the raw user for the given access token.
-     *
-     * @param  string $token
-     *
-     * @return array
-     */
-    protected function getUserByToken($token)
-    {
-
-        $response = $this->getHttpClient()
-            ->get('https://login.eveonline.com/oauth/verify', [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $token
-                ],
-            ]);
-
-        return json_decode($response->getBody(), true);
-    }
-
-    /**
-     * Map the raw user array to a Socialite User instance.
-     *
-     * @param  array $user
-     *
-     * @return \Laravel\Socialite\Two\User
-     */
-    protected function mapUserToObject(array $user)
-    {
-
-        return (new User)->setRaw($user)->map([
-            'character_id' => $user['CharacterID'],
-            'name'         => $user['CharacterName'],
-            'eve_id'       => $user['CharacterOwnerHash'],
-            'avatar'       => $this->imageUrl . $user['CharacterID'] . '_128.jpg',
-        ]);
-    }
-
-    /**
-     * Get the User instance for the authenticated user.
-     *
-     * @return \Laravel\Socialite\Contracts\User
-     * @throws \Seat\Web\Extentions\InvalidStateException
-     */
-    public function user()
-    {
-
-        if ($this->hasInvalidState())
-            throw new InvalidStateException;
-
-        $tokens = $this->getAccessTokenResponse($this->getCode());
-
-        $user = $this->mapUserToObject(
-            array_merge(
-                $this->getUserByToken($tokens['access_token']), [
-                    'RefreshToken' => $tokens['refresh_token']
-                ]
-            )
-        );
-
-        return $user->setToken($tokens['access_token']);
     }
 
     /**

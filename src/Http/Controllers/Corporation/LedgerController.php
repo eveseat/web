@@ -21,10 +21,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
-use App\Http\Controllers\Controller;
 use Seat\Services\Repositories\Corporation\Ledger;
 use Seat\Services\Repositories\Corporation\Security;
 use Seat\Services\Repositories\Corporation\Wallet;
+use Seat\Web\Http\Controllers\Controller;
 
 /**
  * Class ViewController
@@ -42,7 +42,7 @@ class LedgerController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getWalletSummary($corporation_id)
+    public function getWalletSummary(int $corporation_id)
     {
 
         $ledger = $this->getCorporationMemberSecurity($corporation_id);
@@ -59,7 +59,7 @@ class LedgerController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getBountyPrizesByMonth($corporation_id, $year = null, $month = null)
+    public function getBountyPrizesByMonth(int $corporation_id, $year = null, $month = null)
     {
 
         !is_null($year) ? $year : $year = date("Y");
@@ -83,7 +83,7 @@ class LedgerController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getPlanetaryInteractionByMonth($corporation_id, $year = null, $month = null)
+    public function getPlanetaryInteractionByMonth(int $corporation_id, $year = null, $month = null)
     {
 
         !is_null($year) ? $year : $year = date("Y");

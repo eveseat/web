@@ -187,6 +187,15 @@ Route::group([
                 });
 
             });
+
+            // Tools Routes
+            Route::group([
+                'namespace' => 'Tools',
+                'prefix'    => 'tools'
+            ], function () {
+
+                include __DIR__ . '/Routes/Tools/Standings.php';
+            });
         });
 
     });

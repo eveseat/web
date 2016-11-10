@@ -24,6 +24,7 @@ namespace Seat\Web;
 use Illuminate\Auth\Events\Attempting;
 use Illuminate\Auth\Events\Login as LoginEvent;
 use Illuminate\Auth\Events\Logout as LogoutEvent;
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Socialite\SocialiteManager;
@@ -94,48 +95,6 @@ class WebServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-
-        // Merge the config with anything in the main app
-        $this->mergeConfigFrom(
-            __DIR__ . '/Config/web.config.php', 'web.config');
-        $this->mergeConfigFrom(
-            __DIR__ . '/Config/web.filter.rules.php', 'web.filter.rules');
-        $this->mergeConfigFrom(
-            __DIR__ . '/Config/web.permissions.php', 'web.permissions');
-
-        // Register the Google2FA into the IoC
-        $this->app->bind('google_2fa', function () {
-
-            return new Google2FA;
-        });
-
-        // Register the Socialite Factory.
-        // From: Laravel\Socialite\SocialiteServiceProvider
-        $this->app->singleton('Laravel\Socialite\Contracts\Factory', function ($app) {
-
-            return new SocialiteManager($app);
-        });
-
-        // Slap in the Eveonline Socialite Provider
-        $eveonline = $this->app->make('Laravel\Socialite\Contracts\Factory');
-        $eveonline->extend('eveonline',
-            function ($app) use ($eveonline) {
-
-                $config = $app['config']['services.eveonline'];
-
-                return $eveonline->buildProvider(EveOnlineProvider::class, $config);
-            }
-        );
-
-    }
-
-    /**
      * Include the routes
      */
     public function add_routes()
@@ -188,7 +147,8 @@ class WebServiceProvider extends ServiceProvider
         // Character info composer
         $this->app['view']->composer([
             'web::character.includes.summary',
-            'web::character.includes.menu'
+            'web::character.includes.menu',
+            'web::character.intel.includes.menu'
         ], CharacterSummary::class);
 
         // Character menu composer
@@ -246,7 +206,7 @@ class WebServiceProvider extends ServiceProvider
         $router->middleware('registration.status', RegistrationAllowed::class);
 
         // The Bouncer is responsible for checking hes
-        // Clipboard and ensuring that every request
+        // AccessChecker and ensuring that every request
         // that comes in is authorized
         $router->middleware('bouncer', Bouncer::class);
         $router->middleware('characterbouncer', CharacterBouncer::class);
@@ -278,5 +238,62 @@ class WebServiceProvider extends ServiceProvider
     {
 
         Validator::extend('cron', 'Seat\Web\Validation\Custom\Cron@validate');
+    }
+
+    /**
+     * Register the application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+
+        // Merge the config with anything in the main app
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/web.config.php', 'web.config');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/web.filter.rules.php', 'web.filter.rules');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/web.permissions.php', 'web.permissions');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/package.sidebar.php', 'package.sidebar');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/package.character.menu.php', 'package.character.menu');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/package.corporation.menu.php', 'package.corporation.menu');
+
+        // Register the Google2FA into the IoC
+        $this->app->bind('google_2fa', function () {
+
+            return new Google2FA;
+        });
+
+        // Register the Socialite Factory.
+        // From: Laravel\Socialite\SocialiteServiceProvider
+        $this->app->singleton('Laravel\Socialite\Contracts\Factory', function ($app) {
+
+            return new SocialiteManager($app);
+        });
+
+        // Slap in the Eveonline Socialite Provider
+        $eveonline = $this->app->make('Laravel\Socialite\Contracts\Factory');
+        $eveonline->extend('eveonline',
+            function ($app) use ($eveonline) {
+
+                $config = $app['config']['services.eveonline'];
+
+                return $eveonline->buildProvider(EveOnlineProvider::class, $config);
+            }
+        );
+
+        // Register the datatables package! Thanks
+        //  https://laracasts.com/discuss/channels/laravel/register-service-provider-and-facade-within-service-provider
+        $this->app->register(
+            'Yajra\Datatables\DatatablesServiceProvider'
+        );
+
+        $loader = AliasLoader::getInstance();
+        $loader->alias('Datatables', 'Yajra\Datatables\Facades\Datatables');
+
     }
 }

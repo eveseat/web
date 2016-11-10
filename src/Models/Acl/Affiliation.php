@@ -35,6 +35,7 @@ class Affiliation extends Model
      * @var bool
      */
     public $timestamps = false;
+
     /**
      * @var array
      */
@@ -46,7 +47,8 @@ class Affiliation extends Model
     public function users()
     {
 
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)
+            ->withPivot('not');
     }
 
     /**
@@ -55,7 +57,8 @@ class Affiliation extends Model
     public function roles()
     {
 
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Role::class)
+            ->withPivot('not');
     }
 
     /**

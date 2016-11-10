@@ -21,7 +21,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Auth;
 
-use Illuminate\Routing\Controller;
+use Seat\Web\Http\Controllers\Controller;
 
 /**
  * Class AuthorizationController

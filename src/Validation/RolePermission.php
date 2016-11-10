@@ -52,7 +52,8 @@ class RolePermission extends FormRequest
         // Start with a default rules array for the
         // role_id check
         $rules = [
-            'role_id' => 'required|exists:roles,id'
+            'role_id' => 'required|exists:roles,id',
+            'inverse' => 'required|nullable|in:on'
         ];
 
         // Ensure that the permissions is set, if not,
