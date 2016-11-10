@@ -13,13 +13,13 @@
 
       <table class="table datatable compact table-condensed table-hover table-responsive">
         <thead>
-          <tr>
-            <th>{{ trans('web::seat.date') }}</th>
-            <th>{{ trans('web::seat.from') }}</th>
-            <th>{{ trans_choice('web::seat.title', 1) }}</th>
-            <th data-orderable="false">{{ trans('web::seat.to') }}</th>
-            <th data-orderable="false"></th>
-          </tr>
+        <tr>
+          <th>{{ trans('web::seat.date') }}</th>
+          <th>{{ trans('web::seat.from') }}</th>
+          <th>{{ trans_choice('web::seat.title', 1) }}</th>
+          <th data-orderable="false">{{ trans('web::seat.to') }}</th>
+          <th data-orderable="false"></th>
+        </tr>
         </thead>
         <tbody>
 
@@ -62,8 +62,9 @@
                 </span>
               @endif
             </td>
-            <td><a href="{{ route('character.view.mail.read', ['characterID' => $message->characterID, 'message_id' => $message->messageID]) }}"
-                   class="btn btn-xs btn-primary"><i class="fa fa-envelope"></i> Read</a></td>
+            <td>
+              <a href="{{ route('character.view.mail.read', ['characterID' => $message->characterID, 'message_id' => $message->messageID]) }}"
+                 class="btn btn-xs btn-primary"><i class="fa fa-envelope"></i> Read</a></td>
           </tr>
 
         @endforeach

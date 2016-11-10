@@ -21,12 +21,23 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Validation;
 
-use App\Http\Requests\Request;
+use Illuminate\Foundation\Http\FormRequest;
 use Seat\Eveapi\Models\Account\ApiKeyInfoCharacters;
 use Seat\Services\Settings\Profile;
 
-class ProfileSettings extends Request
+class ProfileSettings extends FormRequest
 {
+
+    /**
+     * Authorize the request by default.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+
+        return true;
+    }
 
     /**
      * Get the validation rules that apply to the request.

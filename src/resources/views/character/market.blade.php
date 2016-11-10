@@ -13,15 +13,15 @@
 
       <table class="table datatable compact table-condensed table-hover table-responsive">
         <thead>
-          <tr>
-            <th>{{ trans('web::seat.date') }}</th>
-            <th></th>
-            <th>{{ trans('web::seat.volume') }}</th>
-            <th>{{ trans('web::seat.status') }}</th>
-            <th>{{ trans('web::seat.price') }}</th>
-            <th>{{ trans('web::seat.total') }}</th>
-            <th>{{ trans_choice('web::seat.type', 1) }}</th>
-          </tr>
+        <tr>
+          <th>{{ trans('web::seat.date') }}</th>
+          <th></th>
+          <th>{{ trans('web::seat.volume') }}</th>
+          <th>{{ trans('web::seat.status') }}</th>
+          <th>{{ trans('web::seat.price') }}</th>
+          <th>{{ trans('web::seat.total') }}</th>
+          <th>{{ trans_choice('web::seat.type', 1) }}</th>
+        </tr>
         </thead>
         <tbody>
 
@@ -69,6 +69,13 @@
       </table>
 
     </div>
+
+    @if($orders->render())
+      <div class="panel-footer">
+        {!! $orders->render() !!}
+      </div>
+    @endif
+
   </div>
 
 @stop

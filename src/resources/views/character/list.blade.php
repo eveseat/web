@@ -32,13 +32,13 @@
                       @foreach($corporations as $corporation)
 
                         <option value="{{ $corporation }}"
-                          @if(isset($request->filter['corporationName']))
+                                @if(isset($request->filter['corporationName']))
 
-                            @if(in_array($corporation, $request->filter['corporationName'])))
-                              selected
-                            @endif
+                                @if(in_array($corporation, $request->filter['corporationName'])))
+                                selected
+                                @endif
 
-                          @endif>
+                                @endif>
                           {{ $corporation }}
                         </option>
 
@@ -57,13 +57,13 @@
                       @foreach($alliances as $alliance)
 
                         <option value="{{ $alliance }}"
-                          @if(isset($request->filter['alliance']))
+                                @if(isset($request->filter['alliance']))
 
-                            @if(in_array($alliance, $request->filter['alliance'])))
-                              selected
-                            @endif
+                                @if(in_array($alliance, $request->filter['alliance'])))
+                                selected
+                                @endif
 
-                          @endif>
+                                @endif>
                           {{ $alliance }}
                         </option>
 
@@ -94,7 +94,7 @@
             @foreach($request->filter as $name => $filter)
               <div class="text-muted">{{ studly_case($name) }}</div>
               @foreach($filter as $detail)
-              <span class="label label-default">{{ $detail }}</span>
+                <span class="label label-default">{{ $detail }}</span>
               @endforeach
             @endforeach
           </div>
@@ -112,12 +112,12 @@
 
       <table class="table datatable compact table-condensed table-hover table-responsive">
         <thead>
-          <tr>
-            <th>{{ trans_choice('web::seat.name', 1) }}</th>
-            <th>{{ trans_choice('web::seat.corporation', 1) }}</th>
-            <th>{{ trans('web::seat.alliance') }}</th>
-            <th>{{ trans('web::seat.last_location') }}</th>
-          </tr>
+        <tr>
+          <th>{{ trans_choice('web::seat.name', 1) }}</th>
+          <th>{{ trans_choice('web::seat.corporation', 1) }}</th>
+          <th>{{ trans('web::seat.alliance') }}</th>
+          <th>{{ trans('web::seat.last_location') }}</th>
+        </tr>
         </thead>
         <tbody>
 
@@ -136,8 +136,8 @@
             </td>
             <td>
               @if($character->allianceID != null)
-              {!! img('alliance', $character->allianceID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-              {{ $character->alliance }}
+                {!! img('alliance', $character->allianceID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                {{ $character->alliance }}
               @endif
             </td>
             <td>{{ $character->lastKnownLocation }}</td>

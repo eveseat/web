@@ -9,36 +9,36 @@
     <div class="panel-heading">
       <h3 class="panel-title">{{ trans('web::seat.api_key_add') }}</h3>
     </div>
-  <div class="panel-body">
+    <div class="panel-body">
 
-    <form role="form" action="#" method="post" id="key-form">
-      {{ csrf_field() }}
+      <form role="form" action="#" method="post" id="key-form">
+        {{ csrf_field() }}
 
-      <div class="box-body">
+        <div class="box-body">
 
-        <div class="form-group">
-          <label for="key_id">{{ trans('web::seat.key_id') }}</label>
-          <input type="text" name="key_id" class="form-control" id="key_id" value="{{ old('key_id') }}"
-                 placeholder="{{ trans('web::seat.key_id') }}">
+          <div class="form-group">
+            <label for="key_id">{{ trans('web::seat.key_id') }}</label>
+            <input type="text" name="key_id" class="form-control" id="key_id" value="{{ old('key_id') }}"
+                   placeholder="{{ trans('web::seat.key_id') }}">
+          </div>
+
+          <div class="form-group">
+            <label for="text">{{ trans('web::seat.v_code') }}</label>
+            <input type="text" name="v_code" class="form-control" id="v_code" value=""
+                   placeholder="{{ trans('web::seat.v_code') }}">
+          </div>
+
         </div>
+        <!-- /.box-body -->
 
-        <div class="form-group">
-          <label for="text">{{ trans('web::seat.v_code') }}</label>
-          <input type="text" name="v_code" class="form-control" id="v_code" value=""
-                 placeholder="{{ trans('web::seat.v_code') }}">
+        <div class="box-footer">
+          <button type="submit" class="btn btn-primary pull-right">
+            {{ trans('web::seat.check_key') }}
+          </button>
         </div>
+      </form>
 
-      </div>
-      <!-- /.box-body -->
-
-      <div class="box-footer">
-        <button type="submit" class="btn btn-primary pull-right">
-          {{ trans('web::seat.check_key') }}
-        </button>
-      </div>
-    </form>
-
-  </div>
+    </div>
   </div>
 
   <div class="panel panel-default">
@@ -47,33 +47,33 @@
     </div>
     <div class="panel-body">
 
-    <p>
+      <p>
       <span class="text-muted">
         {{ trans('web::seat.api_use_link') }}
       </span>
-    </p>
+      </p>
 
-    <ul>
-      @if(setting('force_min_mask', true) == 'yes')
+      <ul>
+        @if(setting('force_min_mask', true) == 'yes')
 
-        <li>
-          <a href="https://community.eveonline.com/support/api-key/CreatePredefined?accessMask={{ setting('min_character_access_mask', true) }}"
-             target="_blank">
-            {{ trans('web::seat.api_full_min_mask') }}
-          </a>
-        </li>
+          <li>
+            <a href="https://community.eveonline.com/support/api-key/CreatePredefined?accessMask={{ setting('min_character_access_mask', true) }}"
+               target="_blank">
+              {{ trans('web::seat.api_full_min_mask') }}
+            </a>
+          </li>
 
-      @else
+        @else
 
-        <li>
-          <a href="https://community.eveonline.com/support/api-key/CreatePredefined?accessMask={{ config('web.config.max_access_mask') }}"
-             target="_blank">
-            {{ trans('web::seat.api_full_link') }}
-          </a>
-        </li>
+          <li>
+            <a href="https://community.eveonline.com/support/api-key/CreatePredefined?accessMask={{ config('web.config.max_access_mask') }}"
+               target="_blank">
+              {{ trans('web::seat.api_full_link') }}
+            </a>
+          </li>
 
-      @endif
-    </ul>
+        @endif
+      </ul>
 
     </div>
   </div>
@@ -92,7 +92,7 @@
     // variable to hold request
     var request;
     // bind to the submit event of our form
-    $("#key-form").submit(function(event){
+    $("#key-form").submit(function (event) {
 
       // abort any pending request
       if (request) {
@@ -121,26 +121,26 @@
       });
 
       // callback handler that will be called on success
-      request.done(function (response, textStatus, jqXHR){
+      request.done(function (response, textStatus, jqXHR) {
         $("span#result").html(response);
       });
 
       // callback handler that will be called on failure
-      request.fail(function (jqXHR, textStatus, errorThrown){
+      request.fail(function (jqXHR, textStatus, errorThrown) {
 
         // Validation errors response with HTTP 422
-        if(jqXHR.status === 422) {
+        if (jqXHR.status === 422) {
 
           //process validation errors here.
           var errors = jqXHR.responseJSON; //this will get the errors response data.
           var errorsHtml = '<div class="alert alert-danger"><ul>';
 
-          $.each(errors, function(key,value) {
+          $.each(errors, function (key, value) {
             errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
           });
           errorsHtml += '</ul></di>';
 
-          $("span#result").html( errorsHtml );
+          $("span#result").html(errorsHtml);
 
         } else {
 

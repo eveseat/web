@@ -23,7 +23,8 @@ namespace Seat\Web\Http\Composers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Seat\Services\Repositories\Character\CharacterRepository;
+use Seat\Services\Repositories\Character\Character;
+use Seat\Services\Repositories\Character\Info;
 
 /**
  * Class CharacterSummary
@@ -32,7 +33,9 @@ use Seat\Services\Repositories\Character\CharacterRepository;
 class CharacterSummary
 {
 
-    use CharacterRepository;
+    use Character;
+
+    use Info;
 
     /**
      * @var \Illuminate\Http\Request

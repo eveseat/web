@@ -21,10 +21,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Queue;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Artisan;
 use Seat\Services\Data\Queue;
 use Seat\Services\Repositories\Queue\JobRepository;
+use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Validation\Permission;
 
 /**

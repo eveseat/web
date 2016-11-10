@@ -13,12 +13,12 @@
 
       <table class="table table-condensed table-hover table-responsive">
         <thead>
-          <tr>
-            <th>{{ trans('web::seat.quantity') }}</th>
-            <th>{{ trans_choice('web::seat.type', 1) }}</th>
-            <th>{{ trans('web::seat.volume') }}</th>
-            <th>{{ trans('web::seat.group') }}</th>
-          </tr>
+        <tr>
+          <th>{{ trans('web::seat.quantity') }}</th>
+          <th>{{ trans_choice('web::seat.type', 1) }}</th>
+          <th>{{ trans('web::seat.volume') }}</th>
+          <th>{{ trans('web::seat.group') }}</th>
+        </tr>
         </thead>
         <tbody>
 
@@ -33,7 +33,7 @@
                   {{ trans('web::seat.unknown') }}
                 @endif
               </b>
-            <span class="pull-right">
+              <span class="pull-right">
               <i>
                 {{ count($assets->where('locationID', $data[0]->locationID)) }}
                 {{ trans('web::seat.items_taking') }}

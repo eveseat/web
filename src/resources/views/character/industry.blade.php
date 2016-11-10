@@ -15,15 +15,15 @@
 
       <table class="table datatable compact table-condensed table-hover table-responsive">
         <thead>
-          <tr>
-            <th>{{ trans('web::seat.start') }}</th>
-            <th>{{ trans('web::seat.installer') }}</th>
-            <th>{{ trans('web::seat.system') }}</th>
-            <th>{{ trans('web::seat.activity') }}</th>
-            <th>{{ trans_choice('web::seat.run', 2) }}</th>
-            <th>{{ trans('web::seat.blueprint') }}</th>
-            <th>{{ trans('web::seat.product') }}</th>
-          </tr>
+        <tr>
+          <th>{{ trans('web::seat.start') }}</th>
+          <th>{{ trans('web::seat.installer') }}</th>
+          <th>{{ trans('web::seat.system') }}</th>
+          <th>{{ trans('web::seat.activity') }}</th>
+          <th>{{ trans_choice('web::seat.run', 2) }}</th>
+          <th>{{ trans('web::seat.blueprint') }}</th>
+          <th>{{ trans('web::seat.product') }}</th>
+        </tr>
         </thead>
         <tbody>
 
@@ -34,10 +34,10 @@
               <span>
                 <i class="fa
                     @if($carbon->parse($job->endDate)->gte($carbon->now()))
-                      fa-clock-o
-                    @else
-                      fa-check
-                    @endif"
+                        fa-clock-o
+                      @else
+                        fa-check
+                      @endif"
                    data-toggle="tooltip"
                    title="" data-original-title="End: {{ $job->endDate }}">
                 </i>

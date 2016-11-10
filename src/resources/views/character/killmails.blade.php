@@ -13,13 +13,13 @@
 
       <table class="table datatable compact table-condensed table-hover table-responsive">
         <thead>
-          <tr>
-            <th>{{ trans('web::seat.date') }}</th>
-            <th>{{ trans('web::seat.victim') }}</th>
-            <th>{{ trans('web::seat.ship_type') }}</th>
-            <th>{{ trans('web::seat.location') }}</th>
-            <th data-orderable="false"></th>
-          </tr>
+        <tr>
+          <th>{{ trans('web::seat.date') }}</th>
+          <th>{{ trans('web::seat.victim') }}</th>
+          <th>{{ trans('web::seat.ship_type') }}</th>
+          <th>{{ trans('web::seat.location') }}</th>
+          <th data-orderable="false"></th>
+        </tr>
         </thead>
         <tbody>
 
@@ -51,12 +51,12 @@
 
               <span class="
                 @if($killmail->security >= 0.5)
-                  text-green
-                @elseif($killmail->security < 0.5 && $killmail->security > 0.0)
-                  text-warning
-                @else
-                  text-red
-                @endif">
+                      text-green
+                    @elseif($killmail->security < 0.5 && $killmail->security > 0.0)
+                      text-warning
+                    @else
+                      text-red
+                    @endif">
                 <i>({{ round($killmail->security,  2) }})</i>
               </span>
             </td>

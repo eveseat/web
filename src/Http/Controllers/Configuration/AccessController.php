@@ -21,11 +21,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Configuration;
 
-use App\Http\Controllers\Controller;
-use Seat\Services\Repositories\Character\CharacterRepository;
+use Seat\Services\Repositories\Character\Character;
 use Seat\Services\Repositories\Configuration\UserRespository;
-use Seat\Services\Repositories\Corporation\CorporationRepository;
-use Seat\Web\Acl\Pillow;
+use Seat\Services\Repositories\Corporation\Corporation;
+use Seat\Web\Acl\AccessManager;
+use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Validation\Permission;
 use Seat\Web\Validation\Role;
 use Seat\Web\Validation\RoleAffilliation;
@@ -39,15 +39,7 @@ use Seat\Web\Validation\RoleUser;
 class AccessController extends Controller
 {
 
-    use Pillow, UserRespository, CharacterRepository,
-        CorporationRepository {
-
-        // Resolve the where_filter method conflict that comes from the
-        // Seat\Services\Helpers\Filterable trait that they both use.
-        // Technically, this actually does not mean anything when
-        // looked at from the perspective of the AccessController.
-        CharacterRepository::where_filter insteadof CorporationRepository;
-    }
+    use AccessManager, UserRespository, Character, Corporation;
 
     /**
      * @return \Illuminate\View\View
@@ -68,10 +60,11 @@ class AccessController extends Controller
     public function newRole(Role $request)
     {
 
-        $this->addRole($request->input('title'));
+        $role = $this->addRole($request->input('title'));
 
-        return redirect()->back()
-            ->with('success', trans('web::access.role_added'));
+        return redirect()
+            ->route('configuration.access.roles.edit', ['id' => $role->id])
+            ->with('success', trans('web::seat.role_added'));
     }
 
     /**
@@ -85,7 +78,7 @@ class AccessController extends Controller
         $this->removeRole($role_id);
 
         return redirect()->back()
-            ->with('success', trans('web::access.role_removed'));
+            ->with('success', trans('web::seat.role_removed'));
     }
 
     /**
@@ -138,10 +131,12 @@ class AccessController extends Controller
     {
 
         $this->giveRolePermissions(
-            $request->input('role_id'), $request->input('permissions'));
+            $request->input('role_id'),
+            $request->input('permissions'),
+            $request->input('inverse') ? true : false);
 
         return redirect()->back()
-            ->with('success', trans('web::access.permissions_granted'));
+            ->with('success', trans('web::seat.permissions_granted'));
     }
 
     /**
@@ -156,7 +151,7 @@ class AccessController extends Controller
         $this->removePermissionFromRole($permission_id, $role_id);
 
         return redirect()->back()
-            ->with('success', trans('web::access.permission_revoked'));
+            ->with('success', trans('web::seat.permission_revoked'));
     }
 
     /**
@@ -171,7 +166,7 @@ class AccessController extends Controller
             $request->input('users'), $request->input('role_id'));
 
         return redirect()->back()
-            ->with('success', trans('web::access.user_added'));
+            ->with('success', trans('web::seat.user_added'));
 
     }
 
@@ -187,7 +182,7 @@ class AccessController extends Controller
         $this->removeUserFromRole($user_id, $role_id);
 
         return redirect()->back()
-            ->with('success', trans('web::access.user_removed'));
+            ->with('success', trans('web::seat.user_removed'));
     }
 
     /**
@@ -200,11 +195,15 @@ class AccessController extends Controller
 
         if ($request->input('corporations'))
             $this->giveRoleCorporationAffiliations(
-                $request->input('role_id'), $request->input('corporations'));
+                $request->input('role_id'),
+                $request->input('corporations'),
+                $request->input('inverse') ? true : false);
 
         if ($request->input('characters'))
             $this->giveRoleCharacterAffiliations(
-                $request->input('role_id'), $request->input('characters'));
+                $request->input('role_id'),
+                $request->input('characters'),
+                $request->input('inverse') ? true : false);
 
         return redirect()->back()
             ->with('success', 'Affiliations were added to this role');
@@ -222,6 +221,6 @@ class AccessController extends Controller
         $this->removeAffiliationFromRole($role_id, $affiliation_id);
 
         return redirect()->back()
-            ->with('success', trans('web::access.affiliation_removed'));
+            ->with('success', trans('web::seat.affiliation_removed'));
     }
 }

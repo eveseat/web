@@ -20,9 +20,9 @@
               <h3 class="box-title">
                 {{ $skill_group->groupName }}
               </h3>
-                <span class="pull-right">
+              <span class="pull-right">
                   {{ count($skills->where('groupID', $skill_group->groupID)) }}
-                  skills
+                skills
                 </span>
             </div>
             <div class="box-body">

@@ -13,16 +13,16 @@
 
       <table class="table datatable compact table-condensed table-hover table-responsive">
         <thead>
-          <tr>
-            <th>{{ trans('web::seat.created') }}</th>
-            <th>{{ trans('web::seat.issuer') }}</th>
-            <th>{{ trans_choice('web::seat.type', 1) }}</th>
-            <th>{{ trans('web::seat.status') }}</th>
-            <th>{{ trans_choice('web::seat.title', 1) }}</th>
-            <th>{{ trans('web::seat.collateral') }}</th>
-            <th>{{ trans('web::seat.price') }}</th>
-            <th>{{ trans('web::seat.reward') }}</th>
-          </tr>
+        <tr>
+          <th>{{ trans('web::seat.created') }}</th>
+          <th>{{ trans('web::seat.issuer') }}</th>
+          <th>{{ trans_choice('web::seat.type', 1) }}</th>
+          <th>{{ trans('web::seat.status') }}</th>
+          <th>{{ trans_choice('web::seat.title', 1) }}</th>
+          <th>{{ trans('web::seat.collateral') }}</th>
+          <th>{{ trans('web::seat.price') }}</th>
+          <th>{{ trans('web::seat.reward') }}</th>
+        </tr>
         </thead>
         <tbody>
 
@@ -46,7 +46,7 @@
               </i>
               <i class="fa fa-long-arrow-right"></i>
               <i class="fa fa-map-marker" data-toggle="tooltip"
-                title="" data-original-title="{{ $contract->endlocation }}"></i>
+                 title="" data-original-title="{{ $contract->endlocation }}"></i>
               </span>
             </td>
             <td>{{ $contract->status }}</td>

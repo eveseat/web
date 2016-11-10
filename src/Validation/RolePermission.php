@@ -21,14 +21,25 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Validation;
 
-use App\Http\Requests\Request;
+use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * Class RolePermission
  * @package Seat\Web\Validation
  */
-class RolePermission extends Request
+class RolePermission extends FormRequest
 {
+
+    /**
+     * Authorize the request by default.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+
+        return true;
+    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -41,7 +52,8 @@ class RolePermission extends Request
         // Start with a default rules array for the
         // role_id check
         $rules = [
-            'role_id' => 'required|exists:roles,id'
+            'role_id' => 'required|exists:roles,id',
+            'inverse' => 'required|nullable|in:on'
         ];
 
         // Ensure that the permissions is set, if not,

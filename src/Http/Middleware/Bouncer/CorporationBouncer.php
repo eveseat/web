@@ -22,8 +22,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Http\Middleware\Bouncer;
 
 use Closure;
-use Illuminate\Support\Facades\Event;
-use Seat\Web\Acl\Clipboard;
+use Illuminate\Http\Request;
 use Seat\Web\Exceptions\BouncerException;
 
 /**
@@ -33,8 +32,6 @@ use Seat\Web\Exceptions\BouncerException;
 class CorporationBouncer
 {
 
-    use Clipboard;
-
     /**
      * Handle an incoming request.
      *
@@ -42,15 +39,14 @@ class CorporationBouncer
      * well as ensures that an affiliation to a corporation
      * exists.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure                 $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
+     * @param null                     $permission
      *
-     * @param null                      $permission
-     *
-     * @return mixed
+     * @return \Illuminate\Http\RedirectResponse
      * @throws \Seat\Web\Exceptions\BouncerException
      */
-    public function handle($request, Closure $next, $permission = null)
+    public function handle(Request $request, Closure $next, $permission = null)
     {
 
         // Get the currently logged in user
@@ -71,9 +67,11 @@ class CorporationBouncer
         $message = 'Request to ' . $request->path() . ' was ' .
             'denied by the corporationbouncer. The permission required is ' .
             'corporation.' . $permission . '.';
-        Event::fire('security.log', [$message, 'authorization']);
 
-        return view('web::auth.unauthorized');
+        event('security.log', [$message, 'authorization']);
+
+        // Redirect away from the original request
+        return redirect()->route('auth.unauthorized');
 
     }
 }

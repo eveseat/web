@@ -21,9 +21,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Support;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Seat\Services\Search\Search;
+use Seat\Web\Http\Controllers\Controller;
 
 /**
  * Class SearchController

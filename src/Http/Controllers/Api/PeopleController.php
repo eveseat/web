@@ -21,11 +21,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Illuminate\Http\Request;
-use Seat\Services\Repositories\Character\CharacterRepository;
+use Seat\Services\Repositories\Character\Character;
+use Seat\Services\Repositories\Character\Info;
 use Seat\Services\Repositories\People\PeopleRepository;
+use Seat\Web\Http\Controllers\Controller;
 
 /**
  * Class PeopleController
@@ -34,7 +35,7 @@ use Seat\Services\Repositories\People\PeopleRepository;
 class PeopleController extends Controller
 {
 
-    use PeopleRepository, CharacterRepository;
+    use PeopleRepository, Character, Info;
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

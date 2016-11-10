@@ -24,7 +24,7 @@ return [
     'superuser',
     'queue_manager',
 
-    'apikey'      => [
+    'apikey' => [
         'delete',
         'detail',
         'toggle_status',
@@ -32,7 +32,7 @@ return [
         'update'
     ],
 
-    'character'   => [
+    'character' => [
         'assets',
         'bookmarks',
         'calendar',
@@ -40,6 +40,7 @@ return [
         'contacts',
         'contracts',
         'industry',
+        'intel',
         'killmails',
         'list',
         'mail',
@@ -73,18 +74,18 @@ return [
         'transactions',
     ],
 
-    'mail'        => [
+    'mail' => [
         'bodies',
         'subjects'
     ],
 
-    'people'      => [
+    'people' => [
         'create',
         'edit',
         'view'
     ],
 
-    'search'      => [
+    'search' => [
         'character_assets',
         'character_contact_lists',
         'character_mail',

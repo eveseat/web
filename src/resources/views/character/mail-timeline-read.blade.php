@@ -21,39 +21,39 @@
             {{ $message->senderName }}
           </a>
 
-          @if($message->toCorpOrAllianceID)
-            <li>
-              <b>{{ trans('web::seat.to_corp_alliance') }}:</b>
-              {!! img('auto', $message->toCorpOrAllianceID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-              <span rel="id-to-name">{{ $message->toCorpOrAllianceID }}</span>
-            </li>
-          @endif
+    @if($message->toCorpOrAllianceID)
+      <li>
+        <b>{{ trans('web::seat.to_corp_alliance') }}:</b>
+        {!! img('auto', $message->toCorpOrAllianceID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+        <span rel="id-to-name">{{ $message->toCorpOrAllianceID }}</span>
+      </li>
+    @endif
 
-          @if($message->toCharacterIDs)
-            <li>
-              <b>{{ trans('web::seat.to_char') }}:</b>
+    @if($message->toCharacterIDs)
+      <li>
+        <b>{{ trans('web::seat.to_char') }}:</b>
 
-              @foreach(explode(',', $message->toCharacterIDs) as $char_id)
-                <a href="{{ route('character.view.sheet', ['character_id' => $char_id]) }}">
-                  {!! img('character', $char_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                  <span rel="id-to-name">{{ $char_id }}</span>
-                </a>
-              @endforeach
+        @foreach(explode(',', $message->toCharacterIDs) as $char_id)
+          <a href="{{ route('character.view.sheet', ['character_id' => $char_id]) }}">
+            {!! img('character', $char_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+            <span rel="id-to-name">{{ $char_id }}</span>
+          </a>
+        @endforeach
 
-            </li>
-          @endif
+      </li>
+      @endif
 
-        </h2>
-        <div class="timeline-body">
-          {!! clean_ccp_html($message->body) !!}
-        </div>
+      </h2>
+      <div class="timeline-body">
+        {!! clean_ccp_html($message->body) !!}
+      </div>
 
       </div>
-    </li>
+      </li>
 
-    <li>
-      <i class="fa fa-clock-o bg-gray"></i>
-    </li>
+      <li>
+        <i class="fa fa-clock-o bg-gray"></i>
+      </li>
   </ul>
 
 @stop

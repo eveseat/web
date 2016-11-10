@@ -92,7 +92,7 @@
               @else
                 0
               @endif
-              / {{ config('eveapi.config.limits.eveapi_errors')}}
+                / {{ config('eveapi.config.limits.eveapi_errors')}}
             </dd>
 
             <dt>{{ trans('web::seat.eve_api_connection_threshold') }}</dt>
@@ -102,7 +102,7 @@
               @else
                 0
               @endif
-              / {{ config('eveapi.config.limits.connection_errors')}}
+                / {{ config('eveapi.config.limits.connection_errors')}}
             </dd>
           </dl>
 
