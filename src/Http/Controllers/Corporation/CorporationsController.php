@@ -23,7 +23,12 @@ namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Services\Repositories\Corporation\Corporation;
 use Seat\Web\Http\Controllers\Controller;
+use Yajra\Datatables\Datatables;
 
+/**
+ * Class CorporationsController
+ * @package Seat\Web\Http\Controllers\Corporation
+ */
 class CorporationsController extends Controller
 {
 
@@ -35,10 +40,36 @@ class CorporationsController extends Controller
     public function getCorporations()
     {
 
+        return view('web::corporation.list');
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCorporationsData()
+    {
+
         $corporations = $this->getAllCorporationsWithAffiliationsAndFilters();
 
-        return view('web::corporation.list', compact('corporations'));
+        return Datatables::of($corporations)
+            // Edit some columns to include links and icons
+            ->editColumn('corporationName', function ($row) {
 
+                return view('web::corporation.partials.corporationname', compact('row'))
+                    ->render();
+            })
+            ->editColumn('ceoName', function ($row) {
+
+                return view('web::corporation.partials.ceoname', compact('row'))
+                    ->render();
+            })
+            ->editColumn('allianceName', function ($row) {
+
+                return view('web::corporation.partials.alliancename', compact('row'))
+                    ->render();
+            })
+            ->make(true);
     }
 
 }

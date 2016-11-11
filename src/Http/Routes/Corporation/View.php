@@ -24,6 +24,11 @@ Route::any('/list', [
     'uses' => 'CorporationsController@getCorporations'
 ]);
 
+Route::get('/list/data', [
+    'as'   => 'corporation.list.data',
+    'uses' => 'CorporationsController@getCorporationsData'
+]);
+
 Route::get('/view/assets/{corporation_id}', [
     'as'         => 'corporation.view.assets',
     'middleware' => 'corporationbouncer:assets',
