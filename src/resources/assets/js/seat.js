@@ -54,6 +54,11 @@ $(document).ready(function () {
     });
 });
 
+// Configure some defaults for Datatables
+$.extend(true, $.fn.dataTable.defaults, {
+    responsive: true,
+    autoWidth: false,
+});
 
 // Helper function to mimic the PHP human_readable method
 function human_readable(data, type, row) {
