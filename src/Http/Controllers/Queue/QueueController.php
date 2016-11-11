@@ -64,6 +64,22 @@ class QueueController extends Controller
     }
 
     /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getQueuedJobs()
+    {
+        return response()->json($this->getJobs('Queued'));
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getWorkingJobs()
+    {
+        return response()->json($this->getJobs('Working'));
+    }
+
+    /**
      * @param $command_name
      *
      * @return \Illuminate\Http\RedirectResponse
