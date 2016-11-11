@@ -185,11 +185,9 @@
           </h3>
         </div>
         <div class="panel-body">
-
           @if(count($working) > 0)
-
-            <table class="table table-condensed table-hover">
-              <tbody>
+            <table class="table table-condensed table-hover col-md-12" id="working-jobs">
+              <thead>
               <tr>
                 <th>{{ trans('web::seat.created') }}</th>
                 <th>{{ trans('web::seat.updated') }}</th>
@@ -199,40 +197,12 @@
                 <th>{{ trans('web::seat.output') }}</th>
                 <th>{{ trans('web::seat.status') }}</th>
               </tr>
-
-              @foreach($working as $job)
-
-                <tr>
-                  <td>
-                    <span data-toggle="tooltip" title="" data-original-title="{{ $job->created_at }}">
-                      {{ human_diff($job->created_at) }}
-                    </span>
-                  </td>
-                  <td>
-                    <span data-toggle="tooltip" title="" data-original-title="{{ $job->updated_at }}">
-                      {{ human_diff($job->updated_at) }}
-                    </span>
-                  </td>
-                  <td>{{ $job->owner_id }}</td>
-                  <td>{{ $job->api }}</td>
-                  <td>{{ $job->scope }}</td>
-                  <td>{{ $job->output }}</td>
-                  <td>{{ $job->status }}</td>
-                </tr>
-
-              @endforeach
-
-              @else
-
-                <span class="text-muted">
-                {{ trans('web::seat.no_working') }}
-              </span>
-
-              @endif
-
-              </tbody>
+              </thead>
+              <tbody></tbody>
             </table>
-
+          @else
+            <span class="text-muted">{{ trans('web::seat.no_working') }}</span>
+          @endif
         </div>
       </div>
 
@@ -244,11 +214,9 @@
           </h3>
         </div>
         <div class="panel-body">
-
           @if(count($queued) > 0)
-
-            <table class="table table-condensed table-hover">
-              <tbody>
+            <table class="table table-condensed table-hover col-md-12" id="queued-jobs">
+              <thead>
               <tr>
                 <th>{{ trans('web::seat.created') }}</th>
                 <th>{{ trans('web::seat.owner_id') }}</th>
@@ -256,34 +224,12 @@
                 <th>{{ trans('web::seat.scope') }}</th>
                 <th>{{ trans('web::seat.status') }}</th>
               </tr>
-
-              @foreach($queued as $job)
-
-                <tr>
-                  <td>
-                    <span data-toggle="tooltip" title="" data-original-title="{{ $job->created_at }}">
-                      {{ human_diff($job->created_at) }}
-                    </span>
-                  </td>
-                  <td>{{ $job->owner_id }}</td>
-                  <td>{{ $job->api }}</td>
-                  <td>{{ $job->scope }}</td>
-                  <td>{{ $job->status }}</td>
-                </tr>
-
-              @endforeach
-
-              @else
-
-                <span class="text-muted">
-                {{ trans('web::seat.no_queue') }}
-              </span>
-
-              @endif
-
-              </tbody>
+              </thead>
+              <tbody></tbody>
             </table>
-
+          @else
+            <span class="text-muted">{{ trans('web::seat.no_queue') }}</span>
+          @endif
         </div>
       </div>
 
@@ -293,72 +239,96 @@
 
 @stop
 
-@section('javascript')
-  <script type="text/javascript" src="{{ asset('web/js/moment-with-locales.min.js') }}"></script>
+@push('javascript')
   <script type="text/javascript">
-    jQuery(document).ready(function(){
-      var supervisorTable = jQuery('#supervisor-processes').DataTable({
+    $(document).ready(function () {
+
+    var supervisorTable = jQuery('#supervisor-processes').DataTable({
         'ajax': {
-          'url':'{{ route('json.supervisor.processes') }}',
-          'dataSrc':''
+            'url':'{{ route('json.supervisor.processes') }}',
+            'dataSrc':''
         },
         'columns':[
-          {data:'name'},
-          {data:'pid'},
-          {data:'start', render: human_readable},
-          {data:'log'}
+            {data:'name'},
+            {data:'pid'},
+            {data:'start', render: human_readable},
+            {data:'log'}
         ],
         'searching':false,
         'lengthChange':false
+    });
+
+      var workingJobs = $('#working-jobs').DataTable({
+
+        processing: true,
+        serverSide: true,
+        ajax: '{{ route('json.jobs.working') }}',
+        columns: [
+          {data: 'created_at', name: 'owner_id', render: human_readable},
+          {data: 'updated_at', name: 'owner_id', render: human_readable},
+          {data: 'owner_id', name: 'owner_id'},
+          {data: 'api', name: 'api'},
+          {data: 'scope', name: 'scope'},
+          {data: 'output', name: 'output'},
+          {data: 'status', name: 'status'},
+        ],
+      });
+
+      var queuedJobs = $('#queued-jobs').DataTable({
+
+        processing: true,
+        serverSide: true,
+        ajax: '{{ route('json.jobs.queued') }}',
+        columns: [
+          {data: 'created_at', name: 'created_at', render: human_readable},
+          {data: 'owner_id', name: 'owner_id'},
+          {data: 'api', name: 'api'},
+          {data: 'scope', name: 'scope'},
+          {data: 'status', name: 'status'},
+        ],
       });
 
       check_supervisor();
 
-      setInterval(function(){
+      // reload jobs content table every 15 seconds
+      setInterval(function () {
         supervisorTable.ajax.reload();
         check_supervisor();
+        workingJobs.ajax.reload();
+        queuedJobs.ajax.reload();
       }, {{ config('web.config.queue_status_update_time') }});
+
+        function check_supervisor() {
+            jQuery.ajax('{{ route('json.supervisor.status') }}', {
+                success: function(data, textStatus, jqXHR){
+                    if (data.status) {
+                        if (jQuery('#supervisor-status').hasClass('label-danger')) {
+                            jQuery('#supervisor-status')
+                                    .removeClass('label-danger')
+                                    .addClass('label-success')
+                                    .text("{{ trans('web::seat.supervisor_online') }}");
+
+                            jQuery.ajax('{{ route('queue.supervisor.information') }}', {
+                                success: function(data, textStatus, jqXHR){
+                                    jQuery('#supervisor-info').html(data);
+                                }
+                            });
+                        }
+                    } else {
+                        if (jQuery('#supervisor-status').hasClass('label-success')) {
+                            jQuery('#supervisor-status')
+                                    .removeClass('label-success')
+                                    .addClass('label-danger')
+                                    .text("{{ trans('web::seat.supervisor_offline') }}");
+
+                            jQuery('#supervisor-info').html('<span class="text-muted">It seems that supervisor is not running</span>');
+                        }
+                    }
+                }
+            });
+        }
     });
 
-    function check_supervisor() {
-      jQuery.ajax('{{ route('json.supervisor.status') }}', {
-        success: function(data, textStatus, jqXHR){
-          if (data.status) {
-            if (jQuery('#supervisor-status').hasClass('label-danger')) {
-              jQuery('#supervisor-status')
-                      .removeClass('label-danger')
-                      .addClass('label-success')
-                      .text("{{ trans('web::seat.supervisor_online') }}");
 
-              jQuery.ajax('{{ route('queue.supervisor.information') }}', {
-                success: function(data, textStatus, jqXHR){
-                  jQuery('#supervisor-info').html(data);
-                }
-              });
-            }
-          } else {
-            if (jQuery('#supervisor-status').hasClass('label-success')) {
-              jQuery('#supervisor-status')
-                      .removeClass('label-success')
-                      .addClass('label-danger')
-                      .text("{{ trans('web::seat.supervisor_offline') }}");
-
-              jQuery('#supervisor-info').html('<span class="text-muted">It seems that supervisor is not running</span>');
-            }
-          }
-        }
-      });
-    }
-
-    /*
-     * This function is used by datatable in order to mimic Laravel Carbon human_readable helper
-     */
-    function human_readable(data, type, row){
-      if (type == 'display') {
-        var date = moment(data, "YYYY-MM-DD HH:mm:ss").fromNow();
-        return '<span data-toggle="tooltip" data-placement="top" title="' + data + '">' + date + "</span>";
-      }
-      return data;
-    }
   </script>
-@stop
+@endpush

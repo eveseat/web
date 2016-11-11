@@ -53,3 +53,19 @@ $(document).ready(function () {
         order: []
     });
 });
+
+// Configure some defaults for Datatables
+$.extend(true, $.fn.dataTable.defaults, {
+    responsive: true,
+    autoWidth: false,
+});
+
+// Helper function to mimic the PHP human_readable method
+function human_readable(data, type, row) {
+    if (type == 'display') {
+        var date = moment(data, "YYYY-MM-DD hh:mm:ss").fromNow();
+        return '<span data-toggle="tooltip" data-placement="top" title="' + data + '">' + date + "</span>";
+    }
+
+    return data;
+}

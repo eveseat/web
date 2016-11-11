@@ -26,6 +26,7 @@ use Seat\Services\Data\Queue;
 use Seat\Services\Repositories\Queue\JobRepository;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Validation\Permission;
+use Yajra\Datatables\Datatables;
 use Supervisor\Supervisor;
 
 /**
@@ -139,6 +140,24 @@ class QueueController extends Controller
 
         return view('web::queue.status',
             compact('totals', 'queued', 'working', 'done', 'error'));
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getQueuedJobs()
+    {
+
+        return Datatables::of($this->getJobs('Queued'))->make(true);
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getWorkingJobs()
+    {
+
+        return Datatables::of($this->getJobs('Working'))->make(true);
     }
 
     /**
