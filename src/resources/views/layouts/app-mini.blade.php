@@ -38,7 +38,8 @@
 <!-- Bootstrap 3.3.5 -->
 <script src="{{ asset('web/js/bootstrap.min.js') }}"></script>
 
-@yield('javascript')
+<!-- view specific scripts -->
+@stack('javascript')
 
 </body>
 </html>

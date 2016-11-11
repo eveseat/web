@@ -161,10 +161,10 @@
 
 @stop
 
-@section('javascript')
+@push('javascript')
 
   <script>
     $("#refTypeName").select2();
   </script>
 
-@stop
+@endpush
