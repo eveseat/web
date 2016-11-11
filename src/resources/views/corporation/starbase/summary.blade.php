@@ -45,17 +45,21 @@
                 {{ $starbase->starbaseName }}
               </span>
               @if($starbase->inSovSystem)
-              @if(carbon('now')->diffInHours(carbon('now')->addHours($starbase->fuelBlocks/ ceil($starbase->baseFuelUsage * 0.75))) < 24)
-              <span class="text-red pull-right"><i>{{ trans('web::seat.low_fuel') }} !</i></span>
-              @elseif(carbon('now')->diffInHours(carbon('now')->addHours($starbase->fuelBlocks/ ceil($starbase->baseFuelUsage * 0.75))) < 72)
-              <span class="text-yellow pull-right"><i>{{ trans('web::seat.low_fuel') }}</i></span>
-              @endif
+
+                @if(carbon('now')->diffInHours(carbon('now')->addHours($starbase->fuelBlocks/ ceil($starbase->baseFuelUsage * 0.75))) < 24)
+                  <span class="text-red pull-right"><i>{{ trans('web::seat.low_fuel') }} !</i></span>
+                @elseif(carbon('now')->diffInHours(carbon('now')->addHours($starbase->fuelBlocks/ ceil($starbase->baseFuelUsage * 0.75))) < 72)
+                  <span class="text-yellow pull-right"><i>{{ trans('web::seat.low_fuel') }}</i></span>
+                @endif
+
               @else
-              @if(carbon('now')->diffInHours(carbon('now')->addHours($starbase->fuelBlocks/$starbase->baseFuelUsage)) < 24)
-              <span class="text-red pull-right"><i>{{ trans('web::seat.low_fuel') }} !</i></span>
-              @elseif(carbon('now')->diffInHours(carbon('now')->addHours($starbase->fuelBlocks/$starbase->baseFuelUsage)) < 72)
-              <span class="text-yellow pull-right"><i>{{ trans('web::seat.low_fuel') }}</i></span>
-              @endif
+
+                @if(carbon('now')->diffInHours(carbon('now')->addHours($starbase->fuelBlocks/$starbase->baseFuelUsage)) < 24)
+                  <span class="text-red pull-right"><i>{{ trans('web::seat.low_fuel') }} !</i></span>
+                @elseif(carbon('now')->diffInHours(carbon('now')->addHours($starbase->fuelBlocks/$starbase->baseFuelUsage)) < 72)
+                  <span class="text-yellow pull-right"><i>{{ trans('web::seat.low_fuel') }}</i></span>
+                @endif
+
               @endif
           </td>
           <td>
