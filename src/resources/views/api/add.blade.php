@@ -86,7 +86,7 @@
 
 @stop
 
-@section('javascript')
+@push('javascript')
   <script type="text/javascript">
 
     // variable to hold request
@@ -162,4 +162,4 @@
     });
 
   </script>
-@stop
+@endpush

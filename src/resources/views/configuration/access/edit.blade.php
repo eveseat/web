@@ -273,7 +273,7 @@
 
 @stop
 
-@section('javascript')
+@push('javascript')
 
   @include('web::includes.javascript.id-to-name')
 
@@ -286,4 +286,4 @@
     });
   </script>
 
-@stop
+@endpush

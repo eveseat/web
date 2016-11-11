@@ -153,11 +153,11 @@
 
 @stop
 
-@section('javascript')
+@push('javascript')
 
   <script>
     $("#corporationName").select2();
     $("#alliance").select2();
   </script>
 
-@stop
+@endpush

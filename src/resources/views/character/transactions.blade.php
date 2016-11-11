@@ -186,7 +186,7 @@
 
 @stop
 
-@section('javascript')
+@push('javascript')
 
   <script>
     $("#typeName").select2({
@@ -218,4 +218,4 @@
     });
   </script>
 
-@stop
+@endpush

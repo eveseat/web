@@ -112,7 +112,8 @@
   })();
 </script>
 
-@yield('javascript')
+<!-- view specific scripts -->
+@stack('javascript')
 
 </body>
 </html>

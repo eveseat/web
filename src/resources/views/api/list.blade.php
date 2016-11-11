@@ -35,7 +35,7 @@
 
 @stop
 
-@section('javascript')
+@push('javascript')
   <script>
 
     $(function () {
@@ -59,4 +59,4 @@
     });
 
   </script>
-@stop
+@endpush

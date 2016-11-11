@@ -267,7 +267,7 @@
 
 @stop
 
-@section('javascript')
+@push('javascript')
   <script type="text/javascript">
     $(document).ready(function () {
       jQuery.get("{{ route('check.sde') }}", function (data) {
@@ -279,4 +279,4 @@
       });
     });
   </script>
-@stop
+@endpush

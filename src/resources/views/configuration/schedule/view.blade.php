@@ -119,7 +119,7 @@
 
 @stop
 
-@section('javascript')
+@push('javascript')
 
   <script>
     $("#available_commands, #available_expressions").select2({
@@ -134,4 +134,4 @@
     });
   </script>
 
-@stop
+@endpush
