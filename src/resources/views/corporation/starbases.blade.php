@@ -64,7 +64,7 @@
 
 @stop
 
-@section('javascript')
+@push('javascript')
 
   <script>
     $("a#modules-tab").click(function () {
@@ -104,4 +104,4 @@
 
   @include('web::includes.javascript.id-to-name')
 
-@stop
+@endpush

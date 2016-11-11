@@ -97,7 +97,7 @@
 
 @stop
 
-@section('javascript')
+@push('javascript')
 
   <script>
 
@@ -117,4 +117,4 @@
   </script>
 
   @include('web::includes.javascript.id-to-name')
-@stop
+@endpush

@@ -166,7 +166,7 @@
   </div>
 @stop
 
-@section('javascript')
+@push('javascript')
 
   <script>
 
@@ -193,4 +193,4 @@
 
   </script>
 
-@stop
+@endpush
