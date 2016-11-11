@@ -21,46 +21,111 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
-use Illuminate\Http\Request;
 use Seat\Services\Repositories\Corporation\Wallet;
 use Seat\Web\Http\Controllers\Controller;
+use Yajra\Datatables\Datatables;
 
+/**
+ * Class WalletController
+ * @package Seat\Web\Http\Controllers\Corporation
+ */
 class WalletController extends Controller
 {
 
     use Wallet;
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param                          $corporation_id
+     * @param int $corporation_id
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getJournal(Request $request, int $corporation_id)
+    public function getJournal(int $corporation_id)
     {
 
-        $journal = $this->getCorporationWalletJournal(
-            $corporation_id, 50, $request);
-        $transaction_types = $this->getEveTransactionTypes();
-
-        return view('web::corporation.journal',
-            compact('journal', 'transaction_types'));
+        return view('web::corporation.journal');
 
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param                          $corporation_id
+     * @param int $corporation_id
+     *
+     * @return mixed
+     */
+    public function getJournalData(int $corporation_id)
+    {
+
+        $journal = $this->getCorporationWalletJournal($corporation_id, false);
+
+        return Datatables::of($journal)
+            ->editColumn('refTypeName', function ($row) {
+
+                return view('web::corporation.partials.journaltranstype', compact('row'))
+                    ->render();
+            })
+            ->editColumn('ownerName1', function ($row) {
+
+                return view('web::corporation.partials.journalfrom', compact('row'))
+                    ->render();
+            })
+            ->editColumn('ownerName2', function ($row) {
+
+                return view('web::corporation.partials.journalto', compact('row'))
+                    ->render();
+            })
+            ->editColumn('amount', function ($row) {
+
+                return number($row->amount);
+            })
+            ->editColumn('balance', function ($row) {
+
+                return number($row->balance);
+            })
+            ->make(true);
+
+    }
+
+    /**
+     * @param int $corporation_id
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getTransactions(Request $request, int $corporation_id)
+    public function getTransactions(int $corporation_id)
     {
 
-        $transactions = $this->getCorporationWalletTransactions(
-            $corporation_id, 50, $request);
+        return view('web::corporation.transactions');
+    }
 
-        return view('web::corporation.transactions', compact('transactions'));
+    /**
+     * @param int $corporation_id
+     *
+     * @return mixed
+     */
+    public function getTransactionsData(int $corporation_id)
+    {
+
+        $transactions = $this->getCorporationWalletTransactions($corporation_id, false);
+
+        return Datatables::of($transactions)
+            ->editColumn('transactionType', function ($row) {
+
+                return view('web::corporation.partials.transactiontype', compact('row'))
+                    ->render();
+            })
+            ->editColumn('prince', function ($row) {
+
+                return number($row->price);
+            })
+            ->addColumn('total', function ($row) {
+
+                return number($row->price * $row->quantity);
+            })
+            ->editColumn('clientName', function ($row) {
+
+                return view('web::corporation.partials.transactionclient', compact('row'))
+                    ->render();
+            })
+            ->make(true);
+
     }
 
 }

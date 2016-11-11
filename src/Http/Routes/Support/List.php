@@ -30,12 +30,6 @@ Route::get('/char/tran/client_names/{character_id}', [
     'uses'       => 'ListController@getCharacterTransactionClientNames'
 ]);
 
-Route::get('/corp/tran/client_names/{corporation_id}', [
-    'as'         => 'support.corp.tran.client_names',
-    'middleware' => 'corporationbouncer:transactions',
-    'uses'       => 'ListController@getCorporationTransactionClientNames'
-]);
-
 Route::get('/api-key/userlist', [
     'as'         => 'support.api-key.userlist',
     'middleware' => 'bouncer:superuser',

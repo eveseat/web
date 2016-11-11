@@ -23,7 +23,12 @@ namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Services\Repositories\Corporation\Contracts;
 use Seat\Web\Http\Controllers\Controller;
+use Yajra\Datatables\Datatables;
 
+/**
+ * Class ContractsController
+ * @package Seat\Web\Http\Controllers\Corporation
+ */
 class ContractsController extends Controller
 {
 
@@ -37,9 +42,31 @@ class ContractsController extends Controller
     public function getContracts(int $corporation_id)
     {
 
-        $contracts = $this->getCorporationContracts($corporation_id, 50);
-
         return view('web::corporation.contracts', compact('contracts'));
+    }
+
+    /**
+     * @param int $corporation_id
+     *
+     * @return mixed
+     */
+    public function getContractsData(int $corporation_id)
+    {
+
+        $contracts = $this->getCorporationContracts($corporation_id, false);
+
+        return Datatables::of($contracts)
+            ->editColumn('issuerID', function ($row) {
+
+                return view('web::corporation.partials.contractissuer', compact('row'))
+                    ->render();
+            })
+            ->editColumn('type', function ($row) {
+
+                return view('web::corporation.partials.contracttype', compact('row'))
+                    ->render();
+            })
+            ->make('true');
     }
 
 }

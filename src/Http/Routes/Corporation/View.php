@@ -53,10 +53,22 @@ Route::get('/view/contracts/{corporation_id}', [
     'uses'       => 'ContractsController@getContracts'
 ]);
 
+Route::get('/view/contracts/data/{corporation_id}', [
+    'as'         => 'corporation.view.contracts.data',
+    'middleware' => 'corporationbouncer:contracts',
+    'uses'       => 'ContractsController@getContractsData'
+]);
+
 Route::get('/view/industry/{corporation_id}', [
     'as'         => 'corporation.view.industry',
     'middleware' => 'corporationbouncer:industry',
     'uses'       => 'IndustryController@getIndustry'
+]);
+
+Route::get('/view/industry/data/{corporation_id}', [
+    'as'         => 'corporation.view.industry.data',
+    'middleware' => 'corporationbouncer:industry',
+    'uses'       => 'IndustryController@getIndustryData'
 ]);
 
 Route::get('/view/killmails/{corporation_id}', [
@@ -65,10 +77,22 @@ Route::get('/view/killmails/{corporation_id}', [
     'uses'       => 'KillmailsController@getKillmails'
 ]);
 
+Route::get('/view/killmails/data/{corporation_id}', [
+    'as'         => 'corporation.view.killmails.data',
+    'middleware' => 'corporationbouncer:killmails',
+    'uses'       => 'KillmailsController@getKillmailsData'
+]);
+
 Route::get('/view/market/{corporation_id}', [
     'as'         => 'corporation.view.market',
     'middleware' => 'corporationbouncer:market',
     'uses'       => 'MarketController@getMarket'
+]);
+
+Route::get('/view/market/data/{corporation_id}', [
+    'as'         => 'corporation.view.market.data',
+    'middleware' => 'corporationbouncer:market',
+    'uses'       => 'MarketController@getMarketData'
 ]);
 
 Route::get('/view/pocos/{corporation_id}', [
@@ -157,8 +181,20 @@ Route::get('/view/journal/{corporation_id}', [
     'uses'       => 'WalletController@getJournal'
 ]);
 
+Route::get('/view/journal/data/{corporation_id}', [
+    'as'         => 'corporation.view.journal.data',
+    'middleware' => 'corporationbouncer:journal',
+    'uses'       => 'WalletController@getJournalData'
+]);
+
 Route::get('/view/transactions/{corporation_id}', [
     'as'         => 'corporation.view.transactions',
     'middleware' => 'corporationbouncer:transactions',
     'uses'       => 'WalletController@getTransactions'
+]);
+
+Route::get('/view/transactions/data/{corporation_id}', [
+    'as'         => 'corporation.view.transactions.data',
+    'middleware' => 'corporationbouncer:transactions',
+    'uses'       => 'WalletController@getTransactionsData'
 ]);

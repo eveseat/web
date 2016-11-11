@@ -23,7 +23,12 @@ namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Services\Repositories\Corporation\Killmails;
 use Seat\Web\Http\Controllers\Controller;
+use Yajra\Datatables\Datatables;
 
+/**
+ * Class KillmailsController
+ * @package Seat\Web\Http\Controllers\Corporation
+ */
 class KillmailsController extends Controller
 {
 
@@ -37,9 +42,42 @@ class KillmailsController extends Controller
     public function getKillmails(int $corporation_id)
     {
 
-        $killmails = $this->getCorporationKillmails($corporation_id, 200);
+        return view('web::corporation.killmails');
+    }
 
-        return view('web::corporation.killmails', compact('killmails'));
+    /**
+     * @param int $corporation_id
+     *
+     * @return mixed
+     */
+    public function getKillmailsData(int $corporation_id)
+    {
+
+        $killmails = $this->getCorporationKillmails($corporation_id, false);
+
+        return Datatables::of($killmails)
+            ->editColumn('characterName', function ($row) {
+
+                return view('web::corporation.partials.killmailcharacter', compact('row'))
+                    ->render();
+            })
+            ->editColumn('typeName', function ($row) {
+
+                return view('web::corporation.partials.killmailtype', compact('row'))
+                    ->render();
+            })
+            ->editColumn('itemName', function ($row) {
+
+                return view('web::corporation.partials.killmailsystem', compact('row'))
+                    ->render();
+            })
+            ->addColumn('zkb', function ($row) {
+
+                return view('web::corporation.partials.killmailzkb', compact('row'))
+                    ->render();
+            })
+            ->make(true);
+
     }
 
 }
