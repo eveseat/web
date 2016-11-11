@@ -1,6 +1,6 @@
 <script>
 
-  $(document).ready(function () {
+  function ids_to_names() {
 
     var items = [];
     var arrays = [], size = 250;
@@ -36,6 +36,10 @@
         }
       });
     });
-  });
+  }
+
+  $(document).read(function () {
+    ids_to_names();
+  })
 
 </script>
