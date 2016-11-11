@@ -26,6 +26,7 @@ use Seat\Services\Data\Queue;
 use Seat\Services\Repositories\Queue\JobRepository;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Validation\Permission;
+use Yajra\Datatables\Datatables;
 
 /**
  * Class QueueController
@@ -68,7 +69,8 @@ class QueueController extends Controller
      */
     public function getQueuedJobs()
     {
-        return response()->json($this->getJobs('Queued'));
+
+        return Datatables::of($this->getJobs('Queued'))->make(true);
     }
 
     /**
@@ -76,7 +78,8 @@ class QueueController extends Controller
      */
     public function getWorkingJobs()
     {
-        return response()->json($this->getJobs('Working'));
+
+        return Datatables::of($this->getJobs('Working'))->make(true);
     }
 
     /**

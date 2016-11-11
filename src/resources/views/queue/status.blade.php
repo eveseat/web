@@ -208,47 +208,37 @@
 @stop
 
 @push('javascript')
-  <script type="text/javascript" src="{{ asset('web/js/moment-with-locales.min.js') }}"></script>
   <script type="text/javascript">
     $(document).ready(function () {
 
       var workingJobs = $('#working-jobs').DataTable({
-        'ajax': {
-          'url': '{{ route('json.jobs.working') }}',
-          'dataSrc': ''
-        },
-        'columns': [
-          {
-            data: 'created_at',
-            render: human_readable
-          },
-          {
-            data: 'updated_at',
-            render: human_readable
-          },
-          {data: 'owner_id'},
-          {data: 'api'},
-          {data: 'scope'},
-          {data: 'output'},
-          {data: 'status'}
-        ]
+
+        processing: true,
+        serverSide: true,
+        ajax: '{{ route('json.jobs.working') }}',
+        columns: [
+          {data: 'created_at', name: 'owner_id', render: human_readable},
+          {data: 'updated_at', name: 'owner_id', render: human_readable},
+          {data: 'owner_id', name: 'owner_id'},
+          {data: 'api', name: 'api'},
+          {data: 'scope', name: 'scope'},
+          {data: 'output', name: 'output'},
+          {data: 'status', name: 'status'},
+        ],
       });
 
       var queuedJobs = $('#queued-jobs').DataTable({
-        'ajax': {
-          'url': '{{ route('json.jobs.queued') }}',
-          'dataSrc': ''
-        },
-        'columns': [
-          {
-            data: 'created_at',
-            render: human_readable
-          },
-          {data: 'owner_id'},
-          {data: 'api'},
-          {data: 'scope'},
-          {data: 'status'}
-        ]
+
+        processing: true,
+        serverSide: true,
+        ajax: '{{ route('json.jobs.queued') }}',
+        columns: [
+          {data: 'created_at', name: 'created_at', render: human_readable},
+          {data: 'owner_id', name: 'owner_id'},
+          {data: 'api', name: 'api'},
+          {data: 'scope', name: 'scope'},
+          {data: 'status', name: 'status'},
+        ],
       });
 
       // reload jobs content table every 15 seconds
@@ -258,16 +248,6 @@
       }, {{ config('web.config.queue_status_update_time') }});
     });
 
-    /*
-     * This function is used by datatable in order to mimic Laravel Carbon human_readable helper
-     */
-    function human_readable(data, type, row) {
-      if (type == 'display') {
-        var date = moment(data, "YYYY-MM-DD hh:mm:ss").fromNow();
-        return '<span data-toggle="tooltip" data-placement="top" title="' + data + '">' + date + "</span>";
-      }
 
-      return data;
-    }
   </script>
 @endpush
