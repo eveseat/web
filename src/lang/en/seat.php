@@ -453,6 +453,7 @@ return [
     'fuel_levels'                  => 'Fuel Levels',
     'fuel_blocks'                  => 'Fuel Blocks',
     'fuel_usage'                   => 'Fuel Usage',
+    'low_fuel'                     => 'Low Fuel',
     'stront_usage'                 => 'Strontium Usage',
     'blocks_p_h'                   => 'Blocks p/h',
     'units_p_h'                    => 'Units p/h',
