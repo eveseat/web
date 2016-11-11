@@ -58,6 +58,7 @@ $(document).ready(function () {
 $.extend(true, $.fn.dataTable.defaults, {
     responsive: true,
     autoWidth: false,
+    'order': [[ 0, 'asc' ]],
 });
 
 // Helper function to mimic the PHP human_readable method
