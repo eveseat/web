@@ -46,7 +46,7 @@
         {data: 'characterName', name: 'characterName'},
         {data: 'typeName', name: 'typeName'},
         {data: 'itemName', name: 'itemName'},
-        {data: 'zkb', name: 'zkb'},
+        {data: 'zkb', name: 'itemName'},
       ],
       "fnDrawCallback": function () {
         $(document).ready(function () {
