@@ -38,7 +38,7 @@
     });
   }
 
-  $(document).read(function () {
+  $(document).ready(function () {
     ids_to_names();
   })
 
