@@ -95,14 +95,40 @@ class WebServiceProvider extends ServiceProvider
     }
 
     /**
+     * Register the application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+
+        // Merge the config with anything in the main app
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/web.config.php', 'web.config');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/web.filter.rules.php', 'web.filter.rules');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/web.permissions.php', 'web.permissions');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/package.sidebar.php', 'package.sidebar');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/package.character.menu.php', 'package.character.menu');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/package.corporation.menu.php', 'package.corporation.menu');
+
+        // Register any extra services.
+        $this->register_services();
+
+    }
+
+    /**
      * Include the routes
      */
     public function add_routes()
     {
 
-        if (!$this->app->routesAreCached()) {
+        if (!$this->app->routesAreCached())
             include __DIR__ . '/Http/routes.php';
-        }
     }
 
     /**
@@ -241,26 +267,15 @@ class WebServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the application services.
+     * Register external services used in this package.
      *
-     * @return void
+     * Currently this consists of:
+     *  - PragmaRX\Google2FA
+     *  - Laravel\Socialite
+     *  - Yajra\Datatables
      */
-    public function register()
+    public function register_services()
     {
-
-        // Merge the config with anything in the main app
-        $this->mergeConfigFrom(
-            __DIR__ . '/Config/web.config.php', 'web.config');
-        $this->mergeConfigFrom(
-            __DIR__ . '/Config/web.filter.rules.php', 'web.filter.rules');
-        $this->mergeConfigFrom(
-            __DIR__ . '/Config/web.permissions.php', 'web.permissions');
-        $this->mergeConfigFrom(
-            __DIR__ . '/Config/package.sidebar.php', 'package.sidebar');
-        $this->mergeConfigFrom(
-            __DIR__ . '/Config/package.character.menu.php', 'package.character.menu');
-        $this->mergeConfigFrom(
-            __DIR__ . '/Config/package.corporation.menu.php', 'package.corporation.menu');
 
         // Register the Google2FA into the IoC
         $this->app->bind('google_2fa', function () {
@@ -288,10 +303,7 @@ class WebServiceProvider extends ServiceProvider
 
         // Register the datatables package! Thanks
         //  https://laracasts.com/discuss/channels/laravel/register-service-provider-and-facade-within-service-provider
-        $this->app->register(
-            'Yajra\Datatables\DatatablesServiceProvider'
-        );
-
+        $this->app->register('Yajra\Datatables\DatatablesServiceProvider');
         $loader = AliasLoader::getInstance();
         $loader->alias('Datatables', 'Yajra\Datatables\Facades\Datatables');
 
