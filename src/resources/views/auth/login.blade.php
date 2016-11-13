@@ -45,7 +45,9 @@
       <div class="box-footer">
         <div class="pull-left">
           <a href="{{ route('password.email') }}">{{ trans('web::seat.forgot') }}</a><br>
+          @if(setting('registration', true) === 'yes')
           <a href="{{ route('auth.register') }}" class="text-center">{{ trans('web::seat.register') }}</a>
+          @endif
         </div>
         <button type="submit" class="btn btn-primary pull-right">{{ trans('web::seat.sign_in') }}</button>
       </div>
