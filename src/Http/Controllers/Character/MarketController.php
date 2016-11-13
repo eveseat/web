@@ -24,7 +24,12 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Services\Repositories\Character\Market;
 use Seat\Services\Repositories\Eve\EveRepository;
 use Seat\Web\Http\Controllers\Controller;
+use Yajra\Datatables\Datatables;
 
+/**
+ * Class MarketController
+ * @package Seat\Web\Http\Controllers\Character
+ */
 class MarketController extends Controller
 {
 
@@ -39,10 +44,50 @@ class MarketController extends Controller
     public function getMarket(int $character_id)
     {
 
-        $orders = $this->getCharacterMarketOrders($character_id);
+        return view('web::character.market');
+
+    }
+
+    /**
+     * @param int $character_id
+     *
+     * @return mixed
+     */
+    public function getMarketData(int $character_id)
+    {
+
+        $orders = $this->getCharacterMarketOrders($character_id, false);
         $states = $this->getEveMarketOrderStates();
 
-        return view('web::character.market', compact('orders', 'states'));
+        return Datatables::of($orders)
+            ->addColumn('bs', function ($row) {
+
+                return view('web::partials.marketbuysell', compact('row'))
+                    ->render();
+            })
+            ->addColumn('vol', function ($row) {
+
+                return view('web::partials.marketvolume', compact('row'))
+                    ->render();
+            })
+            ->addColumn('state', function ($row) use ($states) {
+
+                return $states[$row->orderState];
+            })
+            ->editColumn('price', function ($row) {
+
+                return number($row->price);
+            })
+            ->addColumn('total', function ($row) {
+
+                return number($row->price * $row->volEntered);
+            })
+            ->editColumn('typeName', function ($row) {
+
+                return view('web::partials.markettype', compact('row'))
+                    ->render();
+            })
+            ->make(true);
 
     }
 

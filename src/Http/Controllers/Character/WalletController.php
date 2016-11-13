@@ -21,47 +21,112 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Character;
 
-use Illuminate\Http\Request;
 use Seat\Services\Repositories\Character\Wallet;
-use Seat\Services\Repositories\Eve\EveRepository;
 use Seat\Web\Http\Controllers\Controller;
+use Yajra\Datatables\Datatables;
 
+/**
+ * Class WalletController
+ * @package Seat\Web\Http\Controllers\Character
+ */
 class WalletController extends Controller
 {
 
     use Wallet;
-    use EveRepository;
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param                          $character_id
+     *
+     * @param int $character_id
      *
      * @return \Illuminate\View\View
      */
-    public function getJournal(Request $request, int $character_id)
+    public function getJournal(int $character_id)
     {
 
-        $journal = $this->getCharacterWalletJournal(
-            $character_id, 50, $request);
-        $transaction_types = $this->getEveTransactionTypes();
-
-        return view('web::character.journal',
-            compact('journal', 'transaction_types'));
+        return view('web::character.journal');
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param                          $character_id
+     * @param int $character_id
+     *
+     * @return mixed
+     */
+    public function getJournalData(int $character_id)
+    {
+
+        $journal = $this->getCharacterWalletJournal($character_id, false);
+
+        return Datatables::of($journal)
+            ->editColumn('refTypeName', function ($row) {
+
+                return view('web::partials.journaltranstype', compact('row'))
+                    ->render();
+            })
+            ->editColumn('ownerName1', function ($row) {
+
+                return view('web::partials.journalfrom', compact('row'))
+                    ->render();
+            })
+            ->editColumn('ownerName2', function ($row) {
+
+                return view('web::partials.journalto', compact('row'))
+                    ->render();
+            })
+            ->editColumn('amount', function ($row) {
+
+                return number($row->amount);
+            })
+            ->editColumn('balance', function ($row) {
+
+                return number($row->balance);
+            })
+            ->make(true);
+
+    }
+
+    /**
+     *
+     * @param int $character_id
      *
      * @return \Illuminate\View\View
      */
-    public function getTransactions(Request $request, int $character_id)
+    public function getTransactions(int $character_id)
     {
 
-        $transactions = $this->getCharacterWalletTransactions(
-            $character_id, 50, $request);
+        return view('web::character.transactions');
+    }
 
-        return view('web::character.transactions', compact('transactions'));
+    /**
+     * @param int $character_id
+     *
+     * @return mixed
+     */
+    public function getTransactionsData(int $character_id)
+    {
+
+        $transactions = $this->getCharacterWalletTransactions($character_id, false);
+
+        return Datatables::of($transactions)
+            ->editColumn('transactionType', function ($row) {
+
+                return view('web::partials.transactiontype', compact('row'))
+                    ->render();
+            })
+            ->editColumn('price', function ($row) {
+
+                return number($row->price);
+            })
+            ->addColumn('total', function ($row) {
+
+                return number($row->price * $row->quantity);
+            })
+            ->editColumn('clientName', function ($row) {
+
+                return view('web::partials.transactionclient', compact('row'))
+                    ->render();
+            })
+            ->make(true);
+
     }
 
 }

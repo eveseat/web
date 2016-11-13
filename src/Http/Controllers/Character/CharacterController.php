@@ -21,29 +21,54 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Character;
 
-use Illuminate\Http\Request;
 use Seat\Services\Repositories\Character\Character;
 use Seat\Web\Http\Controllers\Controller;
+use Yajra\Datatables\Datatables;
 
+/**
+ * Class CharacterController
+ * @package Seat\Web\Http\Controllers\Character
+ */
 class CharacterController extends Controller
 {
 
     use Character;
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getCharacters(Request $request)
+    public function getCharacters()
     {
 
-        $alliances = $this->getCharacterAlliances();
-        $characters = $this->getAllCharactersWithAffiliationsAndFilters($request);
-        $corporations = $this->getCharacterCorporations();
+        return view('web::character.list');
 
-        return view('web::character.list',
-            compact('alliances', 'characters', 'corporations'));
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCharactersData()
+    {
+
+        $characters = $this->getAllCharactersWithAffiliationsAndFilters();
+
+        return Datatables::of($characters)
+            ->editColumn('characterName', function ($row) {
+
+                return view('web::character.partials.charactername', compact('row'))
+                    ->render();
+            })
+            ->editColumn('corporationName', function ($row) {
+
+                return view('web::character.partials.corporationname', compact('row'))
+                    ->render();
+            })
+            ->editColumn('alliance', function ($row) {
+
+                return view('web::character.partials.alliancename', compact('row'))
+                    ->render();
+            })
+            ->make(true);
 
     }
 

@@ -12,89 +12,12 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ trans_choice('web::seat.filter', 2) }}</h3>
-        </div>
-        <div class="panel-body">
-
-
-          <form role="form" action="{{ route('character.view.journal', ['character_id' => $request->character_id]) }}"
-                method="get">
-
-            <div class="box-body">
-
-              <div class="form-group">
-                <label>{{ trans('web::seat.transaction_type') }}</label>
-                <select id="refTypeName" class="form-control" name="filter[refTypeName][]" multiple>
-
-                  @foreach($transaction_types as $type)
-
-                    <option value="{{ $type->refTypeName }}"
-                            @if(isset($request->filter['refTypeName']))
-                            @if(in_array($type->refTypeName, $request->filter['refTypeName'])))
-                            selected
-                            @endif
-                            @endif>
-                      {{ $type->refTypeName }}
-                    </option>
-
-                  @endforeach
-
-                </select>
-              </div>
-
-            </div>
-            <!-- /.box-body -->
-
-            <div class="box-footer">
-
-              <a href="{{ route('character.view.journal', ['character_id' => $request->character_id]) }}"
-                 class="btn btn-warning pull-left">
-                {{ trans('web::seat.clear') }}
-              </a>
-
-              <button type="submit" class="btn btn-primary pull-right">
-                {{ trans_choice('web::seat.filter', 1) }}
-              </button>
-
-            </div>
-
-          </form>
-        </div>
-
-        @if($request->filter)
-
-          <div class="panel-footer">
-
-            @foreach($request->filter as $name => $filter)
-
-              <div class="text-muted">{{ studly_case($name) }}</div>
-              @foreach($filter as $detail)
-
-                <span class="label label-default">{{ $detail }}</span>
-
-              @endforeach
-
-            @endforeach
-
-          </div>
-
-        @endif
-
-      </div>
-
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-12">
-
-      <div class="panel panel-default">
-        <div class="panel-heading">
           <h3 class="panel-title">{{ trans('web::seat.wallet_journal') }}</h3>
         </div>
         <div class="panel-body">
 
-          <table class="table datatable compact table-condensed table-hover table-responsive">
+          <table class="table compact table-condensed table-hover table-responsive"
+                 id="character-journal" data-page-length=100>
             <thead>
             <tr>
               <th>{{ trans('web::seat.date') }}</th>
@@ -105,53 +28,8 @@
               <th>{{ trans('web::seat.balance') }}</th>
             </tr>
             </thead>
-            <tbody>
-
-            @foreach($journal as $transaction)
-
-              <tr>
-                <td data-order="{{ $transaction->date }}">
-                  <span data-toggle="tooltip"
-                        title="" data-original-title="{{ $transaction->date }}">
-                    {{ human_diff($transaction->date) }}
-                  </span>
-                </td>
-                <td>
-                  {{ $transaction->refTypeName }}
-                  @if($transaction->argName1)
-                    <i class="fa fa-info-circle pull-right" data-toggle="tooltip"
-                       title="" data-original-title="{{ $transaction->argName1 }}">
-                    </i>
-                  @endif
-                </td>
-                <td>
-                  @if($transaction->ownerID1 != 0)
-                    {!! img('auto', $transaction->ownerID1, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-                    {{ $transaction->ownerName1 }}
-                  @else
-                    n/a
-                  @endif
-                </td>
-                <td>
-                  @if($transaction->ownerID2 != 0)
-                    {!! img('auto', $transaction->ownerID2, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-                    {{ $transaction->ownerName2 }}
-                  @else
-                    n/a
-                  @endif
-                </td>
-                <td>{{ number($transaction->amount) }}</td>
-                <td>{{ number($transaction->balance) }}</td>
-              </tr>
-
-            @endforeach
-
-            </tbody>
           </table>
 
-        </div>
-        <div class="panel-footer">
-          {!! $journal->render() !!}
         </div>
       </div>
 
@@ -162,8 +40,29 @@
 
 @push('javascript')
 
-  <script>
-    $("#refTypeName").select2();
-  </script>
+<script>
+
+  $(function () {
+    $('table#character-journal').DataTable({
+      processing: true,
+      serverSide: true,
+      ajax: '{{ route('character.view.journal.data', ['character_id' => $request->character_id]) }}',
+      columns: [
+        {data: 'date', name: 'date', render: human_readable},
+        {data: 'refTypeName', name: 'refTypeName'},
+        {data: 'ownerName1', name: 'ownerName1'},
+        {data: 'ownerName2', name: 'ownerName2'},
+        {data: 'amount', name: 'amount'},
+        {data: 'balance', name: 'balance'},
+      ],
+      'fnDrawCallback': function () {
+        $(document).ready(function () {
+          $('img').unveil(100);
+        });
+      }
+    });
+  });
+
+</script>
 
 @endpush

@@ -58,22 +58,22 @@ class KillmailsController extends Controller
         return Datatables::of($killmails)
             ->editColumn('characterName', function ($row) {
 
-                return view('web::corporation.partials.killmailcharacter', compact('row'))
+                return view('web::partials.killmailcharacter', compact('row'))
                     ->render();
             })
             ->editColumn('typeName', function ($row) {
 
-                return view('web::corporation.partials.killmailtype', compact('row'))
+                return view('web::partials.killmailtype', compact('row'))
                     ->render();
             })
             ->editColumn('itemName', function ($row) {
 
-                return view('web::corporation.partials.killmailsystem', compact('row'))
+                return view('web::partials.killmailsystem', compact('row'))
                     ->render();
             })
             ->addColumn('zkb', function ($row) {
 
-                return view('web::corporation.partials.killmailzkb', compact('row'))
+                return view('web::partials.killmailzkb', compact('row'))
                     ->render();
             })
             ->make(true);

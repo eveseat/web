@@ -58,22 +58,22 @@ class IndustryController extends Controller
         return Datatables::of($jobs)
             ->editColumn('installerName', function ($row) {
 
-                return view('web::corporation.partials.industryinstaller', compact('row'))
+                return view('web::partials.industryinstaller', compact('row'))
                     ->render();
             })
             ->editColumn('solarSystemName', function ($row) {
 
-                return view('web::corporation.partials.industrysystem', compact('row'))
+                return view('web::partials.industrysystem', compact('row'))
                     ->render();
             })
             ->editColumn('blueprintTypeName', function ($row) {
 
-                return view('web::corporation.partials.industryblueprint', compact('row'))
+                return view('web::partials.industryblueprint', compact('row'))
                     ->render();
             })
             ->editColumn('productTypeName', function ($row) {
 
-                return view('web::corporation.partials.industryproduct', compact('row'))
+                return view('web::partials.industryproduct', compact('row'))
                     ->render();
             })
             ->make(true);

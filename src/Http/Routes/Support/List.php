@@ -24,12 +24,6 @@ Route::get('/inv/types', [
     'uses' => 'ListController@getInvTypes'
 ]);
 
-Route::get('/char/tran/client_names/{character_id}', [
-    'as'         => 'support.char.tran.client_names',
-    'middleware' => 'characterbouncer:transactions',
-    'uses'       => 'ListController@getCharacterTransactionClientNames'
-]);
-
 Route::get('/api-key/userlist', [
     'as'         => 'support.api-key.userlist',
     'middleware' => 'bouncer:superuser',

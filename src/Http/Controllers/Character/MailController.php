@@ -23,7 +23,12 @@ namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Services\Repositories\Character\Mail;
 use Seat\Web\Http\Controllers\Controller;
+use Yajra\Datatables\Datatables;
 
+/**
+ * Class MailController
+ * @package Seat\Web\Http\Controllers\Character
+ */
 class MailController extends Controller
 {
 
@@ -37,9 +42,43 @@ class MailController extends Controller
     public function getMail(int $character_id)
     {
 
-        $mail = $this->getCharacterMail($character_id);
+        return view('web::character.mail');
 
-        return view('web::character.mail', compact('mail'));
+    }
+
+    /**
+     * @param int $character_id
+     *
+     * @return mixed
+     */
+    public function getMailData(int $character_id)
+    {
+
+        $mail = $this->getCharacterMail($character_id, false);
+
+        return Datatables::of($mail)
+            ->editColumn('senderName', function ($row) {
+
+                return view('web::character.partials.mailsendername', compact('row'))
+                    ->render();
+            })
+            ->editColumn('title', function ($row) {
+
+                return view('web::character.partials.mailtitle', compact('row'))
+                    ->render();
+            })
+            ->editColumn('tocounts', function ($row) {
+
+                return view('web::character.partials.mailtocounts', compact('row'))
+                    ->render();
+            })
+            ->addColumn('read', function ($row) {
+
+                return view('web::character.partials.mailread', compact('row'))
+                    ->render();
+
+            })
+            ->make(true);
 
     }
 

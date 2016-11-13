@@ -23,7 +23,12 @@ namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Services\Repositories\Character\Industry;
 use Seat\Web\Http\Controllers\Controller;
+use Yajra\Datatables\Datatables;
 
+/**
+ * Class IndustryController
+ * @package Seat\Web\Http\Controllers\Character
+ */
 class IndustryController extends Controller
 {
 
@@ -37,9 +42,42 @@ class IndustryController extends Controller
     public function getIndustry(int $character_id)
     {
 
-        $jobs = $this->getCharacterIndustry($character_id);
+        return view('web::character.industry');
+    }
 
-        return view('web::character.industry', compact('jobs'));
+    /**
+     * @param int $character_id
+     *
+     * @return mixed
+     */
+    public function getIndustryData(int $character_id)
+    {
+
+        $jobs = $this->getCharacterIndustry($character_id, false);
+
+        return Datatables::of($jobs)
+            ->editColumn('installerName', function ($row) {
+
+                return view('web::partials.industryinstaller', compact('row'))
+                    ->render();
+            })
+            ->editColumn('solarSystemName', function ($row) {
+
+                return view('web::partials.industrysystem', compact('row'))
+                    ->render();
+            })
+            ->editColumn('blueprintTypeName', function ($row) {
+
+                return view('web::partials.industryblueprint', compact('row'))
+                    ->render();
+            })
+            ->editColumn('productTypeName', function ($row) {
+
+                return view('web::partials.industryproduct', compact('row'))
+                    ->render();
+            })
+            ->make(true);
+
     }
 
 }

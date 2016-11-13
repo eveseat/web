@@ -3,6 +3,8 @@
 @section('title', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.market'))
 @section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.market'))
 
+@inject('request', 'Illuminate\Http\Request')
+
 @section('character_content')
 
   <div class="panel panel-default">
@@ -11,7 +13,8 @@
     </div>
     <div class="panel-body">
 
-      <table class="table datatable compact table-condensed table-hover table-responsive">
+      <table class="table compact table-condensed table-hover table-responsive"
+             id="character-market">
         <thead>
         <tr>
           <th>{{ trans('web::seat.date') }}</th>
@@ -23,59 +26,39 @@
           <th>{{ trans_choice('web::seat.type', 1) }}</th>
         </tr>
         </thead>
-        <tbody>
-
-        @foreach($orders as $order)
-
-          <tr>
-            <td data-order="{{ $order->issued }}">
-              <span data-toggle="tooltip"
-                    title="" data-original-title="{{ $order->issued }}">
-                {{ human_diff($order->issued) }}
-              </span>
-            </td>
-            <td>
-              @if($order->bid)
-                <span class="text-red">Buy</span>
-              @else
-                <span class="text-green">Sell</span>
-              @endif
-            </td>
-            <td>
-              @if($order->bid)
-                {{ $order->volEntered }}
-              @else
-                {{ $order->volRemaining }}/{{ $order->volEntered }}
-              @endif
-            </td>
-            <td>{{ $states[$order->orderState] }}</td>
-            <td>{{ number($order->price) }}</td>
-            <td>{{ number($order->price * $order->volEntered) }}</td>
-            <td>
-              <span data-toggle="tooltip"
-                    title="" data-original-title="{{ $order->stationName }}">
-                <i class="fa fa-map-marker"></i>
-              </span>
-
-              {!! img('type', $order->typeID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-              {{ $order->typeName }}
-            </td>
-
-          </tr>
-
-        @endforeach
-
-        </tbody>
       </table>
 
     </div>
-
-    @if($orders->render())
-      <div class="panel-footer">
-        {!! $orders->render() !!}
-      </div>
-    @endif
-
   </div>
 
 @stop
+
+@push('javascript')
+
+<script>
+
+  $(function () {
+    $('table#character-market').DataTable({
+      processing: true,
+      serverSide: true,
+      ajax: '{{ route('character.view.market.data', ['character_id' => $request->character_id]) }}',
+      columns: [
+        {data: 'issued', name: 'issued', render: human_readable},
+        {data: 'bs', name: 'bid'},
+        {data: 'vol', name: 'volEntered'},
+        {data: 'state', name: 'orderState'},
+        {data: 'price', name: 'price'},
+        {data: 'total', name: 'price'},
+        {data: 'typeName', name: 'typeName'},
+      ],
+      'fnDrawCallback': function () {
+        $(document).ready(function () {
+          $('img').unveil(100);
+        });
+      }
+    });
+  });
+
+</script>
+
+@endpush

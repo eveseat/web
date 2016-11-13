@@ -58,13 +58,21 @@ class ContractsController extends Controller
         return Datatables::of($contracts)
             ->editColumn('issuerID', function ($row) {
 
-                return view('web::corporation.partials.contractissuer', compact('row'))
+                return view('web::partials.contractissuer', compact('row'))
                     ->render();
             })
             ->editColumn('type', function ($row) {
 
-                return view('web::corporation.partials.contracttype', compact('row'))
+                return view('web::partials.contracttype', compact('row'))
                     ->render();
+            })
+            ->editColumn('price', function ($row) {
+
+                return number($row->price);
+            })
+            ->editColumn('reward', function ($row) {
+
+                return number($row->reward);
             })
             ->make('true');
     }

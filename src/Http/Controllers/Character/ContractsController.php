@@ -23,7 +23,12 @@ namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Services\Repositories\Character\Contracts;
 use Seat\Web\Http\Controllers\Controller;
+use Yajra\Datatables\Datatables;
 
+/**
+ * Class ContractsController
+ * @package Seat\Web\Http\Controllers\Character
+ */
 class ContractsController extends Controller
 {
 
@@ -37,9 +42,40 @@ class ContractsController extends Controller
     public function getContracts(int $character_id)
     {
 
-        $contracts = $this->getCharacterContracts($character_id, 50);
+        return view('web::character.contracts');
 
-        return view('web::character.contracts', compact('contracts'));
+    }
+
+    /**
+     * @param int $character_id
+     *
+     * @return mixed
+     */
+    public function getContractsData(int $character_id)
+    {
+
+        $contracts = $this->getCharacterContracts($character_id, false);
+
+        return Datatables::of($contracts)
+            ->editColumn('issuerID', function ($row) {
+
+                return view('web::partials.contractissuer', compact('row'))
+                    ->render();
+            })
+            ->editColumn('type', function ($row) {
+
+                return view('web::partials.contracttype', compact('row'))
+                    ->render();
+            })
+            ->editColumn('price', function ($row) {
+
+                return number($row->price);
+            })
+            ->editColumn('reward', function ($row) {
+
+                return number($row->reward);
+            })
+            ->make(true);
 
     }
 

@@ -59,17 +59,17 @@ class WalletController extends Controller
         return Datatables::of($journal)
             ->editColumn('refTypeName', function ($row) {
 
-                return view('web::corporation.partials.journaltranstype', compact('row'))
+                return view('web::partials.journaltranstype', compact('row'))
                     ->render();
             })
             ->editColumn('ownerName1', function ($row) {
 
-                return view('web::corporation.partials.journalfrom', compact('row'))
+                return view('web::partials.journalfrom', compact('row'))
                     ->render();
             })
             ->editColumn('ownerName2', function ($row) {
 
-                return view('web::corporation.partials.journalto', compact('row'))
+                return view('web::partials.journalto', compact('row'))
                     ->render();
             })
             ->editColumn('amount', function ($row) {
@@ -108,10 +108,10 @@ class WalletController extends Controller
         return Datatables::of($transactions)
             ->editColumn('transactionType', function ($row) {
 
-                return view('web::corporation.partials.transactiontype', compact('row'))
+                return view('web::partials.transactiontype', compact('row'))
                     ->render();
             })
-            ->editColumn('prince', function ($row) {
+            ->editColumn('price', function ($row) {
 
                 return number($row->price);
             })
@@ -121,7 +121,7 @@ class WalletController extends Controller
             })
             ->editColumn('clientName', function ($row) {
 
-                return view('web::corporation.partials.transactionclient', compact('row'))
+                return view('web::partials.transactionclient', compact('row'))
                     ->render();
             })
             ->make(true);

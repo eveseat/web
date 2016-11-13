@@ -50,24 +50,6 @@ class ListController extends Controller
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @param                          $character_id
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getCharacterTransactionClientNames(Request $request, $character_id)
-    {
-
-        return response()->json([
-            'results' => DB::table('character_wallet_transactions')
-                ->select('clientName as id', 'clientName as text')
-                ->where('characterID', $character_id)
-                ->where('clientName', 'like', '%' . $request->q . '%')
-                ->groupBy('clientName')->get()
-        ]);
-    }
-
-    /**
-     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */

@@ -19,9 +19,14 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-Route::any('/list', [
+Route::get('/list', [
     'as'   => 'character.list',
     'uses' => 'CharacterController@getCharacters'
+]);
+
+Route::get('/list/data', [
+    'as'   => 'character.list.data',
+    'uses' => 'CharacterController@getCharactersData'
 ]);
 
 Route::get('/view/assets/{character_id}', [
@@ -60,10 +65,22 @@ Route::get('/view/contracts/{character_id}', [
     'uses'       => 'ContractsController@getContracts'
 ]);
 
+Route::get('/view/contracts/data/{character_id}', [
+    'as'         => 'character.view.contracts.data',
+    'middleware' => 'characterbouncer:contracts',
+    'uses'       => 'ContractsController@getContractsData'
+]);
+
 Route::get('/view/industry/{character_id}', [
     'as'         => 'character.view.industry',
     'middleware' => 'characterbouncer:industry',
     'uses'       => 'IndustryController@getIndustry'
+]);
+
+Route::get('/view/industry/data/{character_id}', [
+    'as'         => 'character.view.industry.data',
+    'middleware' => 'characterbouncer:industry',
+    'uses'       => 'IndustryController@getIndustryData'
 ]);
 
 Route::group(['prefix' => 'view/intel'], function () {
@@ -124,10 +141,22 @@ Route::get('/view/journal/{character_id}', [
     'uses'       => 'WalletController@getJournal'
 ]);
 
+Route::get('/view/journal/data/{character_id}', [
+    'as'         => 'character.view.journal.data',
+    'middleware' => 'characterbouncer:journal',
+    'uses'       => 'WalletController@getJournalData'
+]);
+
 Route::get('/view/killmails/{character_id}', [
     'as'         => 'character.view.killmails',
     'middleware' => 'characterbouncer:killmails',
     'uses'       => 'KillmailController@getKillmails'
+]);
+
+Route::get('/view/killmails/data/{character_id}', [
+    'as'         => 'character.view.killmails.data',
+    'middleware' => 'characterbouncer:killmails',
+    'uses'       => 'KillmailController@getKillmailsData'
 ]);
 
 Route::get('/view/mail/timeline', [
@@ -146,6 +175,12 @@ Route::get('/view/mail/{character_id}', [
     'uses'       => 'MailController@getMail'
 ]);
 
+Route::get('/view/mail/data/{character_id}', [
+    'as'         => 'character.view.mail.data',
+    'middleware' => 'characterbouncer:mail',
+    'uses'       => 'MailController@getMailData'
+]);
+
 Route::get('/view/mail/{character_id}/read/{message_id}', [
     'as'         => 'character.view.mail.read',
     'middleware' => 'characterbouncer:mail',
@@ -156,6 +191,12 @@ Route::get('/view/market/{character_id}', [
     'as'         => 'character.view.market',
     'middleware' => 'characterbouncer:market',
     'uses'       => 'MarketController@getMarket'
+]);
+
+Route::get('/view/market/data/{character_id}', [
+    'as'         => 'character.view.market.data',
+    'middleware' => 'characterbouncer:market',
+    'uses'       => 'MarketController@getMarketData'
 ]);
 
 Route::get('/view/notifications/{character_id}', [
@@ -198,4 +239,10 @@ Route::get('/view/transactions/{character_id}', [
     'as'         => 'character.view.transactions',
     'middleware' => 'characterbouncer:transactions',
     'uses'       => 'WalletController@getTransactions'
+]);
+
+Route::get('/view/transactions/data/{character_id}', [
+    'as'         => 'character.view.transactions.data',
+    'middleware' => 'characterbouncer:transactions',
+    'uses'       => 'WalletController@getTransactionsData'
 ]);

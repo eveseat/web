@@ -61,12 +61,12 @@ class MarketController extends Controller
         return Datatables::of($orders)
             ->addColumn('bs', function ($row) {
 
-                return view('web::corporation.partials.marketbuysell', compact('row'))
+                return view('web::partials.marketbuysell', compact('row'))
                     ->render();
             })
             ->addColumn('vol', function ($row) {
 
-                return view('web::corporation.partials.marketvolume', compact('row'))
+                return view('web::partials.marketvolume', compact('row'))
                     ->render();
             })
             ->addColumn('state', function ($row) use ($states) {
@@ -83,7 +83,7 @@ class MarketController extends Controller
             })
             ->editColumn('typeName', function ($row) {
 
-                return view('web::corporation.partials.markettype', compact('row'))
+                return view('web::partials.markettype', compact('row'))
                     ->render();
             })
             ->make(true);
