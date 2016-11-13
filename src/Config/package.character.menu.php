@@ -85,7 +85,7 @@ return [
         'route'          => 'character.view.killmails'
     ],
     [
-        'name'           => 'web::seat.mail',
+        'name'           => 'mail',
         'label'          => 'web::seat.mail',
         'permission'     => 'character.mail',
         'highlight_view' => 'mail',
