@@ -39,9 +39,17 @@
     </div>
     <div class="panel-body">
 
-      <span id="mail_from" a-ajax-loaded="false">
-        <i class="fa fa-cog fa fa-spin"></i> {{ trans('web::seat.loading_mail') }}</p>
-      </span>
+      <table class="table compact table-condensed table-hover table-responsive"
+             id="character-top-mail-interactions" data-page-length=10>
+        <thead>
+        <tr>
+          <th>Total</th>
+          <th>Character Name</th>
+          <th>Character Corp</th>
+          <th>Character Alliance</th>
+        </tr>
+        </thead>
+      </table>
 
     </div>
   </div>
@@ -73,16 +81,25 @@
         }
       });
 
-      // Mail From Entries
-      $.ajax({
-        type: 'GET',
-        url: "{{ route('character.view.intel.summary.ajax.mail', ['character_id' => $request->character_id]) }}",
-        success: function (result) {
-          $("span#mail_from").html(result);
-          $("img").unveil(100);
+    });
+
+    $(function () {
+      $('table#character-top-mail-interactions').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{{ route('character.view.intel.summary.mail.data', ['character_id' => $request->character_id]) }}',
+        columns: [
+          {data: 'total', name: 'total', searchable: false},
+          {data: 'characterName', name: 'characterName'},
+          {data: 'corporationName', name: 'corporationName'},
+          {data: 'allianceName', name: 'allianceName'},
+        ],
+        'fnDrawCallback': function () {
+          $(document).ready(function () {
+            $('img').unveil(100);
+          });
         }
       });
-
     });
 
   </script>

@@ -106,10 +106,10 @@ Route::group(['prefix' => 'view/intel'], function () {
     ]);
 
     // Mail
-    Route::get('summary/ajax/mail/{character_id}', [
-        'as'         => 'character.view.intel.summary.ajax.mail',
+    Route::get('summary/mail/data/{character_id}', [
+        'as'         => 'character.view.intel.summary.mail.data',
         'middleware' => 'characterbouncer:intel',
-        'uses'       => 'IntelController@getAjaxTopMailFrom'
+        'uses'       => 'IntelController@getTopMailFromData'
     ]);
 
     // Standings Comparison

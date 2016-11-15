@@ -23,6 +23,7 @@ namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Services\Repositories\Character\Intel;
 use Seat\Web\Http\Controllers\Controller;
+use Yajra\Datatables\Datatables;
 
 /**
  * Class IntelController
@@ -82,13 +83,28 @@ class IntelController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getAjaxTopMailFrom(int $character_id)
+    public function getTopMailFromData(int $character_id)
     {
 
-        $top = $this->characterTopMailInteractions(
-            $character_id, $this->top_limit);
+        $top = $this->characterTopMailInteractions($character_id);
 
-        return view('web::character.intel.ajax.topmail', compact('top'));
+        return Datatables::of($top)
+            ->editColumn('characterName', function ($row) {
+
+                return view('web::character.intel.partials.charactername', compact('row'))
+                    ->render();
+            })
+            ->editColumn('corporationName', function ($row) {
+
+                return view('web::character.intel.partials.corporationname', compact('row'))
+                    ->render();
+            })
+            ->editColumn('alliance', function ($row) {
+
+                return view('web::character.intel.partials.alliancename', compact('row'))
+                    ->render();
+            })
+            ->make(true);
     }
 
     /**
