@@ -53,15 +53,31 @@ class IntelController extends Controller
     /**
      * @param int $character_id
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return
      */
-    public function getAjaxTopWalletJournal(int $character_id)
+    public function getTopWalletJournalData(int $character_id)
     {
 
-        $top = $this->characterTopWalletJournalInteractions(
-            $character_id, $this->top_limit);
+        $top = $this->characterTopWalletJournalInteractions($character_id);
 
-        return view('web::character.intel.ajax.topjournal', compact('top'));
+        return Datatables::of($top)
+            ->editColumn('characterName', function ($row) {
+
+                return view('web::character.intel.partials.charactername', compact('row'))
+                    ->render();
+            })
+            ->editColumn('corporationName', function ($row) {
+
+                return view('web::character.intel.partials.corporationname', compact('row'))
+                    ->render();
+            })
+            ->editColumn('allianceName', function ($row) {
+
+                return view('web::character.intel.partials.alliancename', compact('row'))
+                    ->render();
+            })
+            ->make(true);
+
     }
 
     /**

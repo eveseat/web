@@ -13,9 +13,18 @@
     </div>
     <div class="panel-body">
 
-      <span id="journal_from" a-ajax-loaded="false">
-        <i class="fa fa-cog fa fa-spin"></i> {{ trans('web::seat.loading_journal') }}</p>
-      </span>
+      <table class="table compact table-condensed table-hover table-responsive"
+             id="character-top-journal-interactions" data-page-length=10>
+        <thead>
+        <tr>
+          <th>Total</th>
+          <th>Type</th>
+          <th>Character Name</th>
+          <th>Character Corp</th>
+          <th>Character Alliance</th>
+        </tr>
+        </thead>
+      </table>
 
     </div>
   </div>
@@ -29,12 +38,12 @@
       <table class="table compact table-condensed table-hover table-responsive"
              id="character-top-transaction-interactions" data-page-length=10>
         <thead>
-          <tr>
-            <th>Total</th>
-            <th>Character Name</th>
-            <th>Character Corp</th>
-            <th>Character Alliance</th>
-          </tr>
+        <tr>
+          <th>Total</th>
+          <th>Character Name</th>
+          <th>Character Corp</th>
+          <th>Character Alliance</th>
+        </tr>
         </thead>
       </table>
 
@@ -50,12 +59,12 @@
       <table class="table compact table-condensed table-hover table-responsive"
              id="character-top-mail-interactions" data-page-length=10>
         <thead>
-          <tr>
-            <th>Total</th>
-            <th>Character Name</th>
-            <th>Character Corp</th>
-            <th>Character Alliance</th>
-          </tr>
+        <tr>
+          <th>Total</th>
+          <th>Character Name</th>
+          <th>Character Corp</th>
+          <th>Character Alliance</th>
+        </tr>
         </thead>
       </table>
 
@@ -66,60 +75,66 @@
 
 @push('javascript')
 
-  <script>
+<script>
 
-    $(document).ready(function () {
-
-      // Journal From Entries
-      $.ajax({
-        type: 'GET',
-        url: "{{ route('character.view.intel.summary.ajax.journal', ['character_id' => $request->character_id]) }}",
-        success: function (result) {
-          $("span#journal_from").html(result);
-          $("img").unveil(100);
-        }
-      });
-
+  $(function () {
+    $('table#character-top-journal-interactions').DataTable({
+      processing: true,
+      serverSide: true,
+      ajax: '{{ route('character.view.intel.summary.journal.data', ['character_id' => $request->character_id]) }}',
+      columns: [
+        {data: 'total', name: 'total', searchable: false},
+        {data: 'refTypeName', name: 'refTypeName'},
+        {data: 'characterName', name: 'characterName'},
+        {data: 'corporationName', name: 'corporationName'},
+        {data: 'allianceName', name: 'allianceName'},
+      ],
+      'fnDrawCallback': function () {
+        $(document).ready(function () {
+          $('img').unveil(100);
+        });
+      }
     });
+  });
 
-    $(function () {
-      $('table#character-top-transaction-interactions').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: '{{ route('character.view.intel.summary.transactions.data', ['character_id' => $request->character_id]) }}',
-        columns: [
-          {data: 'total', name: 'total', searchable: false},
-          {data: 'characterName', name: 'characterName'},
-          {data: 'corporationName', name: 'corporationName'},
-          {data: 'allianceName', name: 'allianceName'},
-        ],
-        'fnDrawCallback': function () {
-          $(document).ready(function () {
-            $('img').unveil(100);
-          });
-        }
-      });
+  $(function () {
+    $('table#character-top-transaction-interactions').DataTable({
+      processing: true,
+      serverSide: true,
+      ajax: '{{ route('character.view.intel.summary.transactions.data', ['character_id' => $request->character_id]) }}',
+      columns: [
+        {data: 'total', name: 'total', searchable: false},
+        {data: 'characterName', name: 'characterName'},
+        {data: 'corporationName', name: 'corporationName'},
+        {data: 'allianceName', name: 'allianceName'},
+      ],
+      'fnDrawCallback': function () {
+        $(document).ready(function () {
+          $('img').unveil(100);
+        });
+      }
     });
+  });
 
-    $(function () {
-      $('table#character-top-mail-interactions').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: '{{ route('character.view.intel.summary.mail.data', ['character_id' => $request->character_id]) }}',
-        columns: [
-          {data: 'total', name: 'total', searchable: false},
-          {data: 'characterName', name: 'characterName'},
-          {data: 'corporationName', name: 'corporationName'},
-          {data: 'allianceName', name: 'allianceName'},
-        ],
-        'fnDrawCallback': function () {
-          $(document).ready(function () {
-            $('img').unveil(100);
-          });
-        }
-      });
+  $(function () {
+    $('table#character-top-mail-interactions').DataTable({
+      processing: true,
+      serverSide: true,
+      ajax: '{{ route('character.view.intel.summary.mail.data', ['character_id' => $request->character_id]) }}',
+      columns: [
+        {data: 'total', name: 'total', searchable: false},
+        {data: 'characterName', name: 'characterName'},
+        {data: 'corporationName', name: 'corporationName'},
+        {data: 'allianceName', name: 'allianceName'},
+      ],
+      'fnDrawCallback': function () {
+        $(document).ready(function () {
+          $('img').unveil(100);
+        });
+      }
     });
+  });
 
-  </script>
+</script>
 
 @endpush

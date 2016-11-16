@@ -92,10 +92,10 @@ Route::group(['prefix' => 'view/intel'], function () {
     ]);
 
     // Ajax Call Journal
-    Route::get('summary/ajax/journal/{character_id}', [
-        'as'         => 'character.view.intel.summary.ajax.journal',
+    Route::get('summary/journal/data/{character_id}', [
+        'as'         => 'character.view.intel.summary.journal.data',
         'middleware' => 'characterbouncer:intel',
-        'uses'       => 'IntelController@getAjaxTopWalletJournal'
+        'uses'       => 'IntelController@getTopWalletJournalData'
     ]);
 
     // Transactions
