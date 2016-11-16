@@ -119,11 +119,11 @@ Route::group(['prefix' => 'view/intel'], function () {
         'uses'       => 'IntelController@getStandingsComparison'
     ]);
 
-    // Standings Comparison Ajax result
-    Route::get('comparison/ajax/{character_id}/{profile_id}', [
-        'as'         => 'character.view.intel.ajax.standingscomparison',
+    // Standings Comparison
+    Route::get('comparison/data/{character_id}/{profile_id}', [
+        'as'         => 'character.view.intel.standingscomparison.data',
         'middleware' => 'characterbouncer:intel',
-        'uses'       => 'IntelController@getAjaxCompareStandingsWithProfile'
+        'uses'       => 'IntelController@getCompareStandingsWithProfileData'
     ]);
 
     // Journal Detail

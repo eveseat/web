@@ -158,12 +158,28 @@ class IntelController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getAjaxCompareStandingsWithProfile(int $character_id, int $profile_id)
+    public function getCompareStandingsWithProfileData(int $character_id, int $profile_id)
     {
 
         $journal = $this->getCharacterJournalStandingsWithProfile($character_id, $profile_id);
 
-        return view('web::character.intel.ajax.standings.journal', compact('journal'));
+        return Datatables::of($journal)
+            ->editColumn('characterName', function ($row) {
+
+                return view('web::character.intel.partials.charactername', compact('row'))
+                    ->render();
+            })
+            ->editColumn('corporationName', function ($row) {
+
+                return view('web::character.intel.partials.corporationname', compact('row'))
+                    ->render();
+            })
+            ->editColumn('allianceName', function ($row) {
+
+                return view('web::character.intel.partials.alliancename', compact('row'))
+                    ->render();
+            })
+            ->make(true);
 
     }
 

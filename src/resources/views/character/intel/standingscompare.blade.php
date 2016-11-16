@@ -39,7 +39,20 @@
       <h3 class="panel-title">Interactions</h3>
     </div>
     <div class="panel-body">
-      <span id="comparison-result"></span>
+
+      <table class="table compact table-condensed table-hover table-responsive"
+             id="character-standings-interactions">
+        <thead>
+        <tr>
+          <th>Interactions</th>
+          <th>Character Name</th>
+          <th>Character Corp</th>
+          <th>Character Alliance</th>
+          <th>Standing</th>
+        </tr>
+        </thead>
+      </table>
+
     </div>
   </div>
 
@@ -47,32 +60,44 @@
 
 @push('javascript')
 
-  <script>
+<script>
 
-    $("select#standings-profile-id").select2({
-      placeholder: "Select a profile"
-    });
+  // Profile selector
+  $("select#standings-profile-id").select2({
+    placeholder: "Select a profile"
+  });
 
-    $(document.body).on("change", "select#standings-profile-id", function () {
-
-      // Flip on the loading indicator
-      $("span#comparison-result").html('<i class="fa fa-cog fa fa-spin"></i>');
-
-      // Shitty hack so we can replace the id. Muhaha.
-      var url = "{{ route('character.view.intel.ajax.standingscomparison', ['character_id' => $request->character_id, 'profile_id' => ':id']) }}"
-      url = url.replace(':id', this.value);
-
-      // Perform the AJAX request to get the comparison.
-      $.ajax({
-        type: 'GET',
-        url: url,
-        success: function (result) {
-          $("span#comparison-result").html(result);
-          $("img").unveil(100);
-        }
+  // Prepare an empty DataTable to use.
+  var Table = $('table#character-standings-interactions').DataTable({
+    processing: true,
+    serverSide: true,
+    columns: [
+      {data: 'total', name: 'total', searchable: false},
+      {data: 'characterName', name: 'characterName'},
+      {data: 'corporationName', name: 'corporationName'},
+      {data: 'allianceName', name: 'allianceName'},
+      {data: 'standing', name: 'standing'},
+    ],
+    'fnDrawCallback': function () {
+      $(document).ready(function () {
+        $('img').unveil(100);
       });
-    });
+    },
+    'iDeferLoading': 0
+  });
 
-  </script>
+  // Table Loaders. This should run once a profile is chosen.
+  $(document.body).on("change", "select#standings-profile-id", function () {
+
+    // Shitty hack so we can replace the id. Muhaha.
+    var url = "{{ route('character.view.intel.standingscomparison.data', ['character_id' => $request->character_id, 'profile_id' => ':id']) }}"
+    url = url.replace(':id', this.value);
+
+    // Load the data from the new URL and populate the DataTable.
+    Table.ajax.url(url).load();
+
+  });
+
+</script>
 
 @endpush
