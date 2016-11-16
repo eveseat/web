@@ -99,7 +99,7 @@ class IntelController extends Controller
                 return view('web::character.intel.partials.corporationname', compact('row'))
                     ->render();
             })
-            ->editColumn('alliance', function ($row) {
+            ->editColumn('allianceName', function ($row) {
 
                 return view('web::character.intel.partials.alliancename', compact('row'))
                     ->render();

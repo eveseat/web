@@ -35,7 +35,7 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">Top Mail From</h3>
+      <h3 class="panel-title">Top Mail Interactions</h3>
     </div>
     <div class="panel-body">
 
