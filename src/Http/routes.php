@@ -114,13 +114,6 @@ Route::group([
 
                 include __DIR__ . '/Routes/Api/Key.php';
 
-                // People Group Routes
-                Route::group([
-                    'prefix' => 'people'
-                ], function () {
-
-                    include __DIR__ . '/Routes/Api/People.php';
-                });
             });
 
             // Corporation Routes
@@ -195,6 +188,14 @@ Route::group([
             ], function () {
 
                 include __DIR__ . '/Routes/Tools/Standings.php';
+
+                // People Group Routes
+                Route::group([
+                    'prefix' => 'people'
+                ], function () {
+
+                    include __DIR__ . '/Routes/Tools/People.php';
+                });
             });
         });
 

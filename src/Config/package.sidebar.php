@@ -44,12 +44,6 @@ return [
                 'label' => 'web::seat.list_keys',
                 'icon'  => 'fa-list',
                 'route' => 'api.key.list'
-            ],
-            [
-                'name'  => 'people groups',
-                'label' => 'web::seat.people_groups',
-                'icon'  => 'fa-group',
-                'route' => 'people.list'
             ]
         ]
     ],
@@ -141,6 +135,12 @@ return [
         'icon'          => 'fa-wrench',
         'route_segment' => 'tools',
         'entries'       => [
+            [
+                'name'  => 'people groups',
+                'label' => 'web::seat.people_groups',
+                'icon'  => 'fa-group',
+                'route' => 'people.list'
+            ],
             [
                 'name'  => 'standing profiles',
                 'label' => 'web::seat.standings_builder',
