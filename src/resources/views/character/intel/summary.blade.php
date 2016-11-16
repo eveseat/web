@@ -26,9 +26,17 @@
     </div>
     <div class="panel-body">
 
-      <span id="transactions" a-ajax-loaded="false">
-        <i class="fa fa-cog fa fa-spin"></i> {{ trans('web::seat.loading_transactions') }}</p>
-      </span>
+      <table class="table compact table-condensed table-hover table-responsive"
+             id="character-top-transaction-interactions" data-page-length=10>
+        <thead>
+          <tr>
+            <th>Total</th>
+            <th>Character Name</th>
+            <th>Character Corp</th>
+            <th>Character Alliance</th>
+          </tr>
+        </thead>
+      </table>
 
     </div>
   </div>
@@ -42,12 +50,12 @@
       <table class="table compact table-condensed table-hover table-responsive"
              id="character-top-mail-interactions" data-page-length=10>
         <thead>
-        <tr>
-          <th>Total</th>
-          <th>Character Name</th>
-          <th>Character Corp</th>
-          <th>Character Alliance</th>
-        </tr>
+          <tr>
+            <th>Total</th>
+            <th>Character Name</th>
+            <th>Character Corp</th>
+            <th>Character Alliance</th>
+          </tr>
         </thead>
       </table>
 
@@ -72,15 +80,25 @@
         }
       });
 
-      $.ajax({
-        type: 'GET',
-        url: "{{ route('character.view.intel.summary.ajax.transactions', ['character_id' => $request->character_id]) }}",
-        success: function (result) {
-          $("span#transactions").html(result);
-          $("img").unveil(100);
+    });
+
+    $(function () {
+      $('table#character-top-transaction-interactions').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{{ route('character.view.intel.summary.transactions.data', ['character_id' => $request->character_id]) }}',
+        columns: [
+          {data: 'total', name: 'total', searchable: false},
+          {data: 'characterName', name: 'characterName'},
+          {data: 'corporationName', name: 'corporationName'},
+          {data: 'allianceName', name: 'allianceName'},
+        ],
+        'fnDrawCallback': function () {
+          $(document).ready(function () {
+            $('img').unveil(100);
+          });
         }
       });
-
     });
 
     $(function () {

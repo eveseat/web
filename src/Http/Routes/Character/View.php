@@ -99,10 +99,10 @@ Route::group(['prefix' => 'view/intel'], function () {
     ]);
 
     // Transactions
-    Route::get('summary/ajax/transactions/{character_id}', [
-        'as'         => 'character.view.intel.summary.ajax.transactions',
+    Route::get('summary/transactions/data/{character_id}', [
+        'as'         => 'character.view.intel.summary.transactions.data',
         'middleware' => 'characterbouncer:intel',
-        'uses'       => 'IntelController@getAjaxTopTransactions'
+        'uses'       => 'IntelController@getTopTransactionsData'
     ]);
 
     // Mail
