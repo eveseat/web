@@ -29,6 +29,11 @@ Route::post('/standings', [
     'uses' => 'StandingsController@postNewStanding'
 ]);
 
+Route::get('/standings/delete/{profile_id}', [
+    'as'   => 'tools.standings.delete',
+    'uses' => 'StandingsController@getDeleteStandingsProfile'
+]);
+
 Route::get('/standings/edit/{id}', [
     'as'   => 'tools.standings.edit',
     'uses' => 'StandingsController@getStandingEdit'

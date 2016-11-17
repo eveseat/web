@@ -73,6 +73,21 @@ class StandingsController extends Controller
     }
 
     /**
+     * @param int $profile_id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function getDeleteStandingsProfile(int $profile_id)
+    {
+
+        $standing = StandingsProfile::findOrFail($profile_id);
+        $standing->delete();
+
+        return redirect()->back()
+            ->with('success', 'Standings profile deleted.');
+    }
+
+    /**
      * @param int $id
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

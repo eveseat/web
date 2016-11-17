@@ -63,7 +63,7 @@
                  class="btn btn-primary btn-xs">
                 {{ trans('web::seat.edit') }}
               </a>
-              <a href="{{ route('configuration.access.roles.delete', ['id' => $standing->id]) }}" type="button"
+              <a href="{{ route('tools.standings.delete', ['profile_id' => $standing->id]) }}" type="button"
                  class="btn btn-danger btn-xs">
                 {{ trans('web::seat.delete') }}
               </a>

@@ -41,6 +41,20 @@ class StandingsProfile extends Model
     protected $fillable = ['name'];
 
     /**
+     * Make sure we cleanup on delete
+     *
+     * @return bool|null
+     * @throws \Exception
+     */
+    public function delete()
+    {
+
+        $this->standings()->delete();
+
+        return parent::delete();
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function standings()
