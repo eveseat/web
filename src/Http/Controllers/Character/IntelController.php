@@ -183,17 +183,4 @@ class IntelController extends Controller
 
     }
 
-    /**
-     * @param int $character_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getStandingsJournalDetail(int $character_id)
-    {
-
-        $profiles = $this->standingsProfiles();
-
-        return view('web::character.intel.journaldetail', compact('profiles'));
-    }
-
 }
