@@ -49,3 +49,13 @@ Route::post('/standings/edit/add-element', [
     'as'   => 'tools.standings.edit.addelement',
     'uses' => 'StandingsController@postAddElementToStanding'
 ]);
+
+Route::post('/standings/edit/add-element/fromcorpchar', [
+    'as'   => 'tools.standings.edit.addelement.fromcorpchar',
+    'uses' => 'StandingsController@postAddStandingsFromCorpOrChar'
+]);
+
+Route::get('/standings/edit/remove/{element_id}/{profile_id}', [
+    'as'   => 'tools.standings.edit.remove',
+    'uses' => 'StandingsController@getRemoveElementFromProfile'
+]);

@@ -24,11 +24,16 @@ namespace Seat\Web\Http\Controllers\Tools;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Seat\Services\Repositories\Character\Character;
+use Seat\Services\Repositories\Character\Contacts as CharacterContacts;
+use Seat\Services\Repositories\Corporation\Contacts as CorporationContacts;
+use Seat\Services\Repositories\Corporation\Corporation;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\StandingsProfile;
 use Seat\Web\Models\StandingsProfileStanding;
 use Seat\Web\Validation\StandingsBuilder;
 use Seat\Web\Validation\StandingsElementAdd;
+use Seat\Web\Validation\StandingsExistingElementAdd;
 
 /**
  * Class StandingsController
@@ -36,6 +41,8 @@ use Seat\Web\Validation\StandingsElementAdd;
  */
 class StandingsController extends Controller
 {
+
+    use Character, Corporation, CharacterContacts, CorporationContacts;
 
     /**
      * @var string
@@ -99,7 +106,11 @@ class StandingsController extends Controller
             ->where('id', $id)
             ->first();
 
-        return view('web::tools.standings.edit', compact('standing'));
+        $characters = $this->getAllCharactersWithAffiliationsAndFilters();
+        $corporations = $this->getAllCorporationsWithAffiliationsAndFilters();
+
+        return view('web::tools.standings.edit',
+            compact('standing', 'characters', 'corporations'));
     }
 
     /**
@@ -173,6 +184,102 @@ class StandingsController extends Controller
 
         return redirect()->back()
             ->with('success', 'Element Added to Profile!');
+
+    }
+
+    /**
+     * @param \Seat\Web\Validation\StandingsExistingElementAdd $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postAddStandingsFromCorpOrChar(StandingsExistingElementAdd $request)
+    {
+
+        // Get the standings profile that will be updated.
+        $standings_profile = StandingsProfile::find($request->input('id'));
+
+        // Character Contacts
+        if ($request->has('character')) {
+            foreach ($this->getCharacterContacts($request->input('character')) as $contact) {
+
+                // Determine the contact type. We will default
+                // to a character if its not a corp/alliance.
+                $type = 'character';
+
+                if (strpos($contact->typeName, 'Corporation') !== false)
+                    $type = 'corporation';
+
+                if (strpos($contact->typeName, 'Alliance') !== false)
+                    $type = 'alliance';
+
+                // Prepare the standings entry.
+                $standing = StandingsProfileStanding::firstOrNew([
+                    'standings_profile_id' => $request->input('id'),
+                    'elementID'            => $contact->contactID,
+                    'type'                 => $type
+                ])->fill([
+
+                    // Update the standing incase its different to an
+                    // existing one.
+                    'standing' => $contact->standing
+                ]);
+
+                // Save the standings entry to the profile.
+                $standings_profile->standings()->save($standing);
+            }
+        }
+
+        // Corporation Contacts
+        if ($request->has('corporation')) {
+            foreach ($this->getCorporationContacts($request->input('corporation')) as $contact) {
+
+                // Determine the contact type. We will default
+                // to a character if its not a corp/alliance.
+                $type = 'character';
+
+                if (strpos($contact->typeName, 'Corporation') !== false)
+                    $type = 'corporation';
+
+                if (strpos($contact->typeName, 'Alliance') !== false)
+                    $type = 'alliance';
+
+                // Prepare the standings entry.
+                $standing = StandingsProfileStanding::firstOrNew([
+                    'standings_profile_id' => $request->input('id'),
+                    'elementID'            => $contact->contactID,
+                    'type'                 => $type
+                ])->fill([
+
+                    // Update the standing incase its different to an
+                    // existing one.
+                    'standing' => $contact->standing
+                ]);
+
+                // Save the standings entry to the profile.
+                $standings_profile->standings()->save($standing);
+            }
+        }
+
+        return redirect()->back()
+            ->with('success', 'Standings successfully imported from contact lists.');
+
+    }
+
+    /**
+     * @param int $element_id
+     * @param int $profile_id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function getRemoveElementFromProfile(int $element_id, int $profile_id)
+    {
+
+        // Get the standings profile that will be updated.
+        $standings_profile = StandingsProfile::find($profile_id);
+        $standings_profile->standings()->find($element_id)->delete();
+
+        return redirect()->back()
+            ->with('success', 'Standing removed!');
 
     }
 
