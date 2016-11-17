@@ -99,7 +99,7 @@ class StandingsController extends Controller
             ->where('id', $id)
             ->first();
 
-        return view('web::tools.standings.edit', compact('standing', 'id'));
+        return view('web::tools.standings.edit', compact('standing'));
     }
 
     /**

@@ -4,6 +4,8 @@
 @section('page_header', trans('web::seat.standings_builder'))
 @section('page_description', trans('web::seat.standings_builder'))
 
+@inject('request', 'Illuminate\Http\Request')
+
 @section('left')
 
   <div class="panel panel-default">
@@ -14,7 +16,7 @@
 
       <form role="form" action="{{ route('tools.standings.edit.addelement') }}" method="post">
         {{ csrf_field() }}
-        <input type="hidden" name="id" value="{{ $id }}">
+        <input type="hidden" name="id" value="{{ $request->id }}">
 
         <div class="box-body">
 
