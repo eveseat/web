@@ -11,6 +11,11 @@
         Standings Compare
       </a>
     </li>
+    <li role="presentation" class="@if ($sub_viewname == 'note') active @endif">
+      <a href="{{ route('character.view.intel.notes', $summary->characterID) }}">
+        Notes
+      </a>
+    </li>
   </ul>
 
 </div>

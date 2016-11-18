@@ -23,6 +23,8 @@ namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Services\Repositories\Character\Intel;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Models\IntelNote;
+use Seat\Web\Validation\NewIntelNote;
 use Yajra\Datatables\Datatables;
 
 /**
@@ -180,6 +182,89 @@ class IntelController extends Controller
                     ->render();
             })
             ->make(true);
+
+    }
+
+    /**
+     * @param int $character_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getNotes(int $character_id)
+    {
+
+        return view('web::character.intel.notes');
+
+    }
+
+    /**
+     * @param int $character_id
+     *
+     * @return mixed
+     */
+    public function getNotesData(int $character_id)
+    {
+
+        return Datatables::of(IntelNote::where('character_id', $character_id))
+            ->addColumn('actions', function ($row) {
+
+                return view('web::character.intel.partials.notesactions', compact('row'))
+                    ->render();
+            })
+            ->make(true);
+
+    }
+
+    /**
+     * @param int $character_id
+     * @param int $note_id
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getSingleNotesData(int $character_id, int $note_id)
+    {
+
+        return response()->json(IntelNote::where('character_id', $character_id)
+            ->where('id', $note_id)
+            ->get());
+
+    }
+
+    /**
+     * @param \Seat\Web\Validation\NewIntelNote $request
+     * @param int                               $character_id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postAddNew(NewIntelNote $request, int $character_id)
+    {
+
+        IntelNote::create([
+            'character_id' => $character_id,
+            'title'        => $request->input('title'),
+            'note'         => $request->input('note'),
+        ]);
+
+        return redirect()->back()
+            ->with('success', 'Note Added');
+
+    }
+
+    /**
+     * @param int $character_id
+     * @param int $note_id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function getDeleteNote(int $character_id, int $note_id)
+    {
+
+        IntelNote::where('character_id', $character_id)
+            ->where('id', $note_id)
+            ->delete();
+
+        return redirect()->back()
+            ->with('success', 'Note deleted!');
 
     }
 
