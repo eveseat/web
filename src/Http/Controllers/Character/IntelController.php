@@ -21,6 +21,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Character;
 
+use Seat\Eveapi\Models\Character\CharacterSheet;
 use Seat\Services\Repositories\Character\Intel;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\IntelNote;
@@ -205,7 +206,7 @@ class IntelController extends Controller
     public function getNotesData(int $character_id)
     {
 
-        return Datatables::of(IntelNote::where('character_id', $character_id))
+        return Datatables::of(CharacterSheet::getNotes($character_id))
             ->addColumn('actions', function ($row) {
 
                 return view('web::character.intel.partials.notesactions', compact('row'))
@@ -224,9 +225,8 @@ class IntelController extends Controller
     public function getSingleNotesData(int $character_id, int $note_id)
     {
 
-        return response()->json(IntelNote::where('character_id', $character_id)
-            ->where('id', $note_id)
-            ->get());
+        return response()->json(
+            CharacterSheet::getNote($character_id, $note_id)->get());
 
     }
 
@@ -239,11 +239,8 @@ class IntelController extends Controller
     public function postAddNew(NewIntelNote $request, int $character_id)
     {
 
-        IntelNote::create([
-            'character_id' => $character_id,
-            'title'        => $request->input('title'),
-            'note'         => $request->input('note'),
-        ]);
+        CharacterSheet::addNote(
+            $character_id, $request->input('title'), $request->input('note'));
 
         return redirect()->back()
             ->with('success', 'Note Added');
@@ -259,9 +256,7 @@ class IntelController extends Controller
     public function getDeleteNote(int $character_id, int $note_id)
     {
 
-        IntelNote::where('character_id', $character_id)
-            ->where('id', $note_id)
-            ->delete();
+        CharacterSheet::deleteNote($character_id, $note_id);
 
         return redirect()->back()
             ->with('success', 'Note deleted!');
