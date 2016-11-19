@@ -150,6 +150,12 @@ Route::group(['prefix' => 'view/intel'], function () {
         'uses'       => 'IntelController@postAddNew'
     ]);
 
+    Route::post('notes/update/{character_id}', [
+        'as'         => 'character.view.intel.notes.update',
+        'middleware' => 'characterbouncer:intel',
+        'uses'       => 'IntelController@postUpdateNote'
+    ]);
+
     Route::get('notes/delete/{character_id}/{note_id}', [
         'as'         => 'character.view.intel.notes.delete',
         'middleware' => 'characterbouncer:intel',

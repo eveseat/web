@@ -26,6 +26,7 @@ use Seat\Services\Repositories\Character\Intel;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\IntelNote;
 use Seat\Web\Validation\NewIntelNote;
+use Seat\Web\Validation\UpdateIntelNote;
 use Yajra\Datatables\Datatables;
 
 /**
@@ -226,7 +227,7 @@ class IntelController extends Controller
     {
 
         return response()->json(
-            CharacterSheet::getNote($character_id, $note_id)->get());
+            CharacterSheet::getNote($character_id, $note_id)->first());
 
     }
 
@@ -260,6 +261,25 @@ class IntelController extends Controller
 
         return redirect()->back()
             ->with('success', 'Note deleted!');
+
+    }
+
+    /**
+     * @param \Seat\Web\Validation\UpdateIntelNote $request
+     * @param int                                  $character_id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postUpdateNote(UpdateIntelNote $request, int $character_id)
+    {
+
+        CharacterSheet::updateNote(
+            $character_id, $request->input('note_id'),
+            $request->input('title'),
+            $request->input('note'));
+
+        return redirect()->back()
+            ->with('success', 'Note updated!');
 
     }
 

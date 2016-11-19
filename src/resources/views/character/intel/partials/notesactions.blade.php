@@ -1,6 +1,6 @@
 <div class="btn-group pull-right">
-  <a href="{{ route('character.view.intel.notes.delete', ['character_id' => $row->object_id, 'note_id' => $row->id]) }}"
-     type="button" class="btn btn-primary btn-xs confirmlink col-xs-6">
+  <a class="btn btn-primary btn-xs editnote col-xs-6" type="button" data-toggle="modal" data-target="#editModal"
+     a-note-id="{{ $row->id }}" a-object-id="{{ $row->object_id }}">
     {{ trans('web::seat.edit') }}
   </a>
   <a href="{{ route('character.view.intel.notes.delete', ['character_id' => $row->object_id, 'note_id' => $row->id]) }}"
