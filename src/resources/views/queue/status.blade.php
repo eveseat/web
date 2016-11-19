@@ -144,6 +144,38 @@
     </div>
 
     <div class="col-md-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-title">
+            <i class="fa fa-heartbeat"></i>
+            Supervisor Status
+            <span class="pull-right label label-danger" id="supervisor-status">{{ trans('web::seat.supervisor_offline') }}</span>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-2" id="supervisor-info">
+                <span class="text-muted">It seems that supervisor is not running</span>
+            </div>
+            <div class="col-md-10">
+              <table class="table table-condensed table-hover" id="supervisor-processes">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Process ID</th>
+                    <th>Uptime</th>
+                    <th>Log path</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8">
 
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -211,6 +243,21 @@
   <script type="text/javascript">
     $(document).ready(function () {
 
+    var supervisorTable = jQuery('#supervisor-processes').DataTable({
+        'ajax': {
+            'url':'{{ route('json.supervisor.processes') }}',
+            'dataSrc':''
+        },
+        'columns':[
+            {data:'name'},
+            {data:'pid'},
+            {data:'start', render: human_readable},
+            {data:'log'}
+        ],
+        'searching':false,
+        'lengthChange':false
+    });
+
       var workingJobs = $('#working-jobs').DataTable({
 
         processing: true,
@@ -241,11 +288,45 @@
         ],
       });
 
+      check_supervisor();
+
       // reload jobs content table every 15 seconds
       setInterval(function () {
+        supervisorTable.ajax.reload();
+        check_supervisor();
         workingJobs.ajax.reload();
         queuedJobs.ajax.reload();
       }, {{ config('web.config.queue_status_update_time') }});
+
+        function check_supervisor() {
+            jQuery.ajax('{{ route('json.supervisor.status') }}', {
+                success: function(data, textStatus, jqXHR){
+                    if (data.status) {
+                        if (jQuery('#supervisor-status').hasClass('label-danger')) {
+                            jQuery('#supervisor-status')
+                                    .removeClass('label-danger')
+                                    .addClass('label-success')
+                                    .text("{{ trans('web::seat.supervisor_online') }}");
+
+                            jQuery.ajax('{{ route('queue.supervisor.information') }}', {
+                                success: function(data, textStatus, jqXHR){
+                                    jQuery('#supervisor-info').html(data);
+                                }
+                            });
+                        }
+                    } else {
+                        if (jQuery('#supervisor-status').hasClass('label-success')) {
+                            jQuery('#supervisor-status')
+                                    .removeClass('label-success')
+                                    .addClass('label-danger')
+                                    .text("{{ trans('web::seat.supervisor_offline') }}");
+
+                            jQuery('#supervisor-info').html('<span class="text-muted">It seems that supervisor is not running</span>');
+                        }
+                    }
+                }
+            });
+        }
     });
 
 

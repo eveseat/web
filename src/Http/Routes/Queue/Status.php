@@ -25,6 +25,24 @@ Route::get('/status', [
     'uses'       => 'QueueController@getStatus'
 ]);
 
+Route::get('/json/supervisor/status', [
+    'as'         => 'json.supervisor.status',
+    'middleware' => 'bouncer:queue_manager',
+    'uses'       => 'QueueController@getSupervisorStatus'
+]);
+
+Route::get('/json/supervisor/processes', [
+    'as'         => 'json.supervisor.processes',
+    'middleware' => 'bouncer:queue_manager',
+    'uses'       => 'QueueController@getSupervisorProcesses'
+]);
+
+Route::get('/supervisor/information', [
+    'as'         => 'queue.supervisor.information',
+    'middleware' => 'bouncer:queue_manager',
+    'uses'       => 'QueueController@getSupervisorInformation'
+]);
+
 Route::get('/json/jobs/queued', [
     'as'         => 'json.jobs.queued',
     'middleware' => 'bouncer:queue_manager',

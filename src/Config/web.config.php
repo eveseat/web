@@ -25,6 +25,17 @@ return [
     'max_access_mask'          => 4294967295,
     'queue_status_update_time' => 10 * 1000, // milliseconds = seconds x 1,000
 
+    // Supervisor informations
+    'supervisor'               => [
+        'rpc'      => [
+            'address'   => env('SUPERVISOR_RPC_ADDRESS', '127.0.0.1'),
+            'username'  => env('SUPERVISOR_RPC_USERNAME', 'seat'),
+            'password'  => env('SUPERVISOR_RPC_PASSWORD', 'seat'),
+            'port'      => env('SUPERVISOR_RPC_PORT', 9001)
+        ],
+        'group'         => env('SUPERVISOR_GROUP', 'seat')
+    ],
+
     'languages' => [
         [
             'short' => 'af',
