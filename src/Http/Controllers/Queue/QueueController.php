@@ -76,33 +76,41 @@ class QueueController extends Controller
     }
 
     /**
-     * Return Supervisor running processes related to SeAT in a json response for queue api
+     * Return the current status of Supervisor workers.
      *
      * @return mixed
      */
     public function getSupervisorProcesses()
     {
 
-        $supervisor = app('supervisor');
+        if (app('supervisor')->checkConnection()) {
 
-        $processes = [];
+            $processes = collect(app('supervisor')
+                ->getProcesses())->filter(function ($process) {
 
-        if ($supervisor->checkConnection()) {
-            foreach ($supervisor->getProcesses() as $process) {
-                if ($process->getGroup() == config('web.supervisor.group')) {
-                    $processInfo = $process->getProcessInfo();
+                // Only return processes in the SeAT Group
+                return $process->getGroup() == config('web.supervisor.group');
 
-                    $processes[] = [
-                        'name'  => $processInfo['name'],
-                        'pid'   => $processInfo['pid'],
-                        'start' => date('Y-m-d H:i:s', $processInfo['start']),
-                        'log'   => $processInfo['stdout_logfile']
-                    ];
-                }
-            }
+            })->map(function ($process) {
+
+                $process_info = $process->getProcessInfo();
+
+                return collect([
+                    'name'      => $process_info['name'],
+                    'pid'       => $process_info['pid'],
+                    'statename' => $process_info['statename'],
+                    'spawnerr'  => $process_info['spawnerr'],
+                    'start'     => carbon()
+                        ->createFromTimestamp($process_info['start'])
+                        ->toDateTimeString(),
+                    'log'       => $process_info['logfile']
+                ]);
+
+            });
         }
 
-        return response()->json($processes);
+        return Datatables::of($processes ?? collect())
+            ->make(true);
     }
 
     /**
