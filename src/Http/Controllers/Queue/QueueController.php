@@ -26,8 +26,8 @@ use Seat\Services\Data\Queue;
 use Seat\Services\Repositories\Queue\JobRepository;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Validation\Permission;
-use Yajra\Datatables\Datatables;
 use Supervisor\Supervisor;
+use Yajra\Datatables\Datatables;
 
 /**
  * Class QueueController
@@ -57,16 +57,17 @@ class QueueController extends Controller
      */
     public function getSupervisorStatus()
     {
+
         // supervisor information
-        $supervisor = new Supervisor("seat",
-            config('web.config.supervisor.rpc.address'),
-            config('web.config.supervisor.rpc.username'),
-            config('web.config.supervisor.rpc.password'),
-            config('web.config.supervisor.rpc.port')
+        $supervisor = new Supervisor('seat',
+            config('web.supervisor.rpc.address'),
+            config('web.supervisor.rpc.username'),
+            config('web.supervisor.rpc.password'),
+            config('web.supervisor.rpc.port')
         );
 
         return response()->json(
-            array('status' => $supervisor->checkConnection())
+            ['status' => $supervisor->checkConnection()]
         );
     }
 
@@ -77,12 +78,13 @@ class QueueController extends Controller
      */
     public function getSupervisorInformation()
     {
+
         // supervisor information
-        $supervisor = new Supervisor("seat",
-            config('web.config.supervisor.rpc.address'),
-            config('web.config.supervisor.rpc.username'),
-            config('web.config.supervisor.rpc.password'),
-            config('web.config.supervisor.rpc.port')
+        $supervisor = new Supervisor('seat',
+            config('web.supervisor.rpc.address'),
+            config('web.supervisor.rpc.username'),
+            config('web.supervisor.rpc.password'),
+            config('web.supervisor.rpc.port')
         );
 
         return view('web::queue.ajax.supervisor',
@@ -96,27 +98,28 @@ class QueueController extends Controller
      */
     public function getSupervisorProcesses()
     {
+
         // supervisor information
-        $supervisor = new Supervisor("seat",
-            config('web.config.supervisor.rpc.address'),
-            config('web.config.supervisor.rpc.username'),
-            config('web.config.supervisor.rpc.password'),
-            config('web.config.supervisor.rpc.port')
+        $supervisor = new Supervisor('seat',
+            config('web.supervisor.rpc.address'),
+            config('web.supervisor.rpc.username'),
+            config('web.supervisor.rpc.password'),
+            config('web.supervisor.rpc.port')
         );
 
-        $processes = array();
+        $processes = [];
 
         if ($supervisor->checkConnection()) {
             foreach ($supervisor->getProcesses() as $process) {
-                if ($process->getGroup() == config('web.config.supervisor.group')) {
+                if ($process->getGroup() == config('web.supervisor.group')) {
                     $processInfo = $process->getProcessInfo();
 
-                    $processes[] = array(
-                        'name' => $processInfo['name'],
-                        'pid' => $processInfo['pid'],
+                    $processes[] = [
+                        'name'  => $processInfo['name'],
+                        'pid'   => $processInfo['pid'],
                         'start' => date('Y-m-d H:i:s', $processInfo['start']),
-                        'log' => $processInfo['stdout_logfile']
-                    );
+                        'log'   => $processInfo['stdout_logfile']
+                    ];
                 }
             }
         }
