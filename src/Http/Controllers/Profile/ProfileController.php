@@ -52,7 +52,7 @@ class ProfileController extends Controller
         // Settings value possibilities
         $characters = $this->getUserCharacters(auth()->user()->id);
         $skins = Profile::$options['skins'];
-        $languages = config('web.config.languages');
+        $languages = config('web.locale.languages');
         $sidebar = Profile::$options['sidebar'];
 
         $thousand = Profile::$options['thousand_seperator'];

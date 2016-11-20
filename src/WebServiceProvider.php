@@ -103,10 +103,15 @@ class WebServiceProvider extends ServiceProvider
     {
 
         // Merge the config with anything in the main app
+        // Web package configurations
         $this->mergeConfigFrom(
             __DIR__ . '/Config/web.config.php', 'web.config');
         $this->mergeConfigFrom(
             __DIR__ . '/Config/web.permissions.php', 'web.permissions');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/web.locale.php', 'web.locale');
+
+        // Menu Configurations
         $this->mergeConfigFrom(
             __DIR__ . '/Config/package.sidebar.php', 'package.sidebar');
         $this->mergeConfigFrom(

@@ -64,7 +64,7 @@ class ProfileSettings extends FormRequest
         $allowed_languages = implode(',', array_map(function ($entry) {
 
             return $entry['short'];
-        }, config('web.config.languages')));
+        }, config('web.locale.languages')));
         $allowed_sidebar = implode(',', Profile::$options['sidebar']);
 
         return [
