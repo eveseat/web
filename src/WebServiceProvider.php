@@ -316,7 +316,8 @@ class WebServiceProvider extends ServiceProvider
         // Register the Supervisor RPC helper into the IoC
         $this->app->singleton('supervisor', function () {
 
-            return new Supervisor('seat',
+            return new Supervisor(
+                config('web.supervisor.name'),
                 config('web.supervisor.rpc.address'),
                 config('web.supervisor.rpc.username'),
                 config('web.supervisor.rpc.password'),
