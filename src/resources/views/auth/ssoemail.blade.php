@@ -12,7 +12,7 @@
 
   <div class="login-box-body">
     <p class="login-box-msg">
-      {{ trans('web::seat.mfa_welcome') }}
+      {{ trans('web::seat.email_verify_welcome') }}
     </p>
 
     <form action="{{ route('auth.eve.email.set') }}" class="form-horizontal" method="post">

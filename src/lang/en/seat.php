@@ -111,6 +111,7 @@ return [
     'mfa_welcome'           => 'Please enter an Authentication Code to proceed.',
     'mfa'                   => 'Multifactor Auth',
     'email_verify'          => 'Email Verification',
+    'email_verify_welcome'  => 'Please enter a valid email address for your account.',
 
     // Registration
     'new_account'           => 'New Account',
