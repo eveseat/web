@@ -26,7 +26,6 @@ use Seat\Services\Data\Queue;
 use Seat\Services\Repositories\Queue\JobRepository;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Validation\Permission;
-use Supervisor\Supervisor;
 use Yajra\Datatables\Datatables;
 
 /**
@@ -58,17 +57,9 @@ class QueueController extends Controller
     public function getSupervisorStatus()
     {
 
-        // supervisor information
-        $supervisor = new Supervisor('seat',
-            config('web.supervisor.rpc.address'),
-            config('web.supervisor.rpc.username'),
-            config('web.supervisor.rpc.password'),
-            config('web.supervisor.rpc.port')
-        );
-
-        return response()->json(
-            ['status' => $supervisor->checkConnection()]
-        );
+        return response()->json([
+            'status' => app('supervisor')->checkConnection()
+        ]);
     }
 
     /**
@@ -79,16 +70,9 @@ class QueueController extends Controller
     public function getSupervisorInformation()
     {
 
-        // supervisor information
-        $supervisor = new Supervisor('seat',
-            config('web.supervisor.rpc.address'),
-            config('web.supervisor.rpc.username'),
-            config('web.supervisor.rpc.password'),
-            config('web.supervisor.rpc.port')
-        );
+        $supervisor = app('supervisor');
 
-        return view('web::queue.ajax.supervisor',
-            compact('supervisor'));
+        return view('web::queue.ajax.supervisor', compact('supervisor'));
     }
 
     /**
@@ -99,13 +83,7 @@ class QueueController extends Controller
     public function getSupervisorProcesses()
     {
 
-        // supervisor information
-        $supervisor = new Supervisor('seat',
-            config('web.supervisor.rpc.address'),
-            config('web.supervisor.rpc.username'),
-            config('web.supervisor.rpc.password'),
-            config('web.supervisor.rpc.port')
-        );
+        $supervisor = app('supervisor');
 
         $processes = [];
 

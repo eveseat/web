@@ -51,6 +51,7 @@ use Seat\Web\Http\Middleware\Locale;
 use Seat\Web\Http\Middleware\Mfa;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
 use Seat\Web\Http\Middleware\Requirements;
+use Supervisor\Supervisor;
 use Validator;
 
 /**
@@ -311,6 +312,17 @@ class WebServiceProvider extends ServiceProvider
         $this->app->register('Yajra\Datatables\DatatablesServiceProvider');
         $loader = AliasLoader::getInstance();
         $loader->alias('Datatables', 'Yajra\Datatables\Facades\Datatables');
+
+        // Register the Supervisor RPC helper into the IoC
+        $this->app->singleton('supervisor', function () {
+
+            return new Supervisor('seat',
+                config('web.supervisor.rpc.address'),
+                config('web.supervisor.rpc.username'),
+                config('web.supervisor.rpc.password'),
+                config('web.supervisor.rpc.port')
+            );
+        });
 
     }
 }
