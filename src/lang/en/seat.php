@@ -542,9 +542,9 @@ return [
     'clear_all_history'            => 'Clear All History',
     'job_history'                  => 'Job History',
     'no_history'                   => 'There are no historical jobs',
-    'eve_api_status'               => 'Eve Api Status',
-    'eve_api_error_threshold'      => 'EVE API Error Threshold',
-    'eve_api_connection_threshold' => 'EVE API Connection Error Threshold',
+    'eve_api_status'               => 'EVE API Status',
+    'eve_api_error_threshold'      => 'API Errors',
+    'eve_api_connection_threshold' => 'Connection Errors',
     'supervisor_offline'           => 'Offline',
     'supervisor_online'            => 'Online',
 

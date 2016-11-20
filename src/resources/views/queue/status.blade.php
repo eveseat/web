@@ -86,12 +86,29 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ trans('web::seat.eve_api_status') }}</h3>
+          <h3 class="panel-title">
+            {{ trans('web::seat.eve_api_status') }}
+
+            @if(Cache::get(config('eveapi.config.cache_keys.down')))
+
+              <span class="pull-right label label-danger" id="">
+                {{ trans('web::seat.offline') }}
+              </span>
+
+            @else
+
+              <span class="pull-right label label-success" id="">
+                {{ trans('web::seat.online') }}
+              </span>
+
+            @endif
+
+          </h3>
         </div>
         <div class="panel-body">
 
-          <dl>
-            <dt>{{ trans('web::seat.eve_api_status') }}</dt>
+          <dl class="dl-horizontal">
+            <dt>{{ trans('web::seat.status') }}</dt>
             <dd>
               @if(Cache::get(config('eveapi.config.cache_keys.down')))
                 <span class="text-danger">
