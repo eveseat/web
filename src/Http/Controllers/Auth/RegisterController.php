@@ -21,11 +21,18 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Auth;
 
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\User;
+use Seat\Web\Notifications\EmailVerification;
 use Validator;
 
+/**
+ * Class RegisterController
+ * @package Seat\Web\Http\Controllers\Auth
+ */
 class RegisterController extends Controller
 {
 
@@ -59,6 +66,9 @@ class RegisterController extends Controller
 
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function showRegistrationForm()
     {
 
@@ -98,4 +108,26 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        $user->notify(new EmailVerification());
+
+        return redirect()->back()
+            ->with('success', 'Please check your email for the confirmation link!');
+
+    }
+
 }

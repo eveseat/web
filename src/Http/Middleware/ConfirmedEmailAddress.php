@@ -19,34 +19,29 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Validation;
+namespace Seat\Web\Http\Middleware;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Closure;
 
-class EmailUpdate extends FormRequest
+class ConfirmedEmailAddress
 {
 
     /**
-     * Authorize the request by default.
+     * Handle an incoming request.
      *
-     * @return bool
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Closure                 $next
+     *
+     * @return mixed
      */
-    public function authorize()
+    public function handle($request, Closure $next)
     {
 
-        return true;
+        // If the users account is not active, halt.
+        if (!auth()->user()->active)
+            return redirect()->route('auth.email');
+
+        return $next($request);
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules()
-    {
-
-        return [
-            'new_email' => 'required|email|confirmed'
-        ];
-    }
 }

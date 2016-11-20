@@ -26,6 +26,8 @@ use Seat\Services\Settings\Profile;
 use Seat\Services\Settings\Seat;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\User;
+use Seat\Web\Notifications\EmailVerification;
+use Seat\Web\Validation\EmailUpdate;
 
 /**
  * Class SsoController
@@ -68,6 +70,10 @@ class SsoController extends Controller
         // Login the account
         auth()->login($user, true);
 
+        // Check that we have a valid email for the user.
+        if (!$user->active)
+            return redirect()->route('auth.eve.email');
+
         // Check if a main_character_id setting is set.
         // If not, we can pull the one from the SSO login data
         if (Profile::get('main_character_id') === 1)
@@ -91,11 +97,47 @@ class SsoController extends Controller
             return $existing;
 
         return User::create([
-            'name'   => $user->name,
-            'email'  => str_random(8) . '@seat.local',  // Temp Address
-            'eve_id' => $user->eve_id,
-            'active' => 1,
-            'token'  => $user->token
+            'name'     => $user->name,
+            'email'    => str_random(8) . '@seat.local',  // Temp Address
+            'eve_id'   => $user->eve_id,
+            'active'   => 0,
+            'token'    => $user->token,
+            'password' => bcrypt(str_random(128))   // Random Password.
         ]);
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getUserEmail()
+    {
+
+        // Make sure that only logged in SSO accounts can get here.
+        if (is_null(auth()->user()->eve_id)) abort(404);
+
+        return view('web::auth.ssoemail');
+    }
+
+    /**
+     * @param \Seat\Web\Validation\EmailUpdate $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postUpdateUserEmail(EmailUpdate $request)
+    {
+
+        // Make sure that only logged in SSO accounts can get here.
+        if (is_null(auth()->user()->eve_id)) abort(404);
+
+        // Update the email with the new value
+        $user = auth()->user();
+        $user->email = $request->input('new_email');
+        $user->save();
+
+        $user->notify(new EmailVerification());
+
+        return redirect()->route('auth.email')
+            ->with('success', 'Please check your email for the confirmation link!');
+
     }
 }

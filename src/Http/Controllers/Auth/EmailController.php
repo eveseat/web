@@ -19,34 +19,43 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Validation;
+namespace Seat\Web\Http\Controllers\Auth;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Models\User;
 
-class EmailUpdate extends FormRequest
+/**
+ * Class EmailController
+ * @package Seat\Web\Http\Controllers\Auth
+ */
+class EmailController extends Controller
 {
 
     /**
-     * Authorize the request by default.
+     * @param $token
      *
-     * @return bool
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function authorize()
+    public function confirmEmail($token)
     {
 
-        return true;
+        $user = User::whereActivationToken($token)->firstOrFail();
+        $user->confirmEmail();
+
+        auth()->login($user);
+
+        return redirect()->intended()
+            ->with('success', 'Email verified!');
+
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function rules()
+    public function getEmailRequired()
     {
 
-        return [
-            'new_email' => 'required|email|confirmed'
-        ];
+        return view('web::auth.email');
     }
+
 }

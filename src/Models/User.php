@@ -65,6 +65,23 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected $hidden = ['password', 'remember_token'];
 
     /**
+     * Boot the model.
+     *
+     * We are simply adding the active_token.
+     */
+    public static function boot()
+    {
+
+        parent::boot();
+
+        static::creating(function ($user) {
+
+            $user->activation_token = str_random(64);
+
+        });
+    }
+
+    /**
      * Make sure we cleanup on delete
      *
      * @return bool|null
@@ -82,6 +99,19 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         $this->keys()->update(['user_id' => 0]);
 
         return parent::delete();
+    }
+
+    /**
+     * Confirm the user.
+     *
+     * @return void
+     */
+    public function confirmEmail()
+    {
+
+        $this->active = true;
+        $this->activation_token = null;
+        $this->save();
     }
 
     /**

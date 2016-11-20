@@ -47,6 +47,7 @@ use Seat\Web\Http\Middleware\Bouncer\Bouncer;
 use Seat\Web\Http\Middleware\Bouncer\CharacterBouncer;
 use Seat\Web\Http\Middleware\Bouncer\CorporationBouncer;
 use Seat\Web\Http\Middleware\Bouncer\KeyBouncer;
+use Seat\Web\Http\Middleware\ConfirmedEmailAddress;
 use Seat\Web\Http\Middleware\Locale;
 use Seat\Web\Http\Middleware\Mfa;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
@@ -223,6 +224,9 @@ class WebServiceProvider extends ServiceProvider
         // Authenticate checks that the session is
         // simply authenticated
         $router->middleware('auth', Authenticate::class);
+
+        // Email Verification Requirement
+        $router->middleware('auth.email', ConfirmedEmailAddress::class);
 
         // Ensure that all of the SeAT required modules is installed.
         $router->middleware('requirements', Requirements::class);

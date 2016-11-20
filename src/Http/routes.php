@@ -46,11 +46,24 @@ Route::group([
         });
     });
 
+    // Email Verification Routes
+    Route::group([
+        'namespace'  => 'Auth',
+        'middleware' => ['requirements']
+    ], function () {
+
+        Route::group(['prefix' => 'auth/email'], function () {
+
+            include __DIR__ . '/Routes/Auth/Email.php';
+        });
+    });
+
     // All routes from here require *at least* that the
     // user is authenticated. The mfa middleware checks
     // a setting for the user. We also run the localization
-    // related logic here for translation support
-    Route::group(['middleware' => ['auth', 'locale']], function () {
+    // related logic here for translation support. Lastly,
+    // email verification is required to continue.
+    Route::group(['middleware' => ['auth', 'auth.email', 'locale']], function () {
 
         Route::group(['namespace' => 'Auth', 'prefix' => 'auth'], function () {
 

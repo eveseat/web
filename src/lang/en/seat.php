@@ -110,6 +110,7 @@ return [
     'sign_in'               => 'Sign In',
     'mfa_welcome'           => 'Please enter an Authentication Code to proceed.',
     'mfa'                   => 'Multifactor Auth',
+    'email_verify'          => 'Email Verification',
 
     // Registration
     'new_account'           => 'New Account',

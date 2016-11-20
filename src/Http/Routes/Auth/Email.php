@@ -19,34 +19,13 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Validation;
+// Email confirmation routes
+Route::get('/', [
+    'as'   => 'auth.email',
+    'uses' => 'EmailController@getEmailRequired'
+]);
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class EmailUpdate extends FormRequest
-{
-
-    /**
-     * Authorize the request by default.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-
-        return true;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules()
-    {
-
-        return [
-            'new_email' => 'required|email|confirmed'
-        ];
-    }
-}
+Route::get('confirm/{token}', [
+    'as'   => 'auth.email.confirm',
+    'uses' => 'EmailController@confirmEmail'
+]);
