@@ -66,6 +66,26 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">
+          <h3 class="panel-title">
+            Supervisor Status
+            <span class="pull-right label label-danger" id="supervisor-status">
+              {{ trans('web::seat.supervisor_offline') }}
+            </span>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <span id="supervisor-info"></span>
+          <span id="supervisor-offline-info">
+            <p>Supervisor might not be running or SeAT is unable to connect to
+            the management interface.</p>
+            <p>For instructions on how to configure Supervisor to allow for remote
+            worker monitoring, please refer to the SeAT documentation.</p>
+          </span>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
           <h3 class="panel-title">{{ trans('web::seat.eve_api_status') }}</h3>
         </div>
         <div class="panel-body">
@@ -148,29 +168,23 @@
         <div class="panel-heading">
           <div class="panel-title">
             <i class="fa fa-heartbeat"></i>
-            Supervisor Status
-            <span class="pull-right label label-danger" id="supervisor-status">{{ trans('web::seat.supervisor_offline') }}</span>
+            Supervisor Queue Workers
           </div>
         </div>
         <div class="panel-body">
-          <div class="row">
-            <div class="col-md-2" id="supervisor-info">
-                <span class="text-muted">It seems that supervisor is not running</span>
-            </div>
-            <div class="col-md-10">
-              <table class="table table-condensed table-hover" id="supervisor-processes">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Process ID</th>
-                    <th>Uptime</th>
-                    <th>Log path</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-            </div>
-          </div>
+          <table class="table table-condensed table-hover" id="supervisor-processes">
+            <thead>
+            <tr>
+              <th>Started</th>
+              <th>Name</th>
+              <th>PID</th>
+              <th>Status</th>
+              <th>Errors</th>
+              <th>Log path</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -240,95 +254,129 @@
 @stop
 
 @push('javascript')
-  <script type="text/javascript">
-    $(document).ready(function () {
 
-    var supervisorTable = jQuery('#supervisor-processes').DataTable({
-        'ajax': {
-            'url':'{{ route('json.supervisor.processes') }}',
-            'dataSrc':''
-        },
-        'columns':[
-            {data:'name'},
-            {data:'pid'},
-            {data:'start', render: human_readable},
-            {data:'log'}
-        ],
-        'searching':false,
-        'lengthChange':false
-    });
+<script type="text/javascript">
 
-      var workingJobs = $('#working-jobs').DataTable({
+  $(document).ready(function () {
 
-        processing: true,
-        serverSide: true,
-        ajax: '{{ route('json.jobs.working') }}',
-        columns: [
-          {data: 'created_at', name: 'owner_id', render: human_readable},
-          {data: 'updated_at', name: 'owner_id', render: human_readable},
-          {data: 'owner_id', name: 'owner_id'},
-          {data: 'api', name: 'api'},
-          {data: 'scope', name: 'scope'},
-          {data: 'output', name: 'output'},
-          {data: 'status', name: 'status'},
-        ],
-      });
+    var supervisorTable = $('#supervisor-processes').DataTable({
 
-      var queuedJobs = $('#queued-jobs').DataTable({
+      processing: true,
+      serverSide: true,
+      ajax: '{{ route('json.supervisor.processes') }}',
+      columns: [
+        {data: 'start', name: 'start', render: human_readable},
+        {data: 'name', name: 'name'},
+        {data: 'pid', name: 'pid'},
+        {
+          data: 'statename', name: 'statename', render: function (data) {
 
-        processing: true,
-        serverSide: true,
-        ajax: '{{ route('json.jobs.queued') }}',
-        columns: [
-          {data: 'created_at', name: 'created_at', render: human_readable},
-          {data: 'owner_id', name: 'owner_id'},
-          {data: 'api', name: 'api'},
-          {data: 'scope', name: 'scope'},
-          {data: 'status', name: 'status'},
-        ],
-      });
-
-      check_supervisor();
-
-      // reload jobs content table every 15 seconds
-      setInterval(function () {
-        supervisorTable.ajax.reload();
-        check_supervisor();
-        workingJobs.ajax.reload();
-        queuedJobs.ajax.reload();
-      }, {{ config('web.config.queue_status_update_time') }});
-
-        function check_supervisor() {
-            jQuery.ajax('{{ route('json.supervisor.status') }}', {
-                success: function(data, textStatus, jqXHR){
-                    if (data.status) {
-                        if (jQuery('#supervisor-status').hasClass('label-danger')) {
-                            jQuery('#supervisor-status')
-                                    .removeClass('label-danger')
-                                    .addClass('label-success')
-                                    .text("{{ trans('web::seat.supervisor_online') }}");
-
-                            jQuery.ajax('{{ route('queue.supervisor.information') }}', {
-                                success: function(data, textStatus, jqXHR){
-                                    jQuery('#supervisor-info').html(data);
-                                }
-                            });
-                        }
-                    } else {
-                        if (jQuery('#supervisor-status').hasClass('label-success')) {
-                            jQuery('#supervisor-status')
-                                    .removeClass('label-success')
-                                    .addClass('label-danger')
-                                    .text("{{ trans('web::seat.supervisor_offline') }}");
-
-                            jQuery('#supervisor-info').html('<span class="text-muted">It seems that supervisor is not running</span>');
-                        }
-                    }
-                }
-            });
+          return data.charAt(0).toUpperCase() + data.toLowerCase().slice(1);
         }
+        },
+        {
+          data: 'spawnerr', name: 'spawnerr', render: function (data) {
+
+          if (data.length > 0) {
+
+            return data
+
+          } else {
+
+            return 'None';
+          }
+
+        }
+        },
+        {data: 'log', name: 'log'},
+      ],
     });
 
+    var workingJobs = $('#working-jobs').DataTable({
 
-  </script>
+      processing: true,
+      serverSide: true,
+      ajax: '{{ route('json.jobs.working') }}',
+      columns: [
+        {data: 'created_at', name: 'owner_id', render: human_readable},
+        {data: 'updated_at', name: 'owner_id', render: human_readable},
+        {data: 'owner_id', name: 'owner_id'},
+        {data: 'api', name: 'api'},
+        {data: 'scope', name: 'scope'},
+        {data: 'output', name: 'output'},
+        {data: 'status', name: 'status'},
+      ],
+    });
+
+    var queuedJobs = $('#queued-jobs').DataTable({
+
+      processing: true,
+      serverSide: true,
+      ajax: '{{ route('json.jobs.queued') }}',
+      columns: [
+        {data: 'created_at', name: 'created_at', render: human_readable},
+        {data: 'owner_id', name: 'owner_id'},
+        {data: 'api', name: 'api'},
+        {data: 'scope', name: 'scope'},
+        {data: 'status', name: 'status'},
+      ],
+    });
+
+    // When the document is ready, run the check method.
+    check_supervisor();
+
+    // refresh tables every x seconds
+    setInterval(function () {
+      supervisorTable.ajax.reload();
+      check_supervisor();
+      workingJobs.ajax.reload();
+      queuedJobs.ajax.reload();
+    }, {{ config('web.config.queue_status_update_time') }});
+
+    // Function used to check if Supervisor can be queried
+    // via the HTTP RPC interface.
+    function check_supervisor() {
+      $.ajax('{{ route('json.supervisor.status') }}', {
+
+        success: function (data, textStatus, jqXHR) {
+
+          if (data.status) {
+
+            if ($('#supervisor-status').hasClass('label-danger')) {
+
+              $('#supervisor-status').removeClass('label-danger')
+                      .addClass('label-success')
+                      .text("{{ trans('web::seat.supervisor_online') }}");
+
+              $.ajax('{{ route('queue.supervisor.information') }}', {
+                success: function (data, textStatus, jqXHR) {
+
+                  // Update the status and hide the offline info.
+                  $('#supervisor-info').html(data);
+                  $('#supervisor-offline-info').hide();
+                }
+              });
+
+            }
+
+          } else {
+
+            if ($('#supervisor-status').hasClass('label-success')) {
+
+              $('#supervisor-status').removeClass('label-success')
+                      .addClass('label-danger')
+                      .text("{{ trans('web::seat.supervisor_offline') }}");
+
+              // Hide the status and show the offline message again.
+              $('#supervisor-info').hide();
+              $('#supervisor-offline-info').show();
+            }
+          }
+        }
+      });
+    }
+  });
+
+</script>
+
 @endpush
