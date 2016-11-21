@@ -66,7 +66,12 @@
                 <li class="{{ isset($item['route']) ? (Request::url() === route($item['route']) ? 'active' : null) : null }}">
                   <a href="{{ isset($item['route']) ? route($item['route']) : '#' }}">
                     @if (array_key_exists('label', $item))
-                      <i class="fa {{ $item['icon'] or 'fa-circle-o' }}"></i> {{ trans($item['label']) }}
+                      <i class="fa {{ $item['icon'] or 'fa-circle-o' }}"></i>
+                      @if(array_key_exists('plural', $item))
+                        {{ trans_choice($item['label'], 2) }}
+                      @else
+                        {{ trans($item['label']) }}
+                      @endif
                     @else
                       <i class="fa {{ $item['icon'] or 'fa-circle-o' }}"></i> {{ $item['name'] }}
                     @endif

@@ -104,10 +104,11 @@ return [
                 'route' => 'configuration.import.list'
             ],
             [   // Users
-                'name'  => 'user',
-                'label' => 'web::seat.user',
-                'icon'  => 'fa-user',
-                'route' => 'configuration.users'
+                'name'   => 'user',
+                'plural' => true,
+                'label'  => 'web::seat.user',
+                'icon'   => 'fa-user',
+                'route'  => 'configuration.users'
             ],
             [   // Schedule
                 'name'  => 'schedule',
