@@ -431,3 +431,12 @@
 
 @stop
 
+@push('javascript')
+
+<script>
+
+  $("select#main_character_id").select2();
+
+</script>
+
+@endpush
