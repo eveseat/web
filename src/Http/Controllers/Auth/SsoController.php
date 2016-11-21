@@ -22,7 +22,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Http\Controllers\Auth;
 
 use Laravel\Socialite\Contracts\Factory as Socialite;
-use Seat\Services\Settings\Profile;
 use Seat\Services\Settings\Seat;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\User;
@@ -70,14 +69,17 @@ class SsoController extends Controller
         // Login the account
         auth()->login($user, true);
 
+        // Check if a main_character_id setting is set.
+        // If not, we can pull the one from the SSO login data
+        if (setting('main_character_id') === 1) {
+
+            setting(['main_character_id', $eve_data->character_id]);
+            setting(['main_character_name', $eve_data->name]);
+        }
+
         // Check that we have a valid email for the user.
         if (!$user->active)
             return redirect()->route('auth.eve.email');
-
-        // Check if a main_character_id setting is set.
-        // If not, we can pull the one from the SSO login data
-        if (Profile::get('main_character_id') === 1)
-            Profile::set('main_character_id', $eve_data->character_id);
 
         return redirect()->intended();
     }
