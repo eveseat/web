@@ -46,7 +46,9 @@
           <li class="treeview {{ Request::segment(1) === $entry['route_segment'] ? 'active' : null }}">
             <a href="#">
               <i class="fa {{ $entry['icon'] }}"></i>
+
               @if (array_key_exists('label', $entry))
+
                 <span>
                   @if(array_key_exists('plural', $entry))
                     {{ trans_choice($entry['label'], 2) }}
@@ -55,28 +57,72 @@
                   @endif
                 </span>
                 <i class="fa fa-angle-left pull-right"></i>
+
               @else
+
                 <span>{{ $entry['name'] }}</span> <i class="fa fa-angle-left pull-right"></i>
+
               @endif
+
             </a>
             <ul class="treeview-menu">
 
               @foreach($entry['entries'] as $item)
 
-                <li class="{{ isset($item['route']) ? (Request::url() === route($item['route']) ? 'active' : null) : null }}">
-                  <a href="{{ isset($item['route']) ? route($item['route']) : '#' }}">
-                    @if (array_key_exists('label', $item))
-                      <i class="fa {{ $item['icon'] or 'fa-circle-o' }}"></i>
-                      @if(array_key_exists('plural', $item))
-                        {{ trans_choice($item['label'], 2) }}
+                {{-- check if a permisison is required an if its given --}}
+                @if(array_key_exists('permission', $item))
+
+                  {{-- permision is required. check it --}}
+                  @if(auth()->user()->has($item['permission'], false))
+
+                    <li class="{{ isset($item['route']) ? (Request::url() === route($item['route']) ? 'active' : null) : null }}">
+                      <a href="{{ isset($item['route']) ? route($item['route']) : '#' }}">
+
+                        @if (array_key_exists('label', $item))
+
+                          <i class="fa {{ $item['icon'] or 'fa-circle-o' }}"></i>
+                          @if(array_key_exists('plural', $item))
+                            {{ trans_choice($item['label'], 2) }}
+                          @else
+                            {{ trans($item['label']) }}
+                          @endif
+
+                        @else
+
+                          <i class="fa {{ $item['icon'] or 'fa-circle-o' }}"></i> {{ $item['name'] }}
+
+                        @endif
+
+                      </a>
+                    </li>
+
+                  @endif
+
+                  {{-- TODO: Get rid of this copy pasta by using a partial or something. --}}
+                @else
+
+                  <li class="{{ isset($item['route']) ? (Request::url() === route($item['route']) ? 'active' : null) : null }}">
+                    <a href="{{ isset($item['route']) ? route($item['route']) : '#' }}">
+                      @if (array_key_exists('label', $item))
+
+                        <i class="fa {{ $item['icon'] or 'fa-circle-o' }}"></i>
+
+                        @if(array_key_exists('plural', $item))
+                          {{ trans_choice($item['label'], 2) }}
+                        @else
+                          {{ trans($item['label']) }}
+                        @endif
+
                       @else
-                        {{ trans($item['label']) }}
+
+                        <i class="fa {{ $item['icon'] or 'fa-circle-o' }}"></i> {{ $item['name'] }}
+
                       @endif
-                    @else
-                      <i class="fa {{ $item['icon'] or 'fa-circle-o' }}"></i> {{ $item['name'] }}
-                    @endif
-                  </a>
-                </li>
+
+                    </a>
+                  </li>
+
+                @endif
 
               @endforeach
             </ul>
@@ -87,11 +133,13 @@
 
           <li class="{{ Request::segment(1) === $entry['route_segment'] ? 'active' : null }}">
             <a href="{{ isset($entry['route']) ? route($entry['route']) : '#' }}">
+
               @if (array_key_exists('label', $entry))
                 <i class="fa {{ $entry['icon'] }}"></i> <span>{{ trans($entry['label']) }}</span>
               @else
                 <i class="fa {{ $entry['icon'] }}"></i> <span>{{ $entry['name'] }}</span>
               @endif
+
             </a>
           </li>
 
