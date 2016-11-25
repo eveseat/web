@@ -181,7 +181,8 @@ class WebServiceProvider extends ServiceProvider
         $this->app['view']->composer([
             'web::character.includes.summary',
             'web::character.includes.menu',
-            'web::character.intel.includes.menu'
+            'web::character.intel.includes.menu',
+            'web::character.journal.includes.menu'
         ], CharacterSummary::class);
 
         // Character menu composer

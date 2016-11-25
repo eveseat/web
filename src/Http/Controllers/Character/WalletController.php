@@ -43,7 +43,7 @@ class WalletController extends Controller
     public function getJournal(int $character_id)
     {
 
-        return view('web::character.journal');
+        return view('web::character.journal.journal');
     }
 
     /**
@@ -82,6 +82,51 @@ class WalletController extends Controller
             })
             ->make(true);
 
+    }
+
+    /**
+     * @param int $character_id
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getJournalGraphBalance(int $character_id)
+    {
+
+        $data = $this->getCharacterWalletJournal($character_id, false)
+            ->orderBy('date', 'desc')
+            ->take(150)
+            ->get();
+
+        return response()->json([
+            'labels'   => $data->map(function ($item) {
+
+                return $item->date;
+            })->toArray(),
+            'datasets' => [
+                [
+                    'label'           => 'Balance',
+                    'fill'            => false,
+                    'lineTension'     => 0.1,
+                    'backgroundColor' => "rgba(60,141,188,0.9)",
+                    'borderColor'     => "rgba(60,141,188,0.8)",
+                    'data'            => $data->map(function ($item) {
+
+                        return $item->balance;
+                    })->toArray(),
+                ],
+                [
+                    'label'           => 'Amount',
+                    'fill'            => false,
+                    'lineTension'     => 0.1,
+                    'backgroundColor' => "rgba(210, 214, 222, 1)",
+                    'borderColor'     => "rgba(210, 214, 222, 1)",
+                    'data'            => $data->map(function ($item) {
+
+                        return $item->amount;
+                    })->toArray(),
+                ]
+            ]
+        ]);
     }
 
     /**

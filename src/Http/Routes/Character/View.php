@@ -176,6 +176,12 @@ Route::get('/view/journal/data/{character_id}', [
     'uses'       => 'WalletController@getJournalData'
 ]);
 
+Route::get('/view/journal/graph/balance/{character_id}', [
+    'as'         => 'character.view.journal.graph.balance',
+    'middleware' => 'characterbouncer:journal',
+    'uses'       => 'WalletController@getJournalGraphBalance'
+]);
+
 Route::get('/view/killmails/{character_id}', [
     'as'         => 'character.view.killmails',
     'middleware' => 'characterbouncer:killmails',
