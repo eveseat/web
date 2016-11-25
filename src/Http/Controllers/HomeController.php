@@ -21,7 +21,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers;
 
+use Seat\Services\Repositories\Character\Mail;
 use Seat\Services\Repositories\Eve\EveRepository;
+use Seat\Services\Repositories\Seat\Stats;
 use Seat\Services\Settings\Seat;
 
 /**
@@ -31,7 +33,7 @@ use Seat\Services\Settings\Seat;
 class HomeController extends Controller
 {
 
-    use EveRepository;
+    use EveRepository, Stats, Mail;
 
     /**
      *
@@ -50,8 +52,45 @@ class HomeController extends Controller
             session()->flash('warning', trans('web::seat.sso_email_warning'));
 
         $server_status = $this->getEveLastServerStatus();
+        $total_character_isk = $this->getTotalCharacterIsk();
+        $total_character_skillpoints = $this->getTotalCharacterSkillpoints();
+        $total_character_killmails = $this->getTotalCharacterKillmails();
+        $newest_mail = $this->getAllCharacterNewestMail();
 
-        return view('web::home', compact('server_status'));
+        return view('web::home', compact(
+            'server_status', 'total_character_isk', 'total_character_skillpoints',
+            'total_character_killmails', 'newest_mail'
+        ));
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getServerStatusChartData()
+    {
+
+        $data = $this->getEveServerStatuses();
+
+        return response()->json([
+            'labels'   => $data->map(function ($item) {
+
+                return $item->currentTime;
+            })->toArray(),
+            'datasets' => [
+                [
+                    'label'           => 'Concurrent Player Count',
+                    'fill'            => false,
+                    'lineTension'     => 0.1,
+                    'backgroundColor' => "rgba(60,141,188,0.9)",
+                    'borderColor'     => "rgba(60,141,188,0.8)",
+                    'data'            => $data->map(function ($item) {
+
+                        return $item->onlinePlayers;
+                    })->toArray(),
+                ]
+            ]
+        ]);
+
     }
 
 }

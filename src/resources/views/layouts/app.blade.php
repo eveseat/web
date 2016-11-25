@@ -89,6 +89,8 @@
 <script src="{{ asset('web/js/datatables.min.js') }}"></script>
 <!-- MomentJS -->
 <script src="{{ asset('web/js/moment-with-locales.min.js') }}"></script>
+<!-- ChartJS -->
+<script src="{{ asset('web/js/chart.min.js') }}"></script>
 <!-- Theme JS -->
 <script src="{{ asset('web/js/app.min.js') }}"></script>
 <!-- SeAT JS -->

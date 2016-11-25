@@ -83,6 +83,7 @@ return [
     'add'                   => 'Add',
     'all'                   => 'All',
     'inverse'               => 'Inverse',
+    'read'                  => 'Read',
 
     // Requirements
     'requirements'          => 'Requirements',
@@ -188,6 +189,9 @@ return [
     'home_page'                   => 'The Home Page',
     'online_layers'               => 'Online Players',
     'owned_api_keys'              => 'Owned API Keys',
+    'total_character_isk'         => 'Total Character ISK',
+    'total_character_skillpoints' => 'Total Character Skillpoints',
+    'total_killmails'             => 'Total Killmails',
 
     // Api Keys
     'api_key_add'                 => 'Add a New API Key',
