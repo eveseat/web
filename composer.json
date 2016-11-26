@@ -17,8 +17,8 @@
     "require": {
         "php": ">=7.0",
         "laravel/framework": "5.3.*",
-        "eveseat/eveapi": "~1.0",
-        "eveseat/services": "~1.0",
+        "eveseat/eveapi": "2.0.*",
+        "eveseat/services": "2.0.*",
         "pragmarx/google2fa": "^1.0",
         "league/csv": "^8.1",
         "laravel/socialite": "^2.0",
@@ -27,6 +27,6 @@
         "yzalis/supervisor": "^1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.0"
+        "phpunit/phpunit": "~5.0"
     }
 }
