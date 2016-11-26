@@ -21,14 +21,25 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Validation;
 
-use App\Http\Requests\Request;
+use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * Class RoleUser
  * @package Seat\Web\Validation
  */
-class RoleUser extends Request
+class RoleUser extends FormRequest
 {
+
+    /**
+     * Authorize the request by default.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+
+        return true;
+    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -38,26 +49,10 @@ class RoleUser extends Request
     public function rules()
     {
 
-        // Start with a default rules array for the
-        // role_id check
         $rules = [
-            'role_id' => 'required|exists:roles,id'
+            'role_id' => 'required|exists:roles,id',
+            'users.*' => 'required|exists:users,name'
         ];
-
-        // Ensure that the users is set, if not,
-        // complain that it is actually required
-        if (!$this->request->get('users')) {
-
-            $rules['users'] = 'required';
-
-            return $rules;
-
-        }
-
-        // Add each user in the multi select dynamically
-        foreach ($this->request->get('users') as $key => $value)
-
-            $rules['users.' . $key] = 'required|exists:users,name';
 
         return $rules;
     }

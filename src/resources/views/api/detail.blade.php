@@ -43,6 +43,16 @@
             </span>
           @endif
         </dd>
+        <dt>{{ trans('web::seat.paid_until') }}</dt>
+        <dd>
+          @if ($key->status != null)
+            <span data-toggle="tooltip" title="{{ $key->status->paidUntil }}">
+            {{ human_diff($key->status->paidUntil) }}
+          </span>
+          @else
+            <span>{{ trans('web::unknown') }}</span>
+          @endif
+        </dd>
         <dt>{{ trans('web::seat.v_code') }}</dt>
         <dd>
 
@@ -160,7 +170,8 @@
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                          aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">{{ trans('web::seat.transfer_ownership') }}</h4>
               </div>
               <div class="modal-body">
@@ -284,7 +295,7 @@
 
 @stop
 
-@section('javascript')
+@push('javascript')
 
   <script>
 
@@ -304,4 +315,4 @@
 
   </script>
 
-@stop
+@endpush

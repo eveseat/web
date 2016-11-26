@@ -21,9 +21,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Configuration;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Seat\Services\Repositories\Configuration\UserRespository;
+use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\User;
 use Seat\Web\Validation\EditUser;
 use Seat\Web\Validation\NewUser;
@@ -89,7 +89,7 @@ class UserController extends Controller
         $user->save();
 
         return redirect()->back()
-            ->with('success', trans('web::access.user_updated'));
+            ->with('success', trans('web::seat.user_updated'));
     }
 
     /**
@@ -108,7 +108,7 @@ class UserController extends Controller
         ]);
 
         return redirect()->back()
-            ->with('success', trans('web::access.user_created'));
+            ->with('success', trans('web::seat.user_created'));
     }
 
     /**
@@ -122,7 +122,7 @@ class UserController extends Controller
         $this->flipUserAccountStatus($user_id);
 
         return redirect()->back()
-            ->with('success', trans('web::access.account_status_change'));
+            ->with('success', trans('web::seat.account_status_change'));
     }
 
     /**
@@ -136,12 +136,12 @@ class UserController extends Controller
 
         if ($request->user()->id == $user_id)
             return redirect()->back()
-                ->with('warning', trans('web::access.self_delete_warning'));
+                ->with('warning', trans('web::seat.self_delete_warning'));
 
         $this->getUser($user_id)->delete();
 
         return redirect()->back()
-            ->with('success', trans('web::access.user_deleted'));
+            ->with('success', trans('web::seat.user_deleted'));
     }
 
     /**
@@ -157,6 +157,6 @@ class UserController extends Controller
 
         return redirect()->route('home')
             ->with('success',
-                trans('web::access.impersonating', ['user' => $user->name]));
+                trans('web::seat.impersonating', ['user' => $user->name]));
     }
 }

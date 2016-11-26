@@ -20,7 +20,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 */
 
 // Namespace all of the routes for this package.
-Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
+Route::group([
+    'namespace'  => 'Seat\Web\Http\Controllers',
+    'middleware' => 'web'   // Web middleware for state etc since L5.3
+], function () {
 
     // Authentication & Registration Routes.
     Route::group([
@@ -28,6 +31,9 @@ Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
         'middleware' => 'requirements'
     ], function () {
 
+        // Since Laravel 5.3, its recommended to use Auth::routes(),
+        // for these. We use named routes though, so that does not
+        // *really* work for us here.
         Route::group(['prefix' => 'auth'], function () {
 
             include __DIR__ . '/Routes/Auth/Auth.php';
@@ -40,11 +46,24 @@ Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
         });
     });
 
+    // Email Verification Routes
+    Route::group([
+        'namespace'  => 'Auth',
+        'middleware' => ['requirements']
+    ], function () {
+
+        Route::group(['prefix' => 'auth/email'], function () {
+
+            include __DIR__ . '/Routes/Auth/Email.php';
+        });
+    });
+
     // All routes from here require *at least* that the
     // user is authenticated. The mfa middleware checks
     // a setting for the user. We also run the localization
-    // related logic here for translation support
-    Route::group(['middleware' => ['auth', 'locale']], function () {
+    // related logic here for translation support. Lastly,
+    // email verification is required to continue.
+    Route::group(['middleware' => ['auth', 'auth.email', 'locale']], function () {
 
         Route::group(['namespace' => 'Auth', 'prefix' => 'auth'], function () {
 
@@ -108,13 +127,6 @@ Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
 
                 include __DIR__ . '/Routes/Api/Key.php';
 
-                // People Group Routes
-                Route::group([
-                    'prefix' => 'people'
-                ], function () {
-
-                    include __DIR__ . '/Routes/Api/People.php';
-                });
             });
 
             // Corporation Routes
@@ -180,6 +192,23 @@ Route::group(['namespace' => 'Seat\Web\Http\Controllers'], function () {
                     include __DIR__ . '/Routes/Configuration/Seat.php';
                 });
 
+            });
+
+            // Tools Routes
+            Route::group([
+                'namespace' => 'Tools',
+                'prefix'    => 'tools'
+            ], function () {
+
+                include __DIR__ . '/Routes/Tools/Standings.php';
+
+                // People Group Routes
+                Route::group([
+                    'prefix' => 'people'
+                ], function () {
+
+                    include __DIR__ . '/Routes/Tools/People.php';
+                });
             });
         });
 

@@ -13,12 +13,12 @@
 
       <table class="table datatable compact table-condensed table-hover table-responsive">
         <thead>
-          <tr>
-            <th>{{ trans('web::seat.date') }}</th>
-            <th>{{ trans('web::seat.owner') }}</th>
-            <th>{{ trans('web::seat.description') }}</th>
-            <th>{{ trans('web::seat.status') }}</th>
-          </tr>
+        <tr>
+          <th>{{ trans('web::seat.date') }}</th>
+          <th>{{ trans('web::seat.owner') }}</th>
+          <th>{{ trans('web::seat.description') }}</th>
+          <th>{{ trans('web::seat.status') }}</th>
+        </tr>
         </thead>
         <tbody>
 

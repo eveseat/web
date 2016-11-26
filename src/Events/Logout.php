@@ -21,7 +21,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Events;
 
-use Illuminate\Support\Facades\Event;
+use Illuminate\Auth\Events\Logout as LogoutEvent;
 use Illuminate\Support\Facades\Request;
 use Seat\Web\Models\UserLoginHistory;
 
@@ -35,19 +35,19 @@ class Logout
     /**
      * Write a logout history item for this user
      *
-     * @param $user
+     * @param \Illuminate\Auth\Events\Logout $event
      */
-    public static function handle($user)
+    public static function handle(LogoutEvent $event)
     {
 
-        $user->login_history()->save(new UserLoginHistory([
+        $event->user->login_history()->save(new UserLoginHistory([
             'source'     => Request::getClientIp(),
             'user_agent' => Request::header('User-Agent'),
             'action'     => 'logout'
         ]));
 
         $message = 'User logged out from ' . Request::getClientIp();
-        Event::fire('security.log', [$message, 'authentication']);
+        event('security.log', [$message, 'authentication']);
 
         return;
 

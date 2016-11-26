@@ -26,9 +26,10 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Seat\Eveapi\Models\Eve\ApiKey;
 use Seat\Services\Models\UserSetting;
-use Seat\Web\Acl\Clipboard;
+use Seat\Web\Acl\AccessChecker;
 use Seat\Web\Models\Acl\Affiliation;
 use Seat\Web\Models\Acl\Role;
 
@@ -39,7 +40,7 @@ use Seat\Web\Models\Acl\Role;
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
 
-    use Authenticatable, CanResetPassword, Clipboard;
+    use Authenticatable, CanResetPassword, AccessChecker, Notifiable;
 
     /**
      * The database table used by the model.
@@ -64,6 +65,23 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected $hidden = ['password', 'remember_token'];
 
     /**
+     * Boot the model.
+     *
+     * We are simply adding the active_token.
+     */
+    public static function boot()
+    {
+
+        parent::boot();
+
+        static::creating(function ($user) {
+
+            $user->activation_token = str_random(64);
+
+        });
+    }
+
+    /**
      * Make sure we cleanup on delete
      *
      * @return bool|null
@@ -81,6 +99,19 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         $this->keys()->update(['user_id' => 0]);
 
         return parent::delete();
+    }
+
+    /**
+     * Confirm the user.
+     *
+     * @return void
+     */
+    public function confirmEmail()
+    {
+
+        $this->active = true;
+        $this->activation_token = null;
+        $this->save();
     }
 
     /**
@@ -114,7 +145,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function affiliations()
     {
 
-        return $this->belongsToMany(Affiliation::class);
+        return $this->belongsToMany(Affiliation::class)
+            ->withPivot('not');
     }
 
     /**

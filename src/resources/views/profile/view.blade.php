@@ -21,13 +21,14 @@
 
           <!-- Select Basic -->
           <div class="form-group">
-            <label class="col-md-4 control-label" for="main_character_id">{{ trans('web::seat.main_character') }}</label>
+            <label class="col-md-4 control-label"
+                   for="main_character_id">{{ trans('web::seat.main_character') }}</label>
             <div class="col-md-6">
               <select id="main_character_id" name="main_character_id" class="form-control">
                 @foreach($characters as $character)
                   <option value="{{ $character->characterID }}"
                           @if(setting('main_character_id') == $character->characterID)
-                            selected
+                          selected
                           @endif>
                     {{ $character->characterName }}</option>
                 @endforeach
@@ -43,7 +44,7 @@
                 @foreach($skins as $skin)
                   <option value="{{ $skin }}"
                           @if(setting('skin') == $skin)
-                            selected
+                          selected
                           @endif>
                     {{ str_replace('skin-', '', $skin) }}</option>
                 @endforeach
@@ -87,7 +88,8 @@
 
           <!-- Select Basic -->
           <div class="form-group">
-            <label class="col-md-4 control-label" for="thousand_seperator">{{ trans('web::seat.thousands_seperator') }}</label>
+            <label class="col-md-4 control-label"
+                   for="thousand_seperator">{{ trans('web::seat.thousands_seperator') }}</label>
             <div class="col-md-6">
               <div class="form-inline input-group">
                 <select id="thousand_seperator" name="thousand_seperator" class="form-control">
@@ -107,7 +109,8 @@
 
           <!-- Select Basic -->
           <div class="form-group">
-            <label class="col-md-4 control-label" for="decimal_seperator">{{ trans('web::seat.decimal_seperator') }}</label>
+            <label class="col-md-4 control-label"
+                   for="decimal_seperator">{{ trans('web::seat.decimal_seperator') }}</label>
             <div class="col-md-6">
               <div class="form-inline input-group">
                 <select id="decimal_seperator" name="decimal_seperator" class="form-control">
@@ -128,7 +131,8 @@
 
           <!-- Select Basic -->
           <div class="form-group">
-            <label class="col-md-4 control-label" for="email_notifications">{{ trans('web::seat.email_notifications') }}</label>
+            <label class="col-md-4 control-label"
+                   for="email_notifications">{{ trans('web::seat.email_notifications') }}</label>
             <div class="col-md-6">
               <div class="form-inline input-group">
                 <select id="email_notifications" name="email_notifications" class="form-control">
@@ -208,7 +212,7 @@
         {{ trans('web::seat.user_account') }}
         <span class="pull-right">
           {{ trans('web::seat.last_login') }}: {{ auth()->user()->last_login }}
-          ({{ human_diff(auth()->user()->last_login) }})
+                                             ({{ human_diff(auth()->user()->last_login) }})
         </span>
       </h3>
     </div>
@@ -228,7 +232,8 @@
               </a>
 
               <!-- Modal -->
-              <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel">
+              <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog"
+                   aria-labelledby="passwordModalLabel">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -256,7 +261,8 @@
 
                           <div class="form-group">
                             <label for="new_password_confirmation">{{ trans('web::seat.confirm_new_password') }}</label>
-                            <input type="password" name="new_password_confirmation" class="form-control" id="password_confirmation" placeholder="Password">
+                            <input type="password" name="new_password_confirmation" class="form-control"
+                                   id="password_confirmation" placeholder="Password">
                           </div>
 
                         </div><!-- /.box-body -->
@@ -302,18 +308,18 @@
                           <div class="form-group">
                             <label for="current_email">{{ trans('web::seat.current_email') }}</label>
                             <input type="email" name="current_email" class="form-control" placeholder="Current Email"
-                                   value="{{ auth()->user()->email }}" disabled="disabled" />
+                                   value="{{ auth()->user()->email }}" disabled="disabled"/>
                           </div>
 
                           <div class="form-group">
                             <label for="new_email">{{ trans('web::seat.new_email') }}</label>
-                            <input type="email" name="new_email" class="form-control" placeholder="New Email" />
+                            <input type="email" name="new_email" class="form-control" placeholder="New Email"/>
                           </div>
 
                           <div class="form-group">
                             <label for="new_email_confirmation">{{ trans('web::seat.confirm_new_email') }}</label>
                             <input type="email" name="new_email_confirmation" class="form-control"
-                                   id="email_confirmation" placeholder="New Email Confirmation" />
+                                   id="email_confirmation" placeholder="New Email Confirmation"/>
                           </div>
 
                         </div><!-- /.box-body -->
@@ -365,7 +371,7 @@
                           <tr>
                             <td>
                               <span data-toggle="tooltip"
-                                 title="" data-original-title="{{ $entry->created_at }}">
+                                    title="" data-original-title="{{ $entry->created_at }}">
                                 {{ human_diff($entry->created_at) }}
                               </span>
                             </td>
@@ -425,3 +431,12 @@
 
 @stop
 
+@push('javascript')
+
+<script>
+
+  $("select#main_character_id").select2();
+
+</script>
+
+@endpush

@@ -23,3 +23,8 @@ Route::get('/home', [
     'as'   => 'home',
     'uses' => 'HomeController@getHome'
 ]);
+
+Route::get('/home/chart/server-status', [
+    'as'   => 'home.chart.serverstatus',
+    'uses' => 'HomeController@getServerStatusChartData'
+]);

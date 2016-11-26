@@ -215,21 +215,21 @@
             {{ $starbase->stateTimeStamp }}
             <i>({{ human_diff($starbase->stateTimeStamp) }})</i>
           @else
-          @if($starbase->inSovSystem)
-            {{
-              round($starbase->strontium/ ceil($starbase->baseStrontUsage * 0.75))
-            }} hours at
-            {{
-              carbon('now')->addHours($starbase->strontium / ceil($starbase->baseStrontUsage * 0.75))
-            }}
-          @else
-            {{
-              round(($starbase->strontium/$starbase->baseStrontUsage))
-            }} hours at
-            {{
-              carbon('now')->addHours($starbase->strontium/$starbase->baseStrontUsage)
-            }}
-          @endif
+            @if($starbase->inSovSystem)
+              {{
+                round($starbase->strontium/ ceil($starbase->baseStrontUsage * 0.75))
+              }} hours at
+              {{
+                carbon('now')->addHours($starbase->strontium / ceil($starbase->baseStrontUsage * 0.75))
+              }}
+            @else
+              {{
+                round(($starbase->strontium/$starbase->baseStrontUsage))
+              }} hours at
+              {{
+                carbon('now')->addHours($starbase->strontium/$starbase->baseStrontUsage)
+              }}
+            @endif
           @endif
         </dd>
 

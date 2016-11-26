@@ -32,8 +32,8 @@
                 @else
                   {{ trans('web::seat.none') }}
                 @endif
-                </b>
-            <span class="pull-right">
+              </b>
+              <span class="pull-right">
               <i>
                 {{ count($bookmarks->where('folderID', $data[0]->folderID)) }}
                 {{ trans_choice('web::seat.bookmark', count($bookmarks->where('folderID', $data[0]->folderID))) }}

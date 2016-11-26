@@ -21,15 +21,26 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Validation;
 
-use App\Http\Requests\Request;
+use Illuminate\Foundation\Http\FormRequest;
 use Seat\Services\Settings\Seat;
 
 /**
  * Class SeatSettings
  * @package Seat\Web\Validation
  */
-class SeatSettings extends Request
+class SeatSettings extends FormRequest
 {
+
+    /**
+     * Authorize the request by default.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+
+        return true;
+    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -45,12 +56,13 @@ class SeatSettings extends Request
         $allowed_tracking = implode(',', Seat::$options['allow_tracking']);
 
         return [
-            'registration'    => 'required|in:' . $allowed_registration,
-            'admin_contact'   => 'required|email',
-            'force_min_mask'  => 'required|in:' . $allowed_force_min_mask,
-            'min_access_mask' => 'required|numeric',
-            'allow_sso'       => 'required|in:' . $allowed_sso,
-            'allow_tracking'  => 'required|in:' . $allowed_tracking,
+            'registration'                => 'required|in:' . $allowed_registration,
+            'admin_contact'               => 'required|email',
+            'force_min_mask'              => 'required|in:' . $allowed_force_min_mask,
+            'min_character_access_mask'   => 'required|numeric',
+            'min_corporation_access_mask' => 'required|numeric',
+            'allow_sso'                   => 'required|in:' . $allowed_sso,
+            'allow_tracking'              => 'required|in:' . $allowed_tracking,
         ];
     }
 }

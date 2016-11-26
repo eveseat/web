@@ -21,10 +21,21 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Validation;
 
-use App\Http\Requests\Request;
+use Illuminate\Foundation\Http\FormRequest;
 
-class EmailUpdate extends Request
+class EmailUpdate extends FormRequest
 {
+
+    /**
+     * Authorize the request by default.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+
+        return true;
+    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -35,7 +46,7 @@ class EmailUpdate extends Request
     {
 
         return [
-            'new_email' => 'required|confirmed'
+            'new_email' => 'required|email|confirmed'
         ];
     }
 }

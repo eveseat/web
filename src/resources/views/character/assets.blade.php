@@ -13,12 +13,12 @@
 
       <table class="table compact table-condensed table-hover table-responsive">
         <thead>
-          <tr>
-            <th>{{ trans('web::seat.quantity') }}</th>
-            <th>{{ trans_choice('web::seat.type', 1) }}</th>
-            <th>{{ trans('web::seat.volume') }}</th>
-            <th>{{ trans('web::seat.group') }}</th>
-          </tr>
+        <tr>
+          <th>{{ trans('web::seat.quantity') }}</th>
+          <th>{{ trans_choice('web::seat.type', 1) }}</th>
+          <th>{{ trans('web::seat.volume') }}</th>
+          <th>{{ trans('web::seat.group') }}</th>
+        </tr>
         </thead>
 
         <tbody>
@@ -31,10 +31,10 @@
                 <i>
                 {{ count($assets->where('locationID', $data[0]->locationID)) }}
                   {{ trans('web::seat.items_taking') }}
-                {{ number_metric($assets
-                    ->where('locationID', $data[0]->locationID)->map(function($item) {
-                      return $item->quantity * $item->volume;
-                    })->sum()) }} m&sup3;
+                  {{ number_metric($assets
+                      ->where('locationID', $data[0]->locationID)->map(function($item) {
+                        return $item->quantity * $item->volume;
+                      })->sum()) }} m&sup3;
                 </i>
               </span>
             </td>

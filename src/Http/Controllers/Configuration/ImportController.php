@@ -21,10 +21,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Configuration;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use League\Csv\Reader;
 use Seat\Eveapi\Models\Eve\ApiKey;
+use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Validation\CsvImport;
 use Validator;
 

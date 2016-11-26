@@ -13,15 +13,15 @@
 
       <table class="table table-condensed table-hover table-responsive">
         <thead>
-          <tr>
-            <th>{{ trans_choice('web::seat.type', 1) }}</th>
-            <th>{{ trans('web::seat.reinforcement') }}</th>
-            <th>{{ trans('web::seat.alliance') }}</th>
-            <th>{{ trans('web::seat.standings') }}</th>
-            <th>{{ trans('web::seat.standing_level') }}</th>
-            <th colspan="2">{{ trans('web::seat.tax_alliance_corp') }}</th>
-            <th colspan="5">{{ trans('web::seat.tax_standings') }}</th>
-          </tr>
+        <tr>
+          <th>{{ trans_choice('web::seat.type', 1) }}</th>
+          <th>{{ trans('web::seat.reinforcement') }}</th>
+          <th>{{ trans('web::seat.alliance') }}</th>
+          <th>{{ trans('web::seat.standings') }}</th>
+          <th>{{ trans('web::seat.standing_level') }}</th>
+          <th colspan="2">{{ trans('web::seat.tax_alliance_corp') }}</th>
+          <th colspan="5">{{ trans('web::seat.tax_standings') }}</th>
+        </tr>
         </thead>
         <tbody>
         @foreach($pocos as $poco)
@@ -58,7 +58,7 @@
                     @else
                       text-red
                     @endif">
-                {{ round($poco->standingLevel, 2) }}
+              {{ round($poco->standingLevel, 2) }}
             </td>
             <td>{{ round((float)$poco->taxRateAlliance * 100) }}%</td>
             <td>{{ round((float)$poco->taxRateCorp * 100) }}%</td>

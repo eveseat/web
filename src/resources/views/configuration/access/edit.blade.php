@@ -43,6 +43,14 @@
             @endforeach
 
           </select>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="inverse">
+              {{ trans('web::seat.inverse_permission') }}
+            </label>
+          </div>
+
         </div>
 
         <button type="submit" class="btn btn-success btn-block">
@@ -57,15 +65,17 @@
         <tbody>
 
         <tr>
-          <th colspan="2" class="text-center">{{ trans('web::seat.current_permissions') }}</th>
+          <th colspan="3" class="text-center">{{ trans('web::seat.current_permissions') }}</th>
         </tr>
 
         @foreach($role->permissions as $permission)
 
           <tr>
             <td>{{ studly_case($permission->title) }}</td>
+            <td>{{ $permission->pivot->not }}</td>
             <td>
-              <a href="{{ route('configuration.access.roles.edit.remove.permission', ['role_id' => $role->id, 'permission_id' => $permission->id]) }}" type="button" class="btn btn-danger btn-xs pull-right">
+              <a href="{{ route('configuration.access.roles.edit.remove.permission', ['role_id' => $role->id, 'permission_id' => $permission->id]) }}"
+                 type="button" class="btn btn-danger btn-xs pull-right">
                 {{ trans('web::seat.remove') }}
               </a>
             </td>
@@ -81,7 +91,8 @@
       <b>{{ count($role->permissions) }}</b> {{ trans_choice('web::seat.permission', count($role->permissions)) }}
 
       @if(in_array('superuser', $role_permissions))
-        <span class="label label-danger pull-right" data-toggle="tooltip" title="{{ trans('web::seat.permission_inherit') }}">
+        <span class="label label-danger pull-right" data-toggle="tooltip"
+              title="{{ trans('web::seat.permission_inherit') }}">
           {{ trans('web::seat.has_superuser') }}
         </span>
       @endif
@@ -107,6 +118,7 @@
           <label for="corporations">{{ trans('web::seat.available_corporations') }}</label>
           <select name="corporations[]" id="available_corporations" style="width: 100%" multiple>
 
+            <option value="0">All Corporations</option>
             @foreach($all_corporations as $corporation)
               <option value="{{ $corporation->corporationID }}">
                 {{ $corporation->corporationName }}
@@ -120,6 +132,7 @@
           <label for="characters">{{ trans('web::seat.available_characters') }}</label>
           <select name="characters[]" id="available_characters" style="width: 100%" multiple>
 
+            <option value="0">All Characters</option>
             @foreach($all_characters as $character)
               <option value="{{ $character->characterID }}">
                 {{ $character->characterName }}
@@ -127,6 +140,14 @@
             @endforeach
 
           </select>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="inverse">
+              {{ trans('web::seat.inverse_affiliation') }}
+            </label>
+          </div>
+
         </div>
 
         <button type="submit" class="btn btn-success btn-block">
@@ -141,17 +162,31 @@
         <tbody>
 
         <tr>
-          <th colspan="2" class="text-center">{{ trans('web::seat.current_affiliations') }}</th>
+          <th colspan="4" class="text-center">{{ trans('web::seat.current_affiliations') }}</th>
         </tr>
 
         @foreach($role->affiliations as $affiliation)
 
           <tr>
             <td>
-              {!! img('auto', $affiliation->affiliation, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-              <span rel="id-to-name">{{ $affiliation->affiliation }}</span>
+              @if($affiliation->affiliation === 0)
+
+                {{ trans('web::seat.all') }}
+                @if($affiliation->type == 'corp')
+                  {{ trans_choice('web::seat.corporation', 2) }}
+                @else
+                  {{ trans_choice('web::seat.character', 2) }}
+                @endif
+
+              @else
+
+                {!! img('auto', $affiliation->affiliation, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                <span rel="id-to-name">{{ $affiliation->affiliation }}</span>
+
+              @endif
             </td>
             <td>{{ ucfirst($affiliation->type) }}</td>
+            <td>{{ $affiliation->pivot->not }}</td>
             <td>
               <a href="{{ route('configuration.access.roles.edit.remove.affiliation', ['role_id' => $role->id, 'user_id' => $affiliation->id]) }}"
                  type="button" class="btn btn-danger btn-xs pull-right">
@@ -218,7 +253,8 @@
           <tr>
             <td>{{ $user->name }}</td>
             <td>
-              <a href="{{ route('configuration.access.roles.edit.remove.user', ['role_id' => $role->id, 'user_id' => $user->id]) }}" type="button" class="btn btn-danger btn-xs pull-right">
+              <a href="{{ route('configuration.access.roles.edit.remove.user', ['role_id' => $role->id, 'user_id' => $user->id]) }}"
+                 type="button" class="btn btn-danger btn-xs pull-right">
                 {{ trans('web::seat.remove') }}
               </a>
             </td>
@@ -237,17 +273,17 @@
 
 @stop
 
-@section('javascript')
+@push('javascript')
 
   @include('web::includes.javascript.id-to-name')
 
   <script>
     $("#available_permissions," +
-      "#available_users," +
-      "#available_characters," +
-      "#available_corporations").select2({
-       placeholder: "{{ trans('web::seat.select_item_add') }}"
+            "#available_users," +
+            "#available_characters," +
+            "#available_corporations").select2({
+      placeholder: "{{ trans('web::seat.select_item_add') }}"
     });
   </script>
 
-@stop
+@endpush

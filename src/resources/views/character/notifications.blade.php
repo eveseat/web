@@ -13,11 +13,11 @@
 
       <table class="table datatable compact table-condensed table-hover table-responsive">
         <thead>
-          <tr>
-            <th>{{ trans('web::seat.date') }}</th>
-            <th>{{ trans('web::seat.from') }}</th>
-            <th>{{ trans('web::seat.info') }}</th>
-          </tr>
+        <tr>
+          <th>{{ trans('web::seat.date') }}</th>
+          <th>{{ trans('web::seat.from') }}</th>
+          <th>{{ trans('web::seat.info') }}</th>
+        </tr>
         </thead>
         <tbody>
 

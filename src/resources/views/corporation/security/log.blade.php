@@ -13,13 +13,13 @@
 
       <table class="table datatable compact table-condensed table-hover table-responsive">
         <thead>
-          <tr>
-            <th>{{ trans('web::seat.date') }}</th>
-            <th>{{ trans('web::seat.issuer') }}</th>
-            <th>{{ trans('web::seat.affected') }}</th>
-            <th>{{ trans_choice('web::seat.type', 1) }}</th>
-            <th></th>
-          </tr>
+        <tr>
+          <th>{{ trans('web::seat.date') }}</th>
+          <th>{{ trans('web::seat.issuer') }}</th>
+          <th>{{ trans('web::seat.affected') }}</th>
+          <th>{{ trans_choice('web::seat.type', 1) }}</th>
+          <th></th>
+        </tr>
         </thead>
         <tbody>
 
@@ -46,8 +46,8 @@
             </td>
             <td>
               <span class="label label-default" data-toggle="tooltip"
-                 title=""
-                 data-original-title="{{ implode(" ", array_flatten(json_decode($log->oldRoles, true))) }}">
+                    title=""
+                    data-original-title="{{ implode(" ", array_flatten(json_decode($log->oldRoles, true))) }}">
                 {{ count(array_flatten(json_decode($log->oldRoles, true))) }}
               </span>
               <i class="fa fa-long-arrow-right"></i>

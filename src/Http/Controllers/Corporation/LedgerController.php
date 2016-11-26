@@ -21,8 +21,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
-use App\Http\Controllers\Controller;
-use Seat\Services\Repositories\Corporation\CorporationRepository;
+use Seat\Services\Repositories\Corporation\Ledger;
+use Seat\Services\Repositories\Corporation\Security;
+use Seat\Services\Repositories\Corporation\Wallet;
+use Seat\Web\Http\Controllers\Controller;
 
 /**
  * Class ViewController
@@ -31,14 +33,16 @@ use Seat\Services\Repositories\Corporation\CorporationRepository;
 class LedgerController extends Controller
 {
 
-    use CorporationRepository;
+    use Ledger;
+    use Security;
+    use Wallet;
 
     /**
      * @param $corporation_id
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getWalletSummary($corporation_id)
+    public function getWalletSummary(int $corporation_id)
     {
 
         $ledger = $this->getCorporationMemberSecurity($corporation_id);
@@ -55,17 +59,17 @@ class LedgerController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getBountyPrizesByMonth($corporation_id, $year = null, $month = null)
+    public function getBountyPrizesByMonth(int $corporation_id, $year = null, $month = null)
     {
 
         !is_null($year) ? $year : $year = date("Y");
         !is_null($month) ? $year : $month = date("m");
 
-        $bountyprizes = collect($this->getCorporationLedgerBountyPrizeDates(
-            $corporation_id));
+        $bountyprizes = $this->getCorporationLedgerBountyPrizeDates(
+            $corporation_id);
 
-        $bountyprizedates = collect($this->getCorporationLedgerBountyPrizeByMonth(
-            $corporation_id, $year, $month));
+        $bountyprizedates = $this->getCorporationLedgerBountyPrizeByMonth(
+            $corporation_id, $year, $month);
 
         return view('web::corporation.ledger.bountyprizesbymonth',
             compact('bountyprizes', 'bountyprizedates',
@@ -79,16 +83,16 @@ class LedgerController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getPlanetaryInteractionByMonth($corporation_id, $year = null, $month = null)
+    public function getPlanetaryInteractionByMonth(int $corporation_id, $year = null, $month = null)
     {
 
         !is_null($year) ? $year : $year = date("Y");
         !is_null($month) ? $year : $month = date("m");
 
-        $pidates = collect($this->getCorporationLedgerPIDates($corporation_id));
+        $pidates = $this->getCorporationLedgerPIDates($corporation_id);
 
-        $pitotals = collect($this->getCorporationLedgerPITotalsByMonth(
-            $corporation_id, $year, $month));
+        $pitotals = $this->getCorporationLedgerPITotalsByMonth(
+            $corporation_id, $year, $month);
 
         return view('web::corporation.ledger.planetaryinteraction',
             compact('pidates', 'pitotals', 'piimport', 'piexport',

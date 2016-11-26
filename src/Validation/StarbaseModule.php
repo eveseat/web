@@ -21,11 +21,22 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Validation;
 
-use App\Http\Requests\Request;
+use Illuminate\Foundation\Http\FormRequest;
 use Seat\Eveapi\Models\Corporation\Starbase;
 
-class StarbaseModule extends Request
+class StarbaseModule extends FormRequest
 {
+
+    /**
+     * Authorize the request by default.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+
+        return true;
+    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -37,7 +48,7 @@ class StarbaseModule extends Request
 
         $possible_corp_starbases = Starbase::where(
             'corporationID', $this->route('corporation_id'))
-            ->lists('itemID')
+            ->pluck('itemID')
             ->implode(',');
 
         return [

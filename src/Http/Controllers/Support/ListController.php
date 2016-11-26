@@ -21,9 +21,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Support;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Seat\Web\Http\Controllers\Controller;
 
 /**
  * Class ListController
@@ -44,43 +44,6 @@ class ListController extends Controller
             'results' => DB::table('invTypes')
                 ->select('typeName as id', 'typeName as text')
                 ->where('typeName', 'like', '%' . $request->q . '%')->get()
-        ]);
-
-    }
-
-    /**
-     * @param \Illuminate\Http\Request $request
-     * @param                          $character_id
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getCharacterTransactionClientNames(Request $request, $character_id)
-    {
-
-        return response()->json([
-            'results' => DB::table('character_wallet_transactions')
-                ->select('clientName as id', 'clientName as text')
-                ->where('characterID', $character_id)
-                ->where('clientName', 'like', '%' . $request->q . '%')
-                ->groupBy('clientName')->get()
-        ]);
-    }
-
-    /**
-     * @param \Illuminate\Http\Request $request
-     * @param                          $corporation_id
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getCorporationTransactionClientNames(Request $request, $corporation_id)
-    {
-
-        return response()->json([
-            'results' => DB::table('corporation_wallet_transactions')
-                ->select('clientName as id', 'clientName as text')
-                ->where('corporationID', $corporation_id)
-                ->where('clientName', 'like', '%' . $request->q . '%')
-                ->groupBy('clientName')->get()
         ]);
 
     }

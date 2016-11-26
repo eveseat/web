@@ -14,7 +14,9 @@
           <dd>{{ $access_mask }}</dd>
         </dl>
 
-        @if(setting('force_min_mask', true) == 'yes' && $access_mask < setting('min_access_mask', true))
+        @if(setting('force_min_mask', true) == 'yes' && (($access_mask < setting('min_character_access_mask', true) &&
+          $key_type != 'Corporation') || ($access_mask < setting('min_corporation_access_mask', true) &&
+          $key_type == 'Corporation')))
 
           <div class="text-danger">
             {{ trans('web::seat.insufficient_access_mask') }}
@@ -45,7 +47,9 @@
 
         </ul>
 
-        @if(! (setting('force_min_mask', true) == 'yes' && $access_mask < setting('min_access_mask', true)))
+        @if(! (setting('force_min_mask', true) == 'yes' && (($access_mask < setting('min_character_access_mask', true) &&
+          $key_type != 'Corporation')) || ($access_mask < setting('min_corporation_access_mask', true) &&
+          $key_type == 'Corporation')))
 
           <form role="form" action="{{ route('api.key.add') }}" method="post">
             {{ csrf_field() }}

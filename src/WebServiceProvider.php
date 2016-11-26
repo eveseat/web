@@ -21,6 +21,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web;
 
+use Illuminate\Auth\Events\Attempting;
+use Illuminate\Auth\Events\Login as LoginEvent;
+use Illuminate\Auth\Events\Logout as LogoutEvent;
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Socialite\SocialiteManager;
@@ -43,10 +47,12 @@ use Seat\Web\Http\Middleware\Bouncer\Bouncer;
 use Seat\Web\Http\Middleware\Bouncer\CharacterBouncer;
 use Seat\Web\Http\Middleware\Bouncer\CorporationBouncer;
 use Seat\Web\Http\Middleware\Bouncer\KeyBouncer;
+use Seat\Web\Http\Middleware\ConfirmedEmailAddress;
 use Seat\Web\Http\Middleware\Locale;
 use Seat\Web\Http\Middleware\Mfa;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
 use Seat\Web\Http\Middleware\Requirements;
+use Supervisor\Supervisor;
 use Validator;
 
 /**
@@ -99,36 +105,26 @@ class WebServiceProvider extends ServiceProvider
     {
 
         // Merge the config with anything in the main app
+        // Web package configurations
         $this->mergeConfigFrom(
             __DIR__ . '/Config/web.config.php', 'web.config');
         $this->mergeConfigFrom(
-            __DIR__ . '/Config/web.filter.rules.php', 'web.filter.rules');
-        $this->mergeConfigFrom(
             __DIR__ . '/Config/web.permissions.php', 'web.permissions');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/web.locale.php', 'web.locale');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/web.supervisor.php', 'web.supervisor');
 
-        // Register the Google2FA into the IoC
-        $this->app->bind('google_2fa', function () {
+        // Menu Configurations
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/package.sidebar.php', 'package.sidebar');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/package.character.menu.php', 'package.character.menu');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/package.corporation.menu.php', 'package.corporation.menu');
 
-            return new Google2FA;
-        });
-
-        // Register the Socialite Factory.
-        // From: Laravel\Socialite\SocialiteServiceProvider
-        $this->app->singleton('Laravel\Socialite\Contracts\Factory', function ($app) {
-
-            return new SocialiteManager($app);
-        });
-
-        // Slap in the Eveonline Socialite Provider
-        $eveonline = $this->app->make('Laravel\Socialite\Contracts\Factory');
-        $eveonline->extend('eveonline',
-            function ($app) use ($eveonline) {
-
-                $config = $app['config']['services.eveonline'];
-
-                return $eveonline->buildProvider(EveOnlineProvider::class, $config);
-            }
-        );
+        // Register any extra services.
+        $this->register_services();
 
     }
 
@@ -138,9 +134,8 @@ class WebServiceProvider extends ServiceProvider
     public function add_routes()
     {
 
-        if (!$this->app->routesAreCached()) {
+        if (!$this->app->routesAreCached())
             include __DIR__ . '/Http/routes.php';
-        }
     }
 
     /**
@@ -185,7 +180,9 @@ class WebServiceProvider extends ServiceProvider
         // Character info composer
         $this->app['view']->composer([
             'web::character.includes.summary',
-            'web::character.includes.menu'
+            'web::character.includes.menu',
+            'web::character.intel.includes.menu',
+            'web::character.journal.includes.menu'
         ], CharacterSummary::class);
 
         // Character menu composer
@@ -229,6 +226,9 @@ class WebServiceProvider extends ServiceProvider
         // simply authenticated
         $router->middleware('auth', Authenticate::class);
 
+        // Email Verification Requirement
+        $router->middleware('auth.email', ConfirmedEmailAddress::class);
+
         // Ensure that all of the SeAT required modules is installed.
         $router->middleware('requirements', Requirements::class);
 
@@ -243,7 +243,7 @@ class WebServiceProvider extends ServiceProvider
         $router->middleware('registration.status', RegistrationAllowed::class);
 
         // The Bouncer is responsible for checking hes
-        // Clipboard and ensuring that every request
+        // AccessChecker and ensuring that every request
         // that comes in is authorized
         $router->middleware('bouncer', Bouncer::class);
         $router->middleware('characterbouncer', CharacterBouncer::class);
@@ -259,10 +259,12 @@ class WebServiceProvider extends ServiceProvider
     public function add_events()
     {
 
-        $this->app->events->listen('auth.login', Login::class);
-        $this->app->events->listen('auth.logout', Logout::class);
-        $this->app->events->listen('auth.attempt', Attempt::class);
+        // Internal Authentication Events
+        $this->app->events->listen(LoginEvent::class, Login::class);
+        $this->app->events->listen(LogoutEvent::class, Logout::class);
+        $this->app->events->listen(Attempting::class, Attempt::class);
 
+        // Custom Events
         $this->app->events->listen('security.log', SecLog::class);
     }
 
@@ -273,5 +275,60 @@ class WebServiceProvider extends ServiceProvider
     {
 
         Validator::extend('cron', 'Seat\Web\Validation\Custom\Cron@validate');
+    }
+
+    /**
+     * Register external services used in this package.
+     *
+     * Currently this consists of:
+     *  - PragmaRX\Google2FA
+     *  - Laravel\Socialite
+     *  - Yajra\Datatables
+     */
+    public function register_services()
+    {
+
+        // Register the Google2FA into the IoC
+        $this->app->bind('google_2fa', function () {
+
+            return new Google2FA;
+        });
+
+        // Register the Socialite Factory.
+        // From: Laravel\Socialite\SocialiteServiceProvider
+        $this->app->singleton('Laravel\Socialite\Contracts\Factory', function ($app) {
+
+            return new SocialiteManager($app);
+        });
+
+        // Slap in the Eveonline Socialite Provider
+        $eveonline = $this->app->make('Laravel\Socialite\Contracts\Factory');
+        $eveonline->extend('eveonline',
+            function ($app) use ($eveonline) {
+
+                $config = $app['config']['services.eveonline'];
+
+                return $eveonline->buildProvider(EveOnlineProvider::class, $config);
+            }
+        );
+
+        // Register the datatables package! Thanks
+        //  https://laracasts.com/discuss/channels/laravel/register-service-provider-and-facade-within-service-provider
+        $this->app->register('Yajra\Datatables\DatatablesServiceProvider');
+        $loader = AliasLoader::getInstance();
+        $loader->alias('Datatables', 'Yajra\Datatables\Facades\Datatables');
+
+        // Register the Supervisor RPC helper into the IoC
+        $this->app->singleton('supervisor', function () {
+
+            return new Supervisor(
+                config('web.supervisor.name'),
+                config('web.supervisor.rpc.address'),
+                config('web.supervisor.rpc.username'),
+                config('web.supervisor.rpc.password'),
+                config('web.supervisor.rpc.port')
+            );
+        });
+
     }
 }

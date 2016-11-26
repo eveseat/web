@@ -3,7 +3,7 @@
 @section('title', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.industry'))
 @section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.industry'))
 
-@inject('carbon', 'Carbon\Carbon')
+@inject('request', 'Illuminate\Http\Request')
 
 @section('corporation_content')
 
@@ -13,69 +13,53 @@
     </div>
     <div class="panel-body">
 
-      <table class="table datatable compact table-condensed table-hover table-responsive">
+      <table class="table compact table-condensed table-hover table-responsive"
+             id="corporation-industry">
         <thead>
-          <tr>
-            <th>{{ trans('web::seat.date') }}</th>
-            <th>{{ trans('web::seat.installer') }}</th>
-            <th>{{ trans('web::seat.system') }}</th>
-            <th>{{ trans('web::seat.activity') }}</th>
-            <th>{{ trans_choice('web::seat.run', 2) }}</th>
-            <th>{{ trans('web::seat.blueprint') }}</th>
-            <th>{{ trans('web::seat.product') }}</th>
-          </tr>
+        <tr>
+          <th>{{ trans('web::seat.date') }}</th>
+          <th>{{ trans('web::seat.installer') }}</th>
+          <th>{{ trans('web::seat.system') }}</th>
+          <th>{{ trans('web::seat.activity') }}</th>
+          <th>{{ trans_choice('web::seat.run', 2) }}</th>
+          <th>{{ trans('web::seat.blueprint') }}</th>
+          <th>{{ trans('web::seat.product') }}</th>
+        </tr>
         </thead>
-        <tbody>
-
-        @foreach($jobs as $job)
-
-          <tr>
-            <td data-order="{{ $job->startDate }}">
-              <span>
-                <i class="fa
-                    @if($carbon->parse($job->endDate)->gte($carbon->now()))
-                        fa-clock-o
-                      @else
-                        fa-check
-                      @endif"
-                   data-toggle="tooltip"
-                   title="" data-original-title="End: {{ $job->endDate }}">
-                </i>
-              </span>
-              <span data-toggle="tooltip"
-                    title="" data-original-title="{{ $job->startDate }}">
-                {{ human_diff($job->startDate) }}
-              </span>
-            </td>
-            <td>
-              {!! img('character', $job->installerID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-              {{ $job->installerName }}
-            </td>
-            <td>
-              <span data-toggle="tooltip"
-                    title="" data-original-title="{{ $job->facilityName }}">
-                <i class="fa fa-map-marker"></i>
-              </span>
-              {{ $job->solarSystemName }}
-            </td>
-            <td>{{ $job->activityName }}</td>
-            <td>{{ $job->runs }}</td>
-            <td>
-              {!! img('type', $job->blueprintTypeID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-              {{ $job->blueprintTypeName }}
-            </td>
-            <td>
-              {!! img('type', $job->productTypeID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-              {{ $job->productTypeName }}
-            </td>
-          </tr>
-
-        @endforeach
-
-        </tbody>
       </table>
 
     </div>
   </div>
 
 @stop
+
+@push('javascript')
+
+<script>
+
+  $(function () {
+    $('table#corporation-industry').DataTable({
+      processing: true,
+      serverSide: true,
+      ajax: '{{ route('corporation.view.industry.data', ['corporation_id' => $request->corporation_id]) }}',
+      columns: [
+        {data: 'startDate', name: 'startDate', render: human_readable},
+        {data: 'installerName', name: 'installerName'},
+        {data: 'solarSystemName', name: 'solarSystemName'},
+        {data: 'activityName', name: 'activityName'},
+        {data: 'runs', name: 'runs'},
+        {data: 'blueprintTypeName', name: 'blueprintTypeName'},
+        {data: 'productTypeName', name: 'productTypeName'},
+      ],
+      "fnDrawCallback": function () {
+        $(document).ready(function () {
+          $("img").unveil(100);
+        });
+      }
+    });
+  });
+
+</script>
+
+
+@endpush

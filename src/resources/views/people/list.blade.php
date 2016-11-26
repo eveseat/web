@@ -18,7 +18,8 @@
             <span class="text-muted">{{ trans('web::seat.key') }}: {{ $key->key_id }}</span>
 
             <!-- Button trigger modal -->
-            <a type="button" id="add-to-existing" a-key-id="{{ $key->key_id }}" class="pull-right" data-toggle="modal" data-target="#groupModal">
+            <a type="button" id="add-to-existing" a-key-id="{{ $key->key_id }}" class="pull-right" data-toggle="modal"
+               data-target="#groupModal">
               {{ trans('web::seat.add_to_existing_group') }}
             </a>
 
@@ -30,8 +31,10 @@
                 {!! img('character', $character->characterID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                 {{ $character->characterName }}
               </a>
-              <a href="{{ route('people.new.group', ['character_id' => $character->characterID]) }}" class="pull-right" data-toggle="tooltip"
-                 title="" data-original-title="{{ trans('web::seat.new_group_with_main', ['name' => $character->characterName]) }}">
+              <a href="{{ route('people.new.group', ['character_id' => $character->characterID]) }}" class="pull-right"
+                 data-toggle="tooltip"
+                 title=""
+                 data-original-title="{{ trans('web::seat.new_group_with_main', ['name' => $character->characterName]) }}">
                 <i class="fa fa-plus"></i>
               </a>
             </li>
@@ -97,7 +100,8 @@
                       {!! img('character', $character->characterID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                       {{ $character->characterName }}
                     </a>
-                    <a href="{{ route('people.set.main', ['group_id' => $person->id, 'character_id' => $character->characterID]) }}" class="pull-right" data-toggle="tooltip"
+                    <a href="{{ route('people.set.main', ['group_id' => $person->id, 'character_id' => $character->characterID]) }}"
+                       class="pull-right" data-toggle="tooltip"
                        title="" data-original-title="Set {{ $character->characterName }} as Main">
                       <i class="fa fa-link"></i>
                     </a>
@@ -124,7 +128,8 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel">
             {{ trans('web::seat.add_to_existing') }}
           </h4>
@@ -161,12 +166,12 @@
   </div>
 @stop
 
-@section('javascript')
+@push('javascript')
 
   <script>
 
     // Update the modal key_id to the clicked one
-    $("a#add-to-existing").click(function() {
+    $("a#add-to-existing").click(function () {
 
       $("input#group-add-key-id-value")
               .val($(this).attr('a-key-id'));
@@ -188,4 +193,4 @@
 
   </script>
 
-@stop
+@endpush

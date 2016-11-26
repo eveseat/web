@@ -13,14 +13,14 @@
 
       <table class="table table-condensed table-hover table-responsive">
         <thead>
-          <tr>
-            <th>{{ trans('web::seat.created') }}</th>
-            <th>{{ trans('web::seat.created_by') }}</th>
-            <th>{{ trans_choice('web::seat.name', 1) }}</th>
-            <th>{{ trans('web::seat.location') }}</th>
-            <th>{{ trans('web::seat.note') }}</th>
-            <th></th>
-          </tr>
+        <tr>
+          <th>{{ trans('web::seat.created') }}</th>
+          <th>{{ trans('web::seat.created_by') }}</th>
+          <th>{{ trans_choice('web::seat.name', 1) }}</th>
+          <th>{{ trans('web::seat.location') }}</th>
+          <th>{{ trans('web::seat.note') }}</th>
+          <th></th>
+        </tr>
         </thead>
         <tbody>
 
@@ -36,7 +36,7 @@
                   {{ trans('web::seat.none') }}
                 @endif
               </b>
-            <span class="pull-right">
+              <span class="pull-right">
               <i>
                 {{ count($bookmarks->where('folderID', $data[0]->folderID)) }}
                 {{ trans_choice('web::seat.bookmark', count($bookmarks->where('folderID', $data[0]->folderID))) }}
@@ -90,8 +90,8 @@
 
 @stop
 
-@section('javascript')
+@push('javascript')
 
   @include('web::includes.javascript.id-to-name')
 
-@stop
+@endpush

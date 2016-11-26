@@ -22,8 +22,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Http\Middleware\Bouncer;
 
 use Closure;
-use Illuminate\Support\Facades\Event;
-use Seat\Web\Acl\Clipboard;
+use Illuminate\Http\Request;
 
 /**
  * Class KeyBouncer
@@ -32,22 +31,19 @@ use Seat\Web\Acl\Clipboard;
 class KeyBouncer
 {
 
-    use Clipboard;
-
     /**
      * Handle an incoming request.
      *
      * This filter checks the required permissions or
      * key ownership for a API key.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure                 $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
+     * @param string                   $permission
      *
-     * @param null                      $permission
-     *
-     * @return mixed
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function handle($request, Closure $next, $permission = null)
+    public function handle(Request $request, Closure $next, string $permission = null)
     {
 
         // Get the currently logged in user
@@ -60,15 +56,17 @@ class KeyBouncer
 
         // If we dont have the required permission, check
         // if the current user owns the key.
-        if (in_array($request->key_id, $user->keys->lists('key_id')->all()))
+        if (in_array($request->key_id, $user->keys->pluck('key_id')->all()))
             return $next($request);
 
         $message = 'Request to ' . $request->path() . ' was ' .
             'denied by the keybouncer. The permission required is ' .
             'key.' . $permission . '.';
-        Event::fire('security.log', [$message, 'authorization']);
 
-        return view('web::auth.unauthorized');
+        event('security.log', [$message, 'authorization']);
+
+        // Redirect away from the original request
+        return redirect()->route('auth.unauthorized');
 
     }
 }

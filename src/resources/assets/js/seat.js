@@ -22,7 +22,7 @@ $(document).on("click", ".confirmform", function (e) {
 // Generic 'confirm' dialog code for links.
 // Make your link button part of class confirmlink, and viola
 $(document).on("click", "a.confirmlink", function (event) {
-    event.preventDefault()
+    event.preventDefault();
     var url = $(this).attr("href");
     bootbox.confirm("Are you sure you want to continue?", function (confirmed) {
         if (confirmed) {
@@ -53,3 +53,20 @@ $(document).ready(function () {
         order: []
     });
 });
+
+// Configure some defaults for Datatables
+$.extend(true, $.fn.dataTable.defaults, {
+    responsive: true,
+    autoWidth: false,
+    order: [[0, 'desc']],
+});
+
+// Helper function to mimic the PHP human_readable method
+function human_readable(data, type, row) {
+    if (type == 'display') {
+        var date = moment(data, "YYYY-MM-DD hh:mm:ss").fromNow();
+        return '<span data-toggle="tooltip" data-placement="top" title="' + data + '">' + date + "</span>";
+    }
+
+    return data;
+}

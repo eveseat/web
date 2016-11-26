@@ -59,10 +59,12 @@
             <td>{{ count($role->permissions) }}</td>
             <td>{{ count($role->affiliations) }}</td>
             <td>
-              <a href="{{ route('configuration.access.roles.edit', ['id' => $role->id]) }}" type="button" class="btn btn-primary btn-xs">
+              <a href="{{ route('configuration.access.roles.edit', ['id' => $role->id]) }}" type="button"
+                 class="btn btn-primary btn-xs">
                 {{ trans('web::seat.edit') }}
               </a>
-              <a href="{{ route('configuration.access.roles.delete', ['id' => $role->id]) }}" type="button" class="btn btn-danger btn-xs">
+              <a href="{{ route('configuration.access.roles.delete', ['id' => $role->id]) }}" type="button"
+                 class="btn btn-danger btn-xs">
                 {{ trans('web::seat.delete') }}
               </a>
             </td>

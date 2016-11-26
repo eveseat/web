@@ -13,13 +13,13 @@
 
       <table class="table datatable compact table-condensed table-hover table-responsive">
         <thead>
-          <tr>
-            <th>{{ trans('web::seat.start') }}</th>
-            <th>{{ trans('web::seat.agent') }}</th>
-            <th>{{ trans_choice('web::seat.skill', 1) }}</th>
-            <th>{{ trans('web::seat.points_p_day') }}</th>
-            <th>{{ trans('web::seat.remainder') }}</th>
-          </tr>
+        <tr>
+          <th>{{ trans('web::seat.start') }}</th>
+          <th>{{ trans('web::seat.agent') }}</th>
+          <th>{{ trans_choice('web::seat.skill', 1) }}</th>
+          <th>{{ trans('web::seat.points_p_day') }}</th>
+          <th>{{ trans('web::seat.remainder') }}</th>
+        </tr>
         </thead>
         <tbody>
 

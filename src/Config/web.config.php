@@ -21,27 +21,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 return [
 
-    'version'                  => '1.0.30',
+    'version'                  => '2.0.0-alpha2',
     'max_access_mask'          => 4294967295,
     'queue_status_update_time' => 10 * 1000, // milliseconds = seconds x 1,000
-
-    'languages'                => [
-        [
-            'short' => 'af',
-            'full'  => 'Afrikaans'
-        ],
-        [
-            'short' => 'en',
-            'full'  => 'English'
-        ],
-        [
-            'short' => 'de',
-            'full'  => 'German'
-        ],
-        [
-            'short' => 'fr',
-            'full'  => 'French'
-        ]
-    ]
 
 ];

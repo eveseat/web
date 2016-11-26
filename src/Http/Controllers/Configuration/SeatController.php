@@ -21,8 +21,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Configuration;
 
-use App\Http\Controllers\Controller;
+use Cache;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use Seat\Services\Settings\Seat;
+use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Validation\SeatSettings;
 
 /**
@@ -61,12 +64,46 @@ class SeatController extends Controller
         Seat::set('registration', $request->registration);
         Seat::set('admin_contact', $request->admin_contact);
         Seat::set('force_min_mask', $request->force_min_mask);
-        Seat::set('min_access_mask', $request->min_access_mask);
+        Seat::set('min_character_access_mask', $request->min_character_access_mask);
+        Seat::set('min_corporation_access_mask', $request->min_corporation_access_mask);
         Seat::set('allow_sso', $request->allow_sso);
         Seat::set('allow_tracking', $request->allow_tracking);
 
         return redirect()->back()
             ->with('success', 'SeAT settings updated!');
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getApprovedSDE()
+    {
+
+        $sde_version = Cache::remember('live_sde_version', 720, function () {
+
+            try {
+
+                $sde_uri = "https://raw.githubusercontent.com/eveseat/resources/master/sde.json";
+                $response = (new Client())->request('GET', $sde_uri);
+
+                # Ensure that the request was successful
+                if (!$response->getStatusCode() == 200)
+                    return 'Error fetching latest SDE version';
+
+                $json_array = json_decode($response->getBody());
+
+                return str_replace('-', '.', $json_array->version);
+
+            } catch (RequestException $e) {
+
+                return 'Error fetching latest SDE version';
+            }
+
+            return 'Loading...';
+
+        });
+
+        return response()->json(['version' => $sde_version]);
     }
 
 }

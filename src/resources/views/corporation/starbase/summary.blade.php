@@ -38,23 +38,40 @@
                 </span>
               </span>
           </td>
-          <td>
+          <td data-order="{{ $starbase->starbaseName }}">
               <span data-toggle="tooltip"
                     title="" data-original-title="{{ $starbase->starbaseTypeName }}">
                 {!! img('type', $starbase->starbaseTypeID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                 {{ $starbase->starbaseName }}
               </span>
+              @if($starbase->inSovSystem)
+
+                @if(carbon('now')->diffInHours(carbon('now')->addHours($starbase->fuelBlocks/ ceil($starbase->baseFuelUsage * 0.75))) < 24)
+                  <span class="text-red pull-right"><i>{{ trans('web::seat.low_fuel') }} !</i></span>
+                @elseif(carbon('now')->diffInHours(carbon('now')->addHours($starbase->fuelBlocks/ ceil($starbase->baseFuelUsage * 0.75))) < 72)
+                  <span class="text-yellow pull-right"><i>{{ trans('web::seat.low_fuel') }}</i></span>
+                @endif
+
+              @else
+
+                @if(carbon('now')->diffInHours(carbon('now')->addHours($starbase->fuelBlocks/$starbase->baseFuelUsage)) < 24)
+                  <span class="text-red pull-right"><i>{{ trans('web::seat.low_fuel') }} !</i></span>
+                @elseif(carbon('now')->diffInHours(carbon('now')->addHours($starbase->fuelBlocks/$starbase->baseFuelUsage)) < 72)
+                  <span class="text-yellow pull-right"><i>{{ trans('web::seat.low_fuel') }}</i></span>
+                @endif
+
+              @endif
           </td>
           <td>
             <b>{{ $starbase->moonName }}</b>
-              <span class="
+            <span class="
                 @if($starbase->mapSecurity >= 0.5)
-                      text-green
-                    @elseif($starbase->mapSecurity < 0.5 && $starbase->mapSecurity > 0.0)
-                      text-warning
-                    @else
-                      text-red
-                    @endif">
+                    text-green
+                  @elseif($starbase->mapSecurity < 0.5 && $starbase->mapSecurity > 0.0)
+                    text-warning
+                  @else
+                    text-red
+                  @endif">
                 <i>({{ round($starbase->mapSecurity,  2) }})</i>
               </span>
           </td>

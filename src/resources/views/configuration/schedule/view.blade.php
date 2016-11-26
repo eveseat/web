@@ -24,9 +24,9 @@
 
                 <option value="{{ $name }}"
                         @if($name == old('command'))
-                          selected
+                        selected
                         @endif
-                        >
+                >
                   {{ $name }}
                 </option>
 
@@ -43,9 +43,9 @@
 
                 <option value="{{ $expression }}"
                         @if($expression == old('expression'))
-                          selected
+                        selected
                         @endif
-                        >
+                >
                   {{ $name }}
                 </option>
 
@@ -100,7 +100,7 @@
             <td>{{ $job->allow_maintenance }}</td>
             <td>
               <a href="{{ route('configuration.schedule.delete', ['schedule_id' => $job->id]) }}" type="button"
-                class="btn btn-danger btn-xs confirmlink">
+                 class="btn btn-danger btn-xs confirmlink">
                 {{ trans('web::seat.delete') }}
               </a>
             </td>
@@ -119,7 +119,7 @@
 
 @stop
 
-@section('javascript')
+@push('javascript')
 
   <script>
     $("#available_commands, #available_expressions").select2({
@@ -128,10 +128,10 @@
   </script>
 
   <script>
-    $("#available_expressions").on("change", function() {
+    $("#available_expressions").on("change", function () {
       $("span#expression").html(
               "Cron: <b>" + this.value.replace("<", "") + "</b>");
     });
   </script>
 
-@stop
+@endpush

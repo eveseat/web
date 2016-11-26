@@ -36,12 +36,12 @@
 <div class="wrapper">
 
   <!-- Main Header -->
-  @include('web::includes.header')
+@include('web::includes.header')
 
-          <!-- Left side column. contains the logo and sidebar -->
-  @include('web::includes.sidebar')
+<!-- Left side column. contains the logo and sidebar -->
+@include('web::includes.sidebar')
 
-          <!-- Content Wrapper. Contains page content -->
+<!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
 
     <!-- Content Header (Page header) -->
@@ -56,9 +56,9 @@
     <section class="content">
 
       <!-- Notifications -->
-      @include('web::includes.notifications')
+    @include('web::includes.notifications')
 
-              <!-- Page Content Here -->
+    <!-- Page Content Here -->
       @yield('content')
 
     </section>
@@ -77,7 +77,7 @@
 
 <!-- jQuery -->
 <script src="{{ asset('web/js/jquery.min.js') }}"></script>
-<!-- Bootstrap 3.3.5 -->
+<!-- Bootstrap -->
 <script src="{{ asset('web/js/bootstrap.min.js') }}"></script>
 <!-- Select2 -->
 <script src="{{ asset('web/js/select2.full.min.js') }}"></script>
@@ -87,6 +87,10 @@
 <script src="{{ asset('web/js/jquery.unveil.js') }}"></script>
 <!-- DataTables -->
 <script src="{{ asset('web/js/datatables.min.js') }}"></script>
+<!-- MomentJS -->
+<script src="{{ asset('web/js/moment-with-locales.min.js') }}"></script>
+<!-- ChartJS -->
+<script src="{{ asset('web/js/chart.min.js') }}"></script>
 <!-- Theme JS -->
 <script src="{{ asset('web/js/app.min.js') }}"></script>
 <!-- SeAT JS -->
@@ -112,7 +116,8 @@
   })();
 </script>
 
-@yield('javascript')
+<!-- view specific scripts -->
+@stack('javascript')
 
 </body>
 </html>

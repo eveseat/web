@@ -21,11 +21,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Queue;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Artisan;
 use Seat\Services\Data\Queue;
 use Seat\Services\Repositories\Queue\JobRepository;
+use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Validation\Permission;
+use Yajra\Datatables\Datatables;
 
 /**
  * Class QueueController
@@ -46,6 +47,73 @@ class QueueController extends Controller
     }
 
     /**
+     * Return Supervisor status in a json response for queue api
+     *
+     * status:true Supervisor is running
+     * status:false Supervisor is not running or dead
+     *
+     * @return mixed
+     */
+    public function getSupervisorStatus()
+    {
+
+        return response()->json([
+            'status' => app('supervisor')->checkConnection()
+        ]);
+    }
+
+    /**
+     * Return Supervisor information if supervisor is running
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getSupervisorInformation()
+    {
+
+        $supervisor = app('supervisor');
+
+        return view('web::queue.ajax.supervisor', compact('supervisor'));
+    }
+
+    /**
+     * Return the current status of Supervisor workers.
+     *
+     * @return mixed
+     */
+    public function getSupervisorProcesses()
+    {
+
+        if (app('supervisor')->checkConnection()) {
+
+            $processes = collect(app('supervisor')
+                ->getProcesses())->filter(function ($process) {
+
+                // Only return processes in the SeAT Group
+                return $process->getGroup() == config('web.supervisor.group');
+
+            })->map(function ($process) {
+
+                $process_info = $process->getProcessInfo();
+
+                return collect([
+                    'name'      => $process_info['name'],
+                    'pid'       => $process_info['pid'],
+                    'statename' => $process_info['statename'],
+                    'spawnerr'  => $process_info['spawnerr'],
+                    'start'     => carbon()
+                        ->createFromTimestamp($process_info['start'])
+                        ->toDateTimeString(),
+                    'log'       => $process_info['logfile']
+                ]);
+
+            });
+        }
+
+        return Datatables::of($processes ?? collect())
+            ->make(true);
+    }
+
+    /**
      * @return \Illuminate\View\View
      * @throws \Exception
      */
@@ -61,6 +129,24 @@ class QueueController extends Controller
 
         return view('web::queue.status',
             compact('totals', 'queued', 'working', 'done', 'error'));
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getQueuedJobs()
+    {
+
+        return Datatables::of($this->getJobs('Queued'))->make(true);
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getWorkingJobs()
+    {
+
+        return Datatables::of($this->getJobs('Working'))->make(true);
     }
 
     /**

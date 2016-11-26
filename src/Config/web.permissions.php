@@ -24,7 +24,7 @@ return [
     'superuser',
     'queue_manager',
 
-    'apikey'      => [
+    'apikey' => [
         'delete',
         'detail',
         'toggle_status',
@@ -32,7 +32,7 @@ return [
         'update'
     ],
 
-    'character'   => [
+    'character' => [
         'assets',
         'bookmarks',
         'calendar',
@@ -40,18 +40,19 @@ return [
         'contacts',
         'contracts',
         'industry',
+        'intel',
         'killmails',
         'list',
         'mail',
-        'market_orders',
+        'market',
         'notifications',
         'pi',
-        'research_agents',
+        'research',
         'skills',
         'standings',
         'sheet',
-        'wallet_journal',
-        'wallet_transactions',
+        'journal',
+        'transactions',
     ],
 
     'corporation' => [
@@ -69,22 +70,22 @@ return [
         'pocos',
         'starbases',
         'summary',
-        'wallet_journal',
+        'journal',
         'transactions',
     ],
 
-    'mail'        => [
+    'mail' => [
         'bodies',
         'subjects'
     ],
 
-    'people'      => [
+    'people' => [
         'create',
         'edit',
         'view'
     ],
 
-    'search'      => [
+    'search' => [
         'character_assets',
         'character_contact_lists',
         'character_mail',

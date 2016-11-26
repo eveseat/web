@@ -21,14 +21,27 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Validation;
 
-use App\Http\Requests\Request;
+use Illuminate\Foundation\Http\FormRequest;
+use Seat\Eveapi\Models\Account\ApiKeyInfoCharacters;
+use Seat\Eveapi\Models\Corporation\CorporationSheet;
 
 /**
  * Class RoleAffilliation
  * @package Seat\Web\Validation
  */
-class RoleAffilliation extends Request
+class RoleAffilliation extends FormRequest
 {
+
+    /**
+     * Authorize the request by default.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+
+        return true;
+    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -38,38 +51,23 @@ class RoleAffilliation extends Request
     public function rules()
     {
 
-        // Start with a default rules array for the
-        // role_id check
+        // Instead of using the 'exists' validation rule, we opt to use
+        // the 'in' rule. We do this because we want to add '0' as a valid
+        // value, which will signal a wild card for either all characters
+        // or all corporations.
+        $character_ids = implode(',',
+            array_prepend(ApiKeyInfoCharacters::pluck('characterID')->toArray(), 0));
+        $corporation_ids = implode(',',
+            array_prepend(CorporationSheet::pluck('corporationID')->toArray(), 0));
+
         $rules = [
-            'role_id' => 'required|exists:roles,id'
+            'role_id'        => 'required|exists:roles,id',
+            'inverse'        => 'required|nullable|in:on',
+            'characters'     => 'required_without_all:corporations',
+            'corporations'   => 'required_without_all:characters',
+            'characters.*'   => 'in:' . $character_ids,
+            'corporations.*' => 'in:' . $corporation_ids
         ];
-
-        // Check that we got either a character/corp
-        if (!$this->request->get('characters') && !$this->request->get('corporations')) {
-
-            $rules['characters'] = 'required_without_all:corporations';
-            $rules['corporations'] = 'required_without_all:characters';
-
-            return $rules;
-        }
-
-        // If we have characters, validate them
-        if ($this->request->get('characters')) {
-
-            // Add each character in the multi select dynamically
-            foreach ($this->request->get('characters') as $key => $value)
-
-                $rules['characters.' . $key] = 'required|exists:account_api_key_info_characters,characterID';
-        }
-
-        // If we have corporations, validate them
-        if ($this->request->get('corporations')) {
-
-            // Add each corporation in the multi select dynamically
-            foreach ($this->request->get('corporations') as $key => $value)
-
-                $rules['corporations.' . $key] = 'required|exists:corporation_sheets,corporationID';
-        }
 
         return $rules;
     }

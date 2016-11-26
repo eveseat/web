@@ -39,6 +39,11 @@ Route::get('/list', [
     'uses' => 'KeyController@listAll',
 ]);
 
+Route::get('/list/data', [
+    'as'   => 'api.key.list.data',
+    'uses' => 'KeyController@listAllData',
+]);
+
 Route::get('/delete/{key_id}', [
     'as'         => 'api.key.delete',
     'uses'       => 'KeyController@getDelete',

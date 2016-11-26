@@ -19,29 +19,37 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-// Authentication routes
 Route::get('login', [
     'as'   => 'auth.login',
-    'uses' => 'AuthController@getLogin'
+    'uses' => 'LoginController@showLoginForm'
 ]);
 Route::post('login', [
     'as'   => 'auth.login.post',
-    'uses' => 'AuthController@postLogin'
+    'uses' => 'LoginController@login'
 ]);
-Route::get('logout', [
+Route::any('logout', [
     'as'   => 'auth.logout',
-    'uses' => 'AuthController@getLogout'
+    'uses' => 'LoginController@logout'
 ]);
 
-Route::group(['middleware' => 'registration.status'], function () {
+Route::group([
+    'middleware' => 'registration.status',
+    'prefix'     => 'register'
+], function () {
 
     // Registration routes
-    Route::get('register', [
+    Route::get('/', [
         'as'   => 'auth.register',
-        'uses' => 'AuthController@getRegister'
+        'uses' => 'RegisterController@showRegistrationForm'
     ]);
-    Route::post('register', [
+    Route::post('/', [
         'as'   => 'auth.register.post',
-        'uses' => 'AuthController@postRegister'
+        'uses' => 'RegisterController@register'
     ]);
+
 });
+
+Route::get('unauthorized', [
+    'as'   => 'auth.unauthorized',
+    'uses' => 'AuthorizationController@getUnauthorized'
+]);
