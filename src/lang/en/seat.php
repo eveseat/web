@@ -192,6 +192,8 @@ return [
     'total_character_isk'         => 'Total Character ISK',
     'total_character_skillpoints' => 'Total Character Skillpoints',
     'total_killmails'             => 'Total Killmails',
+    'main_char_skills_level'      => 'Main Character Skills per Level',
+    'main_char_skills_coverage'   => 'Main Character Skills Coverage (in percent)',
 
     // Api Keys
     'api_key_add'                 => 'Add a New API Key',

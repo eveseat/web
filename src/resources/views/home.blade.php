@@ -142,6 +142,30 @@
         </div><!-- /.info-box-content -->
       </div><!-- /.info-box -->
 
+      @if (setting('main_character_id') != 1)
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">{{ trans('web::seat.main_char_skills_level') }}</h3>
+        </div>
+        <div class="box-body">
+          <div class="chart">
+            <canvas id="skills-level" height="230" width="1110"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">{{ trans('web::seat.main_char_skills_coverage') }}</h3>
+        </div>
+        <div class="box-body">
+          <div class="chart">
+            <canvas id="skills-coverage" height="600" width="1110"></canvas>
+          </div>
+        </div>
+      </div>
+      @endif
+
     </div><!-- /.col -->
 
   </div>
@@ -168,6 +192,28 @@
             }
         });
     })
+
+    $.get("{{ route('home.chart.skills.level', ['character_id' => setting('main_character_id')]) }}", function (data) {
+        new Chart($("canvas#skills-level"), {
+          type: 'pie',
+          data: data
+        });
+    });
+
+    $.get("{{ route('home.chart.skills.coverage', ['character_id' => setting('main_character_id')]) }}", function (data) {
+        new Chart($('canvas#skills-coverage'), {
+          type: 'radar',
+          data: data,
+          options: {
+            scale: {
+              ticks: {
+                beginAtZero: true,
+                max: 100
+              }
+            }
+          }
+        });
+    });
 
 </script>
 @endpush
