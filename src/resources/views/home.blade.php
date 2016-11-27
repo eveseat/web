@@ -2,7 +2,7 @@
 
 @section('title', trans('web::seat.home'))
 @section('page_header', trans('web::seat.home'))
-@section('page_description', trans('web::seat.home_page'))
+@section('page_description', trans('web::seat.dashboard'))
 
 @section('full')
 
@@ -85,6 +85,46 @@
 
     <div class="col-md-6 col-sm-6 col-xs-12">
 
+      @if (setting('main_character_id') != 1)
+
+        <div class="box">
+          <div class="box-header with-border">
+            <h3 class="box-title">
+              {!! img('character', setting('main_character_id'), 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+              {{ trans('web::seat.main_char_skills', ['character_name' => setting('main_character_name')]) }}
+            </h3>
+          </div>
+          <div class="box-body">
+
+            <h4 class="box-title">{{ trans('web::seat.main_char_skills_per_level') }}</h4>
+            <div class="chart">
+              <canvas id="skills-level" height="230" width="1110"></canvas>
+            </div>
+
+            <h4 class="box-title">{{ trans('web::seat.main_char_skills_coverage') }}</h4>
+            <div class="chart">
+              <canvas id="skills-coverage" height="600" width="1110"></canvas>
+            </div>
+          </div>
+        </div>
+
+      @endif
+
+    </div><!-- /.col -->
+    <div class="col-md-6 col-sm-6 col-xs-12">
+
+      <div class="info-box">
+        <span class="info-box-icon bg-red"><i class="fa fa-space-shuttle"></i></span>
+        <div class="info-box-content">
+          <span class="info-box-text">{{ trans('web::seat.total_killmails') }}</span>
+          <span class="info-box-number">
+            {{ $total_character_killmails }}
+          </span>
+        </div><!-- /.info-box-content -->
+      </div><!-- /.info-box -->
+
+
+
       <div class="box">
         <div class="box-header with-border">
           <h3 class="box-title">Newest EVEMail</h3>
@@ -130,43 +170,6 @@
       </div>
 
     </div><!-- /.col -->
-    <div class="col-md-6 col-sm-6 col-xs-12">
-
-      <div class="info-box">
-        <span class="info-box-icon bg-red"><i class="fa fa-space-shuttle"></i></span>
-        <div class="info-box-content">
-          <span class="info-box-text">{{ trans('web::seat.total_killmails') }}</span>
-          <span class="info-box-number">
-            {{ $total_character_killmails }}
-          </span>
-        </div><!-- /.info-box-content -->
-      </div><!-- /.info-box -->
-
-      @if (setting('main_character_id') != 1)
-      <div class="box">
-        <div class="box-header with-border">
-          <h3 class="box-title">{{ trans('web::seat.main_char_skills_level') }}</h3>
-        </div>
-        <div class="box-body">
-          <div class="chart">
-            <canvas id="skills-level" height="230" width="1110"></canvas>
-          </div>
-        </div>
-      </div>
-
-      <div class="box">
-        <div class="box-header with-border">
-          <h3 class="box-title">{{ trans('web::seat.main_char_skills_coverage') }}</h3>
-        </div>
-        <div class="box-body">
-          <div class="chart">
-            <canvas id="skills-coverage" height="600" width="1110"></canvas>
-          </div>
-        </div>
-      </div>
-      @endif
-
-    </div><!-- /.col -->
 
   </div>
 
@@ -193,25 +196,25 @@
         });
     })
 
-    $.get("{{ route('home.chart.skills.level', ['character_id' => setting('main_character_id')]) }}", function (data) {
+    $.get("{{ route('character.view.skills.graph.level', ['character_id' => setting('main_character_id')]) }}", function (data) {
         new Chart($("canvas#skills-level"), {
-          type: 'pie',
-          data: data
+            type: 'pie',
+            data: data
         });
     });
 
-    $.get("{{ route('home.chart.skills.coverage', ['character_id' => setting('main_character_id')]) }}", function (data) {
+    $.get("{{ route('character.view.skills.graph.coverage', ['character_id' => setting('main_character_id')]) }}", function (data) {
         new Chart($('canvas#skills-coverage'), {
-          type: 'radar',
-          data: data,
-          options: {
-            scale: {
-              ticks: {
-                beginAtZero: true,
-                max: 100
-              }
+            type: 'radar',
+            data: data,
+            options: {
+                scale: {
+                    ticks: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
             }
-          }
         });
     });
 

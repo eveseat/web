@@ -187,13 +187,15 @@ return [
 
     // Dashboard
     'home_page'                   => 'The Home Page',
+    'dashboard'                   => 'Dashboard',
     'online_layers'               => 'Online Players',
     'owned_api_keys'              => 'Owned API Keys',
     'total_character_isk'         => 'Total Character ISK',
     'total_character_skillpoints' => 'Total Character Skillpoints',
     'total_killmails'             => 'Total Killmails',
-    'main_char_skills_level'      => 'Main Character Skills per Level',
-    'main_char_skills_coverage'   => 'Main Character Skills Coverage (in percent)',
+    'main_char_skills'            => ':character_name\'s Skills',
+    'main_char_skills_per_level'  => 'Skills Per Level',
+    'main_char_skills_coverage'   => 'Skills Coverage (in percent)',
 
     // Api Keys
     'api_key_add'                 => 'Add a New API Key',

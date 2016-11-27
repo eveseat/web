@@ -28,13 +28,3 @@ Route::get('/home/chart/server-status', [
     'as'   => 'home.chart.serverstatus',
     'uses' => 'HomeController@getServerStatusChartData'
 ]);
-
-Route::get('/home/chart/skills/level/{character_id}', [
-    'as'   => 'home.chart.skills.level',
-    'uses' => 'HomeController@getMainCharacterSkillsLevelChartData'
-]);
-
-Route::get('/home/chart/skills/coverage/{character_id}', [
-    'as'   => 'home.chart.skills.coverage',
-    'uses' => 'HomeController@getMainCharacterSkillsCoverageChartData'
-]);

@@ -264,6 +264,18 @@ Route::get('/view/skills/{character_id}', [
     'uses'       => 'SkillsController@getSkills'
 ]);
 
+Route::get('/view/skills/graph/level/{character_id}', [
+    'as'         => 'character.view.skills.graph.level',
+    'middleware' => 'characterbouncer:sheet',
+    'uses'       => 'SkillsController@getCharacterSkillsLevelChartData'
+]);
+
+Route::get('/view/skills/graph/coverage/{character_id}', [
+    'as'         => 'character.view.skills.graph.coverage',
+    'middleware' => 'characterbouncer:sheet',
+    'uses'       => 'SkillsController@getCharacterSkillsCoverageChartData'
+]);
+
 Route::get('/view/standings/{character_id}', [
     'as'         => 'character.view.standings',
     'middleware' => 'characterbouncer:standings',
