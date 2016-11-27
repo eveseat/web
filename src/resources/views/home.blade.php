@@ -124,7 +124,6 @@
       </div><!-- /.info-box -->
 
 
-
       <div class="box">
         <div class="box-header with-border">
           <h3 class="box-title">Newest EVEMail</h3>
@@ -213,6 +212,9 @@
                         beginAtZero: true,
                         max: 100
                     }
+                },
+                legend: {
+                    display: false
                 }
             }
         });

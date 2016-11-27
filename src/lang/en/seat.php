@@ -425,6 +425,7 @@ return [
     'bookmark'                     => 'Bookmark|Bookmarks',
     'coordinates'                  => 'Coordinates',
     'folder'                       => 'Folder',
+    'skills_graph'                 => 'Skills Graph',
 
     // Character Intel
     'loading_journal'              => 'Loading Journal Entries ...',

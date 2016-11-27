@@ -26,6 +26,10 @@ use Seat\Services\Repositories\Character\Skills;
 use Seat\Services\Repositories\Eve\EveRepository;
 use Seat\Web\Http\Controllers\Controller;
 
+/**
+ * Class SkillsController
+ * @package Seat\Web\Http\Controllers\Character
+ */
 class SkillsController extends Controller
 {
 
