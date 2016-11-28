@@ -40,9 +40,9 @@ trait AccessManager
      *
      * @param int $role_id
      *
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Collection
      */
-    public function getCompleteRole(int $role_id = null) : Collection
+    public function getCompleteRole(int $role_id = null)
     {
 
         $roles = RoleModel::with(
