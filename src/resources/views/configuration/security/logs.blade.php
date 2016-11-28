@@ -11,38 +11,40 @@
     </div>
     <div class="panel-body">
 
-      <table class="table table-condensed table-hover table-responsive">
-        <tbody>
+      <table class="table compact table-condensed table-hover table-responsive"
+             id="logs" data-page-length=100>
+        <thead>
         <tr>
           <th>{{ trans('web::seat.date') }}</th>
           <th>{{ trans_choice('web::seat.user', 1) }}</th>
           <th>{{ trans('web::seat.category') }}</th>
           <th>{{ trans('web::seat.message') }}</th>
         </tr>
-
-        @foreach($logs as $log)
-
-          <tr>
-            <td>{{ $log->created_at }}</td>
-            <td>
-              @if($log->user)
-                {{ $log->user->name }}
-              @endif
-            </td>
-            <td>{{ $log->category }}</td>
-            <td>{{ $log->message }}</td>
-          </tr>
-
-        @endforeach
-
-        </tbody>
+        </thead>
       </table>
 
     </div>
-    @if(count($logs) == 50)
-      <div class="panel-footer">
-        {!! $logs->render() !!}
-      </div>
-    @endif
   </div>
 @stop
+
+@push('javascript')
+
+<script>
+
+    $(function () {
+        $('table#logs').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{{ route('configuration.security.logs.data') }}',
+            columns: [
+                {data: 'created_at', name: 'created_at', render: human_readable},
+                {data: 'user', name: 'user', orderable: false, searchable: false},
+                {data: 'category', name: 'category'},
+                {data: 'message', name: 'message'},
+            ]
+        });
+    });
+
+</script>
+
+@endpush
