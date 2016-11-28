@@ -54,7 +54,7 @@ class SearchController extends Controller
      *
      * @return mixed
      */
-    public function getSearchCharacters(Request $request)
+    public function getSearchCharactersData(Request $request)
     {
 
         $characters = $this->doSearchCharacters($request->input('search.value'));
@@ -84,7 +84,7 @@ class SearchController extends Controller
      *
      * @return mixed
      */
-    public function getSearchCorporations(Request $request)
+    public function getSearchCorporationsData(Request $request)
     {
 
         $corporations = $this->doSearchCorporations($request->input('search.value'));
@@ -113,7 +113,7 @@ class SearchController extends Controller
      *
      * @return mixed
      */
-    public function getSearchMail(Request $request)
+    public function getSearchMailData(Request $request)
     {
 
         $mail = $this->doSearchCharacterMail($request->input('search.value'));
@@ -141,6 +141,58 @@ class SearchController extends Controller
 
             })
             ->make(true);
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return mixed
+     */
+    public function getSearchCharacterAssetsData(Request $request)
+    {
+
+        $assets = $this->doSearchCharacterAssets($request->input('search.value'));
+
+        return Datatables::of($assets)
+            ->removeColumn('v_code')
+            ->editColumn('characterName', function ($row) {
+
+                return view('web::search.partials.charactername', compact('row'))
+                    ->render();
+            })
+            ->editColumn('typeName', function ($row) {
+
+                return view('web::search.partials.typename', compact('row'))
+                    ->render();
+            })
+            ->make(true);
+
+    }
+
+    public function getSearchCharacterSkillsData(Request $request)
+    {
+
+        $skills = $this->doSearchCharacterSkills($request->input('search.value'));
+
+        return Datatables::of($skills)
+            ->removeColumn('v_code')
+            ->editColumn('characterName', function ($row) {
+
+                return view('web::search.partials.charactername', compact('row'))
+                    ->render();
+            })
+            ->editColumn('corporationName', function ($row) {
+
+                return view('web::search.partials.corporationname', compact('row'))
+                    ->render();
+            })
+            ->editColumn('typeName', function ($row) {
+
+                return view('web::search.partials.typename', compact('row'))
+                    ->render();
+            })
+            ->make(true);
+
     }
 
 }

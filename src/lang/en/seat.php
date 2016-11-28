@@ -84,6 +84,7 @@ return [
     'all'                   => 'All',
     'inverse'               => 'Inverse',
     'read'                  => 'Read',
+    'level'                 => 'Level',
 
     // Requirements
     'requirements'          => 'Requirements',

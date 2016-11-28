@@ -25,16 +25,26 @@ Route::match(['get', 'post'], '/search', [
 ]);
 
 Route::get('/search/characters/data', [
-    'as' => 'support.search.characters.data',
-    'uses' => 'SearchController@getSearchCharacters',
+    'as'   => 'support.search.characters.data',
+    'uses' => 'SearchController@getSearchCharactersData',
 ]);
 
 Route::get('/search/corporations/data', [
-    'as' => 'support.search.corporations.data',
-    'uses' => 'SearchController@getSearchCorporations',
+    'as'   => 'support.search.corporations.data',
+    'uses' => 'SearchController@getSearchCorporationsData',
 ]);
 
 Route::get('/search/mail/data', [
-    'as' => 'support.search.mail.data',
-    'uses' => 'SearchController@getSearchMail',
+    'as'   => 'support.search.mail.data',
+    'uses' => 'SearchController@getSearchMailData',
+]);
+
+Route::get('/search/assets/data', [
+    'as'   => 'support.search.assets.data',
+    'uses' => 'SearchController@getSearchCharacterAssetsData',
+]);
+
+Route::get('/search/skills/data', [
+    'as'   => 'support.search.skills.data',
+    'uses' => 'SearchController@getSearchCharacterSkillsData',
 ]);
