@@ -42,7 +42,8 @@
             },
             'search': {
                 'search': '{{ $query }}'
-            }
+            },
+            order: [[ 0, "asc" ]]
         });
     });
 
