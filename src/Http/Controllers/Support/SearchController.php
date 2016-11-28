@@ -24,6 +24,7 @@ namespace Seat\Web\Http\Controllers\Support;
 use Illuminate\Http\Request;
 use Seat\Services\Search\Search;
 use Seat\Web\Http\Controllers\Controller;
+use Yajra\Datatables\Datatables;
 
 /**
  * Class SearchController
@@ -39,17 +40,107 @@ class SearchController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function searchAll(Request $request)
+    public function getSearch(Request $request)
     {
 
         $query = $request->q;
 
-        $characters = $this->doSearchCharacters($query);
-        $corporations = $this->doSearchCorporations($query);
-        $mail = $this->doSearchCharacterMail($query);
+        return view('web::search.result', compact('query'));
 
-        return view('web::search.result', compact(
-            'query', 'characters', 'corporations', 'mail'));
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return mixed
+     */
+    public function getSearchCharacters(Request $request)
+    {
+
+        $characters = $this->doSearchCharacters($request->input('search.value'));
+
+        return Datatables::of($characters)
+            ->editColumn('characterName', function ($row) {
+
+                return view('web::search.partials.charactername', compact('row'))
+                    ->render();
+            })
+            ->editColumn('corporationName', function ($row) {
+
+                return view('web::search.partials.corporationname', compact('row'))
+                    ->render();
+            })
+            ->editColumn('shipTypeName', function ($row) {
+
+                return view('web::search.partials.shiptypename', compact('row'))
+                    ->render();
+            })
+            ->make(true);
+
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return mixed
+     */
+    public function getSearchCorporations(Request $request)
+    {
+
+        $corporations = $this->doSearchCorporations($request->input('search.value'));
+
+        return Datatables::of($corporations)
+            ->editColumn('corporationName', function ($row) {
+
+                return view('web::search.partials.corporationname', compact('row'))
+                    ->render();
+            })
+            ->editColumn('ceoName', function ($row) {
+
+                return view('web::search.partials.ceoname', compact('row'))
+                    ->render();
+            })
+            ->editColumn('allianceName', function ($row) {
+
+                return view('web::search.partials.alliancename', compact('row'))
+                    ->render();
+            })
+            ->make(true);
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return mixed
+     */
+    public function getSearchMail(Request $request)
+    {
+
+        $mail = $this->doSearchCharacterMail($request->input('search.value'));
+
+        return Datatables::of($mail)
+            ->editColumn('senderName', function ($row) {
+
+                return view('web::character.partials.mailsendername', compact('row'))
+                    ->render();
+            })
+            ->editColumn('title', function ($row) {
+
+                return view('web::character.partials.mailtitle', compact('row'))
+                    ->render();
+            })
+            ->editColumn('tocounts', function ($row) {
+
+                return view('web::character.partials.mailtocounts', compact('row'))
+                    ->render();
+            })
+            ->addColumn('read', function ($row) {
+
+                return view('web::character.partials.mailread', compact('row'))
+                    ->render();
+
+            })
+            ->make(true);
     }
 
 }

@@ -19,9 +19,22 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-Route::match(['get', 'post'], '/', [
+Route::match(['get', 'post'], '/search', [
     'as'   => 'support.search',
-    'uses' => 'SearchController@searchAll'
+    'uses' => 'SearchController@getSearch'
 ]);
 
+Route::get('/search/characters/data', [
+    'as' => 'support.search.characters.data',
+    'uses' => 'SearchController@getSearchCharacters',
+]);
 
+Route::get('/search/corporations/data', [
+    'as' => 'support.search.corporations.data',
+    'uses' => 'SearchController@getSearchCorporations',
+]);
+
+Route::get('/search/mail/data', [
+    'as' => 'support.search.mail.data',
+    'uses' => 'SearchController@getSearchMail',
+]);

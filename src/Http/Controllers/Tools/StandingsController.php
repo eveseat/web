@@ -106,7 +106,7 @@ class StandingsController extends Controller
             ->where('id', $id)
             ->first();
 
-        $characters = $this->getAllCharactersWithAffiliationsAndFilters();
+        $characters = $this->getAllCharactersWithAffiliations();
         $corporations = $this->getAllCorporationsWithAffiliationsAndFilters();
 
         return view('web::tools.standings.edit',

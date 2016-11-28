@@ -55,7 +55,7 @@ class StandingsExistingElementAdd extends FormRequest
 
         return [
             'id'          => 'required|exists:standings_profiles,id',
-            'character*'  => 'in:' . $this->getAllCharactersWithAffiliationsAndFilters()
+            'character*'  => 'in:' . $this->getAllCharactersWithAffiliations()
                     ->pluck('characterID')->implode(','),
             'corporation' => 'in:' . $this->getAllCorporationsWithAffiliationsAndFilters()
                     ->pluck('corporationID')->implode(',')
