@@ -64,6 +64,14 @@ class SsoController extends Controller
     {
 
         $eve_data = $social->driver('eveonline')->user();
+
+        // user already owned an account and sso is not enabled
+        if (User::where('name', $eve_data->name)->where('eve_id', null)->first()) {
+            session()->put('eve_sso', $eve_data);
+            return redirect()->route('auth.eve.confirmation.get');
+        }
+
+        // new user or existing user with enabled SSO
         $user = $this->findOrCreateUser($eve_data);
 
         // Login the account
@@ -82,30 +90,6 @@ class SsoController extends Controller
             return redirect()->route('auth.eve.email');
 
         return redirect()->intended();
-    }
-
-    /**
-     * Check if a user exists in the database, else, create
-     * and return the User object
-     *
-     * @param $user
-     *
-     * @return static
-     */
-    public function findOrCreateUser($user)
-    {
-
-        if ($existing = User::where('eve_id', $user->eve_id)->first())
-            return $existing;
-
-        return User::create([
-            'name'     => $user->name,
-            'email'    => str_random(8) . '@seat.local',  // Temp Address
-            'eve_id'   => $user->eve_id,
-            'active'   => 0,
-            'token'    => $user->token,
-            'password' => bcrypt(str_random(128))   // Random Password.
-        ]);
     }
 
     /**
@@ -141,5 +125,71 @@ class SsoController extends Controller
         return redirect()->route('auth.email')
             ->with('success', 'Please check your email for the confirmation link!');
 
+    }
+
+    public function getSsoConfirmation()
+    {
+        return view('web::auth.ssoconfirmation');
+    }
+
+    public function postSsoConfirmation()
+    {
+        // confirm user credentials
+        if (auth()->attempt(['name' => session()->get('eve_sso')->name, 'password' => request()->input('password')])) {
+
+            // alter user with SSO credentials
+            $user = User::where('name', session()->get('eve_sso')->name)->first();
+            $user->update([
+                'eve_id' => session()->get('eve_sso')->eve_id,
+                'token' => session()->get('eve_sso')->token
+            ]);
+
+            // authenticate user
+            if (auth()->check() == false) {
+                auth()->login($user, true);
+            }
+
+            // update main character if none are already set
+            if (setting('main_character_id') === 1 || setting('main_character_id') == null) {
+                Seat::set('main_character_id', session()->get('eve_sso')->character_id, auth()->id());
+                Seat::set('main_character_name', session()->get('eve_sso')->name, auth()->id());
+            }
+
+            // destroy sso object from session
+            session()->forget('eve_sso');
+
+            // Check that we have a valid email for the user.
+            if (!$user->active)
+                return redirect()->route('auth.eve.email');
+
+            return redirect()->intended();
+        }
+
+        return redirect()->back()->withErrors([
+            session()->get('eve_sso')->name => trans('web::seat.failed'),
+        ]);
+    }
+
+    /**
+     * Check if a user exists in the database, else, create
+     * and return the User object
+     *
+     * @param $user
+     *
+     * @return User
+     */
+    private function findOrCreateUser(\Laravel\Socialite\Two\User $user) : User
+    {
+        if ($existing = User::where('eve_id', $user->eve_id)->first())
+            return $existing;
+
+        return User::create([
+            'name'     => $user->name,
+            'email'    => str_random(8) . '@seat.local',  // Temp Address
+            'eve_id'   => $user->eve_id,
+            'active'   => 0,
+            'token'    => $user->token,
+            'password' => bcrypt(str_random(128))   // Random Password.
+        ]);
     }
 }

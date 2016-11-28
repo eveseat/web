@@ -391,6 +391,15 @@
               </div>
 
             </li>
+            @if(setting('allow_sso', true) === 'yes')
+            @if(is_null(auth()->user()->eve_id))
+            <li>
+              <a href="{{ route('auth.eve') }}">
+                <img src="https://images.contentful.com/idjq7aai9ylm/18BxKSXCymyqY4QKo8KwKe/c2bdded6118472dd587c8107f24104d7/EVE_SSO_Login_Buttons_Small_White.png?h=25">
+              </a>
+            </li>
+            @endif
+            @endif
           </ul>
 
         </div>
