@@ -489,6 +489,7 @@ return [
     'user_preferences'             => 'User Preferences',
     'user_account'                 => 'User Account',
     'account_settings'             => 'Account Settings',
+    'upgrade_sso'                  => 'Upgrade to EVE Online SSO Account',
     'change_password'              => 'Change Password',
     'change_email'                 => 'Change Email',
     'superuser'                    => 'Superuser',

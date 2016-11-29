@@ -212,7 +212,7 @@
         {{ trans('web::seat.user_account') }}
         <span class="pull-right">
           {{ trans('web::seat.last_login') }}: {{ auth()->user()->last_login }}
-                                             ({{ human_diff(auth()->user()->last_login) }})
+          ({{ human_diff(auth()->user()->last_login) }})
         </span>
       </h3>
     </div>
@@ -391,14 +391,22 @@
               </div>
 
             </li>
+
+            {{-- option to upgrade account to an SSO account --}}
             @if(setting('allow_sso', true) === 'yes')
-            @if(is_null(auth()->user()->eve_id))
-            <li>
-              <a href="{{ route('auth.eve') }}">
-                <img src="https://images.contentful.com/idjq7aai9ylm/18BxKSXCymyqY4QKo8KwKe/c2bdded6118472dd587c8107f24104d7/EVE_SSO_Login_Buttons_Small_White.png?h=25">
-              </a>
-            </li>
-            @endif
+
+              @if(is_null(auth()->user()->eve_id))
+
+                <li class="list-header">{{ trans('web::seat.upgrade_sso') }}</li>
+
+                <li>
+                  <a href="{{ route('auth.eve') }}">
+                    <img src="{{ asset('web/img/evesso.png') }}">
+                  </a>
+                </li>
+
+              @endif
+
             @endif
           </ul>
 
