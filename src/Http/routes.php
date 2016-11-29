@@ -192,6 +192,12 @@ Route::group([
                     include __DIR__ . '/Routes/Configuration/Seat.php';
                 });
 
+                // Worker Settings
+                Route::group(['prefix' => 'workers'], function () {
+
+                    include __DIR__ . '/Routes/Configuration/Workers.php';
+                });
+
             });
 
             // Tools Routes

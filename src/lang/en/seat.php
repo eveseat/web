@@ -168,6 +168,7 @@ return [
     'main_menu'             => 'Main Menu',
     'security'              => 'Security',
     'tracking'              => 'Tracking',
+    'worker_constraints'    => 'Worker Constraints',
 
     'assets'                      => 'Assets',
     'calendar'                    => 'Calendar',
@@ -357,6 +358,7 @@ return [
     'tracking_id'                  => 'Unique Tracking ID',
     'tracking_help'                => 'Before disabling the usage tracking, please refer to the below' .
         ' document first.',
+    'worker'                       => 'Worker|Workers',
 
     // Character
     'joined_curr_corp'             => 'Joined Current Corporation',
