@@ -36,27 +36,27 @@
 @stop
 
 @push('javascript')
-  <script>
+<script>
 
-    $(function () {
-      $('table#keys-table').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: '{{ route('api.key.list.data') }}',
-        columns: [
-          {data: 'key_id', name: 'key_id'},
-          {data: 'info.type', name: 'info.type'},
-          {data: 'info.expires', name: 'info.expires'},
-          {data: 'characters', name: 'characters', orderable: false},
-          {data: 'actions', name: 'actions', orderable: false},
-        ],
-        "fnDrawCallback": function () {
-          $(document).ready(function () {
-            $("img").unveil(100);
-          });
-        }
-      });
+  $(function () {
+    $('table#keys-table').DataTable({
+      processing      : true,
+      serverSide      : true,
+      ajax            : '{{ route('api.key.list.data') }}',
+      columns         : [
+        {data: 'key_id', name: 'key_id'},
+        {data: 'info.type', name: 'info.type'},
+        {data: 'info.expires', name: 'info.expires'},
+        {data: 'characters', name: 'characters', orderable: false},
+        {data: 'actions', name: 'actions', orderable: false},
+      ],
+      "fnDrawCallback": function () {
+        $(document).ready(function () {
+          $("img").unveil(100);
+        });
+      }
     });
+  });
 
-  </script>
+</script>
 @endpush

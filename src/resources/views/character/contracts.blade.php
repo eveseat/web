@@ -40,10 +40,10 @@
 
   $(function () {
     $('table#character-contracts').DataTable({
-      processing: true,
-      serverSide: true,
-      ajax: '{{ route('character.view.contracts.data', ['character_id' => $request->character_id]) }}',
-      columns: [
+      processing      : true,
+      serverSide      : true,
+      ajax            : '{{ route('character.view.contracts.data', ['character_id' => $request->character_id]) }}',
+      columns         : [
         {data: 'dateIssued', name: 'dateIssued', render: human_readable},
         {data: 'issuerID', name: 'issuerID'},
         {data: 'type', name: 'type'},

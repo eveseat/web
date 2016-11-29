@@ -115,6 +115,22 @@ class SsoController extends Controller
     }
 
     /**
+     * @param \Laravel\Socialite\Two\User $data
+     */
+    private function setCharacterId(SocialiteUser $data)
+    {
+
+        // Check if a main_character_id setting is set.
+        // If not, we can pull the one from the SSO login data
+        if (setting('main_character_id') === 1) {
+
+            setting(['main_character_id', $data->character_id]);
+            setting(['main_character_name', $data->name]);
+        }
+
+    }
+
+    /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getUserEmail()
@@ -195,22 +211,6 @@ class SsoController extends Controller
 
         return redirect()->back()
             ->with('error', trans('web::seat.failed'));
-
-    }
-
-    /**
-     * @param \Laravel\Socialite\Two\User $data
-     */
-    private function setCharacterId(SocialiteUser $data)
-    {
-
-        // Check if a main_character_id setting is set.
-        // If not, we can pull the one from the SSO login data
-        if (setting('main_character_id') === 1) {
-
-            setting(['main_character_id', $data->character_id]);
-            setting(['main_character_name', $data->name]);
-        }
 
     }
 

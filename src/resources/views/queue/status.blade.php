@@ -34,7 +34,7 @@
       </div><!-- /.info-box -->
     </div><!-- /.col -->
 
-          <!-- fix for small devices only -->
+    <!-- fix for small devices only -->
     <div class="clearfix visible-sm-block"></div>
 
     <div class="col-md-3 col-sm-6 col-xs-12">
@@ -129,7 +129,7 @@
               @else
                 0
               @endif
-                / {{ config('eveapi.config.limits.eveapi_errors')}}
+              / {{ config('eveapi.config.limits.eveapi_errors')}}
             </dd>
 
             <dt>{{ trans('web::seat.eve_api_connection_threshold') }}</dt>
@@ -139,7 +139,7 @@
               @else
                 0
               @endif
-                / {{ config('eveapi.config.limits.connection_errors')}}
+              / {{ config('eveapi.config.limits.connection_errors')}}
             </dd>
           </dl>
 
@@ -280,8 +280,8 @@
 
       processing: true,
       serverSide: true,
-      ajax: '{{ route('json.supervisor.processes') }}',
-      columns: [
+      ajax      : '{{ route('json.supervisor.processes') }}',
+      columns   : [
         {data: 'start', name: 'start', render: human_readable},
         {data: 'name', name: 'name'},
         {data: 'pid', name: 'pid'},
@@ -313,8 +313,8 @@
 
       processing: true,
       serverSide: true,
-      ajax: '{{ route('json.jobs.working') }}',
-      columns: [
+      ajax      : '{{ route('json.jobs.working') }}',
+      columns   : [
         {data: 'created_at', name: 'owner_id', render: human_readable},
         {data: 'updated_at', name: 'owner_id', render: human_readable},
         {data: 'owner_id', name: 'owner_id'},
@@ -329,8 +329,8 @@
 
       processing: true,
       serverSide: true,
-      ajax: '{{ route('json.jobs.queued') }}',
-      columns: [
+      ajax      : '{{ route('json.jobs.queued') }}',
+      columns   : [
         {data: 'created_at', name: 'created_at', render: human_readable},
         {data: 'owner_id', name: 'owner_id'},
         {data: 'api', name: 'api'},
@@ -362,8 +362,8 @@
             if ($('#supervisor-status').hasClass('label-danger')) {
 
               $('#supervisor-status').removeClass('label-danger')
-                      .addClass('label-success')
-                      .text("{{ trans('web::seat.supervisor_online') }}");
+                  .addClass('label-success')
+                  .text("{{ trans('web::seat.supervisor_online') }}");
 
               $.ajax('{{ route('queue.supervisor.information') }}', {
                 success: function (data, textStatus, jqXHR) {
@@ -381,8 +381,8 @@
             if ($('#supervisor-status').hasClass('label-success')) {
 
               $('#supervisor-status').removeClass('label-success')
-                      .addClass('label-danger')
-                      .text("{{ trans('web::seat.supervisor_offline') }}");
+                  .addClass('label-danger')
+                  .text("{{ trans('web::seat.supervisor_offline') }}");
 
               // Hide the status and show the offline message again.
               $('#supervisor-info').hide();

@@ -97,38 +97,6 @@ class WebServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-
-        // Merge the config with anything in the main app
-        // Web package configurations
-        $this->mergeConfigFrom(
-            __DIR__ . '/Config/web.config.php', 'web.config');
-        $this->mergeConfigFrom(
-            __DIR__ . '/Config/web.permissions.php', 'web.permissions');
-        $this->mergeConfigFrom(
-            __DIR__ . '/Config/web.locale.php', 'web.locale');
-        $this->mergeConfigFrom(
-            __DIR__ . '/Config/web.supervisor.php', 'web.supervisor');
-
-        // Menu Configurations
-        $this->mergeConfigFrom(
-            __DIR__ . '/Config/package.sidebar.php', 'package.sidebar');
-        $this->mergeConfigFrom(
-            __DIR__ . '/Config/package.character.menu.php', 'package.character.menu');
-        $this->mergeConfigFrom(
-            __DIR__ . '/Config/package.corporation.menu.php', 'package.corporation.menu');
-
-        // Register any extra services.
-        $this->register_services();
-
-    }
-
-    /**
      * Include the routes
      */
     public function add_routes()
@@ -275,6 +243,38 @@ class WebServiceProvider extends ServiceProvider
     {
 
         Validator::extend('cron', 'Seat\Web\Validation\Custom\Cron@validate');
+    }
+
+    /**
+     * Register the application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+
+        // Merge the config with anything in the main app
+        // Web package configurations
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/web.config.php', 'web.config');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/web.permissions.php', 'web.permissions');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/web.locale.php', 'web.locale');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/web.supervisor.php', 'web.supervisor');
+
+        // Menu Configurations
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/package.sidebar.php', 'package.sidebar');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/package.character.menu.php', 'package.character.menu');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/package.corporation.menu.php', 'package.corporation.menu');
+
+        // Register any extra services.
+        $this->register_services();
+
     }
 
     /**

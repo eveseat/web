@@ -23,28 +23,28 @@
 
 <script>
 
-    $(function () {
-        $('table#characters').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: '{{ route('support.search.characters.data') }}',
-            columns: [
-                {data: 'characterName', name: 'characterName'},
-                {data: 'corporationName', name: 'corporationName'},
-                {data: 'shipTypeName', name: 'shipTypeName'},
-                {data: 'lastKnownLocation', name: 'lastKnownLocation'},
-            ],
-            'fnDrawCallback': function () {
-                $(document).ready(function () {
-                    $('img').unveil(100);
-                });
-            },
-            'search': {
-                'search': '{{ $query }}'
-            },
-            order: [[ 0, "asc" ]]
+  $(function () {
+    $('table#characters').DataTable({
+      processing      : true,
+      serverSide      : true,
+      ajax            : '{{ route('support.search.characters.data') }}',
+      columns         : [
+        {data: 'characterName', name: 'characterName'},
+        {data: 'corporationName', name: 'corporationName'},
+        {data: 'shipTypeName', name: 'shipTypeName'},
+        {data: 'lastKnownLocation', name: 'lastKnownLocation'},
+      ],
+      'fnDrawCallback': function () {
+        $(document).ready(function () {
+          $('img').unveil(100);
         });
+      },
+      'search'        : {
+        'search': '{{ $query }}'
+      },
+      order           : [[0, "asc"]]
     });
+  });
 
 </script>
 

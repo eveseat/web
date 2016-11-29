@@ -69,9 +69,9 @@
 
   // Prepare an empty DataTable to use.
   var Table = $('table#character-standings-interactions').DataTable({
-    processing: true,
-    serverSide: true,
-    columns: [
+    processing      : true,
+    serverSide      : true,
+    columns         : [
       {data: 'total', name: 'total', searchable: false},
       {data: 'characterName', name: 'characterName'},
       {data: 'corporationName', name: 'corporationName'},
@@ -83,7 +83,7 @@
         $('img').unveil(100);
       });
     },
-    'iDeferLoading': 0
+    'iDeferLoading' : 0
   });
 
   // Table Loaders. This should run once a profile is chosen.

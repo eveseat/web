@@ -24,28 +24,28 @@
 
 <script>
 
-    $(function () {
-        $('table#corporations').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: '{{ route('support.search.corporations.data') }}',
-            columns: [
-                {data: 'corporationName', name: 'corporationName'},
-                {data: 'ceoName', name: 'ceoName'},
-                {data: 'allianceName', name: 'allianceName'},
-                {data: 'taxRate', name: 'taxRate'},
-                {data: 'memberCount', name: 'memberCount'},
-            ],
-            'fnDrawCallback': function () {
-                $(document).ready(function () {
-                    $('img').unveil(100);
-                });
-            },
-            'search': {
-                'search': '{{ $query }}'
-            }
+  $(function () {
+    $('table#corporations').DataTable({
+      processing      : true,
+      serverSide      : true,
+      ajax            : '{{ route('support.search.corporations.data') }}',
+      columns         : [
+        {data: 'corporationName', name: 'corporationName'},
+        {data: 'ceoName', name: 'ceoName'},
+        {data: 'allianceName', name: 'allianceName'},
+        {data: 'taxRate', name: 'taxRate'},
+        {data: 'memberCount', name: 'memberCount'},
+      ],
+      'fnDrawCallback': function () {
+        $(document).ready(function () {
+          $('img').unveil(100);
         });
+      },
+      'search'        : {
+        'search': '{{ $query }}'
+      }
     });
+  });
 
 </script>
 

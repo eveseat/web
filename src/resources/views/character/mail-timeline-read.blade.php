@@ -60,6 +60,6 @@
 
 @push('javascript')
 
-  @include('web::includes.javascript.id-to-name')
+@include('web::includes.javascript.id-to-name')
 
 @endpush

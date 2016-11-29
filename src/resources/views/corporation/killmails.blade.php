@@ -38,10 +38,10 @@
 
   $(function () {
     $('table#corporation-killmails').DataTable({
-      processing: true,
-      serverSide: true,
-      ajax: '{{ route('corporation.view.killmails.data', ['corporation_id' => $request->corporation_id]) }}',
-      columns: [
+      processing      : true,
+      serverSide      : true,
+      ajax            : '{{ route('corporation.view.killmails.data', ['corporation_id' => $request->corporation_id]) }}',
+      columns         : [
         {data: 'killTime', name: 'killTime', render: human_readable},
         {data: 'characterName', name: 'characterName'},
         {data: 'typeName', name: 'typeName'},

@@ -34,10 +34,10 @@
 
   $(function () {
     $('table#corporations-table').DataTable({
-      processing: true,
-      serverSide: true,
-      ajax: '{{ route('corporation.list.data') }}',
-      columns: [
+      processing      : true,
+      serverSide      : true,
+      ajax            : '{{ route('corporation.list.data') }}',
+      columns         : [
         {data: 'corporationName', name: 'corporationName'},
         {data: 'ceoName', name: 'ceoName'},
         {data: 'allianceName', name: 'allianceName'},

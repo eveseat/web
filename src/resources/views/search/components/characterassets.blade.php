@@ -24,29 +24,29 @@
 
 <script>
 
-    $(function () {
-        $('table#character-assets').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: '{{ route('support.search.assets.data') }}',
-            columns: [
-                {data: 'characterName', name: 'characterName'},
-                {data: 'location', name: 'location', searchable: false},
-                {data: 'groupName', name: 'groupName'},
-                {data: 'typeName', name: 'typeName'},
-                {data: 'quantity', name: 'quantity'},
-            ],
-            'fnDrawCallback': function () {
-                $(document).ready(function () {
-                    $('img').unveil(100);
-                });
-            },
-            'search': {
-                'search': '{{ $query }}'
-            },
-            order: [[ 0, "asc" ]]
+  $(function () {
+    $('table#character-assets').DataTable({
+      processing      : true,
+      serverSide      : true,
+      ajax            : '{{ route('support.search.assets.data') }}',
+      columns         : [
+        {data: 'characterName', name: 'characterName'},
+        {data: 'location', name: 'location', searchable: false},
+        {data: 'groupName', name: 'groupName'},
+        {data: 'typeName', name: 'typeName'},
+        {data: 'quantity', name: 'quantity'},
+      ],
+      'fnDrawCallback': function () {
+        $(document).ready(function () {
+          $('img').unveil(100);
         });
+      },
+      'search'        : {
+        'search': '{{ $query }}'
+      },
+      order           : [[0, "asc"]]
     });
+  });
 
 </script>
 

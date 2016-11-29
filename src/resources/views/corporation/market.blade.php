@@ -39,10 +39,10 @@
 
   $(function () {
     $('table#corporation-market').DataTable({
-      processing: true,
-      serverSide: true,
-      ajax: '{{ route('corporation.view.market.data', ['corporation_id' => $request->corporation_id]) }}',
-      columns: [
+      processing      : true,
+      serverSide      : true,
+      ajax            : '{{ route('corporation.view.market.data', ['corporation_id' => $request->corporation_id]) }}',
+      columns         : [
         {data: 'issued', name: 'issued', render: human_readable},
         {data: 'bs', name: 'bid'},
         {data: 'vol', name: 'volEntered'},

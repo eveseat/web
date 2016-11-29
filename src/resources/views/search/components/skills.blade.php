@@ -24,29 +24,29 @@
 
 <script>
 
-    $(function () {
-        $('table#character-skills').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: '{{ route('support.search.skills.data') }}',
-            columns: [
-                {data: 'characterName', name: 'characterName'},
-                {data: 'corporationName', name: 'corporationName'},
-                {data: 'groupName', name: 'groupName'},
-                {data: 'typeName', name: 'typeName'},
-                {data: 'level', name: 'level'},
-            ],
-            'fnDrawCallback': function () {
-                $(document).ready(function () {
-                    $('img').unveil(100);
-                });
-            },
-            'search': {
-                'search': '{{ $query }}'
-            },
-            order: [[ 0, "asc" ]]
+  $(function () {
+    $('table#character-skills').DataTable({
+      processing      : true,
+      serverSide      : true,
+      ajax            : '{{ route('support.search.skills.data') }}',
+      columns         : [
+        {data: 'characterName', name: 'characterName'},
+        {data: 'corporationName', name: 'corporationName'},
+        {data: 'groupName', name: 'groupName'},
+        {data: 'typeName', name: 'typeName'},
+        {data: 'level', name: 'level'},
+      ],
+      'fnDrawCallback': function () {
+        $(document).ready(function () {
+          $('img').unveil(100);
         });
+      },
+      'search'        : {
+        'search': '{{ $query }}'
+      },
+      order           : [[0, "asc"]]
     });
+  });
 
 </script>
 

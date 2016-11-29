@@ -177,48 +177,48 @@
 @push('javascript')
 <script>
 
-    $.get("{{ route('home.chart.serverstatus') }}", function (data) {
+  $.get("{{ route('home.chart.serverstatus') }}", function (data) {
 
-        new Chart($("canvas#serverstatus"), {
-            type: 'line',
-            data: data,
-            options: {
-                legend: {
-                    display: false
-                },
-                scales: {
-                    xAxes: [{
-                        display: false
-                    }]
-                }
-            }
-        });
-    })
-
-    $.get("{{ route('character.view.skills.graph.level', ['character_id' => setting('main_character_id')]) }}", function (data) {
-        new Chart($("canvas#skills-level"), {
-            type: 'pie',
-            data: data
-        });
+    new Chart($("canvas#serverstatus"), {
+      type   : 'line',
+      data   : data,
+      options: {
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            display: false
+          }]
+        }
+      }
     });
+  })
 
-    $.get("{{ route('character.view.skills.graph.coverage', ['character_id' => setting('main_character_id')]) }}", function (data) {
-        new Chart($('canvas#skills-coverage'), {
-            type: 'radar',
-            data: data,
-            options: {
-                scale: {
-                    ticks: {
-                        beginAtZero: true,
-                        max: 100
-                    }
-                },
-                legend: {
-                    display: false
-                }
-            }
-        });
+  $.get("{{ route('character.view.skills.graph.level', ['character_id' => setting('main_character_id')]) }}", function (data) {
+    new Chart($("canvas#skills-level"), {
+      type: 'pie',
+      data: data
     });
+  });
+
+  $.get("{{ route('character.view.skills.graph.coverage', ['character_id' => setting('main_character_id')]) }}", function (data) {
+    new Chart($('canvas#skills-coverage'), {
+      type   : 'radar',
+      data   : data,
+      options: {
+        scale : {
+          ticks: {
+            beginAtZero: true,
+            max        : 100
+          }
+        },
+        legend: {
+          display: false
+        }
+      }
+    });
+  });
 
 </script>
 @endpush

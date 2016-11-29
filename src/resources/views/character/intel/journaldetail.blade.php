@@ -47,32 +47,32 @@
 
 @push('javascript')
 
-  <script>
+<script>
 
-    $("select#standings-profile-id").select2({
-      placeholder: "Select a profile"
+  $("select#standings-profile-id").select2({
+    placeholder: "Select a profile"
+  });
+
+  $(document.body).on("change", "select#standings-profile-id", function () {
+
+    // Flip on the loading indicator
+    $("span#comparison-result").html('<i class="fa fa-cog fa fa-spin"></i>');
+
+    // Shitty hack so we can replace the id. Muhaha.
+    var url = "{{ route('character.view.intel.ajax.standingscomparison', ['character_id' => $request->character_id, 'profile_id' => ':id']) }}"
+    url = url.replace(':id', this.value);
+
+    // Perform the AJAX request to get the comparison.
+    $.ajax({
+      type   : 'GET',
+      url    : url,
+      success: function (result) {
+        $("span#comparison-result").html(result);
+        $("img").unveil(100);
+      }
     });
+  });
 
-    $(document.body).on("change", "select#standings-profile-id", function () {
-
-      // Flip on the loading indicator
-      $("span#comparison-result").html('<i class="fa fa-cog fa fa-spin"></i>');
-
-      // Shitty hack so we can replace the id. Muhaha.
-      var url = "{{ route('character.view.intel.ajax.standingscomparison', ['character_id' => $request->character_id, 'profile_id' => ':id']) }}"
-      url = url.replace(':id', this.value);
-
-      // Perform the AJAX request to get the comparison.
-      $.ajax({
-        type: 'GET',
-        url: url,
-        success: function (result) {
-          $("span#comparison-result").html(result);
-          $("img").unveil(100);
-        }
-      });
-    });
-
-  </script>
+</script>
 
 @endpush

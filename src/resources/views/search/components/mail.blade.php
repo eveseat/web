@@ -23,29 +23,29 @@
 
 <script>
 
-    $(function () {
-        $('table#mail').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: '{{ route('support.search.mail.data') }}',
-            columns: [
-                {data: 'sentDate', name: 'sentDate', render: human_readable},
-                {data: 'senderName', name: 'senderName'},
-                {data: 'title', name: 'title'},
-                {data: 'tocounts', name: 'tocounts', searchable: false},
-                {data: 'read', name: 'read', searchable: false},
-            ],
-            'fnDrawCallback': function () {
-                $(document).ready(function () {
-                    $('img').unveil(100);
-                });
-            },
-            'search': {
-                'search': '{{ $query }}'
-            },
-            order: [[ 0, "asc" ]]
+  $(function () {
+    $('table#mail').DataTable({
+      processing      : true,
+      serverSide      : true,
+      ajax            : '{{ route('support.search.mail.data') }}',
+      columns         : [
+        {data: 'sentDate', name: 'sentDate', render: human_readable},
+        {data: 'senderName', name: 'senderName'},
+        {data: 'title', name: 'title'},
+        {data: 'tocounts', name: 'tocounts', searchable: false},
+        {data: 'read', name: 'read', searchable: false},
+      ],
+      'fnDrawCallback': function () {
+        $(document).ready(function () {
+          $('img').unveil(100);
         });
+      },
+      'search'        : {
+        'search': '{{ $query }}'
+      },
+      order           : [[0, "asc"]]
     });
+  });
 
 </script>
 

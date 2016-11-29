@@ -28,13 +28,6 @@ abstract class AbstractMenu
 {
 
     /**
-     * Return required keys in menu structure
-     *
-     * @return array
-     */
-    public abstract function getRequiredKeys() : array;
-
-    /**
      * Bind data to the view.
      *
      * @param  View $view
@@ -134,4 +127,11 @@ abstract class AbstractMenu
             }
         }
     }
+
+    /**
+     * Return required keys in menu structure
+     *
+     * @return array
+     */
+    public abstract function getRequiredKeys(): array;
 }

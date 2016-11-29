@@ -37,10 +37,10 @@
 
   $(function () {
     $('table#character-mail').DataTable({
-      processing: true,
-      serverSide: true,
-      ajax: '{{ route('character.view.mail.data', ['character_id' => $request->character_id]) }}',
-      columns: [
+      processing      : true,
+      serverSide      : true,
+      ajax            : '{{ route('character.view.mail.data', ['character_id' => $request->character_id]) }}',
+      columns         : [
         {data: 'sentDate', name: 'sentDate', render: human_readable},
         {data: 'senderName', name: 'senderName'},
         {data: 'title', name: 'title'},

@@ -66,42 +66,42 @@
 
 @push('javascript')
 
-  <script>
-    $("a#modules-tab").click(function () {
+<script>
+  $("a#modules-tab").click(function () {
 
-      // Grab the starbaseID
-      var starbase_id = $(this).attr('a-starbase-id');
+    // Grab the starbaseID
+    var starbase_id = $(this).attr('a-starbase-id');
 
-      // Prevent loading the request *again* if its already been
-      // successfully loaded!
-      if ($("div#modules" + starbase_id).attr('a-ajax-loaded') === "false") {
+    // Prevent loading the request *again* if its already been
+    // successfully loaded!
+    if ($("div#modules" + starbase_id).attr('a-ajax-loaded') === "false") {
 
-        // 'Loading' animation
-        $("div#modules" + starbase_id)
-                .html('<i class="fa fa-cog fa fa-spin"></i> {{ trans('web::seat.loading_modules') }}</p>');
+      // 'Loading' animation
+      $("div#modules" + starbase_id)
+          .html('<i class="fa fa-cog fa fa-spin"></i> {{ trans('web::seat.loading_modules') }}</p>');
 
-        $.ajax({
-          type: 'POST',
-          url: "{{ route('corporation.view.starbase.modules',
+      $.ajax({
+        type   : 'POST',
+        url    : "{{ route('corporation.view.starbase.modules',
           ['corporation_id' => $request->corporation_id]) }}",
-          data: {
-            'starbase_id': starbase_id
-          },
-          success: function (result) {
-            $("div#modules" + starbase_id)
-                    .html(result)
-                    .attr('a-ajax-loaded', 'true');
-          },
-          error: function (xhr, textStatus, errorThrown) {
-            console.log(xhr);
-            console.log(textStatus);
-            console.log(errorThrown);
-          }
-        });
-      }
-    });
-  </script>
+        data   : {
+          'starbase_id': starbase_id
+        },
+        success: function (result) {
+          $("div#modules" + starbase_id)
+              .html(result)
+              .attr('a-ajax-loaded', 'true');
+        },
+        error  : function (xhr, textStatus, errorThrown) {
+          console.log(xhr);
+          console.log(textStatus);
+          console.log(errorThrown);
+        }
+      });
+    }
+  });
+</script>
 
-  @include('web::includes.javascript.id-to-name')
+@include('web::includes.javascript.id-to-name')
 
 @endpush

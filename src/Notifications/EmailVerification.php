@@ -50,7 +50,7 @@ class EmailVerification extends Notification
      *
      * @return array
      */
-    public function via($notifiable) : array
+    public function via($notifiable): array
     {
 
         return ['mail'];
@@ -63,7 +63,7 @@ class EmailVerification extends Notification
      *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable) : MailMessage
+    public function toMail($notifiable): MailMessage
     {
 
         return (new MailMessage)

@@ -60,7 +60,7 @@
             <img src="{{ asset('web/img/evesso.png') }}">
           </a>
         </div>
-      <!-- /.box-footer -->
+        <!-- /.box-footer -->
       @endif
 
     </form>

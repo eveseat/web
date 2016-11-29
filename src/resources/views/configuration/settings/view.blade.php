@@ -268,15 +268,15 @@
 @stop
 
 @push('javascript')
-  <script type="text/javascript">
-    $(document).ready(function () {
-      jQuery.get("{{ route('check.sde') }}", function (data) {
-        var live_sde = "error";
-        if (data != null) {
-          live_sde = data.version;
-        }
-        $('#live-sde-version img').attr('src', 'https://img.shields.io/badge/version-' + live_sde + '-blue.svg');
-      });
+<script type="text/javascript">
+  $(document).ready(function () {
+    jQuery.get("{{ route('check.sde') }}", function (data) {
+      var live_sde = "error";
+      if (data != null) {
+        live_sde = data.version;
+      }
+      $('#live-sde-version img').attr('src', 'https://img.shields.io/badge/version-' + live_sde + '-blue.svg');
     });
-  </script>
+  });
+</script>
 @endpush

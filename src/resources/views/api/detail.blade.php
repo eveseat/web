@@ -297,22 +297,22 @@
 
 @push('javascript')
 
-  <script>
+<script>
 
-    $("#user_id").select2({
-      ajax: {
-        url: "{{ route('support.api-key.userlist') }}",
-        dataType: 'json',
-        delay: 250,
-        data: function (params) {
-          return {
-            q: params.term, // search term
-            page: params.page
-          };
-        },
-      }
-    });
+  $("#user_id").select2({
+    ajax: {
+      url     : "{{ route('support.api-key.userlist') }}",
+      dataType: 'json',
+      delay   : 250,
+      data    : function (params) {
+        return {
+          q   : params.term, // search term
+          page: params.page
+        };
+      },
+    }
+  });
 
-  </script>
+</script>
 
 @endpush
