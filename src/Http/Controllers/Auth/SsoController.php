@@ -201,7 +201,7 @@ class SsoController extends Controller
     /**
      * @param \Laravel\Socialite\Two\User $data
      */
-    public function setCharacterId(SocialiteUser $data)
+    private function setCharacterId(SocialiteUser $data)
     {
 
         // Check if a main_character_id setting is set.
