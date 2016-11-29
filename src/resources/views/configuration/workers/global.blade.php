@@ -53,13 +53,15 @@
               <td colspan="3">
                 <b>{{ ucfirst($type) }}</b>
 
-                @if(array_key_exists($type, $current) && !is_null($current[$type]) && count($current[$type]) > 0)
-                  <span class="pull-right">
+                <span class="pull-right">
                   <i>
-                    {{ count($current[$type]) }} Constraints!
+                    @if(array_key_exists($type, $current) && !is_null($current[$type]) && count($current[$type]) > 0)
+                      {{ count($current[$type]) }} Constraints!
+                    @else
+                      All workers for {{ $type }} will run.
+                    @endif
                   </i>
-                  </span>
-                @endif
+                </span>
               </td>
             </tr>
 
