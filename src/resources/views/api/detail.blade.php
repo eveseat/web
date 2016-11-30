@@ -143,7 +143,7 @@
                   <div class="checkbox-inline">
                     <label>
 
-                      @if(array_key_exists($key_type, $current_workers))
+                      @if(!is_null($current_workers) && array_key_exists($key_type, $current_workers))
 
                         @if(!is_null($current_workers[$key_type]) && in_array($worker, $current_workers[$key_type]))
 
