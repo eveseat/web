@@ -19,39 +19,45 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Validation;
+namespace Seat\Web\Http\Validation\Custom;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Cron\CronExpression;
+use InvalidArgumentException;
 
 /**
- * Class NewIntelNote
- * @package Seat\Web\Validation
+ * Class Cron
+ * @package Seat\Web\Http\Validation\Custom
  */
-class NewIntelNote extends FormRequest
+class Cron
 {
 
     /**
-     * Authorize the request by default.
+     * Validate if the $value is a valid cron expression
+     *
+     * @param $attribute
+     * @param $value
+     * @param $parameters
+     * @param $validator
      *
      * @return bool
      */
-    public function authorize()
+    public function validate($attribute, $value, $parameters, $validator)
     {
+
+        // Try create a new CronExpression factory. If
+        // this fails, we can assume the expression
+        // itself is invalid/malformed.
+        try {
+
+            CronExpression::factory($value);
+
+        } catch (InvalidArgumentException $e) {
+
+            return false;
+
+        }
 
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules()
-    {
-
-        return [
-            'title' => 'required',
-            'note'  => 'required',
-        ];
-    }
 }

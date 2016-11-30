@@ -19,15 +19,15 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Validation;
+namespace Seat\Web\Http\Validation;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class ApiKey
- * @package Seat\Web\Validation
+ * Class NewUser
+ * @package Seat\Web\Http\Validation
  */
-class ApiKey extends FormRequest
+class NewUser extends FormRequest
 {
 
     /**
@@ -50,8 +50,9 @@ class ApiKey extends FormRequest
     {
 
         return [
-            'key_id' => 'required|numeric',
-            'v_code' => 'required|size:64|alpha_num',
+            'username' => 'required|max:255|unique:users,name',
+            'email'    => 'required|email|unique:users,email',
+            'password' => 'required|min:6|confirmed'
         ];
     }
 }

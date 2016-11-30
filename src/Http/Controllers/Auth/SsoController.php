@@ -25,9 +25,9 @@ use Laravel\Socialite\Contracts\Factory as Socialite;
 use Laravel\Socialite\Two\User as SocialiteUser;
 use Seat\Services\Settings\Seat;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\Validation\EmailUpdate;
 use Seat\Web\Models\User;
 use Seat\Web\Notifications\EmailVerification;
-use Seat\Web\Validation\EmailUpdate;
 
 /**
  * Class SsoController
@@ -143,7 +143,7 @@ class SsoController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\EmailUpdate $request
+     * @param \Seat\Web\Http\Validation\EmailUpdate $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */

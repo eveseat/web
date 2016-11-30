@@ -26,11 +26,11 @@ use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Services\Repositories\Corporation\Corporation;
 use Seat\Web\Acl\AccessManager;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Validation\Permission;
-use Seat\Web\Validation\Role;
-use Seat\Web\Validation\RoleAffilliation;
-use Seat\Web\Validation\RolePermission;
-use Seat\Web\Validation\RoleUser;
+use Seat\Web\Http\Validation\Permission;
+use Seat\Web\Http\Validation\Role;
+use Seat\Web\Http\Validation\RoleAffilliation;
+use Seat\Web\Http\Validation\RolePermission;
+use Seat\Web\Http\Validation\RoleUser;
 
 /**
  * Class AccessControllerr
@@ -53,7 +53,7 @@ class AccessController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\Role $request
+     * @param \Seat\Web\Http\Validation\Role $request
      *
      * @return mixed
      */
@@ -123,7 +123,7 @@ class AccessController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\RolePermission $request
+     * @param \Seat\Web\Http\Validation\RolePermission $request
      *
      * @return mixed
      */
@@ -155,7 +155,7 @@ class AccessController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\RoleUser $request
+     * @param \Seat\Web\Http\Validation\RoleUser $request
      *
      * @return mixed
      */
@@ -186,7 +186,7 @@ class AccessController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\RoleAffilliation $request
+     * @param \Seat\Web\Http\Validation\RoleAffilliation $request
      *
      * @return mixed
      */

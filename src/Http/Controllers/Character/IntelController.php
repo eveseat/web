@@ -24,9 +24,9 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Eveapi\Models\Character\CharacterSheet;
 use Seat\Services\Repositories\Character\Intel;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\Validation\NewIntelNote;
+use Seat\Web\Http\Validation\UpdateIntelNote;
 use Seat\Web\Models\IntelNote;
-use Seat\Web\Validation\NewIntelNote;
-use Seat\Web\Validation\UpdateIntelNote;
 use Yajra\Datatables\Datatables;
 
 /**
@@ -232,8 +232,8 @@ class IntelController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\NewIntelNote $request
-     * @param int                               $character_id
+     * @param \Seat\Web\Http\Validation\NewIntelNote $request
+     * @param int                                    $character_id
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -265,8 +265,8 @@ class IntelController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\UpdateIntelNote $request
-     * @param int                                  $character_id
+     * @param \Seat\Web\Http\Validation\UpdateIntelNote $request
+     * @param int                                       $character_id
      *
      * @return \Illuminate\Http\RedirectResponse
      */

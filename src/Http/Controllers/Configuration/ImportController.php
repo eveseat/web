@@ -25,7 +25,7 @@ use App\Http\Requests;
 use League\Csv\Reader;
 use Seat\Eveapi\Models\Eve\ApiKey;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Validation\CsvImport;
+use Seat\Web\Http\Validation\CsvImport;
 use Validator;
 
 /**
@@ -45,7 +45,7 @@ class ImportController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\CsvImport $request
+     * @param \Seat\Web\Http\Validation\CsvImport $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */

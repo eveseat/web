@@ -19,19 +19,15 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Validation;
+namespace Seat\Web\Http\Validation;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-/**
- * Class UpdateIntelNote
- * @package Seat\Web\Validation
- */
-class UpdateIntelNote extends FormRequest
+class StandingsBuilder extends FormRequest
 {
 
     /**
-     * Authorize the request by default.
+     * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
@@ -50,10 +46,7 @@ class UpdateIntelNote extends FormRequest
     {
 
         return [
-            'note_id'   => 'required|exists:notes,id',
-            'object_id' => 'required|exists:notes,object_id',
-            'title'     => 'max:255|nullable',
-            'note'      => 'nullable',
+            'name' => 'required|alpha_num|unique:standings_profiles,name'
         ];
     }
 }

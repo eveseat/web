@@ -19,16 +19,15 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Validation;
+namespace Seat\Web\Http\Validation;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Seat\Services\Settings\Seat;
 
 /**
- * Class SeatSettings
- * @package Seat\Web\Validation
+ * Class EditUser
+ * @package Seat\Web\Http\Validation
  */
-class SeatSettings extends FormRequest
+class EditUser extends FormRequest
 {
 
     /**
@@ -50,19 +49,14 @@ class SeatSettings extends FormRequest
     public function rules()
     {
 
-        $allowed_registration = implode(',', Seat::$options['registration']);
-        $allowed_force_min_mask = implode(',', Seat::$options['force_min_mask']);
-        $allowed_sso = implode(',', Seat::$options['allow_sso']);
-        $allowed_tracking = implode(',', Seat::$options['allow_tracking']);
+        // Get the id of the user that will be used to ignore
+        // the email constraint on.
+        $user_id = $this->request->get('user_id');
 
         return [
-            'registration'                => 'required|in:' . $allowed_registration,
-            'admin_contact'               => 'required|email',
-            'force_min_mask'              => 'required|in:' . $allowed_force_min_mask,
-            'min_character_access_mask'   => 'required|numeric',
-            'min_corporation_access_mask' => 'required|numeric',
-            'allow_sso'                   => 'required|in:' . $allowed_sso,
-            'allow_tracking'              => 'required|in:' . $allowed_tracking,
+            'user_id'  => 'required|exists:users,id',
+            'email'    => 'required|email|unique:users,email,' . $user_id,
+            'password' => 'min:6|confirmed'
         ];
     }
 }

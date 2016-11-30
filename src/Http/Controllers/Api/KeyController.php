@@ -29,10 +29,10 @@ use Seat\Eveapi\Models\Eve\ApiKey as ApiKeyModel;
 use Seat\Eveapi\Models\JobTracking;
 use Seat\Eveapi\Traits\JobManager;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\Validation\ApiKey;
+use Seat\Web\Http\Validation\Permission;
+use Seat\Web\Http\Validation\WorkerConstraint;
 use Seat\Web\Models\User;
-use Seat\Web\Validation\ApiKey;
-use Seat\Web\Validation\Permission;
-use Seat\Web\Validation\WorkerConstraint;
 use Yajra\Datatables\Datatables;
 
 /**
@@ -54,7 +54,7 @@ class KeyController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\ApiKey $request
+     * @param \Seat\Web\Http\Validation\ApiKey $request
      *
      * @return \Illuminate\View\View|string
      */
@@ -90,7 +90,7 @@ class KeyController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\ApiKey              $request
+     * @param \Seat\Web\Http\Validation\ApiKey         $request
      * @param \Seat\Eveapi\Helpers\JobPayloadContainer $job
      *
      * @return \Illuminate\Http\RedirectResponse
@@ -336,7 +336,7 @@ class KeyController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\WorkerConstraint $request
+     * @param \Seat\Web\Http\Validation\WorkerConstraint $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */

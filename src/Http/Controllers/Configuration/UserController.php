@@ -24,9 +24,9 @@ namespace Seat\Web\Http\Controllers\Configuration;
 use Illuminate\Http\Request;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\Validation\EditUser;
+use Seat\Web\Http\Validation\NewUser;
 use Seat\Web\Models\User;
-use Seat\Web\Validation\EditUser;
-use Seat\Web\Validation\NewUser;
 
 /**
  * Class UserController
@@ -68,7 +68,7 @@ class UserController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\EditUser $request
+     * @param \Seat\Web\Http\Validation\EditUser $request
      *
      * @return mixed
      */
@@ -93,7 +93,7 @@ class UserController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\NewUser $request
+     * @param \Seat\Web\Http\Validation\NewUser $request
      *
      * @return mixed
      */

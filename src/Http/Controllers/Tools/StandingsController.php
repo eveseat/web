@@ -29,11 +29,11 @@ use Seat\Services\Repositories\Character\Contacts as CharacterContacts;
 use Seat\Services\Repositories\Corporation\Contacts as CorporationContacts;
 use Seat\Services\Repositories\Corporation\Corporation;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\Validation\StandingsBuilder;
+use Seat\Web\Http\Validation\StandingsElementAdd;
+use Seat\Web\Http\Validation\StandingsExistingElementAdd;
 use Seat\Web\Models\StandingsProfile;
 use Seat\Web\Models\StandingsProfileStanding;
-use Seat\Web\Validation\StandingsBuilder;
-use Seat\Web\Validation\StandingsElementAdd;
-use Seat\Web\Validation\StandingsExistingElementAdd;
 
 /**
  * Class StandingsController
@@ -63,7 +63,7 @@ class StandingsController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\StandingsBuilder $request
+     * @param \Seat\Web\Http\Validation\StandingsBuilder $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -158,7 +158,7 @@ class StandingsController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\StandingsElementAdd $request
+     * @param \Seat\Web\Http\Validation\StandingsElementAdd $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -188,7 +188,7 @@ class StandingsController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\StandingsExistingElementAdd $request
+     * @param \Seat\Web\Http\Validation\StandingsExistingElementAdd $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */

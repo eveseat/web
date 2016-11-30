@@ -19,15 +19,15 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Validation;
+namespace Seat\Web\Http\Validation;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EmailUpdate extends FormRequest
+class StandingsElementAdd extends FormRequest
 {
 
     /**
-     * Authorize the request by default.
+     * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
@@ -46,7 +46,10 @@ class EmailUpdate extends FormRequest
     {
 
         return [
-            'new_email' => 'required|email|confirmed'
+            'id'         => 'required|exists:standings_profiles,id',
+            'element_id' => 'required|numeric',
+            'type'       => 'required|in:character,corporation,alliance',
+            'standing'   => 'required|between:-10,10'
         ];
     }
 }

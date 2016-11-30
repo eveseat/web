@@ -19,11 +19,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Validation;
+namespace Seat\Web\Http\Validation;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class Mfa extends FormRequest
+class PasswordUpdate extends FormRequest
 {
 
     /**
@@ -46,7 +46,8 @@ class Mfa extends FormRequest
     {
 
         return [
-            'confirm_code' => 'required|numeric'
+            'current_password' => 'required',
+            'new_password'     => 'required|min:6|confirmed'
         ];
     }
 }

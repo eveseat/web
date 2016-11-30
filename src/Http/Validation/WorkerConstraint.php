@@ -19,16 +19,14 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Validation;
+namespace Seat\Web\Http\Validation;
+
 
 use Illuminate\Foundation\Http\FormRequest;
 
-/**
- * Class CsvImport
- * @package Seat\Web\Validation
- */
-class CsvImport extends FormRequest
+class WorkerConstraint extends FormRequest
 {
+
 
     /**
      * Authorize the request by default.
@@ -50,7 +48,13 @@ class CsvImport extends FormRequest
     {
 
         return [
-            'csv' => 'required|max:2048|mimes:csv,txt'
+            'api.*'         => 'in:' . implode(',', array_keys(config('eveapi.worker_groups.api'))),
+            'character.*'   => 'in:' . implode(',', array_keys(config('eveapi.worker_groups.character'))),
+            'corporation.*' => 'in:' . implode(',', array_keys(config('eveapi.worker_groups.corporation'))),
+            'eve.*'         => 'in:' . implode(',', array_keys(config('eveapi.worker_groups.eve'))),
+            'map.*'         => 'in:' . implode(',', array_keys(config('eveapi.worker_groups.map'))),
+            'server.*'      => 'in:' . implode(',', array_keys(config('eveapi.worker_groups.server'))),
         ];
     }
+
 }

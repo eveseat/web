@@ -242,7 +242,7 @@ class WebServiceProvider extends ServiceProvider
     public function add_custom_validators()
     {
 
-        Validator::extend('cron', 'Seat\Web\Validation\Custom\Cron@validate');
+        Validator::extend('cron', 'Seat\Web\Http\Validation\Custom\Cron@validate');
     }
 
     /**

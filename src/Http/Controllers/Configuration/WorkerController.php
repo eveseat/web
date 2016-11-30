@@ -23,7 +23,7 @@ namespace Seat\Web\Http\Controllers\Configuration;
 
 
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Validation\WorkerConstraint;
+use Seat\Web\Http\Validation\WorkerConstraint;
 
 /**
  * Class WorkerController
@@ -46,7 +46,7 @@ class WorkerController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\WorkerConstraint $request
+     * @param \Seat\Web\Http\Validation\WorkerConstraint $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */

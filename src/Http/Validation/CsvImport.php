@@ -19,23 +19,19 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Validation;
+namespace Seat\Web\Http\Validation;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Seat\Services\Repositories\Character\Character;
-use Seat\Services\Repositories\Corporation\Corporation;
 
 /**
- * Class StandingsExistingElementAdd
- * @package Seat\Web\Validation
+ * Class CsvImport
+ * @package Seat\Web\Http\Validation
  */
-class StandingsExistingElementAdd extends FormRequest
+class CsvImport extends FormRequest
 {
 
-    use Character, Corporation;
-
     /**
-     * Determine if the user is authorized to make this request.
+     * Authorize the request by default.
      *
      * @return bool
      */
@@ -54,11 +50,7 @@ class StandingsExistingElementAdd extends FormRequest
     {
 
         return [
-            'id'          => 'required|exists:standings_profiles,id',
-            'character*'  => 'in:' . $this->getAllCharactersWithAffiliations()
-                    ->pluck('characterID')->implode(','),
-            'corporation' => 'in:' . $this->getAllCorporationsWithAffiliationsAndFilters()
-                    ->pluck('corporationID')->implode(',')
+            'csv' => 'required|max:2048|mimes:csv,txt'
         ];
     }
 }

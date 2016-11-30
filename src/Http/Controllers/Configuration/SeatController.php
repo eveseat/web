@@ -26,7 +26,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Seat\Services\Settings\Seat;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Validation\SeatSettings;
+use Seat\Web\Http\Validation\SeatSettings;
 
 /**
  * Class SeatController
@@ -54,7 +54,7 @@ class SeatController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\SeatSettings $request
+     * @param \Seat\Web\Http\Validation\SeatSettings $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */

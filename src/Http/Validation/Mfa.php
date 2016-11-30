@@ -19,15 +19,15 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Validation;
+namespace Seat\Web\Http\Validation;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StandingsBuilder extends FormRequest
+class Mfa extends FormRequest
 {
 
     /**
-     * Determine if the user is authorized to make this request.
+     * Authorize the request by default.
      *
      * @return bool
      */
@@ -46,7 +46,7 @@ class StandingsBuilder extends FormRequest
     {
 
         return [
-            'name' => 'required|alpha_num|unique:standings_profiles,name'
+            'confirm_code' => 'required|numeric'
         ];
     }
 }
