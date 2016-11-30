@@ -78,3 +78,9 @@ Route::post('/transfer/{key_id}', [
     'uses'       => 'KeyController@transfer',
     'middleware' => 'keybouncer:update'
 ]);
+
+Route::post('/worker/constraints', [
+    'as'         => 'api.key.worker.constraints',
+    'uses'       => 'KeyController@postUpdateWorkerConstraint',
+    'middleware' => 'bouncer:superuser'
+]);

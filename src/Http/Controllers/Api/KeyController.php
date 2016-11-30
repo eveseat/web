@@ -32,6 +32,7 @@ use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\User;
 use Seat\Web\Validation\ApiKey;
 use Seat\Web\Validation\Permission;
+use Seat\Web\Validation\WorkerConstraint;
 use Yajra\Datatables\Datatables;
 
 /**
@@ -279,10 +280,17 @@ class KeyController extends Controller
 
         $jobs = JobTracking::where('owner_id', $api_key)
             ->orderBy('created_at', 'desc')
+            ->take(50)
             ->get();
 
+        // Get worker information.
+        $key_type = $key->info->type == 'Corporation' ? 'corporation' : 'character';
+        $available_workers = config('eveapi.worker_groups');
+        $current_workers = $key->api_call_constraints;
+
         return view('web::api.detail',
-            compact('key', 'access_map', 'jobs'));
+            compact('key', 'access_map', 'jobs', 'key_type',
+                'available_workers', 'current_workers'));
     }
 
     /**
@@ -325,6 +333,30 @@ class KeyController extends Controller
         return redirect()->back()
             ->with('success', 'Key successfully transferred to ' . $user->name);
 
+    }
+
+    /**
+     * @param \Seat\Web\Validation\WorkerConstraint $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postUpdateWorkerConstraint(WorkerConstraint $request)
+    {
+
+        $key = ApiKeyModel::findOrFail($request->input('key_id'));
+
+        // Build a new constraints array from the input data
+        $constraints = [
+            'character'   => $request->input('character'),
+            'corporation' => $request->input('corporation'),
+        ];
+
+        $key->api_call_constraints = $constraints;
+        $key->save();
+
+        // Redirect back with new values.
+        return redirect()->back()
+            ->with('success', 'Constraints Updated');
     }
 
 }
