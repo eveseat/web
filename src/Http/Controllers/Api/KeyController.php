@@ -239,6 +239,22 @@ class KeyController extends Controller
     }
 
     /**
+     * @param $key_id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function getDisable($key_id)
+    {
+        $key = ApiKeyModel::findOrFail($key_id);
+
+        $key->enabled = 0;
+        $key->save();
+
+        return redirect()->back()
+            ->with('success', 'Key disabled');
+    }
+
+    /**
      * @return \Illuminate\Http\RedirectResponse
      */
     public function getEnableAll()
@@ -258,6 +274,25 @@ class KeyController extends Controller
 
         return redirect()->back()
             ->with('success', 'Keys re-enabled');
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function getDisableAll()
+    {
+        $keys = ApiKeyModel::where('enabled', 1);
+
+        if (!auth()->user()->has('apikey.list', false))
+            $keys = $keys->where('user_id', auth()->user()->id());
+
+        $keys->update([
+            'enabled' => 0,
+            'last_error' => null
+        ]);
+
+        return redirect()->back()
+            ->with('success', 'Keys disabled');
     }
 
     /**

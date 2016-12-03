@@ -235,7 +235,9 @@ return [
     'reveal'                      => 'Reveal',
     'add_success'                 => 'Api Key Successfully Added. Update Job :jobid Dispatched',
     're_enable'                   => 'Re-enable Key',
+    'disable'                     => 'Disable key',
     'reenable_all_disabled'       => 'Re-enable all disabled keys',
+    'disable_all_enabled'         => 'Disable all enabled keys',
 
     // People
     'people_groups'               => 'People Groups',

@@ -67,6 +67,18 @@ Route::get('/enable/{key_id}', [
     'middleware' => 'keybouncer:toggle_status'
 ]);
 
+Route::get('/disable/all', [
+    'as'         => 'api.key.disable.all',
+    'uses'       => 'KeyController@getDisableAll',
+    'middleware' => 'keybouncer:toggle_status'
+]);
+
+Route::get('/disable/{key_id}', [
+    'as'         => 'api.key.disable',
+    'uses'       => 'KeyController@getDisable',
+    'middleware' => 'keybouncer:toggle_status'
+]);
+
 Route::get('/update/{key_id}', [
     'as'         => 'api.key.queue',
     'uses'       => 'KeyController@queueUpdateJob',

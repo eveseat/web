@@ -32,6 +32,13 @@
             <span class="text-success">
               {{ ucfirst(trans('web::seat.enabled')) }}
             </span>
+            @if (auth()->user()->has('apikey.toggle_status', false))
+            <span class="pull-right">
+              <a href="{{ route('api.key.disable', ['key_id' => $key->key_id]) }}" class="label label-warning">
+                {{ trans('web::seat.disable') }}
+              </a>
+            </span>
+            @endif
           @else
             <span class="text-danger">
               {{ ucfirst(trans('web::seat.disabled')) }}
