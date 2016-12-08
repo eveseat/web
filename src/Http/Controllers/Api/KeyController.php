@@ -245,6 +245,7 @@ class KeyController extends Controller
      */
     public function getDisable($key_id)
     {
+
         $key = ApiKeyModel::findOrFail($key_id);
 
         $key->enabled = 0;
@@ -281,13 +282,14 @@ class KeyController extends Controller
      */
     public function getDisableAll()
     {
+
         $keys = ApiKeyModel::where('enabled', 1);
 
         if (!auth()->user()->has('apikey.list', false))
             $keys = $keys->where('user_id', auth()->user()->id());
 
         $keys->update([
-            'enabled' => 0,
+            'enabled'    => 0,
             'last_error' => null
         ]);
 
