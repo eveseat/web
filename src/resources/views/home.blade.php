@@ -137,7 +137,7 @@
       </div><!-- /.info-box -->
 
 
-      @if($newest_mail->count() > 0))
+      @if($newest_mail->count() > 0)
 
         <div class="box">
           <div class="box-header with-border">
