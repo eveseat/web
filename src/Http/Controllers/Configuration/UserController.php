@@ -155,7 +155,15 @@ class UserController extends Controller
         // Store the original user in the session
         session(['impersonation_origin' => auth()->user()]);
 
+        // Get the user
         $user = $this->getUser($user_id);
+
+        // Log the impersonation event.
+        event('security.log', [
+            'Impersonating ' . $user->name, 'authentication'
+        ]);
+
+        // Login as the new user.
         auth()->login($user);
 
         return redirect()->route('home')
@@ -172,6 +180,12 @@ class UserController extends Controller
         // If there is no user set in the session, abort!
         if (!session('impersonation_origin', false))
             abort(404);
+
+        // Log the impersonation revert event.
+        event('security.log', [
+            'Reverting impersonation back to ' . session('impersonation_origin')->name,
+            'authentication'
+        ]);
 
         // Login
         auth()->login(session('impersonation_origin'));
