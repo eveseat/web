@@ -55,7 +55,7 @@
 
                 <span class="pull-right">
                   <i>
-                    @if(array_key_exists($type, $current) && !is_null($current[$type]) && count($current[$type]) > 0)
+                    @if(!is_null($current) && array_key_exists($type, $current) && !is_null($current[$type]) && count($current[$type]) > 0)
                       {{ count($current[$type]) }} Constraints!
                     @else
                       All workers for {{ $type }} will run.
@@ -75,7 +75,7 @@
                   <div class="checkbox-inline">
                     <label>
 
-                      @if(array_key_exists($type, $current))
+                      @if(!is_null($current) && array_key_exists($type, $current))
 
                         @if(!is_null($current[$type]) && in_array($group, $current[$type]))
 
