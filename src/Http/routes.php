@@ -200,6 +200,17 @@ Route::group([
 
             });
 
+            // Impersonation Helper Group. This one is Seperate purely
+            // because we dont want to restrict this to superusers only.
+            // For obvious reasons I hope...
+            Route::group([
+                'namespace' => 'Configuration',
+                'prefix'    => 'configuration',
+            ], function () {
+
+                include __DIR__ . '/Routes/Configuration/Impersonation.php';
+            });
+
             // Tools Routes
             Route::group([
                 'namespace' => 'Tools',

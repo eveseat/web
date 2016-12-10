@@ -152,11 +152,35 @@ class UserController extends Controller
     public function impersonate($user_id)
     {
 
+        // Store the original user in the session
+        session(['impersonation_origin' => auth()->user()]);
+
         $user = $this->getUser($user_id);
         auth()->login($user);
 
         return redirect()->route('home')
             ->with('success',
                 trans('web::seat.impersonating', ['user' => $user->name]));
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function getStopImpersonate()
+    {
+
+        // If there is no user set in the session, abort!
+        if (!session('impersonation_origin', false))
+            abort(404);
+
+        // Login
+        auth()->login(session('impersonation_origin'));
+
+        // Clear the session value
+        session()->forget('impersonation_origin');
+
+        return redirect()->route('home')
+            ->with('success', trans('web::seat.revert_impersonation'));
+
     }
 }

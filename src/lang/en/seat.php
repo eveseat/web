@@ -138,6 +138,7 @@ return [
     'joined'                => 'Joined',
     'profile'               => 'Profile',
     'sign_out'              => 'Sign Out',
+    'stop_impersonation'    => 'Stop Impersonation',
 
     // Notifications
     'error'                 => 'Error',
@@ -283,6 +284,7 @@ return [
     'user_deleted'                => 'The user has been deleted',
     'self_delete_warning'         => 'You can not delete yourself!',
     'impersonating'               => 'Impersonating :user',
+    'revert_impersonation'        => 'Impersonation Stopped',
     'user_created'                => 'User Created',
     'unauthorized_request'        => 'Unauthorized Request',
     'unauthorized_request_logged' => 'This attempt has been logged.',
