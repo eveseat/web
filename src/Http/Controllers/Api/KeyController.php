@@ -181,7 +181,6 @@ class KeyController extends Controller
                 // where it makes sense. Unfortunately this had
                 // to be done because of the way the characters
                 // are incuded on a key.
-
                 $query->whereHas('characters', function ($filter) {
 
                     $filter->where(
@@ -193,6 +192,11 @@ class KeyController extends Controller
                         'type', 'like', '%' . request()->input('search')['value'] . '%');
 
                 });
+
+                // Ensure we take permissions into account!
+                if (!auth()->user()->has('apikey.list', false))
+                    $query->where('user_id', auth()->user()->id);
+
             })
             ->setRowClass(function ($row) {
 
