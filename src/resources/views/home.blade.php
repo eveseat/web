@@ -83,9 +83,10 @@
 
   <div class="row">
 
+    <!-- skills graphs -->
     <div class="col-md-6 col-sm-6 col-xs-12">
 
-      @if (setting('main_character_id') != 1)
+      @if (setting('main_character_id') != 1 && !is_null(setting('main_character_name')))
 
         <div class="box">
           <div class="box-header with-border">
@@ -108,6 +109,18 @@
           </div>
         </div>
 
+      @else
+
+        <div class="box">
+          <div class="box-body">
+
+            Set your main character in your
+            <a href="{{ route('profile.view') }}">{{ trans('web::seat.profile') }}</a>
+            after adding an API key to view the skills graph!
+
+          </div>
+        </div>
+
       @endif
 
     </div><!-- /.col -->
@@ -124,49 +137,52 @@
       </div><!-- /.info-box -->
 
 
-      <div class="box">
-        <div class="box-header with-border">
-          <h3 class="box-title">Newest EVEMail</h3>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body">
+      @if($newest_mail->count() > 0))
 
-          <table class="table compact table-condensed table-hover table-responsive">
-            <thead>
-            <tr>
-              <th>From</th>
-              <th>Title</th>
-              <th></th>
-            </tr>
-            </thead>
-            <tbody>
+        <div class="box">
+          <div class="box-header with-border">
+            <h3 class="box-title">Newest EVEMail</h3>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
 
-            @foreach($newest_mail as $message)
-
+            <table class="table compact table-condensed table-hover table-responsive">
+              <thead>
               <tr>
-                <td>
-                  {!! img('auto', $message->senderID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-                  {{ $message->senderName }}
-                </td>
-                <td>{{ $message->title }}</td>
-                <td>
-                  <a href="{{ route('character.view.mail.timeline.read', ['message_id' => $message->messageID]) }}"
-                     class="btn btn-primary btn-xs">
-                    <i class="fa fa-envelope"></i>
-                    {{ trans('web::seat.read') }}
-                  </a>
-                </td>
+                <th>From</th>
+                <th>Title</th>
+                <th></th>
               </tr>
+              </thead>
+              <tbody>
 
-            @endforeach
+              @foreach($newest_mail as $message)
 
-            </tbody>
-          </table>
+                <tr>
+                  <td>
+                    {!! img('auto', $message->senderID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
+                    {{ $message->senderName }}
+                  </td>
+                  <td>{{ $message->title }}</td>
+                  <td>
+                    <a href="{{ route('character.view.mail.timeline.read', ['message_id' => $message->messageID]) }}"
+                       class="btn btn-primary btn-xs">
+                      <i class="fa fa-envelope"></i>
+                      {{ trans('web::seat.read') }}
+                    </a>
+                  </td>
+                </tr>
 
+              @endforeach
+
+              </tbody>
+            </table>
+
+          </div>
+          <!-- /.box-body -->
         </div>
-        <!-- /.box-body -->
 
-      </div>
+      @endif
 
     </div><!-- /.col -->
 
@@ -195,6 +211,9 @@
     });
   })
 
+  {{-- only request the graph data if there is a main character! --}}
+  @if (setting('main_character_id') != 1 && !is_null(setting('main_character_name')))
+
   $.get("{{ route('character.view.skills.graph.level', ['character_id' => setting('main_character_id')]) }}", function (data) {
     new Chart($("canvas#skills-level"), {
       type: 'pie',
@@ -219,6 +238,8 @@
       }
     });
   });
+
+  @endif
 
 </script>
 @endpush
