@@ -26,7 +26,8 @@
              id="keys-table" data-page-length=25>
         <thead>
         <tr>
-          <th>{{ trans_choice('web::seat.id', 1) }}</th>
+          <th>{{ trans_choice('web::seat.key_id', 1) }}</th>
+          <th>{{ trans('web::seat.enabled') }}</th>
           <th>{{ trans_choice('web::seat.type', 1) }}</th>
           <th>{{ trans('web::seat.expiry') }}</th>
           <th>{{ trans_choice('web::seat.character', 1) }}</th>
@@ -50,6 +51,12 @@
       ajax            : '{{ route('api.key.list.data') }}',
       columns         : [
         {data: 'key_id', name: 'key_id'},
+        {
+          data: 'enabled', name: 'enabled', render: function (data) {
+          if (data == 1) return 'Yes';
+          if (data == 0) return 'No';
+        }
+        },
         {data: 'info.type', name: 'info.type'},
         {data: 'info.expires', name: 'info.expires'},
         {data: 'characters', name: 'characters', orderable: false},

@@ -101,6 +101,20 @@
     </div>
   </div>
 
+  {{-- if the key is disabled, show the reason --}}
+  @if($key->enabled == 0)
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Last Error</h3>
+      </div>
+      <div class="panel-body">
+        <pre>{{ $key->last_error }}</pre>
+      </div>
+    </div>
+
+  @endif
+
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">{{ trans_choice('web::seat.character', 2) }}</h3>
