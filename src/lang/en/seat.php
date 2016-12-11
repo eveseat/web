@@ -352,6 +352,8 @@ return [
         ' values in the .env file as they may be empty or invalid. SSO can fail because of this!',
     'allow_sso'                    => 'Allow Single Signon',
     'allow_registration'           => 'Allow Registration',
+    'email_activation'             => 'Email Activation',
+    'require_activation'           => 'Require Email Activation',
     'module_versions'              => 'SeAT Module Versions',
     'tp_versions'                  => 'Third Party Versions',
     'installed'                    => 'Installed',
