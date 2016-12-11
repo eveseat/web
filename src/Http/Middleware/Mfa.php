@@ -45,7 +45,7 @@ class Mfa
 
         // If no session key is available, check that
         // the user us configured for mfa
-        if (Profile::get('require_mfa') == "yes" && !empty(auth()->user()->mfa_token))
+        if (setting('require_mfa') == 'yes' && !empty(auth()->user()->mfa_token))
             return redirect()->route('auth.login.mfa');
 
         return $next($request);
