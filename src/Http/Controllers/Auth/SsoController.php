@@ -84,6 +84,14 @@ class SsoController extends Controller
         // Login the account
         auth()->login($user, true);
 
+        // Check if an account was just logged in for the first
+        // time using SSO and ask for an email address.
+        if (User::where('name', $eve_data->name)->where('active', 0)->first()) {
+
+            // Redirect to the password confirmation page.
+            return redirect()->route('auth.eve.email');
+        }
+
         // Set the main characterID based on the response.
         $this->setCharacterId($eve_data);
 
