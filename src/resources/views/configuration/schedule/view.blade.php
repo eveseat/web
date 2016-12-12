@@ -121,17 +121,17 @@
 
 @push('javascript')
 
-  <script>
-    $("#available_commands, #available_expressions").select2({
-      tags: true
-    });
-  </script>
+<script>
+  $("#available_commands, #available_expressions").select2({
+    tags: true
+  });
+</script>
 
-  <script>
-    $("#available_expressions").on("change", function () {
-      $("span#expression").html(
-              "Cron: <b>" + this.value.replace("<", "") + "</b>");
-    });
-  </script>
+<script>
+  $("#available_expressions").on("change", function () {
+    $("span#expression").html(
+        "Cron: <b>" + this.value.replace("<", "") + "</b>");
+  });
+</script>
 
 @endpush

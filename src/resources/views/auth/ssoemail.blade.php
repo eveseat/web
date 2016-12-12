@@ -25,7 +25,8 @@
         </div>
 
         <div class="form-group has-feedback">
-          <input type="text" name="new_email_confirmation" class="form-control" placeholder="{{ trans('web::seat.confirm_new_email') }}">
+          <input type="text" name="new_email_confirmation" class="form-control"
+                 placeholder="{{ trans('web::seat.confirm_new_email') }}">
           <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
         </div>
       </div>

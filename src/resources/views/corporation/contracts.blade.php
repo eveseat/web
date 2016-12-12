@@ -37,34 +37,34 @@
 
 @push('javascript')
 
-  <script>
+<script>
 
-    $(function () {
-      $('table#corporation-contracts').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: '{{ route('corporation.view.contracts.data', ['corporation_id' => $request->corporation_id]) }}',
-        columns: [
-          {data: 'dateIssued', name: 'dateIssued', render: human_readable},
-          {data: 'issuerID', name: 'issuerID'},
-          {data: 'type', name: 'type'},
-          {data: 'status', name: 'status'},
-          {data: 'title', name: 'title'},
-          {data: 'collateral', name: 'collateral'},
-          {data: 'price', name: 'price'},
-          {data: 'reward', name: 'reward'},
-        ],
-        "fnDrawCallback": function () {
-          $(document).ready(function () {
-            $("img").unveil(100);
-            ids_to_names();
-          });
-        }
-      });
+  $(function () {
+    $('table#corporation-contracts').DataTable({
+      processing      : true,
+      serverSide      : true,
+      ajax            : '{{ route('corporation.view.contracts.data', ['corporation_id' => $request->corporation_id]) }}',
+      columns         : [
+        {data: 'dateIssued', name: 'dateIssued', render: human_readable},
+        {data: 'issuerID', name: 'issuerID'},
+        {data: 'type', name: 'type'},
+        {data: 'status', name: 'status'},
+        {data: 'title', name: 'title'},
+        {data: 'collateral', name: 'collateral'},
+        {data: 'price', name: 'price'},
+        {data: 'reward', name: 'reward'},
+      ],
+      "fnDrawCallback": function () {
+        $(document).ready(function () {
+          $("img").unveil(100);
+          ids_to_names();
+        });
+      }
     });
+  });
 
-  </script>
+</script>
 
-  @include('web::includes.javascript.id-to-name')
+@include('web::includes.javascript.id-to-name')
 
 @endpush

@@ -24,7 +24,7 @@
         "league/csv": "^8.1",
         "laravel/socialite": "^2.0",
         "guzzlehttp/guzzle": "^6.2",
-        "yajra/laravel-datatables-oracle": "^6.21",
+        "yajra/laravel-datatables-oracle": "6.21.*",
         "yzalis/supervisor": "^1.0"
     },
     "require-dev": {

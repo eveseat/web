@@ -3,7 +3,30 @@
 @section('title', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.skills'))
 @section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.skills'))
 
+@inject('request', 'Illuminate\Http\Request')
+
 @section('character_content')
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        {{ trans('web::seat.skills_graph') }}
+      </h3>
+    </div>
+    <div class="panel-body">
+
+      <h4 class="box-title">{{ trans('web::seat.main_char_skills_per_level') }}</h4>
+      <div class="chart">
+        <canvas id="skills-level" height="230" width="1110"></canvas>
+      </div>
+
+      <h4 class="box-title">{{ trans('web::seat.main_char_skills_coverage') }}</h4>
+      <div class="chart">
+        <canvas id="skills-coverage" height="400" width="1110"></canvas>
+      </div>
+
+    </div>
+  </div>
 
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -81,3 +104,34 @@
   </div>
 
 @stop
+
+@push('javascript')
+<script>
+
+  $.get("{{ route('character.view.skills.graph.level', ['character_id' => $request->character_id]) }}", function (data) {
+    new Chart($("canvas#skills-level"), {
+      type: 'pie',
+      data: data
+    });
+  });
+
+  $.get("{{ route('character.view.skills.graph.coverage', ['character_id' => $request->character_id]) }}", function (data) {
+    new Chart($('canvas#skills-coverage'), {
+      type   : 'radar',
+      data   : data,
+      options: {
+        scale : {
+          ticks: {
+            beginAtZero: true,
+            max        : 100
+          }
+        },
+        legend: {
+          display: false
+        }
+      }
+    });
+  });
+
+</script>
+@endpush

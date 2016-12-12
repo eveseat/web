@@ -50,6 +50,25 @@
             </div>
           </div>
 
+          <legend>{{ trans('web::seat.email_activation') }}</legend>
+
+          <!-- Select Basic -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="require_activation">{{ trans('web::seat.require_activation') }}</label>
+            <div class="col-md-6">
+              <select id="registration" name="require_activation" class="form-control">
+                <option value="yes"
+                        @if(setting('require_activation', true) == "yes") selected @endif>
+                  {{ trans('web::seat.yes') }}
+                </option>
+                <option value="no"
+                        @if(setting('require_activation', true) == "no") selected @endif>
+                  {{ trans('web::seat.no') }}
+                </option>
+              </select>
+            </div>
+          </div>
+
           <legend>{{ trans('web::seat.single_signon') }}</legend>
 
           <!-- Select Basic -->
@@ -268,15 +287,15 @@
 @stop
 
 @push('javascript')
-  <script type="text/javascript">
-    $(document).ready(function () {
-      jQuery.get("{{ route('check.sde') }}", function (data) {
-        var live_sde = "error";
-        if (data != null) {
-          live_sde = data.version;
-        }
-        $('#live-sde-version img').attr('src', 'https://img.shields.io/badge/version-' + live_sde + '-blue.svg');
-      });
+<script type="text/javascript">
+  $(document).ready(function () {
+    jQuery.get("{{ route('check.sde') }}", function (data) {
+      var live_sde = "error";
+      if (data != null) {
+        live_sde = data.version;
+      }
+      $('#live-sde-version img').attr('src', 'https://img.shields.io/badge/version-' + live_sde + '-blue.svg');
     });
-  </script>
+  });
+</script>
 @endpush

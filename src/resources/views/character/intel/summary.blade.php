@@ -79,10 +79,10 @@
 
   $(function () {
     $('table#character-top-journal-interactions').DataTable({
-      processing: true,
-      serverSide: true,
-      ajax: '{{ route('character.view.intel.summary.journal.data', ['character_id' => $request->character_id]) }}',
-      columns: [
+      processing      : true,
+      serverSide      : true,
+      ajax            : '{{ route('character.view.intel.summary.journal.data', ['character_id' => $request->character_id]) }}',
+      columns         : [
         {data: 'total', name: 'total', searchable: false},
         {data: 'refTypeName', name: 'refTypeName'},
         {data: 'characterName', name: 'characterName'},
@@ -99,10 +99,10 @@
 
   $(function () {
     $('table#character-top-transaction-interactions').DataTable({
-      processing: true,
-      serverSide: true,
-      ajax: '{{ route('character.view.intel.summary.transactions.data', ['character_id' => $request->character_id]) }}',
-      columns: [
+      processing      : true,
+      serverSide      : true,
+      ajax            : '{{ route('character.view.intel.summary.transactions.data', ['character_id' => $request->character_id]) }}',
+      columns         : [
         {data: 'total', name: 'total', searchable: false},
         {data: 'characterName', name: 'characterName'},
         {data: 'corporationName', name: 'corporationName'},
@@ -118,10 +118,10 @@
 
   $(function () {
     $('table#character-top-mail-interactions').DataTable({
-      processing: true,
-      serverSide: true,
-      ajax: '{{ route('character.view.intel.summary.mail.data', ['character_id' => $request->character_id]) }}',
-      columns: [
+      processing      : true,
+      serverSide      : true,
+      ajax            : '{{ route('character.view.intel.summary.mail.data', ['character_id' => $request->character_id]) }}',
+      columns         : [
         {data: 'total', name: 'total', searchable: false},
         {data: 'characterName', name: 'characterName'},
         {data: 'corporationName', name: 'corporationName'},

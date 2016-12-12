@@ -21,7 +21,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Acl;
 
-use Illuminate\Support\Collection;
 use Seat\Web\Models\Acl\Affiliation as AffiliationModel;
 use Seat\Web\Models\Acl\Permission as PermissionModel;
 use Seat\Web\Models\Acl\Role as RoleModel;
@@ -40,9 +39,9 @@ trait AccessManager
      *
      * @param int $role_id
      *
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Collection
      */
-    public function getCompleteRole(int $role_id = null) : Collection
+    public function getCompleteRole(int $role_id = null)
     {
 
         $roles = RoleModel::with(
@@ -69,7 +68,7 @@ trait AccessManager
      *
      * @return \Seat\Web\Models\Acl\Role
      */
-    public function addRole(string $title) : RoleModel
+    public function addRole(string $title): RoleModel
     {
 
         return RoleModel::create([
@@ -101,7 +100,7 @@ trait AccessManager
      *
      * @return int
      */
-    public function removeRole(int $id) : int
+    public function removeRole(int $id): int
     {
 
         return RoleModel::destroy($id);
@@ -155,7 +154,7 @@ trait AccessManager
      *
      * @return \Seat\Web\Models\Acl\Role
      */
-    public function getRole(int $id) : RoleModel
+    public function getRole(int $id): RoleModel
     {
 
         return RoleModel::findOrFail($id);

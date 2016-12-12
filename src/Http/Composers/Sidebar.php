@@ -43,7 +43,7 @@ class Sidebar extends AbstractMenu
      *
      * @return array
      */
-    public function getRequiredKeys() : array
+    public function getRequiredKeys(): array
     {
 
         return [

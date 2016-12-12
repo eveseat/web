@@ -26,7 +26,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Seat\Services\Settings\Seat;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Validation\SeatSettings;
+use Seat\Web\Http\Validation\SeatSettings;
 
 /**
  * Class SeatController
@@ -54,7 +54,7 @@ class SeatController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\SeatSettings $request
+     * @param \Seat\Web\Http\Validation\SeatSettings $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -68,6 +68,7 @@ class SeatController extends Controller
         Seat::set('min_corporation_access_mask', $request->min_corporation_access_mask);
         Seat::set('allow_sso', $request->allow_sso);
         Seat::set('allow_tracking', $request->allow_tracking);
+        Seat::set('require_activation', $request->require_activation);
 
         return redirect()->back()
             ->with('success', 'SeAT settings updated!');

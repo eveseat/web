@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Artisan;
 use Seat\Services\Data\Queue;
 use Seat\Services\Repositories\Queue\JobRepository;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Validation\Permission;
+use Seat\Web\Http\Validation\Permission;
 use Yajra\Datatables\Datatables;
 
 /**

@@ -53,8 +53,8 @@
                 {{ human_diff($character->logonDateTime) }}
               </span>
             </td>
-            <td data-order="{{ $character->enabled }}">
-              @if($character->enabled)
+            <td data-order="{{ $character->key_ok }}">
+              @if($character->key_ok == 1)
                 <i class="fa fa-check"></i>
               @else
                 <i class="fa fa-exclamation-triangle"></i>

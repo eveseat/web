@@ -19,15 +19,15 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Validation;
+namespace Seat\Web\Http\Validation;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class ApiKey
- * @package Seat\Web\Validation
+ * Class EditUser
+ * @package Seat\Web\Http\Validation
  */
-class ApiKey extends FormRequest
+class EditUser extends FormRequest
 {
 
     /**
@@ -49,9 +49,14 @@ class ApiKey extends FormRequest
     public function rules()
     {
 
+        // Get the id of the user that will be used to ignore
+        // the email constraint on.
+        $user_id = $this->request->get('user_id');
+
         return [
-            'key_id' => 'required|numeric',
-            'v_code' => 'required|size:64|alpha_num',
+            'user_id'  => 'required|exists:users,id',
+            'email'    => 'required|email|unique:users,email,' . $user_id,
+            'password' => 'min:6|confirmed'
         ];
     }
 }

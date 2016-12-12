@@ -44,10 +44,10 @@
 
   $(function () {
     $('table#corporation-journal').DataTable({
-      processing: true,
-      serverSide: true,
-      ajax: '{{ route('corporation.view.journal.data', ['corporation_id' => $request->corporation_id]) }}',
-      columns: [
+      processing      : true,
+      serverSide      : true,
+      ajax            : '{{ route('corporation.view.journal.data', ['corporation_id' => $request->corporation_id]) }}',
+      columns         : [
         {data: 'date', name: 'date', render: human_readable},
         {data: 'refTypeName', name: 'refTypeName'},
         {data: 'ownerName1', name: 'ownerName1'},

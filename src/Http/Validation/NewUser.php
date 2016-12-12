@@ -19,13 +19,13 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Validation;
+namespace Seat\Web\Http\Validation;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * Class NewUser
- * @package Seat\Web\Validation
+ * @package Seat\Web\Http\Validation
  */
 class NewUser extends FormRequest
 {

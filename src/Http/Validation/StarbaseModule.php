@@ -19,45 +19,40 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Validation\Custom;
+namespace Seat\Web\Http\Validation;
 
-use Cron\CronExpression;
-use InvalidArgumentException;
+use Illuminate\Foundation\Http\FormRequest;
+use Seat\Eveapi\Models\Corporation\Starbase;
 
-/**
- * Class Cron
- * @package Seat\Web\Validation\Custom
- */
-class Cron
+class StarbaseModule extends FormRequest
 {
 
     /**
-     * Validate if the $value is a valid cron expression
-     *
-     * @param $attribute
-     * @param $value
-     * @param $parameters
-     * @param $validator
+     * Authorize the request by default.
      *
      * @return bool
      */
-    public function validate($attribute, $value, $parameters, $validator)
+    public function authorize()
     {
-
-        // Try create a new CronExpression factory. If
-        // this fails, we can assume the expression
-        // itself is invalid/malformed.
-        try {
-
-            CronExpression::factory($value);
-
-        } catch (InvalidArgumentException $e) {
-
-            return false;
-
-        }
 
         return true;
     }
 
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+
+        $possible_corp_starbases = Starbase::where(
+            'corporationID', $this->route('corporation_id'))
+            ->pluck('itemID')
+            ->implode(',');
+
+        return [
+            'starbase_id' => 'required|numeric|in:' . $possible_corp_starbases
+        ];
+    }
 }

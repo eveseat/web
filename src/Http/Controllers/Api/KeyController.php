@@ -29,9 +29,10 @@ use Seat\Eveapi\Models\Eve\ApiKey as ApiKeyModel;
 use Seat\Eveapi\Models\JobTracking;
 use Seat\Eveapi\Traits\JobManager;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\Validation\ApiKey;
+use Seat\Web\Http\Validation\Permission;
+use Seat\Web\Http\Validation\WorkerConstraint;
 use Seat\Web\Models\User;
-use Seat\Web\Validation\ApiKey;
-use Seat\Web\Validation\Permission;
 use Yajra\Datatables\Datatables;
 
 /**
@@ -53,7 +54,7 @@ class KeyController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\ApiKey $request
+     * @param \Seat\Web\Http\Validation\ApiKey $request
      *
      * @return \Illuminate\View\View|string
      */
@@ -89,7 +90,7 @@ class KeyController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\ApiKey              $request
+     * @param \Seat\Web\Http\Validation\ApiKey         $request
      * @param \Seat\Eveapi\Helpers\JobPayloadContainer $job
      *
      * @return \Illuminate\Http\RedirectResponse
@@ -180,7 +181,6 @@ class KeyController extends Controller
                 // where it makes sense. Unfortunately this had
                 // to be done because of the way the characters
                 // are incuded on a key.
-
                 $query->whereHas('characters', function ($filter) {
 
                     $filter->where(
@@ -192,6 +192,11 @@ class KeyController extends Controller
                         'type', 'like', '%' . request()->input('search')['value'] . '%');
 
                 });
+
+                // Ensure we take permissions into account!
+                if (!auth()->user()->has('apikey.list', false))
+                    $query->where('user_id', auth()->user()->id);
+
             })
             ->setRowClass(function ($row) {
 
@@ -238,6 +243,23 @@ class KeyController extends Controller
     }
 
     /**
+     * @param $key_id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function getDisable($key_id)
+    {
+
+        $key = ApiKeyModel::findOrFail($key_id);
+
+        $key->enabled = 0;
+        $key->save();
+
+        return redirect()->back()
+            ->with('success', 'Key disabled');
+    }
+
+    /**
      * @return \Illuminate\Http\RedirectResponse
      */
     public function getEnableAll()
@@ -260,6 +282,26 @@ class KeyController extends Controller
     }
 
     /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function getDisableAll()
+    {
+
+        $keys = ApiKeyModel::where('enabled', 1);
+
+        if (!auth()->user()->has('apikey.list', false))
+            $keys = $keys->where('user_id', auth()->user()->id());
+
+        $keys->update([
+            'enabled'    => 0,
+            'last_error' => null
+        ]);
+
+        return redirect()->back()
+            ->with('success', 'Keys disabled');
+    }
+
+    /**
      * @param $api_key
      *
      * @return \Illuminate\View\View
@@ -279,10 +321,17 @@ class KeyController extends Controller
 
         $jobs = JobTracking::where('owner_id', $api_key)
             ->orderBy('created_at', 'desc')
+            ->take(50)
             ->get();
 
+        // Get worker information.
+        $key_type = $key->info->type == 'Corporation' ? 'corporation' : 'character';
+        $available_workers = config('eveapi.worker_groups');
+        $current_workers = $key->api_call_constraints;
+
         return view('web::api.detail',
-            compact('key', 'access_map', 'jobs'));
+            compact('key', 'access_map', 'jobs', 'key_type',
+                'available_workers', 'current_workers'));
     }
 
     /**
@@ -325,6 +374,30 @@ class KeyController extends Controller
         return redirect()->back()
             ->with('success', 'Key successfully transferred to ' . $user->name);
 
+    }
+
+    /**
+     * @param \Seat\Web\Http\Validation\WorkerConstraint $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postUpdateWorkerConstraint(WorkerConstraint $request)
+    {
+
+        $key = ApiKeyModel::findOrFail($request->input('key_id'));
+
+        // Build a new constraints array from the input data
+        $constraints = [
+            'character'   => $request->input('character'),
+            'corporation' => $request->input('corporation'),
+        ];
+
+        $key->api_call_constraints = $constraints;
+        $key->save();
+
+        // Redirect back with new values.
+        return redirect()->back()
+            ->with('success', 'Constraints Updated');
     }
 
 }

@@ -29,20 +29,20 @@
       <ul>
         <li class="list-header list-unstyled">{{ trans('web::seat.preferred_apps') }}</li>
         <li><a href="http://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8">Google Authenticator for
-                                                                                           iOS</a></li>
+            iOS</a></li>
         <li><a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2">Google
-                                                                                                           Authenticator
-                                                                                                           for
-                                                                                                           Android</a>
+            Authenticator
+            for
+            Android</a>
         </li>
         <li>
           <a href="http://apps.microsoft.com/windows/en-us/app/google-authenticator/7ea6de74-dddb-47df-92cb-40afac4d38bb">Google
-                                                                                                                          Authenticator
-                                                                                                                          (port)
-                                                                                                                          on
-                                                                                                                          Windows
-                                                                                                                          app
-                                                                                                                          store</a>
+            Authenticator
+            (port)
+            on
+            Windows
+            app
+            store</a>
         </li>
         <li class="list-header list-unstyled">{{ trans('web::seat.other_apps') }}</li>
         <li><a href="https://www.authy.com/">Authy for iOS, Android, Chrome, OS X</a></li>

@@ -23,3 +23,8 @@ Route::get('/logs', [
     'as'   => 'configuration.security.logs',
     'uses' => 'SecurityController@getLogs'
 ]);
+
+Route::get('/logs/data', [
+    'as'   => 'configuration.security.logs.data',
+    'uses' => 'SecurityController@getLogsData'
+]);

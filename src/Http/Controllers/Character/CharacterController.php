@@ -50,7 +50,7 @@ class CharacterController extends Controller
     public function getCharactersData()
     {
 
-        $characters = $this->getAllCharactersWithAffiliationsAndFilters();
+        $characters = $this->getAllCharactersWithAffiliations();
 
         return Datatables::of($characters)
             ->editColumn('characterName', function ($row) {

@@ -34,10 +34,10 @@
 
   $(function () {
     $('table#character-list').DataTable({
-      processing: true,
-      serverSide: true,
-      ajax: '{{ route('character.list.data') }}',
-      columns: [
+      processing      : true,
+      serverSide      : true,
+      ajax            : '{{ route('character.list.data') }}',
+      columns         : [
         {data: 'characterName', name: 'characterName'},
         {data: 'corporationName', name: 'corporationName'},
         {data: 'alliance', name: 'alliance'},
@@ -48,7 +48,7 @@
           $("img").unveil(100);
         });
       },
-      order: [[ 0, "asc" ]]
+      order           : [[0, "asc"]]
     });
   });
 

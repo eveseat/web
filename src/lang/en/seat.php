@@ -84,6 +84,7 @@ return [
     'all'                   => 'All',
     'inverse'               => 'Inverse',
     'read'                  => 'Read',
+    'level'                 => 'Level',
 
     // Requirements
     'requirements'          => 'Requirements',
@@ -98,6 +99,8 @@ return [
         ' No jobs will be queued because of this. Please configure it in the SeAT settings.',
     'sso_email_warning'     => 'This profile is using an auto generated email addres due to it ' .
         ' being an EVE SSO login. Please set a valid email address in your profile settings.',
+    'sso_activation'        => 'SSO Activation',
+    'sso_confirmation'      => 'It appears you already own an account. Please confirm your credentials in order to enable SSO.',
 
     // Auth
     'failed'                => 'These credentials do not match our records.',
@@ -135,6 +138,7 @@ return [
     'joined'                => 'Joined',
     'profile'               => 'Profile',
     'sign_out'              => 'Sign Out',
+    'stop_impersonation'    => 'Stop Impersonation',
 
     // Notifications
     'error'                 => 'Error',
@@ -165,6 +169,7 @@ return [
     'main_menu'             => 'Main Menu',
     'security'              => 'Security',
     'tracking'              => 'Tracking',
+    'worker_constraints'    => 'Worker Constraints',
 
     'assets'                      => 'Assets',
     'calendar'                    => 'Calendar',
@@ -187,11 +192,15 @@ return [
 
     // Dashboard
     'home_page'                   => 'The Home Page',
+    'dashboard'                   => 'Dashboard',
     'online_layers'               => 'Online Players',
     'owned_api_keys'              => 'Owned API Keys',
     'total_character_isk'         => 'Total Character ISK',
     'total_character_skillpoints' => 'Total Character Skillpoints',
     'total_killmails'             => 'Total Killmails',
+    'main_char_skills'            => ':character_name\'s Skills',
+    'main_char_skills_per_level'  => 'Skills Per Level',
+    'main_char_skills_coverage'   => 'Skills Coverage (in percent)',
 
     // Api Keys
     'api_key_add'                 => 'Add a New API Key',
@@ -227,7 +236,9 @@ return [
     'reveal'                      => 'Reveal',
     'add_success'                 => 'Api Key Successfully Added. Update Job :jobid Dispatched',
     're_enable'                   => 'Re-enable Key',
+    'disable'                     => 'Disable key',
     'reenable_all_disabled'       => 'Re-enable all disabled keys',
+    'disable_all_enabled'         => 'Disable all enabled keys',
 
     // People
     'people_groups'               => 'People Groups',
@@ -273,6 +284,7 @@ return [
     'user_deleted'                => 'The user has been deleted',
     'self_delete_warning'         => 'You can not delete yourself!',
     'impersonating'               => 'Impersonating :user',
+    'revert_impersonation'        => 'Impersonation Stopped',
     'user_created'                => 'User Created',
     'unauthorized_request'        => 'Unauthorized Request',
     'unauthorized_request_logged' => 'This attempt has been logged.',
@@ -340,6 +352,8 @@ return [
         ' values in the .env file as they may be empty or invalid. SSO can fail because of this!',
     'allow_sso'                    => 'Allow Single Signon',
     'allow_registration'           => 'Allow Registration',
+    'email_activation'             => 'Email Activation',
+    'require_activation'           => 'Require Email Activation',
     'module_versions'              => 'SeAT Module Versions',
     'tp_versions'                  => 'Third Party Versions',
     'installed'                    => 'Installed',
@@ -350,6 +364,7 @@ return [
     'tracking_id'                  => 'Unique Tracking ID',
     'tracking_help'                => 'Before disabling the usage tracking, please refer to the below' .
         ' document first.',
+    'worker'                       => 'Worker|Workers',
 
     // Character
     'joined_curr_corp'             => 'Joined Current Corporation',
@@ -421,6 +436,7 @@ return [
     'bookmark'                     => 'Bookmark|Bookmarks',
     'coordinates'                  => 'Coordinates',
     'folder'                       => 'Folder',
+    'skills_graph'                 => 'Skills Graph',
 
     // Character Intel
     'loading_journal'              => 'Loading Journal Entries ...',
@@ -481,6 +497,7 @@ return [
     'user_preferences'             => 'User Preferences',
     'user_account'                 => 'User Account',
     'account_settings'             => 'Account Settings',
+    'upgrade_sso'                  => 'Upgrade to EVE Online SSO Account',
     'change_password'              => 'Change Password',
     'change_email'                 => 'Change Email',
     'superuser'                    => 'Superuser',

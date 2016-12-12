@@ -19,19 +19,23 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Validation;
+namespace Seat\Web\Http\Validation;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Seat\Services\Repositories\Character\Character;
+use Seat\Services\Repositories\Corporation\Corporation;
 
 /**
- * Class UpdateIntelNote
- * @package Seat\Web\Validation
+ * Class StandingsExistingElementAdd
+ * @package Seat\Web\Http\Validation
  */
-class UpdateIntelNote extends FormRequest
+class StandingsExistingElementAdd extends FormRequest
 {
 
+    use Character, Corporation;
+
     /**
-     * Authorize the request by default.
+     * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
@@ -50,10 +54,11 @@ class UpdateIntelNote extends FormRequest
     {
 
         return [
-            'note_id'   => 'required|exists:notes,id',
-            'object_id' => 'required|exists:notes,object_id',
-            'title'     => 'max:255|nullable',
-            'note'      => 'nullable',
+            'id'          => 'required|exists:standings_profiles,id',
+            'character*'  => 'in:' . $this->getAllCharactersWithAffiliations()
+                    ->pluck('characterID')->implode(','),
+            'corporation' => 'in:' . $this->getAllCorporationsWithAffiliationsAndFilters()
+                    ->pluck('corporationID')->implode(',')
         ];
     }
 }

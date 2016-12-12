@@ -19,15 +19,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Validation;
+namespace Seat\Web\Http\Validation;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-/**
- * Class Role
- * @package Seat\Web\Validation
- */
-class Role extends FormRequest
+class EmailUpdate extends FormRequest
 {
 
     /**
@@ -50,7 +46,7 @@ class Role extends FormRequest
     {
 
         return [
-            'title' => 'required|unique:roles,title|max:255'
+            'new_email' => 'required|email|confirmed'
         ];
     }
 }

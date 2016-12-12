@@ -12,4 +12,8 @@
 
   @include('web::search.components.mail')
 
+  @include('web::search.components.characterassets')
+
+  @include('web::search.components.skills')
+
 @stop

@@ -1,4 +1,4 @@
-@extends('web::layouts.grids.4-8')
+@extends('web::layouts.grids.3-9')
 
 @section('title', trans('web::seat.user_management'))
 @section('page_header', trans('web::seat.user_management'))
@@ -105,14 +105,22 @@
                    class="btn btn-warning btn-xs">
                   {{ trans('web::seat.edit') }}
                 </a>
-                <a href="{{ route('configuration.users.delete', ['user_id' => $user->id]) }}" type="button"
-                   class="btn btn-danger btn-xs confirmlink">
-                  {{ trans('web::seat.delete') }}
-                </a>
               </div>
-              <a href="{{ route('configuration.users.impersonate', ['user_id' => $user->id]) }}" type="button"
-                 class="btn btn-success btn-xs">
-                {{ trans('web::seat.impersonate') }}</a>
+
+              @if(auth()->user()->id != $user->id)
+                <div class="btn-group">
+                  <a href="{{ route('configuration.users.delete', ['user_id' => $user->id]) }}" type="button"
+                     class="btn btn-danger btn-xs confirmlink">
+                    {{ trans('web::seat.delete') }}
+                  </a>
+                  <a href="{{ route('configuration.users.impersonate', ['user_id' => $user->id]) }}" type="button"
+                     class="btn btn-success btn-xs">
+                    {{ trans('web::seat.impersonate') }}
+                  </a>
+                </div>
+              @else
+                <em class="text-danger">(This is you!)</em>
+              @endif
             </td>
           </tr>
 

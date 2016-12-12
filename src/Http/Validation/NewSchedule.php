@@ -19,14 +19,14 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Validation;
+namespace Seat\Web\Http\Validation;
 
 use Artisan;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * Class NewSchedule
- * @package Seat\Web\Validation
+ * @package Seat\Web\Http\Validation
  */
 class NewSchedule extends FormRequest
 {

@@ -168,29 +168,29 @@
 
 @push('javascript')
 
-  <script>
+<script>
 
-    // Update the modal key_id to the clicked one
-    $("a#add-to-existing").click(function () {
+  // Update the modal key_id to the clicked one
+  $("a#add-to-existing").click(function () {
 
-      $("input#group-add-key-id-value")
-              .val($(this).attr('a-key-id'));
-    });
+    $("input#group-add-key-id-value")
+        .val($(this).attr('a-key-id'));
+  });
 
-    $("#user_id").select2({
-      ajax: {
-        url: "{{ route('people.search') }}",
-        dataType: 'json',
-        delay: 250,
-        data: function (params) {
-          return {
-            q: params.term, // search term
-            page: params.page
-          };
-        },
-      }
-    });
+  $("#user_id").select2({
+    ajax: {
+      url     : "{{ route('people.search') }}",
+      dataType: 'json',
+      delay   : 250,
+      data    : function (params) {
+        return {
+          q   : params.term, // search term
+          page: params.page
+        };
+      },
+    }
+  });
 
-  </script>
+</script>
 
 @endpush

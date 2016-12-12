@@ -275,15 +275,15 @@
 
 @push('javascript')
 
-  @include('web::includes.javascript.id-to-name')
+@include('web::includes.javascript.id-to-name')
 
-  <script>
-    $("#available_permissions," +
-            "#available_users," +
-            "#available_characters," +
-            "#available_corporations").select2({
-      placeholder: "{{ trans('web::seat.select_item_add') }}"
-    });
-  </script>
+<script>
+  $("#available_permissions," +
+      "#available_users," +
+      "#available_characters," +
+      "#available_corporations").select2({
+    placeholder: "{{ trans('web::seat.select_item_add') }}"
+  });
+</script>
 
 @endpush

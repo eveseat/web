@@ -102,19 +102,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Confirm the user.
-     *
-     * @return void
-     */
-    public function confirmEmail()
-    {
-
-        $this->active = true;
-        $this->activation_token = null;
-        $this->save();
-    }
-
-    /**
      * Users have a login history
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -156,6 +143,19 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
 
         return $this->hasMany(ApiKey::class);
+    }
+
+    /**
+     * Confirm the user.
+     *
+     * @return void
+     */
+    public function confirmEmail()
+    {
+
+        $this->active = true;
+        $this->activation_token = null;
+        $this->save();
     }
 
     /**

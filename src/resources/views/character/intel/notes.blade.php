@@ -54,8 +54,8 @@
     $('table#character-notes').DataTable({
       processing: true,
       serverSide: true,
-      ajax: '{{ route('character.view.intel.notes.data', ['character_id' => $request->character_id]) }}',
-      columns: [
+      ajax      : '{{ route('character.view.intel.notes.data', ['character_id' => $request->character_id]) }}',
+      columns   : [
         {data: 'created_at', name: 'created_at', render: human_readable},
         {data: 'title', name: 'title'},
         {data: 'note', name: 'note'},

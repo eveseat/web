@@ -34,6 +34,7 @@ class Permission extends Model
      * @var bool
      */
     public $timestamps = false;
+
     /**
      * @var array
      */

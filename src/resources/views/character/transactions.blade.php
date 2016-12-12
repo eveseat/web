@@ -44,10 +44,10 @@
 
   $(function () {
     $('table#character-transactions').DataTable({
-      processing: true,
-      serverSide: true,
-      ajax: '{{ route('character.view.transactions.data', ['character_id' => $request->character_id]) }}',
-      columns: [
+      processing      : true,
+      serverSide      : true,
+      ajax            : '{{ route('character.view.transactions.data', ['character_id' => $request->character_id]) }}',
+      columns         : [
         {data: 'transactionDateTime', name: 'transactionDateTime', render: human_readable},
         {data: 'transactionType', name: 'transactionType'},
         {data: 'quantity', name: 'quantity'},

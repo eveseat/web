@@ -38,7 +38,7 @@ class ConfirmedEmailAddress
     {
 
         // If the users account is not active, halt.
-        if (!auth()->user()->active)
+        if (!auth()->user()->active && setting('require_activation', true) == 'yes')
             return redirect()->route('auth.email');
 
         return $next($request);

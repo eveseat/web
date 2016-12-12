@@ -19,16 +19,15 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Validation;
+namespace Seat\Web\Http\Validation;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Seat\Services\Settings\Seat;
 
 /**
- * Class SeatSettings
- * @package Seat\Web\Validation
+ * Class CsvImport
+ * @package Seat\Web\Http\Validation
  */
-class SeatSettings extends FormRequest
+class CsvImport extends FormRequest
 {
 
     /**
@@ -50,19 +49,8 @@ class SeatSettings extends FormRequest
     public function rules()
     {
 
-        $allowed_registration = implode(',', Seat::$options['registration']);
-        $allowed_force_min_mask = implode(',', Seat::$options['force_min_mask']);
-        $allowed_sso = implode(',', Seat::$options['allow_sso']);
-        $allowed_tracking = implode(',', Seat::$options['allow_tracking']);
-
         return [
-            'registration'                => 'required|in:' . $allowed_registration,
-            'admin_contact'               => 'required|email',
-            'force_min_mask'              => 'required|in:' . $allowed_force_min_mask,
-            'min_character_access_mask'   => 'required|numeric',
-            'min_corporation_access_mask' => 'required|numeric',
-            'allow_sso'                   => 'required|in:' . $allowed_sso,
-            'allow_tracking'              => 'required|in:' . $allowed_tracking,
+            'csv' => 'required|max:2048|mimes:csv,txt'
         ];
     }
 }

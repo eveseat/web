@@ -18,9 +18,9 @@
     $.each(arrays, function (index, value) {
 
       $.ajax({
-        type: 'POST',
-        url: "{{ route('support.names.resolve') }}",
-        data: {
+        type   : 'POST',
+        url    : "{{ route('support.names.resolve') }}",
+        data   : {
           'ids': value.join(',')
         },
         success: function (result) {
@@ -29,7 +29,7 @@
             $("span:contains('" + id + "')").html(name);
           })
         },
-        error: function (xhr, textStatus, errorThrown) {
+        error  : function (xhr, textStatus, errorThrown) {
           console.log(xhr);
           console.log(textStatus);
           console.log(errorThrown);

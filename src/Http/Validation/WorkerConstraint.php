@@ -19,15 +19,17 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Validation;
+namespace Seat\Web\Http\Validation;
+
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StandingsBuilder extends FormRequest
+class WorkerConstraint extends FormRequest
 {
 
+
     /**
-     * Determine if the user is authorized to make this request.
+     * Authorize the request by default.
      *
      * @return bool
      */
@@ -46,7 +48,13 @@ class StandingsBuilder extends FormRequest
     {
 
         return [
-            'name' => 'required|alpha_num|unique:standings_profiles,name'
+            'api.*'         => 'in:' . implode(',', array_keys(config('eveapi.worker_groups.api'))),
+            'character.*'   => 'in:' . implode(',', array_keys(config('eveapi.worker_groups.character'))),
+            'corporation.*' => 'in:' . implode(',', array_keys(config('eveapi.worker_groups.corporation'))),
+            'eve.*'         => 'in:' . implode(',', array_keys(config('eveapi.worker_groups.eve'))),
+            'map.*'         => 'in:' . implode(',', array_keys(config('eveapi.worker_groups.map'))),
+            'server.*'      => 'in:' . implode(',', array_keys(config('eveapi.worker_groups.server'))),
         ];
     }
+
 }

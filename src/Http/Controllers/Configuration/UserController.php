@@ -24,9 +24,9 @@ namespace Seat\Web\Http\Controllers\Configuration;
 use Illuminate\Http\Request;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\Validation\EditUser;
+use Seat\Web\Http\Validation\NewUser;
 use Seat\Web\Models\User;
-use Seat\Web\Validation\EditUser;
-use Seat\Web\Validation\NewUser;
 
 /**
  * Class UserController
@@ -68,7 +68,7 @@ class UserController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\EditUser $request
+     * @param \Seat\Web\Http\Validation\EditUser $request
      *
      * @return mixed
      */
@@ -93,7 +93,7 @@ class UserController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\NewUser $request
+     * @param \Seat\Web\Http\Validation\NewUser $request
      *
      * @return mixed
      */
@@ -152,11 +152,49 @@ class UserController extends Controller
     public function impersonate($user_id)
     {
 
+        // Store the original user in the session
+        session(['impersonation_origin' => auth()->user()]);
+
+        // Get the user
         $user = $this->getUser($user_id);
+
+        // Log the impersonation event.
+        event('security.log', [
+            'Impersonating ' . $user->name, 'authentication'
+        ]);
+
+        // Login as the new user.
         auth()->login($user);
 
         return redirect()->route('home')
             ->with('success',
                 trans('web::seat.impersonating', ['user' => $user->name]));
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function getStopImpersonate()
+    {
+
+        // If there is no user set in the session, abort!
+        if (!session('impersonation_origin', false))
+            abort(404);
+
+        // Log the impersonation revert event.
+        event('security.log', [
+            'Reverting impersonation back to ' . session('impersonation_origin')->name,
+            'authentication'
+        ]);
+
+        // Login
+        auth()->login(session('impersonation_origin'));
+
+        // Clear the session value
+        session()->forget('impersonation_origin');
+
+        return redirect()->route('home')
+            ->with('success', trans('web::seat.revert_impersonation'));
+
     }
 }

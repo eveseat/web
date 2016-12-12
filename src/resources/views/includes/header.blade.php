@@ -18,7 +18,20 @@
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
 
-        <!-- Queue information -->
+        <!-- Impersonation information -->
+        @if(session('impersonation_origin', false))
+
+          <li class="dropdown">
+            <a href="{{ route('configuration.users.impersonate.stop') }}"
+               class="dropdown-toggle" data-toggle="tooltip" data-placement="bottom"
+               title="{{ trans('web::seat.stop_impersonation') }}">
+              <i class="fa fa-user-secret"></i>
+            </a>
+          </li>
+
+      @endif
+
+      <!-- Queue information -->
         <li class="dropdown">
           <a href="{{ auth()->user()->has('queue_manager') ? route('queue.status') : '#queue_count' }}"
              class="dropdown-toggle" data-toggle="tooltip" data-placement="bottom"

@@ -32,6 +32,13 @@
             <span class="text-success">
               {{ ucfirst(trans('web::seat.enabled')) }}
             </span>
+            @if (auth()->user()->has('apikey.toggle_status', false))
+              <span class="pull-right">
+              <a href="{{ route('api.key.disable', ['key_id' => $key->key_id]) }}" class="label label-warning">
+                {{ trans('web::seat.disable') }}
+              </a>
+            </span>
+            @endif
           @else
             <span class="text-danger">
               {{ ucfirst(trans('web::seat.disabled')) }}
@@ -87,8 +94,26 @@
         </dd>
       </dl>
 
+      <a href="{{ route('api.key.queue', ['key_id' => $key->key_id]) }}" class="btn btn-success btn-block">
+        {{ trans('web::seat.api_job_update') }}
+      </a>
+
     </div>
   </div>
+
+  {{-- if the key is disabled, show the reason --}}
+  @if($key->enabled == 0)
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Last Error</h3>
+      </div>
+      <div class="panel-body">
+        <pre>{{ $key->last_error }}</pre>
+      </div>
+    </div>
+
+  @endif
 
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -115,9 +140,72 @@
     </div>
   </div>
 
-  <a href="{{ route('api.key.queue', ['key_id' => $key->key_id]) }}" class="btn btn-success btn-block">
-    {{ trans('web::seat.api_job_update') }}
-  </a>
+  @if(auth()->user()->hasSuperUser())
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Worker Constraints</h3>
+      </div>
+      <div class="panel-body">
+
+        <form role="form" action="{{ route('api.key.worker.constraints') }}" method="post">
+          {{ csrf_field() }}
+          <input type="hidden" name="key_id" value="{{ $key->key_id }}">
+
+          <table class="table compact table-condensed table-hover table-responsive">
+            <tbody>
+            @foreach($available_workers[$key_type] as $worker => $classes)
+
+              <tr>
+                <td>{{ ucfirst($worker) }}</td>
+                <td>{{ count($classes) }}</td>
+                <td>
+
+                  <div class="checkbox-inline">
+                    <label>
+
+                      @if(!is_null($current_workers) && array_key_exists($key_type, $current_workers))
+
+                        @if(!is_null($current_workers[$key_type]) && in_array($worker, $current_workers[$key_type]))
+
+                          <input type="checkbox" name="{{ $key_type.'[]' }}" value="{{ $worker }}" checked>
+
+                        @else
+
+                          <input type="checkbox" name="{{ $key_type.'[]' }}" value="{{ $worker }}">
+
+                        @endif
+
+                      @else
+
+                        <input type="checkbox" name="{{ $key_type.'[]' }}" value="{{ $worker }}">
+
+                      @endif
+                      {{ trans('web::seat.enabled') }}
+
+                    </label>
+                  </div>
+
+                </td>
+              </tr>
+
+            @endforeach
+
+            </tbody>
+          </table>
+
+          <div class="box-footer">
+            <button type="submit" class="btn btn-primary">
+              {{ trans('web::seat.update') }}
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+
+  @endif
+
 @stop
 
 @section('center')
@@ -297,22 +385,22 @@
 
 @push('javascript')
 
-  <script>
+<script>
 
-    $("#user_id").select2({
-      ajax: {
-        url: "{{ route('support.api-key.userlist') }}",
-        dataType: 'json',
-        delay: 250,
-        data: function (params) {
-          return {
-            q: params.term, // search term
-            page: params.page
-          };
-        },
-      }
-    });
+  $("#user_id").select2({
+    ajax: {
+      url     : "{{ route('support.api-key.userlist') }}",
+      dataType: 'json',
+      delay   : 250,
+      data    : function (params) {
+        return {
+          q   : params.term, // search term
+          page: params.page
+        };
+      },
+    }
+  });
 
-  </script>
+</script>
 
 @endpush

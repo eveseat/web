@@ -19,35 +19,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Validation;
+Route::get('/constraints', [
+    'as'   => 'workers.constraints.list',
+    'uses' => 'WorkerController@getConstraints'
+]);
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class PasswordUpdate extends FormRequest
-{
-
-    /**
-     * Authorize the request by default.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-
-        return true;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules()
-    {
-
-        return [
-            'current_password' => 'required',
-            'new_password'     => 'required|min:6|confirmed'
-        ];
-    }
-}
+Route::post('/constraints/update', [
+    'as'   => 'workers.constraints.update',
+    'uses' => 'WorkerController@postUpdateConstraints'
+]);

@@ -76,6 +76,27 @@ class RegisterController extends Controller
     }
 
     /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        $user->notify(new EmailVerification());
+
+        return redirect()->back()
+            ->with('success', 'Please check your email for the confirmation link!');
+
+    }
+
+    /**
      * Get a validator for an incoming registration request.
      *
      * @param  array $data
@@ -107,27 +128,6 @@ class RegisterController extends Controller
             'email'    => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
-    }
-
-    /**
-     * Handle a registration request for the application.
-     *
-     * @param  \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function register(Request $request)
-    {
-
-        $this->validator($request->all())->validate();
-
-        event(new Registered($user = $this->create($request->all())));
-
-        $user->notify(new EmailVerification());
-
-        return redirect()->back()
-            ->with('success', 'Please check your email for the confirmation link!');
-
     }
 
 }

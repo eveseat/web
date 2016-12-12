@@ -25,7 +25,7 @@ use App\Http\Requests;
 use Artisan;
 use Seat\Services\Models\Schedule;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Validation\NewSchedule;
+use Seat\Web\Http\Validation\NewSchedule;
 
 /**
  * Class ScheduleController
@@ -60,7 +60,7 @@ class ScheduleController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\NewSchedule $request
+     * @param \Seat\Web\Http\Validation\NewSchedule $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */

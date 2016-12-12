@@ -22,11 +22,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Http\Controllers\Auth;
 
 use Laravel\Socialite\Contracts\Factory as Socialite;
+use Laravel\Socialite\Two\User as SocialiteUser;
 use Seat\Services\Settings\Seat;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\Validation\EmailUpdate;
 use Seat\Web\Models\User;
 use Seat\Web\Notifications\EmailVerification;
-use Seat\Web\Validation\EmailUpdate;
 
 /**
  * Class SsoController
@@ -64,22 +65,27 @@ class SsoController extends Controller
     {
 
         $eve_data = $social->driver('eveonline')->user();
+
+        // Check if there is a SeAT account with the same name. If this is the
+        // case, we need to confirm the current password for the user before
+        // we convert the account to an SSO account.
+        if (User::where('name', $eve_data->name)->where('eve_id', null)->first()) {
+
+            // Store the data from Eveonline in the sesion.
+            session()->put('eve_sso', $eve_data);
+
+            // Redirect to the password confirmation page.
+            return redirect()->route('auth.eve.confirmation.get');
+        }
+
+        // Get or create the User bound to this login.
         $user = $this->findOrCreateUser($eve_data);
 
         // Login the account
         auth()->login($user, true);
 
-        // Check if a main_character_id setting is set.
-        // If not, we can pull the one from the SSO login data
-        if (setting('main_character_id') === 1) {
-
-            setting(['main_character_id', $eve_data->character_id]);
-            setting(['main_character_name', $eve_data->name]);
-        }
-
-        // Check that we have a valid email for the user.
-        if (!$user->active)
-            return redirect()->route('auth.eve.email');
+        // Set the main characterID based on the response.
+        $this->setCharacterId($eve_data);
 
         return redirect()->intended();
     }
@@ -88,11 +94,11 @@ class SsoController extends Controller
      * Check if a user exists in the database, else, create
      * and return the User object
      *
-     * @param $user
+     * @param \Laravel\Socialite\Two\User $user
      *
-     * @return static
+     * @return \Seat\Web\Models\User
      */
-    public function findOrCreateUser($user)
+    private function findOrCreateUser(SocialiteUser $user): User
     {
 
         if ($existing = User::where('eve_id', $user->eve_id)->first())
@@ -109,6 +115,22 @@ class SsoController extends Controller
     }
 
     /**
+     * @param \Laravel\Socialite\Two\User $data
+     */
+    private function setCharacterId(SocialiteUser $data)
+    {
+
+        // Check if a main_character_id setting is set.
+        // If not, we can pull the one from the SSO login data
+        if (setting('main_character_id') === 1) {
+
+            setting(['main_character_id', $data->character_id]);
+            setting(['main_character_name', $data->name]);
+        }
+
+    }
+
+    /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getUserEmail()
@@ -121,7 +143,7 @@ class SsoController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\EmailUpdate $request
+     * @param \Seat\Web\Http\Validation\EmailUpdate $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -142,4 +164,54 @@ class SsoController extends Controller
             ->with('success', 'Please check your email for the confirmation link!');
 
     }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getSsoConfirmation()
+    {
+
+        return view('web::auth.ssoconfirmation');
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postSsoConfirmation()
+    {
+
+        // Confirm the User credentials.
+        if (auth()->attempt([
+            'name'     => session()->get('eve_sso')->name,
+            'password' => request()->input('password')
+        ])
+        ) {
+
+            // Change to SeAT account to a SSO account.
+            $user = User::where('name', session()->get('eve_sso')->name)->first();
+            $user->update([
+                'eve_id'   => session()->get('eve_sso')->eve_id,
+                'token'    => session()->get('eve_sso')->token,
+                'password' => bcrypt(str_random(128))   // Random Password.
+            ]);
+
+            // Authenticate the user.
+            if (auth()->check() == false)
+                auth()->login($user, true);
+
+            // Set the main characterID based on the response.
+            $this->setCharacterId(session()->get('eve_sso'));
+
+            // Remove the SSO data from the session
+            session()->forget('eve_sso');
+
+            return redirect()->intended();
+
+        }
+
+        return redirect()->back()
+            ->with('error', trans('web::seat.failed'));
+
+    }
+
 }

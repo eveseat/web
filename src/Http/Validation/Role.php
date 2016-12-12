@@ -19,15 +19,15 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-namespace Seat\Web\Validation;
+namespace Seat\Web\Http\Validation;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class CsvImport
- * @package Seat\Web\Validation
+ * Class Role
+ * @package Seat\Web\Http\Validation
  */
-class CsvImport extends FormRequest
+class Role extends FormRequest
 {
 
     /**
@@ -50,7 +50,7 @@ class CsvImport extends FormRequest
     {
 
         return [
-            'csv' => 'required|max:2048|mimes:csv,txt'
+            'title' => 'required|unique:roles,title|max:255'
         ];
     }
 }

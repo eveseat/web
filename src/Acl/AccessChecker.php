@@ -57,7 +57,7 @@ trait AccessChecker
      *
      * @return bool
      */
-    public function hasAny(array $permissions, bool $need_affiliation = true) : bool
+    public function hasAny(array $permissions, bool $need_affiliation = true): bool
     {
 
         foreach ($permissions as $permission)

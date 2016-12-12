@@ -23,7 +23,7 @@ namespace Seat\Web\Http\Controllers\Profile;
 
 use App\Http\Requests;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Validation\Mfa;
+use Seat\Web\Http\Validation\Mfa;
 
 /**
  * Class MfaSetupController
@@ -54,7 +54,7 @@ class MfaSetupController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\Mfa $request
+     * @param \Seat\Web\Http\Validation\Mfa $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */

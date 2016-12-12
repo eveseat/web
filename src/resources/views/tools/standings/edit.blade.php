@@ -163,17 +163,17 @@
   // Resolve names to EVE IDs
   $("select#element-name").select2({
     ajax: {
-      url: '{{ route("tools.standings.ajax.element") }}',
+      url     : '{{ route("tools.standings.ajax.element") }}',
       dataType: 'json',
-      type: 'POST',
-      delay: 250,
-      cache: true
+      type    : 'POST',
+      delay   : 250,
+      cache   : true
     },
   });
 
   $("select#element-type," + "select#element-standing," +
-          "select#characterstanding," +
-          "select#corporationstanding").select2();
+      "select#characterstanding," +
+      "select#corporationstanding").select2();
 
 </script>
 

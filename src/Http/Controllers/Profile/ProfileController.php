@@ -26,9 +26,9 @@ use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Services\Settings\Profile;
 use Seat\Services\Settings\UserSettings;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Validation\EmailUpdate;
-use Seat\Web\Validation\PasswordUpdate;
-use Seat\Web\Validation\ProfileSettings;
+use Seat\Web\Http\Validation\EmailUpdate;
+use Seat\Web\Http\Validation\PasswordUpdate;
+use Seat\Web\Http\Validation\ProfileSettings;
 
 /**
  * Class ProfileController
@@ -64,7 +64,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\ProfileSettings $request
+     * @param \Seat\Web\Http\Validation\ProfileSettings $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -99,7 +99,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\PasswordUpdate $request
+     * @param \Seat\Web\Http\Validation\PasswordUpdate $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -123,7 +123,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\EmailUpdate $request
+     * @param \Seat\Web\Http\Validation\EmailUpdate $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */

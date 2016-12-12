@@ -39,10 +39,10 @@
 
   $(function () {
     $('table#character-industry').DataTable({
-      processing: true,
-      serverSide: true,
-      ajax: '{{ route('character.view.industry.data', ['character_id' => $request->character_id]) }}',
-      columns: [
+      processing      : true,
+      serverSide      : true,
+      ajax            : '{{ route('character.view.industry.data', ['character_id' => $request->character_id]) }}',
+      columns         : [
         {data: 'startDate', name: 'startDate', render: human_readable},
         {data: 'installerName', name: 'installerName'},
         {data: 'solarSystemName', name: 'solarSystemName'},

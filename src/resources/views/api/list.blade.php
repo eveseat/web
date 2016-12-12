@@ -9,6 +9,11 @@
     <div class="panel-heading">
       <h3 class="panel-title">{{ trans('web::seat.api_all') }}
         <span class="pull-right">
+          @if (auth()->user()->has('apikey.toggle_status', false))
+            <a href="{{ route('api.key.disable.all') }}" class="btn btn-xs btn-warning">
+            {{ trans('web::seat.disable_all_enabled') }}
+          </a>
+          @endif
           <a href="{{ route('api.key.enable.all') }}" class="btn btn-xs btn-primary">
             {{ trans('web::seat.reenable_all_disabled') }}
           </a>
@@ -21,7 +26,8 @@
              id="keys-table" data-page-length=25>
         <thead>
         <tr>
-          <th>{{ trans_choice('web::seat.id', 1) }}</th>
+          <th>{{ trans_choice('web::seat.key_id', 1) }}</th>
+          <th>{{ trans('web::seat.enabled') }}</th>
           <th>{{ trans_choice('web::seat.type', 1) }}</th>
           <th>{{ trans('web::seat.expiry') }}</th>
           <th>{{ trans_choice('web::seat.character', 1) }}</th>
@@ -36,27 +42,33 @@
 @stop
 
 @push('javascript')
-  <script>
+<script>
 
-    $(function () {
-      $('table#keys-table').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: '{{ route('api.key.list.data') }}',
-        columns: [
-          {data: 'key_id', name: 'key_id'},
-          {data: 'info.type', name: 'info.type'},
-          {data: 'info.expires', name: 'info.expires'},
-          {data: 'characters', name: 'characters', orderable: false},
-          {data: 'actions', name: 'actions', orderable: false},
-        ],
-        "fnDrawCallback": function () {
-          $(document).ready(function () {
-            $("img").unveil(100);
-          });
+  $(function () {
+    $('table#keys-table').DataTable({
+      processing      : true,
+      serverSide      : true,
+      ajax            : '{{ route('api.key.list.data') }}',
+      columns         : [
+        {data: 'key_id', name: 'key_id'},
+        {
+          data: 'enabled', name: 'enabled', render: function (data) {
+          if (data == 1) return 'Yes';
+          if (data == 0) return 'No';
         }
-      });
+        },
+        {data: 'info.type', name: 'info.type'},
+        {data: 'info.expires', name: 'info.expires'},
+        {data: 'characters', name: 'characters', orderable: false},
+        {data: 'actions', name: 'actions', orderable: false},
+      ],
+      "fnDrawCallback": function () {
+        $(document).ready(function () {
+          $("img").unveil(100);
+        });
+      }
     });
+  });
 
-  </script>
+</script>
 @endpush

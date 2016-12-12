@@ -25,7 +25,7 @@ use Seat\Services\Repositories\Corporation\Assets;
 use Seat\Services\Repositories\Corporation\Starbases;
 use Seat\Services\Repositories\Eve\EveRepository;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Validation\StarbaseModule;
+use Seat\Web\Http\Validation\StarbaseModule;
 
 class StarbaseController extends Controller
 {
@@ -55,8 +55,8 @@ class StarbaseController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\StarbaseModule $request
-     * @param                                     $corporation_id
+     * @param \Seat\Web\Http\Validation\StarbaseModule $request
+     * @param                                          $corporation_id
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */

@@ -21,10 +21,15 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Web\Http\Controllers\Character;
 
+use Seat\Eveapi\Models\Character\CharacterSheet;
 use Seat\Services\Repositories\Character\Skills;
 use Seat\Services\Repositories\Eve\EveRepository;
 use Seat\Web\Http\Controllers\Controller;
 
+/**
+ * Class SkillsController
+ * @package Seat\Web\Http\Controllers\Character
+ */
 class SkillsController extends Controller
 {
 
@@ -44,6 +49,78 @@ class SkillsController extends Controller
 
         return view('web::character.skills',
             compact('skills', 'skill_groups'));
+    }
+
+    /**
+     * @param $character_id
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getCharacterSkillsLevelChartData(int $character_id)
+    {
+
+        if ($character_id == 1) {
+            return response()->json([]);
+        }
+
+        $data = $this->getCharacterSkillsAmountPerLevel($character_id);
+
+        return response()->json([
+            'labels'   => [
+                'Level 0', 'Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5'
+            ],
+            'datasets' => [
+                [
+                    'data'            => $data,
+                    'backgroundColor' => [
+                        '#00c0ef',
+                        '#39cccc',
+                        '#00a65a',
+                        '#605ca8',
+                        '#001f3f',
+                        '#3c8dbc'
+                    ]
+                ]
+            ]
+        ]);
+    }
+
+    /**
+     * @param $character_id
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getCharacterSkillsCoverageChartData($character_id)
+    {
+
+        if ($character_id == 1) {
+            return response()->json([]);
+        }
+
+        $data = $this->getCharacterSkillCoverage($character_id);
+
+        $character = CharacterSheet::where('characterID', $character_id)->first();
+
+        return response()->json([
+            'labels'   => $data->map(function ($item) {
+
+                return $item->marketGroupName;
+            })->toArray(), // skills category
+            'datasets' => [
+                [
+                    'label'                => $character->name,
+                    'data'                 => $data->map(function ($item) {
+
+                        return round($item->characterAmount / $item->gameAmount * 100, 2);  // character / in game rate
+                    })->toArray(),
+                    'fill'                 => true,
+                    'backgroundColor'      => 'rgba(60,141,188,0.3)',
+                    'borderColor'          => '#3c8dbc',
+                    'pointBackgroundColor' => '#3c8dbc',
+                    'pointBorderColor'     => '#fff'
+                ]
+            ]
+        ]);
     }
 
 }

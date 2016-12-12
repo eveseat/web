@@ -22,7 +22,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Http\Controllers\Auth;
 
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Validation\Mfa;
+use Seat\Web\Http\Validation\Mfa;
 
 /**
  * Class MfaController
@@ -41,7 +41,7 @@ class MfaController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Validation\Mfa $request
+     * @param \Seat\Web\Http\Validation\Mfa $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */
