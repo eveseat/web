@@ -68,7 +68,7 @@ class Requirements
 
         })->isEmpty()
         )
-            return view('web::requirements.extentions', compact('requirements'));
+            return response()->view('web::requirements.extentions', compact('requirements'));
 
         // Check the PHP Version.
         if (!version_compare(phpversion(), '5.5.14', '>='))
