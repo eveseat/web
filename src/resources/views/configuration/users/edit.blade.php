@@ -42,14 +42,17 @@
         </div><!-- /.box-body -->
 
         <div class="box-footer">
-          <a href="{{ route('configuration.users.edit.account_status', ['user_id' => $user->id]) }}"
-             class="btn btn-{{ $user->active ? 'warning' : 'success' }} pull-left">
-            @if($user->active)
-              {{ trans('web::seat.deactivate_user') }}
-            @else
-              {{ trans('web::seat.activate_user') }}
-            @endif
-          </a>
+
+          @if(auth()->user()->id != $user->id)
+            <a href="{{ route('configuration.users.edit.account_status', ['user_id' => $user->id]) }}"
+               class="btn btn-{{ $user->active ? 'warning' : 'success' }} pull-left">
+              @if($user->active)
+                {{ trans('web::seat.deactivate_user') }}
+              @else
+                {{ trans('web::seat.activate_user') }}
+              @endif
+            </a>
+          @endif
           <button type="submit" class="btn btn-primary pull-right">
             {{ trans('web::seat.edit') }}
           </button>
