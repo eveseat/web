@@ -85,8 +85,10 @@ class SsoController extends Controller
         auth()->login($user, true);
 
         // Check if an account was just logged in for the first
-        // time using SSO and ask for an email address.
-        if (User::where('name', $eve_data->name)->where('active', 0)->first()) {
+        // time using SSO and ask for an email address if its required.
+        if (User::where('name', $eve_data->name)->where('active', 0)->first() &&
+            setting('require_activation', true) == 'yes'
+        ) {
 
             // Redirect to the password confirmation page.
             return redirect()->route('auth.eve.email');
