@@ -57,10 +57,10 @@
       </ul>
       </p>
 
-      <hr>
-
       <p>
-        {!! clean_ccp_html($message->body) !!}
+
+        @include('web::character.partials.messagethread')
+
       </p>
 
     </div>
