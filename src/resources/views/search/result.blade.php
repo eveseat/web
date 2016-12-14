@@ -6,6 +6,8 @@
 
 @section('full')
 
+  @include('web::search.components.apikey')
+
   @include('web::search.components.character')
 
   @include('web::search.components.corporation')
