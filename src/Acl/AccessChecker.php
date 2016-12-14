@@ -235,10 +235,30 @@ trait AccessChecker
 
             foreach ($key->characters as $character) {
 
-                if ($key->info->type === 'Corporation')
-                    $map['corp'][$character->corporationID] = ['*'];
+                // We only grant corporation related permission
+                if ($key->info->type === 'Corporation') {
+                    // clone permissions from configuration
+                    $permissions = config('web.permissions.corporation');
 
-                $map['char'][$character->characterID] = ['*'];
+                    // prefix all permissions by corporation
+                    array_walk($permissions, function (&$value) {
+                        $value = 'corporation.' . $value;
+                    });
+
+                    // assign permission
+                    $map['corp'][$character->corporationID] = $permissions;
+                }
+
+                // clone permissions from configuration
+                $permissions = config('web.permissions.character');
+
+                // prefix all permissions by character
+                array_walk($permissions, function(&$value){
+                    $value = 'character.' . $value;
+                });
+
+                // We only grant character related permission
+                $map['char'][$character->characterID] = $permissions;
             }
 
         }
