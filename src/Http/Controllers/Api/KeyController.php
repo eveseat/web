@@ -191,7 +191,7 @@ class KeyController extends Controller
                     $filter->where(
                         'type', 'like', '%' . request()->input('search')['value'] . '%');
 
-                })->orWhere('key_id', 'like', '%' . request()->input('search')['value'] . '%');
+                });
 
                 // Ensure we take permissions into account!
                 if (!auth()->user()->has('apikey.list', false))
