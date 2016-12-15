@@ -22,6 +22,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Http\Controllers\Support;
 
 use Illuminate\Http\Request;
+use Seat\Eveapi\Models\Eve\ApiKey;
 use Seat\Services\Search\Search;
 use Seat\Web\Http\Controllers\Controller;
 use Yajra\Datatables\Datatables;
@@ -191,6 +192,45 @@ class SearchController extends Controller
                 return view('web::search.partials.typename', compact('row'))
                     ->render();
             })
+            ->make(true);
+
+    }
+
+    public function getSearchApiKeyData(Request $request)
+    {
+
+        $keys = $this->doSearchApiKey($request->input('search.value'));
+
+        if (!auth()->user()->has('apikey.list', false))
+            $keys = $keys
+                ->where('user_id', auth()->user()->id);
+
+        // Return data that datatables can understand
+        return Datatables::of($keys)
+            ->editColumn('info.expired', function ($column) {
+
+                // Format dates for expired for sorting reasons
+                return carbon($column->expires)->format('d/m/y');
+            })
+            ->addColumn('characters', function ($row) {
+
+                // Include a view to show characters on a key
+                return view('web::api.partial.character', compact('row'))
+                    ->render();
+            })
+            ->addColumn('actions', function ($row) {
+
+                // Detail & Delete buttons
+                return view('web::api.partial.actions', compact('row'))
+                    ->render();
+            })
+            ->setRowClass(function ($row) {
+
+                // Make disabled keys red.
+                if (!$row->enabled)
+                    return 'danger';
+            })
+            ->removeColumn('v_code')
             ->make(true);
 
     }

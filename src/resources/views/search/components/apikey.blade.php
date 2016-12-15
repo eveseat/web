@@ -29,7 +29,7 @@
     $('table#api-keys').DataTable({
       processing      : true,
       serverSide      : true,
-      ajax            : '{{ route('api.key.list.data') }}',
+      ajax            : '{{ route('support.search.keys.data') }}',
       columns         : [
         {data: 'key_id', name: 'key_id'},
         {
