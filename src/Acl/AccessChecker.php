@@ -237,11 +237,13 @@ trait AccessChecker
 
                 // We only grant corporation related permission
                 if ($key->info->type === 'Corporation') {
+
                     // clone permissions from configuration
                     $permissions = config('web.permissions.corporation');
 
                     // prefix all permissions by corporation
                     array_walk($permissions, function (&$value) {
+
                         $value = 'corporation.' . $value;
                     });
 
@@ -253,7 +255,8 @@ trait AccessChecker
                 $permissions = config('web.permissions.character');
 
                 // prefix all permissions by character
-                array_walk($permissions, function(&$value){
+                array_walk($permissions, function (&$value) {
+
                     $value = 'character.' . $value;
                 });
 
