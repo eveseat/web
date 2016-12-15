@@ -6,10 +6,10 @@
 
       @if($thread_message['headers_ok'] == true)
 
-        <div class="panel-heading" role="tab" id="heading{{ $thread_id }}">
+        <div class="panel-heading" role="tab" id="heading{{ $message->messageID }}{{ $thread_id }}">
           <h4 class="panel-title">
-            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $thread_id }}"
-               aria-expanded="true" aria-controls="collapse{{ $thread_id }}">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $message->messageID }}{{ $thread_id }}"
+               aria-expanded="true" aria-controls="collapse{{ $message->messageID }}{{ $thread_id }}">
 
               "{{ $thread_message['subject'] }}"
               from {{ $thread_message['from'] }}
@@ -23,7 +23,7 @@
 
       @endif
 
-      <div id="collapse{{ $thread_id }}"
+      <div id="collapse{{ $message->messageID }}{{ $thread_id }}"
            {{-- if the headers are ok, we can work on the panel and collapse --}}
            @if($thread_message['headers_ok'] == true)
 
