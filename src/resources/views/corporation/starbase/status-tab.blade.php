@@ -92,7 +92,7 @@
 
         <dt>{{ trans('web::seat.corp_member_access') }}:</dt>
         <dd>
-          @if($starbase->allowCorporationMembersn)
+          @if($starbase->allowCorporationMembers)
             {{ trans('web::seat.yes') }}
           @else
             {{ trans('web::seat.no') }}
