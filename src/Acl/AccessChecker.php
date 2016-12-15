@@ -177,20 +177,44 @@ trait AccessChecker
 
         $map = $this->getAffiliationMap();
 
-        // Owning a key grants you '*' permissions. In this
-        // context, '*' acts as a wildard for *all* permissions
-        // for this character / corporation ID
-        foreach ($map['char'] as $char => $permissions)
-            if ($char == $this->getCharacterId() && (
-                    in_array($permission, $permissions) || in_array('*', $permissions))
-            )
+        // Owning a key grants you '*' permissions to the owned object. In this
+        // context, '*' acts as a wildcard for *all* permissions
+        foreach ($map['char'] as $char => $permissions) {
+
+            // specific filter for character object
+            if (strpos($permission, 'character.') !== false) {
+
+                // check only character wildcard and specific permission
+                if ($char == $this->getCharacterId() && (in_array('character.*', $permissions) ||
+                        in_array($permission, $permissions))
+                )
+                    return true;
+
+            }
+
+            // check everything else, including global wildcard
+            if (in_array('*', $permissions) || in_array($permission, $permissions))
                 return true;
 
-        foreach ($map['corp'] as $corp => $permissions)
-            if ($corp == $this->getCorporationId() && (
-                    in_array($permission, $permissions) || in_array('*', $permissions))
-            )
+        }
+
+        foreach ($map['corp'] as $corp => $permissions) {
+
+            // specific filter for corporation object
+            if (strpos($permission, 'corporation.') !== false) {
+
+                // check only character wildcard and specific permission
+                if ($corp == $this->getCorporationId() && (in_array('corporation.*', $permissions) ||
+                        in_array($permission, $permissions))
+                )
+                    return true;
+
+            }
+
+            // check everything else, including global wildcard
+            if (in_array('*', $permissions) || in_array($permission, $permissions))
                 return true;
+        }
 
         return false;
     }
@@ -238,30 +262,12 @@ trait AccessChecker
                 // We only grant corporation related permission
                 if ($key->info->type === 'Corporation') {
 
-                    // clone permissions from configuration
-                    $permissions = config('web.permissions.corporation');
-
-                    // prefix all permissions by corporation
-                    array_walk($permissions, function (&$value) {
-
-                        $value = 'corporation.' . $value;
-                    });
-
                     // assign permission
-                    $map['corp'][$character->corporationID] = $permissions;
+                    $map['corp'][$character->corporationID] = ['corporation.*'];
                 }
 
-                // clone permissions from configuration
-                $permissions = config('web.permissions.character');
-
-                // prefix all permissions by character
-                array_walk($permissions, function (&$value) {
-
-                    $value = 'character.' . $value;
-                });
-
                 // We only grant character related permission
-                $map['char'][$character->characterID] = $permissions;
+                $map['char'][$character->characterID] = ['character.*'];
             }
 
         }
