@@ -22,7 +22,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Http\Controllers\Support;
 
 use Illuminate\Http\Request;
-use Seat\Eveapi\Models\Eve\ApiKey;
 use Seat\Services\Search\Search;
 use Seat\Web\Http\Controllers\Controller;
 use Yajra\Datatables\Datatables;
@@ -170,6 +169,11 @@ class SearchController extends Controller
 
     }
 
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return mixed
+     */
     public function getSearchCharacterSkillsData(Request $request)
     {
 
@@ -196,6 +200,11 @@ class SearchController extends Controller
 
     }
 
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return mixed
+     */
     public function getSearchApiKeyData(Request $request)
     {
 
