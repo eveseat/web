@@ -66,12 +66,14 @@ class ProfileSettings extends FormRequest
             return $entry['short'];
         }, config('web.locale.languages')));
         $allowed_sidebar = implode(',', Profile::$options['sidebar']);
+        $mail_threads = implode(',', Profile::$options['mail_threads']);
 
         return [
             'main_character_id'   => 'required|in:' . $allowed_main_character_ids,
             'skin'                => 'required|in:' . $allowed_skins,
             'language'            => 'required|in:' . $allowed_languages,
             'sidebar'             => 'required|in:' . $allowed_sidebar,
+            'mail_threads'        => 'required|in:' . $mail_threads,
             'thousand_seperator'  => 'in:" ",",","."|size:1',
             'decimal_seperator'   => 'required|in:",","."|size:1',
             'email_notifications' => 'required|in:yes,no',

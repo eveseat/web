@@ -57,10 +57,18 @@
       </ul>
       </p>
 
-      <hr>
-
       <p>
-        {!! clean_ccp_html($message->body) !!}
+
+        @if(setting('mail_threads') == "yes")
+
+          @include('web::character.partials.messagethread')
+
+        @else
+
+          {!! clean_ccp_html($message->body) !!}
+
+        @endif
+
       </p>
 
     </div>

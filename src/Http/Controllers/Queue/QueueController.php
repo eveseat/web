@@ -146,7 +146,13 @@ class QueueController extends Controller
     public function getWorkingJobs()
     {
 
-        return Datatables::of($this->getJobs('Working'))->make(true);
+        return Datatables::of($this->getJobs('Working'))
+            ->addColumn('actions', function($row) {
+
+                return view('web::queue.partials.actions', compact('row'))
+                    ->render();
+            })
+            ->make(true);
     }
 
     /**
@@ -172,6 +178,21 @@ class QueueController extends Controller
 
         return redirect()->back()
             ->with('success', 'The command ' . $command_name . ' has been run.');
+
+    }
+
+    /**
+     * @param string $job_id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function getKillJob(string $job_id)
+    {
+
+        $this->deleteJobById($job_id);
+
+        return redirect()->back()
+            ->with('success', 'Job ' . $job_id . ' killed');
 
     }
 

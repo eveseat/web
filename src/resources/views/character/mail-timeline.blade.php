@@ -58,7 +58,17 @@
 
           </h2>
           <div class="timeline-body">
-            {!! clean_ccp_html($message->body) !!}
+
+            @if(setting('mail_threads') == "yes")
+
+              @include('web::character.partials.messagethread')
+
+            @else
+
+              {!! clean_ccp_html($message->body) !!}
+
+            @endif
+
           </div>
           <div class="timeline-footer">
             <a href="{{ route('character.view.mail.timeline.read', ['message_id' => $message->messageID]) }}"

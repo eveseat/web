@@ -83,7 +83,7 @@
 
         <dt>{{ trans('web::seat.attack_on_war') }}:</dt>
         <dd>
-          @if($starbase->onCorporationWarn)
+          @if($starbase->onCorporationWar)
             {{ trans('web::seat.yes') }}
           @else
             {{ trans('web::seat.no') }}
@@ -92,7 +92,7 @@
 
         <dt>{{ trans('web::seat.corp_member_access') }}:</dt>
         <dd>
-          @if($starbase->allowCorporationMembersn)
+          @if($starbase->allowCorporationMembers)
             {{ trans('web::seat.yes') }}
           @else
             {{ trans('web::seat.no') }}
