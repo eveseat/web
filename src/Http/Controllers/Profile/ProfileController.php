@@ -85,6 +85,7 @@ class ProfileController extends Controller
         Profile::set('skin', $request->skin);
         Profile::set('language', $request->language);
         Profile::set('sidebar', $request->sidebar);
+        Profile::set('mail_threads', $request->mail_threads);
 
         Profile::set('thousand_seperator', $request->thousand_seperator);
         Profile::set('decimal_seperator', $request->decimal_seperator);

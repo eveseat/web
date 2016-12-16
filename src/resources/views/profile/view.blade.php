@@ -84,6 +84,23 @@
             </div>
           </div>
 
+          <!-- Select Basic -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="sidebar">{{ trans('web::seat.mail_as_threads') }}</label>
+            <div class="col-md-6">
+              <select id="sidebar" name="mail_threads" class="form-control">
+                <option value="yes"
+                        @if(setting('mail_threads') == "yes") selected @endif>
+                  {{ trans('web::seat.yes') }}
+                </option>
+                <option value="no"
+                        @if(setting('mail_threads') == "no") selected @endif>
+                  {{ trans('web::seat.no') }}
+                </option>
+              </select>
+            </div>
+          </div>
+
           <legend>{{ trans('web::seat.number_format') }}</legend>
 
           <!-- Select Basic -->

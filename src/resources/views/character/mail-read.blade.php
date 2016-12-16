@@ -59,7 +59,15 @@
 
       <p>
 
-        @include('web::character.partials.messagethread')
+        @if(setting('mail_threads') == "yes")
+
+          @include('web::character.partials.messagethread')
+
+        @else
+
+          {!! clean_ccp_html($message->body) !!}
+
+        @endif
 
       </p>
 

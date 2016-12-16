@@ -507,6 +507,7 @@ return [
     'seat_skin'                    => 'SeAT Skin',
     'language'                     => 'Language',
     'sidebar_size'                 => 'Sidebar Size',
+    'mail_as_threads'              => 'View Mail as Threads',
     'number_format'                => 'Number Format',
     'current_format'               => 'Current Format',
     'thousands_seperator'          => 'Thousands Seperator',
