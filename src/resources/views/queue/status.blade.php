@@ -322,6 +322,7 @@
         {data: 'scope', name: 'scope'},
         {data: 'output', name: 'output'},
         {data: 'status', name: 'status'},
+        {data: 'actions', name: 'actions', searchable: false},
       ],
     });
 

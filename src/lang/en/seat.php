@@ -45,6 +45,7 @@ return [
     'never'                 => 'Never',
     'detail'                => 'Detail|Details',
     'delete'                => 'Delete',
+    'kill'                  => 'Kill',
     'verify'                => 'Verify',
     'reset'                 => 'Reset',
     'back'                  => 'Back',
