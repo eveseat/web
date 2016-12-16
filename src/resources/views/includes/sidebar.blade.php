@@ -14,7 +14,9 @@
           @if(is_null(setting('main_character_name')))
             <a href="{{ route('profile.view') }}">{{ trans('web::seat.no_main_char') }}!</a>
           @else
-            {{ trans('web::seat.hello') }}, {{ setting('main_character_name') }}
+            <a href="{{ route('character.view.sheet', ['character_id' => setting('main_character_id')]) }}">
+              {{ trans('web::seat.hello') }}, {{ setting('main_character_name') }}
+            </a>
           @endif
         </p>
         <!-- Status -->
