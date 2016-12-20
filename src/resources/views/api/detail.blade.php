@@ -353,6 +353,10 @@
     </div>
     <div class="panel-body">
 
+      <a href="{{ route('api.key.joblog', ['key_id' => $key->key_id]) }}" class="btn btn-success btn-block">
+        {{ trans('web::seat.joblog') }}
+      </a>
+
       <table class="table table-condensed table-hover">
         <tbody>
         <tr>

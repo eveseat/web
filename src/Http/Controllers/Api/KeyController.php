@@ -26,6 +26,7 @@ use Pheal\Pheal;
 use Seat\Eveapi\Helpers\JobPayloadContainer;
 use Seat\Eveapi\Jobs\CheckAndQueueKey;
 use Seat\Eveapi\Models\Eve\ApiKey as ApiKeyModel;
+use Seat\Eveapi\Models\JobLog;
 use Seat\Eveapi\Models\JobTracking;
 use Seat\Eveapi\Traits\JobManager;
 use Seat\Web\Http\Controllers\Controller;
@@ -398,6 +399,36 @@ class KeyController extends Controller
         // Redirect back with new values.
         return redirect()->back()
             ->with('success', 'Constraints Updated');
+    }
+
+    /**
+     * @param int $key_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getJobLog(int $key_id)
+    {
+
+        return view('web::api.joblog');
+    }
+
+    /**
+     * @param int $key_id
+     *
+     * @return mixed
+     */
+    public function getJobLogData(int $key_id)
+    {
+
+        $log = JobLog::where('key_id', $key_id);
+
+        return Datatables::of($log)
+            ->editColumn('message', function ($row) {
+
+                return str_limit($row->message, 200);
+            })
+            ->make(true);
+
     }
 
 }

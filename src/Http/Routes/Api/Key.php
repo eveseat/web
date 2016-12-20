@@ -96,3 +96,15 @@ Route::post('/worker/constraints', [
     'uses'       => 'KeyController@postUpdateWorkerConstraint',
     'middleware' => 'bouncer:superuser'
 ]);
+
+Route::get('/joblog/{key_id}', [
+    'as'         => 'api.key.joblog',
+    'uses'       => 'KeyController@getJobLog',
+    'middleware' => 'keybouncer:detail'
+]);
+
+Route::get('/joblog/data/{key_id}', [
+    'as'         => 'api.key.joblog.data',
+    'uses'       => 'KeyController@getJobLogData',
+    'middleware' => 'keybouncer:detail'
+]);
