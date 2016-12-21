@@ -182,17 +182,18 @@ class KeyController extends Controller
                 // where it makes sense. Unfortunately this had
                 // to be done because of the way the characters
                 // are incuded on a key.
-                $query->whereHas('characters', function ($filter) {
+                if (!empty(request()->input('search.value')))
+                    $query->whereHas('characters', function ($filter) {
 
-                    $filter->where(
-                        'characterName', 'like', '%' . request()->input('search')['value'] . '%');
+                        $filter->where(
+                            'characterName', 'like', '%' . request()->input('search.value') . '%');
 
-                })->orWhereHas('info', function ($filter) {
+                    })->orWhereHas('info', function ($filter) {
 
-                    $filter->where(
-                        'type', 'like', '%' . request()->input('search')['value'] . '%');
+                        $filter->where(
+                            'type', 'like', '%' . request()->input('search.value') . '%');
 
-                });
+                    });
 
                 // Ensure we take permissions into account!
                 if (!auth()->user()->has('apikey.list', false))

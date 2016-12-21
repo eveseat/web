@@ -57,8 +57,28 @@
           if (data == 0) return 'No';
         }
         },
-        {data: 'info.type', name: 'info.type'},
-        {data: 'info.expires', name: 'info.expires'},
+        {
+          data: 'info.type', name: 'info.type', render: function (data) {
+
+          if (typeof data === 'undefined') {
+            return 'Unknown';
+          }
+
+          return data
+
+        }
+        },
+        {
+          data: 'info.expires', name: 'info.expires', render: function (data) {
+
+          if (typeof data === 'undefined') {
+            return 'Unknown';
+          }
+
+          return data
+
+        }
+        },
         {data: 'characters', name: 'characters', orderable: false},
         {data: 'actions', name: 'actions', orderable: false},
       ],
