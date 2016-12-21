@@ -262,7 +262,7 @@ trait AccessChecker
                 // We only grant corporation related permission
                 if ($key->info->type === 'Corporation') {
 
-                    // assign permission
+                    // Assign the permission
                     $map['corp'][$character->corporationID] = ['corporation.*'];
                 }
 
