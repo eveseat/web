@@ -57,7 +57,7 @@
             {{ human_diff($key->status->paidUntil) }}
           </span>
           @else
-            <span>{{ trans('web::unknown') }}</span>
+            <span>{{ trans('web::seat.unknown') }}</span>
           @endif
         </dd>
         <dt>{{ trans('web::seat.v_code') }}</dt>
