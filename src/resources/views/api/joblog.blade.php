@@ -19,9 +19,10 @@
              id="joblog-table" data-page-length=25>
         <thead>
         <tr>
-          <th>{{ trans_choice('web::seat.key_id', 1) }}</th>
-          <th>{{ trans('web::seat.enabled') }}</th>
+          <th>{{ trans_choice('web::seat.id', 1) }}</th>
+          <th>{{ trans('web::seat.created') }}</th>
           <th>{{ trans_choice('web::seat.type', 1) }}</th>
+          <th>{{ trans_choice('web::seat.message', 1) }}</th>
           <th></th>
         </tr>
         </thead>
@@ -41,7 +42,7 @@
       serverSide: true,
       ajax      : '{{ route('api.key.joblog.data', ['key_id' => $request->key_id]) }}',
       columns   : [
-        {data: 'id', name: 'id'},
+        {data: 'id', name: 'id', visible: false},
         {data: 'created_at', name: 'created_at', render: human_readable},
         {data: 'type', name: 'type'},
         {data: 'message', name: 'message'},
