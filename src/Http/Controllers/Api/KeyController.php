@@ -125,10 +125,10 @@ class KeyController extends Controller
         $job->api = 'Scheduler';
         $job->owner_id = $api_key->key_id;
         $job->eve_api_key = $api_key;
+        $job->queue = 'high';   // Give this job some priority
 
         // Queue the update Job
-        $job_id = $this->addUniqueJob(
-            CheckAndQueueKey::class, $job);
+        $job_id = $this->addUniqueJob(CheckAndQueueKey::class, $job);
 
         return redirect()->route('api.key')
             ->with('success', trans('web::seat.add_success',
@@ -351,9 +351,9 @@ class KeyController extends Controller
         $job->api = 'Scheduler';
         $job->owner_id = $key->key_id;
         $job->eve_api_key = $key;
+        $job->queue = 'high';   // Give this job some priority
 
-        $job_id = $this->addUniqueJob(
-            'Seat\Eveapi\Jobs\CheckAndQueueKey', $job);
+        $job_id = $this->addUniqueJob(CheckAndQueueKey::class, $job);
 
         return redirect()->back()
             ->with('success', 'Update job ' . $job_id . ' Queued');
