@@ -57,7 +57,7 @@
             {{ human_diff($key->status->paidUntil) }}
           </span>
           @else
-            <span>{{ trans('web::unknown') }}</span>
+            <span>{{ trans('web::seat.unknown') }}</span>
           @endif
         </dd>
         <dt>{{ trans('web::seat.v_code') }}</dt>
@@ -352,6 +352,10 @@
       <h3 class="panel-title">{{ trans('web::seat.recent_jobs') }}</h3>
     </div>
     <div class="panel-body">
+
+      <a href="{{ route('api.key.joblog', ['key_id' => $key->key_id]) }}" class="btn btn-success btn-block">
+        {{ trans('web::seat.joblog') }}
+      </a>
 
       <table class="table table-condensed table-hover">
         <tbody>

@@ -240,6 +240,7 @@ return [
     'disable'                     => 'Disable key',
     'reenable_all_disabled'       => 'Re-enable all disabled keys',
     'disable_all_enabled'         => 'Disable all enabled keys',
+    'joblog'                      => 'Job Log',
 
     // People
     'people_groups'               => 'People Groups',

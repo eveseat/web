@@ -26,6 +26,7 @@ use Pheal\Pheal;
 use Seat\Eveapi\Helpers\JobPayloadContainer;
 use Seat\Eveapi\Jobs\CheckAndQueueKey;
 use Seat\Eveapi\Models\Eve\ApiKey as ApiKeyModel;
+use Seat\Eveapi\Models\JobLog;
 use Seat\Eveapi\Models\JobTracking;
 use Seat\Eveapi\Traits\JobManager;
 use Seat\Web\Http\Controllers\Controller;
@@ -124,10 +125,10 @@ class KeyController extends Controller
         $job->api = 'Scheduler';
         $job->owner_id = $api_key->key_id;
         $job->eve_api_key = $api_key;
+        $job->queue = 'high';   // Give this job some priority
 
         // Queue the update Job
-        $job_id = $this->addUniqueJob(
-            CheckAndQueueKey::class, $job);
+        $job_id = $this->addUniqueJob(CheckAndQueueKey::class, $job);
 
         return redirect()->route('api.key')
             ->with('success', trans('web::seat.add_success',
@@ -181,17 +182,18 @@ class KeyController extends Controller
                 // where it makes sense. Unfortunately this had
                 // to be done because of the way the characters
                 // are incuded on a key.
-                $query->whereHas('characters', function ($filter) {
+                if (!empty(request()->input('search.value')))
+                    $query->whereHas('characters', function ($filter) {
 
-                    $filter->where(
-                        'characterName', 'like', '%' . request()->input('search')['value'] . '%');
+                        $filter->where(
+                            'characterName', 'like', '%' . request()->input('search.value') . '%');
 
-                })->orWhereHas('info', function ($filter) {
+                    })->orWhereHas('info', function ($filter) {
 
-                    $filter->where(
-                        'type', 'like', '%' . request()->input('search')['value'] . '%');
+                        $filter->where(
+                            'type', 'like', '%' . request()->input('search.value') . '%');
 
-                });
+                    });
 
                 // Ensure we take permissions into account!
                 if (!auth()->user()->has('apikey.list', false))
@@ -349,9 +351,9 @@ class KeyController extends Controller
         $job->api = 'Scheduler';
         $job->owner_id = $key->key_id;
         $job->eve_api_key = $key;
+        $job->queue = 'high';   // Give this job some priority
 
-        $job_id = $this->addUniqueJob(
-            'Seat\Eveapi\Jobs\CheckAndQueueKey', $job);
+        $job_id = $this->addUniqueJob(CheckAndQueueKey::class, $job);
 
         return redirect()->back()
             ->with('success', 'Update job ' . $job_id . ' Queued');
@@ -398,6 +400,36 @@ class KeyController extends Controller
         // Redirect back with new values.
         return redirect()->back()
             ->with('success', 'Constraints Updated');
+    }
+
+    /**
+     * @param int $key_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getJobLog(int $key_id)
+    {
+
+        return view('web::api.joblog');
+    }
+
+    /**
+     * @param int $key_id
+     *
+     * @return mixed
+     */
+    public function getJobLogData(int $key_id)
+    {
+
+        $log = JobLog::where('key_id', $key_id);
+
+        return Datatables::of($log)
+            ->editColumn('message', function ($row) {
+
+                return str_limit($row->message, 200);
+            })
+            ->make(true);
+
     }
 
 }
