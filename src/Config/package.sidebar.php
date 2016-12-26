@@ -20,14 +20,14 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 */
 
 return [
-    'web.home'          => [
+    '0home'         => [
         'name'          => 'home',
         'label'         => 'web::seat.home',
         'icon'          => 'fa-home',
         'route_segment' => 'home',
         'route'         => 'home'
     ],
-    'web.api-key'       => [
+    'api-key'       => [
         'name'          => 'api key management',
         'label'         => 'web::seat.api_key_management',
         'icon'          => 'fa-key',
@@ -47,7 +47,7 @@ return [
             ]
         ]
     ],
-    'web.corporation'   => [
+    'corporation'   => [
         'name'          => 'corporation',
         'label'         => 'web::seat.corporation',
         'plural'        => true,
@@ -62,7 +62,7 @@ return [
             ]
         ]
     ],
-    'web.character'     => [
+    'character'     => [
         'name'          => 'character',
         'label'         => 'web::seat.character',
         'plural'        => true,
@@ -83,7 +83,7 @@ return [
             ]
         ]
     ],
-    'web.configuration' => [
+    'configuration' => [
         'name'          => 'configuration',
         'label'         => 'web::seat.configuration',
         'permission'    => 'superuser',
@@ -137,7 +137,7 @@ return [
             ],
         ]
     ],
-    'web.tools'         => [
+    'tools'         => [
         'name'          => 'tools',
         'label'         => 'web::seat.tools',
         'icon'          => 'fa-wrench',
