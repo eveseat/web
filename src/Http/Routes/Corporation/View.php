@@ -59,6 +59,12 @@ Route::get('/view/contracts/data/{corporation_id}', [
     'uses'       => 'ContractsController@getContractsData'
 ]);
 
+Route::get('/view/contracts/items/{corporation_id}/{contract_id}', [
+    'as'         => 'corporation.view.contracts.items',
+    'middleware' => 'corporationbouncer:contracts',
+    'uses'       => 'ContractsController@getContractsItemsData'
+]);
+
 Route::get('/view/industry/{corporation_id}', [
     'as'         => 'corporation.view.industry',
     'middleware' => 'corporationbouncer:industry',

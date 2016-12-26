@@ -31,14 +31,6 @@ class Sidebar extends AbstractMenu
 {
 
     /**
-     * Create a new sidebar composer.
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
      * Return required keys in menu structure
      *
      * @return array
@@ -61,20 +53,14 @@ class Sidebar extends AbstractMenu
     public function compose(View $view)
     {
 
-        // Home. This menu item declares the menu and
-        // sets it as an array of arrays.
-        $menu = [];
+        // Grab the menu and sort it.
+        $menu = config('package.sidebar');
+        ksort($menu);
 
-        // Load any menus from any registered packages
-        $package_menus = config('package.sidebar');
-        foreach ($package_menus as $package_name => $menu_data) {
+        // Return the sidebar with the loaded packages menus
+        $view->with('menu', collect($menu)->map(function ($menu_data, $package_name) {
 
-            $prepared_menu = $this->load_plugin_menu($package_name, $menu_data);
-
-            if (!empty($prepared_menu))
-                array_push($menu, $prepared_menu);
-        }
-
-        $view->with('menu', $menu);
+            return $this->load_plugin_menu($package_name, $menu_data);
+        }));
     }
 }

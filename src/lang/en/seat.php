@@ -439,6 +439,7 @@ return [
     'coordinates'                  => 'Coordinates',
     'folder'                       => 'Folder',
     'skills_graph'                 => 'Skills Graph',
+    'contract_items'               => 'Contract Items',
 
     // Character Intel
     'loading_journal'              => 'Loading Journal Entries ...',
