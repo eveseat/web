@@ -71,6 +71,12 @@ Route::get('/view/contracts/data/{character_id}', [
     'uses'       => 'ContractsController@getContractsData'
 ]);
 
+Route::get('/view/contracts/items/{character_id}/{contract_id}', [
+    'as'         => 'character.view.contracts.items',
+    'middleware' => 'characterbouncer:contracts',
+    'uses'       => 'ContractsController@getContractsItemsData'
+]);
+
 Route::get('/view/industry/{character_id}', [
     'as'         => 'character.view.industry',
     'middleware' => 'characterbouncer:industry',

@@ -32,6 +32,25 @@
     </div>
   </div>
 
+  <!-- Contracts Items Modal -->
+  <div class="modal fade" id="contractsItemsModal" tabindex="-1" role="dialog"
+       aria-labelledby="contractsItemsModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">{{ trans('web::seat.contract_items') }}</h4>
+        </div>
+        <div class="modal-body">
+
+          <span id="contract-items-result"></span>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
 @stop
 
 @push('javascript')
@@ -52,11 +71,33 @@
         {data: 'collateral', name: 'collateral'},
         {data: 'price', name: 'price'},
         {data: 'reward', name: 'reward'},
+        {data: 'contents', name: 'contents', searchable: false},
       ],
       "fnDrawCallback": function () {
         $(document).ready(function () {
+
+          // Load images when they are in the viewport
           $("img").unveil(100);
+
+          // Resolve EVE ids to names.
           ids_to_names();
+
+          // After loading the contracts data, bind a click event
+          // on items with the contract-item class.
+          $('a.contract-item').on('click', function () {
+
+            // Small hack to get an ajaxable url from Laravel
+            var url = "{{ route('character.view.contracts.items', ['character_id' => $request->character_id, 'contract_id' => ':contractid']) }}";
+            var contract_id = $(this).attr('a-contract-id');
+            url = url.replace(':contractid', contract_id);
+
+            // Perform an ajax request for the contract items
+            $.get(url, function (data) {
+              $('span#contract-items-result').html(data);
+            });
+
+          });
+
         });
       }
     });

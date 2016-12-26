@@ -75,8 +75,27 @@ class ContractsController extends Controller
 
                 return number($row->reward);
             })
+            ->addColumn('contents', function ($row) {
+
+                return view('web::partials.contractcontentsbutton', compact('row'))
+                    ->render();
+            })
             ->make(true);
 
+    }
+
+    /**
+     * @param int $character_id
+     * @param int $contract_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getContractsItemsData(int $character_id, int $contract_id)
+    {
+
+        $assets = $this->getCharacterContractsItems($character_id, $contract_id);
+
+        return view('web::character.contractitems', compact('assets'));
     }
 
 }
