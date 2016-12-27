@@ -63,7 +63,7 @@ abstract class AbstractMenu
         // Check if the current user has the permission
         // required to see the menu
         if (isset($menu_data['permission']))
-            if (!auth()->user()->has($menu_data['permission']))
+            if (!auth()->user()->has($menu_data['permission'], false))
                 return null;
 
         return $menu_data;

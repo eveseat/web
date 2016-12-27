@@ -61,6 +61,13 @@ class Sidebar extends AbstractMenu
         $view->with('menu', collect($menu)->map(function ($menu_data, $package_name) {
 
             return $this->load_plugin_menu($package_name, $menu_data);
+
+        })->filter(function ($entry) {
+
+            // Clean out empty entries that may appear as a result of
+            // permissions not being granted.
+            if (!is_null($entry))
+                return $entry;
         }));
     }
 }
