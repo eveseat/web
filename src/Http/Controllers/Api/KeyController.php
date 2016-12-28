@@ -326,8 +326,13 @@ class KeyController extends Controller
             ->take(50)
             ->get();
 
-        // Get worker information.
-        $key_type = $key->info->type == 'Corporation' ? 'corporation' : 'character';
+        // Get worker information. If we dont have key info yet,
+        // just default to a character. It will update later.
+        if ($key->info)
+            $key_type = $key->info->type == 'Corporation' ? 'corporation' : 'character';
+        else
+            $key_type = 'character';
+
         $available_workers = config('eveapi.worker_groups');
         $current_workers = $key->api_call_constraints;
 
@@ -356,7 +361,7 @@ class KeyController extends Controller
         $job_id = $this->addUniqueJob(CheckAndQueueKey::class, $job);
 
         return redirect()->back()
-            ->with('success', 'Update job ' . $job_id . ' Queued');
+            ->with('success', 'Added job ' . $job_id);
     }
 
     /**
