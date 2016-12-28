@@ -67,11 +67,12 @@
             </tr>
 
             </tbody>
-            @if($asset_contents->where('itemID',$asset->itemID)->count() > 0)
+
+            @if($asset_contents->where('itemID', $asset->itemID)->count() > 0)
 
               <tbody style="display: none;" class="tbodycontent">
 
-              @foreach( $asset_contents->where('itemID',$asset->itemID) as $asset_content)
+              @foreach( $asset_contents->where('itemID', $asset->itemID) as $asset_content)
 
                 <tr class="hidding">
                   <td>{{ $asset_content->quantity }}</td>

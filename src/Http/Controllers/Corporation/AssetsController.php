@@ -38,8 +38,9 @@ class AssetsController extends Controller
     {
 
         $assets = $this->getCorporationAssets($corporation_id);
+        $asset_contents = $this->getCorporationAssetContents($corporation_id);
 
-        return view('web::corporation.assets', compact('assets'));
+        return view('web::corporation.assets', compact('assets', 'asset_contents'));
     }
 
 }
