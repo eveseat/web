@@ -361,7 +361,7 @@ class KeyController extends Controller
         $job_id = $this->addUniqueJob(CheckAndQueueKey::class, $job);
 
         return redirect()->back()
-            ->with('success', 'Update job ' . $job_id . ' Queued');
+            ->with('success', 'Added job ' . $job_id);
     }
 
     /**
