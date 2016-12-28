@@ -94,9 +94,11 @@
         </dd>
       </dl>
 
-      <a href="{{ route('api.key.queue', ['key_id' => $key->key_id]) }}" class="btn btn-success btn-block">
-        {{ trans('web::seat.api_job_update') }}
-      </a>
+      @if($key->enabled)
+        <a href="{{ route('api.key.queue', ['key_id' => $key->key_id]) }}" class="btn btn-success btn-block">
+          {{ trans('web::seat.api_job_update') }}
+        </a>
+      @endif
 
     </div>
   </div>
