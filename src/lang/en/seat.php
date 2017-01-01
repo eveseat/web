@@ -155,7 +155,7 @@ return [
     'all_char'              => 'All Characters',
     'mail_timeline'         => 'Mail Timeline',
     'all_corp'              => 'All Corporations',
-    'configuration'         => 'Configuration',
+    'configuration'         => 'Settings',
     'access'                => 'Access Management',
     'other'                 => 'Other',
     'tools'                 => 'Tools',
