@@ -54,7 +54,8 @@
 
           <!-- Select Basic -->
           <div class="form-group">
-            <label class="col-md-4 control-label" for="require_activation">{{ trans('web::seat.require_activation') }}</label>
+            <label class="col-md-4 control-label"
+                   for="require_activation">{{ trans('web::seat.require_activation') }}</label>
             <div class="col-md-6">
               <select id="registration" name="require_activation" class="form-control">
                 <option value="yes"

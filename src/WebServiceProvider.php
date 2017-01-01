@@ -326,7 +326,7 @@ class WebServiceProvider extends ServiceProvider
                 config('web.supervisor.rpc.address'),
                 config('web.supervisor.rpc.username'),
                 config('web.supervisor.rpc.password'),
-                (int) config('web.supervisor.rpc.port')
+                (int)config('web.supervisor.rpc.port')
             );
         });
 

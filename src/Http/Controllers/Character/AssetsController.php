@@ -40,7 +40,7 @@ class AssetsController extends Controller
         $assets = $this->getCharacterAssets($character_id);
         $asset_contents = $this->getCharacterAssetContents($character_id);
 
-        return view('web::character.assets', compact('assets','asset_contents'));
+        return view('web::character.assets', compact('assets', 'asset_contents'));
     }
 
 }

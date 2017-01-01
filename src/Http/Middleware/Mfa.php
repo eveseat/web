@@ -22,7 +22,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 namespace Seat\Web\Http\Middleware;
 
 use Closure;
-use Seat\Services\Settings\Profile;
 
 class Mfa
 {

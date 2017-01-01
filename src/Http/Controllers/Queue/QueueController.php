@@ -147,7 +147,7 @@ class QueueController extends Controller
     {
 
         return Datatables::of($this->getJobs('Working'))
-            ->addColumn('actions', function($row) {
+            ->addColumn('actions', function ($row) {
 
                 return view('web::queue.partials.actions', compact('row'))
                     ->render();

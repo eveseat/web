@@ -8,7 +8,8 @@
 
         <div class="panel-heading" role="tab" id="heading{{ $message->messageID }}{{ $thread_id }}">
           <h4 class="panel-title">
-            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $message->messageID }}{{ $thread_id }}"
+            <a role="button" data-toggle="collapse" data-parent="#accordion"
+               href="#collapse{{ $message->messageID }}{{ $thread_id }}"
                aria-expanded="true" aria-controls="collapse{{ $message->messageID }}{{ $thread_id }}">
 
               "{{ $thread_message['subject'] }}"
