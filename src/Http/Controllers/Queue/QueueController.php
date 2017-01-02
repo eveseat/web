@@ -1,23 +1,24 @@
 <?php
+
 /*
-This file is part of SeAT
-
-Copyright (C) 2015, 2016  Leon Jacobs
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ * This file is part of SeAT
+ *
+ * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 
 namespace Seat\Web\Http\Controllers\Queue;
 
@@ -25,16 +26,14 @@ use Illuminate\Support\Facades\Artisan;
 use Seat\Services\Data\Queue;
 use Seat\Services\Repositories\Queue\JobRepository;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Http\Validation\Permission;
 use Yajra\Datatables\Datatables;
 
 /**
- * Class QueueController
+ * Class QueueController.
  * @package Seat\Web\Http\Controllers\Queue
  */
 class QueueController extends Controller
 {
-
     use Queue, JobRepository;
 
     /**
@@ -47,7 +46,7 @@ class QueueController extends Controller
     }
 
     /**
-     * Return Supervisor status in a json response for queue api
+     * Return Supervisor status in a json response for queue api.
      *
      * status:true Supervisor is running
      * status:false Supervisor is not running or dead
@@ -58,12 +57,12 @@ class QueueController extends Controller
     {
 
         return response()->json([
-            'status' => app('supervisor')->checkConnection()
+            'status' => app('supervisor')->checkConnection(),
         ]);
     }
 
     /**
-     * Return Supervisor information if supervisor is running
+     * Return Supervisor information if supervisor is running.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -103,7 +102,7 @@ class QueueController extends Controller
                     'start'     => carbon()
                         ->createFromTimestamp($process_info['start'])
                         ->toDateTimeString(),
-                    'log'       => $process_info['logfile']
+                    'log'       => $process_info['logfile'],
                 ]);
 
             });
@@ -168,10 +167,10 @@ class QueueController extends Controller
             'eve:update-api-call-list',
             'eve:update-eve',
             'eve:update-map',
-            'eve:update-server-status'
+            'eve:update-server-status',
         ];
 
-        if (!in_array($command_name, $accepted_commands))
+        if (! in_array($command_name, $accepted_commands))
             abort(401);
 
         Artisan::call($command_name);
@@ -255,5 +254,4 @@ class QueueController extends Controller
         return redirect()->route('queue.status')
             ->with('success', 'All job history cleared.');
     }
-
 }

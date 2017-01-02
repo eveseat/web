@@ -1,23 +1,24 @@
 <?php
+
 /*
-This file is part of SeAT
-
-Copyright (C) 2015, 2016  Leon Jacobs
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ * This file is part of SeAT
+ *
+ * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 
 return [
 
@@ -395,7 +396,7 @@ return [
     'other_apps'                   => 'Ander Apps',
     'confirm_code'                 => "Bevestig 'n verifikasie Kode",
     'confirm_help'                 => "Bevestig jou opstelling deur 'n bevestigings kode gegenereer deur " .
-        "jou verifikasie app in te tik.",
+        'jou verifikasie app in te tik.',
     'code'                         => 'Kode',
     'confirm_setup'                => 'Bevestig',
 
@@ -413,7 +414,7 @@ return [
     'no_working'                   => 'Daar is tans geen werk an die gang nie',
     'no_queue'                     => 'Daar wag tans geen werk nie',
     'job_error_detail'             => 'Werksprobleem besonderhede',
-    'error_details_desc'           => "Hierdie is die volledige fout. As hierdie nie iets is wat jy verstaan nie " .
+    'error_details_desc'           => 'Hierdie is die volledige fout. As hierdie nie iets is wat jy verstaan nie ' .
         "of 'n ontwikkelaar het daarvoor gevra, kopie en plak die hele gedeelte hier onder en sit dit " .
         " op 'n website soos as pastebin stuur die skakel aan.",
     'full_job_error'               => 'Volledige Taak Probleem',

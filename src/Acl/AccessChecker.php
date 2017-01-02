@@ -1,23 +1,24 @@
 <?php
+
 /*
-This file is part of SeAT
-
-Copyright (C) 2015, 2016  Leon Jacobs
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ * This file is part of SeAT
+ *
+ * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 
 namespace Seat\Web\Acl;
 
@@ -25,24 +26,23 @@ use Seat\Services\Repositories\Character\Character;
 use Seat\Services\Repositories\Corporation\Corporation;
 
 /**
- * Class AccessChecker
+ * Class AccessChecker.
  * @package Seat\Web\Acl
  */
 trait AccessChecker
 {
-
     // Use repositories to get character & corp info
     use Character, Corporation;
 
     /**
-     * The CharacterID from the request
+     * The CharacterID from the request.
      *
      * @var
      */
     protected $character_id;
 
     /**
-     * The CorporationID from the request
+     * The CorporationID from the request.
      *
      * @var
      */
@@ -50,7 +50,7 @@ trait AccessChecker
 
     /**
      * Checks if the user has any of the required
-     * permissions
+     * permissions.
      *
      * @param array      $permissions
      * @param bool|false $need_affiliation
@@ -85,7 +85,7 @@ trait AccessChecker
         if ($this->hasSuperUser())
             return true;
 
-        if (!$need_affiliation) {
+        if (! $need_affiliation) {
 
             if ($this->hasPermissions($permission))
                 return true;
@@ -103,7 +103,7 @@ trait AccessChecker
 
     /**
      * Determine of the current user has the
-     * superuser permission
+     * superuser permission.
      */
     public function hasSuperUser()
     {
@@ -247,8 +247,8 @@ trait AccessChecker
             'inverted_permissions'  => [],
             'inverted_affiliations' => [
                 'char' => [],
-                'corp' => []
-            ]
+                'corp' => [],
+            ],
         ];
 
         // User Accounts inherit the character and
@@ -428,7 +428,7 @@ trait AccessChecker
 
     /**
      * Determine if the current user has a specific
-     * role
+     * role.
      *
      * @param $role_name
      *

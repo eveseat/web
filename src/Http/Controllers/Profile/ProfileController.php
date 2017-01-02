@@ -1,42 +1,41 @@
 <?php
+
 /*
-This file is part of SeAT
-
-Copyright (C) 2015, 2016  Leon Jacobs
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ * This file is part of SeAT
+ *
+ * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 
 namespace Seat\Web\Http\Controllers\Profile;
 
 use Seat\Services\Repositories\Character\Info;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Services\Settings\Profile;
-use Seat\Services\Settings\UserSettings;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\EmailUpdate;
 use Seat\Web\Http\Validation\PasswordUpdate;
 use Seat\Web\Http\Validation\ProfileSettings;
 
 /**
- * Class ProfileController
+ * Class ProfileController.
  * @package Seat\Web\Http\Controllers\Profile
  */
 class ProfileController extends Controller
 {
-
     use UserRespository, Info;
 
     /**
@@ -73,7 +72,7 @@ class ProfileController extends Controller
 
         // If the multifactor authentication is being disabled,
         // clear out the token we have on record too.
-        if ($request->require_mfa == "no" && Profile::get('require_mfa') == "yes") {
+        if ($request->require_mfa == 'no' && Profile::get('require_mfa') == 'yes') {
 
             auth()->user()->update(['mfa_token' => null]);
         }
@@ -107,9 +106,9 @@ class ProfileController extends Controller
     public function postUpdatePassword(PasswordUpdate $request)
     {
 
-        if (!auth()->validate([
+        if (! auth()->validate([
             'name'     => auth()->user()->name,
-            'password' => $request->current_password])
+            'password' => $request->current_password, ])
         )
             return redirect()->back()
                 ->with('error',
@@ -138,5 +137,4 @@ class ProfileController extends Controller
         return redirect()->back()
             ->with('success', 'Email updated!');
     }
-
 }

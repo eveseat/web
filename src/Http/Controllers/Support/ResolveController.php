@@ -1,40 +1,39 @@
 <?php
+
 /*
-This file is part of SeAT
-
-Copyright (C) 2015, 2016  Leon Jacobs
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ * This file is part of SeAT
+ *
+ * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 
 namespace Seat\Web\Http\Controllers\Support;
 
-use App\Http\Requests;
 use Cache;
 use Illuminate\Http\Request;
 use Seat\Web\Http\Controllers\Controller;
 
 /**
- * Class ResolveController
+ * Class ResolveController.
  * @package Seat\Web\Http\Controllers\Support
  */
 class ResolveController extends Controller
 {
-
     /**
-     * The prefix used for name_ids in the cache
+     * The prefix used for name_ids in the cache.
      *
      * @var string
      */
@@ -65,7 +64,7 @@ class ResolveController extends Controller
 
         // Call the EVE API for any outstanding ids that need
         // resolution
-        if (!empty($ids)) {
+        if (! empty($ids)) {
 
             $pheal = app()
                 ->make('Seat\Eveapi\Helpers\PhealSetup')
@@ -74,7 +73,7 @@ class ResolveController extends Controller
             foreach (array_chunk($ids, 30) as $id_chunk) {
 
                 $names = $pheal->eveScope->CharacterName([
-                    'ids' => implode(',', $id_chunk)]);
+                    'ids' => implode(',', $id_chunk), ]);
 
                 foreach ($names->characters as $result) {
 

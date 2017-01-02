@@ -1,23 +1,24 @@
 <?php
+
 /*
-This file is part of SeAT
-
-Copyright (C) 2015, 2016  Leon Jacobs
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ * This file is part of SeAT
+ *
+ * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 
 namespace Seat\Web\Http\Controllers\Api;
 
@@ -31,18 +32,16 @@ use Seat\Eveapi\Models\JobTracking;
 use Seat\Eveapi\Traits\JobManager;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\ApiKey;
-use Seat\Web\Http\Validation\Permission;
 use Seat\Web\Http\Validation\WorkerConstraint;
 use Seat\Web\Models\User;
 use Yajra\Datatables\Datatables;
 
 /**
- * Class KeyController
+ * Class KeyController.
  * @package Seat\Web\Http\Controllers\Api
  */
 class KeyController extends Controller
 {
-
     use JobManager;
 
     /**
@@ -153,7 +152,7 @@ class KeyController extends Controller
 
         $keys = ApiKeyModel::with('info');
 
-        if (!auth()->user()->has('apikey.list', false))
+        if (! auth()->user()->has('apikey.list', false))
             $keys = $keys
                 ->where('user_id', auth()->user()->id);
 
@@ -182,7 +181,7 @@ class KeyController extends Controller
                 // where it makes sense. Unfortunately this had
                 // to be done because of the way the characters
                 // are incuded on a key.
-                if (!empty(request()->input('search.value')))
+                if (! empty(request()->input('search.value')))
                     $query->whereHas('characters', function ($filter) {
 
                         $filter->where(
@@ -196,14 +195,14 @@ class KeyController extends Controller
                     });
 
                 // Ensure we take permissions into account!
-                if (!auth()->user()->has('apikey.list', false))
+                if (! auth()->user()->has('apikey.list', false))
                     $query->where('user_id', auth()->user()->id);
 
             })
             ->setRowClass(function ($row) {
 
                 // Make disabled keys red.
-                if (!$row->enabled)
+                if (! $row->enabled)
                     return 'danger';
             })
             ->removeColumn('v_code')
@@ -269,7 +268,7 @@ class KeyController extends Controller
 
         $keys = ApiKeyModel::where('enabled', '<>', 1);
 
-        if (!auth()->user()->has('apikey.list', false))
+        if (! auth()->user()->has('apikey.list', false))
             $keys = $keys
                 ->where('user_id', auth()->user()->id);
 
@@ -291,12 +290,12 @@ class KeyController extends Controller
 
         $keys = ApiKeyModel::where('enabled', 1);
 
-        if (!auth()->user()->has('apikey.list', false))
+        if (! auth()->user()->has('apikey.list', false))
             $keys = $keys->where('user_id', auth()->user()->id());
 
         $keys->update([
             'enabled'    => 0,
-            'last_error' => null
+            'last_error' => null,
         ]);
 
         return redirect()->back()
@@ -436,5 +435,4 @@ class KeyController extends Controller
             ->make(true);
 
     }
-
 }

@@ -1,23 +1,24 @@
 <?php
+
 /*
-This file is part of SeAT
-
-Copyright (C) 2015, 2016  Leon Jacobs
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ * This file is part of SeAT
+ *
+ * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 
 namespace Seat\Web\Models;
 
@@ -34,12 +35,11 @@ use Seat\Web\Models\Acl\Affiliation;
 use Seat\Web\Models\Acl\Role;
 
 /**
- * Class User
+ * Class User.
  * @package Seat\Web\Models
  */
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
-
     use Authenticatable, CanResetPassword, AccessChecker, Notifiable;
 
     /**
@@ -55,7 +55,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'mfa_token', 'active', 'eve_id', 'token'];
+        'name', 'email', 'password', 'mfa_token', 'active', 'eve_id', 'token', ];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -82,7 +82,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Make sure we cleanup on delete
+     * Make sure we cleanup on delete.
      *
      * @return bool|null
      * @throws \Exception
@@ -102,7 +102,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Users have a login history
+     * Users have a login history.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -113,7 +113,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * This user may have certain roles assigned
+     * This user may have certain roles assigned.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -125,7 +125,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     /**
      * This user may be affiliated manually to
-     * other characterID's and or corporations
+     * other characterID's and or corporations.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
