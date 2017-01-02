@@ -48,7 +48,7 @@
             <tbody style="border-top: 0px;">
 
             <tr>
-              @if($asset_contents->where('itemID',$asset->itemID)->count() > 0)
+              @if($asset_contents->where('parentAssetItemID', $asset->itemID)->count() > 0)
 
                 <td><i class="fa fa-plus viewcontent" style="cursor: pointer;"></i></td>
 
@@ -68,11 +68,11 @@
 
             </tbody>
 
-            @if($asset_contents->where('itemID', $asset->itemID)->count() > 0)
+            @if($asset_contents->where('parentAssetItemID', $asset->itemID)->count() > 0)
 
               <tbody style="display: none;" class="tbodycontent">
 
-              @foreach( $asset_contents->where('itemID', $asset->itemID) as $asset_content)
+              @foreach( $asset_contents->where('parentAssetItemID', $asset->itemID) as $asset_content)
 
                 <tr class="hidding">
                   <td>{{ $asset_content->quantity }}</td>
