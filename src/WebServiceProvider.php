@@ -1,23 +1,24 @@
 <?php
+
 /*
-This file is part of SeAT
-
-Copyright (C) 2015, 2016  Leon Jacobs
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ * This file is part of SeAT
+ *
+ * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 
 namespace Seat\Web;
 
@@ -56,12 +57,11 @@ use Supervisor\Supervisor;
 use Validator;
 
 /**
- * Class EveapiServiceProvider
+ * Class EveapiServiceProvider.
  * @package Seat\Eveapi
  */
 class WebServiceProvider extends ServiceProvider
 {
-
     /**
      * Bootstrap the application services.
      *
@@ -97,18 +97,18 @@ class WebServiceProvider extends ServiceProvider
     }
 
     /**
-     * Include the routes
+     * Include the routes.
      */
     public function add_routes()
     {
 
-        if (!$this->app->routesAreCached())
+        if (! $this->app->routesAreCached())
             include __DIR__ . '/Http/routes.php';
     }
 
     /**
      * Set the paths for migrations and assets that
-     * should be published to the main application
+     * should be published to the main application.
      */
     public function add_publications()
     {
@@ -120,7 +120,7 @@ class WebServiceProvider extends ServiceProvider
     }
 
     /**
-     * Set the path and namespace for the vies
+     * Set the path and namespace for the vies.
      */
     public function add_views()
     {
@@ -138,7 +138,7 @@ class WebServiceProvider extends ServiceProvider
 
         // User information view composer
         $this->app['view']->composer([
-            'web::includes.header'
+            'web::includes.header',
         ], User::class);
 
         // Sidebar menu view composer
@@ -150,12 +150,12 @@ class WebServiceProvider extends ServiceProvider
             'web::character.includes.summary',
             'web::character.includes.menu',
             'web::character.intel.includes.menu',
-            'web::character.journal.includes.menu'
+            'web::character.journal.includes.menu',
         ], CharacterSummary::class);
 
         // Character menu composer
         $this->app['view']->composer([
-            'web::character.includes.menu'
+            'web::character.includes.menu',
         ], CharacterMenu::class);
 
         // Corporation info composer
@@ -163,18 +163,18 @@ class WebServiceProvider extends ServiceProvider
             'web::corporation.includes.summary',
             'web::corporation.includes.menu',
             'web::corporation.security.includes.menu',
-            'web::corporation.ledger.includes.menu'
+            'web::corporation.ledger.includes.menu',
         ], CorporationSummary::class);
 
         // Corporation menu composer
         $this->app['view']->composer([
-            'web::corporation.includes.menu'
+            'web::corporation.includes.menu',
         ], CorporationMenu::class);
 
     }
 
     /**
-     * Include the translations and set the namespace
+     * Include the translations and set the namespace.
      */
     public function add_translations()
     {
@@ -183,7 +183,7 @@ class WebServiceProvider extends ServiceProvider
     }
 
     /**
-     * Include the middleware needed
+     * Include the middleware needed.
      *
      * @param $router
      */
@@ -222,7 +222,7 @@ class WebServiceProvider extends ServiceProvider
 
     /**
      * Register the custom events that may fire for
-     * this package
+     * this package.
      */
     public function add_events()
     {
@@ -237,7 +237,7 @@ class WebServiceProvider extends ServiceProvider
     }
 
     /**
-     * Add custom validators that are not part of Laravel core
+     * Add custom validators that are not part of Laravel core.
      */
     public function add_custom_validators()
     {

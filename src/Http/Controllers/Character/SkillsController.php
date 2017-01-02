@@ -1,23 +1,24 @@
 <?php
+
 /*
-This file is part of SeAT
-
-Copyright (C) 2015, 2016  Leon Jacobs
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ * This file is part of SeAT
+ *
+ * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 
 namespace Seat\Web\Http\Controllers\Character;
 
@@ -27,12 +28,11 @@ use Seat\Services\Repositories\Eve\EveRepository;
 use Seat\Web\Http\Controllers\Controller;
 
 /**
- * Class SkillsController
+ * Class SkillsController.
  * @package Seat\Web\Http\Controllers\Character
  */
 class SkillsController extends Controller
 {
-
     use Skills;
     use EveRepository;
 
@@ -67,7 +67,7 @@ class SkillsController extends Controller
 
         return response()->json([
             'labels'   => [
-                'Level 0', 'Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5'
+                'Level 0', 'Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5',
             ],
             'datasets' => [
                 [
@@ -78,10 +78,10 @@ class SkillsController extends Controller
                         '#00a65a',
                         '#605ca8',
                         '#001f3f',
-                        '#3c8dbc'
-                    ]
-                ]
-            ]
+                        '#3c8dbc',
+                    ],
+                ],
+            ],
         ]);
     }
 
@@ -117,10 +117,9 @@ class SkillsController extends Controller
                     'backgroundColor'      => 'rgba(60,141,188,0.3)',
                     'borderColor'          => '#3c8dbc',
                     'pointBackgroundColor' => '#3c8dbc',
-                    'pointBorderColor'     => '#fff'
-                ]
-            ]
+                    'pointBorderColor'     => '#fff',
+                ],
+            ],
         ]);
     }
-
 }
