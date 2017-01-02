@@ -1,34 +1,35 @@
 <?php
+
 /*
-This file is part of SeAT
-
-Copyright (C) 2015, 2016  Leon Jacobs
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ * This file is part of SeAT
+ *
+ * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 
 // Namespace all of the routes for this package.
 Route::group([
     'namespace'  => 'Seat\Web\Http\Controllers',
-    'middleware' => 'web'   // Web middleware for state etc since L5.3
+    'middleware' => 'web',   // Web middleware for state etc since L5.3
 ], function () {
 
     // Authentication & Registration Routes.
     Route::group([
         'namespace'  => 'Auth',
-        'middleware' => 'requirements'
+        'middleware' => 'requirements',
     ], function () {
 
         // Since Laravel 5.3, its recommended to use Auth::routes(),
@@ -49,7 +50,7 @@ Route::group([
     // Email Verification Routes
     Route::group([
         'namespace'  => 'Auth',
-        'middleware' => ['requirements']
+        'middleware' => ['requirements'],
     ], function () {
 
         Route::group(['prefix' => 'auth/email'], function () {
@@ -93,7 +94,7 @@ Route::group([
             // User Profile Routes
             Route::group([
                 'namespace' => 'Profile',
-                'prefix'    => 'profile'
+                'prefix'    => 'profile',
             ], function () {
 
                 // Preferences
@@ -122,7 +123,7 @@ Route::group([
             // Api Key Routes
             Route::group([
                 'namespace' => 'Api',
-                'prefix'    => 'api-key'
+                'prefix'    => 'api-key',
             ], function () {
 
                 include __DIR__ . '/Routes/Api/Key.php';
@@ -132,7 +133,7 @@ Route::group([
             // Corporation Routes
             Route::group([
                 'namespace' => 'Corporation',
-                'prefix'    => 'corporation'
+                'prefix'    => 'corporation',
             ], function () {
 
                 include __DIR__ . '/Routes/Corporation/View.php';
@@ -141,7 +142,7 @@ Route::group([
             // Character Routes
             Route::group([
                 'namespace' => 'Character',
-                'prefix'    => 'character'
+                'prefix'    => 'character',
             ], function () {
 
                 include __DIR__ . '/Routes/Character/View.php';
@@ -153,7 +154,7 @@ Route::group([
             Route::group([
                 'namespace'  => 'Configuration',
                 'prefix'     => 'configuration',
-                'middleware' => 'bouncer:superuser'
+                'middleware' => 'bouncer:superuser',
             ], function () {
 
                 // User Management
@@ -214,14 +215,14 @@ Route::group([
             // Tools Routes
             Route::group([
                 'namespace' => 'Tools',
-                'prefix'    => 'tools'
+                'prefix'    => 'tools',
             ], function () {
 
                 include __DIR__ . '/Routes/Tools/Standings.php';
 
                 // People Group Routes
                 Route::group([
-                    'prefix' => 'people'
+                    'prefix' => 'people',
                 ], function () {
 
                     include __DIR__ . '/Routes/Tools/People.php';

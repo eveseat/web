@@ -1,45 +1,45 @@
 <?php
+
 /*
-This file is part of SeAT
-
-Copyright (C) 2015, 2016  Leon Jacobs
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ * This file is part of SeAT
+ *
+ * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 
 namespace Seat\Web\Http\Composers;
 
 use Illuminate\Contracts\View\View;
 
 /**
- * Class CorporationMenu
+ * Class CorporationMenu.
  * @package Seat\Web\Http\Composers
  */
 class CorporationMenu extends AbstractMenu
 {
-
     /**
      * Create a new sidebar composer.
      */
     public function __construct()
     {
-        //
+
     }
 
     /**
-     * Return required keys in menu structure
+     * Return required keys in menu structure.
      *
      * @return array
      */
@@ -47,7 +47,7 @@ class CorporationMenu extends AbstractMenu
     {
 
         return [
-            'name', 'permission', 'highlight_view', 'route'
+            'name', 'permission', 'highlight_view', 'route',
         ];
     }
 
@@ -66,7 +66,7 @@ class CorporationMenu extends AbstractMenu
         $menu = [];
 
         // Load any package menus
-        if (!empty(config('package.corporation.menu'))) {
+        if (! empty(config('package.corporation.menu'))) {
             foreach (config('package.corporation.menu') as $menu_data) {
                 $prepared_menu = $this->load_plugin_menu('corporation', $menu_data);
                 array_push($menu, $prepared_menu);

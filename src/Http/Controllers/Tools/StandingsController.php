@@ -1,23 +1,24 @@
 <?php
+
 /*
-This file is part of SeAT
-
-Copyright (C) 2015, 2016  Leon Jacobs
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ * This file is part of SeAT
+ *
+ * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 
 namespace Seat\Web\Http\Controllers\Tools;
 
@@ -36,12 +37,11 @@ use Seat\Web\Models\StandingsProfile;
 use Seat\Web\Models\StandingsProfileStanding;
 
 /**
- * Class StandingsController
+ * Class StandingsController.
  * @package Seat\Web\Http\Controllers\Other
  */
 class StandingsController extends Controller
 {
-
     use Character, Corporation, CharacterContacts, CorporationContacts;
 
     /**
@@ -71,7 +71,7 @@ class StandingsController extends Controller
     {
 
         StandingsProfile::create([
-            'name' => $request->input('name')
+            'name' => $request->input('name'),
         ]);
 
         return redirect()->back()
@@ -132,7 +132,7 @@ class StandingsController extends Controller
                     ->getPheal();
 
                 $names = $pheal->eveScope->CharacterID([
-                    'names' => $request->input('q')
+                    'names' => $request->input('q'),
                 ]);
 
                 foreach ($names->characters as $result) {
@@ -140,8 +140,8 @@ class StandingsController extends Controller
                     $response['results'] = [
                         [
                             'id'   => $result->characterID,
-                            'text' => $result->name
-                        ]];
+                            'text' => $result->name,
+                        ], ];
 
                     // Cache the entry
                     Cache::forever(
@@ -171,7 +171,7 @@ class StandingsController extends Controller
 
         // Ensure that the element we got is one what we managed
         // to resolve earlier.
-        if (!cache($this->cache_prefix . $element_id))
+        if (! cache($this->cache_prefix . $element_id))
             return redirect()->back()
                 ->with('error', 'Invalid Element ID');
 
@@ -216,12 +216,12 @@ class StandingsController extends Controller
                 $standing = StandingsProfileStanding::firstOrNew([
                     'standings_profile_id' => $request->input('id'),
                     'elementID'            => $contact->contactID,
-                    'type'                 => $type
+                    'type'                 => $type,
                 ])->fill([
 
                     // Update the standing incase its different to an
                     // existing one.
-                    'standing' => $contact->standing
+                    'standing' => $contact->standing,
                 ]);
 
                 // Save the standings entry to the profile.
@@ -247,12 +247,12 @@ class StandingsController extends Controller
                 $standing = StandingsProfileStanding::firstOrNew([
                     'standings_profile_id' => $request->input('id'),
                     'elementID'            => $contact->contactID,
-                    'type'                 => $type
+                    'type'                 => $type,
                 ])->fill([
 
                     // Update the standing incase its different to an
                     // existing one.
-                    'standing' => $contact->standing
+                    'standing' => $contact->standing,
                 ]);
 
                 // Save the standings entry to the profile.
@@ -282,5 +282,4 @@ class StandingsController extends Controller
             ->with('success', 'Standing removed!');
 
     }
-
 }

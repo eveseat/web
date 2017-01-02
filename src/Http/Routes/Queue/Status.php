@@ -1,103 +1,104 @@
 <?php
+
 /*
-This file is part of SeAT
-
-Copyright (C) 2015, 2016  Leon Jacobs
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ * This file is part of SeAT
+ *
+ * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 
 Route::get('/status', [
     'as'         => 'queue.status',
     'middleware' => 'bouncer:queue_manager',
-    'uses'       => 'QueueController@getStatus'
+    'uses'       => 'QueueController@getStatus',
 ]);
 
 Route::get('/json/supervisor/status', [
     'as'         => 'json.supervisor.status',
     'middleware' => 'bouncer:queue_manager',
-    'uses'       => 'QueueController@getSupervisorStatus'
+    'uses'       => 'QueueController@getSupervisorStatus',
 ]);
 
 Route::get('/json/supervisor/processes', [
     'as'         => 'json.supervisor.processes',
     'middleware' => 'bouncer:queue_manager',
-    'uses'       => 'QueueController@getSupervisorProcesses'
+    'uses'       => 'QueueController@getSupervisorProcesses',
 ]);
 
 Route::get('/supervisor/information', [
     'as'         => 'queue.supervisor.information',
     'middleware' => 'bouncer:queue_manager',
-    'uses'       => 'QueueController@getSupervisorInformation'
+    'uses'       => 'QueueController@getSupervisorInformation',
 ]);
 
 Route::get('/json/jobs/queued', [
     'as'         => 'json.jobs.queued',
     'middleware' => 'bouncer:queue_manager',
-    'uses'       => 'QueueController@getQueuedJobs'
+    'uses'       => 'QueueController@getQueuedJobs',
 ]);
 
 Route::get('/json/jobs/working', [
     'as'         => 'json.jobs.working',
     'middleware' => 'bouncer:queue_manager',
-    'uses'       => 'QueueController@getWorkingJobs'
+    'uses'       => 'QueueController@getWorkingJobs',
 ]);
 
 Route::get('/kill/{job_id}', [
     'as'         => 'kill.job',
     'middleware' => 'bouncer:queue_manager',
-    'uses'       => 'QueueController@getKillJob'
+    'uses'       => 'QueueController@getKillJob',
 ]);
 
 Route::get('/short-status', [
     'as'   => 'queue.status.short',
-    'uses' => 'QueueController@getShortStatus'
+    'uses' => 'QueueController@getShortStatus',
 ]);
 
 Route::get('/run/{command_name}', [
     'as'         => 'queue.command.run',
     'middleware' => 'bouncer:queue_manager',
-    'uses'       => 'QueueController@getSubmitJob'
+    'uses'       => 'QueueController@getSubmitJob',
 ]);
 
 Route::get('/errors', [
     'as'         => 'queue.errors',
     'middleware' => 'bouncer:queue_manager',
-    'uses'       => 'QueueController@getErrors'
+    'uses'       => 'QueueController@getErrors',
 ]);
 
 Route::get('/errors/detail/{job_id}', [
     'as'         => 'queue.errors.detail',
     'middleware' => 'bouncer:queue_manager',
-    'uses'       => 'QueueController@getErrorDetail'
+    'uses'       => 'QueueController@getErrorDetail',
 ]);
 
 Route::get('/errors/clear', [
     'as'         => 'queue.errors.clear',
     'middleware' => 'bouncer:queue_manager',
-    'uses'       => 'QueueController@getClearErrors'
+    'uses'       => 'QueueController@getClearErrors',
 ]);
 
 Route::get('/history', [
     'as'         => 'queue.history',
     'middleware' => 'bouncer:queue_manager',
-    'uses'       => 'QueueController@getHistory'
+    'uses'       => 'QueueController@getHistory',
 ]);
 
 Route::get('/history/clear', [
     'as'         => 'queue.history.clear',
     'middleware' => 'bouncer:queue_manager',
-    'uses'       => 'QueueController@getClearHistory'
+    'uses'       => 'QueueController@getClearHistory',
 ]);

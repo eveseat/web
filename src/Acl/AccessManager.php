@@ -1,23 +1,24 @@
 <?php
+
 /*
-This file is part of SeAT
-
-Copyright (C) 2015, 2016  Leon Jacobs
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ * This file is part of SeAT
+ *
+ * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 
 namespace Seat\Web\Acl;
 
@@ -27,15 +28,14 @@ use Seat\Web\Models\Acl\Role as RoleModel;
 use Seat\Web\Models\User as UserModel;
 
 /**
- * Class AccessManager
+ * Class AccessManager.
  * @package Seat\Web\Acl
  */
 trait AccessManager
 {
-
     /**
      * Return everything related to the Role
-     * with eager loading
+     * with eager loading.
      *
      * @param int $role_id
      *
@@ -47,12 +47,12 @@ trait AccessManager
         $roles = RoleModel::with(
             'permissions', 'users', 'affiliations');
 
-        if (!is_null($role_id)) {
+        if (! is_null($role_id)) {
 
             $roles = $roles->where('id', $role_id)
                 ->first();
 
-            if (!$roles)
+            if (! $roles)
                 abort(404);
 
             return $roles;
@@ -62,7 +62,7 @@ trait AccessManager
     }
 
     /**
-     * Add a new role
+     * Add a new role.
      *
      * @param string $title
      *
@@ -78,7 +78,7 @@ trait AccessManager
     }
 
     /**
-     * Remove a role by title
+     * Remove a role by title.
      *
      * @param string $title
      *
@@ -90,11 +90,10 @@ trait AccessManager
         $role = RoleModel::where('title', $title)->first();
         $this->removeRole($role->id);
 
-        return;
     }
 
     /**
-     * Remove a role
+     * Remove a role.
      *
      * @param int $id
      *
@@ -107,7 +106,7 @@ trait AccessManager
     }
 
     /**
-     * Give a role many permissions
+     * Give a role many permissions.
      *
      * @param       $role_id
      * @param array $permissions
@@ -119,11 +118,10 @@ trait AccessManager
         foreach ($permissions as $key => $permission_name)
             $this->giveRolePermission($role_id, $permission_name, $inverse);
 
-        return;
     }
 
     /**
-     * Give a Role a permission
+     * Give a Role a permission.
      *
      * @param int    $role_id
      * @param string $permission_name
@@ -135,20 +133,19 @@ trait AccessManager
         $role = $this->getRole($role_id);
 
         $permission = PermissionModel::firstOrNew([
-            'title' => $permission_name
+            'title' => $permission_name,
         ]);
 
         // If the role does not already have the permission
         // add it. We will also apply the inverse rule as an
         // extra attrivute on save()
-        if (!$role->permissions->contains($permission->id))
+        if (! $role->permissions->contains($permission->id))
             $role->permissions()->save($permission, ['not' => $inverse]);
 
-        return;
     }
 
     /**
-     * Get a role
+     * Get a role.
      *
      * @param int $id
      *
@@ -161,7 +158,7 @@ trait AccessManager
     }
 
     /**
-     * Remove a permission from a Role
+     * Remove a permission from a Role.
      *
      * @param int $permission_id
      * @param int $role_id
@@ -172,12 +169,10 @@ trait AccessManager
         $role = $this->getRole($role_id);
         $role->permissions()->detach($permission_id);
 
-        return;
-
     }
 
     /**
-     * Give an array of usernames a role
+     * Give an array of usernames a role.
      *
      * @param array $user_names
      * @param int   $role_id
@@ -191,12 +186,10 @@ trait AccessManager
             $this->giveUserRole($user->id, $role_id);
         }
 
-        return;
-
     }
 
     /**
-     * Give a user a Role
+     * Give a user a Role.
      *
      * @param int $user_id
      * @param int $role_id
@@ -207,20 +200,18 @@ trait AccessManager
         $user = UserModel::find($user_id);
 
         $role = RoleModel::firstOrNew([
-            'id' => $role_id
+            'id' => $role_id,
         ]);
 
         // If the role does not already have the user
         // add it.
-        if (!$role->users->contains($user->id))
+        if (! $role->users->contains($user->id))
             $role->users()->save($user);
-
-        return;
 
     }
 
     /**
-     * Remove a user from a role
+     * Remove a user from a role.
      *
      * @param int $user_id
      * @param int $role_id
@@ -231,7 +222,6 @@ trait AccessManager
         $role = $this->getRole($role_id);
         $role->users()->detach($user_id);
 
-        return;
     }
 
     /**
@@ -245,7 +235,6 @@ trait AccessManager
         foreach ($affiliations as $affiliation)
             $this->giveRoleCorporationAffiliation($role_id, $affiliation, $inverse);
 
-        return;
     }
 
     /**
@@ -260,13 +249,11 @@ trait AccessManager
 
         $affiliation = AffiliationModel::firstOrNew([
             'affiliation' => $corporation_id,
-            'type'        => 'corp'
+            'type'        => 'corp',
         ]);
 
-        if (!$role->affiliations->contains($affiliation))
+        if (! $role->affiliations->contains($affiliation))
             $role->affiliations()->save($affiliation, ['not' => $inverse]);
-
-        return;
 
     }
 
@@ -281,7 +268,6 @@ trait AccessManager
         foreach ($affiliations as $affiliation)
             $this->giveRoleCharacterAffiliation($role_id, $affiliation, $inverse);
 
-        return;
     }
 
     /**
@@ -296,10 +282,10 @@ trait AccessManager
 
         $affiliation = AffiliationModel::firstOrNew([
             'affiliation' => $character_id,
-            'type'        => 'char'
+            'type'        => 'char',
         ]);
 
-        if (!$role->affiliations->contains($affiliation))
+        if (! $role->affiliations->contains($affiliation))
             $role->affiliations()->save($affiliation, ['not' => $inverse]);
     }
 
@@ -313,7 +299,5 @@ trait AccessManager
         $role = $this->getRole($role_id);
         $role->affiliations()->detach($affiliation_id);
 
-        return;
     }
-
 }
