@@ -33,6 +33,7 @@ use Laravel\Socialite\Two\User;
  */
 class EveOnlineProvider extends AbstractProvider implements ProviderInterface
 {
+
     /**
      * Base URL to the Eve Online Image Server.
      *
@@ -58,6 +59,7 @@ class EveOnlineProvider extends AbstractProvider implements ProviderInterface
 
         if ($this->hasInvalidState())
             throw new InvalidStateException;
+
         $tokens = $this->getAccessTokenResponse($this->getCode());
 
         $user = $this->mapUserToObject(
