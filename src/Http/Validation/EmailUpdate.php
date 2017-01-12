@@ -46,7 +46,7 @@ class EmailUpdate extends FormRequest
     {
 
         return [
-            'new_email' => 'required|email|confirmed',
+            'new_email' => 'required|email|confirmed|unique:users,email',
         ];
     }
 }
