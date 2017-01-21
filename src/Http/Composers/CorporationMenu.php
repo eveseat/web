@@ -68,7 +68,7 @@ class CorporationMenu extends AbstractMenu
         // Load any package menus
         if (! empty(config('package.corporation.menu'))) {
             foreach (config('package.corporation.menu') as $menu_data) {
-                $prepared_menu = $this->load_plugin_menu('corporation', $menu_data);
+                $prepared_menu = $this->load_plugin_menu('corporation', $menu_data, true);
                 array_push($menu, $prepared_menu);
             }
         }
