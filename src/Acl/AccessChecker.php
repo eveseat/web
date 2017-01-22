@@ -136,8 +136,12 @@ trait AccessChecker
         foreach ($roles as $role) {
 
             // ... in every defined permission
-            foreach ($role->permissions as $permission)
-                array_push($permissions, $permission->title);
+            foreach ($role->permissions as $permission) {
+
+                // only add permissions if it is not an inverse
+                if (! $permission->pivot->not)
+                    array_push($permissions, $permission->title);
+            }
 
         }
 

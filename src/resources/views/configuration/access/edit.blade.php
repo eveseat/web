@@ -90,11 +90,19 @@
     <div class="panel-footer">
       <b>{{ count($role->permissions) }}</b> {{ trans_choice('web::seat.permission', count($role->permissions)) }}
 
-      @if(in_array('superuser', $role_permissions))
-        <span class="label label-danger pull-right" data-toggle="tooltip"
-              title="{{ trans('web::seat.permission_inherit') }}">
+      {{-- determine if this role has the superuser role --}}
+      @if($role->permissions->where('title', 'superuser')->first())
+
+        {{-- ensure the role is not inversed --}}
+        @if($role->permissions->where('title', 'superuser')->first()->pivot->not == 0)
+
+          <span class="label label-danger pull-right" data-toggle="tooltip"
+                title="{{ trans('web::seat.permission_inherit') }}">
           {{ trans('web::seat.has_superuser') }}
-        </span>
+          </span>
+
+        @endif
+
       @endif
 
     </div>
