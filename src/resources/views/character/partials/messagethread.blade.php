@@ -22,6 +22,22 @@
           </h4>
         </div>
 
+      @else
+
+        <div class="panel-heading" role="tab" id="heading{{ $message->messageID }}0">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordion"
+               href="#collapse{{ $message->messageID }}0"
+               aria-expanded="true" aria-controls="collapse{{ $message->messageID }}0">
+
+              "{{ $message->title }}"
+              sent {{ human_diff($message->sentDate) }}
+
+              <span class="pull-right">#0</span>
+            </a>
+          </h4>
+        </div>
+
       @endif
 
       <div id="collapse{{ $message->messageID }}{{ $thread_id }}"
