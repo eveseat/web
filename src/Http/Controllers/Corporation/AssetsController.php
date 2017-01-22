@@ -26,7 +26,7 @@ use Seat\Services\Repositories\Corporation\Assets;
 use Seat\Web\Http\Controllers\Controller;
 
 /**
- * Class AssetsController
+ * Class AssetsController.
  * @package Seat\Web\Http\Controllers\Corporation
  */
 class AssetsController extends Controller
@@ -60,5 +60,4 @@ class AssetsController extends Controller
 
         return view('web::partials.assetscontents', compact('contents'));
     }
-
 }
