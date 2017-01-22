@@ -72,7 +72,11 @@
 
           <tr>
             <td>{{ studly_case($permission->title) }}</td>
-            <td>{{ $permission->pivot->not }}</td>
+            <td>
+              @if($permission->pivot->not == 1)
+                {{ trans('web::seat.inverse') }}
+              @endif
+            </td>
             <td>
               <a href="{{ route('configuration.access.roles.edit.remove.permission', ['role_id' => $role->id, 'permission_id' => $permission->id]) }}"
                  type="button" class="btn btn-danger btn-xs pull-right">
@@ -194,7 +198,11 @@
               @endif
             </td>
             <td>{{ ucfirst($affiliation->type) }}</td>
-            <td>{{ $affiliation->pivot->not }}</td>
+            <td>
+              @if($affiliation->pivot->not == 1)
+                {{ trans('web::seat.inverse') }}
+              @endif
+            </td>
             <td>
               <a href="{{ route('configuration.access.roles.edit.remove.affiliation', ['role_id' => $role->id, 'user_id' => $affiliation->id]) }}"
                  type="button" class="btn btn-danger btn-xs pull-right">
