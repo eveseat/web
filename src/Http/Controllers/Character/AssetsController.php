@@ -26,7 +26,7 @@ use Seat\Services\Repositories\Character\Assets;
 use Seat\Web\Http\Controllers\Controller;
 
 /**
- * Class AssetsController
+ * Class AssetsController.
  * @package Seat\Web\Http\Controllers\Character
  */
 class AssetsController extends Controller
