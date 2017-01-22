@@ -50,11 +50,12 @@ abstract class AbstractMenu
      *
      * @param $package_name
      * @param $menu_data
+     * @param $require_affiliation bool True if the menu is requiring affiliation
      *
      * @return array
      * @throws \Seat\Web\Exceptions\PackageMenuBuilderException
      */
-    public function load_plugin_menu($package_name, $menu_data)
+    public function load_plugin_menu($package_name, $menu_data, bool $require_affiliation = false)
     {
 
         // Validate the package menu
@@ -63,7 +64,7 @@ abstract class AbstractMenu
         // Check if the current user has the permission
         // required to see the menu
         if (isset($menu_data['permission']))
-            if (! auth()->user()->has($menu_data['permission'], false))
+            if (! auth()->user()->has($menu_data['permission'], $require_affiliation))
                 return null;
 
         return $menu_data;

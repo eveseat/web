@@ -70,7 +70,7 @@ class CharacterMenu extends AbstractMenu
 
             foreach (config('package.character.menu') as $menu_data) {
 
-                $prepared_menu = $this->load_plugin_menu('character', $menu_data);
+                $prepared_menu = $this->load_plugin_menu('character', $menu_data, true);
                 array_push($menu, $prepared_menu);
 
             }
