@@ -25,6 +25,10 @@ namespace Seat\Web\Http\Controllers\Corporation;
 use Seat\Services\Repositories\Corporation\Assets;
 use Seat\Web\Http\Controllers\Controller;
 
+/**
+ * Class AssetsController
+ * @package Seat\Web\Http\Controllers\Corporation
+ */
 class AssetsController extends Controller
 {
     use Assets;
@@ -42,4 +46,19 @@ class AssetsController extends Controller
 
         return view('web::corporation.assets', compact('assets', 'asset_contents'));
     }
+
+    /**
+     * @param int $corporation_id
+     * @param int $item_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getAssetsContents(int $corporation_id, int $item_id)
+    {
+
+        $contents = $this->getCorporationAssetContents($corporation_id, $item_id);
+
+        return view('web::partials.assetscontents', compact('contents'));
+    }
+
 }

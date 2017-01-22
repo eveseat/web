@@ -25,6 +25,10 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Services\Repositories\Character\Assets;
 use Seat\Web\Http\Controllers\Controller;
 
+/**
+ * Class AssetsController
+ * @package Seat\Web\Http\Controllers\Character
+ */
 class AssetsController extends Controller
 {
     use Assets;
@@ -38,8 +42,21 @@ class AssetsController extends Controller
     {
 
         $assets = $this->getCharacterAssets($character_id);
-        $asset_contents = $this->getCharacterAssetContents($character_id);
 
-        return view('web::character.assets', compact('assets', 'asset_contents'));
+        return view('web::character.assets', compact('assets'));
+    }
+
+    /**
+     * @param int $character_id
+     * @param int $item_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getAssetsContents(int $character_id, int $item_id)
+    {
+
+        $contents = $this->getCharacterAssetContents($character_id, $item_id);
+
+        return view('web::partials.assetscontents', compact('contents'));
     }
 }

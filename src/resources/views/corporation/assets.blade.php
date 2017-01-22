@@ -3,6 +3,8 @@
 @section('title', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.assets'))
 @section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.assets'))
 
+@inject('request', 'Illuminate\Http\Request')
+
 @section('corporation_content')
 
   <div class="panel panel-default">
@@ -48,9 +50,13 @@
             <tbody style="border-top: 0px;">
 
             <tr>
-              @if($asset_contents->where('parentAssetItemID', $asset->itemID)->count() > 0)
+              @if($asset->childContentCount > 0)
 
-                <td><i class="fa fa-plus viewcontent" style="cursor: pointer;"></i></td>
+                <td>
+                  <i class="fa fa-plus viewcontent" style="cursor: pointer;"
+                     a-item-id="{{ $asset->itemID }}" a-loaded="false">
+                  </i>
+                </td>
 
               @else
 
@@ -68,24 +74,10 @@
 
             </tbody>
 
-            @if($asset_contents->where('parentAssetItemID', $asset->itemID)->count() > 0)
+            @if($asset->childContentCount > 0)
 
               <tbody style="display: none;" class="tbodycontent">
-
-              @foreach( $asset_contents->where('parentAssetItemID', $asset->itemID) as $asset_content)
-
-                <tr class="hidding">
-                  <td>{{ $asset_content->quantity }}</td>
-                  <td>
-                    {!! img('type', $asset_content->typeID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-                    {{ $asset_content->typeName }}
-                  </td>
-                  <td>{{ number_metric($asset_content->quantity * $asset_content->volume) }} m&sup3;</td>
-                  <td>{{ $asset_content->groupName }}</td>
-                </tr>
-
-              @endforeach
-
+              <!-- assets contents populated via ajax call -->
               </tbody>
 
             @endif
@@ -105,9 +97,10 @@
 
 <script type="text/javascript">
 
-  $(".viewcontent").on("click", function (event) {
+  $(".viewcontent").on("click", function () {
 
-    // get the tbody tag direct after the button
+    var attribute_box = $(this);
+
     var contents = $(this).closest("tbody").next("tbody");
 
     // Show or hide
@@ -116,9 +109,34 @@
     // Sstyling
     if (contents.is(":visible")) {
 
+      // Get the assets contents
+
+      if (attribute_box.attr('a-loaded') == 'false') {
+
+        // Small hack to get an ajaxable url from Laravel
+        var url = "{{ route('corporation.view.assets.contents', ['corporation_id' => $request->corporation_id, 'item_id' => ':item_id']) }}";
+        var item_id = attribute_box.attr('a-item-id');
+        url = url.replace(':item_id', item_id);
+
+        // Perform an ajax request for the asset items
+        $.get(url, function (data) {
+
+          // Populate the tbody
+          contents.html(data);
+
+          // Mark the contents as loaded
+          attribute_box.attr('a-loaded', 'true');
+
+          // Re-init the lazy image loader
+          $("img").unveil(100);
+        });
+
+      }
+
+      // Apply some styleing
       $(this).removeClass("fa-plus").addClass("fa-minus");
       $(this).closest("tr").css("background-color", "#D4D4D4"); // Heading Color
-      contents.css("background-color", "#E5E5E5");              // Table Contents Colot
+      contents.css("background-color", "#E5E5E5");              // Table Contents Color
 
     } else {
 

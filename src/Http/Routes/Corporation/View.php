@@ -36,6 +36,12 @@ Route::get('/view/assets/{corporation_id}', [
     'uses'       => 'AssetsController@getAssets',
 ]);
 
+Route::get('/view/assets/contents/{corporation_id}/{item_id}', [
+    'as'         => 'corporation.view.assets.contents',
+    'middleware' => 'corporationbouncer:assets',
+    'uses'       => 'AssetsController@getAssetsContents',
+]);
+
 Route::get('/view/bookmarks/{corporation_id}', [
     'as'         => 'corporation.view.bookmarks',
     'middleware' => 'corporationbouncer:bookmarks',
