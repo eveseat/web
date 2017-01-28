@@ -50,6 +50,10 @@ class Bouncer
         // Get the currently logged in user
         $user = auth()->user();
 
+        if ($user == null) {
+            return redirect()->guest('auth/login');
+        }
+
         // Check on the clipboard if this permission
         // should be granted.
         if ($user->has($permission, false))
