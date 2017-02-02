@@ -18,6 +18,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('web/css/adminlte.min.css') }}">
 
+  <!-- view specfic head content -->
   @stack('head')
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
