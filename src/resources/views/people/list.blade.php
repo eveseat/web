@@ -59,7 +59,7 @@
     </div>
     <div class="panel-body">
         <div class="col-md-12">
-          <table class="table compact table-condensed table-hover table-responsive" id="characters">
+          <table class="table compact table-condensed table-responsive" id="characters">
             <thead>
               <tr>
                 <th>{{ trans('web::seat.main_character') }}</th>
