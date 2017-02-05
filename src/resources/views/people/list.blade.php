@@ -58,67 +58,58 @@
       <h3 class="panel-title">{{ trans('web::seat.people_groups') }}</h3>
     </div>
     <div class="panel-body">
-
         <div class="col-md-12">
-
           <table class="table compact table-condensed table-hover table-responsive" id="characters">
             <thead>
               <tr>
                 <th>{{ trans('web::seat.main_character') }}</th>
+                <th>{{ trans('web::seat.key') }}</th>
                 <th>{{ trans_choice('web::seat.character', 2) }}</th>
                 <th>{{ trans_choice('web::seat.corporation', 1) }}</th>
-                <th>{{ trans('web::seat.key') }}</th>
                 <th>{{ trans('web::seat.actions') }}</th>
               </tr>
             </thead>
             <tbody>
               @foreach($people as $person)
-
                 <tr>
                   <td id="main_character" class="{{$person->main_character_id}}">
                     {!! img('character', $person->main_character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                     {{ $person->main_character_name }}
                   </td>
-
-                    @foreach($person->members as $member)
-
-                        @foreach($member->characters as $character)
+                </tr>
+                  @foreach($person->members as $member)
+                      @foreach($member->characters as $character)
                         <tr id="characters" class="{{$person->main_character_id}}">
+                          @if ($loop->first)
+                            <td rowspan="{{ count($member->characters) }}">
+                              <span class="text-muted">Key: {{ $member->key_id }}</span>
+                            </td>
+                          @endif
                           <td>
                             <a href="{{ route('character.view.sheet', ['character_id' => $character->characterID]) }}">
                               {!! img('character', $character->characterID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                               {{ $character->characterName }}
                             </a>
                           </td>
-
                           <td>
                             {{ $character->corporationName }}
                           </td>
-
                           <td>
-                            <span>Key: {{ $member->key_id }}</span>
-                          </td>
-
-                          <td>
-                            <a href="{{ route('people.remove.group.key', ['group_id' => $person->id, 'key_id' => $member->key_id]) }}"><i class="fa fa-chain-broken"></i></a>
-                            &nbsp;
                             <a href="{{ route('people.set.main', ['group_id' => $person->id, 'character_id' => $character->characterID]) }}"data-toggle="tooltip"
                                title="" data-original-title="Set {{ $character->characterName }} as Main">
                               <i class="fa fa-angle-double-up"></i>
                             </a>
+                            @if ($loop->first)
+                              &nbsp;<a href="{{ route('people.remove.group.key', ['group_id' => $person->id, 'key_id' => $member->key_id]) }}"><i class="fa fa-chain-broken"></i></a>
+                            @endif
                           </td>
-
                         </tr>
                       @endforeach
-
                     @endforeach
-                </tr>
               @endforeach
             </tbody>
           </table>
-
         </div>
-
     </div>
   </div>
 
