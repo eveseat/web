@@ -125,6 +125,26 @@ abstract class AbstractMenu
                 if (! array_key_exists('route', $entry))
                     throw new PackageMenuBuilderException(
                         'A sub menu entry failed to define a route');
+
+                if (isset($entry['entries'])) {
+
+                    foreach ($entry['entries'] as $subentry) {
+
+                        if (! array_key_exists('name', $subentry))
+                            throw new PackageMenuBuilderException(
+                                'A sub menu entry failed to define a name');
+
+                        if (! array_key_exists('icon', $subentry))
+                            throw new PackageMenuBuilderException(
+                                'A sub menu entry failed to define an icon');
+
+                        if (! array_key_exists('route', $subentry))
+                            throw new PackageMenuBuilderException(
+                                'A sub menu entry failed to define a route');
+
+                    }
+
+                }
             }
         }
     }

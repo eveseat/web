@@ -95,7 +95,35 @@
 
                         @endif
 
+                        @if(array_key_exists('entries', $item))
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                        @endif
+
                       </a>
+
+                      @if(array_key_exists('entries', $item))
+                      <ul class="treeview-menu">
+                        @foreach($item['entries'] as $subitem)
+                        <li class="{{ isset($subitem['route']) ? (Request::url() === route($subitem['route']) ? 'active' : null) : null }}">
+                            <a href="{{ isset($subitem['route']) ? route($subitem['route']) : '#' }}">
+                              @if (array_key_exists('label', $subitem))
+                              <i class="fa {{ $subitem['icon'] or 'fa-circle-o' }}"></i>
+                              @if(array_key_exists('plural', $subitem))
+                                {{ trans_choice($subitem['label'], 2) }}
+                              @else
+                                {{ trans($subitem['label']) }}
+                              @endif
+                              @else
+                              <i class="fa {{ $subitem['icon'] or 'fa-circle-o' }}"></i> {{ $subitem['name'] }}
+                              @endif
+                            </a>
+                        </li>
+                        @endforeach
+                      </ul>
+                      @endif
+
                     </li>
 
                   @endif
@@ -121,7 +149,35 @@
 
                       @endif
 
+                      @if(array_key_exists('entries', $item))
+                      <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                      </span>
+                      @endif
+
                     </a>
+
+                    @if(array_key_exists('entries', $item))
+                      <ul class="treeview-menu">
+                        @foreach($item['entries'] as $subitem)
+                        <li class="{{ isset($subitem['route']) ? (Request::url() === route($subitem['route']) ? 'active' : null) : null }}">
+                          <a href="{{ isset($subitem['route']) ? route($subitem['route']) : '#' }}">
+                            @if (array_key_exists('label', $subitem))
+                              <i class="fa {{ $subitem['icon'] or 'fa-circle-o' }}"></i>
+                              @if(array_key_exists('plural', $subitem))
+                              {{ trans_choice($subitem['label'], 2) }}
+                              @else
+                              {{ trans($subitem['label']) }}
+                              @endif
+                              @else
+                              <i class="fa {{ $subitem['icon'] or 'fa-circle-o' }}"></i> {{ $subitem['name'] }}
+                              @endif
+                          </a>
+                        </li>
+                        @endforeach
+                      </ul>
+                    @endif
+
                   </li>
 
                 @endif
