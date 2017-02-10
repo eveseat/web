@@ -58,68 +58,58 @@
       <h3 class="panel-title">{{ trans('web::seat.people_groups') }}</h3>
     </div>
     <div class="panel-body">
-
-      @foreach($people as $person)
-
         <div class="col-md-12">
-
-          <div class="col-md-3">
-
-            <dl class="">
-              <dt>{{ trans('web::seat.main_character') }}</dt>
-              <dd>
-                {!! img('character', $person->main_character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                {{ $person->main_character_name }}
-              </dd>
-              <dt>{{ trans('web::seat.actions') }}</dt>
-              <dd>
-                <a href="{{ route('people.remove.group', ['group_id' => $person->id]) }}">
-                  {{ trans('web::seat.remove') }}
-                </a>
-              </dd>
-            </dl>
-
-          </div>
-          <div class="col-md-9">
-
-            @foreach($person->members as $member)
-
-              <ul class="list-unstyled">
-                <li>
-                  <span class="text-muted">Key: {{ $member->key_id }}</span>
-                  <a href="{{ route('people.remove.group.key', ['group_id' => $person->id, 'key_id' => $member->key_id]) }}"
-                     class="pull-right">
-                    {{ trans('web::seat.remove') }}
-                  </a>
-                </li>
-
-                @foreach($member->characters as $character)
-
-                  <li>
-                    <a href="{{ route('character.view.sheet', ['character_id' => $character->characterID]) }}">
-                      {!! img('character', $character->characterID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                      {{ $character->characterName }}
-                    </a>
-                    <a href="{{ route('people.set.main', ['group_id' => $person->id, 'character_id' => $character->characterID]) }}"
-                       class="pull-right" data-toggle="tooltip"
-                       title="" data-original-title="Set {{ $character->characterName }} as Main">
-                      <i class="fa fa-link"></i>
-                    </a>
-                  </li>
-
-                @endforeach
-
-              </ul>
-              <hr>
-
-            @endforeach
-
-          </div>
-
+          <table class="table compact table-condensed table-responsive" id="characters">
+            <thead>
+              <tr>
+                <th>{{ trans('web::seat.main_character') }}</th>
+                <th>{{ trans('web::seat.key') }}</th>
+                <th>{{ trans_choice('web::seat.character', 2) }}</th>
+                <th>{{ trans_choice('web::seat.corporation', 1) }}</th>
+                <th>{{ trans('web::seat.actions') }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach($people as $person)
+                <tr>
+                  <td id="main_character" class="{{$person->main_character_id}}">
+                    {!! img('character', $person->main_character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                    {{ $person->main_character_name }}
+                  </td>
+                </tr>
+                  @foreach($person->members as $member)
+                      @foreach($member->characters as $character)
+                        <tr id="characters" class="{{$person->main_character_id}}">
+                          @if ($loop->first)
+                            <td rowspan="{{ count($member->characters) }}">
+                              <span class="text-muted">Key: {{ $member->key_id }}</span>
+                            </td>
+                          @endif
+                          <td>
+                            <a href="{{ route('character.view.sheet', ['character_id' => $character->characterID]) }}">
+                              {!! img('character', $character->characterID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                              {{ $character->characterName }}
+                            </a>
+                          </td>
+                          <td>
+                            {{ $character->corporationName }}
+                          </td>
+                          <td>
+                            <a href="{{ route('people.set.main', ['group_id' => $person->id, 'character_id' => $character->characterID]) }}"data-toggle="tooltip"
+                               title="" data-original-title="Set {{ $character->characterName }} as Main">
+                              <i class="fa fa-angle-double-up"></i>
+                            </a>
+                            @if ($loop->first)
+                              &nbsp;<a href="{{ route('people.remove.group.key', ['group_id' => $person->id, 'key_id' => $member->key_id]) }}"><i class="fa fa-chain-broken"></i></a>
+                            @endif
+                          </td>
+                        </tr>
+                      @endforeach
+                    @endforeach
+              @endforeach
+            </tbody>
+          </table>
         </div>
-
-      @endforeach
-
     </div>
   </div>
 
@@ -189,6 +179,11 @@
         };
       },
     }
+  });
+
+  $("td#main_character").each(function(index, td) {
+    var characters = $("table#characters").find("tr[class=" + $(this).attr('class') + "]").length + 1;
+    $(this).attr('rowspan', characters);
   });
 
 </script>
