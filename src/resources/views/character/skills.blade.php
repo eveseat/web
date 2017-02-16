@@ -53,8 +53,11 @@
               <ul class="list-unstyled">
 
                 @foreach($skills->where('groupID', $skill_group->groupID) as $skill)
-
-                  <li>
+                  @if($loop->iteration % 2 == 0)
+                    <li style="background-color:#efefef;">
+                  @else
+                    <li>
+                  @endif
                     <i class="fa fa-book"></i> {{ $skill->typeName }}
                     <span class="pull-right">
 
@@ -91,7 +94,7 @@
               </ul>
             </div><!-- /.box-body -->
             <div class="box-footer">
-              {{ $skills->where('groupID', $skill_group->groupID)->sum('skillpoints') }}
+              {{ number($skills->where('groupID', $skill_group->groupID)->sum('skillpoints'), 0) }}
               total skillpoints
             </div>
           </div>
