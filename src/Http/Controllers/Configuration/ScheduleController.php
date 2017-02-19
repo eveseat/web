@@ -42,15 +42,15 @@ class ScheduleController extends Controller
         $schedule = Schedule::all();
         $commands = Artisan::all();
         $expressions = [
-            'hourly'               => '0 * * * * *',
-            'daily'                => '0 0 * * * *',
-            'weekly'               => '0 0 * * 0 *',
-            'monthly'              => '0 0 1 * * *',
-            'yearly'               => '0 0 1 1 * *',
-            'every minute'         => '* * * * * *',
-            'every five minutes'   => '*/5 * * * * *',
-            'every ten minutes'    => '*/10 * * * * *',
-            'every thirty minutes' => '0,30 * * * * *',
+            'hourly'               => '0 * * * *',
+            'daily'                => '0 0 * * *',
+            'weekly'               => '0 0 * * 0',
+            'monthly'              => '0 0 1 * *',
+            'yearly'               => '0 0 1 1 *',
+            'every minute'         => '* * * * *',
+            'every five minutes'   => '*/5 * * * *',
+            'every ten minutes'    => '*/10 * * * *',
+            'every thirty minutes' => '0,30 * * * *',
 
         ];
 
