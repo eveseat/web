@@ -242,6 +242,8 @@ return [
     'reenable_all_disabled'       => 'Re-enable all disabled keys',
     'disable_all_enabled'         => 'Disable all enabled keys',
     'joblog'                      => 'Job Log',
+    'job_log_config'              => 'Job logging will only occur if it is enabled. Currently ' .
+        'it is: :status',
 
     // People
     'people_groups'               => 'People Groups',

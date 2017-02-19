@@ -355,6 +355,12 @@
     </div>
     <div class="panel-body">
 
+      <p>
+        {{ trans('web::seat.job_log_config',
+          ['status' => config('eveapi.config.enable_joblog') ? trans('web::seat.enabled') : trans('web::seat.disabled')])
+        }}
+      </p>
+
       <a href="{{ route('api.key.joblog', ['key_id' => $key->key_id]) }}" class="btn btn-success btn-block">
         {{ trans('web::seat.joblog') }}
       </a>
