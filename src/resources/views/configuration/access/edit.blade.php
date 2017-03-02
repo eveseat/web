@@ -145,6 +145,7 @@
           <select name="characters[]" id="available_characters" style="width: 100%" multiple>
 
             <option value="0">All Characters</option>
+            <option value="1">Corp Characters</option>
             @foreach($all_characters as $character)
               <option value="{{ $character->characterID }}">
                 {{ $character->characterName }}
@@ -189,6 +190,11 @@
                 @else
                   {{ trans_choice('web::seat.character', 2) }}
                 @endif
+
+              @elseif($affiliation->affiliation === 1)
+
+                {{ trans_choice('web::seat.corporation', 1) }}
+                {{ trans_choice('web::seat.character', 2) }}
 
               @else
 
@@ -295,9 +301,9 @@
 
 <script>
   $("#available_permissions," +
-      "#available_users," +
-      "#available_characters," +
-      "#available_corporations").select2({
+          "#available_users," +
+          "#available_characters," +
+          "#available_corporations").select2({
     placeholder: "{{ trans('web::seat.select_item_add') }}"
   });
 </script>
