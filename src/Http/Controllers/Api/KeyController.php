@@ -163,6 +163,11 @@ class KeyController extends Controller
                 // Format dates for expired for sorting reasons
                 return carbon($column->expires)->format('d/m/y');
             })
+            ->addColumn('tags', function ($row) {
+                // Include a view to show tags on a key
+                return view('web::api.partial.tags', compact('row'))
+                    ->render();
+            })
             ->addColumn('characters', function ($row) {
 
                 // Include a view to show characters on a key
@@ -192,6 +197,8 @@ class KeyController extends Controller
                         $filter->where(
                             'type', 'like', '%' . request()->input('search.value') . '%');
 
+                    })->orWhereHas('tags', function ($filter) {
+                        $filter->where('name', 'like', '%' . request()->input('search.value') . '%');
                     });
 
                 // Ensure we take permissions into account!
@@ -434,5 +441,33 @@ class KeyController extends Controller
             })
             ->make(true);
 
+    }
+
+    public function postTag(Request $request)
+    {
+        $this->validate($request, [
+            'key_id' => 'required',
+            'tag' => 'required',
+        ]);
+
+        if (($tag = ApiKeyModel::addTag($request->input('key_id'), $request->input('tag'))) != null) {
+            return response()->json(['ok' => true, 'tag_id' => $tag->id]);
+        }
+
+        return response()->json(['ok' => false, 'msg' => 'Unable to create a tag associated to this Api Key'], 500);
+    }
+
+    public function deleteTag(Request $request)
+    {
+        $this->validate($request, [
+            'key_id' => 'required',
+            'tag_id' => 'required',
+        ]);
+
+        if (ApiKeyModel::deleteTag($request->input('key_id'), $request->input('tag_id'))) {
+            return response()->json(['ok' => true]);
+        }
+
+        return response()->json(['ok' => false, 'msg' => 'Unable to remove the tag associated to this Api Key'], 500);
     }
 }

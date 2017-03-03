@@ -42,6 +42,7 @@ return [
     'status'                => 'Status',
     'id'                    => 'ID|IDs',
     'type'                  => 'Type|Types',
+    'tags'                  => 'Tag|Tags',
     'expiry'                => 'Expiry',
     'never'                 => 'Never',
     'detail'                => 'Detail|Details',

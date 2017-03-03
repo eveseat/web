@@ -60,6 +60,7 @@ Route::get('/detail/{key_id}', [
 Route::get('/enable/all', [
     'as'   => 'api.key.enable.all',
     'uses' => 'KeyController@getEnableAll',
+    'middleware' => 'keybouncer:toggle_status',
 ]);
 
 Route::get('/enable/{key_id}', [
@@ -108,4 +109,16 @@ Route::get('/joblog/data/{key_id}', [
     'as'         => 'api.key.joblog.data',
     'uses'       => 'KeyController@getJobLogData',
     'middleware' => 'keybouncer:detail',
+]);
+
+Route::post('/json/tags', [
+    'as' => 'json.key.tags.add',
+    'uses' => 'KeyController@postTag',
+    'middleware' => 'keybouncer:update',
+]);
+
+Route::delete('/json/tags', [
+    'as' => 'json.key.tags.delete',
+    'uses' => 'KeyController@deleteTag',
+    'middleware' => 'keybouncer:update',
 ]);
