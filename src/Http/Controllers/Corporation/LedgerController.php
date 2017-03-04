@@ -53,6 +53,63 @@ class LedgerController extends Controller
     }
 
     /**
+     * @param int $corporation_id
+     * @param null $year
+     * @param null $month
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getBuyByMonth(int $corporation_id, $year = null, $month = null)
+    {
+        ! is_null($year) ? $year : $year = date('Y');
+        ! is_null($month) ? $month : $month = date('m');
+
+        $buy = $this->getCorporationLedgerBuyDates($corporation_id);
+        $buydates = $this->getCorporationLedgerBuyByMonth($corporation_id, $year, $month);
+
+        return view('web::corporation.ledger.buybymonth',
+            compact('buy', 'buydates', 'corporation_id', 'month', 'year'));
+    }
+
+    /**
+     * @param int $corporation_id
+     * @param null $year
+     * @param null $month
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getSellByMonth(int $corporation_id, $year = null, $month = null)
+    {
+        ! is_null($year) ? $year : $year = date('Y');
+        ! is_null($month) ? $month : $month = date('m');
+
+        $sell = $this->getCorporationLedgerSellDates($corporation_id);
+        $selldates = $this->getCorporationLedgerSellByMonth($corporation_id, $year, $month);
+
+        return view('web::corporation.ledger.sellbymonth',
+            compact('sell', 'selldates', 'corporation_id', 'month', 'year'));
+    }
+
+    /**
+     * @param int $corporation_id
+     * @param null $year
+     * @param null $month
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getFeeByMonth(int $corporation_id, $year = null, $month = null)
+    {
+        ! is_null($year) ? $year : $year = date('Y');
+        ! is_null($month) ? $month : $month = date('m');
+
+        $fee = $this->getCorporationLedgerFeeDates($corporation_id);
+        $feedates = $this->getCorporationLedgerFeeByMonth($corporation_id, $year, $month);
+
+        return view('web::corporation.ledger.feebymonth',
+            compact('fee', 'feedates', 'corporation_id', 'month', 'year'));
+    }
+
+    /**
      * @param      $corporation_id
      * @param null $year
      * @param null $month

@@ -144,6 +144,24 @@ Route::group(['prefix' => 'view/ledger'], function () {
         'uses'       => 'LedgerController@getWalletSummary',
     ]);
 
+    Route::get('buy/{corporation_id}/{year?}/{month?}', [
+        'as' => 'corporation.view.ledger.buybymonth',
+        'middleware' => 'corporationbouncer:ledger',
+        'uses' => 'LedgerController@getBuyByMonth',
+    ]);
+
+    Route::get('sell/{corporation_id}/{year?}/{month?}', [
+        'as' => 'corporation.view.ledger.sellbymonth',
+        'middleware' => 'corporationbouncer:ledger',
+        'uses' => 'LedgerController@getSellByMonth',
+    ]);
+
+    Route::get('fee/{corporation_id}/{year?}/{month?}', [
+        'as' => 'corporation.view.ledger.feebymonth',
+        'middleware' => 'corporationbouncer:ledger',
+        'uses' => 'LedgerController@getFeeByMonth',
+    ]);
+
     Route::get('bountyprizes/{corporation_id}/{year?}/{month?}', [
         'as'         => 'corporation.view.ledger.bountyprizesbymonth',
         'middleware' => 'corporationbouncer:ledger',
