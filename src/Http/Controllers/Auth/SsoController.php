@@ -66,12 +66,13 @@ class SsoController extends Controller
 
         $eve_data = $social->driver('eveonline')->user();
 
-        // Check if there is a SeAT account with the same name. If this is the
-        // case, we need to confirm the current password for the user before
-        // we convert the account to an SSO account.
-        if (User::where('name', $eve_data->name)->where('eve_id', null)->first()) {
 
-            // Store the data from Eveonline in the sesion.
+        // Check if User is Logged in or if there is a SeAT account with the same name.
+        // If this is the case, we need to confirm the current password for the user before
+        // we convert the account to an SSO account.
+        if (User::where('name', auth()->user()->name ? auth()->user()->name : $eve_data->name)->where('eve_id', null)->first()) {
+
+            // Store the data from Eveonline in the session.
             session()->put('eve_sso', $eve_data);
 
             // Redirect to the password confirmation page.
@@ -191,14 +192,27 @@ class SsoController extends Controller
     {
 
         // Confirm the User credentials.
-        if (auth()->attempt([
-            'name'     => session()->get('eve_sso')->name,
-            'password' => request()->input('password'),
-        ])
+        if (
+            auth()->attempt([
+                'name'     => auth()->user()->name,
+                'password' => request()->input('password'),
+            ])
+
+            ||
+
+            auth()->attempt([
+                'name'     => session()->get('eve_sso')->name,
+                'password' => request()->input('password'),
+            ])
         ) {
 
             // Change to SeAT account to a SSO account.
-            $user = User::where('name', session()->get('eve_sso')->name)->first();
+            if(auth()->user()) {
+                $user = User::where('name', auth()->user()->name)->first();
+            }
+            else {
+                $user = User::where('name', session()->get('eve_sso')->name)->first();
+            }
             $user->update([
                 'eve_id'   => session()->get('eve_sso')->eve_id,
                 'token'    => session()->get('eve_sso')->token,
