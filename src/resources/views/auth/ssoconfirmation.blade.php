@@ -18,9 +18,15 @@
 
       <div class="box-body">
         <div class="form-group has-feedback">
+          @if(auth()->user())
+          <input type="text" name="name" class="form-control" value="{{ auth()->user()->name }}"
+                 placeholder="{{ trans('web::seat.username') }}" disabled="disabled">
+          <span class="glyphicon glyphicon-user form-control-feedback"></span>
+           @else
           <input type="text" name="name" class="form-control" value="{{ session('eve_sso')->name }}"
                  placeholder="{{ trans('web::seat.username') }}" disabled="disabled">
           <span class="glyphicon glyphicon-user form-control-feedback"></span>
+          @endif
         </div>
 
         <div class="form-group has-feedback">
