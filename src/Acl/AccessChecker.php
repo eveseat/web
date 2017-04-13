@@ -355,7 +355,7 @@ trait AccessChecker
 
                 } elseif($affilition->affiliation === 1) {
 
-                    $filterCorps = array();
+                    $filterCorps = [];
                     unset($role->affiliations);
                     foreach ($role->affiliations as $affiliation){
                         if($affiliation->type == 'corp')
