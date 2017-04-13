@@ -323,7 +323,7 @@ trait AccessChecker
                 // is signified by the char / corp id of 0. If we encounter
                 // this id, then we need to all of the possible corp / char
                 // in the system to the affiliation map.
-                if ($affilition->affiliation === 0 || $affilition->affiliation === 1) {
+                if ($affilition->affiliation === 0) {
 
                     if ($affilition->type == 'char') {
 
@@ -335,15 +335,6 @@ trait AccessChecker
 
                             else
                                 $map['char'][$characterID] = $role_permissions;
-
-                        }
-                        foreach ($this->getAllCharacters()->pluck('corporationID') as $corporation) {
-                            if(in_array($corporation, get_object_vars($role->affiliations))){
-                                if (isset($map['char'][$characterID]))
-                                    $map['char'][$characterID] += $role_permissions;
-                                else
-                                    $map['char'][$characterID] = $role_permissions;
-                            }
 
                         }
                     }
@@ -360,6 +351,24 @@ trait AccessChecker
                                 $map['corp'][$corporationID] = $role_permissions;
 
                         }
+                    }
+
+                } elseif($affilition->affiliation === 1) {
+
+                    $filterCorps = array();
+                    unset($role->affiliations);
+                    foreach ($role->affiliations as $affiliation){
+                        if($affiliation->type == 'corp')
+                            $filterCorps[] += $affiliation->affiliation;
+                    }
+
+                    foreach ($this->getAllCharacters()->whereIn('corporationID', $filterCorps)->pluck('characterID') as  $characterID) {
+                        if (isset($map['char'][$characterID]))
+                            $map['char'][$characterID] += $role_permissions;
+
+                        else
+                            $map['char'][$characterID] = $role_permissions;
+
                     }
                 } else {
 
