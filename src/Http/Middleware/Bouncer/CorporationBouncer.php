@@ -31,7 +31,6 @@ use Illuminate\Http\Request;
  */
 class CorporationBouncer
 {
-
     /**
      * Handle an incoming request.
      *
