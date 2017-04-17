@@ -33,7 +33,7 @@
 
       <!-- Queue information -->
         <li class="dropdown">
-          <a href="{{ auth()->user()->has('queue_manager') ? route('queue.status') : '#queue_count' }}"
+          <a href="{{ auth()->user()->has('queue_manager', false) ? route('queue.status') : '#queue_count' }}"
              class="dropdown-toggle" data-toggle="tooltip" data-placement="bottom"
              title="{{ trans('web::seat.queued') }}">
             <i class="fa fa-truck"></i>
@@ -41,7 +41,7 @@
           </a>
         </li>
         <li class="dropdown">
-          <a href="{{ auth()->user()->has('queue_manager') ? route('queue.status') : '#working_count' }}"
+          <a href="{{ auth()->user()->has('queue_manager', false) ? route('queue.status') : '#working_count' }}"
              class="dropdown-toggle" data-toggle="tooltip" data-placement="bottom"
              title="{{ trans('web::seat.working') }}">
             <i class="fa fa-exchange"></i>
@@ -49,7 +49,7 @@
           </a>
         </li>
         <li class="dropdown">
-          <a href="{{ auth()->user()->has('queue_manager') ? route('queue.status') : '#error_count' }}"
+          <a href="{{ auth()->user()->has('queue_manager', false) ? route('queue.status') : '#error_count' }}"
              class="dropdown-toggle" data-toggle="tooltip" data-placement="bottom"
              title="{{ trans('web::seat.error') }}">
             <i class="fa fa-exclamation"></i>
