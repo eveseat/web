@@ -24,7 +24,6 @@ namespace Seat\Web\Http\Middleware\Bouncer;
 
 use Closure;
 use Illuminate\Http\Request;
-use Seat\Web\Exceptions\BouncerException;
 
 /**
  * Class CharacterBouncer.
@@ -32,6 +31,7 @@ use Seat\Web\Exceptions\BouncerException;
  */
 class CharacterBouncer
 {
+
     /**
      * Handle an incoming request.
      *
@@ -44,24 +44,13 @@ class CharacterBouncer
      * @param string                   $permission
      *
      * @return \Illuminate\Http\RedirectResponse
-     * @throws \Seat\Web\Exceptions\BouncerException
      */
     public function handle(Request $request, Closure $next, string $permission = null)
     {
 
-        // Get the currently logged in user
-        $user = auth()->user();
-
-        if (! $request->character_id)
-            throw new BouncerException(
-                'CharacterBouncer was unable to determine a character_id');
-
-        // Set the request charID
-        $user->setCharacterId($request->character_id);
-
         // Check on the clipboard if this permission
         // should be granted.
-        if ($user->has('character.' . $permission))
+        if (auth()->user()->has('character.' . $permission))
             return $next($request);
 
         $message = 'Request to ' . $request->path() . ' was ' .

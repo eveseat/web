@@ -24,7 +24,6 @@ namespace Seat\Web\Http\Middleware\Bouncer;
 
 use Closure;
 use Illuminate\Http\Request;
-use Seat\Web\Exceptions\BouncerException;
 
 /**
  * Class CorporationBouncer.
@@ -32,6 +31,7 @@ use Seat\Web\Exceptions\BouncerException;
  */
 class CorporationBouncer
 {
+
     /**
      * Handle an incoming request.
      *
@@ -44,24 +44,13 @@ class CorporationBouncer
      * @param null                     $permission
      *
      * @return \Illuminate\Http\RedirectResponse
-     * @throws \Seat\Web\Exceptions\BouncerException
      */
     public function handle(Request $request, Closure $next, $permission = null)
     {
 
-        // Get the currently logged in user
-        $user = auth()->user();
-
-        if (! $request->corporation_id)
-            throw new BouncerException(
-                'CorporationBouncer was unable to determine a corporation_id');
-
-        // Set the request corpID
-        $user->setCorporationID($request->corporation_id);
-
         // Check on the clipboard if this permission
         // should be granted.
-        if ($user->has('corporation.' . $permission))
+        if (auth()->user()->has('corporation.' . $permission))
             return $next($request);
 
         $message = 'Request to ' . $request->path() . ' was ' .

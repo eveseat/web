@@ -24,6 +24,7 @@ namespace Seat\Web\Acl;
 
 use Seat\Services\Repositories\Character\Character;
 use Seat\Services\Repositories\Corporation\Corporation;
+use Seat\Web\Exceptions\BouncerException;
 
 /**
  * Class AccessChecker.
@@ -36,18 +37,36 @@ trait AccessChecker
     use Character, Corporation;
 
     /**
-     * The CharacterID from the request.
+     * Return the character_id in question for the current request.
      *
-     * @var
+     * @return int
+     * @throws \Seat\Web\Exceptions\BouncerException
      */
-    protected $character_id;
+    public function getCharacterId(): int
+    {
+
+        if (! request()->character_id)
+            throw new BouncerException(
+                __CLASS__ . ' was unable to determine a character_id');
+
+        return request()->character_id;
+    }
 
     /**
-     * The CorporationID from the request.
+     * Return the corporation_id in quetsion for the current request.
      *
-     * @var
+     * @return int
+     * @throws \Seat\Web\Exceptions\BouncerException
      */
-    protected $corporation_id;
+    public function getCorporationId(): int
+    {
+
+        if (! request()->corporation_id)
+            throw new BouncerException(
+                __CLASS__ . ' was unable to determine a corporation_id');
+
+        return request()->corporation_id;
+    }
 
     /**
      * Checks if the user has any of the required
@@ -386,42 +405,6 @@ trait AccessChecker
         // Finally, return the calculated map!
         return $map;
 
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCharacterId()
-    {
-
-        return $this->character_id;
-    }
-
-    /**
-     * @param mixed $character_id
-     */
-    public function setCharacterId($character_id)
-    {
-
-        $this->character_id = $character_id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCorporationId()
-    {
-
-        return $this->corporation_id;
-    }
-
-    /**
-     * @param mixed $corporation_id
-     */
-    public function setCorporationId($corporation_id)
-    {
-
-        $this->corporation_id = $corporation_id;
     }
 
     /**
