@@ -31,7 +31,6 @@ use Illuminate\Http\Request;
  */
 class CharacterBouncer
 {
-
     /**
      * Handle an incoming request.
      *
