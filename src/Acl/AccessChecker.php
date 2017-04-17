@@ -31,6 +31,7 @@ use Seat\Services\Repositories\Corporation\Corporation;
  */
 trait AccessChecker
 {
+
     // Use repositories to get character & corp info
     use Character, Corporation;
 
@@ -196,10 +197,6 @@ trait AccessChecker
 
             }
 
-            // check everything else, including global wildcard
-            if (in_array('*', $permissions) || in_array($permission, $permissions))
-                return true;
-
         }
 
         foreach ($map['corp'] as $corp => $permissions) {
@@ -215,9 +212,6 @@ trait AccessChecker
 
             }
 
-            // check everything else, including global wildcard
-            if (in_array('*', $permissions) || in_array($permission, $permissions))
-                return true;
         }
 
         return false;
