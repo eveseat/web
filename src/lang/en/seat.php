@@ -335,6 +335,12 @@ return [
 
     // Ledger
     'ledger'                       => 'Wallet Ledger',
+    'buybymonth'                   => 'Buy By Month',
+    'buytotal'                     => 'Buy Total',
+    'sellbymonth'                   => 'Sell By Month',
+    'selltotal'                     => 'Sell Total',
+    'feebymonth'                   => 'Fee By Month',
+    'feetotal'                     => 'Fee Total',
     'bountyprizesbymonth'          => 'Bounty Prizes By Month',
     'bountyprizetotal'             => 'Prize Total',
     'pitotals'                     => 'PI Total Taxes',

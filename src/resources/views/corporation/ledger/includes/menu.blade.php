@@ -6,6 +6,21 @@
         {{ trans_choice('web::seat.wallet_summary', 1) }}
       </a>
     </li>
+    <li role="presentation" class="@if ($sub_viewname == 'buybymonth') active @endif">
+      <a href="{{ route('corporation.view.ledger.buybymonth', $sheet->corporationID) }}">
+        {{ trans_choice('web::seat.buybymonth', 2) }}
+      </a>
+    </li>
+    <li role="presentation" class="@if ($sub_viewname == 'sellbymonth') active @endif">
+      <a href="{{ route('corporation.view.ledger.sellbymonth', $sheet->corporationID) }}">
+        {{ trans_choice('web::seat.sellbymonth', 2) }}
+      </a>
+    </li>
+    <li role="presentation" class="@if ($sub_viewname == 'feebymonth') active @endif">
+      <a href="{{ route('corporation.view.ledger.feebymonth', $sheet->corporationID) }}">
+        {{ trans_choice('web::seat.feebymonth', 2) }}
+      </a>
+    </li>
     <li role="presentation" class="@if ($sub_viewname == 'bountyprizesbymonth') active @endif">
       <a href="{{ route('corporation.view.ledger.bountyprizesbymonth', $sheet->corporationID) }}">
         {{ trans_choice('web::seat.bountyprizesbymonth', 2) }}
