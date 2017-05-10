@@ -168,6 +168,12 @@ class WalletController extends Controller
                 return view('web::partials.transactionclient', compact('row'))
                     ->render();
             })
+            ->filter(function ($query) {
+                if (request()->has('search.value')) {
+                    $query->where('typeName', 'like', '%' . request()->input('search.value') . '%')
+                    ->orWhere('clientName', 'like', '%' . request()->input('search.value') . '%');
+                }
+            })
             ->make(true);
 
     }
