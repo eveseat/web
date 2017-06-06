@@ -229,7 +229,7 @@ return [
     'transfer'                    => '转移',
     'mask_map_fail'               => '无法加载 Access Mask map',
     'recent_jobs'                 => '最近任务',
-    'scope'                       => 'Scope',
+    'scope'                       => '范围',
     'api_all'                     => '所有 API Keys',
     'reveal'                      => '显示',
     'add_success'                 => 'Api Key 成功添加. 更新任务 :jobid 已下发',
@@ -307,9 +307,8 @@ return [
     'csv_format_explained'         => 'CSV 文件格式为 keyID,vCode 以下为样例',
     'important_notes'              => '重要事项',
     'curr_user_becomes_owner'      => '当前用户 (:user) 会变更为 API Key 的拥有者',
-    'only_format_is_checked'       => 'Only API key format is checked here. No checking is done to ensure that ' .
-        'minimum api masks are configured.',
-    'update_with_next_job'         => 'Key data will only populate once the next updater job comes by, or is manually started.',
+    'only_format_is_checked'       => 'API Key 的格式只会在这里得到检查，以确保设置为最小的 Mask',
+    'update_with_next_job'         => 'Key 数据会在下次任务或手动更新时变更',
 
     // Schedule
     'new_schedule'                 => '新计划',
@@ -574,5 +573,5 @@ return [
     'web_version'                  => '网页版',
     'sde_version'                  => 'SDE 版本',
     'render_in'                    => '渲染于',
-    'copyright'                    => 'Copyright',
+    'copyright'                    => '版权信息',
 ];
