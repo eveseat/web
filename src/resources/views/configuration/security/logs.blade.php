@@ -41,7 +41,8 @@
         {data: 'user', name: 'user', orderable: false, searchable: false},
         {data: 'category', name: 'category'},
         {data: 'message', name: 'message'},
-      ]
+      ],
+      dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
     });
   });
 

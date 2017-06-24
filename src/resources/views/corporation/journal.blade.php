@@ -55,6 +55,7 @@
         {data: 'amount', name: 'amount'},
         {data: 'balance', name: 'balance'},
       ],
+      dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
       "fnDrawCallback": function () {
         $(document).ready(function () {
           $("img").unveil(100);
