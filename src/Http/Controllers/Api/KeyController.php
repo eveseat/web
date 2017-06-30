@@ -218,7 +218,7 @@ class KeyController extends Controller
     public function getDelete($key_id)
     {
 
-        ApiKeyModel::where('key_id', $key_id)
+        ApiKeyModel::find($key_id)
             ->delete();
 
         return redirect()->back()
