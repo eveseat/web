@@ -28,6 +28,10 @@ return [
             'full'  => 'Afrikaans',
         ],
         [
+            'short' => 'cn',
+            'full'  => 'Chinese',
+        ],
+        [
             'short' => 'en',
             'full'  => 'English',
         ],
