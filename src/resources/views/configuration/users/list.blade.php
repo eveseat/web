@@ -82,13 +82,15 @@
             <td>{{ $user->name }}</td>
             <td>{{ $user->email }}</td>
             <td>
-            <span class="label label-{{ $user->active == 1 ? 'success' : 'warning' }}">
-              {{ $user->active == 1 ? 'Active' : 'Inactive' }}
-            </span>
-              @if(!is_null($user->eve_id))
-                <span class="label label-info">
-                Sso
+              @if(setting('require_activation', true) == 'yes')
+              <span class="label label-{{ $user->active == 1 ? 'success' : 'warning' }}">
+                {{ $user->active == 1 ? 'Active' : 'Inactive' }}
               </span>
+              @endif
+              @if(!is_null($user->eve_id))
+              <span class="label label-info">Sso</span>
+              @else
+              <span class="label label-primary">Standard</span>
               @endif
             </td>
             <td>
