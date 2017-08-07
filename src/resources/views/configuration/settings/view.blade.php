@@ -201,7 +201,7 @@
         <dd>
           <ul>
             <li>{{ trans('web::seat.installed') }}: <b>v{{ config('api.config.version') }}</b></li>
-            <li>{{ trans('web::seat.current') }}: <img src="https://poser.pugx.org/eveseat/api/v/stable"></li>
+            <li>{{ trans('web::seat.current') }}: <img src="https://img.shields.io/packagist/v/eveseat/api.svg?style=flat-square"></li>
             <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/api" target="_blank">https://github.com/eveseat/api</a>
             </li>
           </ul>
@@ -211,7 +211,7 @@
         <dd>
           <ul>
             <li>{{ trans('web::seat.installed') }}: <b>v{{ config('console.config.version') }}</b></li>
-            <li>{{ trans('web::seat.current') }}: <img src="https://poser.pugx.org/eveseat/console/v/stable"></li>
+            <li>{{ trans('web::seat.current') }}: <img src="https://img.shields.io/packagist/v/eveseat/console.svg?style=flat-square"></li>
             <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/console" target="_blank">https://github.com/eveseat/console</a>
             </li>
           </ul>
@@ -221,7 +221,7 @@
         <dd>
           <ul>
             <li>{{ trans('web::seat.installed') }}: <b>v{{ config('eveapi.config.version') }}</b></li>
-            <li>{{ trans('web::seat.current') }}: <img src="https://poser.pugx.org/eveseat/eveapi/v/stable"></li>
+            <li>{{ trans('web::seat.current') }}: <img src="https://img.shields.io/packagist/v/eveseat/eveapi.svg?style=flat-square"></li>
             <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/eveapi" target="_blank">https://github.com/eveseat/eveapi</a>
             </li>
           </ul>
@@ -231,7 +231,7 @@
         <dd>
           <ul>
             <li>{{ trans('web::seat.installed') }}: <b>v{{ config('notifications.config.version') }}</b></li>
-            <li>{{ trans('web::seat.current') }}: <img src="https://poser.pugx.org/eveseat/notifications/v/stable"></li>
+            <li>{{ trans('web::seat.current') }}: <img src="https://img.shields.io/packagist/v/eveseat/notifications.svg?style=flat-square"></li>
             <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/notifications" target="_blank">https://github.com/eveseat/notifications</a>
             </li>
           </ul>
@@ -241,7 +241,7 @@
         <dd>
           <ul>
             <li>{{ trans('web::seat.installed') }}: <b>v{{ config('web.config.version') }}</b></li>
-            <li>{{ trans('web::seat.current') }}: <img src="https://poser.pugx.org/eveseat/web/v/stable"></li>
+            <li>{{ trans('web::seat.current') }}: <img src="https://img.shields.io/packagist/v/eveseat/web.svg?style=flat-square"></li>
             <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/web" target="_blank">https://github.com/eveseat/web</a>
             </li>
           </ul>
@@ -251,7 +251,7 @@
         <dd>
           <ul>
             <li>{{ trans('web::seat.installed') }}: <b>v{{ config('services.config.version') }}</b></li>
-            <li>{{ trans('web::seat.current') }}: <img src="https://poser.pugx.org/eveseat/services/v/stable"></li>
+            <li>{{ trans('web::seat.current') }}: <img src="https://img.shields.io/packagist/v/eveseat/services.svg?style=flat-square"></li>
             <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/services" target="_blank">https://github.com/eveseat/services</a>
             </li>
           </ul>
@@ -275,7 +275,7 @@
           <ul>
             <li>{{ trans('web::seat.installed') }}: <b>{{ setting('installed_sde', true) }}</b></li>
             <li id="live-sde-version">{{ trans('web::seat.current') }}: <img
-                      src="https://img.shields.io/badge/version-loading...-blue.svg"></li>
+                      src="https://img.shields.io/badge/version-loading...-blue.svg?style=flat-square"></li>
           </ul>
         </dd>
 
@@ -295,7 +295,7 @@
       if (data != null) {
         live_sde = data.version;
       }
-      $('#live-sde-version img').attr('src', 'https://img.shields.io/badge/version-' + live_sde + '-blue.svg');
+      $('#live-sde-version img').attr('src', 'https://img.shields.io/badge/version-' + live_sde + '-blue.svg?style=flat-square');
     });
   });
 </script>
