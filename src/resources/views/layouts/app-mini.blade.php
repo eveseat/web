@@ -18,9 +18,9 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('web/css/adminlte.min.css') }}">
 
-  @if(file_exists(public_path('web/css/custom-layout-mini.css')))
+  @if(file_exists(public_path('custom-layout-mini.css')))
   <!-- Custom layout CSS -->
-  <link rel="stylesheet" href="{{ asset('web/css/custom-layout-mini.css') }}" />
+  <link rel="stylesheet" href="{{ asset('custom-layout-mini.css') }}" />
   @endif
 
   <!-- view specfic head content -->

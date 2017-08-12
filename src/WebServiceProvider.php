@@ -121,19 +121,6 @@ class WebServiceProvider extends ServiceProvider
             base_path('vendor/components/font-awesome/css/font-awesome.min.css') => public_path('web/css/font-awesome.min.css'),
             base_path('vendor/components/font-awesome/fonts') => public_path('web/fonts'),
         ]);
-
-        // Check if theme overload exists and publish it
-        if (file_exists(base_path('custom-layout.css'))) {
-            $this->publishes([
-                base_path('custom-layout.css') => public_path('web/css/custom-layout.css'),
-            ]);
-        }
-
-        if (file_exists(base_path('custom-layout-mini.css'))) {
-            $this->publishes([
-                base_path('custom-layout-mini.css') => public_path('web/css/custom-layout-mini.css'),
-            ]);
-        }
     }
 
     /**
