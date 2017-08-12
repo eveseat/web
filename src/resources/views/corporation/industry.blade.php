@@ -42,7 +42,7 @@
       processing      : true,
       serverSide      : true,
       ajax            : '{{ route('corporation.view.industry.data', ['corporation_id' => $request->corporation_id]) }}',
-      dom             : '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-12"<"corporation-industry_filters">>><"row"<"col-sm-12"rt>><"row"<"col-sm-5"i><"col-sm-7"p>>',
+      dom             : '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-12"<"corporation-industry_filters">>><"row"<"col-sm-12"rt>><"row"<"col-sm-5"i><"col-sm-7"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
       columns         : [
         {data: 'endDate', name: 'endDate', render: human_readable},
         {data: 'installerName', name: 'installerName'},
@@ -53,7 +53,6 @@
         {data: 'productTypeName', name: 'productTypeName'},
         {data: 'status', name: 'status', visible: false}
       ],
-      dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
       "fnDrawCallback": function () {
         $(document).ready(function () {
           $("img").unveil(100);
