@@ -42,7 +42,7 @@
       processing      : true,
       serverSide      : true,
       ajax            : '{{ route('corporation.view.industry.data', ['corporation_id' => $request->corporation_id]) }}',
-      dom             : '<"row"<"col-sm-2"l><"col-sm-5"<"corporation-industry_filters">><"col-sm-5"f>><"row"<"col-sm-12"rt>><"row"<"col-sm-5"i><"col-sm-7"p>>',
+      dom             : '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-12"<"corporation-industry_filters">>><"row"<"col-sm-12"rt>><"row"<"col-sm-5"i><"col-sm-7"p>>',
       columns         : [
         {data: 'endDate', name: 'endDate', render: human_readable},
         {data: 'installerName', name: 'installerName'},
@@ -65,7 +65,7 @@
       .search('[[:<:]]1[[:>:]]', true, false) // strict lookup
       .draw();
 
-    var filterGroup = $('<div class="btn-group">');
+    var filterGroup = $('<div class="btn-group btn-group-justified" role="group">');
 
     var filterRunning = $('<button class="btn btn-primary disabled">Running</button>');
     filterRunning.click(function(){
@@ -133,11 +133,11 @@
     });
 
     // build filter toolbar
-    filterGroup.append(filterRunning);
-    filterGroup.append(filterPaused);
-    filterGroup.append(filterCompleted);
-    filterGroup.append(filterCancelled);
-    filterGroup.append(filterHistory);
+    filterGroup.append($('<div class="btn-group" role="group">').append(filterRunning));
+    filterGroup.append($('<div class="btn-group" role="group">').append(filterPaused));
+    filterGroup.append($('<div class="btn-group" role="group">').append(filterCompleted));
+    filterGroup.append($('<div class="btn-group" role="group">').append(filterCancelled));
+    filterGroup.append($('<div class="btn-group" role="group">').append(filterHistory));
 
     $('div.corporation-industry_filters').append(filterGroup);
   });
