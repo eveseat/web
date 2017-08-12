@@ -26,9 +26,11 @@
   <link rel="stylesheet" href="{{ asset('web/css/skins/' . setting('skin') . '.min.css') }}">
   <!-- SeAT CSS -->
   <link rel="stylesheet" href="{{ asset('web/css/seat.css') }}">
-  @if(file_exists(public_path('custom-layout.css')))
   <!-- Custom layout CSS -->
-  <link rel="stylesheet" href="{{ asset('custom-layout.css') }}" />
+  @if(file_exists(public_path('custom-layout.css')))
+
+    <link rel="stylesheet" href="{{ asset('custom-layout.css') }}" />
+
   @endif
 
   <!-- view specfic head content -->
