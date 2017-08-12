@@ -83,14 +83,14 @@
             <td>{{ $user->email }}</td>
             <td>
               @if(setting('require_activation', true) == 'yes')
-              <span class="label label-{{ $user->active == 1 ? 'success' : 'warning' }}">
+                <span class="label label-{{ $user->active == 1 ? 'success' : 'warning' }}">
                 {{ $user->active == 1 ? 'Active' : 'Inactive' }}
               </span>
               @endif
               @if(!is_null($user->eve_id))
-              <span class="label label-info">Sso</span>
+                <span class="label label-info">Sso</span>
               @else
-              <span class="label label-primary">Standard</span>
+                <span class="label label-primary">Standard</span>
               @endif
             </td>
             <td>
