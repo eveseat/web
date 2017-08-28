@@ -98,4 +98,51 @@ class LedgerController extends Controller
             compact('pidates', 'pitotals', 'piimport', 'piexport',
                 'corporation_id', 'month', 'year'));
     }
+
+    /**
+     * @param      $corporation_id
+     * @param null $year
+     * @param null $month
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getMissionByMonth(int $corporation_id, $year = null, $month = null)
+    {
+
+        ! is_null($year) ? $year : $year = date('Y');
+        ! is_null($month) ? $year : $month = date('m');
+
+        $missiondates = $this->getCorporationLedgerMissionDates($corporation_id);
+
+        $mission = $this->getCorporationLedgerMissionTotalsByMonth(
+            $corporation_id, $year, $month);
+
+        return view('web::corporation.ledger.missionbymonth',
+            compact('mission', 'missiondates',
+                'corporation_id', 'month', 'year'));
+    }
+
+    /**
+     * @param      $corporation_id
+     * @param null $year
+     * @param null $month
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getIncursionByMonth(int $corporation_id, $year = null, $month = null)
+    {
+
+        ! is_null($year) ? $year : $year = date('Y');
+        ! is_null($month) ? $year : $month = date('m');
+
+        $incursiondates = $this->getCorporationLedgerIncursionDates($corporation_id);
+
+        $incursion = $this->getCorporationLedgerIncursionTotalsByMonth(
+            $corporation_id, $year, $month);
+
+        return view('web::corporation.ledger.incursionbymonth',
+            compact('incursion', 'incursiondates',
+                'corporation_id', 'month', 'year'));
+    }
+
 }

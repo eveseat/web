@@ -16,6 +16,16 @@
         {{ trans_choice('web::seat.pi', 2) }}
       </a>
     </li>
+    <li role="presentation" class="@if ($sub_viewname == 'missionbymonth') active @endif">
+      <a href="{{ route('corporation.view.ledger.missionbymonth', $sheet->corporationID) }}">
+        {{ trans_choice('web::seat.missionbymonth', 2) }}
+      </a>
+    </li>
+    <li role="presentation" class="@if ($sub_viewname == 'incursionbymonth') active @endif">
+      <a href="{{ route('corporation.view.ledger.incursionbymonth', $sheet->corporationID) }}">
+        {{ trans_choice('web::seat.incursionbymonth', 2) }}
+      </a>
+    </li>
   </ul>
 
 </div>
