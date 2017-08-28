@@ -118,7 +118,7 @@ class LedgerController extends Controller
             $corporation_id, $year, $month);
 
         return view('web::corporation.ledger.missionbymonth',
-            compact('mission', 'missiondates', 
+            compact('mission', 'missiondates',
                 'corporation_id', 'month', 'year'));
     }
 

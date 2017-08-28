@@ -341,7 +341,7 @@ return [
     'wallet_division_name'         => 'Wallet Division Name',
     'wallet_summary'               => 'Wallet Summary|Wallet Summaries',
     'missionbymonth'               => 'Mission Prizes By Month',
-    'missiontotal'		   => 'Mission Total Taxes',
+    'missiontotal'                 => 'Mission Total Taxes',
     'incursiontotal'               => 'Incursion Total Taxes',
     'incursionbymonth'             => 'Incursions By Month',
 
