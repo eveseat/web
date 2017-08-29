@@ -112,13 +112,13 @@ class LedgerController extends Controller
         ! is_null($year) ? $year : $year = date('Y');
         ! is_null($month) ? $year : $month = date('m');
 
-        $missiondates = $this->getCorporationLedgerMissionDates($corporation_id);
+        $mission = $this->getCorporationLedgerMissionDates($corporation_id);
 
-        $mission = $this->getCorporationLedgerMissionTotalsByMonth(
+        $missiondates = $this->getCorporationLedgerMissionTotalsByMonth(
             $corporation_id, $year, $month);
 
         return view('web::corporation.ledger.missionbymonth',
-            compact('mission', 'missiondates',
+            compact('mission', 'missiondates', 
                 'corporation_id', 'month', 'year'));
     }
 
@@ -135,9 +135,9 @@ class LedgerController extends Controller
         ! is_null($year) ? $year : $year = date('Y');
         ! is_null($month) ? $year : $month = date('m');
 
-        $incursiondates = $this->getCorporationLedgerIncursionDates($corporation_id);
+        $incursion = $this->getCorporationLedgerIncursionDates($corporation_id);
 
-        $incursion = $this->getCorporationLedgerIncursionTotalsByMonth(
+        $incursiondates = $this->getCorporationLedgerIncursionTotalsByMonth(
             $corporation_id, $year, $month);
 
         return view('web::corporation.ledger.incursionbymonth',
