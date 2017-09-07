@@ -79,7 +79,7 @@
             <p>Supervisor might not be running or SeAT is unable to connect to
             the management interface.</p>
             <p>For instructions on how to configure Supervisor to allow for remote
-            worker monitoring, please refer to the SeAT documentation.</p>
+              worker monitoring, please refer to the <a href="http://seat-docs.readthedocs.io/en/latest/admin_guides/seat_supervisor/">SeAT documentation</a>.</p>
           </span>
         </div>
       </div>
