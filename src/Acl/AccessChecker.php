@@ -421,7 +421,7 @@ trait AccessChecker
         if ($this->hasSuperUser())
             return true;
 
-        foreach ($this->roles() as $role)
+        foreach ($this->roles as $role)
             if ($role->title == $role_name)
                 return true;
 
