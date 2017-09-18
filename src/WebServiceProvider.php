@@ -196,31 +196,31 @@ class WebServiceProvider extends ServiceProvider
 
         // Authenticate checks that the session is
         // simply authenticated
-        $router->middleware('auth', Authenticate::class);
+        $router->aliasMiddleware('auth', Authenticate::class);
 
         // Email Verification Requirement
-        $router->middleware('auth.email', ConfirmedEmailAddress::class);
+        $router->aliasMiddleware('auth.email', ConfirmedEmailAddress::class);
 
         // Ensure that all of the SeAT required modules is installed.
-        $router->middleware('requirements', Requirements::class);
+        $router->aliasMiddleware('requirements', Requirements::class);
 
         // Localization support
-        $router->middleware('locale', Locale::class);
+        $router->aliasMiddleware('locale', Locale::class);
 
         // Optional multifactor authentication if required
-        $router->middleware('mfa', Mfa::class);
+        $router->aliasMiddleware('mfa', Mfa::class);
 
         // Registration Middleware checks of the app is
         // allowing new user registration to occur.
-        $router->middleware('registration.status', RegistrationAllowed::class);
+        $router->aliasMiddleware('registration.status', RegistrationAllowed::class);
 
         // The Bouncer is responsible for checking hes
         // AccessChecker and ensuring that every request
         // that comes in is authorized
-        $router->middleware('bouncer', Bouncer::class);
-        $router->middleware('characterbouncer', CharacterBouncer::class);
-        $router->middleware('corporationbouncer', CorporationBouncer::class);
-        $router->middleware('keybouncer', KeyBouncer::class);
+        $router->aliasMiddleware('bouncer', Bouncer::class);
+        $router->aliasMiddleware('characterbouncer', CharacterBouncer::class);
+        $router->aliasMiddleware('corporationbouncer', CorporationBouncer::class);
+        $router->aliasMiddleware('keybouncer', KeyBouncer::class);
 
     }
 
