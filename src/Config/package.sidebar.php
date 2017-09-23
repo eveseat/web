@@ -145,10 +145,11 @@ return [
         'route_segment' => 'tools',
         'entries'       => [
             [
-                'name'  => 'people groups',
-                'label' => 'web::seat.people_groups',
-                'icon'  => 'fa-group',
-                'route' => 'people.list',
+                'name'       => 'people groups',
+                'label'      => 'web::seat.people_groups',
+                'permission' => 'people.view',
+                'icon'       => 'fa-group',
+                'route'      => 'people.list',
             ],
             [
                 'name'  => 'standing profiles',
