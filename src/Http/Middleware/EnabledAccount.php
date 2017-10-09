@@ -20,32 +20,26 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\Controllers\Auth;
+namespace Seat\Web\Http\Middleware;
 
-use Seat\Web\Http\Controllers\Controller;
+use Closure;
 
-/**
- * Class AuthorizationController.
- * @package Seat\Web\Http\Controllers\Auth
- */
-class AuthorizationController extends Controller
+class EnabledAccount
 {
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Closure                 $next
+     *
+     * @return mixed
      */
-    public function getUnauthorized()
+    public function handle($request, Closure $next)
     {
+        // If the users account is not active, halt.
+        if (! auth()->user()->active && ! auth()->user()->hasSuperUser())
+            return redirect()->route('auth.disabled');
 
-        return view('web::auth.unauthorized');
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getDisabledAccount()
-    {
-        auth()->logout();
-
-        return view('web::auth.disabled');
+        return $next($request);
     }
 }
