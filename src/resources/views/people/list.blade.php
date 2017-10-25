@@ -18,10 +18,12 @@
             <span class="text-muted">{{ trans('web::seat.key') }}: {{ $key->key_id }}</span>
 
             <!-- Button trigger modal -->
-            <a type="button" id="add-to-existing" a-key-id="{{ $key->key_id }}" class="pull-right" data-toggle="modal"
-               data-target="#groupModal">
-              {{ trans('web::seat.add_to_existing_group') }}
-            </a>
+            @if(auth()->user()->has('people.edit', false))
+              <a type="button" id="add-to-existing" a-key-id="{{ $key->key_id }}" class="pull-right" data-toggle="modal"
+                 data-target="#groupModal">
+                {{ trans('web::seat.add_to_existing_group') }}
+              </a>
+            @endif
 
           </li>
 
@@ -31,12 +33,13 @@
                 {!! img('character', $character->characterID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                 {{ $character->characterName }}
               </a>
-              <a href="{{ route('people.new.group', ['character_id' => $character->characterID]) }}" class="pull-right"
-                 data-toggle="tooltip"
-                 title=""
-                 data-original-title="{{ trans('web::seat.new_group_with_main', ['name' => $character->characterName]) }}">
-                <i class="fa fa-plus"></i>
-              </a>
+              @if (auth()->user()->has('people.create', false))
+                <a href="{{ route('people.new.group', ['character_id' => $character->characterID]) }}" class="pull-right"
+                   data-toggle="tooltip" title=""
+                   data-original-title="{{ trans('web::seat.new_group_with_main', ['name' => $character->characterName]) }}">
+                  <i class="fa fa-plus"></i>
+                </a>
+              @endif
             </li>
           @endforeach
 
@@ -95,11 +98,13 @@
                             {{ $character->corporationName }}
                           </td>
                           <td>
-                            <a href="{{ route('people.set.main', ['group_id' => $person->id, 'character_id' => $character->characterID]) }}"data-toggle="tooltip"
-                               title="" data-original-title="Set {{ $character->characterName }} as Main">
-                              <i class="fa fa-angle-double-up"></i>
-                            </a>
-                            @if ($loop->first)
+                            @if(auth()->user()->has('people.edit', false))
+                              <a href="{{ route('people.set.main', ['group_id' => $person->id, 'character_id' => $character->characterID]) }}"data-toggle="tooltip"
+                                 title="" data-original-title="Set {{ $character->characterName }} as Main">
+                                <i class="fa fa-angle-double-up"></i>
+                              </a>
+                            @endif
+                            @if (auth()->user()->has('people.edit', false) && $loop->first)
                               &nbsp;<a href="{{ route('people.remove.group.key', ['group_id' => $person->id, 'key_id' => $member->key_id]) }}"><i class="fa fa-chain-broken"></i></a>
                             @endif
                           </td>
