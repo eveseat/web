@@ -21,43 +21,43 @@
  */
 
 Route::get('/', [
-    'as'   => 'people.list',
+    'as'         => 'people.list',
     'middleware' => 'bouncer:people.view',
-    'uses' => 'PeopleController@getAll',
+    'uses'       => 'PeopleController@getAll',
 ]);
 
 Route::get('/search', [
-    'as'   => 'people.search',
+    'as'         => 'people.search',
     'middleware' => 'bouncer:people.view',
-    'uses' => 'PeopleController@getSearchPeopleGroups',
+    'uses'       => 'PeopleController@getSearchPeopleGroups',
 ]);
 
 Route::get('/new/group/{character_id}', [
-    'as'   => 'people.new.group',
+    'as'         => 'people.new.group',
     'middleware' => 'bouncer:people.create',
-    'uses' => 'PeopleController@getNewGroup',
+    'uses'       => 'PeopleController@getNewGroup',
 ]);
 
 Route::post('/add/existing', [
-    'as'   => 'people.add.group.existing',
+    'as'         => 'people.add.group.existing',
     'middleware' => 'bouncer:people.edit',
-    'uses' => 'PeopleController@getAddToExisting',
+    'uses'       => 'PeopleController@getAddToExisting',
 ]);
 
 Route::get('/set/main/key/{group_id}/{character_id}', [
-    'as'   => 'people.set.main',
+    'as'         => 'people.set.main',
     'middleware' => 'bouncer:people.edit',
-    'uses' => 'PeopleController@setGroupMain',
+    'uses'       => 'PeopleController@setGroupMain',
 ]);
 
 Route::get('/remove/group/{group_id}', [
-    'as'   => 'people.remove.group',
+    'as'         => 'people.remove.group',
     'middleware' => 'bouncer:people.edit',
-    'uses' => 'PeopleController@removeGroup',
+    'uses'       => 'PeopleController@removeGroup',
 ]);
 
 Route::get('/remove/group/key/{group_id}/{key_id}', [
-    'as'   => 'people.remove.group.key',
+    'as'         => 'people.remove.group.key',
     'middleware' => 'bouncer:people.edit',
-    'uses' => 'PeopleController@removeKeyFromGroup',
+    'uses'       => 'PeopleController@removeKeyFromGroup',
 ]);
