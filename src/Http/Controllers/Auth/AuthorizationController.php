@@ -38,14 +38,4 @@ class AuthorizationController extends Controller
 
         return view('web::auth.unauthorized');
     }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getDisabledAccount()
-    {
-        auth()->logout();
-
-        return view('web::auth.disabled');
-    }
 }

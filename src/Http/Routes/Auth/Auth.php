@@ -24,12 +24,10 @@ Route::get('login', [
     'as'   => 'auth.login',
     'uses' => 'LoginController@showLoginForm',
 ]);
-
 Route::post('login', [
     'as'   => 'auth.login.post',
     'uses' => 'LoginController@login',
 ]);
-
 Route::any('logout', [
     'as'   => 'auth.logout',
     'uses' => 'LoginController@logout',
@@ -55,10 +53,4 @@ Route::group([
 Route::get('unauthorized', [
     'as'   => 'auth.unauthorized',
     'uses' => 'AuthorizationController@getUnauthorized',
-]);
-
-Route::get('disabled', [
-    'as' => 'auth.disabled',
-    'uses' => 'AuthorizationController@getDisabledAccount',
-    'middleware' => 'auth',
 ]);
