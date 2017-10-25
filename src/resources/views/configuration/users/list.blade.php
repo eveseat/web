@@ -67,6 +67,7 @@
         <tbody>
         <tr>
           <th>{{ trans_choice('web::seat.name', 1) }}</th>
+          <th>{{ trans_choice('web::seat.active', 1) }}</th>
           <th>{{ trans('web::seat.email') }}</th>
           <th>{{ trans_choice('web::seat.status', 1) }}</th>
           <th>{{ trans('web::seat.last_login') }}</th>
@@ -80,12 +81,19 @@
 
           <tr>
             <td>{{ $user->name }}</td>
+            <td>
+              @if($user->account_active())
+                <i class="fa fa-check"></i>
+              @else
+                <i class="fa fa-times"></i>
+              @endif
+            </td>
             <td>{{ $user->email }}</td>
             <td>
               @if(setting('require_activation', true) == 'yes')
                 <span class="label label-{{ $user->active == 1 ? 'success' : 'warning' }}">
-                {{ $user->active == 1 ? 'Active' : 'Inactive' }}
-              </span>
+                  {{ $user->active == 1 ? 'Email Active' : 'Email Inactive' }}
+                </span>
               @endif
               @if(!is_null($user->eve_id))
                 <span class="label label-info">Sso</span>

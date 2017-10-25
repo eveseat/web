@@ -54,3 +54,8 @@ Route::get('unauthorized', [
     'as'   => 'auth.unauthorized',
     'uses' => 'AuthorizationController@getUnauthorized',
 ]);
+
+Route::get('disabled', [
+    'as'   => 'auth.disabled',
+    'uses' => 'AuthorizationController@getDisabledAccount',
+]);

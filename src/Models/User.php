@@ -55,7 +55,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'mfa_token', 'active', 'eve_id', 'token', ];
+        'name', 'email', 'password', 'mfa_token', 'active', 'account_status', 'eve_id', 'token',];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -99,6 +99,18 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         $this->keys()->update(['user_id' => 0]);
 
         return parent::delete();
+    }
+
+    /**
+     * Returns the status of the current users SeAT
+     * account.
+     *
+     * @return int|mixed|static
+     */
+    public function account_active()
+    {
+
+        return $this->account_status;
     }
 
     /**

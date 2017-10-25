@@ -64,7 +64,7 @@ Route::group([
     // a setting for the user. We also run the localization
     // related logic here for translation support. Lastly,
     // email verification is required to continue.
-    Route::group(['middleware' => ['auth', 'auth.email', 'locale']], function () {
+    Route::group(['middleware' => ['auth', 'auth.email', 'auth.account_status', 'locale']], function () {
 
         Route::group(['namespace' => 'Auth', 'prefix' => 'auth'], function () {
 
