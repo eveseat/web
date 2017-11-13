@@ -98,4 +98,92 @@ class LedgerController extends Controller
             compact('pidates', 'pitotals', 'piimport', 'piexport',
                 'corporation_id', 'month', 'year'));
     }
+    /**
+     * @param      $corporation_id
+     * @param null $year
+     * @param null $month
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getOfficeRentalFeeByMonth(int $corporation_id, $year = null, $month = null)
+    {
+
+        ! is_null($year) ? $year : $year = date('Y');
+        ! is_null($month) ? $year : $month = date('m');
+
+        $officerentalfeedates = $this->getCorporationLedgerOfficeRentalFeeDates($corporation_id);
+
+        $officerentalfeetotals = $this->getCorporationLedgerOfficeRentalFeeTotalsByMonth(
+            $corporation_id, $year, $month);
+
+        return view('web::corporation.ledger.officerentalfee',
+            compact('officerentalfeedates', 'officerentalfeetotals',
+                'corporation_id', 'month', 'year'));
+    }
+    /**
+     * @param      $corporation_id
+     * @param null $year
+     * @param null $month
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getIndustryFacilityTaxByMonth(int $corporation_id, $year = null, $month = null)
+    {
+
+        ! is_null($year) ? $year : $year = date('Y');
+        ! is_null($month) ? $year : $month = date('m');
+
+        $industryfacilitytaxdates = $this->getCorporationLedgerIndustryFacilityTaxDates($corporation_id);
+
+        $industryfacilitytaxtotals = $this->getCorporationLedgerIndustryFacilityTaxTotalsByMonth(
+            $corporation_id, $year, $month);
+
+        return view('web::corporation.ledger.industryfacilitytax',
+            compact('industryfacilitytaxdates', 'industryfacilitytaxtotals',
+                'corporation_id', 'month', 'year'));
+    }
+    /**
+     * @param      $corporation_id
+     * @param null $year
+     * @param null $month
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getReprocessingFeeByMonth(int $corporation_id, $year = null, $month = null)
+    {
+
+        ! is_null($year) ? $year : $year = date('Y');
+        ! is_null($month) ? $year : $month = date('m');
+
+        $reprocessingfeedates = $this->getCorporationLedgerReprocessingFeeDates($corporation_id);
+
+        $reprocessingfeetotals = $this->getCorporationLedgerReprocessingFeeTotalsByMonth(
+            $corporation_id, $year, $month);
+
+        return view('web::corporation.ledger.reprocessingfee',
+            compact('reprocessingfeedates', 'reprocessingfeetotals',
+                'corporation_id', 'month', 'year'));
+    }
+    /**
+     * @param      $corporation_id
+     * @param null $year
+     * @param null $month
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getJumpCloneTotalsByMonth(int $corporation_id, $year = null, $month = null)
+    {
+
+        ! is_null($year) ? $year : $year = date('Y');
+        ! is_null($month) ? $year : $month = date('m');
+
+        $jumpclonedates = $this->getCorporationLedgerJumpCloneDates($corporation_id);
+
+        $jumpclonetotals = $this->getCorporationLedgeJumpCloneTotalsTotalsByMonth(
+            $corporation_id, $year, $month);
+
+        return view('web::corporation.ledger.jumpclone',
+            compact('jumpclonedates', 'jumpclonetotals',
+                'corporation_id', 'month', 'year'));
+    }
 }
