@@ -14,10 +14,10 @@
         <div class="info-box-content">
           <span class="info-box-text">{{ trans('web::seat.online_layers') }}</span>
           <span class="info-box-number">
-            {{ $server_status['onlinePlayers'] or trans('web::seat.unknown') }}
+{{--            {{ $server_status['onlinePlayers'] or trans('web::seat.unknown') }}--}}
           </span>
           <span class="text-muted">
-            {{ trans('web::seat.last_update') }}: {{ human_diff($server_status['created_at']) }}
+            {{--{{ trans('web::seat.last_update') }}: {{ human_diff($server_status['created_at']) }}--}}
           </span>
         </div><!-- /.info-box-content -->
       </div><!-- /.info-box -->
@@ -191,55 +191,55 @@
 @stop
 
 @push('javascript')
-<script>
+  <script>
 
-  $.get("{{ route('home.chart.serverstatus') }}", function (data) {
+      $.get("{{ route('home.chart.serverstatus') }}", function (data) {
 
-    new Chart($("canvas#serverstatus"), {
-      type   : 'line',
-      data   : data,
-      options: {
-        legend: {
-          display: false
-        },
-        scales: {
-          xAxes: [{
-            display: false
-          }]
-        }
-      }
-    });
-  })
+          new Chart($("canvas#serverstatus"), {
+              type: 'line',
+              data: data,
+              options: {
+                  legend: {
+                      display: false
+                  },
+                  scales: {
+                      xAxes: [{
+                          display: false
+                      }]
+                  }
+              }
+          });
+      })
 
-  {{-- only request the graph data if there is a main character! --}}
-  @if (setting('main_character_id') != 1 && !is_null(setting('main_character_name')))
+      {{-- only request the graph data if there is a main character! --}}
+      @if (setting('main_character_id') != 1 && !is_null(setting('main_character_name')))
 
-  $.get("{{ route('character.view.skills.graph.level', ['character_id' => setting('main_character_id')]) }}", function (data) {
-    new Chart($("canvas#skills-level"), {
-      type: 'pie',
-      data: data
-    });
-  });
+      $.get("{{ route('character.view.skills.graph.level', ['character_id' => setting('main_character_id')]) }}", function (data) {
+          new Chart($("canvas#skills-level"), {
+              type: 'pie',
+              data: data
+          });
+      });
 
-  $.get("{{ route('character.view.skills.graph.coverage', ['character_id' => setting('main_character_id')]) }}", function (data) {
-    new Chart($('canvas#skills-coverage'), {
-      type   : 'radar',
-      data   : data,
-      options: {
-        scale : {
-          ticks: {
-            beginAtZero: true,
-            max        : 100
-          }
-        },
-        legend: {
-          display: false
-        }
-      }
-    });
-  });
+      $.get("{{ route('character.view.skills.graph.coverage', ['character_id' => setting('main_character_id')]) }}", function (data) {
+          new Chart($('canvas#skills-coverage'), {
+              type: 'radar',
+              data: data,
+              options: {
+                  scale: {
+                      ticks: {
+                          beginAtZero: true,
+                          max: 100
+                      }
+                  },
+                  legend: {
+                      display: false
+                  }
+              }
+          });
+      });
 
-  @endif
+    @endif
 
-</script>
+  </script>
 @endpush

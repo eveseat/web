@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers;
 
+use Illuminate\View\View;
 use Seat\Services\Repositories\Character\Mail;
 use Seat\Services\Repositories\Eve\EveRepository;
 use Seat\Services\Repositories\Seat\Stats;
@@ -37,8 +38,9 @@ class HomeController extends Controller
 
     /**
      * @return \Illuminate\View\View
+     * @throws \Seat\Services\Exceptions\SettingException
      */
-    public function getHome()
+    public function getHome() : View
     {
 
         // Warn if the admin contact has not been set yet.

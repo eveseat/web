@@ -55,7 +55,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'mfa_token', 'active', 'eve_id', 'token', ];
+        'name', 'email', 'character_owner_hash'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -74,11 +74,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
         parent::boot();
 
-        static::creating(function ($user) {
-
-            $user->activation_token = str_random(64);
-
-        });
     }
 
     /**
@@ -143,19 +138,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
 
         return $this->hasMany(ApiKey::class);
-    }
-
-    /**
-     * Confirm the user.
-     *
-     * @return void
-     */
-    public function confirmEmail()
-    {
-
-        $this->active = true;
-        $this->activation_token = null;
-        $this->save();
     }
 
     /**

@@ -41,10 +41,6 @@ Route::group([
             include __DIR__ . '/Routes/Auth/Sso.php';
         });
 
-        Route::group(['prefix' => 'password'], function () {
-
-            include __DIR__ . '/Routes/Auth/Password.php';
-        });
     });
 
     // Email Verification Routes
@@ -60,173 +56,161 @@ Route::group([
     });
 
     // All routes from here require *at least* that the
-    // user is authenticated. The mfa middleware checks
-    // a setting for the user. We also run the localization
-    // related logic here for translation support. Lastly,
-    // email verification is required to continue.
-    Route::group(['middleware' => ['auth', 'auth.email', 'locale']], function () {
+    // user is authenticated. We also run the localization
+    // related logic here for translation support.
+    Route::group(['middleware' => ['auth', 'locale']], function () {
 
-        Route::group(['namespace' => 'Auth', 'prefix' => 'auth'], function () {
+        // The home route does not need any prefixes
+        // and or namespacing modifications, so we will
+        // just include it
+        include __DIR__ . '/Routes/Home.php';
 
-            include __DIR__ . '/Routes/Auth/Mfa.php';
+        // Support Routes
+        Route::group([
+            'namespace' => 'Support',
+            'prefix'    => 'support',
+        ], function () {
+
+            include __DIR__ . '/Routes/Support/List.php';
+            include __DIR__ . '/Routes/Support/Resolve.php';
+            include __DIR__ . '/Routes/Support/Search.php';
         });
 
-        // Routes from here on may optionally have a multifactor
-        // authentication requirement
-        Route::group(['middleware' => 'mfa'], function () {
+        // User Profile Routes
+        Route::group([
+            'namespace' => 'Profile',
+            'prefix'    => 'profile',
+        ], function () {
 
-            // The home route does not need any prefixes
-            // and or namespacing modifications, so we will
-            // just include it
-            include __DIR__ . '/Routes/Home.php';
+            // Preferences
+            Route::group(['prefix' => 'settings'], function () {
 
-            // Support Routes
-            Route::group([
-                'namespace' => 'Support',
-                'prefix'    => 'support',
-            ], function () {
-
-                include __DIR__ . '/Routes/Support/List.php';
-                include __DIR__ . '/Routes/Support/Resolve.php';
-                include __DIR__ . '/Routes/Support/Search.php';
+                include __DIR__ . '/Routes/Profile/View.php';
             });
 
-            // User Profile Routes
-            Route::group([
-                'namespace' => 'Profile',
-                'prefix'    => 'profile',
-            ], function () {
+            // Mfa configuration
+            Route::group(['prefix' => 'mfa'], function () {
 
-                // Preferences
-                Route::group(['prefix' => 'settings'], function () {
-
-                    include __DIR__ . '/Routes/Profile/View.php';
-                });
-
-                // Mfa configuration
-                Route::group(['prefix' => 'mfa'], function () {
-
-                    include __DIR__ . '/Routes/Profile/Mfa.php';
-                });
-
+                include __DIR__ . '/Routes/Profile/Mfa.php';
             });
 
-            // Queue Jobs
-            Route::group([
-                'namespace' => 'Queue',
-                'prefix'    => 'queue',
-            ], function () {
+        });
 
-                include __DIR__ . '/Routes/Queue/Status.php';
+        // Queue Jobs
+        Route::group([
+            'namespace' => 'Queue',
+            'prefix'    => 'queue',
+        ], function () {
+
+            include __DIR__ . '/Routes/Queue/Status.php';
+        });
+
+        // Api Key Routes
+        Route::group([
+            'namespace' => 'Api',
+            'prefix'    => 'api-key',
+        ], function () {
+
+            include __DIR__ . '/Routes/Api/Key.php';
+
+        });
+
+        // Corporation Routes
+        Route::group([
+            'namespace' => 'Corporation',
+            'prefix'    => 'corporation',
+        ], function () {
+
+            include __DIR__ . '/Routes/Corporation/View.php';
+        });
+
+        // Character Routes
+        Route::group([
+            'namespace' => 'Character',
+            'prefix'    => 'character',
+        ], function () {
+
+            include __DIR__ . '/Routes/Character/View.php';
+        });
+
+        // Configuration Routes. In the context of seat,
+        // all configuration should only be possible if
+        // a user has the 'superuser' role.
+        Route::group([
+            'namespace'  => 'Configuration',
+            'prefix'     => 'configuration',
+            'middleware' => 'bouncer:superuser',
+        ], function () {
+
+            // User Management
+            Route::group(['prefix' => 'users'], function () {
+
+                include __DIR__ . '/Routes/Configuration/User.php';
             });
 
-            // Api Key Routes
-            Route::group([
-                'namespace' => 'Api',
-                'prefix'    => 'api-key',
-            ], function () {
+            // Access Mangement
+            Route::group(['prefix' => 'access'], function () {
 
-                include __DIR__ . '/Routes/Api/Key.php';
-
+                include __DIR__ . '/Routes/Configuration/Access.php';
             });
 
-            // Corporation Routes
-            Route::group([
-                'namespace' => 'Corporation',
-                'prefix'    => 'corporation',
-            ], function () {
+            // Security
+            Route::group(['prefix' => 'security'], function () {
 
-                include __DIR__ . '/Routes/Corporation/View.php';
+                include __DIR__ . '/Routes/Configuration/Security.php';
             });
 
-            // Character Routes
-            Route::group([
-                'namespace' => 'Character',
-                'prefix'    => 'character',
-            ], function () {
+            // Schedule
+            Route::group(['prefix' => 'schedule'], function () {
 
-                include __DIR__ . '/Routes/Character/View.php';
+                include __DIR__ . '/Routes/Configuration/Schedule.php';
             });
 
-            // Configuration Routes. In the context of seat,
-            // all configuration should only be possible if
-            // a user has the 'superuser' role.
-            Route::group([
-                'namespace'  => 'Configuration',
-                'prefix'     => 'configuration',
-                'middleware' => 'bouncer:superuser',
-            ], function () {
+            // Import
+            Route::group(['prefix' => 'import'], function () {
 
-                // User Management
-                Route::group(['prefix' => 'users'], function () {
-
-                    include __DIR__ . '/Routes/Configuration/User.php';
-                });
-
-                // Access Mangement
-                Route::group(['prefix' => 'access'], function () {
-
-                    include __DIR__ . '/Routes/Configuration/Access.php';
-                });
-
-                // Security
-                Route::group(['prefix' => 'security'], function () {
-
-                    include __DIR__ . '/Routes/Configuration/Security.php';
-                });
-
-                // Schedule
-                Route::group(['prefix' => 'schedule'], function () {
-
-                    include __DIR__ . '/Routes/Configuration/Schedule.php';
-                });
-
-                // Import
-                Route::group(['prefix' => 'import'], function () {
-
-                    include __DIR__ . '/Routes/Configuration/Import.php';
-                });
-
-                // SeAT Settings
-                Route::group(['prefix' => 'settings'], function () {
-
-                    include __DIR__ . '/Routes/Configuration/Seat.php';
-                });
-
-                // Worker Settings
-                Route::group(['prefix' => 'workers'], function () {
-
-                    include __DIR__ . '/Routes/Configuration/Workers.php';
-                });
-
+                include __DIR__ . '/Routes/Configuration/Import.php';
             });
 
-            // Impersonation Helper Group. This one is Seperate purely
-            // because we dont want to restrict this to superusers only.
-            // For obvious reasons I hope...
-            Route::group([
-                'namespace' => 'Configuration',
-                'prefix'    => 'configuration',
-            ], function () {
+            // SeAT Settings
+            Route::group(['prefix' => 'settings'], function () {
 
-                include __DIR__ . '/Routes/Configuration/Impersonation.php';
+                include __DIR__ . '/Routes/Configuration/Seat.php';
             });
 
-            // Tools Routes
+            // Worker Settings
+            Route::group(['prefix' => 'workers'], function () {
+
+                include __DIR__ . '/Routes/Configuration/Workers.php';
+            });
+
+        });
+
+        // Impersonation Helper Group. This one is Seperate purely
+        // because we dont want to restrict this to superusers only.
+        // For obvious reasons I hope...
+        Route::group([
+            'namespace' => 'Configuration',
+            'prefix'    => 'configuration',
+        ], function () {
+
+            include __DIR__ . '/Routes/Configuration/Impersonation.php';
+        });
+
+        // Tools Routes
+        Route::group([
+            'namespace' => 'Tools',
+            'prefix'    => 'tools',
+        ], function () {
+
+            include __DIR__ . '/Routes/Tools/Standings.php';
+
+            // People Group Routes
             Route::group([
-                'namespace' => 'Tools',
-                'prefix'    => 'tools',
+                'prefix' => 'people',
             ], function () {
 
-                include __DIR__ . '/Routes/Tools/Standings.php';
-
-                // People Group Routes
-                Route::group([
-                    'prefix' => 'people',
-                ], function () {
-
-                    include __DIR__ . '/Routes/Tools/People.php';
-                });
+                include __DIR__ . '/Routes/Tools/People.php';
             });
         });
 

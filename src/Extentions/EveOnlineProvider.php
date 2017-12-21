@@ -84,10 +84,11 @@ class EveOnlineProvider extends AbstractProvider implements ProviderInterface
     {
 
         return (new User)->setRaw($user)->map([
-            'character_id' => $user['CharacterID'],
-            'name'         => $user['CharacterName'],
-            'eve_id'       => $user['CharacterOwnerHash'],
-            'avatar'       => $this->imageUrl . $user['CharacterID'] . '_128.jpg',
+            'character_id'         => $user['CharacterID'],
+            'name'                 => $user['CharacterName'],
+            'character_owner_hash' => $user['CharacterOwnerHash'],
+            'refresh_token'        => $user['RefreshToken'],
+            'avatar'               => $this->imageUrl . $user['CharacterID'] . '_128.jpg',
         ]);
     }
 
@@ -155,9 +156,9 @@ class EveOnlineProvider extends AbstractProvider implements ProviderInterface
      *
      * @param  string $body
      *
-     * @return string
+     * @return array
      */
-    protected function parseAccessToken($body)
+    protected function parseAccessToken($body): array
     {
 
         $jsonResponse = json_decode($body, true);

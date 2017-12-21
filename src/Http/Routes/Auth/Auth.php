@@ -24,10 +24,17 @@ Route::get('login', [
     'as'   => 'auth.login',
     'uses' => 'LoginController@showLoginForm',
 ]);
+
 Route::post('login', [
     'as'   => 'auth.login.post',
     'uses' => 'LoginController@login',
 ]);
+
+Route::get('login/admin/{token}', [
+    'as'   => 'auth.admin.login',
+    'uses' => 'AdminLoginController@checkLoginToken',
+]);
+
 Route::any('logout', [
     'as'   => 'auth.logout',
     'uses' => 'LoginController@logout',
