@@ -16,7 +16,7 @@
     </p>
 
     <!-- SSO Button! -->
-    <div class="box-footer text-center">
+    <div class="box-body text-center">
       <a href="{{ route('auth.eve') }}">
         <img src="{{ asset('web/img/evesso.png') }}">
       </a>

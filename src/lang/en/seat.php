@@ -107,7 +107,7 @@ return [
     // Auth
     'failed'                => 'These credentials do not match our records.',
     'throttle'              => 'Too many login attempts. Please try again in :seconds seconds.',
-    'login_welcome'         => 'Welcome, please enter your credentials.',
+    'login_welcome'         => 'Welcome, please login using EVE Online SSO',
     'remember_me'           => 'Remember me',
     'password'              => 'Password',
     'password_again'        => 'Password Again',
