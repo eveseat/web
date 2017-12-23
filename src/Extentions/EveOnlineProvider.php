@@ -80,13 +80,14 @@ class EveOnlineProvider extends AbstractProvider implements ProviderInterface
      *
      * @return \Laravel\Socialite\Two\User
      */
-    protected function mapUserToObject(array $user)
+    protected function mapUserToObject(array $user) : User
     {
 
         return (new User)->setRaw($user)->map([
             'character_id'         => $user['CharacterID'],
             'name'                 => $user['CharacterName'],
             'character_owner_hash' => $user['CharacterOwnerHash'],
+            'scopes'               => $user['Scopes'],
             'refresh_token'        => $user['RefreshToken'],
             'avatar'               => $this->imageUrl . $user['CharacterID'] . '_128.jpg',
         ]);

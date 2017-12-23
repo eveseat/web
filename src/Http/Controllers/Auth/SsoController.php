@@ -24,11 +24,9 @@ namespace Seat\Web\Http\Controllers\Auth;
 
 use Laravel\Socialite\Contracts\Factory as Socialite;
 use Laravel\Socialite\Two\User as SocialiteUser;
-use Seat\Services\Settings\Seat;
+use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Http\Validation\EmailUpdate;
 use Seat\Web\Models\User;
-use Seat\Web\Notifications\EmailVerification;
 
 /**
  * Class SsoController.
@@ -38,25 +36,17 @@ class SsoController extends Controller
 {
     /**
      * Redirect the user to the Eve Online authentication page.
+     * TODO: Make the scopes requested by SeAT configurable in the UI.
      *
      * @param \Laravel\Socialite\Contracts\Factory $social
      *
      * @return \Seat\Web\Http\Controllers\Auth\Response
-     * @throws \Seat\Services\Exceptions\SettingException
      */
     public function redirectToProvider(Socialite $social)
     {
 
-        // Prevent dropping into this route is SSO
-        // is disabled.
-        if (Seat::get('allow_sso') !== 'yes')
-            abort(404);
-
         return $social->driver('eveonline')
-            ->scopes([
-                'esi-assets.read_assets.v1',
-                'esi-bookmarks.read_character_bookmarks.v1',
-            ])
+            ->scopes(config('eveapi.scopes'))
             ->redirect();
     }
 
@@ -75,6 +65,9 @@ class SsoController extends Controller
 
         // Get or create the User bound to this login.
         $user = $this->findOrCreateUser($eve_data);
+
+        // Update the refresh token for this character.
+        $this->updateRefreshToken($eve_data);
 
         // Login the account
         auth()->login($user, true);
@@ -106,6 +99,20 @@ class SsoController extends Controller
     }
 
     /**
+     * @param \Laravel\Socialite\Two\User $eve_data
+     */
+    public function updateRefreshToken(SocialiteUser $eve_data): void
+    {
+
+        RefreshToken::firstOrNew(['character_id' => $eve_data->character_id])
+            ->fill([
+                'refresh_token' => $eve_data->refresh_token,
+                'scopes'        => json_encode(explode(' ', $eve_data->scopes)),
+            ])
+            ->save();
+    }
+
+    /**
      * @param \Laravel\Socialite\Two\User $data
      *
      * @throws \Seat\Services\Exceptions\SettingException
@@ -121,49 +128,5 @@ class SsoController extends Controller
             setting(['main_character_name', $data->name]);
         }
 
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getUserEmail()
-    {
-
-        // Make sure that only logged in SSO accounts can get here.
-        if (is_null(auth()->user()->eve_id)) abort(404);
-
-        return view('web::auth.ssoemail');
-    }
-
-    /**
-     * @param \Seat\Web\Http\Validation\EmailUpdate $request
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function postUpdateUserEmail(EmailUpdate $request)
-    {
-
-        // Make sure that only logged in SSO accounts can get here.
-        if (is_null(auth()->user()->eve_id)) abort(404);
-
-        // Update the email with the new value
-        $user = auth()->user();
-        $user->email = $request->input('new_email');
-        $user->save();
-
-        $user->notify(new EmailVerification());
-
-        return redirect()->route('auth.email')
-            ->with('success', 'Please check your email for the confirmation link!');
-
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getSsoConfirmation()
-    {
-
-        return view('web::auth.ssoconfirmation');
     }
 }
