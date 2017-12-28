@@ -107,7 +107,9 @@ class SsoController extends Controller
         RefreshToken::firstOrNew(['character_id' => $eve_data->character_id])
             ->fill([
                 'refresh_token' => $eve_data->refresh_token,
-                'scopes'        => json_encode(explode(' ', $eve_data->scopes)),
+                'scopes'        => explode(' ', $eve_data->scopes),
+                'token'         => $eve_data->token,
+                'expires_on'    => $eve_data->expires_on,
             ])
             ->save();
     }

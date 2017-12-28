@@ -80,7 +80,7 @@ class EveOnlineProvider extends AbstractProvider implements ProviderInterface
      *
      * @return \Laravel\Socialite\Two\User
      */
-    protected function mapUserToObject(array $user) : User
+    protected function mapUserToObject(array $user): User
     {
 
         return (new User)->setRaw($user)->map([
@@ -89,6 +89,7 @@ class EveOnlineProvider extends AbstractProvider implements ProviderInterface
             'character_owner_hash' => $user['CharacterOwnerHash'],
             'scopes'               => $user['Scopes'],
             'refresh_token'        => $user['RefreshToken'],
+            'expires_on'           => Carbon($user['ExpiresOn']),
             'avatar'               => $this->imageUrl . $user['CharacterID'] . '_128.jpg',
         ]);
     }
