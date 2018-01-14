@@ -28,6 +28,7 @@ use Illuminate\Auth\Events\Logout as LogoutEvent;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Horizon\Horizon;
 use Laravel\Socialite\SocialiteManager;
 use PragmaRX\Google2FA\Google2FA;
 use Seat\Web\Events\Attempt;
@@ -94,6 +95,9 @@ class WebServiceProvider extends ServiceProvider
         // Add Validators
         $this->add_custom_validators();
 
+        // Configure the queue dashboard
+        $this->configureHorizon();
+
     }
 
     /**
@@ -114,12 +118,12 @@ class WebServiceProvider extends ServiceProvider
     {
 
         $this->publishes([
-            __DIR__ . '/resources/assets'     => public_path('web'),
-            __DIR__ . '/database/migrations/' => database_path('migrations'),
+            __DIR__ . '/resources/assets'                                        => public_path('web'),
+            __DIR__ . '/database/migrations/'                                    => database_path('migrations'),
 
             // Font Awesome Pulled from packagist
             base_path('vendor/components/font-awesome/css/font-awesome.min.css') => public_path('web/css/font-awesome.min.css'),
-            base_path('vendor/components/font-awesome/fonts') => public_path('web/fonts'),
+            base_path('vendor/components/font-awesome/fonts')                    => public_path('web/fonts'),
         ]);
     }
 
@@ -332,6 +336,19 @@ class WebServiceProvider extends ServiceProvider
                 config('web.supervisor.rpc.password'),
                 (int) config('web.supervisor.rpc.port')
             );
+        });
+
+    }
+
+    /**
+     * Specify the constraint for access to the Queue dashboard.
+     */
+    public function configureHorizon()
+    {
+
+        Horizon::auth(function ($request) {
+
+            return $request->user()->has('queue_manager');
         });
 
     }

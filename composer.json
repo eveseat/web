@@ -16,8 +16,9 @@
     "minimum-stability": "alpha",
     "prefer-stable": true,
     "require": {
-        "php": ">=7.0",
-        "laravel/framework": "5.3.*",
+        "php": ">=7.1",
+        "laravel/framework": "5.5.*",
+        "laravel/horizon": "^1.0",
         "eveseat/eveapi": "2.0.*",
         "eveseat/services": "2.0.*",
         "pragmarx/google2fa": "^1.0",

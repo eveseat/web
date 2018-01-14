@@ -33,27 +33,11 @@
 
       <!-- Queue information -->
         <li class="dropdown">
-          <a href="{{ auth()->user()->has('queue_manager', false) ? route('queue.status') : '#queue_count' }}"
+          <a href="{{ auth()->user()->has('queue_manager', false) ? route('horizon.index') : '#queue_count' }}"
              class="dropdown-toggle" data-toggle="tooltip" data-placement="bottom"
              title="{{ trans('web::seat.queued') }}">
             <i class="fa fa-truck"></i>
             <span class="label label-success" id="queue_count">0</span>
-          </a>
-        </li>
-        <li class="dropdown">
-          <a href="{{ auth()->user()->has('queue_manager', false) ? route('queue.status') : '#working_count' }}"
-             class="dropdown-toggle" data-toggle="tooltip" data-placement="bottom"
-             title="{{ trans('web::seat.working') }}">
-            <i class="fa fa-exchange"></i>
-            <span class="label label-warning" id="working_count">0</span>
-          </a>
-        </li>
-        <li class="dropdown">
-          <a href="{{ auth()->user()->has('queue_manager', false) ? route('queue.status') : '#error_count' }}"
-             class="dropdown-toggle" data-toggle="tooltip" data-placement="bottom"
-             title="{{ trans('web::seat.error') }}">
-            <i class="fa fa-exclamation"></i>
-            <span class="label label-danger" id="error_count">0</span>
           </a>
         </li>
 
