@@ -272,22 +272,25 @@ trait AccessChecker
         // corporation ID's on the keys that they are
         // the owner for. They also automatically
         // inherit all permissions for these keys.
-        foreach ($this->keys as $key) {
 
-            foreach ($key->characters as $character) {
+        // TODO: SeAT 3x - This needs a *major* refactor.
 
-                // We only grant corporation related permission
-                if ($key->info->type === 'Corporation') {
-
-                    // Assign the permission
-                    $map['corp'][$character->corporationID] = ['corporation.*'];
-                }
-
-                // We only grant character related permission
-                $map['char'][$character->characterID] = ['character.*'];
-            }
-
-        }
+//        foreach ($this->keys as $key) {
+//
+//            foreach ($key->characters as $character) {
+//
+//                // We only grant corporation related permission
+//                if ($key->info->type === 'Corporation') {
+//
+//                    // Assign the permission
+//                    $map['corp'][$character->corporationID] = ['corporation.*'];
+//                }
+//
+//                // We only grant character related permission
+//                $map['char'][$character->characterID] = ['character.*'];
+//            }
+//
+//        }
 
         // Next we move through the roles the user has
         // and populate the permissions that the affiliations

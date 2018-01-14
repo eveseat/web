@@ -28,26 +28,6 @@ return [
         'route_segment' => 'home',
         'route'         => 'home',
     ],
-    'api-key'     => [
-        'name'          => 'api key management',
-        'label'         => 'web::seat.api_key_management',
-        'icon'          => 'fa-key',
-        'route_segment' => 'api-key',
-        'entries'       => [
-            [   // Add Api Key
-                'name'  => 'add api key',
-                'label' => 'web::seat.add_api_key',
-                'icon'  => 'fa-plus',
-                'route' => 'api.key',
-            ],
-            [
-                'name'  => 'list keys',
-                'label' => 'web::seat.list_keys',
-                'icon'  => 'fa-list',
-                'route' => 'api.key.list',
-            ],
-        ],
-    ],
     'corporation' => [
         'name'          => 'corporation',
         'label'         => 'web::seat.corporation',
@@ -97,12 +77,6 @@ return [
                 'label' => 'web::seat.access',
                 'icon'  => 'fa-shield',
                 'route' => 'configuration.access.roles',
-            ],
-            [   // Import
-                'name'  => 'import',
-                'label' => 'web::seat.import',
-                'icon'  => 'fa-upload',
-                'route' => 'configuration.import.list',
             ],
             [   // Users
                 'name'   => 'user',
