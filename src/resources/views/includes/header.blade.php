@@ -40,6 +40,14 @@
             <span class="label label-success" id="queue_count">0</span>
           </a>
         </li>
+        <li class="dropdown">
+          <a href="{{ auth()->user()->has('queue_manager', false) ? route('horizon.index') : '#error_count' }}"
+             class="dropdown-toggle" data-toggle="tooltip" data-placement="bottom"
+             title="{{ trans('web::seat.error') }}">
+            <i class="fa fa-exclamation"></i>
+            <span class="label label-danger" id="error_count">0</span>
+          </a>
+        </li>
 
         <!-- User Account Menu -->
         <li class="dropdown user user-menu">
