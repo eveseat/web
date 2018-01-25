@@ -51,33 +51,7 @@
             <!-- hidden-xs hides the username on small devices so only the image appears. -->
             <span class="hidden-xs">{{ $user->name }}</span>
           </a>
-          <ul class="dropdown-menu">
-            <!-- The user image in the menu -->
-            <li class="user-header">
-              <img src="//image.eveonline.com/Character/{{ setting('main_character_id') }}_256.jpg"
-                   class="img-circle" alt="User Image">
-
-              <p>
-                {{ $user->name }}
-                <small>{{ trans('web::seat.joined') }}: {{ human_diff($user->created_at) }} </small>
-              </p>
-            </li>
-            <!-- Menu Footer-->
-            <li class="user-footer">
-              <div class="pull-left">
-                <a href="{{ route('profile.view') }}"
-                   class="btn btn-default btn-flat">{{ trans('web::seat.profile') }}</a>
-              </div>
-              <div class="pull-right">
-                <form role="form" action="{{ route('auth.logout') }}" method="post">
-                  {{ csrf_field() }}
-                  <button type="submit" class="btn btn-default btn-flat">
-                    {{ trans('web::seat.sign_out') }}
-                  </button>
-                </form>
-              </div>
-            </li>
-          </ul>
+          @include('web::includes.character-selection')
         </li>
 
       </ul>

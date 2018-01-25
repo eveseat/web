@@ -31,3 +31,30 @@ img.eve-icon.xxlarge-icon {
     width: 256px;
     height: 256px;
 }
+
+/*
+ * Profile Drop Down
+ */
+
+ul.dropdown-menu > li.user-character:first-child {
+    border-top: solid 1px #eee;
+}
+
+ul.dropdown-menu > li.user-character {
+    margin-top: 0;
+    border-bottom: 1px solid #eee;
+}
+
+ul.dropdown-menu li.user-character a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+ul.dropdown-menu li.user-character.new-character {
+    border-bottom: 1px solid #f4f4f4;
+}
+
+ul.dropdown-menu li.user-character.new-character a h3 {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
