@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Profile;
 
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Services\Repositories\Character\Info;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Services\Settings\Profile;
@@ -136,5 +137,23 @@ class ProfileController extends Controller
 
         return redirect()->back()
             ->with('success', 'Email updated!');
+    }
+
+    /**
+     * @param int $character_id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Seat\Services\Exceptions\SettingException
+     */
+    public function changeCharacter(int $character_id)
+    {
+        setting(['main_character_id', $character_id]);
+
+        $character = CharacterInfo::find($character_id);
+        if (is_null($character))
+            setting(['main_character_name', 'N/A']);
+        else
+            setting(['main_character_name', $character->name]);
+
+        return redirect()->back();
     }
 }

@@ -1,7 +1,7 @@
 <ul class="dropdown-menu">
     @foreach(\Seat\Web\Models\UserRelation::where('main_user_id', auth()->user()->id)->get() as $relation)
     <li class="media user-character">
-        <a href="#">
+        <a href="{{ route('profile.change-character', ['character_id' => $relation->character()->character_id]) }}">
             <div class="media-left">
                 {!! img('character', $relation->character()->character_id, 64, ['class' => 'img-circle'], false) !!}
             </div>

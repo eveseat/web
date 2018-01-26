@@ -39,3 +39,8 @@ Route::post('/update/email', [
     'as'   => 'profile.update.email',
     'uses' => 'ProfileController@postUpdateEmail',
 ]);
+
+Route::get('/change-character/{character_id}', [
+    'as'         => 'profile.change-character',
+    'uses'       => 'ProfileController@changeCharacter',
+]);
