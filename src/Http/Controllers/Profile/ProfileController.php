@@ -49,7 +49,7 @@ class ProfileController extends Controller
             ->take(50)->sortByDesc('created_at');
 
         // Settings value possibilities
-        $characters = $this->getUserCharacters(auth()->user()->id);
+        $characters = $this->getUserGroupCharacters(auth()->user()->groups);
         $skins = Profile::$options['skins'];
         $languages = config('web.locale.languages');
         $sidebar = Profile::$options['sidebar'];
@@ -96,30 +96,6 @@ class ProfileController extends Controller
         return redirect()->back()
             ->with('success', 'Profile settings updated!');
 
-    }
-
-    /**
-     * @param \Seat\Web\Http\Validation\PasswordUpdate $request
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function postUpdatePassword(PasswordUpdate $request)
-    {
-
-        if (! auth()->validate([
-            'name'     => auth()->user()->name,
-            'password' => $request->current_password, ])
-        )
-            return redirect()->back()
-                ->with('error',
-                    'Your current password is incorrect, please try again.');
-
-        $user = auth()->user();
-        $user->password = bcrypt($request->new_password);
-        $user->save();
-
-        return redirect()->back()
-            ->with('success', 'Password updated!');
     }
 
     /**

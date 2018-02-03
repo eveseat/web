@@ -504,7 +504,6 @@ return [
     'user_account'                 => 'User Account',
     'account_settings'             => 'Account Settings',
     'upgrade_sso'                  => 'Upgrade to EVE Online SSO Account',
-    'change_password'              => 'Change Password',
     'change_email'                 => 'Change Email',
     'superuser'                    => 'Superuser',
     'user_interface'               => 'User Interface',
@@ -523,9 +522,6 @@ return [
     'owned_keys'                   => 'Owned Keys',
     'account_help'                 => 'For any account related enquiries, including permissions amendments, ' .
         'please contact the SeAT administrator.',
-    'current_password'             => 'Current Password',
-    'new_password'                 => 'New Password',
-    'confirm_new_password'         => 'Confirm New Password',
     'current_email'                => 'Current Email',
     'new_email'                    => 'New Email',
     'confirm_new_email'            => 'Confirm New Email',

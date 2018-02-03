@@ -26,11 +26,11 @@
             <div class="col-md-6">
               <select id="main_character_id" name="main_character_id" class="form-control">
                 @foreach($characters as $character)
-                  <option value="{{ $character->characterID }}"
-                          @if(setting('main_character_id') == $character->characterID)
+                  <option value="{{ $character->id }}"
+                          @if(setting('main_character_id') == $character->id)
                           selected
                           @endif>
-                    {{ $character->characterName }}</option>
+                    {{ $character->name }}</option>
                 @endforeach
               </select>
             </div>
@@ -243,63 +243,6 @@
             <li>
 
               <!-- Button trigger modal -->
-              <a type="button" data-toggle="modal" data-target="#passwordModal">
-                <i class="fa fa-lock"></i>
-                {{ trans('web::seat.change_password') }}
-              </a>
-
-              <!-- Modal -->
-              <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog"
-                   aria-labelledby="passwordModalLabel">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                      <h4 class="modal-title" id="passwordModalLabel">{{ trans('web::seat.change_password') }}</h4>
-                    </div>
-                    <div class="modal-body">
-
-                      <form role="form" action="{{ route('profile.update.password') }}" method="post">
-                        {{ csrf_field() }}
-
-                        <div class="box-body">
-
-                          <div class="form-group">
-                            <label for="current_password">{{ trans('web::seat.current_password') }}</label>
-                            <input type="password" name="current_password" class="form-control" placeholder="Password">
-                          </div>
-
-                          <div class="form-group">
-                            <label for="new_password">{{ trans('web::seat.new_password') }}</label>
-                            <input type="password" name="new_password" class="form-control" placeholder="Password">
-                          </div>
-
-                          <div class="form-group">
-                            <label for="new_password_confirmation">{{ trans('web::seat.confirm_new_password') }}</label>
-                            <input type="password" name="new_password_confirmation" class="form-control"
-                                   id="password_confirmation" placeholder="Password">
-                          </div>
-
-                        </div><!-- /.box-body -->
-
-                        <div class="box-footer">
-                          <button type="submit" class="btn btn-primary pull-right">
-                            {{ trans('web::seat.change_password') }}
-                          </button>
-                        </div>
-                      </form>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </li>
-            <li>
-
-              <!-- Button trigger modal -->
               <a type="button" data-toggle="modal" data-target="#emailModal">
                 <i class="fa fa-envelope"></i>
                 {{ trans('web::seat.change_email') }}
@@ -408,23 +351,6 @@
               </div>
 
             </li>
-
-            {{-- option to upgrade account to an SSO account --}}
-            @if(setting('allow_sso', true) === 'yes')
-
-              @if(is_null(auth()->user()->eve_id))
-
-                <li class="list-header">{{ trans('web::seat.upgrade_sso') }}</li>
-
-                <li>
-                  <a href="{{ route('auth.eve') }}">
-                    <img src="{{ asset('web/img/evesso.png') }}">
-                  </a>
-                </li>
-
-              @endif
-
-            @endif
           </ul>
 
         </div>
@@ -445,17 +371,6 @@
         </div>
       </div>
 
-    </div>
-    <div class="panel-footer">
-      @if(auth()->user()->hasSuperUser())
-        <span class="label label-danger">
-          {{ trans('web::seat.superuser') }}
-        </span>
-      @endif
-
-      <span class="pull-right">
-        {{ count($user->keys) }} {{ trans('web::seat.owned_keys') }}
-      </span>
     </div>
   </div>
 
