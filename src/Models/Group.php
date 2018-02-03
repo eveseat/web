@@ -20,41 +20,25 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+namespace Seat\Web\Models;
 
-class CreateUsersTable extends Migration
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * Class Group
+ * @package Seat\Web\Models
+ */
+class Group extends Model
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-
-        Schema::create('users', function (Blueprint $table) {
-
-            $table->bigInteger('id')->primary();
-            $table->string('name')->unique();
-            $table->string('email')->unique()->nullable();
-            $table->string('character_owner_hash');
-            $table->dateTime('last_login')->nullable();
-            $table->string('last_login_source')->nullable();
-            $table->rememberToken();
-
-            $table->timestamps();
-        });
-    }
 
     /**
-     * Reverse the migrations.
+     * Return the Users that are in this group.
      *
-     * @return void
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function down()
+    public function users()
     {
 
-        Schema::drop('users');
+        return $this->hasMany(User::class);
     }
 }

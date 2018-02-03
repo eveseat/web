@@ -42,11 +42,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     use Authenticatable, CanResetPassword, AccessChecker, Notifiable;
 
     /**
-     * The database table used by the model.
-     *
-     * @var string
+     * @var bool
      */
-    protected $table = 'users';
+    public $incrementing = false;
 
     /**
      * The attributes that are mass assignable.
@@ -54,7 +52,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'character_owner_hash'];
+        'id', 'name', 'email', 'character_owner_hash'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -62,18 +60,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
-
-    /**
-     * Boot the model.
-     *
-     * We are simply adding the active_token.
-     */
-    public static function boot()
-    {
-
-        parent::boot();
-
-    }
 
     /**
      * Make sure we cleanup on delete.
@@ -88,9 +74,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         $this->login_history()->delete();
         $this->roles()->detach();
         $this->affiliations()->detach();
-
-        // Return keys to the super user
-        $this->keys()->update(['user_id' => 0]);
 
         return parent::delete();
     }
@@ -128,6 +111,17 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
         return $this->belongsToMany(Affiliation::class)
             ->withPivot('not');
+    }
+
+    /**
+     * Get the group the current user belongs to.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function group()
+    {
+
+        return $this->belongsToMany(Group::class);
     }
 
     /**

@@ -26,6 +26,7 @@ use Laravel\Socialite\Contracts\Factory as Socialite;
 use Laravel\Socialite\Two\User as SocialiteUser;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Models\Group;
 use Seat\Web\Models\User;
 
 /**
@@ -70,7 +71,7 @@ class SsoController extends Controller
         $this->updateRefreshToken($eve_data);
 
         // Login the account
-        auth()->login($user, true);
+        $this->loginUser($user);
 
         // Set the main characterID based on the response.
         $this->setCharacterId($eve_data);
@@ -89,10 +90,12 @@ class SsoController extends Controller
     private function findOrCreateUser(SocialiteUser $user): User
     {
 
+        // TODO: Determine if the owner_hash is changed and take some action.
         if ($existing = User::where('character_owner_hash', $user->character_owner_hash)->first())
             return $existing;
 
-        return User::create([
+        return User::forceCreate([  // Only because I don't want to set id as fillable
+            'id'                   => $user->character_id,
             'name'                 => $user->name,
             'character_owner_hash' => $user->character_owner_hash,
         ]);
@@ -115,6 +118,45 @@ class SsoController extends Controller
     }
 
     /**
+     * Login the user, ensuring that a group is attached.
+     *
+     * If no group is attached, ensure that the user at least
+     * has *a* group attached to it.
+     *
+     * @param \Seat\Web\Models\User $user
+     */
+    public function loginUser(User $user)
+    {
+
+        // If we have an already logged in session, take the current
+        // user we want to login as, make sure its part of the
+        // same group as the current user, and login that one instead.
+        if (auth()->check()) {
+
+            // Check if the group the current user is in matches
+            // the group (if any) of the user *to* login. If not,
+            // cleanup that user and attach to the current users
+            // group.
+            if (auth()->user()->group()->first() != $user->group()->first()) {
+
+                $user->group()->detach();
+
+                // Attach the user to the user in the current session.
+                $user->group()->attach(auth()->user()->group()->first());
+            }
+
+        } else {
+
+            // Ensure that the new user has at least one group
+            // attached
+            if ($user->group()->count() === 0)
+                $user->group()->attach((new Group)->save());
+        }
+
+        auth()->login($user, true);
+    }
+
+    /**
      * @param \Laravel\Socialite\Two\User $data
      *
      * @throws \Seat\Services\Exceptions\SettingException
@@ -129,6 +171,5 @@ class SsoController extends Controller
             setting(['main_character_id', $data->character_id]);
             setting(['main_character_name', $data->name]);
         }
-
     }
 }
