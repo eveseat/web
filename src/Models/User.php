@@ -114,6 +114,17 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
+     * An alias attribute for the character_id.
+     *
+     * @return mixed
+     */
+    public function getCharacterIdAttribute()
+    {
+
+        return $this->id;
+    }
+
+    /**
      * Get the group the current user belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
