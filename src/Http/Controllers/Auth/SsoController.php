@@ -147,12 +147,9 @@ class SsoController extends Controller
         // same group as the current user, and login that one instead.
         if (auth()->check()) {
 
-            // Remove group memberships that this user might have.
-            $user->groups()->detach();
-
-            // And attach it to the groups that the already logged
-            // in user has.
-            $user->groups()->attach(auth()->user()->groups);
+            // Sync the groups of the new user with the existing
+            // one.
+            $user->groups()->sync(auth()->user()->groups);
 
         } else {
 
