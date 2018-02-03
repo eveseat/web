@@ -29,7 +29,7 @@
                   <option value="{{ $character->id }}"
                           @if(setting('main_character_id') == $character->id)
                           selected
-                          @endif>
+                      @endif>
                     {{ $character->name }}</option>
                 @endforeach
               </select>
@@ -45,7 +45,7 @@
                   <option value="{{ $skin }}"
                           @if(setting('skin') == $skin)
                           selected
-                          @endif>
+                      @endif>
                     {{ str_replace('skin-', '', $skin) }}</option>
                 @endforeach
               </select>
@@ -61,7 +61,7 @@
                   <option value="{{ $language['short'] }}"
                           @if(setting('language') == $language['short'])
                           selected
-                          @endif>
+                      @endif>
                     {{ $language['full'] }}</option>
                 @endforeach
               </select>
@@ -77,7 +77,7 @@
                   <option value="{{ $style }}"
                           @if(setting('sidebar') == $style)
                           selected
-                          @endif>
+                      @endif>
                     {{ str_replace('sidebar-', '', $style) }}</option>
                 @endforeach
               </select>
@@ -374,6 +374,43 @@
     </div>
   </div>
 
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        Linked Characters
+
+        <span class="pull-right">
+          <a href="{{ route('auth.eve') }}" class="btn btn-primary btn-xs">
+            Link another character
+          </a>
+        </span>
+
+      </h3>
+    </div>
+    <div class="panel-body">
+
+      <div class="row">
+        <div class="col-md-12">
+
+          <ul class="list-unstyled">
+
+            @foreach($characters as $character)
+              <li>
+
+                {!! img('character', $character->id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                {{ $character->name }}
+
+              </li>
+            @endforeach
+
+          </ul>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <span class="text-center">
     {{ trans('web::seat.account_help') }}
   </span>
@@ -382,10 +419,10 @@
 
 @push('javascript')
 
-<script>
+  <script>
 
-  $("select#main_character_id").select2();
+    $("select#main_character_id").select2();
 
-</script>
+  </script>
 
 @endpush
