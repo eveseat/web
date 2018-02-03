@@ -133,24 +133,19 @@ class SsoController extends Controller
         // same group as the current user, and login that one instead.
         if (auth()->check()) {
 
-            // Check if the group the current user is in matches
-            // the group (if any) of the user *to* login. If not,
-            // cleanup that user and attach to the current users
-            // group.
-            if (auth()->user()->group()->first() != $user->group()->first()) {
+            // Remove group memberships that this user might have.
+            $user->groups()->detach();
 
-                $user->group()->detach();
-
-                // Attach the user to the user in the current session.
-                $user->group()->attach(auth()->user()->group()->first());
-            }
+            // And attach it to the groups that the already logged
+            // in user has.
+            $user->groups()->attach(auth()->user()->groups);
 
         } else {
 
-            // Ensure that the new user has at least one group
+            // Ensure that this user has at least one group
             // attached
-            if ($user->group()->count() === 0)
-                $user->group()->attach((new Group)->save());
+            if ($user->groups()->count() == 0)
+                $user->groups()->attach(Group::create());
         }
 
         auth()->login($user, true);
