@@ -24,6 +24,7 @@ namespace Seat\Web\Http\Composers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
+use Seat\Services\Repositories\Configuration\UserRespository;
 
 /**
  * Class User.
@@ -31,13 +32,7 @@ use Illuminate\Support\Facades\Auth;
  */
 class User
 {
-    /**
-     * Create a new user composer.
-     */
-    public function __construct()
-    {
-
-    }
+    use UserRespository;
 
     /**
      * Bind data to the view.
@@ -48,7 +43,7 @@ class User
      */
     public function compose(View $view)
     {
-
         $view->with('user', Auth::user());
+        $view->with('user_characters', $this->getUserGroupCharacters(auth()->user()->groups));
     }
 }

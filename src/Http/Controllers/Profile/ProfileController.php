@@ -125,9 +125,9 @@ class ProfileController extends Controller
         setting(['main_character_id', $character_id]);
 
         $character = CharacterInfo::find($character_id);
-        if (is_null($character))
-            setting(['main_character_name', 'N/A']);
-        else
+
+        setting(['main_character_name', 'N/A']);
+        if (!is_null($character))
             setting(['main_character_name', $character->name]);
 
         return redirect()->back();

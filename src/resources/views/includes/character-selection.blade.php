@@ -1,20 +1,28 @@
 <ul class="dropdown-menu">
-    @foreach(\Seat\Web\Models\UserRelation::where('main_user_id', auth()->user()->id)->get() as $relation)
+    @foreach($user_characters as $character)
+    @if($character->character_id == setting('main_character_id'))
+    <li class="media user-character active">
+    @else
     <li class="media user-character">
-        <a href="{{ route('profile.change-character', ['character_id' => $relation->character()->character_id]) }}">
+    @endif
+        <a href="{{ route('profile.change-character', ['character_id' => $character->character_id]) }}">
             <div class="media-left">
-                {!! img('character', $relation->character()->character_id, 64, ['class' => 'img-circle'], false) !!}
+                {!! img('character', $character->character_id, 64, ['class' => 'img-circle'], false) !!}
             </div>
             <div class="media-body">
-                <h4 class="media-heading">{{ $relation->character()->name }}</h4>
-                <h5>{{ $relation->character()->corporation->name }} [{{ $relation->character()->corporation->ticker }}]</h5>
+                <h4 class="media-heading">{{ $character->name }}</h4>
+                @if(is_null($character->corporation))
+                <h5>N/A [ticker]</h5>
+                @else
+                <h5>{{ $character->corporation->name }} [{{ $character->corporation->ticker }}]</h5>
+                @endif
             </div>
         </a>
     </li>
     @endforeach
     <li class="user-character new-character">
         <!-- Route to link new character -->
-        <a href="#" class="text-center">
+        <a href="{{ route('auth.eve') }}" class="text-center">
             <h3>
                 <span class="fa fa-plus-circle"></span>
             </h3>
