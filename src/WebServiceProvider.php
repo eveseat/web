@@ -30,7 +30,6 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Horizon\Horizon;
 use Laravel\Socialite\SocialiteManager;
-use PragmaRX\Google2FA\Google2FA;
 use Seat\Web\Events\Attempt;
 use Seat\Web\Events\Auth;
 use Seat\Web\Events\Login;
@@ -51,7 +50,6 @@ use Seat\Web\Http\Middleware\Bouncer\CorporationBouncer;
 use Seat\Web\Http\Middleware\Bouncer\KeyBouncer;
 use Seat\Web\Http\Middleware\ConfirmedEmailAddress;
 use Seat\Web\Http\Middleware\Locale;
-use Seat\Web\Http\Middleware\Mfa;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
 use Seat\Web\Http\Middleware\Requirements;
 use Supervisor\Supervisor;
@@ -211,9 +209,6 @@ class WebServiceProvider extends ServiceProvider
         // Localization support
         $router->aliasMiddleware('locale', Locale::class);
 
-        // Optional multifactor authentication if required
-        $router->aliasMiddleware('mfa', Mfa::class);
-
         // Registration Middleware checks of the app is
         // allowing new user registration to occur.
         $router->aliasMiddleware('registration.status', RegistrationAllowed::class);
@@ -251,6 +246,19 @@ class WebServiceProvider extends ServiceProvider
     {
 
         Validator::extend('cron', 'Seat\Web\Http\Validation\Custom\Cron@validate');
+    }
+
+    /**
+     * Specify the constraint for access to the Queue dashboard.
+     */
+    public function configureHorizon()
+    {
+
+        Horizon::auth(function ($request) {
+
+            return $request->user()->has('queue_manager');
+        });
+
     }
 
     /**
@@ -296,12 +304,6 @@ class WebServiceProvider extends ServiceProvider
     public function register_services()
     {
 
-        // Register the Google2FA into the IoC
-        $this->app->bind('google_2fa', function () {
-
-            return new Google2FA;
-        });
-
         // Register the Socialite Factory.
         // From: Laravel\Socialite\SocialiteServiceProvider
         $this->app->singleton('Laravel\Socialite\Contracts\Factory', function ($app) {
@@ -336,19 +338,6 @@ class WebServiceProvider extends ServiceProvider
                 config('web.supervisor.rpc.password'),
                 (int) config('web.supervisor.rpc.port')
             );
-        });
-
-    }
-
-    /**
-     * Specify the constraint for access to the Queue dashboard.
-     */
-    public function configureHorizon()
-    {
-
-        Horizon::auth(function ($request) {
-
-            return $request->user()->has('queue_manager');
         });
 
     }

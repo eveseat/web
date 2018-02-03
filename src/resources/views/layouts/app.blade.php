@@ -117,6 +117,7 @@
       url     : "{{ route('queue.status.short') }}",
       success : function (data) {
         $("span#queue_count").text(data.queue_count);
+        $("span#error_count").text(data.error_count);
       },
       complete: function () {
         // Schedule the next request when the current one's complete

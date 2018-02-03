@@ -20,12 +20,25 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/setup', [
-    'as'   => 'profile.mfa.new',
-    'uses' => 'MfaSetupController@getNew',
-]);
+namespace Seat\Web\Models;
 
-Route::post('/setup', [
-    'as'   => 'profile.mfa.setup',
-    'uses' => 'MfaSetupController@postSetup',
-]);
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * Class Group
+ * @package Seat\Web\Models
+ */
+class Group extends Model
+{
+
+    /**
+     * Return the Users that are in this group.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function users()
+    {
+
+        return $this->hasMany(User::class);
+    }
+}
