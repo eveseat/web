@@ -21,7 +21,6 @@
         "laravel/horizon": "^1.0",
         "eveseat/eveapi": "2.0.*",
         "eveseat/services": "2.0.*",
-        "pragmarx/google2fa": "^1.0",
         "league/csv": "^8.1",
         "laravel/socialite": "^2.0",
         "guzzlehttp/guzzle": "^6.2",

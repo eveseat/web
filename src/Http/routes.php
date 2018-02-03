@@ -88,12 +88,6 @@ Route::group([
                 include __DIR__ . '/Routes/Profile/View.php';
             });
 
-            // Mfa configuration
-            Route::group(['prefix' => 'mfa'], function () {
-
-                include __DIR__ . '/Routes/Profile/Mfa.php';
-            });
-
         });
 
         // Queue Jobs
