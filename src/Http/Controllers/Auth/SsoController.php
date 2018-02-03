@@ -90,9 +90,23 @@ class SsoController extends Controller
     private function findOrCreateUser(SocialiteUser $user): User
     {
 
-        // TODO: Determine if the owner_hash is changed and take some action.
-        if ($existing = User::where('character_owner_hash', $user->character_owner_hash)->first())
+        if ($existing = User::find($user->character_id)) {
+
+            // If the character_owner_hash has changed, it might be that
+            // this character was transferred. We will still allow the login,
+            // but the group memberships the character had will be removed.
+            if ($existing->character_owner_hash !== $user->character_owner_hash) {
+
+                // Remove group memberships
+                $existing->groups()->detach();
+
+                // Update the new character_owner_hash
+                $existing->character_owner_hash = $user->character_owner_hash;
+                $existing->save();
+            }
+
             return $existing;
+        }
 
         return User::forceCreate([  // Only because I don't want to set id as fillable
             'id'                   => $user->character_id,
