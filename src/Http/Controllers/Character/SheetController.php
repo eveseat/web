@@ -22,10 +22,11 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
-use Illuminate\Support\Facades\DB;
 use Seat\Eveapi\Models\Character\CharacterCorporationHistory;
+use Seat\Eveapi\Models\Character\CharacterFatigue;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Character\CharacterTitle;
+use Seat\Eveapi\Models\Clones\CharacterClone;
 use Seat\Eveapi\Models\Clones\CharacterImplant;
 use Seat\Eveapi\Models\Clones\CharacterJumpClone;
 use Seat\Eveapi\Models\Skills\CharacterSkillQueue;
@@ -35,7 +36,6 @@ use Seat\Services\Repositories\Character\JumpClone;
 use Seat\Services\Repositories\Character\Skills;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Models\Group;
 
 class SheetController extends Controller
 {
@@ -60,17 +60,16 @@ class SheetController extends Controller
             return redirect()->back()
                 ->with('error', trans('web::seat.unknown_character'));
 
-        $group = DB::table('group_user')->where('user_id', $character_id)->first();
-
-        $account_info = $this->getUserGroupCharacters(DB::table('group_user')->where('group_id', $group->group_id)->get());
-        $employment = CharacterCorporationHistory::where('character_id', $character_id)->get();
-        $implants = CharacterImplant::where('character_id', $character_id)->get();
-        $jump_clones = CharacterJumpClone::where('character_id', $character_id)->get();
-        $skill_queue = CharacterSkillQueue::where('character_id', $character_id)->orderBy('queue_position')->get();
-        $titles = CharacterTitle::where('character_id', $character_id);
+        $fatigue      = CharacterFatigue::find($character_id);
+        $employment   = CharacterCorporationHistory::where('character_id', $character_id)->orderBy('start_date', 'desc')->get();
+        $implants     = CharacterImplant::where('character_id', $character_id)->get();
+        $last_jump    = CharacterClone::find($character_id);
+        $jump_clones  = CharacterJumpClone::where('character_id', $character_id)->get();
+        $skill_queue  = CharacterSkillQueue::where('character_id', $character_id)->orderBy('queue_position')->get();
+        $titles       = CharacterTitle::where('character_id', $character_id)->get();
 
         return view('web::character.sheet',
-            compact('account_info', '$character_info', 'employment',
-                'implants', 'jump_clones', 'skill_queue', 'titles'));
+            compact('fatigue', 'character_info', 'employment',
+                'implants', 'last_jump', 'jump_clones', 'skill_queue', 'titles'));
     }
 }
