@@ -32,7 +32,7 @@
     <div class="panel-heading">
       <h3 class="panel-title">{{ trans('web::seat.skills') }}</h3>
     </div>
-    <div class="panel-body">
+    <div class="panel-body no-padding">
 
       @foreach($skill_groups as $skill_group)
 
@@ -40,61 +40,43 @@
 
           <div class="box box-solid">
             <div class="box-header with-border">
+              <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-minus"></i>
+              </button>
               <h3 class="box-title">
                 {{ $skill_group->groupName }}
               </h3>
               <span class="pull-right">
-                  {{ count($skills->where('groupID', $skill_group->groupID)) }}
-                skills
-                </span>
+                {{ count($skills->where('groupID', $skill_group->groupID)) }} skills
+              </span>
             </div>
             <div class="box-body">
-
-              <ul class="list-unstyled">
-
+              <table class="table table-striped">
                 @foreach($skills->where('groupID', $skill_group->groupID) as $skill)
-                  @if($loop->iteration % 2 == 0)
-                    <li style="background-color:#efefef;">
-                  @else
-                    <li>
-                  @endif
-                    <i class="fa fa-book"></i> {{ $skill->typeName }}
-                    <span class="pull-right">
-
-                      @if($skill->level == 0)
-
-                        <i class="fa fa-star-o"></i>
-
-                      @elseif($skill->level == 5)
-
-                        <span class="text-green">
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                        </span>
-
-                      @else
-
-                        @for ($i=0; $i < $skill->level ; $i++)
-
-                          <i class="fa fa-star"></i>
-
-                        @endfor
-
-                      @endif
-
-                      | {{ $skill->level }}
+                <tr>
+                  <td><i class="fa fa-book"></i> {{ $skill->type->typeName }}</td>
+                  <td class="text-right">
+                    @if($skill->trained_skill_level == 0)
+                    <i class="fa fa-star-o"></i>
+                    @elseif($skill->trained_skill_level == 5)
+                    <span class="text-green">
+                      @for($i = 1; $i <= 5; $i++)
+                      <i class="fa fa-star"></i>
+                      @endfor
                     </span>
-                  </li>
-
+                    @else
+                    @for($i = 1;  $i <= $skill->trained_skill_level; $i++)
+                    <i class="fa fa-star"></i>
+                    @endfor
+                    @endif
+                     | {{ $skill->trained_skill_level }}
+                  </td>
+                </tr>
                 @endforeach
-
-              </ul>
+              </table>
             </div><!-- /.box-body -->
             <div class="box-footer">
-              {{ number($skills->where('groupID', $skill_group->groupID)->sum('skillpoints'), 0) }}
+              {{ number($skills->where('groupID', $skill_group->groupID)->sum('skillpoints_in_skill'), 0) }}
               total skillpoints
             </div>
           </div>
@@ -135,6 +117,8 @@
       }
     });
   });
+
+  $('')
 
 </script>
 @endpush
