@@ -22,20 +22,27 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
+use Illuminate\Support\Facades\DB;
+use Seat\Eveapi\Models\Character\CharacterCorporationHistory;
+use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Character\CharacterTitle;
+use Seat\Eveapi\Models\Clones\CharacterImplant;
+use Seat\Eveapi\Models\Clones\CharacterJumpClone;
 use Seat\Services\Repositories\Character\Character;
 use Seat\Services\Repositories\Character\Implants;
-use Seat\Services\Repositories\Character\Info;
 use Seat\Services\Repositories\Character\JumpClone;
 use Seat\Services\Repositories\Character\Skills;
+use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Models\Group;
 
 class SheetController extends Controller
 {
     use Character;
-    use Info;
     use Implants;
     use JumpClone;
     use Skills;
+    use UserRespository;
 
     /**
      * @param $character_id
@@ -45,25 +52,25 @@ class SheetController extends Controller
     public function getSheet(int $character_id)
     {
 
-        $character_sheet = $this->getCharacterSheet($character_id);
-
-        // Check if we managed to get any records for
-        // this character. If not, redirect back with
-        // an error.
-        if (empty($character_sheet))
+        // Ensure we've the public information for this character
+        // If not, redirect back with an error
+        // TODO : queue a job which will pull public data for this toon
+        if (! $character_info = CharacterInfo::find($character_id))
             return redirect()->back()
                 ->with('error', trans('web::seat.unknown_character'));
 
-        $account_info = $this->getCharacterAccountInfo($character_id);
-        $employment = $this->getCharacterEmploymentHistory($character_id);
-        $implants = $this->getCharacterImplants($character_id);
-        $jump_clones = $this->getCharacterJumpClones($character_id);
+        $group = DB::table('group_user')->where('user_id', $character_id)->first();
+
+        $account_info = $this->getUserGroupCharacters(DB::table('group_user')->where('group_id', $group->group_id)->get());
+        $employment = CharacterCorporationHistory::where('character_id', $character_id)->get();
+        $implants = CharacterImplant::where('character_id', $character_id)->get();
+        $jump_clones = CharacterJumpClone::where('character_id', $character_id)->get();
         $skill_in_training = $this->getCharacterSkillInTraining($character_id);
         $skill_queue = $this->getCharacterSkilQueue($character_id);
-        $titles = $this->getCharacterCorporationTitles($character_id);
+        $titles = CharacterTitle::where('character_id', $character_id);
 
         return view('web::character.sheet',
-            compact('account_info', 'character_sheet', 'employment',
+            compact('account_info', '$character_info', 'employment',
                 'implants', 'jump_clones', 'skill_in_training',
                 'skill_queue', 'titles'));
     }
