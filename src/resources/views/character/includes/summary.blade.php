@@ -118,6 +118,9 @@
          target="_blank">
         <img src="{{ asset('web/img/zkillboard.png') }}">
       </a>
+      <a href="http://eve-prism.com/?view=character&name={{ $summary->name }}" target="_blank">
+        <img src="{{ asset('web/img/eve-prism.png') }}" />
+      </a>
     </span>
   </div>
 </div>
