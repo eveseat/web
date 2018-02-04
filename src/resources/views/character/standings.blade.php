@@ -9,48 +9,57 @@
     <div class="panel-heading">
       <h3 class="panel-title">{{ trans('web::seat.standings') }}</h3>
     </div>
-    <div class="panel-body">
+    <div class="panel-body no-padding">
 
-      <table class="table table-condensed table-hover table-responsive">
-        <tbody>
-        <tr>
-          <th>{{ trans('web::seat.from') }}</th>
-          <th>{{ trans('web::seat.standings') }}</th>
-        </tr>
+      @foreach($standings->unique('from_type')->groupBy('from_type') as $type => $data)
 
-        @foreach($standings->unique('type')->groupBy('type') as $type => $data)
+        <div class="box box-solid">
+          <div class="box-header with-border">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+              <i class="fa fa-minus"></i>
+            </button>
+            @if($type == 'npc_corp')
+            <h3 class="box-title">Corporation NPC</h3>
+            @else
+            <h3 class="box-title">{{ ucfirst($type) }}</h3>
+            @endif
+          </div>
+          <div class="box-body">
+            <table class="table table-striped table-responsive table-condensed table-hover">
+              <thead>
+                <tr>
+                  <th>From</th>
+                  <th>Standings</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach($standings->where('from_type', $data[0]->from_type) as $standing)
 
-          <tr class="active">
-            <td colspan="2">
-              <b>{{ ucfirst($type) }}</b>
-            </td>
-          </tr>
-
-          @foreach($standings->where('type', $data[0]->type) as $standing)
-
-            <tr>
-              <td>
-                {!! img('auto', $standing->fromID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                {{ $standing->fromName }}
-              </td>
-              <td>
-                <span class="
-                  @if($standing->standing > 0)
-                        text-success
+                  <tr>
+                    <td>
+                      {!! img('auto', $standing->from_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                      @if(is_null($standing->factionName))
+                      <span rel="id-to-name">{{ $standing->from_id }}</span>
                       @else
-                        text-danger
-                      @endif">
-                  {{ $standing->standing }}
-                </span>
-              </td>
-            </tr>
+                      {{ $standing->factionName }}
+                      @endif
+                    </td>
+                    <td>
+                      @if($standing->standing > 0)
+                      <span class="text-success">{{ $standing->standing }}</span>
+                      @else
+                      <span class="text-danger">{{ $standing->standing }}</span>
+                      @endif
+                    </td>
+                  </tr>
 
-          @endforeach
+                @endforeach
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-        @endforeach
-
-        </tbody>
-      </table>
+      @endforeach
 
     </div>
   </div>
