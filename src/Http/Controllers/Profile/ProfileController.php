@@ -22,7 +22,6 @@
 
 namespace Seat\Web\Http\Controllers\Profile;
 
-use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Services\Repositories\Character\Info;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Services\Settings\Profile;
@@ -117,21 +116,37 @@ class ProfileController extends Controller
 
     /**
      * @param int $character_id
+     *
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Seat\Services\Exceptions\SettingException
      */
-    public function changeCharacter(int $character_id)
+    public function getChangeCharacter(int $character_id)
     {
-        $character = CharacterInfo::find($character_id);
+
+        $user_characters = $this->getUserGroupCharacters(
+            auth()->user()->groups)->pluck('id');
+
+        // Prevent logins to arbitrary characters.
+        if (! $user_characters->contains($character_id)) {
+
+            // Log this attempt
+            event('security.log', ['Character change denied ', 'authentication']);
+            abort(404);
+        }
+
+        // Find the new user to login as.
+        $user = User::findOrFail($character_id);
+
+        // Log the character change login event.
+        event('security.log', [
+            'Character change to ' . $user->name . ' from ' . auth()->user()->name,
+            'authentication',
+        ]);
 
         auth()->login(User::find($character_id), true);
 
-        setting(['main_character_id', $character_id]);
-
-        if (!is_null($character))
-            setting(['main_character_name', $character->name]);
-        else
-            setting(['main_character_name', 'N/A']);
+        setting(['main_character_id', $user->character_id]);
+        setting(['main_character_name', $user->name]);
 
         return redirect()->back();
     }

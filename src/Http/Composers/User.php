@@ -43,6 +43,7 @@ class User
      */
     public function compose(View $view)
     {
+
         $view->with('user', Auth::user());
         $view->with('user_characters', $this->getUserGroupCharacters(auth()->user()->groups));
     }
