@@ -50,9 +50,9 @@
                       <span class="col-md-3">
                         @for($i = 1; $i <= $skill->finished_level; $i++)
                         @if($i == $skill->finished_level)
-                        <span class="fa fa-square"></span>
+                        <span class="fa fa-star text-green"></span>
                         @else
-                        <span class="fa fa-square-o "></span>
+                        <span class="fa fa-star"></span>
                         @endif
                         @endfor
                       </span>
