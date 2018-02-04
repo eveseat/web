@@ -25,12 +25,11 @@ namespace Seat\Web\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Group
+ * Class Group.
  * @package Seat\Web\Models
  */
 class Group extends Model
 {
-
     /**
      * Return the Users that are in this group.
      *

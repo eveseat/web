@@ -27,7 +27,6 @@ use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Services\Settings\Profile;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\EmailUpdate;
-use Seat\Web\Http\Validation\PasswordUpdate;
 use Seat\Web\Http\Validation\ProfileSettings;
 
 /**
