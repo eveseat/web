@@ -51,7 +51,7 @@
               </span>
             </div>
             <div class="box-body">
-              <table class="table table-striped">
+              <table class="table table-striped table-hover table-responsive">
                 @foreach($skills->where('groupID', $skill_group->groupID) as $skill)
                 <tr>
                   <td><i class="fa fa-book"></i> {{ $skill->type->typeName }}</td>
