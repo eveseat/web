@@ -28,8 +28,8 @@ use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Services\Settings\Profile;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\EmailUpdate;
-use Seat\Web\Http\Validation\PasswordUpdate;
 use Seat\Web\Http\Validation\ProfileSettings;
+use Seat\Web\Models\User;
 
 /**
  * Class ProfileController.
@@ -122,13 +122,16 @@ class ProfileController extends Controller
      */
     public function changeCharacter(int $character_id)
     {
-        setting(['main_character_id', $character_id]);
-
         $character = CharacterInfo::find($character_id);
 
-        setting(['main_character_name', 'N/A']);
+        auth()->login(User::find($character_id), true);
+
+        setting(['main_character_id', $character_id]);
+
         if (!is_null($character))
             setting(['main_character_name', $character->name]);
+        else
+            setting(['main_character_name', 'N/A']);
 
         return redirect()->back();
     }

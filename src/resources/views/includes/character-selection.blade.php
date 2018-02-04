@@ -7,14 +7,14 @@
     @endif
         <a href="{{ route('profile.change-character', ['character_id' => $character->character_id]) }}">
             <div class="media-left">
-                {!! img('character', $character->character_id, 64, ['class' => 'img-circle'], false) !!}
+                {!! img('character', $character->character_id, 32, ['class' => 'img-circle'], false) !!}
             </div>
             <div class="media-body">
                 <h4 class="media-heading">{{ $character->name }}</h4>
                 @if(is_null($character->corporation))
-                <h5>N/A [ticker]</h5>
+                <span>N/A [ticker]</span>
                 @else
-                <h5>{{ $character->corporation->name }} [{{ $character->corporation->ticker }}]</h5>
+                <span>{{ $character->corporation->name }} [{{ $character->corporation->ticker }}]</span>
                 @endif
             </div>
         </a>

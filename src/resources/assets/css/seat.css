@@ -73,9 +73,12 @@ ul.dropdown-menu > li.user-character {
     background-color: #f39c12;
 }
 
-ul.dropdown-menu li.user-character a {
-    padding-top: 10px;
-    padding-bottom: 10px;
+ul.dropdown-menu > li.user-character a .media-left {
+    vertical-align: middle;
+}
+
+ul.dropdown-menu > li.user-character a h4.media-heading {
+    margin-bottom: 1px;
 }
 
 ul.dropdown-menu li.user-character.new-character {
@@ -83,6 +86,6 @@ ul.dropdown-menu li.user-character.new-character {
 }
 
 ul.dropdown-menu li.user-character.new-character a h3 {
-    margin-top: 15px;
-    margin-bottom: 15px;
+    margin-top: 7px;
+    margin-bottom: 7px;
 }
