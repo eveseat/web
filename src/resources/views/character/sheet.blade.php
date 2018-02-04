@@ -19,8 +19,8 @@
 
             <dt>{{ trans('web::seat.curr_training') }}</dt>
             <dd>
-              @if($skill_in_training && strlen($skill_in_training->typeName) > 0)
-                {{ $skill_in_training->typeName }} to level <b>{{ $skill_in_training->trainingToLevel }}</b>
+              @if($skill_queue->count() > 0 && strlen($skill_queue->first()->typeName) > 0)
+                {{ $skill_queue->first()->typeName }} to level <b>{{ $skill_queue->first()->finished_level }}</b>
               @else
                 {{ trans('web::seat.no_skill_training') }}
               @endif

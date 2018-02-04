@@ -28,6 +28,7 @@ use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Character\CharacterTitle;
 use Seat\Eveapi\Models\Clones\CharacterImplant;
 use Seat\Eveapi\Models\Clones\CharacterJumpClone;
+use Seat\Eveapi\Models\Skills\CharacterSkillQueue;
 use Seat\Services\Repositories\Character\Character;
 use Seat\Services\Repositories\Character\Implants;
 use Seat\Services\Repositories\Character\JumpClone;
@@ -65,13 +66,11 @@ class SheetController extends Controller
         $employment = CharacterCorporationHistory::where('character_id', $character_id)->get();
         $implants = CharacterImplant::where('character_id', $character_id)->get();
         $jump_clones = CharacterJumpClone::where('character_id', $character_id)->get();
-        $skill_in_training = $this->getCharacterSkillInTraining($character_id);
-        $skill_queue = $this->getCharacterSkilQueue($character_id);
+        $skill_queue = CharacterSkillQueue::where('character_id', $character_id)->orderBy('queue_position')->get();
         $titles = CharacterTitle::where('character_id', $character_id);
 
         return view('web::character.sheet',
             compact('account_info', '$character_info', 'employment',
-                'implants', 'jump_clones', 'skill_in_training',
-                'skill_queue', 'titles'));
+                'implants', 'jump_clones', 'skill_queue', 'titles'));
     }
 }
