@@ -86,6 +86,14 @@
       @endforeach
 
     </div>
+    <div class="panel-footer clearfix">
+      <span class="pull-left">
+        {{ number($skills->sum('skillpoints_in_skill'), 0) }} total skillpoints
+      </span>
+      <span class="pull-right">
+        {{ number(count($skills), 0) }} skills
+      </span>
+    </div>
   </div>
 
 @stop
