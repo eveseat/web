@@ -22,20 +22,28 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
+use Seat\Eveapi\Models\Character\CharacterCorporationHistory;
+use Seat\Eveapi\Models\Character\CharacterFatigue;
+use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Character\CharacterTitle;
+use Seat\Eveapi\Models\Clones\CharacterClone;
+use Seat\Eveapi\Models\Clones\CharacterImplant;
+use Seat\Eveapi\Models\Clones\CharacterJumpClone;
+use Seat\Eveapi\Models\Skills\CharacterSkillQueue;
 use Seat\Services\Repositories\Character\Character;
 use Seat\Services\Repositories\Character\Implants;
-use Seat\Services\Repositories\Character\Info;
 use Seat\Services\Repositories\Character\JumpClone;
 use Seat\Services\Repositories\Character\Skills;
+use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Web\Http\Controllers\Controller;
 
 class SheetController extends Controller
 {
     use Character;
-    use Info;
     use Implants;
     use JumpClone;
     use Skills;
+    use UserRespository;
 
     /**
      * @param $character_id
@@ -45,26 +53,23 @@ class SheetController extends Controller
     public function getSheet(int $character_id)
     {
 
-        $character_sheet = $this->getCharacterSheet($character_id);
-
-        // Check if we managed to get any records for
-        // this character. If not, redirect back with
-        // an error.
-        if (empty($character_sheet))
+        // Ensure we've the public information for this character
+        // If not, redirect back with an error
+        // TODO : queue a job which will pull public data for this toon
+        if (! $character_info = CharacterInfo::find($character_id))
             return redirect()->back()
                 ->with('error', trans('web::seat.unknown_character'));
 
-        $account_info = $this->getCharacterAccountInfo($character_id);
-        $employment = $this->getCharacterEmploymentHistory($character_id);
-        $implants = $this->getCharacterImplants($character_id);
-        $jump_clones = $this->getCharacterJumpClones($character_id);
-        $skill_in_training = $this->getCharacterSkillInTraining($character_id);
-        $skill_queue = $this->getCharacterSkilQueue($character_id);
-        $titles = $this->getCharacterCorporationTitles($character_id);
+        $fatigue      = CharacterFatigue::find($character_id);
+        $employment   = CharacterCorporationHistory::where('character_id', $character_id)->orderBy('start_date', 'desc')->get();
+        $implants     = CharacterImplant::where('character_id', $character_id)->get();
+        $last_jump    = CharacterClone::find($character_id);
+        $jump_clones  = CharacterJumpClone::where('character_id', $character_id)->get();
+        $skill_queue  = CharacterSkillQueue::where('character_id', $character_id)->orderBy('queue_position')->get();
+        $titles       = CharacterTitle::where('character_id', $character_id)->get();
 
         return view('web::character.sheet',
-            compact('account_info', 'character_sheet', 'employment',
-                'implants', 'jump_clones', 'skill_in_training',
-                'skill_queue', 'titles'));
+            compact('fatigue', 'character_info', 'employment',
+                'implants', 'last_jump', 'jump_clones', 'skill_queue', 'titles'));
     }
 }

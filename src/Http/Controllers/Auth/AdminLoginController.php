@@ -31,7 +31,6 @@ use Seat\Web\Models\User;
  */
 class AdminLoginController extends Controller
 {
-
     /**
      * Login using the cached admin user token.
      *
