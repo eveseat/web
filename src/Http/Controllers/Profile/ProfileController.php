@@ -22,13 +22,14 @@
 
 namespace Seat\Web\Http\Controllers\Profile;
 
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Services\Repositories\Character\Info;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Services\Settings\Profile;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\EmailUpdate;
-use Seat\Web\Http\Validation\PasswordUpdate;
 use Seat\Web\Http\Validation\ProfileSettings;
+use Seat\Web\Models\User;
 
 /**
  * Class ProfileController.
@@ -112,5 +113,26 @@ class ProfileController extends Controller
 
         return redirect()->back()
             ->with('success', 'Email updated!');
+    }
+
+    /**
+     * @param int $character_id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Seat\Services\Exceptions\SettingException
+     */
+    public function changeCharacter(int $character_id)
+    {
+        $character = CharacterInfo::find($character_id);
+
+        auth()->login(User::find($character_id), true);
+
+        setting(['main_character_id', $character_id]);
+
+        if (!is_null($character))
+            setting(['main_character_name', $character->name]);
+        else
+            setting(['main_character_name', 'N/A']);
+
+        return redirect()->back();
     }
 }
