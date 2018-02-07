@@ -187,6 +187,7 @@ return [
     'sheet'                       => 'Sheet',
     'skills'                      => 'Skills',
     'standings'                   => 'Standings',
+    'wallet'                      => 'Wallet',
     'wallet_journal'              => 'Wallet Journal',
     'wallet_transactions'         => 'Wallet Transactions',
 
