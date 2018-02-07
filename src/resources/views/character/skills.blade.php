@@ -54,7 +54,7 @@
               <table class="table table-striped table-hover table-condensed table-responsive">
                 @foreach($skills->where('groupID', $skill_group->groupID) as $skill)
                 <tr>
-                  <td><i class="fa fa-book"></i> {{ $skill->type->typeName }}</td>
+                  <td><i class="fa fa-book"></i> {{ $skill->typeName }}</td>
                   <td class="text-right">
                     @if($skill->trained_skill_level == 0)
                     <i class="fa fa-star-o"></i>
