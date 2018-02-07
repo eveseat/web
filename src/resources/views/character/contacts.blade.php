@@ -30,8 +30,8 @@
                 @endif
                   ">
             <td>
-              {!! img('auto', $contact->contactID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-              {{ $contact->contactName }}
+              {!! img('auto', $contact->contact_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
+                <span rel="id-to-name">{{ $contact->contact_id }}</span>
             </td>
             <td>
               <span class="
@@ -49,18 +49,18 @@
                 return $item->labelID & $contact->labelMask; })->implode('name', ', ') }}
             </td>
             <td>
-              @if (!in_array($contact->contactTypeID, [2, 16159]))
+              @if (!in_array($contact->contact_type, ['corporation', 'alliance']))
                 <a href="http://eveboard.com/pilot/{{ $contact->contactName }}"
                    target="_blank">
                   <img src="{{ asset('web/img/eveboard.png') }}">
                 </a>
               @endif
-              @if ($contact->contactTypeID == 2)
+              @if ($contact->contact_type == 'corporation')
                 <a href="https://gate.eveonline.com/Corporation/{{ $contact->contactName }}"
                    target="_blank">
                   <img src="{{ asset('web/img/evegate.png') }}">
                 </a>
-              @elseif ($contact->contactTypeID == 16159)
+              @elseif ($contact->contact_type == 'alliance')
                 <a href="https://gate.eveonline.com/Alliance/{{ $contact->contactName }}"
                    target="_blank">
                   <img src="{{ asset('web/img/evegate.png') }}">
@@ -71,34 +71,34 @@
                   <img src="{{ asset('web/img/evegate.png') }}">
                 </a>
               @endif
-              @if ($contact->contactTypeID == 2)
-                <a href="https://eve-kill.net/?a=corp_detail&crp_external_id={{ $contact->contactID }}"
+              @if ($contact->contact_type == 'corporation')
+                <a href="https://eve-kill.net/?a=corp_detail&crp_external_id={{ $contact->contact_id }}"
                    target="_blank">
                   <img src="{{ asset('web/img/evekill.png') }}">
                 </a>
-              @elseif ($contact->contactTypeID == 16159)
-                <a href="https://eve-kill.net/?a=alliance_detail&all_external_id={{ $contact->contactID }}"
+              @elseif ($contact->contact_type == 'alliance')
+                <a href="https://eve-kill.net/?a=alliance_detail&all_external_id={{ $contact->contact_id }}"
                    target="_blank">
                   <img src="{{ asset('web/img/evekill.png') }}">
                 </a>
               @else
-                <a href="https://eve-kill.net/?a=pilot_detail&plt_external_id={{ $contact->contactID }}"
+                <a href="https://eve-kill.net/?a=pilot_detail&plt_external_id={{ $contact->contact_id }}"
                    target="_blank">
                   <img src="{{ asset('web/img/evekill.png') }}">
                 </a>
               @endif
-              @if (!in_array($contact->contactTypeID, [2, 16159]))
+              @if (!in_array($contact->contact_type, ['corporation', 'alliance']))
                 <a href="http://eve-search.com/search/author/{{ $contact->contactName }}"
                    target="_blank">
                   <img src="{{ asset('web/img/evesearch.png') }}">
                 </a>
               @endif
-              @if ($contact->contactTypeID == 2)
+              @if ($contact->contact_type == 'corporation')
                 <a href="http://evewho.com/corp/{{ $contact->contactName }}"
                    target="_blank">
                   <img src="{{ asset('web/img/evewho.png') }}">
                 </a>
-              @elseif ($contact->contactTypeID == 16159)
+              @elseif ($contact->contact_type == 'alliance')
                 <a href="http://evewho.com/alli/{{ $contact->contactName }}"
                    target="_blank">
                   <img src="{{ asset('web/img/evewho.png') }}">
@@ -109,23 +109,23 @@
                   <img src="{{ asset('web/img/evewho.png') }}">
                 </a>
               @endif
-              @if ($contact->contactTypeID == 2)
-                <a href="https://zkillboard.com/corporation/{{ $contact->contactID }}"
+              @if ($contact->contact_type == 'corporation')
+                <a href="https://zkillboard.com/corporation/{{ $contact->contact_id }}"
                    target="_blank">
                   <img src="{{ asset('web/img/zkillboard.png') }}">
                 </a>
-              @elseif ($contact->contactTypeID == 16159)
-                <a href="https://zkillboard.com/alliance/{{ $contact->contactID }}"
+              @elseif ($contact->contact_type == 'alliance')
+                <a href="https://zkillboard.com/alliance/{{ $contact->contact_id }}"
                    target="_blank">
                   <img src="{{ asset('web/img/zkillboard.png') }}">
                 </a>
               @else
-                <a href="https://zkillboard.com/character/{{ $contact->contactID }}"
+                <a href="https://zkillboard.com/character/{{ $contact->contact_id }}"
                    target="_blank">
                   <img src="{{ asset('web/img/zkillboard.png') }}">
                 </a>
               @endif
-              @if ($contact->contactTypeID != 16159)
+              @if ($contact->contact_type != 'alliance')
                 <a href="http://eve-hunt.net/hunt/{{ $contact->contactName }}"
                    target="_blank">
                   <img src="{{ asset('web/img/evehunt.png') }}">
