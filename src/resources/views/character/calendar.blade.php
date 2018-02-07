@@ -25,21 +25,21 @@
         @foreach($events as $event)
 
           <tr>
-            <td data-order="{{ $event->eventDate }}">
-              <span data-toggle="tooltip" title="" data-original-title="{{ $event->eventDate }}">
-                {{ human_diff($event->eventDate) }}
+            <td data-order="{{ $event->event_date }}">
+              <span data-toggle="tooltip" title="" data-original-title="{{ $event->event_date }}">
+                {{ human_diff($event->event_date) }}
               </span>
             </td>
             <td>
-              {!! img('auto', $event->ownerID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-              {{ $event->ownerName }}
+              {!! img('auto', $event->detail->owner_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
+              <span rel="id-to-name">{{ $event->detail->owner_id }}</span>
             </td>
             <td>
               <i class="fa fa-comment" data-toggle="popover" data-placement="top" title="" data-html="true"
-                 data-trigger="hover" data-content="{{ clean_ccp_html($event->eventText) }}"></i>
-              {{ $event->eventTitle }}
+                 data-trigger="hover" data-content="{{ clean_ccp_html($event->detail->text) }}"></i>
+              {{ $event->title }}
             </td>
-            <td>{{ $event->response }}</td>
+            <td>{{ str_replace('_', ' ', $event->event_response) }}</td>
           </tr>
 
         @endforeach
