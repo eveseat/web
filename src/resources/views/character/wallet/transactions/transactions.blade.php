@@ -1,11 +1,11 @@
-@extends('web::character.layouts.view', ['viewname' => 'transactions'])
+@extends('web::character.wallet.layouts.view', ['sub_viewname' => 'transactions'])
 
 @section('title', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.wallet_transactions'))
 @section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.wallet_transactions'))
 
 @inject('request', 'Illuminate\Http\Request')
 
-@section('character_content')
+@section('wallet_content')
 
   <div class="row">
     <div class="col-md-12">
@@ -48,12 +48,12 @@
       serverSide      : true,
       ajax            : '{{ route('character.view.transactions.data', ['character_id' => $request->character_id]) }}',
       columns         : [
-        {data: 'transactionDateTime', name: 'transactionDateTime', render: human_readable},
-        {data: 'transactionType', name: 'transactionType'},
+        {data: 'date', name: 'date', render: human_readable},
+        {data: 'is_buy', name: 'is_buy'},
         {data: 'quantity', name: 'quantity'},
         {data: 'price', name: 'price'},
         {data: 'total', name: 'price'},
-        {data: 'clientName', name: 'clientName'},
+        {data: 'client', name: 'client'}
       ],
       dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
       'fnDrawCallback': function () {

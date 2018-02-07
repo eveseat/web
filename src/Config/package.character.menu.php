@@ -142,17 +142,10 @@ return [
         'route'          => 'character.view.standings',
     ],
     [
-        'name'           => 'wallet journal',
-        'label'          => 'web::seat.wallet_journal',
-        'permission'     => 'character.journal',
-        'highlight_view' => 'journal',
+        'name'           => 'wallet',
+        'label'          => 'web::seat.wallet',
+        'permission'     => ['character.journal', 'character.transactions'],
+        'highlight_view' => 'wallet',
         'route'          => 'character.view.journal',
-    ],
-    [
-        'name'           => 'wallet transactions',
-        'label'          => 'web::seat.wallet_transactions',
-        'permission'     => 'character.transactions',
-        'highlight_view' => 'transactions',
-        'route'          => 'character.view.transactions',
     ],
 ];
