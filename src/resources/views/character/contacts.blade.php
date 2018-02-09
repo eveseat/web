@@ -30,7 +30,7 @@
                 @endif
                   ">
             <td>
-              {!! img('auto', $contact->contact_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
+              {!! img($contact->contact_type, $contact->contact_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
                 <span rel="id-to-name">{{ $contact->contact_id }}</span>
             </td>
             <td>
@@ -46,7 +46,7 @@
             </td>
             <td>
               {{ $labels->filter(function($item) use ($contact) {
-                return $item->labelID & $contact->labelMask; })->implode('name', ', ') }}
+                return $item->label_id & $contact->label_id; })->implode('label_name', ', ') }}
             </td>
             <td>
               @if (!in_array($contact->contact_type, ['corporation', 'alliance']))
@@ -125,12 +125,10 @@
                   <img src="{{ asset('web/img/zkillboard.png') }}">
                 </a>
               @endif
-              @if ($contact->contact_type != 'alliance')
-                <a href="http://eve-hunt.net/hunt/{{ $contact->contactName }}"
-                   target="_blank">
-                  <img src="{{ asset('web/img/evehunt.png') }}">
-                </a>
-              @endif
+              <a href="http://eve-prism.com/?view={{ $contact->contact_type }}&name={{ $contact->contact_id }}"
+                target="_blank">
+                <img src="{{ asset('web/img/eve-prism.png') }}" />
+              </a>
             </td>
           </tr>
         @endforeach
