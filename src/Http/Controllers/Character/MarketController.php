@@ -57,7 +57,6 @@ class MarketController extends Controller
     {
 
         $orders = $this->getCharacterMarketOrders($character_id, false);
-        $states = $this->getEveMarketOrderStates();
 
         return Datatables::of($orders)
             ->addColumn('bs', function ($row) {
@@ -70,9 +69,9 @@ class MarketController extends Controller
                 return view('web::partials.marketvolume', compact('row'))
                     ->render();
             })
-            ->addColumn('state', function ($row) use ($states) {
+            ->addColumn('state', function ($row) {
 
-                return $states[$row->orderState];
+                return ucfirst($row->state);
             })
             ->editColumn('price', function ($row) {
 
@@ -80,7 +79,7 @@ class MarketController extends Controller
             })
             ->addColumn('total', function ($row) {
 
-                return number($row->price * $row->volEntered);
+                return number($row->price * $row->volume_total);
             })
             ->editColumn('typeName', function ($row) {
 
