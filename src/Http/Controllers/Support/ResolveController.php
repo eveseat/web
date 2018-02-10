@@ -22,8 +22,8 @@
 
 namespace Seat\Web\Http\Controllers\Support;
 
-use Cache;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Seat\Web\Http\Controllers\Controller;
 
 /**
@@ -48,6 +48,9 @@ class ResolveController extends Controller
     {
 
         $ids = array_unique(explode(',', $request->ids));
+        $ids = collect($ids)->filter(function($value) {
+            return is_numeric($value);
+        })->toArray();
 
         // Init the initial return array
         $response = [];
@@ -66,20 +69,19 @@ class ResolveController extends Controller
         // resolution
         if (! empty($ids)) {
 
-            $pheal = app()
-                ->make('Seat\Eveapi\Helpers\PhealSetup')
-                ->getPheal();
+            $eseye = app('esi-client')->get();
 
             foreach (array_chunk($ids, 30) as $id_chunk) {
 
-                $names = $pheal->eveScope->CharacterName([
-                    'ids' => implode(',', $id_chunk), ]);
+                $eseye->setVersion('v2');
+                $eseye->setBody($id_chunk);
+                $names = $eseye->invoke('post', '/universe/names/');
 
-                foreach ($names->characters as $result) {
+                foreach ($names as $result) {
 
                     Cache::forever(
-                        $this->prefix . $result->characterID, $result->name);
-                    $response[$result->characterID] = $result->name;
+                        $this->prefix . $result->id, $result->name);
+                    $response[$result->id] = $result->name;
                 }
 
             }
