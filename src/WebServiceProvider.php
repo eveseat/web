@@ -156,7 +156,7 @@ class WebServiceProvider extends ServiceProvider
             'web::character.includes.summary',
             'web::character.includes.menu',
             'web::character.intel.includes.menu',
-            'web::character.journal.includes.menu',
+            'web::character.wallet.includes.menu',
         ], CharacterSummary::class);
 
         // Character menu composer
