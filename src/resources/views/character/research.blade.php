@@ -26,10 +26,10 @@
         @foreach($agents as $agent)
 
           <tr>
-            <td data-order="{{ $agent->researchStartDate }}">
+            <td data-order="{{ $agent->started_at }}">
               <span data-toggle="tooltip"
-                    title="" data-original-title="{{ $agent->researchStartDate }}">
-                {{ human_diff($agent->researchStartDate) }}
+                    title="" data-original-title="{{ $agent->started_at }}">
+                {{ human_diff($agent->started_at) }}
               </span>
             </td>
             <td>
@@ -40,8 +40,8 @@
               {!! img('type', $agent->typeID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
               {{ $agent->typeName }}
             </td>
-            <td>{{ $agent->pointsPerDay }}</td>
-            <td>{{ $agent->remainderPoints }}</td>
+            <td>{{ $agent->points_per_day }}</td>
+            <td>{{ $agent->remainder_points }}</td>
           </tr>
 
         @endforeach
