@@ -27,6 +27,20 @@
       </table>
 
     </div>
+    <div class="panel-footer clearfix">
+      <div class="col-md-2 col-md-offset-2">
+        <span class="label label-warning">0</span> Corporation
+      </div>
+      <div class="col-md-2">
+        <span class="label label-primary">0</span> Alliance
+      </div>
+      <div class="col-md-2">
+        <span class="label label-info">0</span> Characters
+      </div>
+      <div class="col-md-2">
+        <span class="label label-success">0</span> Mailing-Lists
+      </div>
+    </div>
   </div>
 
 @stop
@@ -41,16 +55,18 @@
       serverSide      : true,
       ajax            : '{{ route('character.view.mail.data', ['character_id' => $request->character_id]) }}',
       columns         : [
-        {data: 'sentDate', name: 'sentDate', render: human_readable},
-        {data: 'senderName', name: 'senderName'},
-        {data: 'title', name: 'title'},
-        {data: 'tocounts', name: 'senderName'},
-        {data: 'read', name: 'senderName'},
+        {data: 'timestamp', name: 'timestamp', render: human_readable},
+        {data: 'from', name: 'from'},
+        {data: 'subject', name: 'subject'},
+        {data: 'tocounts', name: 'tocounts'},
+        {data: 'read', name: 'read'}
       ],
       dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
       'fnDrawCallback': function () {
         $(document).ready(function () {
           $('img').unveil(100);
+
+          ids_to_names();
         });
       }
     });

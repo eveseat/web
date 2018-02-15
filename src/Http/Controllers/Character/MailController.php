@@ -57,12 +57,12 @@ class MailController extends Controller
         $mail = $this->getCharacterMail($character_id, false);
 
         return Datatables::of($mail)
-            ->editColumn('senderName', function ($row) {
+            ->editColumn('from', function ($row) {
 
                 return view('web::character.partials.mailsendername', compact('row'))
                     ->render();
             })
-            ->editColumn('title', function ($row) {
+            ->editColumn('subject', function ($row) {
 
                 return view('web::character.partials.mailtitle', compact('row'))
                     ->render();
