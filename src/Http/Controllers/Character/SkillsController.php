@@ -22,7 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
-use Seat\Eveapi\Models\Character\CharacterSheet;
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Services\Repositories\Character\Skills;
 use Seat\Services\Repositories\Eve\EveRepository;
 use Seat\Web\Http\Controllers\Controller;
@@ -99,7 +99,7 @@ class SkillsController extends Controller
 
         $data = $this->getCharacterSkillCoverage($character_id);
 
-        $character = CharacterSheet::where('characterID', $character_id)->first();
+        $character = CharacterInfo::where('character_id', $character_id)->first();
 
         return response()->json([
             'labels'   => $data->map(function ($item) {
