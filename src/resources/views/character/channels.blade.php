@@ -27,16 +27,16 @@
         @foreach($channels as $channel)
 
           <tr>
-            <td>{{ $channel->info->displayName }}</td>
+            <td>{{ $channel->info->name }}</td>
             <td>
-              <a href="{{ route('character.view.sheet', ['character_id' => $channel->info->ownerID]) }}">
-                {!! img('character', $channel->info->ownerID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                {{ $channel->info->ownerName }}
+              <a href="{{ route('character.view.sheet', ['character_id' => $channel->info->owner_id]) }}">
+                {!! img('character', $channel->info->owner_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                <span rel="id-to-name">{{ $channel->info->owner_id }}</span>
               </a>
             </td>
             <td>
               @foreach($channel->members as $member)
-                @if($member->accessorID == $request->character_id)
+                @if($member->accessor_id == $request->character_id)
 
                   {{ $member->role }}
 
@@ -44,7 +44,7 @@
               @endforeach
             </td>
             <td>
-              @if($channel->info->hasPassword)
+              @if($channel->info->has_password)
                 {{ trans('web::seat.yes') }}
               @else
                 {{ trans('web::seat.no') }}
@@ -53,13 +53,13 @@
             <td>
 
               <!-- Button trigger modal -->
-              <a type="button" data-toggle="modal" data-target="#detailModal{{ $channel->channelID }}">
+              <a type="button" data-toggle="modal" data-target="#detailModal{{ $channel->channel_id }}">
                 <i class="fa fa-commenting"></i>
                 {{ trans_choice('web::seat.detail', 1) }}
               </a>
 
               <!-- Modal -->
-              <div class="modal fade" id="detailModal{{ $channel->channelID }}" tabindex="-1" role="dialog"
+              <div class="modal fade" id="detailModal{{ $channel->channel_id }}" tabindex="-1" role="dialog"
                    aria-labelledby="passwordModalLabel">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
@@ -69,7 +69,7 @@
                       </button>
                       <h4 class="modal-title" id="passwordModalLabel">
                         {{ trans_choice('web::seat.detail', 2) }}:
-                        {{ $channel->info->displayName }}
+                        {{ $channel->info->name }}
                       </h4>
                     </div>
                     <div class="modal-body">
@@ -93,9 +93,9 @@
 
                           <tr>
                             <td>
-                              <a href="{{ route('character.view.sheet', ['character_id' => $member->accessorID]) }}">
-                                {!! img('character', $member->accessorID, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-                                {{ $member->accessorName }}
+                              <a href="{{ route('character.view.sheet', ['character_id' => $member->accessor_id]) }}">
+                                {!! img('character', $member->accessor_id, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
+                                <span rel="id-to-name">{{ $member->accessor_id }}</span>
                               </a>
                             </td>
                             <td>{{ $member->role }}</td>
