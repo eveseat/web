@@ -37,51 +37,65 @@ class ResolveController extends Controller
      *
      * @var string
      */
-    protected $prefix = 'name_id';
+    protected $prefix = 'name_id:';
 
     /**
      * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      * @throws \Illuminate\Container\EntryNotFoundException
+     * @throws \Exception
      */
     public function resolveIdsToNames(Request $request)
     {
 
-        $ids = array_unique(explode(',', $request->ids));
-
         // Init the initial return array
-        $response = [];
+        $response = collect();
 
-        // Populate any entries from the cache
-        foreach ($ids as $id) {
+        // Grab the ids from the request for processing
+        $ids = collect(explode(',', $request->ids))->map(function ($id) {
 
-            if (Cache::has($this->prefix . $id)) {
+            // Convert them all to integers
+            return (int) $id;
 
-                $response[$id] = Cache::get($this->prefix . $id);
-                unset($ids[$id]);
+        })->unique()->filter(function ($id) use (&$response) {
+
+            // Next, filter the ids we have in the cache, setting
+            // the appropriate response values as we go along.
+            if ($cached_entry = cache($this->prefix . $id)) {
+
+                $response[$id] = $cached_entry;
+
+                // Remove this as a valid id, we already have the value we want.
+                return false;
             }
-        }
 
-        // Call the EVE API for any outstanding ids that need
-        // resolution
-        if (! empty($ids)) {
+            // We don't have this id in the cache. Return it
+            // so that we can update it later.
+            return true;
+        });
 
+        // Call the EVE API for any outstanding ids that need name resolution
+        if ($ids->count() > 0) {
+
+            // Resolve the Eseye library from the IoC
             $eseye = app('esi-client')->get();
 
-            foreach (array_chunk($ids, 30) as $id_chunk) {
+            // Chunk 30 ids for name resolution
+            $ids->chunk(30)->each(function ($chunk) use (&$response, $eseye) {
 
                 $eseye->setVersion('v2');
-                $eseye->setBody($id_chunk);
+                $eseye->setBody($chunk->toArray());
                 $names = $eseye->invoke('post', '/universe/names/');
 
-                foreach ($names as $result) {
-                    Cache::forever(
-                        $this->prefix . $result->id, $result->name);
-                    $response[$result->id] = $result->name;
-                }
+                collect($names)->each(function ($name) use (&$response) {
 
-            }
+                    // Cache the name resolution for this id for a long time.
+                    cache([$this->prefix . $name->id => $name->name], carbon()->addCentury());
+
+                    $response[$name->id] = $name->name;
+                });
+            });
         }
 
         return response()->json($response);
