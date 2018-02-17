@@ -64,7 +64,8 @@ abstract class AbstractMenu
         // Check if the current user has the permission
         // required to see the menu
         if (isset($menu_data['permission'])) {
-            // check if the parameter is an array
+
+            // Check if the parameter is an array
             // in such case, we grant access if user has at least one permission
             if (is_array($menu_data['permission'])) {
                 foreach ($menu_data['permission'] as $menu_permission)
@@ -74,7 +75,7 @@ abstract class AbstractMenu
                 return null;
             }
 
-            if (!auth()->user()->has($menu_data['permission'], $require_affiliation))
+            if (! auth()->user()->has($menu_data['permission'], $require_affiliation))
                 return null;
         }
 

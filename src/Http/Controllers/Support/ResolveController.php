@@ -43,6 +43,7 @@ class ResolveController extends Controller
      * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Container\EntryNotFoundException
      */
     public function resolveIdsToNames(Request $request)
     {

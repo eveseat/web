@@ -115,8 +115,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             ->withPivot('not');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function character()
     {
+
         return $this->belongsTo(CharacterInfo::class, 'id', 'character_id');
     }
 

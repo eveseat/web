@@ -53,20 +53,23 @@ class SheetController extends Controller
     public function getSheet(int $character_id)
     {
 
+        // TODO: Revert to respostory pattern.
+
         // Ensure we've the public information for this character
-        // If not, redirect back with an error
+        // If not, redirect back with an error.
+
         // TODO : queue a job which will pull public data for this toon
         if (! $character_info = CharacterInfo::find($character_id))
             return redirect()->back()
                 ->with('error', trans('web::seat.unknown_character'));
 
-        $fatigue      = CharacterFatigue::find($character_id);
-        $employment   = CharacterCorporationHistory::where('character_id', $character_id)->orderBy('start_date', 'desc')->get();
-        $implants     = CharacterImplant::where('character_id', $character_id)->get();
-        $last_jump    = CharacterClone::find($character_id);
-        $jump_clones  = CharacterJumpClone::where('character_id', $character_id)->get();
-        $skill_queue  = CharacterSkillQueue::where('character_id', $character_id)->orderBy('queue_position')->get();
-        $titles       = CharacterTitle::where('character_id', $character_id)->get();
+        $fatigue = CharacterFatigue::find($character_id);
+        $employment = CharacterCorporationHistory::where('character_id', $character_id)->orderBy('start_date', 'desc')->get();
+        $implants = CharacterImplant::where('character_id', $character_id)->get();
+        $last_jump = CharacterClone::find($character_id);
+        $jump_clones = CharacterJumpClone::where('character_id', $character_id)->get();
+        $skill_queue = CharacterSkillQueue::where('character_id', $character_id)->orderBy('queue_position')->get();
+        $titles = CharacterTitle::where('character_id', $character_id)->get();
 
         return view('web::character.sheet',
             compact('fatigue', 'character_info', 'employment',

@@ -53,17 +53,17 @@ class CharacterController extends Controller
         $characters = $this->getAllCharactersWithAffiliations();
 
         return Datatables::of($characters)
-            ->editColumn('characterName', function ($row) {
+            ->editColumn('name', function ($row) {
 
                 return view('web::character.partials.charactername', compact('row'))
                     ->render();
             })
-            ->editColumn('corporationName', function ($row) {
+            ->editColumn('corporation_id', function ($row) {
 
                 return view('web::character.partials.corporationname', compact('row'))
                     ->render();
             })
-            ->editColumn('alliance', function ($row) {
+            ->editColumn('alliance_id', function ($row) {
 
                 return view('web::character.partials.alliancename', compact('row'))
                     ->render();

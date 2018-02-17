@@ -18,7 +18,7 @@
           <th>{{ trans_choice('web::seat.name', 1) }}</th>
           <th>{{ trans_choice('web::seat.corporation', 1) }}</th>
           <th>{{ trans('web::seat.alliance') }}</th>
-          <th>{{ trans('web::seat.last_location') }}</th>
+          <th>{{ trans('web::seat.security_status') }}</th>
         </tr>
         </thead>
       </table>
@@ -38,15 +38,17 @@
       serverSide      : true,
       ajax            : '{{ route('character.list.data') }}',
       columns         : [
-        {data: 'characterName', name: 'characterName'},
-        {data: 'corporationName', name: 'corporationName'},
-        {data: 'alliance', name: 'alliance'},
-        {data: 'lastKnownLocation', name: 'lastKnownLocation'},
+        {data: 'name', name: 'name'},
+        {data: 'corporation_id', name: 'corporation_id'},
+        {data: 'alliance_id', name: 'alliance_id'},
+        {data: 'security_status', name: 'security_status'},
       ],
       dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
       "fnDrawCallback": function () {
         $(document).ready(function () {
           $("img").unveil(100);
+
+          ids_to_names();
         });
       },
       order           : [[0, "asc"]]
@@ -54,5 +56,7 @@
   });
 
 </script>
+
+@include('web::includes.javascript.id-to-name')
 
 @endpush

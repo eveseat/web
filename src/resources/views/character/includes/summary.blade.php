@@ -47,9 +47,7 @@
         <dt>{{ trans('web::seat.joined_curr_corp') }}</dt>
         <dd>
             @if(!is_null($summary->corporation()))
-            {{ human_diff($summary->corporation()->start_date) }}
-            @else
-            N/A
+              {{ human_diff($summary->corporation()->start_date) }}
             @endif
         </dd>
 
@@ -59,9 +57,7 @@
         <dt>{{ trans('web::seat.account_balance') }}</dt>
         <dd>
           @if(!is_null($summary->balance))
-          {{ number($summary->balance->balance) }}
-          @else
-          N/A
+            {{ number($summary->balance->balance) }}
           @endif
         </dd>
 

@@ -63,6 +63,8 @@ class CharacterSummary
     public function compose(View $view)
     {
 
+        // TODO: Remove direct Model / DB calls and revert to repository pattern.
+
         $summary = CharacterInfo::find($this->request->character_id);
 
         $group = DB::table('group_user')->where('user_id', $this->request->character_id)->first();
