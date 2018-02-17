@@ -59,11 +59,15 @@
       'fnDrawCallback': function () {
         $(document).ready(function () {
           $('img').unveil(100);
+
+          ids_to_names();
         });
       }
     });
   });
 
 </script>
+
+@include('web::includes.javascript.id-to-name')
 
 @endpush
