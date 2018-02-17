@@ -52,8 +52,11 @@ class ResolveController extends Controller
         // Init the initial return array
         $response = collect();
 
+        // Resolve the Esi client library from the IoC
+        $eseye = app('esi-client')->get();
+
         // Grab the ids from the request for processing
-        $ids = collect(explode(',', $request->ids))->map(function ($id) {
+        collect(explode(',', $request->ids))->map(function ($id) {
 
             // Convert them all to integers
             return (int) $id;
@@ -73,30 +76,24 @@ class ResolveController extends Controller
             // We don't have this id in the cache. Return it
             // so that we can update it later.
             return true;
-        });
 
-        // Call the EVE API for any outstanding ids that need name resolution
-        if ($ids->count() > 0) {
+        })->chunk(1000)->each(function ($chunk) use (&$response, $eseye) {
 
-            // Resolve the Eseye library from the IoC
-            $eseye = app('esi-client')->get();
+            // Finally, grab outstanding ids and resolve their names
+            // using Esi.
 
-            // Chunk 30 ids for name resolution
-            $ids->chunk(30)->each(function ($chunk) use (&$response, $eseye) {
+            $eseye->setVersion('v2');
+            $eseye->setBody($chunk->toArray());
+            $names = $eseye->invoke('post', '/universe/names/');
 
-                $eseye->setVersion('v2');
-                $eseye->setBody($chunk->toArray());
-                $names = $eseye->invoke('post', '/universe/names/');
+            collect($names)->each(function ($name) use (&$response) {
 
-                collect($names)->each(function ($name) use (&$response) {
+                // Cache the name resolution for this id for a long time.
+                cache([$this->prefix . $name->id => $name->name], carbon()->addCentury());
 
-                    // Cache the name resolution for this id for a long time.
-                    cache([$this->prefix . $name->id => $name->name], carbon()->addCentury());
-
-                    $response[$name->id] = $name->name;
-                });
+                $response[$name->id] = $name->name;
             });
-        }
+        });
 
         return response()->json($response);
     }
