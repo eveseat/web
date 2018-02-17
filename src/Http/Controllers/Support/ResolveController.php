@@ -83,7 +83,7 @@ class ResolveController extends Controller
             // using Esi.
 
             $eseye->setVersion('v2');
-            $eseye->setBody($chunk->toArray());
+            $eseye->setBody($chunk->flatten()->toArray());
             $names = $eseye->invoke('post', '/universe/names/');
 
             collect($names)->each(function ($name) use (&$response) {
