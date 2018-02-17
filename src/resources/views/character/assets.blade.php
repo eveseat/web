@@ -36,7 +36,7 @@
               @endif
               </b>
               <span class="pull-right">
-                <i>{{ $assets->where('location_id', $location->first()->location_id)->count() }} items tacking
+                <i>{{ $assets->where('location_id', $location->first()->location_id)->count() }} items taking
                   {{
                     number_metric($assets->where('location_id', $location->first()->location_id)->map(
                       function($value){
