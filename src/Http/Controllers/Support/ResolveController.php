@@ -22,7 +22,6 @@
 
 namespace Seat\Web\Http\Controllers\Support;
 
-use Cache;
 use Illuminate\Http\Request;
 use Seat\Web\Http\Controllers\Controller;
 

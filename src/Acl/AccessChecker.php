@@ -37,38 +37,6 @@ trait AccessChecker
     use Character, Corporation;
 
     /**
-     * Return the character_id in question for the current request.
-     *
-     * @return int
-     * @throws \Seat\Web\Exceptions\BouncerException
-     */
-    public function getCharacterId(): int
-    {
-
-        if (! request()->character_id)
-            throw new BouncerException(
-                __CLASS__ . ' was unable to determine a character_id');
-
-        return request()->character_id;
-    }
-
-    /**
-     * Return the corporation_id in quetsion for the current request.
-     *
-     * @return int
-     * @throws \Seat\Web\Exceptions\BouncerException
-     */
-    public function getCorporationId(): int
-    {
-
-        if (! request()->corporation_id)
-            throw new BouncerException(
-                __CLASS__ . ' was unable to determine a corporation_id');
-
-        return request()->corporation_id;
-    }
-
-    /**
      * Checks if the user has any of the required
      * permissions.
      *
@@ -195,27 +163,55 @@ trait AccessChecker
      * @param $permission
      *
      * @return bool
+     * @throws \Seat\Web\Exceptions\BouncerException
      */
     public function hasAffiliationAndPermission($permission)
     {
 
         $map = $this->getAffiliationMap();
 
+        // TODO: An annoying change in the 3x migration introduced
+        // and array based permission, which is stupid. Remove that
+        // or plan better for it in 3.1
+
         // Owning a key grants you '*' permissions to the owned object. In this
         // context, '*' acts as a wildcard for *all* permissions
         foreach ($map['char'] as $char => $permissions) {
 
-            // specific filter for character object
-            if (strpos($permission, 'character.') !== false) {
+            // yeah, this is dumb. So if we have an array permission, we need to
+            // loop and check each in there.
+            if (is_array($permission)) {
 
-                // check only character wildcard and specific permission
-                if ($char == $this->getCharacterId() && (in_array('character.*', $permissions) ||
-                        in_array($permission, $permissions))
-                )
-                    return true;
+                foreach ($permission as $sub_permission) {
 
+                    // specific filter for character object
+                    if (strpos($sub_permission, 'character.') !== false) {
+
+                        // check only character wildcard and specific permission
+                        if ($char == $this->getCharacterId() &&
+                            (in_array('character.*', $permissions) ||
+                                in_array($sub_permission, $permissions))
+                        )
+                            return true;
+
+                    }
+                }
+
+            } else {
+
+                // If not an array permission, check it like normal.
+
+                // specific filter for character object
+                if (strpos($permission, 'character.') !== false) {
+
+                    // check only character wildcard and specific permission
+                    if ($char == $this->getCharacterId() && (in_array('character.*', $permissions) ||
+                            in_array($permission, $permissions))
+                    )
+                        return true;
+
+                }
             }
-
         }
 
         foreach ($map['corp'] as $corp => $permissions) {
@@ -273,24 +269,20 @@ trait AccessChecker
         // the owner for. They also automatically
         // inherit all permissions for these keys.
 
-        // TODO: SeAT 3x - This needs a *major* refactor.
+        // TODO: Refactor this is 3.1.
+        // For now we get the character_ids this user has
+        // in the character_groups they belong to, then
+        // assign the wildcard permission for that character.
+        $user_character_ids = auth()->user()->groups()->get()->map(function ($group) {
 
-//        foreach ($this->keys as $key) {
-//
-//            foreach ($key->characters as $character) {
-//
-//                // We only grant corporation related permission
-//                if ($key->info->type === 'Corporation') {
-//
-//                    // Assign the permission
-//                    $map['corp'][$character->corporationID] = ['corporation.*'];
-//                }
-//
-//                // We only grant character related permission
-//                $map['char'][$character->characterID] = ['character.*'];
-//            }
-//
-//        }
+            return $group->users->pluck('id');
+
+        })->flatten()->toArray();
+
+        foreach ($user_character_ids as $user_character_id) {
+
+            $map['char'][$user_character_id] = ['character.*'];
+        }
 
         // Next we move through the roles the user has
         // and populate the permissions that the affiliations
@@ -408,6 +400,38 @@ trait AccessChecker
         // Finally, return the calculated map!
         return $map;
 
+    }
+
+    /**
+     * Return the character_id in question for the current request.
+     *
+     * @return int
+     * @throws \Seat\Web\Exceptions\BouncerException
+     */
+    public function getCharacterId(): int
+    {
+
+        if (! request()->character_id)
+            throw new BouncerException(
+                __CLASS__ . ' was unable to determine a character_id');
+
+        return request()->character_id;
+    }
+
+    /**
+     * Return the corporation_id in quetsion for the current request.
+     *
+     * @return int
+     * @throws \Seat\Web\Exceptions\BouncerException
+     */
+    public function getCorporationId(): int
+    {
+
+        if (! request()->corporation_id)
+            throw new BouncerException(
+                __CLASS__ . ' was unable to determine a corporation_id');
+
+        return request()->corporation_id;
     }
 
     /**
