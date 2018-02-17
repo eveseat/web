@@ -16,6 +16,7 @@
       <table class="table compact table-condensed table-hover table-responsive">
         <thead>
         <tr>
+          <th></th>
           <th>{{ trans('web::seat.quantity') }}</th>
           <th>{{ trans_choice('web::seat.type', 1) }}</th>
           <th>{{ trans('web::seat.volume') }}</th>
@@ -23,69 +24,104 @@
         </tr>
         </thead>
 
-        @foreach($assets->unique('location')->groupBy('location') as $location => $data)
-
-          <tbody style="border-top: 0px;">
-
+        <tbody>
+        @foreach($assets->whereIn('location_flag', ['Hangar', 'AssetSafety', 'Deliveries'])->sortBy('locationName')->groupBy('location_id') as $location)
           <tr class="active">
-            <td colspan="4">
-              <b>{{ $location }}</b>
+            <td colspan="5">
+              <b>
+              @if($location->first()->locationName == '')
+                Unknown Structure ({{ $location->first()->location_id }})
+              @else
+                {{ $location->first()->locationName }}
+              @endif
+              </b>
               <span class="pull-right">
-                <i>
-                  {{ count($assets->where('locationID', $data[0]->locationID)) }}
-                  {{ trans('web::seat.items_taking') }}
-                  {{ number_metric($assets
-                      ->where('locationID', $data[0]->locationID)->map(function($item) {
-                            return $item->quantity * $item->volume;
-                  })->sum()) }} m&sup3;
-                </i>
+                <i>{{ $assets->where('location_id', $location->first()->location_id)->count() }} items tacking
+                  {{
+                    number_metric($assets->where('location_id', $location->first()->location_id)->map(
+                      function($value){
+                        return $value->quantity * $value->type->volume;
+                      })->sum()
+                    )
+                  }}
+                  m&sup3;</i>
               </span>
             </td>
           </tr>
 
-          </tbody>
+          @foreach($assets->where('location_id', $location->first()->location_id) as $container)
 
-          @foreach($assets->where('locationID', $data[0]->locationID) as $asset)
-
-            <tbody style="border-top: 0px;">
-
-            <tr>
-              @if($asset->childContentCount > 0)
-
+              <tr>
                 <td>
-                  <i class="fa fa-plus viewcontent" style="cursor: pointer;"
-                     a-item-id="{{ $asset->itemID }}" a-loaded="false">
-                  </i>
+                  @if($container->content->count() > 0)
+                  <button class="btn btn-xs btn-link viewcontent">
+                    <i class="fa fa-plus"></i>
+                  </button>
+                  @endif
                 </td>
+                <td>
+                  @if($container->content->count() < 1)
+                  {{ number($container->quantity, 0) }}
+                  @endif
+                </td>
+                <td>{!! img('type', $container->type_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!} {{ $container->type->typeName }} @if(! $container->is_singleton)<span class="text-red">(packaged)</span>@endif</td>
+                <td>{{ number_metric($container->quantity * $container->type->volume) }}m&sup3;</td>
+                <td>{{ $container->type->group->groupName }}</td>
+              </tr>
 
-              @else
-
-                <td>{{ $asset->quantity }}</td>
-
+              @if($container->content->count() > 0)
+              <tr style="display: none;">
+                <td colspan="5">
+                  <table class="table compact table-condensed table-hover table-responsive">
+                    <tbody>
+                      @foreach($container->content as $content)
+                        <tr>
+                          <td>
+                            @if($content->content->count() > 0)
+                            <button class="btn btn-xs btn-link viewcontent">
+                              <i class="fa fa-plus"></i>
+                            </button>
+                            @endif
+                          </td>
+                          <td>
+                            @if($content->content->count() < 1)
+                            {{ number($content->quantity, 0) }}
+                            @endif
+                          </td>
+                          <td>{!! img('type', $content->type_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!} {{ $content->type->typeName }}</td>
+                          <td>{{ number_metric($content->quantity * $content->type->volume) }}m&sup3;</td>
+                          <td>{{ $content->type->group->groupName }}</td>
+                        </tr>
+                        @if($content->content->count() > 0)
+                          <tr style="display: none;">
+                            <td colspan="5">
+                              <table class="table compact table-condensed table-hover table-responsive">
+                                <tbody>
+                                @foreach($content->content as $cargo)
+                                  <tr>
+                                    <td></td>
+                                    <td>{{ number($cargo->quantity, 0) }}</td>
+                                    <td>{!! img('type', $cargo->type_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!} {{ $cargo->type->typeName }}</td>
+                                    <td>{{ number_metric($cargo->quantity * $cargo->type->volume) }}m&sup3;</td>
+                                    <td>{{ $cargo->type->group->groupName }}</td>
+                                  </tr>
+                                @endforeach
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        @endif
+                      @endforeach
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
               @endif
-
-              <td>
-                {!! img('type', $asset->typeID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-                {{ $asset->typeName }}
-              </td>
-              <td>{{ number_metric($asset->quantity * $asset->volume) }} m&sup3;</td>
-              <td>{{ $asset->groupName }}</td>
-            </tr>
-
-            </tbody>
-
-            @if($asset->childContentCount > 0)
-
-              <tbody style="display: none;" class="tbodycontent">
-              <!-- assets contents populated via ajax call -->
-              </tbody>
-
-            @endif
 
           @endforeach
 
         @endforeach
-
+        </tbody>
       </table>
 
     </div><!-- /.box-body -->
@@ -101,12 +137,12 @@
 
     var attribute_box = $(this);
 
-    var contents = $(this).closest("tbody").next("tbody");
+    var contents = $(this).closest('tr').next('tr');
 
     // Show or hide
     contents.toggle();
 
-    // Sstyling
+    // Styling
     if (contents.is(":visible")) {
 
       // Get the assets contents
@@ -134,13 +170,14 @@
       }
 
       // Apply some styleing
-      $(this).removeClass("fa-plus").addClass("fa-minus");
+      //console.debug($(this).find('i'));
+      $(this).find('i').removeClass("fa-plus").addClass("fa-minus");
       $(this).closest("tr").css("background-color", "#D4D4D4"); // Heading Color
       contents.css("background-color", "#E5E5E5");              // Table Contents Color
 
     } else {
-
-      $(this).removeClass("fa-minus").addClass("fa-plus");
+      //console.debug($(this).find('i'));
+      $(this).find('i').removeClass("fa-minus").addClass("fa-plus");
       $(this).closest("tr").css("background-color", "");
 
     }

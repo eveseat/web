@@ -28,6 +28,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Services\Models\UserSetting;
 use Seat\Web\Acl\AccessChecker;
 use Seat\Web\Models\Acl\Affiliation;
@@ -52,7 +53,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'character_owner_hash'];
+        'name', 'email', 'character_owner_hash',
+    ];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -111,6 +113,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
         return $this->belongsToMany(Affiliation::class)
             ->withPivot('not');
+    }
+
+    public function character()
+    {
+        return $this->belongsTo(CharacterInfo::class, 'id', 'character_id');
     }
 
     /**

@@ -1,16 +1,16 @@
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
-  @foreach(evemail_threads($message->body) as $thread_id => $thread_message)
+  @foreach(evemail_threads($message->body->body) as $thread_id => $thread_message)
 
     <div class="panel panel-default">
 
       @if($thread_message['headers_ok'] == true)
 
-        <div class="panel-heading" role="tab" id="heading{{ $message->messageID }}{{ $thread_id }}">
+        <div class="panel-heading" role="tab" id="heading-{{ $message->mail_id }}-{{ $thread_id }}">
           <h4 class="panel-title">
             <a role="button" data-toggle="collapse" data-parent="#accordion"
-               href="#collapse{{ $message->messageID }}{{ $thread_id }}"
-               aria-expanded="true" aria-controls="collapse{{ $message->messageID }}{{ $thread_id }}">
+               href="#collapse-{{ $message->mail_id }}-{{ $thread_id }}"
+               aria-expanded="true" aria-controls="collapse-{{ $message->mail_id }}-{{ $thread_id }}">
 
               "{{ $thread_message['subject'] }}"
               from {{ $thread_message['from'] }}
@@ -24,14 +24,14 @@
 
       @else
 
-        <div class="panel-heading" role="tab" id="heading{{ $message->messageID }}0">
+        <div class="panel-heading" role="tab" id="heading-{{ $message->mail_id }}-0">
           <h4 class="panel-title">
             <a role="button" data-toggle="collapse" data-parent="#accordion"
-               href="#collapse{{ $message->messageID }}0"
-               aria-expanded="true" aria-controls="collapse{{ $message->messageID }}0">
+               href="#collapse-{{ $message->mail_id }}-0"
+               aria-expanded="true" aria-controls="collapse-{{ $message->mail_id }}-0">
 
-              "{{ $message->title }}"
-              sent {{ human_diff($message->sentDate) }}
+              "{{ $message->subject }}"
+              sent {{ human_diff($message->timestamp) }}
 
               <span class="pull-right">#0</span>
             </a>
@@ -40,19 +40,19 @@
 
       @endif
 
-      <div id="collapse{{ $message->messageID }}{{ $thread_id }}"
+      <div id="collapse-{{ $message->mail_id }}-{{ $thread_id }}" role="tabpanel"
            {{-- if the headers are ok, we can work on the panel and collapse --}}
            @if($thread_message['headers_ok'] == true)
 
-           class="panel-collapse collapse in" role="tabpanel"
+           class="panel-collapse collapse"
 
            @else
 
-           class="panel-collapse" role="tabpanel"
+           class="panel-collapse collapse in"
 
            @endif
 
-           aria-labelledby="heading{{ $thread_id }}">
+           aria-labelledby="heading-{{ $message->mail_id }}-{{ $thread_id }}">
         <div class="panel-body">
 
           {!! clean_ccp_html($thread_message['message']) !!}

@@ -6,14 +6,12 @@
 
     <div class="box-body box-profile">
 
-      {!! img('character', $summary->characterID, 128, ['class' => 'profile-user-img img-responsive img-circle']) !!}
+      {!! img('character', $summary->character_id, 128, ['class' => 'profile-user-img img-responsive img-circle']) !!}
       <h3 class="profile-username text-center">
-        {{ $summary->characterName }}
+        {{ $summary->name }}
       </h3>
 
-      <p class="text-muted text-center">
-        {{ $summary->corporationName }}
-      </p>
+      <p class="text-muted text-center"><span rel="id-to-name">{{ $summary->corporation_id }}</span></p>
 
       <table class="table table-condensed table-hover">
         <thead></thead>
@@ -21,19 +19,17 @@
 
         @foreach($characters as $character)
 
-          @if($character->characterName != $summary->characterName)
+          @if($character->name != $summary->name)
 
             <tr>
               <td>
 
-                <a href="{{ route('character.view.sheet', ['character_id' => $character->characterID]) }}">
-                  {!! img('character', $character->characterID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                  {{ $character->characterName }}
+                <a href="{{ route('character.view.sheet', ['character_id' => $character->character_id]) }}">
+                  {!! img('character', $character->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  {{ $character->name }}
                 </a>
 
-                <span class="text-muted pull-right">
-                  {{ $character->corporationName }}
-                </span>
+                <span rel="id-to-name" class="text-muted pull-right">{{ $character->character->corporation_id }}</span>
               </td>
             </tr>
 
@@ -49,15 +45,27 @@
       <dl>
 
         <dt>{{ trans('web::seat.joined_curr_corp') }}</dt>
-        <dd>{{ human_diff($summary->corporationDate) }}</dd>
+        <dd>
+            @if(!is_null($summary->corporation()))
+            {{ human_diff($summary->corporation()->start_date) }}
+            @else
+            N/A
+            @endif
+        </dd>
 
         <dt>{{ trans_choice('web::seat.skillpoint', 2) }}</dt>
-        <dd>{{ number($summary->skillPoints, 0) }}</dd>
+        <dd>{{ number($summary->skills->sum('skillpoints_in_skill'), 0) }}</dd>
 
         <dt>{{ trans('web::seat.account_balance') }}</dt>
-        <dd>{{ number($summary->accountBalance) }}</dd>
+        <dd>
+          @if(!is_null($summary->balance))
+          {{ number($summary->balance->balance) }}
+          @else
+          N/A
+          @endif
+        </dd>
 
-        <dt>{{ trans('web::seat.current_ship') }}</dt>
+      <dt>{{ trans('web::seat.current_ship') }}</dt>
         <dd>{{ $summary->shipTypeName }} called <i>{{ $summary->shipName }}</i></dd>
 
         <dt>{{ trans('web::seat.last_location') }}</dt>
@@ -65,13 +73,13 @@
 
         <dt>{{ trans('web::seat.security_status') }}</dt>
         <dd>
-          @if($summary->securityStatus < 0)
+          @if($summary->security_status < 0)
             <span class="text-danger">
-              {{ number($summary->securityStatus, 12) }}
+              {{ number($summary->security_status, 12) }}
             </span>
           @else
             <span class="text-success">
-              {{ number($summary->securityStatus, 12) }}
+              {{ number($summary->security_status, 12) }}
             </span>
           @endif
         </dd>
@@ -84,49 +92,39 @@
           </span>
         </dd>
 
-        <dt>{{ trans('web::seat.api_detail') }}</dt>
-        <dd>
-          <a href="{{ route('api.key.detail', ['key_id' => $summary->keyID]) }}" type="button">
-            <i class="fa fa-key"></i>
-            {{ trans('web::seat.view') }}
-          </a>
-        </dd>
-
-        <dt></dt>
       </dl>
     </div>
 
   </div>
   <div class="panel-footer">
     <span class="text-center center-block">
-      <a href="http://eveboard.com/pilot/{{ $summary->characterName }}"
+      <a href="http://eveboard.com/pilot/{{ $summary->name }}"
          target="_blank">
         <img src="{{ asset('web/img/eveboard.png') }}">
       </a>
-      <a href="https://gate.eveonline.com/Profile/{{ $summary->characterName }}"
+      <a href="https://forums.eveonline.com/u/{{ str_replace(' ', '_', $summary->name) }}/summary"
          target="_blank">
         <img src="{{ asset('web/img/evegate.png') }}">
       </a>
-      <a href="https://eve-kill.net/?a=pilot_detail&plt_external_id={{ $summary->characterID }}"
-         target="_blank">
-        <img src="{{ asset('web/img/evekill.png') }}">
-      </a>
-      <a href="http://eve-search.com/search/author/{{ $summary->characterName }}"
+      <a href="http://eve-search.com/search/author/{{ $summary->name }}"
          target="_blank">
         <img src="{{ asset('web/img/evesearch.png') }}">
       </a>
-      <a href="http://evewho.com/pilot/{{ $summary->characterName }}"
+      <a href="http://evewho.com/pilot/{{ $summary->name }}"
          target="_blank">
         <img src="{{ asset('web/img/evewho.png') }}">
       </a>
-      <a href="https://zkillboard.com/character/{{ $summary->characterName }}"
+      <a href="https://zkillboard.com/character/{{ $summary->name }}"
          target="_blank">
         <img src="{{ asset('web/img/zkillboard.png') }}">
       </a>
-      <a href="http://eve-hunt.net/hunt/{{ $summary->characterName }}"
-         target="_blank">
-        <img src="{{ asset('web/img/evehunt.png') }}">
+      <a href="http://eve-prism.com/?view=character&name={{ $summary->name }}" target="_blank">
+        <img src="{{ asset('web/img/eve-prism.png') }}" />
       </a>
     </span>
   </div>
 </div>
+
+@push('javascript')
+@include('web::includes.javascript.id-to-name')
+@endpush

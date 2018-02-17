@@ -24,8 +24,10 @@ namespace Seat\Web\Http\Composers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Seat\Services\Repositories\Character\Character;
-use Seat\Services\Repositories\Character\Info;
+use Illuminate\Support\Facades\DB;
+use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Services\Repositories\Configuration\UserRespository;
+use Seat\Web\Models\Group;
 
 /**
  * Class CharacterSummary.
@@ -33,8 +35,7 @@ use Seat\Services\Repositories\Character\Info;
  */
 class CharacterSummary
 {
-    use Character;
-    use Info;
+    use UserRespository;
 
     /**
      * @var \Illuminate\Http\Request
@@ -62,11 +63,10 @@ class CharacterSummary
     public function compose(View $view)
     {
 
-        $summary = $this->getCharacterInformation(
-            $this->request->character_id);
+        $summary = CharacterInfo::find($this->request->character_id);
 
-        $characters = $this->getCharactersOnApiKey(
-            $summary->keyID);
+        $group = DB::table('group_user')->where('user_id', $this->request->character_id)->first();
+        $characters = $this->getUserGroupCharacters(Group::where('id', $group->group_id)->get());
 
         $view->with('summary', $summary);
         $view->with('characters', $characters);

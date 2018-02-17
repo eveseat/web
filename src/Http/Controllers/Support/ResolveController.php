@@ -66,20 +66,18 @@ class ResolveController extends Controller
         // resolution
         if (! empty($ids)) {
 
-            $pheal = app()
-                ->make('Seat\Eveapi\Helpers\PhealSetup')
-                ->getPheal();
+            $eseye = app('esi-client')->get();
 
             foreach (array_chunk($ids, 30) as $id_chunk) {
 
-                $names = $pheal->eveScope->CharacterName([
-                    'ids' => implode(',', $id_chunk), ]);
+                $eseye->setVersion('v2');
+                $eseye->setBody($id_chunk);
+                $names = $eseye->invoke('post', '/universe/names/');
 
-                foreach ($names->characters as $result) {
-
+                foreach ($names as $result) {
                     Cache::forever(
-                        $this->prefix . $result->characterID, $result->name);
-                    $response[$result->characterID] = $result->name;
+                        $this->prefix . $result->id, $result->name);
+                    $response[$result->id] = $result->name;
                 }
 
             }

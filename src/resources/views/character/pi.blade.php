@@ -26,19 +26,19 @@
         @foreach($colonies as $colony)
 
           <tr>
-            <td data-order="{{ $colony->lastUpdate }}">
+            <td data-order="{{ $colony->last_update }}">
               <span data-toggle="tooltip"
-                    title="" data-original-title="{{ $colony->lastUpdate }}">
-                {{ human_diff($colony->lastUpdate) }}
+                    title="" data-original-title="{{ $colony->last_update }}">
+                {{ human_diff($colony->last_update) }}
               </span>
             </td>
-            <td>{{ $colony->solarSystemName }}</td>
+            <td>{{ $colony->itemName }}</td>
             <td>
-              {!! img('type', $colony->planetTypeID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-              {{ $colony->planetTypeName }}
+              {!! img('type', $colony->typeID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+              {{ ucfirst($colony->planet_type) }}
             </td>
-            <td>{{ $colony->upgradeLevel }}</td>
-            <td>{{ $colony->numberOfPins }}</td>
+            <td>{{ $colony->upgrade_level }}</td>
+            <td>{{ $colony->num_pins }}</td>
           </tr>
 
         @endforeach
