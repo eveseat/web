@@ -57,7 +57,7 @@ class ContractsController extends Controller
         $contracts = $this->getCharacterContracts($character_id, false);
 
         return Datatables::of($contracts)
-            ->editColumn('issuerID', function ($row) {
+            ->editColumn('issuer_id', function ($row) {
 
                 return view('web::partials.contractissuer', compact('row'))
                     ->render();

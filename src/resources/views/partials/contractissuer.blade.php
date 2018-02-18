@@ -1,2 +1,2 @@
-{!! img('auto', $row->issuerID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-<span rel="id-to-name">{{ $row->issuerID }}</span>
+{!! img('auto', $row->issuer_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
+<span rel="id-to-name">{{ $row->issuer_id }}</span>
