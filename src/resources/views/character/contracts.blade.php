@@ -63,15 +63,20 @@
       serverSide      : true,
       ajax            : '{{ route('character.view.contracts.data', ['character_id' => $request->character_id]) }}',
       columns         : [
-        {data: 'dateIssued', name: 'dateIssued', render: human_readable},
-        {data: 'issuerID', name: 'issuerID'},
+        {data: 'date_issued', name: 'date_issued', render: human_readable},
+        {data: 'issuer_id', name: 'issuer_id'},
         {data: 'type', name: 'type'},
-        {data: 'status', name: 'status'},
+        {data: 'status', name: 'status', render: function(data, type, row){
+            var str = data.toLowerCase();
+            return str.replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g, function($1){
+                return $1.toUpperCase();
+            });
+        }},
         {data: 'title', name: 'title'},
         {data: 'collateral', name: 'collateral'},
         {data: 'price', name: 'price'},
         {data: 'reward', name: 'reward'},
-        {data: 'contents', name: 'contents', searchable: false},
+        {data: 'contents', name: 'contents', searchable: false}
       ],
       dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
       "fnDrawCallback": function () {
