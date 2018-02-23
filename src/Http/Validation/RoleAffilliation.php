@@ -56,7 +56,7 @@ class RoleAffilliation extends FormRequest
         // value, which will signal a wild card for either all characters
         // or all corporations.
         $character_ids = implode(',',
-            array_prepend(ApiKeyInfoCharacters::pluck('characterID')->toArray(), 0));
+            array_prepend(ApiKeyInfoCharacters::pluck('characterID')->toArray(), '0,1'));
         $corporation_ids = implode(',',
             array_prepend(CorporationSheet::pluck('corporationID')->toArray(), 0));
 

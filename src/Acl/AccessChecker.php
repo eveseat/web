@@ -361,6 +361,23 @@ trait AccessChecker
                         }
                     }
 
+                } elseif($affilition->affiliation === 1) {
+
+                    $filterCorps = [];
+                    unset($role->affiliations);
+                    foreach ($role->affiliations as $affiliation){
+                        if($affiliation->type == 'corp')
+                            $filterCorps[] += $affiliation->affiliation;
+                    }
+
+                    foreach ($this->getAllCharacters()->whereIn('corporationID', $filterCorps)->pluck('characterID') as  $characterID) {
+                        if (isset($map['char'][$characterID]))
+                            $map['char'][$characterID] += $role_permissions;
+
+                        else
+                            $map['char'][$characterID] = $role_permissions;
+
+                    }
                 } else {
 
                     // Add the single affiliation to the map. As we will run this operation
