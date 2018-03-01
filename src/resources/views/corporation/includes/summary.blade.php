@@ -6,14 +6,14 @@
 
     <div class="box-body box-profile">
 
-      {!! img('corporation', $sheet->corporationID, 128, ['class' => 'profile-user-img img-responsive img-circle']) !!}
+      {!! img('corporation', $sheet->corporation_id, 128, ['class' => 'profile-user-img img-responsive img-circle']) !!}
       <h3 class="profile-username text-center">
-        {{ $sheet->corporationName }}
+        {{ $sheet->name }}
       </h3>
 
-      @if($sheet->allianceID)
+      @if($sheet->alliance_id)
         <p class="text-muted text-center">
-          {{ $sheet->allianceName }}
+          <span rel="id-to-name">{{ $sheet->alliance_id }}</span>
         </p>
       @endif
 
@@ -21,9 +21,9 @@
 
       <dl>
 
-        @if($sheet->allianceID)
+        @if($sheet->alliance_id)
           <dt>{{ trans('web::seat.alliance') }}</dt>
-          <dd>{{ $sheet->allianceName }}</dd>
+          <dd><span rel="id-to-name">{{ $sheet->alliance_id }}</span></dd>
         @endif
 
         <dt>{{ trans('web::seat.ticker') }}</dt>
@@ -31,14 +31,14 @@
 
         <dt>{{ trans('web::seat.ceo') }}</dt>
         <dd>
-          <a href="{{ route('character.view.sheet', ['character_id' => $sheet->ceoID]) }}">
-            {!! img('character', $sheet->ceoID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-            {{ $sheet->ceoName }}
+          <a href="{{ route('character.view.sheet', ['character_id' => $sheet->ceo_id]) }}">
+            {!! img('character', $sheet->ceo_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
+            <span rel="id-to-name">{{ $sheet->ceo_id }}</span>
           </a>
         </dd>
 
         <dt>{{ trans('web::seat.home_station') }}</dt>
-        <dd>{{ $sheet->stationName }}</dd>
+        <dd>{{ optional($sheet->homeStation)->name }}</dd>
 
         <dt>{{ trans('web::seat.url') }}</dt>
         <dd>
@@ -46,11 +46,15 @@
         </dd>
 
         <dt>{{ trans('web::seat.tax_rate') }}</dt>
-        <dd>{{ number($sheet->taxRate) }}%</dd>
+        <dd>{{ number($sheet->tax_rate) }}%</dd>
 
         <dt>{{ trans('web::seat.member_count') }}</dt>
         <dd>
-          {{ $sheet->memberCount }} / {{ $sheet->memberLimit }}
+          @if(!is_null($sheet->memberLimit) && $sheet->memberLimit > 0)
+          {{ $sheet->member_count }} / {{ $sheet->memberLimit }}
+          @else
+          0
+          @endif
         </dd>
 
         <dt>{{ trans('web::seat.last_update') }}</dt>
@@ -67,3 +71,7 @@
 
   </div>
 </div>
+
+@push('javascript')
+@include('web::includes.javascript.id-to-name')
+@endpush
