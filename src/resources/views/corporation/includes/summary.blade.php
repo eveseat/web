@@ -53,7 +53,7 @@
           @if(!is_null($sheet->memberLimit) && $sheet->memberLimit > 0)
           {{ $sheet->member_count }} / {{ $sheet->memberLimit }}
           @else
-          0
+          {{ $sheet->member_count }}
           @endif
         </dd>
 
