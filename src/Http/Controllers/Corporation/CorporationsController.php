@@ -54,17 +54,17 @@ class CorporationsController extends Controller
 
         return Datatables::of($corporations)
             // Edit some columns to include links and icons
-            ->editColumn('corporationName', function ($row) {
+            ->editColumn('name', function ($row) {
 
                 return view('web::corporation.partials.corporationname', compact('row'))
                     ->render();
             })
-            ->editColumn('ceoName', function ($row) {
+            ->editColumn('ceo_id', function ($row) {
 
                 return view('web::corporation.partials.ceoname', compact('row'))
                     ->render();
             })
-            ->editColumn('allianceName', function ($row) {
+            ->editColumn('alliance_id', function ($row) {
 
                 return view('web::corporation.partials.alliancename', compact('row'))
                     ->render();
