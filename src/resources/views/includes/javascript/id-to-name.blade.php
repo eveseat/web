@@ -1,4 +1,4 @@
-<script>
+<script type="text/javascript">
 
   function ids_to_names() {
 
@@ -6,8 +6,10 @@
     var arrays = [], size = 250;
 
     $('[rel="id-to-name"]').each(function () {
-      //add item to array
-      items.push($(this).text());
+      var val = $(this).text();
+      //add item to array if it's a valid integer
+      if (!isNaN(parseInt(val)))
+          items.push(val);
     });
 
     var items = $.unique(items);
@@ -40,6 +42,6 @@
 
   $(document).ready(function () {
     ids_to_names();
-  })
+  });
 
 </script>
