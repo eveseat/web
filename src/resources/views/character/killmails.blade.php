@@ -52,8 +52,7 @@
       'fnDrawCallback': function () {
         $(document).ready(function () {
           $('img').unveil(100);
-
-            ids_to_names();
+          ids_to_names();
         });
       }
     });
