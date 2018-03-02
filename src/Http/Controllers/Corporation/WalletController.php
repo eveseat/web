@@ -42,7 +42,7 @@ class WalletController extends Controller
     public function getJournal(int $corporation_id)
     {
 
-        return view('web::corporation.journal');
+        return view('web::corporation.wallet.journal.journal');
 
     }
 
@@ -92,7 +92,7 @@ class WalletController extends Controller
     public function getTransactions(int $corporation_id)
     {
 
-        return view('web::corporation.transactions');
+        return view('web::corporation.wallet.transactions.transactions');
     }
 
     /**

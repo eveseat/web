@@ -1,11 +1,11 @@
-@extends('web::corporation.layouts.view', ['viewname' => 'journal'])
+@extends('web::corporation.wallet.layouts.view', ['sub_viewname' => 'journal'])
 
 @section('title', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.wallet_journal'))
 @section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.wallet_journal'))
 
 @inject('request', 'Illuminate\Http\Request')
 
-@section('corporation_content')
+@section('wallet_content')
 
   <div class="row">
     <div class="col-md-12">
