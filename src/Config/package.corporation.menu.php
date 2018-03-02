@@ -122,17 +122,10 @@ return [
         'route'          => 'corporation.view.ledger.summary',
     ],
     [
-        'name'           => 'wallet journal',
-        'label'          => 'web::seat.wallet_journal',
-        'permission'     => 'corporation.journal',
-        'highlight_view' => 'journal',
+        'name'           => 'wallet',
+        'label'          => 'web::seat.wallet',
+        'permission'     => ['corporation.journal', 'corporation.transactions'],
+        'highlight_view' => 'wallet',
         'route'          => 'corporation.view.journal',
-    ],
-    [
-        'name'           => 'wallet transactions',
-        'label'          => 'web::seat.wallet_transactions',
-        'permission'     => 'corporation.transactions',
-        'highlight_view' => 'transactions',
-        'route'          => 'corporation.view.transactions',
     ],
 ];

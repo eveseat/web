@@ -40,7 +40,7 @@
 
 @push('javascript')
 
-<script>
+<script type="text/javascript">
 
   $(function () {
     $('table#character-transactions').DataTable({

@@ -1,11 +1,11 @@
-@extends('web::corporation.layouts.view', ['viewname' => 'transactions'])
+@extends('web::corporation.wallet.layouts.view', ['sub_viewname' => 'transactions'])
 
 @section('title', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.wallet_transactions'))
 @section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.wallet_transactions'))
 
 @inject('request', 'Illuminate\Http\Request')
 
-@section('corporation_content')
+@section('wallet_content')
 
   <div class="row">
     <div class="col-md-12">
@@ -40,7 +40,7 @@
 
 @push('javascript')
 
-<script>
+<script type="text/javascript">
 
   $(function () {
     $('table#corporation-transactions').DataTable({
@@ -48,17 +48,18 @@
       serverSide      : true,
       ajax            : '{{ route('corporation.view.transactions.data', ['corporation_id' => $request->corporation_id]) }}',
       columns         : [
-        {data: 'transactionDateTime', name: 'transactionDateTime', render: human_readable},
-        {data: 'transactionType', name: 'transactionType'},
+        {data: 'date', name: 'date', render: human_readable},
+        {data: 'is_buy', name: 'is_buy'},
         {data: 'quantity', name: 'quantity'},
         {data: 'price', name: 'price'},
         {data: 'total', name: 'price'},
-        {data: 'clientName', name: 'clientName'},
+        {data: 'client', name: 'client'}
       ],
       dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
       "fnDrawCallback": function () {
         $(document).ready(function () {
           $("img").unveil(100);
+          ids_to_names();
         });
       }
     });

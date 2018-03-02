@@ -42,16 +42,17 @@
       serverSide      : true,
       ajax            : '{{ route('corporation.view.killmails.data', ['corporation_id' => $request->corporation_id]) }}',
       columns         : [
-        {data: 'killTime', name: 'killTime', render: human_readable},
-        {data: 'characterName', name: 'characterName'},
-        {data: 'typeName', name: 'typeName'},
-        {data: 'itemName', name: 'itemName'},
-        {data: 'zkb', name: 'itemName'},
+        {data: 'killmail_time', name: 'killmail_time', render: human_readable},
+        {data: 'character_name', name: 'character_name'},
+        {data: 'type_name', name: 'type_name'},
+        {data: 'item_name', name: 'item_name'},
+        {data: 'zkb', name: 'zkb'}
       ],
       dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
       "fnDrawCallback": function () {
         $(document).ready(function () {
           $("img").unveil(100);
+          ids_to_names();
         });
       }
     });

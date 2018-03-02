@@ -57,7 +57,7 @@
 
 @push('javascript')
 
-<script>
+<script type="text/javascript">
 
   // ChartJS Spending Graph
   $.get("{{ route('character.view.journal.graph.balance', ['character_id' => $request->character_id]) }}", function (data) {
@@ -77,7 +77,7 @@
         }
       }
     });
-  })
+  });
 
   // DataTable
   $(function () {
@@ -97,7 +97,6 @@
       'fnDrawCallback': function () {
         $(document).ready(function () {
           $('img').unveil(100);
-
           ids_to_names();
         });
       }
@@ -105,7 +104,5 @@
   });
 
 </script>
-
-@include('web::includes.javascript.id-to-name')
 
 @endpush

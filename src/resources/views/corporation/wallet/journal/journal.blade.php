@@ -1,11 +1,11 @@
-@extends('web::corporation.layouts.view', ['viewname' => 'journal'])
+@extends('web::corporation.wallet.layouts.view', ['sub_viewname' => 'journal'])
 
 @section('title', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.wallet_journal'))
 @section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.wallet_journal'))
 
 @inject('request', 'Illuminate\Http\Request')
 
-@section('corporation_content')
+@section('wallet_content')
 
   <div class="row">
     <div class="col-md-12">
@@ -40,7 +40,7 @@
 
 @push('javascript')
 
-<script>
+<script type="text/javascript">
 
   $(function () {
     $('table#corporation-journal').DataTable({
@@ -49,9 +49,9 @@
       ajax            : '{{ route('corporation.view.journal.data', ['corporation_id' => $request->corporation_id]) }}',
       columns         : [
         {data: 'date', name: 'date', render: human_readable},
-        {data: 'refTypeName', name: 'refTypeName'},
-        {data: 'ownerName1', name: 'ownerName1'},
-        {data: 'ownerName2', name: 'ownerName2'},
+        {data: 'ref_type_name', name: 'ref_type_name'},
+        {data: 'first_party_id', name: 'first_party_id'},
+        {data: 'second_party_id', name: 'second_party_id'},
         {data: 'amount', name: 'amount'},
         {data: 'balance', name: 'balance'},
       ],
@@ -59,6 +59,7 @@
       "fnDrawCallback": function () {
         $(document).ready(function () {
           $("img").unveil(100);
+          ids_to_names();
         });
       }
     });

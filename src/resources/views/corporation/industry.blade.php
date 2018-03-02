@@ -44,8 +44,8 @@
       ajax            : '{{ route('corporation.view.industry.data', ['corporation_id' => $request->corporation_id]) }}',
       dom             : '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-12"<"corporation-industry_filters">>><"row"<"col-sm-12"rt>><"row"<"col-sm-5"i><"col-sm-7"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
       columns         : [
-        {data: 'endDate', name: 'endDate', render: human_readable},
-        {data: 'installerName', name: 'installerName'},
+        {data: 'end_date', name: 'end_date', render: human_readable},
+        {data: 'installer_id', name: 'installer_id'},
         {data: 'solarSystemName', name: 'solarSystemName'},
         {data: 'activityName', name: 'activityName'},
         {data: 'runs', name: 'runs'},
@@ -62,7 +62,7 @@
 
     // initial filter
     table.column(7)
-      .search('[[:<:]]1[[:>:]]', true, false) // strict lookup
+      .search('[[:<:]]active[[:>:]]', true, false) // strict lookup
       .draw();
 
     var filterGroup = $('<div class="btn-group btn-group-justified" role="group">');
@@ -76,7 +76,7 @@
       filterHistory.removeClass('disabled');
 
       table.column(7)
-          .search('[[:<:]]1[[:>:]]', true, false) // strict lookup
+          .search('[[:<:]]active[[:>:]]', true, false) // strict lookup
           .draw();
     });
 
@@ -89,7 +89,7 @@
       filterHistory.removeClass('disabled');
 
       table.column(7)
-          .search('[[:<:]]2[[:>:]]', true, false) // strict lookup
+          .search('[[:<:]]paused[[:>:]]', true, false) // strict lookup
           .draw();
     });
 
@@ -102,7 +102,7 @@
       filterHistory.removeClass('disabled');
 
       table.column(7)
-          .search('[[:<:]]3[[:>:]]', true, false) // strict lookup
+          .search('[[:<:]]ready[[:>:]]', true, false) // strict lookup
           .draw();
     });
 
@@ -115,7 +115,7 @@
         filterHistory.removeClass('disabled');
 
       table.column(7)
-          .search('[[:<:]]102[[:>:]]', true, false) // strict lookup
+          .search('[[:<:]]cancelled[[:>:]]', true, false) // strict lookup
           .draw();
     });
 
@@ -128,7 +128,7 @@
       $(this).addClass('disabled');
 
       table.column(7)
-          .search('[[:<:]]101[[:>:]]|[[:<:]]103[[:>:]]', true, false) // strict lookup
+          .search('[[:<:]]delivered[[:>:]]|[[:<:]]reverted[[:>:]]', true, false) // strict lookup
           .draw();
     });
 
