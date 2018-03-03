@@ -64,15 +64,15 @@
       serverSide      : true,
       ajax            : '{{ route('corporation.view.contracts.data', ['corporation_id' => $request->corporation_id]) }}',
       columns         : [
-        {data: 'dateIssued', name: 'dateIssued', render: human_readable},
-        {data: 'issuerID', name: 'issuerID'},
+        {data: 'date_issued', name: 'date_issued', render: human_readable},
+        {data: 'issuer_id', name: 'issuer_id'},
         {data: 'type', name: 'type'},
         {data: 'status', name: 'status'},
         {data: 'title', name: 'title'},
         {data: 'collateral', name: 'collateral'},
         {data: 'price', name: 'price'},
         {data: 'reward', name: 'reward'},
-        {data: 'contents', name: 'contents', searchable: false},
+        {data: 'contents', name: 'contents', searchable: false}
       ],
       dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
       "fnDrawCallback": function () {
