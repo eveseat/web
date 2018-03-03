@@ -14,7 +14,7 @@
       <table class="table table-condensed table-hover table-responsive">
         <thead>
         <tr>
-          <th>{{ trans_choice('web::seat.type', 1) }}</th>
+          <th>{{ trans_choice('web::seat.system', 1) }}</th>
           <th>{{ trans('web::seat.reinforcement') }}</th>
           <th>{{ trans('web::seat.alliance') }}</th>
           <th>{{ trans('web::seat.standings') }}</th>
@@ -27,46 +27,42 @@
         @foreach($pocos as $poco)
 
           <tr>
+            <td>{{ $poco->system->itemName }}</td>
+            <td>between {{ $poco->reinforce_exit_start }}h and {{ $poco->reinforce_exit_end }}h</td>
             <td>
-              <span data-toggle="tooltip"
-                    title="" data-original-title="{{ $poco->planetTypeName }}">
-                {!! img('type', $poco->planetTypeID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-              </span>
-              {{ $poco->planetName }}
-            </td>
-            <td>{{ $poco->reinforceHour }}</td>
-            <td>
-              @if($poco->allowAlliance)
+              @if($poco->allow_alliance_access)
                 {{ trans('web::seat.yes') }}
               @else
                 {{ trans('web::seat.no') }}
               @endif
             </td>
             <td>
-              @if($poco->allowStandings)
+              @if($poco->allow_access_with_standings)
                 {{ trans('web::seat.yes') }}
               @else
                 {{ trans('web::seat.no') }}
               @endif
             </td>
             <td>
-              <span class="
-                    @if($poco->standingLevel >= 0.5)
-                      text-green
-                    @elseif($poco->standingLevel < 0.5 && $poco->standingLevel > 0.0)
-                      text-warning
-                    @else
-                      text-red
-                    @endif">
-              {{ round($poco->standingLevel, 2) }}
+              @if($poco->standing_level == 'terrible')
+              <span class="label label-danger">Terrible</span>
+              @elseif($poco->standing_level == 'bad')
+              <span class="label label-warning">Bad</span>
+              @elseif($poco->standing_level == 'neutral')
+              <span class="label label-default">Neutral</span>
+              @elseif($poco->standing_level == 'good')
+              <span class="label label-info">Good</span>
+              @elseif($poco->standing_level == 'excellent')
+              <span class="label label-primary">Excellent</span>
+              @endif
             </td>
-            <td>{{ round((float)$poco->taxRateAlliance * 100) }}%</td>
-            <td>{{ round((float)$poco->taxRateCorp * 100) }}%</td>
-            <td><span class="text-blue">{{ round((float)$poco->taxRateStandingHigh * 100) }}%</span></td>
-            <td><span class="text-aqua">{{ round((float)$poco->taxRateStandingGood * 100) }}%</span></td>
-            <td>{{ round((float)$poco->taxRateStandingNeutral * 100) }}%</td>
-            <td><span class="text-warning">{{ round((float)$poco->taxRateStandingBad * 100) }}%</span></td>
-            <td><span class="text-danger">{{ round((float)$poco->taxRateStandingHorrible * 100) }}%</span></td>
+            <td>{{ round((float)$poco->alliance_tax_rate * 100) }}%</td>
+            <td>{{ round((float)$poco->corporation_tax_rate * 100) }}%</td>
+            <td><span class="text-blue">{{ round((float)$poco->excellent_standing_tax_rate * 100) }}%</span></td>
+            <td><span class="text-aqua">{{ round((float)$poco->good_standing_tax_rate * 100) }}%</span></td>
+            <td>{{ round((float)$poco->neutral_standing_tax_rate * 100) }}%</td>
+            <td><span class="text-warning">{{ round((float)$poco->bad_standing_tax_rate * 100) }}%</span></td>
+            <td><span class="text-danger">{{ round((float)$poco->terrible_standing_tax_rate * 100) }}%</span></td>
           </tr>
 
         @endforeach
