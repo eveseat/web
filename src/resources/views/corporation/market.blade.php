@@ -23,7 +23,7 @@
           <th>{{ trans('web::seat.status') }}</th>
           <th>{{ trans('web::seat.price') }}</th>
           <th>{{ trans('web::seat.total') }}</th>
-          <th>{{ trans_choice('web::seat.type', 1) }}</th>
+          <th>{{ trans_choice('web::seat.item', 1) }}</th>
         </tr>
         </thead>
       </table>
