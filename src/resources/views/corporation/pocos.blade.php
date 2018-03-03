@@ -27,7 +27,17 @@
         @foreach($pocos as $poco)
 
           <tr>
-            <td>{{ $poco->system->itemName }}</td>
+            <td>
+                @if (is_null($poco->location_id))
+                {!! img('type', 0, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                {{ $poco->system->itemName }}
+                @else
+                <span data-toggle="tooltip" title="{{ $poco->planet->type->typeName }}">
+                  {!! img('type', $poco->planet->typeID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                </span>
+                {{ $poco->planet->itemName }}
+                @endif
+            </td>
             <td>between {{ $poco->reinforce_exit_start }}h and {{ $poco->reinforce_exit_end }}h</td>
             <td>
               @if($poco->allow_alliance_access)
