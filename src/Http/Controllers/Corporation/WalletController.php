@@ -57,7 +57,7 @@ class WalletController extends Controller
         $journal = $this->getCorporationWalletJournal($corporation_id, false);
 
         return Datatables::of($journal)
-            ->editColumn('ref_type_name', function ($row) {
+            ->editColumn('ref_type', function ($row) {
 
                 return view('web::partials.journaltranstype', compact('row'))
                     ->render();
