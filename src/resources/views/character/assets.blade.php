@@ -170,13 +170,12 @@
       }
 
       // Apply some styleing
-      //console.debug($(this).find('i'));
       $(this).find('i').removeClass("fa-plus").addClass("fa-minus");
       $(this).closest("tr").css("background-color", "#D4D4D4"); // Heading Color
       contents.css("background-color", "#E5E5E5");              // Table Contents Color
 
     } else {
-      //console.debug($(this).find('i'));
+
       $(this).find('i').removeClass("fa-minus").addClass("fa-plus");
       $(this).closest("tr").css("background-color", "");
 
