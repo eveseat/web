@@ -34,15 +34,15 @@
                       @else
                         label-warning
                       @endif">
-                  {{ $starbase_states[$starbase->state] }}
+                  {{ ucfirst($starbase->state) }}
                 </span>
               </span>
           </td>
-          <td data-order="{{ $starbase->starbaseName }}">
+          <td data-order="{{ $starbase->type->typeName }}">
               <span data-toggle="tooltip"
-                    title="" data-original-title="{{ $starbase->starbaseTypeName }}">
-                {!! img('type', $starbase->starbaseTypeID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                {{ $starbase->starbaseName }}
+                    title="" data-original-title="{{ $starbase->type->typeName }}">
+                {!! img('type', $starbase->type_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                {{ $starbase->type->typeName }}
               </span>
             @if($starbase->inSovSystem)
 
@@ -63,30 +63,30 @@
             @endif
           </td>
           <td>
-            <b>{{ $starbase->moonName }}</b>
+            <b>{{ $starbase->moon->itemName }}</b>
             <span class="
-                @if($starbase->mapSecurity >= 0.5)
+                @if($starbase->moon->security >= 0.5)
                     text-green
-                  @elseif($starbase->mapSecurity < 0.5 && $starbase->mapSecurity > 0.0)
+                  @elseif($starbase->moon->security < 0.5 && $starbase->moon->security > 0.0)
                     text-warning
                   @else
                     text-red
                   @endif">
-                <i>({{ round($starbase->mapSecurity,  2) }})</i>
+                <i>({{ round($starbase->moon->security,  2) }})</i>
               </span>
           </td>
-          <td data-order="{{ 100 * (($starbase->fuelBlocks * 5)/$starbase->fuelBaySize) }}">
+          <td data-order="{{ 100 * (($starbase->fuelBlocks * 5)/$starbase->type->capacity) }}">
             <div class="progress">
               <div class="progress-bar" role="progressbar"
                    aria-valuenow="60" aria-valuemin="0"
                    aria-valuemax="100"
-                   style="width: {{ 100 * (($starbase->fuelBlocks * 5)/$starbase->fuelBaySize) }}%">
+                   style="width: {{ 100 * (($starbase->fuelBlocks * 5) / $starbase->type->capacity) }}%">
               </div>
             </div>
           </td>
           <td data-order="
             @if($starbase->inSovSystem)
-          {{ carbon('now')->addHours($starbase->fuelBlocks / ceil($starbase->baseFuelUsage * 0.75)) }}
+          {{ carbon('now')->addHours($starbase->fuelBays->whereIn('type_id', [4051, 4246, 4247, 4312, 36945])->first()->quantity / ceil($starbase->baseFuelUsage * 0.75)) }}
           @else
           {{ carbon('now')->addHours($starbase->fuelBlocks/$starbase->baseFuelUsage)  }}
           @endif
@@ -104,7 +104,7 @@
             @endif
           </td>
           <td>
-            <a href="#starbaseDetail{{ $starbase->itemID }}">Detail</a>
+            <a href="#starbaseDetail{{ $starbase->starbase_id }}">Detail</a>
           </td>
         </tr>
 
