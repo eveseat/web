@@ -48,10 +48,10 @@
         @foreach ($pitotals as $pit)
 
           <tr>
-            <td data-order="{{ $pit->ownerName1 }}">
-              <a href="{{ route('character.view.sheet', ['character_id' => $pit->ownerID1]) }}">
-                {!! img('character', $pit->ownerID1, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                {{ $pit->ownerName1 }}
+            <td data-order="{{ $pit->first_party_id }}">
+              <a href="{{ route('character.view.sheet', ['character_id' => $pit->first_party_id]) }}">
+                {!! img('character', $pit->first_party_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                <span rel="id-to-name">{{ $pit->first_party_id }}</span>
               </a>
             </td>
             <td data-order="{{ number($pit->total) }}">{{ number($pit->total) }}</td>
