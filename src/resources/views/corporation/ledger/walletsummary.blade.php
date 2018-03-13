@@ -18,10 +18,10 @@
             <th>{{ trans_choice('web::seat.balance', 2) }}</th>
           </tr>
 
-          @foreach ($divisions as $division)
+          @foreach ($divisions->sortBy('name') as $division)
 
             <tr>
-              <td>{{ $division->description }}</td>
+              <td>{{ $division->name }}</td>
               <td>{{ number($division->balance) }}</td>
             </tr>
 
