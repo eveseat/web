@@ -111,13 +111,13 @@ class WalletController extends Controller
                 return view('web::partials.transactiontype', compact('row'))
                     ->render();
             })
-            ->editColumn('price', function ($row) {
+            ->editColumn('unit_price', function ($row) {
 
-                return number($row->price);
+                return number($row->unit_price);
             })
             ->addColumn('total', function ($row) {
 
-                return number($row->price * $row->quantity);
+                return number($row->unit_price * $row->quantity);
             })
             ->editColumn('client', function ($row) {
 
