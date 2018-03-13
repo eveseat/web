@@ -12,17 +12,18 @@
     <div class="panel-body">
       <div>
         <table class="table datatable table-condensed table-hover table-responsive">
+          <thead>
+            <tr>
+              <th>{{ trans_choice('web::seat.wallet_division_name', 2) }}</th>
+              <th>{{ trans_choice('web::seat.balance', 2) }}</th>
+            </tr>
+          </thead>
           <tbody>
-          <tr class="active">
-            <th>{{ trans_choice('web::seat.wallet_division_name', 2) }}</th>
-            <th>{{ trans_choice('web::seat.balance', 2) }}</th>
-          </tr>
-
           @foreach ($divisions->sortBy('name') as $division)
 
             <tr>
               <td>{{ $division->name }}</td>
-              <td>{{ number($division->balance) }}</td>
+              <td data-order="{{ $division->balance }}">{{ number($division->balance) }}</td>
             </tr>
 
           @endforeach
