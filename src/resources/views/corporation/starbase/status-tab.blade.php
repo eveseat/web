@@ -38,7 +38,7 @@
         </dd>
 
         <dt>{{ trans_choice('web::seat.name', 1) }}:</dt>
-        <dd>{{ $starbase->type->typeName }}</dd>
+        <dd>{{ $starbase->item->name }}</dd>
 
       </dl>
 
