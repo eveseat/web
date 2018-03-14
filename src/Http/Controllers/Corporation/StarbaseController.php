@@ -64,7 +64,7 @@ class StarbaseController extends Controller
     {
 
         $starbase = $this->getCorporationStarbases($corporation_id, $request->starbase_id)->first();
-        $starbase_modules = $this->getCorporationAssetContents($corporation_id, $starbase->starbase_id);
+        $starbase_modules = $this->getStarbaseModules($corporation_id, $request->starbase_id);
 
         return view('web::corporation.starbase.ajax.modules-tab',
             compact('starbase', 'starbase_modules'));
