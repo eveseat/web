@@ -29,31 +29,39 @@
               </td>
               <td>
                 @foreach($starbase_module->content as $content)
-                  <span data-toggle="tooltip"
-                        title="" data-original-title="{{ $content->typeName }}">
-                    {!! img('type', $content->type_id, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-                  </span>
+                <span data-toggle="tooltip"
+                      title="" data-original-title="{{ $content->type->typeName }}">
+                  {!! img('type', $content->type_id, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
+                </span>
                 @endforeach
               </td>
               <td>
+                @if($starbase_module->type->capacity > 0)
                 <b>
-                  if($module['used_volume'] == 0 || $module['available_volume'] == 0)
-                    0%
-                  else
-                    { number(100 * ($module['used_volume']) / ($module['available_volume']), 0) }%
-                  endif
+                  @if(is_null($starbase_module->content))
+                  0%
+                  @else
+                  {{ number($starbase_module->usedVolumeRate, 2) }}%
+                  @endif
                 </b>
                 <i>
-                  ({ number($module['used_volume']) } m&sup3; / { number($module['available_volume']) } m&sup3;)
-                  { number($module['total_items']) }
-                  { trans_choice('web::seat.item', $module['total_items']) }
+                  ({{ number($starbase_module->usedVolume) }} m&sup3; / {{ number($starbase_module->type->capacity) }} m&sup3;)
+                  {{ number($starbase_module->content->count(), 0) }}
+                  {{ trans_choice('web::seat.item', $starbase_module->content->count()) }}
                 </i>
+                @endif
               </td>
               <td>
+                @if($starbase_module->type->capacity > 0)
                 @include('web::macros.progressbar',
-                  ['partial' => $starbase_module['used_volume'],'full' => $starbase_module['available_volume']])
+                  ['partial' => $starbase_module->usedVolume,'full' => $starbase_module->type->capacity])
+                @else
+                {{ trans('web::seat.no_storage') }}
+                @endif
               </td>
               <td>
+                {{-- TODO : use an ajax call to load the modal content and generate the modal only once instead for all row --}}
+                @if($starbase_module->content->count() > 0)
 
                 <!-- Button trigger modal -->
                 <a type="button" data-toggle="modal" data-target="#assetModal{{ $starbase_module->item_id }}">
@@ -71,7 +79,7 @@
                         </button>
                         <h4 class="modal-title" id="assetModalLabel">
                           {{ trans_choice('web::seat.detail', 2) }}:
-                          {{ $starbase_module->typeName }}
+                          {{ $starbase_module->type->typeName }}
                         </h4>
                       </div>
                       <div class="modal-body">
@@ -80,7 +88,7 @@
                           <tbody>
                           <tr>
                             <th>#</th>
-                            <th></th>
+                            <th>{{ trans_choice('web::seat.type', 0) }}</th>
                             <th>{{ trans('web::seat.volume_usage') }}</th>
                           </tr>
 
@@ -90,11 +98,11 @@
                               <td>{{ $content->quantity }}</td>
                               <td>
                                 {!! img('type', $content->type_id, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-                                {{ $content->typeName }}
+                                {{ $content->type->typeName }}
                               </td>
                               <td>
                                 @include('web::macros.progressbar',
-                                  ['partial' => $content->quantity * $content->type->volume,'full' => $module['available_volume']])
+                                  ['partial' => $content->quantity * $content->type->volume,'full' => $starbase_module->type->capacity])
                               </td>
                             </tr>
 
@@ -107,6 +115,8 @@
                     </div>
                   </div>
                 </div>
+
+                @endif
 
               </td>
             </tr>
