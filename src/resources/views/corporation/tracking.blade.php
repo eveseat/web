@@ -27,37 +27,37 @@
 
           <tr>
             <td>
-              <a href="{{ route('character.view.sheet', ['character_id' => $character->characterID]) }}">
-                {!! img('character', $character->characterID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                {{ $character->name }}
+              <a href="{{ route('character.view.sheet', ['character_id' => $character->character_id]) }}">
+                {!! img('character', $character->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                <span rel="id-to-name">{{ $character->character_id }}</span>
               </a>
             </td>
-            <td data-order="{{ $character->startDateTime }}">
+            <td data-order="{{ $character->start_date }}">
               <span data-toggle="tooltip"
-                    title="" data-original-title="{{ $character->startDateTime }}">
-                {{ human_diff($character->startDateTime) }}
+                    title="" data-original-title="{{ $character->start_date }}">
+                {{ human_diff($character->start_date) }}
               </span>
             </td>
             <td>
-              {{ $character->location }}
-              @if($character->shipType != 'Unknown Type')
+              {{ $character->location_id }}
+              @if(!is_null($character->ship_type_id))
                 <i class="pull-right" data-toggle="tooltip"
-                   title="" data-original-title="{{ $character->shipType }}">
-                  {!! img('type', $character->shipTypeID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                   title="" data-original-title="{{ $character->type->typeName }}">
+                  {!! img('type', $character->ship_type_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                 </i>
               @endif
             </td>
-            <td data-order="{{ $character->logonDateTime }}">
+            <td data-order="{{ $character->logon_date }}">
               <span data-toggle="tooltip"
-                    title="" data-original-title="{{ $character->logonDateTime }}">
-                {{ human_diff($character->logonDateTime) }}
+                    title="" data-original-title="{{ $character->logon_date }}">
+                {{ human_diff($character->logon_date) }}
               </span>
             </td>
             <td data-order="{{ $character->key_ok }}">
               @if($character->key_ok == 1)
-                <i class="fa fa-check"></i>
+                <i class="fa fa-check text-success"></i>
               @else
-                <i class="fa fa-exclamation-triangle"></i>
+                <i class="fa fa-exclamation-triangle text-danger"></i>
               @endif
             </td>
           </tr>
