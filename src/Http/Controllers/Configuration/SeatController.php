@@ -57,15 +57,13 @@ class SeatController extends Controller
      * @param \Seat\Web\Http\Validation\SeatSettings $request
      *
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Seat\Services\Exceptions\SettingException
      */
     public function postUpdateSettings(SeatSettings $request)
     {
 
         Seat::set('registration', $request->registration);
         Seat::set('admin_contact', $request->admin_contact);
-        Seat::set('force_min_mask', $request->force_min_mask);
-        Seat::set('min_character_access_mask', $request->min_character_access_mask);
-        Seat::set('min_corporation_access_mask', $request->min_corporation_access_mask);
         Seat::set('allow_tracking', $request->allow_tracking);
         Seat::set('require_activation', $request->require_activation);
 
