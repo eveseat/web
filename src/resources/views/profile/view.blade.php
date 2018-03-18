@@ -184,6 +184,14 @@
     </div>
   </div>
 
+  <div class="panel panel-default">
+    <div class="panel-body">
+      {{ trans('web::seat.third_party_access') }}
+      <a href="https://community.eveonline.com/support/third-party-applications/" target="_blank">Third Party
+        Applications</a>
+    </div>
+  </div>
+
 @stop
 
 @section('right')

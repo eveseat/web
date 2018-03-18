@@ -559,6 +559,8 @@ return [
     'confirm_setup'                => 'Confirm Setup',
     'linked_characters'            => 'Linked Characters',
     'link_another_character'       => 'Link another character',
+    'third_party_access'           => 'Check the access third party applications (such as this one) has to ' .
+        'your EVE Online account regularly.',
 
     // Queue
     'queue_manage'                 => 'Queue Management',
