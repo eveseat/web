@@ -154,6 +154,12 @@ Route::group([
                 include __DIR__ . '/Routes/Configuration/Security.php';
             });
 
+            // Sso
+            Route::group(['prefix' => 'sso'], function () {
+
+                include __DIR__ . '/Routes/Configuration/Sso.php';
+            });
+
             // Schedule
             Route::group(['prefix' => 'schedule'], function () {
 

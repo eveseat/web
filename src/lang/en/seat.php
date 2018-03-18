@@ -168,6 +168,7 @@ return [
     'search'                => 'Search',
     'main_menu'             => 'Main Menu',
     'security'              => 'Security',
+    'sso'                   => 'Single Sign-on',
     'tracking'              => 'Tracking',
     'worker_constraints'    => 'Worker Constraints',
 
@@ -369,6 +370,25 @@ return [
     'tracking_help'                => 'Before disabling the usage tracking, please refer to the below' .
         ' document first.',
     'worker'                       => 'Worker|Workers',
+
+    // SSO Settings
+    'sso_scopes'                   => 'SSO Scopes',
+    'available_scopes'             => 'Available SSO Scopes',
+    'enable_all'                   => 'Enable All',
+    'remove_all'                   => 'Remove All',
+    'update_sso_scopes'            => 'Update SSO Scopes',
+    'current_configuration_status' => 'Current SSO Configuration',
+    'client_id_status'             => 'Client ID Status',
+    'client_id_ok'                 => 'Client ID OK',
+    'client_id_not_ok'             => 'Client ID Not OK. Check .env file',
+    'client_secret_status'         => 'Client Secret Status',
+    'client_secret_ok'             => 'Client Secret OK',
+    'client_secret_not_ok'         => 'Client Secret not OK. Check .env file',
+    'callback_url_status'          => 'Callback URL Status',
+    'callback_url_ok'              => 'Callback URL OK as :url',
+    'callback_maybe_wrong'         => 'Callback URL set but might be incorrect. Currently set as :current ' .
+        'and should maybe be :suggested',
+    'client_callback_not_ok'       => 'Callback URL not set. Check .env and set as :url',
 
     // Character
     'joined_curr_corp'             => 'Joined Current Corporation',

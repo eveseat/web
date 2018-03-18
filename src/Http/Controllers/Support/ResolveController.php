@@ -83,16 +83,17 @@ class ResolveController extends Controller
             // retrieve them from SDE and remove them from collection
             // TODO CCP WIP : https://github.com/ccpgames/esi-issues/issues/736
             $names = ChrFaction::whereIn('factionID', $chunk->flatten()->toArray())
-                               ->get();
+                ->get();
 
-            collect($names)->each(function($name) use (&$response) {
+            collect($names)->each(function ($name) use (&$response) {
 
                 cache([$this->prefix . $name->factionID => $name->factionName], carbon()->addCentury());
                 $response[$name->factionID] = $name->factionName;
 
             });
 
-            $chunk = $chunk->filter(function($id) use ($names) {
+            $chunk = $chunk->filter(function ($id) use ($names) {
+
                 return ! $names->contains('factionID', $id);
             });
 

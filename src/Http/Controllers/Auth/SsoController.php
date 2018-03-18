@@ -37,17 +37,17 @@ class SsoController extends Controller
 {
     /**
      * Redirect the user to the Eve Online authentication page.
-     * TODO: Make the scopes requested by SeAT configurable in the UI.
      *
      * @param \Laravel\Socialite\Contracts\Factory $social
      *
      * @return \Seat\Web\Http\Controllers\Auth\Response
+     * @throws \Seat\Services\Exceptions\SettingException
      */
     public function redirectToProvider(Socialite $social)
     {
 
         return $social->driver('eveonline')
-            ->scopes(config('eveapi.scopes'))
+            ->scopes(setting('sso_scopes', true))
             ->redirect();
     }
 

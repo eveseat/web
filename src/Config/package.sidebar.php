@@ -91,6 +91,12 @@ return [
                 'icon'  => 'fa-clock-o',
                 'route' => 'configuration.schedule',
             ],
+            [   // Sso
+                'name'  => 'sso',
+                'label' => 'web::seat.sso',
+                'icon'  => 'fa-user-circle',
+                'route' => 'configuration.sso',
+            ],
             [   // SeAT Setting
                 'name'  => 'settings',
                 'label' => 'web::seat.settings',
