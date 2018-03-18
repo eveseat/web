@@ -316,6 +316,51 @@
               </div>
 
             </li>
+
+            <!-- scopes -->
+            <li>
+
+              <!-- Button trigger modal -->
+              <a type="button" data-toggle="modal" data-target="#scopesModal">
+                <i class="fa fa-shield"></i>
+                {{ trans_choice('web::seat.scope', 2) }}
+              </a>
+
+              <!-- Modal -->
+              <div class="modal fade" id="scopesModal" tabindex="-1" role="dialog" aria-labelledby="scopesModalLabel">
+                <div class="modal-dialog modal-lg" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      <h4 class="modal-title" id="scopesModalLabel">{{ trans_choice('web::seat.scope', 2) }}</h4>
+                    </div>
+                    <div class="modal-body">
+
+                      <table class="table table-condensed table-hover table-responsive">
+                        <tbody>
+                        <tr>
+                          <th>{{ trans_choice('web::seat.scope', 1) }}</th>
+                        </tr>
+
+                        @foreach($scopes as $scope)
+
+                          <tr>
+                            <td>{{ $scope }}</td>
+                          </tr>
+
+                        @endforeach
+
+                        </tbody>
+                      </table>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </li>
           </ul>
 
         </div>

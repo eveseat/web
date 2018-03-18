@@ -233,7 +233,7 @@ return [
     'transfer'                    => 'Transfer',
     'mask_map_fail'               => 'Unable to load the Access Mask map',
     'recent_jobs'                 => 'Recent Jobs',
-    'scope'                       => 'Scope',
+    'scope'                       => 'Scope|Scopes',
     'api_all'                     => 'All API Keys',
     'reveal'                      => 'Reveal',
     'add_success'                 => 'Api Key Successfully Added. Update Job :jobid Dispatched',

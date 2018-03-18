@@ -50,6 +50,7 @@ class ProfileController extends Controller
 
         // Settings value possibilities
         $characters = $this->getUserGroupCharacters(auth()->user()->groups);
+        $scopes = auth()->user()->refresh_token->scopes;
         $skins = Profile::$options['skins'];
         $languages = config('web.locale.languages');
         $sidebar = Profile::$options['sidebar'];
@@ -58,7 +59,7 @@ class ProfileController extends Controller
         $decimal = Profile::$options['decimal_seperator'];
 
         return view('web::profile.view',
-            compact('user', 'history', 'characters', 'skins', 'languages',
+            compact('user', 'history', 'characters', 'scopes', 'skins', 'languages',
                 'sidebar', 'thousand', 'decimal'));
     }
 
@@ -66,6 +67,7 @@ class ProfileController extends Controller
      * @param \Seat\Web\Http\Validation\ProfileSettings $request
      *
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Seat\Services\Exceptions\SettingException
      */
     public function getUpdateUserSettings(ProfileSettings $request)
     {
