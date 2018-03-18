@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\Controllers\Support;
 
 use Illuminate\Http\Request;
+use Seat\Eveapi\Models\Sde\ChrFaction;
 use Seat\Web\Http\Controllers\Controller;
 
 /**
@@ -77,6 +78,27 @@ class ResolveController extends Controller
             return true;
 
         })->chunk(1000)->each(function ($chunk) use (&$response, $eseye) {
+
+            // universe resolver is not working on factions at this time
+            // retrieve them from SDE and remove them from collection
+            // TODO CCP WIP : https://github.com/ccpgames/esi-issues/issues/736
+            $names = ChrFaction::whereIn('factionID', $chunk->flatten()->toArray())
+                               ->get();
+
+            collect($names)->each(function($name) use (&$response) {
+
+                cache([$this->prefix . $name->factionID => $name->factionName], carbon()->addCentury());
+                $response[$name->factionID] = $name->factionName;
+
+            });
+
+            $chunk = $chunk->filter(function($id) use ($names) {
+                return ! $names->contains('factionID', $id);
+            });
+
+            // quick break if no more IDs must be resolve by ESI
+            if ($chunk->count() == 0)
+                return;
 
             // Finally, grab outstanding ids and resolve their names
             // using Esi.

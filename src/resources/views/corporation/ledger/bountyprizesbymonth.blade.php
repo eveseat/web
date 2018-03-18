@@ -48,10 +48,10 @@
 
           @foreach ($bountyprizedates as $bpbm)
             <tr>
-              <td data-order="{{ $bpbm->ownerName2 }}">
-                <a href="{{ route('character.view.sheet', ['character_id' => $bpbm->ownerID2]) }}">
-                  {!! img('character', $bpbm->ownerID2, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                  {{ $bpbm->ownerName2 }}
+              <td data-order="{{ $bpbm->second_party_id }}">
+                <a href="{{ route('character.view.sheet', ['character_id' => $bpbm->second_party_id]) }}">
+                  {!! img('character', $bpbm->second_party_id, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
+                  <span rel="id-to-name">{{ $bpbm->second_party_id }}</span>
                 </a>
               </td>
               <td data-order="{{ number($bpbm->total) }}">{{ number($bpbm->total) }}</td>

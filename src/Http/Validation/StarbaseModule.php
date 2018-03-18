@@ -23,7 +23,7 @@
 namespace Seat\Web\Http\Validation;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Seat\Eveapi\Models\Corporation\Starbase;
+use Seat\Eveapi\Models\Corporation\CorporationStarbase;
 
 class StarbaseModule extends FormRequest
 {
@@ -46,9 +46,9 @@ class StarbaseModule extends FormRequest
     public function rules()
     {
 
-        $possible_corp_starbases = Starbase::where(
-            'corporationID', $this->route('corporation_id'))
-            ->pluck('itemID')
+        $possible_corp_starbases = CorporationStarbase::where(
+            'corporation_id', $this->route('corporation_id'))
+            ->pluck('starbase_id')
             ->implode(',');
 
         return [

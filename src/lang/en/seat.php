@@ -498,6 +498,7 @@ return [
     'standing_level'               => 'Standing Level',
     'tax_alliance_corp'            => 'Tax: Alliance/Corp',
     'tax_standings'                => 'Tax: Standings',
+    'no_storage'                   => 'There is no storage',
 
     // Profile
     'user_profile'                 => 'User Profile',

@@ -49,7 +49,7 @@
         {data: 'state', name: 'orderState'},
         {data: 'price', name: 'price'},
         {data: 'total', name: 'price'},
-        {data: 'typeName', name: 'typeName'},
+        {data: 'typeName', name: 'typeName'}
       ],
       dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
       'fnDrawCallback': function () {

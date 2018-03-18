@@ -45,11 +45,10 @@ class LedgerController extends Controller
     public function getWalletSummary(int $corporation_id)
     {
 
-        $ledger = $this->getCorporationMemberSecurity($corporation_id);
         $divisions = $this->getCorporationWalletDivisionSummary($corporation_id);
 
         return view('web::corporation.ledger.walletsummary',
-            compact('ledger', 'divisions'));
+            compact('divisions'));
     }
 
     /**

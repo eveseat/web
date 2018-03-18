@@ -15,76 +15,81 @@
 
       <table class="table table-condensed table-hover table-responsive">
         <thead>
-        <tr>
-          <th>{{ trans('web::seat.quantity') }}</th>
-          <th>{{ trans_choice('web::seat.type', 1) }}</th>
-          <th>{{ trans('web::seat.volume') }}</th>
-          <th>{{ trans('web::seat.group') }}</th>
-        </tr>
+          <tr>
+            <th></th>
+            <th>{{ trans('web::seat.quantity') }}</th>
+            <th>{{ trans_choice('web::seat.type', 1) }}</th>
+            <th>{{ trans('web::seat.volume') }}</th>
+            <th>{{ trans('web::seat.group') }}</th>
+          </tr>
         </thead>
 
-        @foreach($assets->unique('location')->groupBy('location') as $location => $data)
+        <tbody>
 
-          <tbody style="border-top: 0px;">
-
+          @foreach($assets->sortBy('locationName')->groupBy('location_id') as $location)
           <tr class="active">
-            <td colspan="4">
-              <b>{{ $location }}</b>
+            <td colspan="5">
+              <b>
+                @if($location->first()->locationName == '')
+                  Unknown Structure ({{ $location->first()->location_id }})
+                @else
+                  {{ $location->first()->locationName }}
+                @endif
+              </b>
               <span class="pull-right">
-                <i>
-                  {{ count($assets->where('locationID', $data[0]->locationID)) }}
-                  {{ trans('web::seat.items_taking') }}
-                  {{ number_metric($assets
-                      ->where('locationID', $data[0]->locationID)->map(function($item) {
-                            return $item->quantity * $item->volume;
-                  })->sum()) }} m&sup3;
-                </i>
+                <i>ITEM_NUMBER items taking ITEMS_VOLUME m&sup3;</i>
               </span>
             </td>
           </tr>
 
-          </tbody>
+          {{-- asset office node --}}
+          @if($assets->where('location_id', $location->first()->location_id)->where('location_flag', 'OfficeFolder')->count() > 0)
+          <tr>
+            <td colspan="5">Office
+              <span class="pull-right">
+                <i>ITEM_NUMBER items taking ITEMS_VOLUME m&sup3;</i>
+              </span>
+            </td>
+          </tr>
+          @foreach($divisions as $division)
+          @if($assets->where('location_id', $location->first()->location_id)->where('location_flag', 'OfficeFolder')
+              ->first()->content->where('location_flag', 'CorpSAG' . $division->division)->count() > 0)
+          <tr>
+            <td colspan="5">
+                <button type="button" class="btn btn-xs btn-link">
+                  <i class="fa fa-cubes"></i>
+                </button>
+                {{ $division->name }}
+            </td>
+          </tr>
+          @endif
+          @endforeach
+          @endif
 
-          @foreach($assets->where('locationID', $data[0]->locationID) as $asset)
+          {{-- asset safety node --}}
+          @if($assets->where('location_id', $location->first()->location_id)->where('location_flag', 'AssetSafety')->count() > 0)
+          <tr class="bg-yellow">
+            <td colspan="5">Assets Safety
+              <span class="pull-right">
+                <i>ITEM_NUMBER items taking ITEMS_VOLUME m&sup3;</i>
+              </span>
+            </td>
+          </tr>
+          @endif
 
-            <tbody style="border-top: 0px;">
-
-            <tr>
-              @if($asset->childContentCount > 0)
-
-                <td>
-                  <i class="fa fa-plus viewcontent" style="cursor: pointer;"
-                     a-item-id="{{ $asset->itemID }}" a-loaded="false">
-                  </i>
-                </td>
-
-              @else
-
-                <td>{{ $asset->quantity }}</td>
-
-              @endif
-
-              <td>
-                {!! img('type', $asset->typeID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-                {{ $asset->typeName }}
-              </td>
-              <td>{{ number_metric($asset->quantity * $asset->volume) }} m&sup3;</td>
-              <td>{{ $asset->groupName }}</td>
-            </tr>
-
-            </tbody>
-
-            @if($asset->childContentCount > 0)
-
-              <tbody style="display: none;" class="tbodycontent">
-              <!-- assets contents populated via ajax call -->
-              </tbody>
-
-            @endif
-
+          {{-- asset delivery node --}}
+          @if($assets->where('location_id', $location->first()->location_id)->where('location_flag', 'Deliveries')->count() > 0)
+          <tr>
+            <td colspan="5">Assets Deliveries
+              <span class="pull-right">
+                <i>ITEM_NUMBER items taking ITEMS_VOLUME m&sup3;</i>
+              </span>
+            </td>
+          </tr>
+          @endif
           @endforeach
 
-        @endforeach
+        </tbody>
 
       </table>
 
@@ -101,7 +106,7 @@
 
     var attribute_box = $(this);
 
-    var contents = $(this).closest("tbody").next("tbody");
+    var contents = $(this).closest('tr').next('tr');
 
     // Show or hide
     contents.toggle();
@@ -134,13 +139,13 @@
       }
 
       // Apply some styleing
-      $(this).removeClass("fa-plus").addClass("fa-minus");
+      $(this).find('i').removeClass("fa-plus").addClass("fa-minus");
       $(this).closest("tr").css("background-color", "#D4D4D4"); // Heading Color
       contents.css("background-color", "#E5E5E5");              // Table Contents Color
 
     } else {
 
-      $(this).removeClass("fa-minus").addClass("fa-plus");
+      $(this).find('i').removeClass("fa-minus").addClass("fa-plus");
       $(this).closest("tr").css("background-color", "");
 
     }

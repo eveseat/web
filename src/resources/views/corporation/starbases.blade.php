@@ -20,10 +20,10 @@
     <div class="row">
       <div class="col-md-12">
 
-        <div class="panel panel-default" id="starbaseDetail{{ $starbase->itemID }}">
+        <div class="panel panel-default" id="starbaseDetail{{ $starbase->starbase_id }}">
           <div class="panel-heading">
             <h3 class="panel-title">
-              {{ $starbase->starbaseName }} <i>({{ $starbase->moonName }})</i>
+              {{ $starbase->type->name }} <i>({{ $starbase->moon->itemName }})</i>
             </h3>
           </div>
           <div class="panel-body">
@@ -32,12 +32,12 @@
               <!-- Nav tabs -->
               <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
-                  <a href="#status{{ $starbase->itemID }}" aria-controls="status{{ $starbase->itemID }}"
+                  <a href="#status{{ $starbase->starbase_id }}" aria-controls="status{{ $starbase->starbase_id }}"
                      role="tab" data-toggle="tab">Status</a>
                 </li>
                 <li role="presentation">
-                  <a href="#modules{{ $starbase->itemID }}" aria-controls="modules{{ $starbase->itemID }}"
-                     id="modules-tab" a-starbase-id="{{ $starbase->itemID }}"
+                  <a href="#modules{{ $starbase->starbase_id }}" aria-controls="modules{{ $starbase->starbase_id }}"
+                     id="modules-tab" a-starbase-id="{{ $starbase->starbase_id }}"
                      role="tab" data-toggle="tab">{{ trans_choice('web::seat.module', 2) }}</a>
                 </li>
               </ul>
@@ -46,7 +46,7 @@
 
                 @include('web::corporation.starbase.status-tab')
 
-                <div role="tabpanel" class="tab-pane" id="modules{{ $starbase->itemID }}"
+                <div role="tabpanel" class="tab-pane" id="modules{{ $starbase->starbase_id }}"
                      a-ajax-loaded="false">
                   <!-- ajax placeholder div -->
                 </div>

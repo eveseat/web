@@ -3,6 +3,4 @@
    title="" data-original-title="{{ ucwords(str_replace('_', ' ', $row->type)) }}">
 </i>
 <i class="fa fa-long-arrow-right"></i>
-<i class="fa fa-map-marker" data-toggle="tooltip"
-   title="" data-original-title="{{ $row->endlocation }}"></i>
-</span>
+<i class="fa fa-map-marker" data-toggle="tooltip" title="" data-original-title="{{ $row->endlocation }}"></i>

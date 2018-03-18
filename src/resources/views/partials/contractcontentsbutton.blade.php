@@ -1,4 +1,4 @@
-@if($row->type == 'item_exchange')
+@if($row->type == 'item_exchange' && $row->volume > 0)
 
   <a href="#" class="contract-item" data-toggle="modal" data-target="#contractsItemsModal"
      a-contract-id="{{ $row->contract_id }}">

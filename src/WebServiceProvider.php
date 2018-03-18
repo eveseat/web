@@ -170,6 +170,7 @@ class WebServiceProvider extends ServiceProvider
             'web::corporation.includes.menu',
             'web::corporation.security.includes.menu',
             'web::corporation.ledger.includes.menu',
+            'web::corporation.wallet.includes.menu',
         ], CorporationSummary::class);
 
         // Corporation menu composer

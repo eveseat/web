@@ -24,28 +24,23 @@
         </thead>
         <tbody>
 
-        @forelse($bookmarks->unique('folderID')->groupBy('folderID') as $folder_id => $data)
+        @forelse($bookmarks->unique('folder_id')->groupBy('folder_id') as $folder_id => $data)
 
           <tr class="active">
             <td colspan="6">
               <b>
-                {{ trans('web::seat.folder') }}:
-                @if(strlen($data[0]->folderName ) > 0)
-                  {{ $data[0]->folderName }}
-                @else
-                  {{ trans('web::seat.none') }}
-                @endif
+                {{ trans('web::seat.folder') }}: {{ $data[0]->folder->name }}
               </b>
               <span class="pull-right">
               <i>
-                {{ count($bookmarks->where('folderID', $data[0]->folderID)) }}
-                {{ trans_choice('web::seat.bookmark', count($bookmarks->where('folderID', $data[0]->folderID))) }}
+                {{ count($bookmarks->where('folder_id', $data[0]->folder_id)) }}
+                {{ trans_choice('web::seat.bookmark', count($bookmarks->where('folder_id', $data[0]->folder_id))) }}
               </i>
             </span>
             </td>
           </tr>
 
-          @foreach($bookmarks->where('folderID', $data[0]->folderID) as $bookmark)
+          @foreach($bookmarks->where('folder_id', $data[0]->folder_id) as $bookmark)
 
             <tr>
               <td>
@@ -55,14 +50,14 @@
                 </span>
               </td>
               <td>
-                <a href="{{ route('character.view.sheet', ['character_id' => $bookmark->creatorID]) }}">
-                  {!! img('character', $bookmark->creatorID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                  <span rel="id-to-name">{{ $bookmark->creatorID }}</span>
+                <a href="{{ route('character.view.sheet', ['character_id' => $bookmark->creator_id]) }}">
+                  {!! img('character', $bookmark->creator_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  <span rel="id-to-name">{{ $bookmark->creator_id }}</span>
                 </a>
               </td>
-              <td>{{ clean_ccp_html($bookmark->memo) }}</td>
-              <td>{{ $bookmark->mapName }}</td>
-              <td>{{ clean_ccp_html($bookmark->note) }}</td>
+              <td>{{ clean_ccp_html($bookmark->label) }}</td>
+              <td>{{ $bookmark->system->itemName }}</td>
+              <td>{{ clean_ccp_html($bookmark->notes) }}</td>
               <td>
                 <i class="fa fa-info-circle" data-toggle="tooltip"
                    title="" data-original-title="{{ trans('web::seat.coordinates') }}:
@@ -89,9 +84,3 @@
   </div>
 
 @stop
-
-@push('javascript')
-
-@include('web::includes.javascript.id-to-name')
-
-@endpush

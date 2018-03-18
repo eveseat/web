@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Corporation\Assets;
 use Seat\Services\Repositories\Corporation\Starbases;
 use Seat\Services\Repositories\Eve\EveRepository;
@@ -47,11 +48,10 @@ class StarbaseController extends Controller
         // After that we will take the list of starbases and
         // attempt to determine the fuel usage as well as
         // the tower name as per the assets list.
+        $sheet = CorporationInfo::find($corporation_id);
         $starbases = $this->getCorporationStarbases($corporation_id);
-        $starbase_states = $this->getEveStarbaseTowerStates();
 
-        return view('web::corporation.starbases',
-            compact('starbases', 'starbase_states'));
+        return view('web::corporation.starbases', compact('sheet', 'starbases'));
     }
 
     /**
@@ -63,11 +63,11 @@ class StarbaseController extends Controller
     public function postStarbaseModules(StarbaseModule $request, int $corporation_id)
     {
 
-        $starbase = $this->getCorporationStarbases($corporation_id, $request->starbase_id);
-        $module_contents = $this->getCorporationAssetContents($corporation_id);
+        $starbase = $this->getCorporationStarbases($corporation_id, $request->starbase_id)->first();
+        $starbase_modules = $this->getStarbaseModules($corporation_id, $request->starbase_id);
 
         return view('web::corporation.starbase.ajax.modules-tab',
-            compact('starbase', 'module_contents'));
+            compact('starbase', 'starbase_modules'));
 
     }
 }
