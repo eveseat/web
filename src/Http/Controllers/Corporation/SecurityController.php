@@ -43,7 +43,7 @@ class SecurityController extends Controller
     public function getRoles(int $corporation_id)
     {
 
-        $security = $this->getCorporationMemberSecurity($corporation_id);
+        $security = $this->getCorporationMemberRoles($corporation_id);
 
         return view('web::corporation.security.roles', compact('security'));
     }

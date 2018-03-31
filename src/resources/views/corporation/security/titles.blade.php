@@ -14,27 +14,27 @@
       <table class="table table-condensed table-hover table-responsive">
         <tbody>
 
-        @foreach($titles->unique('titleID')->groupBy('titleID') as $titleID => $data)
+        @foreach($titles->groupBy('name') as $title_name => $members)
 
           <tr class="active">
             <td colspan="4">
               <b>
-                {{ strip_tags($data[0]->titleName) }}
+                {{ strip_tags($title_name) }}
               </b>
               <span class="pull-right">
-                {{ count($titles->where('titleID', $titleID)) }}
-                {{ trans_choice('web::seat.character', count($titles->where('titleID', $titleID))) }}
+                {{ count($members) }}
+                {{ trans_choice('web::seat.character', count($members)) }}
               </span>
             </td>
           </tr>
 
-          @foreach($titles->where('titleID', $titleID) as $character)
+          @foreach($members as $member)
 
             <tr>
               <td>
-                <a href="{{ route('character.view.sheet', ['character_id' => $character->characterID]) }}">
-                  {!! img('character', $character->characterID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                  {{ $character->characterName }}
+                <a href="{{ route('character.view.sheet', ['character_id' => $member->character_id]) }}">
+                  {!! img('character', $member->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  <span rel="id-to-name">{{ $member->character_id }}</span>
                 </a>
               </td>
             </tr>
