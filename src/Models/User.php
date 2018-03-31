@@ -137,6 +137,25 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
+     * Return the character ID's this user is associated with as a
+     * result of common group memberships.
+     *
+     * These are basically the characters the same account has logged
+     * in with using the "link another" button.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function associatedCharacterIds()
+    {
+
+        return $this->groups()->get()->map(function ($group) {
+
+            return $group->users->pluck('id');
+
+        })->flatten();
+    }
+
+    /**
      * Get the group the current user belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
