@@ -30,7 +30,7 @@
             <h2 class="timeline-header">
               <b>{{ trans('web::seat.from') }}: </b>
               <a href="{{ route('character.view.sheet', ['character_id' => $message->from]) }}">
-                {!! img('character', $message->from, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                {!! img('character', $message->from, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
                 <span rel="id-to-name">{{ $message->from }}</span>
               </a>
 
@@ -41,7 +41,7 @@
 
             @foreach($message->recipients->where('recipient_type', 'alliance') as $recipient)
 
-              {!! img('alliance', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+              {!! img('alliance', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
               <span rel="id-to-name">{{ $recipient->recipient_id }}</span>
 
             @endforeach
@@ -56,7 +56,7 @@
 
             @foreach($message->recipients->where('recipient_type', 'corporation') as $recipient)
 
-              {!! img('corporation', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+              {!! img('corporation', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
               <span rel="id-to-name">{{ $recipient->recipient_id }}</span>
 
             @endforeach
@@ -71,7 +71,7 @@
 
             @foreach($message->recipients->where('recipient_type', 'character') as $recipient)
 
-              {!! img('character', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+              {!! img('character', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
               <span rel="id-to-name">{{ $recipient->recipient_id }}</span>
 
             @endforeach
