@@ -48,10 +48,6 @@ class HomeController extends Controller
             if (Seat::get('admin_contact') === 'seatadmin@localhost.local')
                 session()->flash('warning', trans('web::seat.admin_contact_warning'));
 
-        // Check for the default EVE SSO generated email.
-        if (str_contains(auth()->user()->email, '@seat.local'))
-            session()->flash('warning', trans('web::seat.sso_email_warning'));
-
         $server_status = $this->getEveLastServerStatus();
         $total_character_isk = $this->getTotalCharacterIsk();
         $total_character_skillpoints = $this->getTotalCharacterSkillpoints();

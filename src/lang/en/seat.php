@@ -99,8 +99,6 @@ return [
     'min_version'           => 'Minimum Version',
     'admin_contact_warning' => 'An administrative contact for this install has not been set.' .
         ' No jobs will be queued because of this. Please configure it in the SeAT settings.',
-    'sso_email_warning'     => 'This profile is using an auto generated email addres due to it ' .
-        ' being an EVE SSO login. Please set a valid email address in your profile settings.',
     'sso_activation'        => 'SSO Activation',
     'sso_confirmation'      => 'It appears you already own an account. Please confirm your credentials in order to enable SSO.',
 
