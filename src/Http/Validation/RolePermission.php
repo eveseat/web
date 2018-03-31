@@ -53,7 +53,7 @@ class RolePermission extends FormRequest
         // role_id check
         $rules = [
             'role_id' => 'required|exists:roles,id',
-            'inverse' => 'required|nullable|in:on',
+            'inverse' => 'nullable|in:on',
         ];
 
         // Ensure that the permissions is set, if not,
