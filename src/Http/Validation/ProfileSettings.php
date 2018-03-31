@@ -47,19 +47,7 @@ class ProfileSettings extends FormRequest
     public function rules()
     {
 
-        $user_id = auth()->user()->id;
-
-        // For some fail reson I cant get the UserRepository trait
-        // to be happy here.
-        // TODO: Fix that!
-        $allowed_main_character_ids = implode(',', ApiKeyInfoCharacters::with('key')
-            ->whereHas('key', function ($query) use ($user_id) {
-
-                $query->where('user_id', $user_id);
-            })
-            ->pluck('characterID')
-            ->toArray());
-
+        $allowed_main_character_ids = auth()->user()->associatedCharacterIds()->implode(',');
         $allowed_skins = implode(',', Profile::$options['skins']);
         $allowed_languages = implode(',', array_map(function ($entry) {
 
@@ -74,7 +62,7 @@ class ProfileSettings extends FormRequest
             'language'            => 'required|in:' . $allowed_languages,
             'sidebar'             => 'required|in:' . $allowed_sidebar,
             'mail_threads'        => 'required|in:' . $mail_threads,
-            'thousand_seperator'  => 'in:" ",",","."|size:1',
+            'thousand_seperator'  => 'nullable|in:,",","."|size:1',
             'decimal_seperator'   => 'required|in:",","."|size:1',
             'email_notifications' => 'required|in:yes,no',
         ];
