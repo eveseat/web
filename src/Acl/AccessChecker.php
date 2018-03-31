@@ -273,11 +273,7 @@ trait AccessChecker
         // For now we get the character_ids this user has
         // in the character_groups they belong to, then
         // assign the wildcard permission for that character.
-        $user_character_ids = auth()->user()->groups()->get()->map(function ($group) {
-
-            return $group->users->pluck('id');
-
-        })->flatten()->toArray();
+        $user_character_ids = auth()->user()->associatedCharacterIds()->toArray();
 
         foreach ($user_character_ids as $user_character_id) {
 
