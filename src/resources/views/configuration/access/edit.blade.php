@@ -131,8 +131,8 @@
 
             <option value="0">All Corporations</option>
             @foreach($all_corporations as $corporation)
-              <option value="{{ $corporation->corporationID }}">
-                {{ $corporation->corporationName }}
+              <option value="{{ $corporation->corporation_id }}">
+                {{ $corporation->name }}
               </option>
             @endforeach
 
@@ -145,8 +145,8 @@
 
             <option value="0">All Characters</option>
             @foreach($all_characters as $character)
-              <option value="{{ $character->characterID }}">
-                {{ $character->characterName }}
+              <option value="{{ $character->character_id }}">
+                {{ $character->name }}
               </option>
             @endforeach
 

@@ -93,24 +93,11 @@ class AccessController extends Controller
         // arrays for easier processing in the view
         $role = $this->getRole($role_id);
 
-        $role_permissions = $role->permissions()
-            ->get()
-            ->pluck('title')
-            ->toArray();
-
+        $role_permissions = $role->permissions()->get()->pluck('title')->toArray();
         $role_affiliations = $role->affiliations();
-
-        $role_users = $role->users()
-            ->get()
-            ->pluck('name')
-            ->toArray();
-
-        $all_users = $this->getAllUsers()
-            ->pluck('name')
-            ->toArray();
-
+        $role_users = $role->users()->get()->pluck('name')->toArray();
+        $all_users = $this->getAllUsers()->pluck('name')->toArray();
         $all_characters = $this->getAllCharacters();
-
         $all_corporations = $this->getAllCorporations();
 
         return view(

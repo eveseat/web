@@ -24,6 +24,8 @@ namespace Seat\Web\Http\Validation;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Seat\Eveapi\Models\Account\ApiKeyInfoCharacters;
+use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Corporation\CorporationSheet;
 
 /**
@@ -56,13 +58,13 @@ class RoleAffilliation extends FormRequest
         // value, which will signal a wild card for either all characters
         // or all corporations.
         $character_ids = implode(',',
-            array_prepend(ApiKeyInfoCharacters::pluck('characterID')->toArray(), 0));
+            array_prepend(CharacterInfo::pluck('character_id')->toArray(), 0));
         $corporation_ids = implode(',',
-            array_prepend(CorporationSheet::pluck('corporationID')->toArray(), 0));
+            array_prepend(CorporationInfo::pluck('corporation_id')->toArray(), 0));
 
         $rules = [
             'role_id'        => 'required|exists:roles,id',
-            'inverse'        => 'required|nullable|in:on',
+            'inverse'        => 'nullable|in:on',
             'characters'     => 'required_without_all:corporations',
             'corporations'   => 'required_without_all:characters',
             'characters.*'   => 'in:' . $character_ids,

@@ -44,6 +44,7 @@ trait AccessChecker
      * @param bool|false $need_affiliation
      *
      * @return bool
+     * @throws \Seat\Web\Exceptions\BouncerException
      */
     public function hasAny(array $permissions, bool $need_affiliation = true): bool
     {
@@ -66,6 +67,7 @@ trait AccessChecker
      * @param bool $need_affiliation
      *
      * @return bool
+     * @throws \Seat\Web\Exceptions\BouncerException
      */
     public function has($permission, $need_affiliation = true)
     {
@@ -98,6 +100,7 @@ trait AccessChecker
 
         $permissions = $this->getAllPermissions();
 
+
         foreach ($permissions as $permission)
             if ($permission === 'superuser') return true;
 
@@ -115,10 +118,7 @@ trait AccessChecker
 
         $permissions = [];
 
-        $roles = $this
-            ->roles()
-            ->with('permissions')
-            ->get();
+        $roles = $this->roles()->with('permissions')->get();
 
         // Go through every role...
         foreach ($roles as $role) {
