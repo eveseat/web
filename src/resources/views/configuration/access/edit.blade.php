@@ -43,14 +43,13 @@
             @endforeach
 
           </select>
+        </div>
 
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" name="inverse">
-              {{ trans('web::seat.inverse_permission') }}
-            </label>
-          </div>
-
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" name="inverse">
+            {{ trans('web::seat.inverse_permission') }}
+          </label>
         </div>
 
         <button type="submit" class="btn btn-success btn-block">
@@ -291,15 +290,15 @@
 
 @push('javascript')
 
-@include('web::includes.javascript.id-to-name')
+  @include('web::includes.javascript.id-to-name')
 
-<script>
-  $("#available_permissions," +
-      "#available_users," +
-      "#available_characters," +
-      "#available_corporations").select2({
-    placeholder: "{{ trans('web::seat.select_item_add') }}"
-  });
-</script>
+  <script>
+    $("#available_permissions," +
+        "#available_users," +
+        "#available_characters," +
+        "#available_corporations").select2({
+      placeholder: "{{ trans('web::seat.select_item_add') }}"
+    });
+  </script>
 
 @endpush
