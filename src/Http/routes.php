@@ -204,14 +204,6 @@ Route::group([
         ], function () {
 
             include __DIR__ . '/Routes/Tools/Standings.php';
-
-            // People Group Routes
-            Route::group([
-                'prefix' => 'people',
-            ], function () {
-
-                include __DIR__ . '/Routes/Tools/People.php';
-            });
         });
 
     });
