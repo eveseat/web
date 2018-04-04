@@ -37,7 +37,7 @@
     <!-- /.search form -->
 
     <!-- Sidebar Menu -->
-    <ul class="sidebar-menu">
+    <ul class="sidebar-menu" data-widget="tree">
       <li class="header">{{ trans('web::seat.main_menu') }}</li>
 
       @foreach($menu as $entry)
@@ -58,7 +58,9 @@
                     {{ trans($entry['label']) }}
                   @endif
                 </span>
-                <i class="fa fa-angle-left pull-right"></i>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
 
               @else
 
