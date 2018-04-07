@@ -121,37 +121,69 @@ class StandingsController extends Controller
     public function getStandingsAjaxElementName(Request $request)
     {
 
-        $response = ['results' => []];
+        $response = [
+            'results' => []
+        ];
 
-        if (strlen($request->input('q')) > 0) {
+        if (strlen($request->input('search')) > 0) {
 
             try {
 
-                $pheal = app()
-                    ->make('Seat\Eveapi\Helpers\PhealSetup')
-                    ->getPheal();
-
-                $names = $pheal->eveScope->CharacterID([
-                    'names' => $request->input('q'),
+                // Resolve the Esi client library from the IoC
+                $eseye = app('esi-client')->get();
+                $eseye->setVersion('v2');
+                $eseye->setQueryString([
+                    'categories' => $request->input('type'),
+                    'search'     => $request->input('search'),
                 ]);
 
-                foreach ($names->characters as $result) {
+                $entityIds = $eseye->invoke('get', '/search/');
 
-                    $response['results'] = [
-                        [
-                            'id'   => $result->characterID,
-                            'text' => $result->name,
-                        ], ];
+                if (!property_exists($entityIds, $request->input('type')))
+                    return response()->json([]);
 
-                    // Cache the entry
-                    Cache::forever(
-                        $this->cache_prefix . $result->characterID,
-                        $result->name
-                    );
-                }
+                if (count($entityIds->{$request->input('type')}) < 1)
+                    return response()->json();
 
-            } catch (Exception $e) {
-            }
+                collect($entityIds->{$request->input('type')})->unique()->filter(function ($id) use (&$response) {
+
+                    // Next, filter the ids we have in the cache, setting
+                    // the appropriate response values as we go along.
+                    if ($cached_entry = cache('name_id:' . $id)) {
+
+                        $response['results'][] = [
+                            'id' => $id,
+                            'text' => $cached_entry,
+                        ];
+
+                        // Remove this as a valid id, we already have the value we want.
+                        return false;
+                    }
+
+                    // We don't have this id in the cache. Return it
+                    // so that we can update it later.
+                    return true;
+
+                })->chunk(1000)->each(function ($chunk) use (&$response, $eseye) {
+
+                    $eseye->setVersion('v2');
+                    $eseye->setBody($chunk->flatten()->toArray());
+                    $names = $eseye->invoke('post', '/universe/names/');
+
+                    collect($names)->each(function ($name) use (&$response) {
+
+                        // Cache the name resolution for this id for a long time.
+                        cache(['name_id:' . $name->id => $name->name], carbon()->addCentury());
+
+                        $response['results'][] = [
+                            'id' => $name->id,
+                            'text' => $name->name,
+                        ];
+                    });
+
+                });
+
+            } catch (Exception $e) { }
         }
 
         return response()->json($response);
