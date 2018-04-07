@@ -122,7 +122,7 @@ class StandingsController extends Controller
     {
 
         $response = [
-            'results' => []
+            'results' => [],
         ];
 
         if (strlen($request->input('search')) > 0) {
@@ -139,7 +139,7 @@ class StandingsController extends Controller
 
                 $entityIds = $eseye->invoke('get', '/search/');
 
-                if (!property_exists($entityIds, $request->input('type')))
+                if (! property_exists($entityIds, $request->input('type')))
                     return response()->json([]);
 
                 if (count($entityIds->{$request->input('type')}) < 1)
