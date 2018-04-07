@@ -246,13 +246,14 @@
 
                           <div class="form-group">
                             <label for="new_email">{{ trans('web::seat.new_email') }}</label>
-                            <input type="email" name="new_email" class="form-control" placeholder="New Email"/>
+                            <input type="email" name="new_email" class="form-control" placeholder="New Email"
+                                   required="required" />
                           </div>
 
                           <div class="form-group">
                             <label for="new_email_confirmation">{{ trans('web::seat.confirm_new_email') }}</label>
                             <input type="email" name="new_email_confirmation" class="form-control"
-                                   id="email_confirmation" placeholder="New Email Confirmation"/>
+                                   id="email_confirmation" placeholder="New Email Confirmation" required="required" />
                           </div>
 
                         </div><!-- /.box-body -->
@@ -348,9 +349,6 @@
 
                       <table class="table table-condensed table-hover table-responsive">
                         <tbody>
-                        <tr>
-                          <th>{{ trans_choice('web::seat.scope', 1) }}</th>
-                        </tr>
 
                         @foreach($scopes as $scope)
 
