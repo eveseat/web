@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\Controllers\Support;
 
 use Illuminate\Http\Request;
+use Seat\Eveapi\Models\Mail\MailHeader;
 use Seat\Services\Search\Search;
 use Seat\Web\Http\Controllers\Controller;
 use Yajra\Datatables\Datatables;
@@ -57,22 +58,17 @@ class SearchController extends Controller
     public function getSearchCharactersData(Request $request)
     {
 
-        $characters = $this->doSearchCharacters($request->input('search.value'));
+        $characters = $this->doSearchCharacters();
 
         return Datatables::of($characters)
-            ->editColumn('characterName', function ($row) {
+            ->editColumn('name', function ($row) {
 
                 return view('web::search.partials.charactername', compact('row'))
                     ->render();
             })
-            ->editColumn('corporationName', function ($row) {
+            ->editColumn('corporation_id', function ($row) {
 
                 return view('web::search.partials.corporationname', compact('row'))
-                    ->render();
-            })
-            ->editColumn('shipTypeName', function ($row) {
-
-                return view('web::search.partials.shiptypename', compact('row'))
                     ->render();
             })
             ->make(true);
@@ -87,20 +83,20 @@ class SearchController extends Controller
     public function getSearchCorporationsData(Request $request)
     {
 
-        $corporations = $this->doSearchCorporations($request->input('search.value'));
+        $corporations = $this->doSearchCorporations();
 
         return Datatables::of($corporations)
-            ->editColumn('corporationName', function ($row) {
+            ->editColumn('name', function ($row) {
 
                 return view('web::search.partials.corporationname', compact('row'))
                     ->render();
             })
-            ->editColumn('ceoName', function ($row) {
+            ->editColumn('ceo_id', function ($row) {
 
                 return view('web::search.partials.ceoname', compact('row'))
                     ->render();
             })
-            ->editColumn('allianceName', function ($row) {
+            ->editColumn('alliance_id', function ($row) {
 
                 return view('web::search.partials.alliancename', compact('row'))
                     ->render();
@@ -116,18 +112,21 @@ class SearchController extends Controller
     public function getSearchMailData(Request $request)
     {
 
-        $mail = $this->doSearchCharacterMail($request->input('search.value'));
+        $mail = $this->doSearchCharacterMail();
 
         return Datatables::of($mail)
-            ->editColumn('senderName', function ($row) {
+            ->editColumn('from', function ($row) {
 
                 return view('web::character.partials.mailsendername', compact('row'))
                     ->render();
             })
-            ->editColumn('title', function ($row) {
+            ->editColumn('subject', function ($row) {
 
                 return view('web::character.partials.mailtitle', compact('row'))
                     ->render();
+            })
+            ->addColumn('body', function(MailHeader $row){
+                return str_limit(clean_ccp_html($row->body->body), 30, '...');
             })
             ->editColumn('tocounts', function ($row) {
 
@@ -151,7 +150,7 @@ class SearchController extends Controller
     public function getSearchCharacterAssetsData(Request $request)
     {
 
-        $assets = $this->doSearchCharacterAssets($request->input('search.value'));
+        $assets = $this->doSearchCharacterAssets();
 
         return Datatables::of($assets)
             ->removeColumn('v_code')
@@ -177,16 +176,15 @@ class SearchController extends Controller
     public function getSearchCharacterSkillsData(Request $request)
     {
 
-        $skills = $this->doSearchCharacterSkills($request->input('search.value'));
+        $skills = $this->doSearchCharacterSkills();
 
         return Datatables::of($skills)
-            ->removeColumn('v_code')
-            ->editColumn('characterName', function ($row) {
+            ->editColumn('character_name', function ($row) {
 
                 return view('web::search.partials.charactername', compact('row'))
                     ->render();
             })
-            ->editColumn('corporationName', function ($row) {
+            ->editColumn('corporation_id', function ($row) {
 
                 return view('web::search.partials.corporationname', compact('row'))
                     ->render();
@@ -200,47 +198,4 @@ class SearchController extends Controller
 
     }
 
-    /**
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return mixed
-     */
-    public function getSearchApiKeyData(Request $request)
-    {
-
-        $keys = $this->doSearchApiKey($request->input('search.value'));
-
-        if (! auth()->user()->has('apikey.list', false))
-            $keys = $keys
-                ->where('user_id', auth()->user()->id);
-
-        // Return data that datatables can understand
-        return Datatables::of($keys)
-            ->editColumn('info.expired', function ($column) {
-
-                // Format dates for expired for sorting reasons
-                return carbon($column->expires)->format('d/m/y');
-            })
-            ->addColumn('characters', function ($row) {
-
-                // Include a view to show characters on a key
-                return view('web::api.partial.character', compact('row'))
-                    ->render();
-            })
-            ->addColumn('actions', function ($row) {
-
-                // Detail & Delete buttons
-                return view('web::api.partial.actions', compact('row'))
-                    ->render();
-            })
-            ->setRowClass(function ($row) {
-
-                // Make disabled keys red.
-                if (! $row->enabled)
-                    return 'danger';
-            })
-            ->removeColumn('v_code')
-            ->make(true);
-
-    }
 }

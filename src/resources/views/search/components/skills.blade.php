@@ -22,7 +22,7 @@
 
 @push('javascript')
 
-<script>
+<script type="text/javascript">
 
   $(function () {
     $('table#character-skills').DataTable({
@@ -30,16 +30,17 @@
       serverSide      : true,
       ajax            : '{{ route('support.search.skills.data') }}',
       columns         : [
-        {data: 'characterName', name: 'characterName'},
-        {data: 'corporationName', name: 'corporationName'},
-        {data: 'groupName', name: 'groupName'},
-        {data: 'typeName', name: 'typeName'},
-        {data: 'level', name: 'level'},
+        {data: 'name',                name: 'character_infos.name'},
+        {data: 'corporation_id',      name: 'character_infos.corporation_id'},
+        {data: 'groupName',           name: 'invGroups.groupName'},
+        {data: 'typeName',            name: 'invTypes.typeName'},
+        {data: 'trained_skill_level', name: 'character_skills.trained_skill_level'}
       ],
       dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
       'fnDrawCallback': function () {
         $(document).ready(function () {
           $('img').unveil(100);
+          ids_to_names();
         });
       },
       'search'        : {

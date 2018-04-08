@@ -49,8 +49,3 @@ Route::get('/search/skills/data', [
     'as'   => 'support.search.skills.data',
     'uses' => 'SearchController@getSearchCharacterSkillsData',
 ]);
-
-Route::get('/search/keys/data', [
-    'as'   => 'support.search.keys.data',
-    'uses' => 'SearchController@getSearchApiKeyData',
-]);
