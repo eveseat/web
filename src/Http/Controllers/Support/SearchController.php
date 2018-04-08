@@ -125,7 +125,7 @@ class SearchController extends Controller
                 return view('web::character.partials.mailtitle', compact('row'))
                     ->render();
             })
-            ->addColumn('body', function(MailHeader $row){
+            ->addColumn('body', function (MailHeader $row) {
                 return str_limit(clean_ccp_html($row->body->body), 30, '...');
             })
             ->editColumn('tocounts', function ($row) {
@@ -196,5 +196,4 @@ class SearchController extends Controller
             ->make(true);
 
     }
-
 }
