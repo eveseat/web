@@ -108,9 +108,14 @@ class ProfileController extends Controller
     public function postUpdateEmail(EmailUpdate $request)
     {
 
-        $user = auth()->user();
-        $user->email = $request->new_email;
-        $user->save();
+        // retrieving all tied accounts
+        $accounts = $this->getUserGroupCharacters(auth()->user()->groups);
+
+        // iterating over all retrieved account and updating email
+        $accounts->each(function($account) use ($request) {
+            $account->email = $request->new_email;
+            $account->save();
+        });
 
         return redirect()->back()
             ->with('success', 'Email updated!');
