@@ -153,7 +153,6 @@ class SearchController extends Controller
         $assets = $this->doSearchCharacterAssets();
 
         return Datatables::of($assets)
-            ->removeColumn('v_code')
             ->editColumn('characterName', function ($row) {
 
                 return view('web::search.partials.charactername', compact('row'))
