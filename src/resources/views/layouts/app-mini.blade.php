@@ -17,6 +17,8 @@
   <link rel="stylesheet" href="{{ asset('web/css/font-awesome.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('web/css/adminlte.min.css') }}">
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
   <!-- Custom layout CSS -->
   @if(file_exists(public_path('custom-layout-mini.css')))

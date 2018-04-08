@@ -24,6 +24,8 @@
   <link rel="stylesheet" href="{{ asset('web/css/adminlte.min.css') }}">
   <!-- Skin -->
   <link rel="stylesheet" href="{{ asset('web/css/skins/' . setting('skin') . '.min.css') }}">
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <!-- SeAT CSS -->
   <link rel="stylesheet" href="{{ asset('web/css/seat.css') }}">
   <!-- Custom layout CSS -->

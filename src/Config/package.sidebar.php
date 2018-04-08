@@ -109,13 +109,6 @@ return [
                 'icon'  => 'fa-list',
                 'route' => 'configuration.security.logs',
             ],
-            [   // Workers
-                'name'   => 'workers',
-                'label'  => 'web::seat.worker_constraints',
-                'plural' => true,
-                'icon'   => 'fa-truck',
-                'route'  => 'workers.constraints.list',
-            ],
         ],
     ],
     'tools'       => [
