@@ -29,7 +29,7 @@
                   {{ $character->name }}
                 </a>
 
-                <span rel="id-to-name" class="text-muted pull-right">{{ $character->character->corporation_id }}</span>
+                <span rel="id-to-name" class="text-muted pull-right">{{ $character->corporation_id }}</span>
               </td>
             </tr>
 
