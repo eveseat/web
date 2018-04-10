@@ -64,7 +64,16 @@
                   {{ number($container->quantity, 0) }}
                   @endif
                 </td>
-                <td>{!! img('type', $container->type_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!} {{ $container->type->typeName }} @if(! $container->is_singleton)<span class="text-red">(packaged)</span>@endif</td>
+                <td>{!! img('type', $container->type_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  @if($container->name != $container->type->typeName)
+                    {{ $container->name }} ({{ $container->type->typeName }})
+                  @else
+                    {{ $container->type->typeName }}
+                  @endif
+                  @if(! $container->is_singleton)
+                    <span class="text-red">(packaged)</span>
+                  @endif
+                </td>
                 <td>{{ number_metric($container->quantity * $container->type->volume) }}m&sup3;</td>
                 <td>{{ $container->type->group->groupName }}</td>
               </tr>
