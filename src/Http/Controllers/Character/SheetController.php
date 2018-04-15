@@ -53,7 +53,7 @@ class SheetController extends Controller
     public function getSheet(int $character_id)
     {
 
-        // TODO: Revert to respostory pattern.
+        // TODO: Revert to repository pattern.
 
         // Ensure we've the public information for this character
         // If not, redirect back with an error.
@@ -64,7 +64,7 @@ class SheetController extends Controller
                 ->with('error', trans('web::seat.unknown_character'));
 
         $fatigue = CharacterFatigue::find($character_id);
-        $employment = CharacterCorporationHistory::where('character_id', $character_id)->orderBy('start_date', 'desc')->get();
+        $employment = CharacterCorporationHistory::where('character_id', $character_id)->orderBy('record_id', 'desc')->get();
         $implants = CharacterImplant::where('character_id', $character_id)->get();
         $last_jump = CharacterClone::find($character_id);
         $jump_clones = CharacterJumpClone::where('character_id', $character_id)->get();
