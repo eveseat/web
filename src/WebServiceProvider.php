@@ -25,6 +25,7 @@ namespace Seat\Web;
 use Illuminate\Auth\Events\Attempting;
 use Illuminate\Auth\Events\Login as LoginEvent;
 use Illuminate\Auth\Events\Logout as LogoutEvent;
+use Illuminate\Auth\Events\Registered as RegisterEvent;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
@@ -34,6 +35,7 @@ use Seat\Web\Events\Attempt;
 use Seat\Web\Events\Auth;
 use Seat\Web\Events\Login;
 use Seat\Web\Events\Logout;
+use Seat\Web\Events\Register;
 use Seat\Web\Events\SecLog;
 use Seat\Web\Events\Security;
 use Seat\Web\Extentions\EveOnlineProvider;
@@ -54,6 +56,7 @@ use Seat\Web\Http\Middleware\RegistrationAllowed;
 use Seat\Web\Http\Middleware\Requirements;
 use Supervisor\Supervisor;
 use Validator;
+
 
 /**
  * Class EveapiServiceProvider.
@@ -235,6 +238,7 @@ class WebServiceProvider extends ServiceProvider
         $this->app->events->listen(LoginEvent::class, Login::class);
         $this->app->events->listen(LogoutEvent::class, Logout::class);
         $this->app->events->listen(Attempting::class, Attempt::class);
+        $this->app->events->listen(RegisterEvent::class, Register::class);
 
         // Custom Events
         $this->app->events->listen('security.log', SecLog::class);
