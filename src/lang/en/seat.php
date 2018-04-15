@@ -415,6 +415,7 @@ return [
     'amount'                       => 'Amount',
     'balance'                      => 'Balance',
     'corporation_name'             => 'Corporation Name',
+    'character_name'               => 'Character Name',
     'from'                         => 'From',
     'subject'                      => 'Subject',
     'to'                           => 'To',
