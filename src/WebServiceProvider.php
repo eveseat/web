@@ -55,6 +55,7 @@ use Seat\Web\Http\Middleware\Requirements;
 use Supervisor\Supervisor;
 use Validator;
 
+
 /**
  * Class EveapiServiceProvider.
  * @package Seat\Eveapi

@@ -24,6 +24,7 @@ namespace Seat\Web\Events;
 
 use DateTime;
 use Illuminate\Auth\Events\Login as LoginEvent;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Request;
 use Seat\Web\Models\UserLoginHistory;
 
@@ -42,6 +43,7 @@ class Login
     public static function handle(LoginEvent $event)
     {
 
+        // Create a log entry for this login.
         $event->user->last_login_source = Request::getClientIp();
         $event->user->last_login = new DateTime();
         $event->user->save();
@@ -55,5 +57,12 @@ class Login
         $message = 'User logged in from ' . Request::getClientIp();
         event('security.log', [$message, 'authentication']);
 
+
+        // Dispatch an update job for the character_id
+        // TODO: Write a job that can be dispatched without the need
+        // to rely on Artisan.
+        Artisan::call('esi:update:characters', [
+            'character_id' => $event->user->character_id,
+        ]);
     }
 }

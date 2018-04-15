@@ -20,23 +20,12 @@
 
           <div class="form-group">
             <label for="username">{{ trans_choice('web::seat.username', 1) }}</label>
-            <input type="text" name="username" class="form-control" id="username" value="{{ $user->name }}">
+            <input type="text" name="username" class="form-control" id="username" value="{{ $user->name }}" disabled>
           </div>
 
           <div class="form-group">
             <label for="email">{{ trans_choice('web::seat.email', 1) }}</label>
             <input type="email" name="email" class="form-control" id="email" value="{{ $user->email }}">
-          </div>
-
-          <div class="form-group">
-            <label for="password">{{ trans_choice('web::seat.password', 1) }}</label>
-            <input type="password" name="password" class="form-control" id="password" placeholder="Password">
-          </div>
-
-          <div class="form-group">
-            <label for="password_confirm">{{ trans_choice('web::seat.password_again', 1) }}</label>
-            <input type="password" name="password_confirmation" class="form-control" id="password_confirmation"
-                   placeholder="Password">
           </div>
 
         </div><!-- /.box-body -->
