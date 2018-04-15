@@ -27,7 +27,6 @@ use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\EditUser;
 use Seat\Web\Http\Validation\NewUser;
-use Seat\Web\Models\User;
 
 /**
  * Class UserController.
@@ -58,9 +57,7 @@ class UserController extends Controller
 
         $user = $this->getFullUser($user_id);
 
-        $login_history = $user->login_history()
-            ->orderBy('created_at', 'desc')
-            ->take(15)
+        $login_history = $user->login_history()->orderBy('created_at', 'desc')->take(15)
             ->get();
 
         return view('web::configuration.users.edit',
@@ -78,37 +75,13 @@ class UserController extends Controller
         $user = $this->getUser($request->input('user_id'));
 
         $user->fill([
-            'name'  => $request->input('username'),
             'email' => $request->input('email'),
         ]);
-
-        // Update the password if it was set.
-        if ($request->has('password'))
-            $user->password = bcrypt($request->input('password'));
 
         $user->save();
 
         return redirect()->back()
             ->with('success', trans('web::seat.user_updated'));
-    }
-
-    /**
-     * @param \Seat\Web\Http\Validation\NewUser $request
-     *
-     * @return mixed
-     */
-    public function addUser(NewUser $request)
-    {
-
-        User::create([
-            'name'     => $request->input('username'),
-            'email'    => $request->input('email'),
-            'password' => bcrypt($request->input('password')),
-            'active'   => true,
-        ]);
-
-        return redirect()->back()
-            ->with('success', trans('web::seat.user_created'));
     }
 
     /**
