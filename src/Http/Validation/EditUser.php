@@ -56,7 +56,6 @@ class EditUser extends FormRequest
         return [
             'user_id'  => 'required|exists:users,id',
             'email'    => 'required|email|unique:users,email,' . $user_id,
-            'password' => 'min:6|confirmed',
         ];
     }
 }

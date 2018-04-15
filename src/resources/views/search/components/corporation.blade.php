@@ -30,16 +30,17 @@
       serverSide      : true,
       ajax            : '{{ route('support.search.corporations.data') }}',
       columns         : [
-        {data: 'corporationName', name: 'corporationName'},
-        {data: 'ceoName', name: 'ceoName'},
-        {data: 'allianceName', name: 'allianceName'},
-        {data: 'taxRate', name: 'taxRate'},
-        {data: 'memberCount', name: 'memberCount'},
+        {data: 'name', name: 'name'},
+        {data: 'ceo_id', name: 'ceo_id'},
+        {data: 'alliance_id', name: 'alliance_id'},
+        {data: 'tax_rate', name: 'tax_rate'},
+        {data: 'member_count', name: 'member_count'}
       ],
       dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
       'fnDrawCallback': function () {
         $(document).ready(function () {
           $('img').unveil(100);
+          ids_to_names();
         });
       },
       'search'        : {

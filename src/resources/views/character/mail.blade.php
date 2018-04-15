@@ -56,10 +56,11 @@
       ajax            : '{{ route('character.view.mail.data', ['character_id' => $request->character_id]) }}',
       columns         : [
         {data: 'timestamp', name: 'timestamp', render: human_readable},
-        {data: 'from', name: 'from'},
+        {data: 'from', name: 'from', searchable: false},
         {data: 'subject', name: 'subject'},
-        {data: 'tocounts', name: 'tocounts'},
-        {data: 'read', name: 'read'}
+        {data: 'body', name: 'body.body', visible: false},
+        {data: 'tocounts', name: 'tocounts', searchable: false},
+        {data: 'read', name: 'read', searchable: false}
       ],
       dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
       'fnDrawCallback': function () {

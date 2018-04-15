@@ -25,11 +25,6 @@ Route::get('/', [
     'uses' => 'UserController@getAll',
 ]);
 
-Route::post('/add', [
-    'as'   => 'configuration.access.users.add',
-    'uses' => 'UserController@addUser',
-]);
-
 Route::post('/update', [
     'as'   => 'configuration.access.users.update',
     'uses' => 'UserController@updateUser',
