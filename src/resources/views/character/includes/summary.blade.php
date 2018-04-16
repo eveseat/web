@@ -24,7 +24,7 @@
             <tr>
               <td>
 
-                <a href="{{ route('character.view.sheet', ['character_id' => $character->character_id]) }}">
+                <a href="{{ route(\Illuminate\Support\Facades\Route::currentRouteName(), ['character_id' => $character->character_id]) }}">
                   {!! img('character', $character->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                   {{ $character->name }}
                 </a>
