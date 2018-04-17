@@ -234,21 +234,11 @@ class StandingsController extends Controller
         if ($request->has('character')) {
             foreach ($this->getCharacterContacts($request->input('character')) as $contact) {
 
-                // Determine the contact type. We will default
-                // to a character if its not a corp/alliance.
-                $type = 'character';
-
-                if (strpos($contact->typeName, 'Corporation') !== false)
-                    $type = 'corporation';
-
-                if (strpos($contact->typeName, 'Alliance') !== false)
-                    $type = 'alliance';
-
                 // Prepare the standings entry.
                 $standing = StandingsProfileStanding::firstOrNew([
                     'standings_profile_id' => $request->input('id'),
-                    'elementID'            => $contact->contactID,
-                    'type'                 => $type,
+                    'elementID'            => $contact->contact_id,
+                    'type'                 => $contact->contact_type,
                 ])->fill([
 
                     // Update the standing incase its different to an
@@ -265,21 +255,11 @@ class StandingsController extends Controller
         if ($request->has('corporation')) {
             foreach ($this->getCorporationContacts($request->input('corporation')) as $contact) {
 
-                // Determine the contact type. We will default
-                // to a character if its not a corp/alliance.
-                $type = 'character';
-
-                if (strpos($contact->typeName, 'Corporation') !== false)
-                    $type = 'corporation';
-
-                if (strpos($contact->typeName, 'Alliance') !== false)
-                    $type = 'alliance';
-
                 // Prepare the standings entry.
                 $standing = StandingsProfileStanding::firstOrNew([
                     'standings_profile_id' => $request->input('id'),
-                    'elementID'            => $contact->contactID,
-                    'type'                 => $type,
+                    'elementID'            => $contact->contact_id,
+                    'type'                 => $contact->contact_type,
                 ])->fill([
 
                     // Update the standing incase its different to an
