@@ -364,25 +364,21 @@ trait AccessChecker
                     // check if it's containing any character permission and append all character from this corporation
                     if ($affilition->type == 'corp') {
 
-                        $i = 0;
-                        while ($i < count($role_permissions)) {
-                            if (strpos($role_permissions[$i], 'character.') !== false) {
+                        $characters = CharacterInfo::where('corporation_id', $affilition->affiliation)->get();
 
-                                $characters = CharacterInfo::where('corporation_id', $affilition->affiliation)->get();
+                        foreach ($role_permissions as $permission) {
+                            if (strpos($permission, 'character.') !== false) {
 
-                                $characters->each(function($character) use (&$map, $role_permissions, $i) {
+                                $characters->each(function($character) use (&$map, $permission) {
 
                                     if (!isset($map['char'][$character->character_id]))
                                         $map['char'][$character->character_id] = [];
 
-                                    array_push($map['char'][$character->character_id], $role_permissions[$i]);
+                                    array_push($map['char'][$character->character_id], $permission);
 
                                 });
 
-                                break;
                             }
-
-                            $i++;
                         }
 
                     }
