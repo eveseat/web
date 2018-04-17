@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Acl;
 
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Services\Repositories\Character\Character;
 use Seat\Services\Repositories\Corporation\Corporation;
 use Seat\Web\Exceptions\BouncerException;
@@ -99,7 +100,6 @@ trait AccessChecker
     {
 
         $permissions = $this->getAllPermissions();
-
 
         foreach ($permissions as $permission)
             if ($permission === 'superuser') return true;
@@ -269,7 +269,7 @@ trait AccessChecker
         // the owner for. They also automatically
         // inherit all permissions for these keys.
 
-        // TODO: Refactor this is 3.1.
+        // TODO: Refactor this in 3.1.
         // For now we get the character_ids this user has
         // in the character_groups they belong to, then
         // assign the wildcard permission for that character.
@@ -332,7 +332,7 @@ trait AccessChecker
                     if ($affilition->type == 'char') {
 
                         // Process all of the characters
-                        foreach ($this->getAllCharacters()->pluck('characterID') as $characterID) {
+                        foreach ($this->getAllCharacters()->pluck('character_id') as $characterID) {
 
                             if (isset($map['char'][$characterID]))
                                 $map['char'][$characterID] += $role_permissions;
@@ -346,7 +346,7 @@ trait AccessChecker
                     if ($affilition->type == 'corp') {
 
                         // Process all of the corporations
-                        foreach ($this->getAllCorporations()->pluck('corporationID') as $corporationID) {
+                        foreach ($this->getAllCorporations()->pluck('corporation_id') as $corporationID) {
 
                             if (isset($map['corp'][$corporationID]))
                                 $map['corp'][$corporationID] += $role_permissions;
@@ -358,6 +358,29 @@ trait AccessChecker
                     }
 
                 } else {
+
+                    // in case we have an affiliation of corp kind
+                    // check if it's containing any character permission and append all character from this corporation
+                    if ($affilition->type == 'corp') {
+
+                        $characters = CharacterInfo::where('corporation_id', $affilition->affiliation)->get();
+
+                        foreach ($role_permissions as $permission) {
+                            if (strpos($permission, 'character.') !== false) {
+
+                                $characters->each(function ($character) use (&$map, $permission) {
+
+                                    if (! isset($map['char'][$character->character_id]))
+                                        $map['char'][$character->character_id] = [];
+
+                                    array_push($map['char'][$character->character_id], $permission);
+
+                                });
+
+                            }
+                        }
+
+                    }
 
                     // Add the single affiliation to the map. As we will run this operation
                     // multiple times when multiple roles are involved, we need to check if
