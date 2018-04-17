@@ -22,17 +22,15 @@
 
 namespace Seat\Web\Http\Controllers\Configuration;
 
-
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\SsoScopes;
 
 /**
- * Class SsoController
+ * Class SsoController.
  * @package Seat\Web\Http\Controllers\Configuration
  */
 class SsoController extends Controller
 {
-
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */

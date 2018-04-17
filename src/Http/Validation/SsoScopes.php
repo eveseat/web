@@ -22,17 +22,15 @@
 
 namespace Seat\Web\Http\Validation;
 
-
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 /**
- * Class SsoScopes
+ * Class SsoScopes.
  * @package Seat\Web\Http\Validation
  */
 class SsoScopes extends FormRequest
 {
-
     /**
      * Authorize the request by default.
      *

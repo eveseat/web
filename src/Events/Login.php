@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,7 +56,6 @@ class Login
 
         $message = 'User logged in from ' . Request::getClientIp();
         event('security.log', [$message, 'authentication']);
-
 
         // Dispatch an update job for the character_id
         // TODO: Write a job that can be dispatched without the need
