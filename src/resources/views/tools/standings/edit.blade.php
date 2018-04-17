@@ -21,24 +21,24 @@
         <div class="box-body">
 
           <div class="form-group">
-            <label for="text">Characters</label>
+            <label for="characterstanding">Characters</label>
             <select id="characterstanding" name="character" style="width: 100%">
               <option></option>
               @foreach($characters as $character)
 
-                <option value="{{ $character->characterID }}">{{ $character->characterName }}</option>
+                <option value="{{ $character->character_id }}">{{ $character->name }}</option>
 
               @endforeach
             </select>
           </div>
 
           <div class="form-group">
-            <label for="text">Corporations</label>
+            <label for="corporationstanding">Corporations</label>
             <select id="corporationstanding" name="corporation" style="width: 100%">
               <option></option>
               @foreach($corporations as $corporation)
 
-                <option value="{{ $corporation->corporationID }}">{{ $corporation->corporationName }}</option>
+                <option value="{{ $corporation->corporation_id }}">{{ $corporation->name }}</option>
 
               @endforeach
             </select>
@@ -69,12 +69,12 @@
         <div class="box-body">
 
           <div class="form-group">
-            <label for="name">Name</label>
+            <label for="element-name">Name</label>
             <select id="element-name" name="element_id" style="width: 100%"></select>
           </div>
 
           <div class="form-group">
-            <label for="text">Type</label>
+            <label for="element-type">Type</label>
             <select id="element-type" name="type" style="width: 100%">
               <option value="character">Character</option>
               <option value="corporation">Corporation</option>
@@ -83,7 +83,7 @@
           </div>
 
           <div class="form-group">
-            <label for="text">Standing</label>
+            <label for="element-standing">Standing</label>
             <select id="element-standing" name="standing" style="width: 100%">
               <option value="-10">-10</option>
               <option value="-5">-5</option>
@@ -123,7 +123,7 @@
           <th>Standing</th>
         </tr>
 
-        @foreach($standing->standings as $standing)
+        @foreach($standing->standings->sortByDesc('standing') as $standing)
 
           <tr class="
             @if($standing->standing > 0)
@@ -167,8 +167,14 @@
       dataType: 'json',
       type    : 'POST',
       delay   : 250,
-      cache   : true
-    },
+      cache   : true,
+      data    : function(params){
+          return {
+              search: params.term,
+              type: $('#element-type').val()
+          }
+      }
+    }
   });
 
   $("select#element-type," + "select#element-standing," +
