@@ -38,56 +38,9 @@ class PiController extends Controller
     {
 
         $colonies = $this->getCharacterPlanetaryColonies($character_id);
-        $extractors = $this->getCharacterPlanetaryExtractors($character_id);
-
-        $extractors = $extractors->map(function($item){
-            $item->celestialIndex = $this->getRomanNumerals($item->celestialIndex);
-            $item->cycle_time = $this->getCountdown($item->expiry_time);
-           return $item;
-        });
 
         // TODO: Complete the Links and stuff™
 
-        return view('web::character.pi', compact('colonies','extractors'));
-    }
-
-    function getCountdown($end){
-        $end = strtotime($end);
-
-        $current = strtotime(now());
-        $completed = (1-1/($end-$current))* 100;
-
-        return $completed;
-
-    }
-
-    function getRomanNumerals($decimalInteger)
-    {
-        $n = intval($decimalInteger);
-        $res = '';
-
-        $roman_numerals = array(
-            'M'  => 1000,
-            'CM' => 900,
-            'D'  => 500,
-            'CD' => 400,
-            'C'  => 100,
-            'XC' => 90,
-            'L'  => 50,
-            'XL' => 40,
-            'X'  => 10,
-            'IX' => 9,
-            'V'  => 5,
-            'IV' => 4,
-            'I'  => 1);
-
-        foreach ($roman_numerals as $roman => $numeral)
-        {
-            $matches = intval($n / $numeral);
-            $res .= str_repeat($roman, $matches);
-            $n = $n % $numeral;
-        }
-
-        return $res;
+        return view('web::character.pi', compact('colonies'));
     }
 }

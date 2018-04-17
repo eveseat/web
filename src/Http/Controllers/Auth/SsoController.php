@@ -22,7 +22,6 @@
 
 namespace Seat\Web\Http\Controllers\Auth;
 
-use Illuminate\Auth\Events\Registered;
 use Laravel\Socialite\Contracts\Factory as Socialite;
 use Laravel\Socialite\Two\User as SocialiteUser;
 use Seat\Eveapi\Models\RefreshToken;
@@ -76,8 +75,6 @@ class SsoController extends Controller
 
         // Set the main characterID based on the response.
         $this->setCharacterId($eve_data);
-
-        event(new Registered($eve_data));
 
         return redirect()->intended();
     }
