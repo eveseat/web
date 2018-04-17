@@ -101,7 +101,6 @@ trait AccessChecker
 
         $permissions = $this->getAllPermissions();
 
-
         foreach ($permissions as $permission)
             if ($permission === 'superuser') return true;
 
@@ -369,9 +368,9 @@ trait AccessChecker
                         foreach ($role_permissions as $permission) {
                             if (strpos($permission, 'character.') !== false) {
 
-                                $characters->each(function($character) use (&$map, $permission) {
+                                $characters->each(function ($character) use (&$map, $permission) {
 
-                                    if (!isset($map['char'][$character->character_id]))
+                                    if (! isset($map['char'][$character->character_id]))
                                         $map['char'][$character->character_id] = [];
 
                                     array_push($map['char'][$character->character_id], $permission);
