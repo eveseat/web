@@ -123,7 +123,7 @@
           <th>Standing</th>
         </tr>
 
-        @foreach($standing->standings as $standing)
+        @foreach($standing->standings->sortByDesc('standing') as $standing)
 
           <tr class="
             @if($standing->standing > 0)

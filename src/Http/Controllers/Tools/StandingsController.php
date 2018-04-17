@@ -47,7 +47,7 @@ class StandingsController extends Controller
     /**
      * @var string
      */
-    protected $cache_prefix = 'standingbuilder';
+    protected $cache_prefix = 'name_id:';
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
