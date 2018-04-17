@@ -350,13 +350,17 @@
                       <table class="table table-condensed table-hover table-responsive">
                         <tbody>
 
-                        @foreach($scopes as $scope)
+                          @unless(is_null($scopes))
 
-                          <tr>
-                            <td>{{ $scope }}</td>
-                          </tr>
+                            @foreach($scopes as $scope)
 
-                        @endforeach
+                              <tr>
+                                <td>{{ $scope }}</td>
+                              </tr>
+
+                            @endforeach
+
+                          @endunless
 
                         </tbody>
                       </table>
