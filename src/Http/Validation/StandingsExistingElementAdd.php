@@ -55,10 +55,10 @@ class StandingsExistingElementAdd extends FormRequest
 
         return [
             'id'          => 'required|exists:standings_profiles,id',
-            'character*'  => 'in:' . $this->getAllCharactersWithAffiliations()
-                    ->pluck('character_id')->implode(','),
-            'corporation' => 'in:' . $this->getAllCorporationsWithAffiliationsAndFilters()
-                    ->pluck('corporation_id')->implode(','),
+            'character'   => 'nullable|in:' .
+                $this->getAllCharactersWithAffiliations()->pluck('character_id')->implode(','),
+            'corporation' => 'nullable|in:' .
+                $this->getAllCorporationsWithAffiliationsAndFilters()->pluck('corporation_id')->implode(','),
         ];
     }
 }

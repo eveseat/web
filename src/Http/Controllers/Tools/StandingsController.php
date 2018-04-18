@@ -24,7 +24,6 @@ namespace Seat\Web\Http\Controllers\Tools;
 
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Seat\Services\Repositories\Character\Character;
 use Seat\Services\Repositories\Character\Contacts as CharacterContacts;
 use Seat\Services\Repositories\Corporation\Contacts as CorporationContacts;
@@ -145,45 +144,47 @@ class StandingsController extends Controller
                 if (count($entityIds->{$request->input('type')}) < 1)
                     return response()->json();
 
-                collect($entityIds->{$request->input('type')})->unique()->filter(function ($id) use (&$response) {
+                collect($entityIds->{$request->input('type')})->unique()
+                    ->filter(function ($id) use (&$response) {
 
-                    // Next, filter the ids we have in the cache, setting
-                    // the appropriate response values as we go along.
-                    if ($cached_entry = cache('name_id:' . $id)) {
+                        // Next, filter the ids we have in the cache, setting
+                        // the appropriate response values as we go along.
+                        if ($cached_entry = cache('name_id:' . $id)) {
 
-                        $response['results'][] = [
-                            'id' => $id,
-                            'text' => $cached_entry,
-                        ];
+                            $response['results'][] = [
+                                'id'   => $id,
+                                'text' => $cached_entry,
+                            ];
 
-                        // Remove this as a valid id, we already have the value we want.
-                        return false;
-                    }
+                            // Remove this as a valid id, we already have the value we want.
+                            return false;
+                        }
 
-                    // We don't have this id in the cache. Return it
-                    // so that we can update it later.
-                    return true;
+                        // We don't have this id in the cache. Return it
+                        // so that we can update it later.
+                        return true;
 
-                })->chunk(1000)->each(function ($chunk) use (&$response, $eseye) {
+                    })->chunk(1000)->each(function ($chunk) use (&$response, $eseye) {
 
-                    $eseye->setVersion('v2');
-                    $eseye->setBody($chunk->flatten()->toArray());
-                    $names = $eseye->invoke('post', '/universe/names/');
+                        $eseye->setVersion('v2');
+                        $eseye->setBody($chunk->flatten()->toArray());
+                        $names = $eseye->invoke('post', '/universe/names/');
 
-                    collect($names)->each(function ($name) use (&$response) {
+                        collect($names)->each(function ($name) use (&$response) {
 
-                        // Cache the name resolution for this id for a long time.
-                        cache(['name_id:' . $name->id => $name->name], carbon()->addCentury());
+                            // Cache the name resolution for this id for a long time.
+                            cache(['name_id:' . $name->id => $name->name], carbon()->addCentury());
 
-                        $response['results'][] = [
-                            'id' => $name->id,
-                            'text' => $name->name,
-                        ];
+                            $response['results'][] = [
+                                'id'   => $name->id,
+                                'text' => $name->name,
+                            ];
+                        });
+
                     });
 
-                });
-
-            } catch (Exception $e) { }
+            } catch (Exception $e) {
+            }
         }
 
         return response()->json($response);
@@ -193,6 +194,7 @@ class StandingsController extends Controller
      * @param \Seat\Web\Http\Validation\StandingsElementAdd $request
      *
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function postAddElementToStanding(StandingsElementAdd $request)
     {
@@ -231,7 +233,7 @@ class StandingsController extends Controller
         $standings_profile = StandingsProfile::find($request->input('id'));
 
         // Character Contacts
-        if ($request->has('character')) {
+        if ($request->filled('character')) {
             foreach ($this->getCharacterContacts($request->input('character')) as $contact) {
 
                 // Prepare the standings entry.
@@ -252,7 +254,7 @@ class StandingsController extends Controller
         }
 
         // Corporation Contacts
-        if ($request->has('corporation')) {
+        if ($request->filled('corporation')) {
             foreach ($this->getCorporationContacts($request->input('corporation')) as $contact) {
 
                 // Prepare the standings entry.
