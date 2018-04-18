@@ -64,7 +64,7 @@ class IntelController extends Controller
         $top = $this->characterTopWalletJournalInteractions($character_id);
 
         return Datatables::of($top)
-            ->editColumn('ref_type', function($row) {
+            ->editColumn('ref_type', function ($row) {
                 return ucwords(str_replace('_', ' ', $row->ref_type));
             })
             ->editColumn('characterName', function ($row) {
