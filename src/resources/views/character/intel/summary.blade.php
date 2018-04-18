@@ -84,7 +84,7 @@
       ajax            : '{{ route('character.view.intel.summary.journal.data', ['character_id' => $request->character_id]) }}',
       columns         : [
         {data: 'total', name: 'total', searchable: false},
-        {data: 'refTypeName', name: 'refTypeName'},
+        {data: 'ref_type', name: 'ref_type'},
         {data: 'characterName', name: 'characterName'},
         {data: 'corporationName', name: 'corporationName'},
         {data: 'allianceName', name: 'allianceName'},
@@ -93,6 +93,7 @@
       'fnDrawCallback': function () {
         $(document).ready(function () {
           $('img').unveil(100);
+          ids_to_names();
         });
       }
     });
@@ -113,6 +114,7 @@
       'fnDrawCallback': function () {
         $(document).ready(function () {
           $('img').unveil(100);
+          ids_to_names();
         });
       }
     });
@@ -133,6 +135,7 @@
       'fnDrawCallback': function () {
         $(document).ready(function () {
           $('img').unveil(100);
+          ids_to_names();
         });
       }
     });
