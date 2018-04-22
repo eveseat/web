@@ -214,19 +214,34 @@ trait AccessChecker
             }
         }
 
+        // Process entries for corporations
         foreach ($map['corp'] as $corp => $permissions) {
 
-            // specific filter for corporation object
-            if (strpos($permission, 'corporation.') !== false) {
+            if (is_array($permission)) {
 
-                // check only character wildcard and specific permission
-                if ($corp == $this->getCorporationId() && (in_array('corporation.*', $permissions) ||
-                        in_array($permission, $permissions))
-                )
+                foreach ($permission as $sub_permission) {
+
+                    if (! $corp == $this->getCorporationId())
+                        return false;
+
+                    if (in_array('corporation.*', $permissions))
+                        return true;
+
+                    if (in_array($sub_permission, $permissions))
+                        return true;
+                }
+
+            } else {
+
+                if (! $corp == $this->getCorporationId())
+                    return false;
+
+                if (in_array('corporation.*', $permissions))
                     return true;
 
+                if (in_array($permission, $permissions))
+                    return true;
             }
-
         }
 
         return false;
@@ -415,6 +430,54 @@ trait AccessChecker
         // And corporations
         foreach ($map['corp'] as $corp => $permissions)
             $map['corp'][$corp] = array_diff($map['corp'][$corp], $map['inverted_permissions']);
+
+        // ESI Related corporation role <-> SeAT role maping.
+        // This is to allow characters that have in game roles
+        // such as director or other wallet related roles to view
+        // corporation information.
+        // TODO: This is going to need a major revamp in 3.1!
+        $esi_role_map = [
+            'Accountant'        => [
+                'corporation.summary',
+                'corporation.journal',
+                'corporation.transactions',
+            ],
+            'Auditor'           => [],
+            'Contract_Manager'  => [
+                'corporation.contracts',
+            ],
+            'Diplomat'          => [
+                'corporation.tracking',
+            ],
+            'Director'          => ['corporation.*'],   // All roles for you!
+            'Junior_Accountant' => [
+                'corporation.summary',
+                'corporation.journal',
+                'corporation.transactions',
+            ],
+            'Security_Officer'  => [
+                'corporation.security',
+            ],
+            'Trader'            => [
+                'corporation.market',
+            ],
+        ];
+
+        // Add corporation roles based on in game roles.
+        $current_corp_roles = $this->character->corporation_roles
+            ->pluck('role')->toArray();
+
+        foreach ($esi_role_map as $ingame_role => $seat_roles) {
+
+            if (in_array($ingame_role, $current_corp_roles)) {
+
+                if (! isset($map['corp'][$this->character->corporation_id]))
+                    $map['corp'][$this->character->corporation_id] = [];
+
+                foreach ($seat_roles as $seat_role)
+                    array_push($map['corp'][$this->character->corporation_id], $seat_role);
+            }
+        }
 
         // Finally, return the calculated map!
         return $map;
