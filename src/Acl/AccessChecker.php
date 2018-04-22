@@ -442,11 +442,15 @@ trait AccessChecker
                 'corporation.journal',
                 'corporation.transactions',
             ],
-            'Auditor'           => [],
+            'Auditor'           => [
+                'corporation.summary',
+            ],
             'Contract_Manager'  => [
+                'corporation.summary',
                 'corporation.contracts',
             ],
             'Diplomat'          => [
+                'corporation.summary',
                 'corporation.tracking',
             ],
             'Director'          => ['corporation.*'],   // All roles for you!
@@ -456,9 +460,11 @@ trait AccessChecker
                 'corporation.transactions',
             ],
             'Security_Officer'  => [
+                'corporation.summary',
                 'corporation.security',
             ],
             'Trader'            => [
+                'corporation.summary',
                 'corporation.market',
             ],
         ];
