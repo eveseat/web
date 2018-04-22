@@ -70,8 +70,9 @@ class SsoController extends Controller
         // Update the refresh token for this character.
         $this->updateRefreshToken($eve_data);
 
-        // Login the account
-        $this->loginUser($user);
+        if (! $this->loginUser($user))
+            return redirect()->route('auth.login')
+                ->with('error', 'Login failed. Please contact your administrator.');
 
         // Set the main characterID based on the response.
         $this->setCharacterId($eve_data);
@@ -137,10 +138,26 @@ class SsoController extends Controller
      * If no group is attached, ensure that the user at least
      * has *a* group attached to it.
      *
+     * This method returns a boolean as a status flag for the
+     * login routine. If a false is returned, it might mean
+     * that that account is not allowed to sign in.
+     *
      * @param \Seat\Web\Models\User $user
+     *
+     * @return bool
      */
-    public function loginUser(User $user)
+    public function loginUser(User $user): bool
     {
+
+        // If this account is disabled, refuse to login
+        if (! $user->active) {
+
+            event('security.log', [
+                'Login for ' . $user->name . ' refused due to a disabled account', 'authentication',
+            ]);
+
+            return false;
+        }
 
         // If we have an already logged in session, take the current
         // user we want to login as, make sure its part of the
@@ -160,6 +177,8 @@ class SsoController extends Controller
         }
 
         auth()->login($user, true);
+
+        return true;
     }
 
     /**

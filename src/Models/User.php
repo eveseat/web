@@ -49,6 +49,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public $incrementing = false;
 
     /**
+     * @var array
+     */
+    protected $casts = [
+        'active' => 'boolean',
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

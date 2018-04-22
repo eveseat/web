@@ -17,6 +17,7 @@
         <tbody>
         <tr>
           <th>{{ trans_choice('web::seat.name', 1) }}</th>
+          <th>{{ trans('web::seat.status') }}</th>
           <th>{{ trans('web::seat.email') }}</th>
           <th>{{ trans('web::seat.last_login') }}</th>
           <th>{{ trans('web::seat.from') }}</th>
@@ -29,6 +30,17 @@
 
           <tr>
             <td>{{ $user->name }}</td>
+            <td>
+              @if($user->active)
+                <span class="label label-success">
+                  {{ trans('web::seat.enabled') }}
+                </span>
+              @else
+                <span class="label label-danger">
+                  {{ trans('web::seat.disabled') }}
+                </span>
+              @endif
+            </td>
             <td>{{ $user->email }}</td>
             <td>
             <span data-toggle="tooltip" title="" data-original-title="{{ $user->last_login }}">

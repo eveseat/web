@@ -38,6 +38,7 @@ class CreateUsersTable extends Migration
             $table->bigInteger('id')->primary();
             $table->string('name')->unique();
             $table->string('email')->unique()->nullable();
+            $table->boolean('active')->default(true);
             $table->string('character_owner_hash');
             $table->dateTime('last_login')->nullable();
             $table->string('last_login_source')->nullable();
