@@ -34,7 +34,7 @@
 
             @foreach(config('eveapi.scopes') as $scope)
 
-              <option value="{{ $scope }}" @if (in_array($scope, setting('sso_scopes', true))) selected @endif>
+              <option value="{{ $scope }}" @if (! is_null(setting('sso_scopes', true)) && in_array($scope, setting('sso_scopes', true))) selected @endif>
                 {{ $scope }}
               </option>
 
