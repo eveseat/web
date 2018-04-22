@@ -83,7 +83,7 @@ class HomeController extends Controller
                     'borderColor'     => 'rgba(60,141,188,0.8)',
                     'data'            => $data->map(function ($item) {
 
-                        return $item->onlinePlayers;
+                        return $item->players;
                     })->toArray(),
                 ],
             ],
