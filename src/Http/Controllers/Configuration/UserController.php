@@ -150,12 +150,12 @@ class UserController extends Controller
     {
 
         // If there is no user set in the session, abort!
-        if (! session('impersonation_origin', false))
+        if (! session()->has('impersonation_origin'))
             abort(404);
 
         // Log the impersonation revert event.
         event('security.log', [
-            'Reverting impersonation back to ' . session('impersonation_origin')->name,
+            'Reverting impersonation back to ' . session()->get('impersonation_origin')->name,
             'authentication',
         ]);
 

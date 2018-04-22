@@ -253,7 +253,7 @@ class WebServiceProvider extends ServiceProvider
 
     /**
      * Apply any configuration overrides to those config/
-     * files published using php aprtisan vendor:publish
+     * files published using php aprtisan vendor:publish.
      */
     public function apply_custom_configuration()
     {
