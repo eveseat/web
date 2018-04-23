@@ -470,8 +470,10 @@ trait AccessChecker
         ];
 
         // Add corporation roles based on in game roles.
-        $current_corp_roles = $this->character->corporation_roles
-            ->pluck('role')->toArray();
+        $current_corp_roles = [];
+        if (! is_null($this->character))
+            $current_corp_roles = $this->character->corporation_roles
+                ->pluck('role')->toArray();
 
         foreach ($esi_role_map as $ingame_role => $seat_roles) {
 
