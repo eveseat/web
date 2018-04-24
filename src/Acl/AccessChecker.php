@@ -469,19 +469,22 @@ trait AccessChecker
             ],
         ];
 
-        // Add corporation roles based on in game roles.
-        $current_corp_roles = $this->character->corporation_roles
-            ->pluck('role')->toArray();
+        // Check if there are corporation roles we can add. If so, add 'em.
+        if ($current_corp_roles = optional($this->character)->corporation_roles) {
 
-        foreach ($esi_role_map as $ingame_role => $seat_roles) {
+            // Extract only the roles names and cast to an array for lookups.
+            $current_corp_roles = $current_corp_roles->pluck('role')->toArray();
 
-            if (in_array($ingame_role, $current_corp_roles)) {
+            foreach ($esi_role_map as $ingame_role => $seat_roles) {
 
-                if (! isset($map['corp'][$this->character->corporation_id]))
-                    $map['corp'][$this->character->corporation_id] = [];
+                if (in_array($ingame_role, $current_corp_roles)) {
 
-                foreach ($seat_roles as $seat_role)
-                    array_push($map['corp'][$this->character->corporation_id], $seat_role);
+                    if (! isset($map['corp'][$this->character->corporation_id]))
+                        $map['corp'][$this->character->corporation_id] = [];
+
+                    foreach ($seat_roles as $seat_role)
+                        array_push($map['corp'][$this->character->corporation_id], $seat_role);
+                }
             }
         }
 
