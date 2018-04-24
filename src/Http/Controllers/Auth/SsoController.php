@@ -112,6 +112,7 @@ class SsoController extends Controller
         return User::forceCreate([  // Only because I don't want to set id as fillable
             'id'                   => $user->character_id,
             'name'                 => $user->name,
+            'active'               => true,
             'character_owner_hash' => $user->character_owner_hash,
         ]);
     }
