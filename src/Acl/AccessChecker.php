@@ -149,10 +149,7 @@ trait AccessChecker
 
         $permissions = $this->getAllPermissions();
 
-        if (in_array($permission, $permissions))
-            return true;
-
-        return false;
+        return in_array($permission, $permissions);
     }
 
     /**
@@ -221,10 +218,10 @@ trait AccessChecker
 
                 foreach ($permission as $sub_permission) {
 
-                    if (! $corp == $this->getCorporationId())
+                    if ($corp != $this->getCorporationId())
                         return false;
 
-                    if (in_array('corporation.*', $permissions))
+                    if (in_array('corporation.*', $permissions) && $corp == $this->getCorporationId())
                         return true;
 
                     if (in_array($sub_permission, $permissions))
@@ -233,10 +230,10 @@ trait AccessChecker
 
             } else {
 
-                if (! $corp == $this->getCorporationId())
+                if ($corp != $this->getCorporationId())
                     return false;
 
-                if (in_array('corporation.*', $permissions))
+                if (in_array('corporation.*', $permissions) && $corp == $this->getCorporationId())
                     return true;
 
                 if (in_array($permission, $permissions))
