@@ -38,7 +38,7 @@ class ContactsController extends Controller
     {
 
         $contacts = $this->getCorporationContacts($corporation_id);
-        $labels   = $this->getCorporationContactLabels($corporation_id);
+        $labels = $this->getCorporationContactLabels($corporation_id);
 
         return view('web::corporation.contacts', compact('contacts', 'labels'));
     }
