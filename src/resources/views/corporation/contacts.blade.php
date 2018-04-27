@@ -17,6 +17,7 @@
           <th>{{ trans_choice('web::seat.name', 1) }}</th>
           <th>{{ trans_choice('web::seat.type', 1) }}</th>
           <th>{{ trans('web::seat.standings') }}</th>
+          <th>{{ trans('web::seat.labels') }}</th>
           <td class="no-sort"></td>
         </tr>
         </thead>
@@ -45,6 +46,10 @@
                       ">
                 <b>{{ $contact->standing }}</b>
               </span>
+            </td>
+            <td>
+              {{ $labels->filter(function($item) use ($contact) {
+                 return $item->label_id & $contact->label_id; })->implode('label_name', ', ') }}
             </td>
             <td>
               @if (!in_array($contact->contact_type, ['corporation', 'alliance']))

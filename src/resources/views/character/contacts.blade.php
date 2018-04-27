@@ -15,6 +15,7 @@
         <thead>
         <tr>
           <th>{{ trans_choice('web::seat.name', 1) }}</th>
+          <th>{{ trans_choice('web::seat.type', 1) }}</th>
           <th>{{ trans('web::seat.standings') }}</th>
           <th>{{ trans('web::seat.labels') }}</th>
           <th class="no-sort"></th>
@@ -33,6 +34,7 @@
               {!! img($contact->contact_type, $contact->contact_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
                 <span rel="id-to-name">{{ $contact->contact_id }}</span>
             </td>
+            <td>{{ ucfirst($contact->contact_type) }}</td>
             <td>
               <span class="
                 @if($contact->standing > 0)
