@@ -43,6 +43,9 @@ $(document).ready(function () {
 // Enable bootstrap popovers
 $("[data-toggle=popover]").popover();
 
+// Enable bootstrap tooltips
+$("[data-toggle=tooltip]").tooltip();
+
 // Initialize DataTables on <table> tags
 // with the 'datatable' class.
 //
