@@ -22,14 +22,15 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Seat\Eveapi\Models\Corporation\CorporationMemberTracking;
-use Seat\Eveapi\Models\Industry\CharacterMining;
+use Seat\Services\Repositories\Corporation\MiningLedger;
 use Seat\Web\Http\Controllers\Controller;
 
 class MiningLedgerController extends Controller
 {
+    use MiningLedger;
+
     public function getLedger(int $corporation_id, int $year = null, int $month = null) : View
     {
         if (is_null($year))
@@ -38,34 +39,23 @@ class MiningLedgerController extends Controller
         if (is_null($month))
             $month = date('m');
 
-        $members = CorporationMemberTracking::where('corporation_id', $corporation_id)
-                                            ->select('character_id')
-                                            ->get();
+        $ledgers = $this->getCorporationLedgers($corporation_id);
 
-        $ledgers = CharacterMining::select(DB::raw('DISTINCT YEAR(date) as year, MONTH(date) as month'))
-                     ->whereIn('character_id', $members)
-                     ->orderBy('year', 'desc')
-                     ->orderBy('month', 'desc')
-                     ->get();
-
-        $entries = CharacterMining::select('character_minings.character_id', 'year', 'month',
-                DB::raw('sum(quantity) as quantities'), DB::raw('sum(quantity * volume) as volumes'),
-                DB::raw('sum(quantity * average_price) as amounts'))
-            ->join('market_prices', 'market_prices.type_id', 'character_minings.type_id')
-            ->join('invTypes', 'typeID', 'character_minings.type_id')
-            ->join('corporation_member_trackings', 'corporation_member_trackings.character_id', 'character_minings.character_id')
-            ->where('corporation_id', $corporation_id)
-            ->where('year', '=', $year)
-            ->where('month', '=', $month)
-            ->groupBy('character_id', 'year', 'month')
-            ->get();
+        $entries = $this->getCorporationLedger($corporation_id, $year, $month)
+                        ->groupBy('character_id')
+                        ->map(function ($row) {
+                            $row->quantity = $row->sum('quantity');
+                            $row->volumes = $row->sum('volumes');
+                            $row->amount = $row->sum('amount');
+                            return $row;
+                        });
 
         return view('web::corporation.mining.ledger', compact('ledgers', 'entries'));
     }
 
     public function getTracking(int $corporation_id) : View
     {
-        $members = MemberTracking::where('corporationID', $corporation_id)->get();
+        $members = CorporationMemberTracking::where('corporation_id', $corporation_id)->get();
 
         return view('mining-ledger::corporation.views.tracking', compact('members'));
     }

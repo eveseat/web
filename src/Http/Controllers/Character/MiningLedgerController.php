@@ -23,31 +23,39 @@
 namespace Seat\Web\Http\Controllers\Character;
 
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
-use Seat\Eveapi\Models\Industry\CharacterMining;
+use Seat\Services\Repositories\Character\MiningLedger;
 use Seat\Web\Http\Controllers\Controller;
 
 class MiningLedgerController extends Controller
 {
+    use MiningLedger;
+
     public function getLedger(int $character_id) : View
     {
-        $ledger = CharacterMining::select('date', 'solar_system_id', 'type_id', DB::raw('SUM(quantity) as quantity'))
-                               ->where('character_id', $character_id)
-                               ->groupBy('date', 'solar_system_id', 'type_id')
-                               ->get();
+
+        $ledger = $this->getCharacterLedger($character_id)
+                                ->sortByDesc('date')
+                                ->groupBy('date', 'solar_system_id', 'type_id')
+                                ->map(function($row) {
+                                    $row->quantity = $row->sum('quantity');
+                                    $row->volumes  = $row->sum('volumes');
+                                    $row->amount   = $row->sum('amount');
+                                    return $row;
+                                })->flatten();
 
         return view('web::character.mining-ledger', compact('ledger'));
     }
 
     public function getDetailedLedger(int $character_id, $date, int $system_id, int $type_id) : JsonResponse
     {
-        $entries = CharacterMining::select('time', 'type_id', 'quantity')
-                                ->where('character_id', $character_id)
-                                ->where('date', $date)
-                                ->where('solar_system_id', $system_id)
-                                ->where('type_id', $type_id)
-                                ->get();
+
+        $entries = $this->getCharacterLedger($character_id, false)
+                        ->addSelect('time')
+                        ->where('date', $date)
+                        ->where('solar_system_id', $system_id)
+                        ->where('type_id', $type_id)
+                        ->get();
 
         return response()->json($entries);
     }

@@ -42,23 +42,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($entries as $entry)
+                    @foreach($entries as $character_id => $entry)
                     <tr>
-                        <td data-order="{{ $entry->name }}">
-                            {!! img('character', $entry->character_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-                            <a href="{{ route('character.view.sheet', ['character_id' => $entry->character_id]) }}">
-                                <span rel="id-to-name">{{ $entry->character_id }}</span>
+                        <td data-order="{{ $character_id }}">
+                            {!! img('character', $character_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
+                            <a href="{{ route('character.view.sheet', ['character_id' => $character_id]) }}">
+                                <span rel="id-to-name">{{ $character_id }}</span>
                             </a>
                         </td>
-                        <td class="text-right" data-order="{{ $entry->quantities }}">{{ number_format($entry->quantities, 2) }}</td>
+                        <td class="text-right" data-order="{{ $entry->quantity }}">{{ number_format($entry->quantity, 2) }}</td>
                         <td class="text-right" data-order="{{ $entry->volumes }}">{{ number_format($entry->volumes, 2) }} m3</td>
-                        <td class="text-right" data-order="{{ $entry->amounts }}">{{ number_format($entry->amounts, 2) }} ISK</td>
+                        <td class="text-right" data-order="{{ $entry->amount }}">{{ number_format($entry->amount, 2) }} ISK</td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-        <div class="panel-footer">Total : {{ number_format($entries->sum('amounts'), 2) }}</div>
+        <div class="panel-footer">Total : {{ number_format($entries->sum('amount'), 2) }}</div>
     </div>
 @stop
 
