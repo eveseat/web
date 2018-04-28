@@ -108,6 +108,12 @@ Route::get('/view/market/data/{corporation_id}', [
     'uses'       => 'MarketController@getMarketData',
 ]);
 
+Route::get('/view/mining-ledger/{corporation_id}/{year?}/{month?}', [
+    'as'         => 'corporation.view.mining_ledger',
+    'middleware' => 'corporationbouncer:mining',
+    'uses'       => 'MiningLedgerController@getLedger',
+]);
+
 Route::get('/view/pocos/{corporation_id}', [
     'as'         => 'corporation.view.pocos',
     'middleware' => 'corporationbouncer:pocos',

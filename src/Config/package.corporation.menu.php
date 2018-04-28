@@ -72,6 +72,13 @@ return [
         'route'          => 'corporation.view.market',
     ],
     [
+        'name'           => 'mining',
+        'label'          => 'web::seat.mining',
+        'permission'     => 'corporation.mining',
+        'highlight_view' => 'mining',
+        'route'          => 'corporation.view.mining_ledger',
+    ],
+    [
         'name'           => 'pocos',
         'label'          => 'web::seat.pocos',
         'permission'     => 'corporation.pocos',

@@ -520,6 +520,12 @@ return [
     'tax_standings'                => 'Tax: Standings',
     'no_storage'                   => 'There is no storage',
 
+    // Mining Ledger
+    'mining'                       => 'Mining',
+    'mining_ledger'                => 'Ledger|Ledgers',
+    'available_ledger'             => 'Available Ledger|Available Ledgers',
+    'ore'                          => 'Ore',
+
     // Profile
     'user_profile'                 => 'User Profile',
     'user_preferences'             => 'User Preferences',

@@ -247,6 +247,18 @@ Route::get('/view/market/data/{character_id}', [
     'uses'       => 'MarketController@getMarketData',
 ]);
 
+Route::get('/view/mining-ledger/{character_id}', [
+    'as'         => 'character.view.mining_ledger',
+    'middleware' => 'characterbouncer:mining',
+    'uses'       => 'MiningLedgerController@getLedger',
+]);
+
+Route::get('/view/mining-ledger/{character_id}/{date}/{system_id}/{type_id}', [
+    'as'         => 'character.view.detailed_mining_ledger',
+    'middleware' => 'characterbouncer:mining',
+    'uses'       => 'MiningLedgerController@getDetailedLedger',
+]);
+
 Route::get('/view/notifications/{character_id}', [
     'as'         => 'character.view.notifications',
     'middleware' => 'characterbouncer:notifications',
