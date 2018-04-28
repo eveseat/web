@@ -247,13 +247,13 @@
                           <div class="form-group">
                             <label for="new_email">{{ trans('web::seat.new_email') }}</label>
                             <input type="email" name="new_email" class="form-control" placeholder="New Email"
-                                   required="required" />
+                                   required="required"/>
                           </div>
 
                           <div class="form-group">
                             <label for="new_email_confirmation">{{ trans('web::seat.confirm_new_email') }}</label>
                             <input type="email" name="new_email_confirmation" class="form-control"
-                                   id="email_confirmation" placeholder="New Email Confirmation" required="required" />
+                                   id="email_confirmation" placeholder="New Email Confirmation" required="required"/>
                           </div>
 
                         </div><!-- /.box-body -->
@@ -350,17 +350,17 @@
                       <table class="table table-condensed table-hover table-responsive">
                         <tbody>
 
-                          @unless(is_null($scopes))
+                        @unless(is_null($scopes))
 
-                            @foreach($scopes as $scope)
+                          @foreach($scopes as $scope)
 
-                              <tr>
-                                <td>{{ $scope }}</td>
-                              </tr>
+                            <tr>
+                              <td>{{ $scope }}</td>
+                            </tr>
 
-                            @endforeach
+                          @endforeach
 
-                          @endunless
+                        @endunless
 
                         </tbody>
                       </table>
@@ -401,6 +401,9 @@
         {{ trans('web::seat.linked_characters') }}
 
         <span class="pull-right">
+          <a href="https://community.eveonline.com/support/third-party-applications/" target="_blank" class="btn btn-success btn-xs">
+            {{ trans('web::seat.view_third_party_access') }}
+          </a>
           <a href="{{ route('auth.eve') }}" class="btn btn-primary btn-xs">
             {{ trans('web::seat.link_another_character') }}
           </a>
