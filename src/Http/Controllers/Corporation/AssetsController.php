@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Services\Repositories\Corporation\Assets;
+use Seat\Services\Repositories\Corporation\Divisions;
 use Seat\Web\Http\Controllers\Controller;
 
 /**
@@ -31,7 +32,7 @@ use Seat\Web\Http\Controllers\Controller;
  */
 class AssetsController extends Controller
 {
-    use Assets;
+    use Assets, Divisions;
 
     /**
      * @param $corporation_id
@@ -41,9 +42,10 @@ class AssetsController extends Controller
     public function getAssets(int $corporation_id)
     {
 
+        $divisions = $this->getCorporationDivisions($corporation_id);
         $assets = $this->getCorporationAssets($corporation_id);
 
-        return view('web::corporation.assets', compact('assets'));
+        return view('web::corporation.assets', compact('divisions', 'assets'));
     }
 
     /**

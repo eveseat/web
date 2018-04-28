@@ -15,13 +15,13 @@
 
       <table class="table table-condensed table-hover table-responsive">
         <thead>
-          <tr>
-            <th>{{ trans('web::seat.quantity') }}</th>
-            <th>{{ trans_choice('web::seat.type', 1) }}</th>
-            <th>{{ trans('web::seat.volume') }}</th>
-            <th>{{ trans('web::seat.location_flag') }}</th>
-            <th>{{ trans('web::seat.group') }}</th>
-          </tr>
+        <tr>
+          <th>{{ trans('web::seat.quantity') }}</th>
+          <th>{{ trans_choice('web::seat.type', 1) }}</th>
+          <th>{{ trans('web::seat.volume') }}</th>
+          <th>{{ trans('web::seat.group') }}</th>
+          <th>{{ trans('web::seat.location_flag') }}</th>
+        </tr>
         </thead>
 
         <tbody>
@@ -30,16 +30,16 @@
 
           <tbody style="border-top: 0px;">
 
-            <tr class="active">
-              <td colspan="5">
-                <b>
-                  @if($location->first()->location_name == '')
-                    Unknown Structure ({{ $location->first()->location_id }})
-                  @else
-                    {{ $location->first()->location_name }}
-                  @endif
-                </b>
-                <span class="pull-right">
+          <tr class="active">
+            <td colspan="5">
+              <b>
+                @if($location->first()->location_name == '')
+                  Unknown Structure ({{ $location->first()->location_id }})
+                @else
+                  {{ $location->first()->location_name }}
+                @endif
+              </b>
+              <span class="pull-right">
                     <i>
                       {{ count($assets->where('location_id', $location->first()->location_id)) }}
                       {{ trans('web::seat.items_taking') }}
@@ -49,8 +49,8 @@
                       })->sum()) }} m&sup3;
                     </i>
                   </span>
-              </td>
-            </tr>
+            </td>
+          </tr>
 
           </tbody>
 
@@ -86,7 +86,15 @@
               </td>
               <td>{{ number_metric($asset->quantity * $asset->type->volume) }} m&sup3;</td>
               <td>{{ $asset->type->group->groupName }}</td>
-              <td>{{ $asset->location_flag }}</td>
+              <td>
+                @if(str_contains($asset->location_flag, 'CorpSAG'))
+                  {{
+                    $divisions->where('division', str_after($asset->location_flag, 'CorpSAG')) ->pluck('name')->first()
+                  }}
+                @else
+                  {{ $asset->location_flag }}
+                @endif
+              </td>
             </tr>
 
             </tbody>
