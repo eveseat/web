@@ -54,12 +54,6 @@ Route::get('/view/calendar/{character_id}', [
     'uses'       => 'CalendarController@getCalendar',
 ]);
 
-Route::get('/view/channels/{character_id}', [
-    'as'         => 'character.view.channels',
-    'middleware' => 'characterbouncer:channels',
-    'uses'       => 'ChannelsController@getChannels',
-]);
-
 Route::get('/view/contacts/{character_id}', [
     'as'         => 'character.view.contacts',
     'middleware' => 'characterbouncer:contacts',

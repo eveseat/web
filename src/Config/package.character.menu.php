@@ -44,13 +44,6 @@ return [
         'route'          => 'character.view.calendar',
     ],
     [
-        'name'           => 'channels',
-        'label'          => 'web::seat.channels',
-        'permission'     => 'character.channels',
-        'highlight_view' => 'channels',
-        'route'          => 'character.view.channels',
-    ],
-    [
         'name'           => 'contacts',
         'label'          => 'web::seat.contacts',
         'permission'     => 'character.contacts',
