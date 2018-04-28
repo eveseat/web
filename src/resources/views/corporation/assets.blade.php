@@ -89,7 +89,7 @@
               <td>
                 @if(str_contains($asset->location_flag, 'CorpSAG'))
                   {{
-                    $divisions->where('division', str_after($asset->location_flag, 'CorpSAG')) ->pluck('name')->first()
+                    $divisions->where('division', str_after($asset->location_flag, 'CorpSAG'))->pluck('name')->first()
                   }}
                 @else
                   {{ $asset->location_flag }}
