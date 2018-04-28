@@ -89,14 +89,16 @@
                   @endforeach
                 </td>
                 <td>
-                  <a href="{{ route('configuration.access.roles.edit', ['id' => $role->id]) }}" type="button"
-                     class="btn btn-warning btn-xs">
-                    {{ trans('web::seat.edit') }}
-                  </a>
-                  <a href="{{ route('configuration.access.roles.edit.remove.user', ['role_id' => $role->id, 'user_id' => $user->id]) }}"
-                     type="button" class="btn btn-danger btn-xs">
-                    {{ trans('web::seat.remove') }}
-                  </a>
+                  @if(auth()->user()->id != $user->id)
+                    <a href="{{ route('configuration.access.roles.edit', ['id' => $role->id]) }}" type="button"
+                       class="btn btn-warning btn-xs">
+                      {{ trans('web::seat.edit') }}
+                    </a>
+                    <a href="{{ route('configuration.access.roles.edit.remove.user', ['role_id' => $role->id, 'user_id' => $user->id]) }}"
+                       type="button" class="btn btn-danger btn-xs">
+                      {{ trans('web::seat.remove') }}
+                    </a>
+                  @endif
                 </td>
 
               </tr>
