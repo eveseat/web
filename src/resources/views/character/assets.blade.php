@@ -36,7 +36,8 @@
               @endif
               </b>
               <span class="pull-right">
-                <i>{{ $assets->where('location_id', $location->first()->location_id)->count() }} items taking
+                <i>{{ $assets->where('location_id', $location->first()->location_id)->count() }}
+                  {{ trans('web::seat.items_taking') }}
                   {{
                     number_metric($assets->where('location_id', $location->first()->location_id)->map(
                       function($value){
@@ -64,7 +65,8 @@
                   {{ number($container->quantity, 0) }}
                   @endif
                 </td>
-                <td>{!! img('type', $container->type_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
+                <td>
+                  {!! img('type', $container->type_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
                   @if($container->name != $container->type->typeName)
                     {{ $container->name }} ({{ $container->type->typeName }})
                   @else

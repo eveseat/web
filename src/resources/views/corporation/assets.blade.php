@@ -16,80 +16,92 @@
       <table class="table table-condensed table-hover table-responsive">
         <thead>
           <tr>
-            <th></th>
             <th>{{ trans('web::seat.quantity') }}</th>
             <th>{{ trans_choice('web::seat.type', 1) }}</th>
             <th>{{ trans('web::seat.volume') }}</th>
+            <th>{{ trans('web::seat.location_flag') }}</th>
             <th>{{ trans('web::seat.group') }}</th>
           </tr>
         </thead>
 
         <tbody>
 
-          @foreach($assets->sortBy('locationName')->groupBy('location_id') as $location)
-          <tr class="active">
-            <td colspan="5">
-              <b>
-                @if($location->first()->locationName == '')
-                  Unknown Structure ({{ $location->first()->location_id }})
+        @foreach($assets->unique('location_id')->groupBy('location_id') as $location)
+
+          <tbody style="border-top: 0px;">
+
+            <tr class="active">
+              <td colspan="5">
+                <b>
+                  @if($location->first()->location_name == '')
+                    Unknown Structure ({{ $location->first()->location_id }})
+                  @else
+                    {{ $location->first()->location_name }}
+                  @endif
+                </b>
+                <span class="pull-right">
+                    <i>
+                      {{ count($assets->where('location_id', $location->first()->location_id)) }}
+                      {{ trans('web::seat.items_taking') }}
+                      {{ number_metric($assets
+                          ->where('location_id', $location->first()->location_id)->map(function($item) {
+                            return $item->quantity * $item->type->volume;
+                      })->sum()) }} m&sup3;
+                    </i>
+                  </span>
+              </td>
+            </tr>
+
+          </tbody>
+
+          @foreach($assets->where('location_id', $location->first()->location_id) as $asset)
+
+            <tbody style="border-top: 0px;">
+
+            <tr>
+              @if($asset->content->count() > 0)
+
+                <td>
+                  <i class="fa fa-plus viewcontent" style="cursor: pointer;"
+                     a-item-id="{{ $asset->item_id }}" a-loaded="false">
+                  </i>
+                </td>
+
+              @else
+
+                <td>{{ $asset->quantity }}</td>
+
+              @endif
+
+              <td>
+                {!! img('type', $asset->type_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
+                @if($asset->name != $asset->type->typeName)
+                  {{ $asset->name }} ({{ $asset->type->typeName }})
                 @else
-                  {{ $location->first()->locationName }}
+                  {{ $asset->type->typeName }}
                 @endif
-              </b>
-              <span class="pull-right">
-                <i>ITEM_NUMBER items taking ITEMS_VOLUME m&sup3;</i>
-              </span>
-            </td>
-          </tr>
+                @if(! $asset->is_singleton)
+                  <span class="text-red">(packaged)</span>
+                @endif
+              </td>
+              <td>{{ number_metric($asset->quantity * $asset->type->volume) }} m&sup3;</td>
+              <td>{{ $asset->type->group->groupName }}</td>
+              <td>{{ $asset->location_flag }}</td>
+            </tr>
 
-          {{-- asset office node --}}
-          @if($assets->where('location_id', $location->first()->location_id)->where('location_flag', 'OfficeFolder')->count() > 0)
-          <tr>
-            <td colspan="5">Office
-              <span class="pull-right">
-                <i>ITEM_NUMBER items taking ITEMS_VOLUME m&sup3;</i>
-              </span>
-            </td>
-          </tr>
-          @foreach($divisions as $division)
-          @if($assets->where('location_id', $location->first()->location_id)->where('location_flag', 'OfficeFolder')
-              ->first()->content->where('location_flag', 'CorpSAG' . $division->division)->count() > 0)
-          <tr>
-            <td colspan="5">
-                <button type="button" class="btn btn-xs btn-link">
-                  <i class="fa fa-cubes"></i>
-                </button>
-                {{ $division->name }}
-            </td>
-          </tr>
-          @endif
-          @endforeach
-          @endif
+            </tbody>
 
-          {{-- asset safety node --}}
-          @if($assets->where('location_id', $location->first()->location_id)->where('location_flag', 'AssetSafety')->count() > 0)
-          <tr class="bg-yellow">
-            <td colspan="5">Assets Safety
-              <span class="pull-right">
-                <i>ITEM_NUMBER items taking ITEMS_VOLUME m&sup3;</i>
-              </span>
-            </td>
-          </tr>
-          @endif
+            @if($asset->content->count() > 0)
 
-          {{-- asset delivery node --}}
-          @if($assets->where('location_id', $location->first()->location_id)->where('location_flag', 'Deliveries')->count() > 0)
-          <tr>
-            <td colspan="5">Assets Deliveries
-              <span class="pull-right">
-                <i>ITEM_NUMBER items taking ITEMS_VOLUME m&sup3;</i>
-              </span>
-            </td>
-          </tr>
-          @endif
+              <tbody style="display: none;" class="tbodycontent">
+              <!-- assets contents populated via ajax call -->
+              </tbody>
+
+            @endif
+
           @endforeach
 
-        </tbody>
+        @endforeach
 
       </table>
 
@@ -100,57 +112,48 @@
 
 @push('javascript')
 
-<script type="text/javascript">
+  <script type="text/javascript">
 
-  $(".viewcontent").on("click", function () {
+    $(".viewcontent").on("click", function () {
+      var attribute_box = $(this);
+      var contents = $(this).closest("tbody").next("tbody");
 
-    var attribute_box = $(this);
+      // Show or hide
+      contents.toggle();
 
-    var contents = $(this).closest('tr').next('tr');
+      if (contents.is(":visible")) {
 
-    // Show or hide
-    contents.toggle();
+        // Get the assets contents
+        if (attribute_box.attr('a-loaded') == 'false') {
 
-    // Sstyling
-    if (contents.is(":visible")) {
+          // Small hack to get an ajaxable url from Laravel
+          var url = "{{ route('corporation.view.assets.contents', ['corporation_id' => $request -> corporation_id, 'item_id' => ':item_id']) }}";
+          var item_id = attribute_box.attr('a-item-id');
+          url = url.replace(':item_id', item_id);
 
-      // Get the assets contents
+          // Perform an ajax request for the asset items
+          $.get(url, function (data) {
+            // Populate the tbody
+            contents.html(data);
+            // Mark the contents as loaded
+            attribute_box.attr('a-loaded', 'true');
+            // Re-init the lazy image loader
+            $("img").unveil(100);
+          });
+        }
 
-      if (attribute_box.attr('a-loaded') == 'false') {
+        // Apply some styling
+        $(this).removeClass("fa-plus").addClass("fa-minus");
+        $(this).closest("tr").css("background-color", "#D4D4D4"); // Heading Color
+        contents.css("background-color", "#E5E5E5");              // Table Contents Color
 
-        // Small hack to get an ajaxable url from Laravel
-        var url = "{{ route('corporation.view.assets.contents', ['corporation_id' => $request->corporation_id, 'item_id' => ':item_id']) }}";
-        var item_id = attribute_box.attr('a-item-id');
-        url = url.replace(':item_id', item_id);
+      } else {
 
-        // Perform an ajax request for the asset items
-        $.get(url, function (data) {
-
-          // Populate the tbody
-          contents.html(data);
-
-          // Mark the contents as loaded
-          attribute_box.attr('a-loaded', 'true');
-
-          // Re-init the lazy image loader
-          $("img").unveil(100);
-        });
-
+        $(this).removeClass("fa-minus").addClass("fa-plus");
+        $(this).closest("tr").css("background-color", "");
       }
+    });
 
-      // Apply some styleing
-      $(this).find('i').removeClass("fa-plus").addClass("fa-minus");
-      $(this).closest("tr").css("background-color", "#D4D4D4"); // Heading Color
-      contents.css("background-color", "#E5E5E5");              // Table Contents Color
-
-    } else {
-
-      $(this).find('i').removeClass("fa-minus").addClass("fa-plus");
-      $(this).closest("tr").css("background-color", "");
-
-    }
-  });
-
-</script>
+  </script>
 
 @endpush

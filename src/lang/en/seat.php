@@ -174,6 +174,7 @@ return [
     'worker_constraints'    => 'Worker Constraints',
 
     'assets'                      => 'Assets',
+    'location_flag'               => 'Location Flag',
     'calendar'                    => 'Calendar',
     'channels'                    => 'Channels',
     'contacts'                    => 'Contacts',
