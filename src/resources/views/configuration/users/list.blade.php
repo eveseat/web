@@ -18,6 +18,7 @@
         <tr>
           <th>{{ trans_choice('web::seat.name', 1) }}</th>
           <th>{{ trans('web::seat.status') }}</th>
+          <th>{{ trans('web::seat.token') }}</th>
           <th>{{ trans('web::seat.email') }}</th>
           <th>{{ trans('web::seat.last_login') }}</th>
           <th>{{ trans('web::seat.from') }}</th>
@@ -39,6 +40,13 @@
                 <span class="label label-danger">
                   {{ trans('web::seat.disabled') }}
                 </span>
+              @endif
+            </td>
+            <td>
+              @if($user->refresh_token)
+                <i class="fa fa-check text-success"></i>
+              @else
+                <i class="fa fa-exclamation-triangle text-danger"></i>
               @endif
             </td>
             <td>{{ $user->email }}</td>

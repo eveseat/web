@@ -40,13 +40,17 @@ class HomeController extends Controller
      * @return \Illuminate\View\View
      * @throws \Seat\Services\Exceptions\SettingException
      */
-    public function getHome() : View
+    public function getHome(): View
     {
 
         // Warn if the admin contact has not been set yet.
         if (auth()->user()->hasSuperUser())
             if (Seat::get('admin_contact') === 'seatadmin@localhost.local')
                 session()->flash('warning', trans('web::seat.admin_contact_warning'));
+
+        // Warn if a refresh token is missing.
+        if (! auth()->user()->refresh_token)
+            session()->flash('warning', trans('web::seat.refresh_token_warning'));
 
         $server_status = $this->getEveLastServerStatus();
         $total_character_isk = $this->getTotalCharacterIsk();

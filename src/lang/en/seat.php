@@ -87,6 +87,7 @@ return [
     'inverse'               => 'Inverse',
     'read'                  => 'Read',
     'level'                 => 'Level',
+    'token'                 => 'Token',
 
     // Requirements
     'requirements'          => 'Requirements',
@@ -99,6 +100,8 @@ return [
     'min_version'           => 'Minimum Version',
     'admin_contact_warning' => 'An administrative contact for this install has not been set.' .
         ' No jobs will be queued because of this. Please configure it in the SeAT settings.',
+    'refresh_token_warning' => 'Your account does not have a valid refresh token recorded. ' .
+        'Please logout and back in to correct this as soon as possible.',
     'sso_activation'        => 'SSO Activation',
     'sso_confirmation'      => 'It appears you already own an account. Please confirm your credentials in order to enable SSO.',
 
