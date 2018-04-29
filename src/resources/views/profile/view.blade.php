@@ -184,13 +184,7 @@
     </div>
   </div>
 
-  <div class="panel panel-default">
-    <div class="panel-body">
-      {{ trans('web::seat.third_party_access') }}
-      <a href="https://community.eveonline.com/support/third-party-applications/" target="_blank">Third Party
-        Applications</a>
-    </div>
-  </div>
+
 
 @stop
 
@@ -395,16 +389,25 @@
   </div>
 
   <div class="panel panel-default">
+    <div class="panel-body">
+      <p>
+        {{ trans('web::seat.third_party_access') }}
+      </p>
+      <a href="https://community.eveonline.com/support/third-party-applications/" target="_blank"
+         class="btn btn-success btn-xs pull-right">
+        {{ trans('web::seat.view_third_party_access') }}
+      </a>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">
 
         {{ trans('web::seat.linked_characters') }}
 
         <span class="pull-right">
-          <a href="https://community.eveonline.com/support/third-party-applications/" target="_blank"
-             class="btn btn-success btn-xs">
-            {{ trans('web::seat.view_third_party_access') }}
-          </a>
+
           <a href="{{ route('auth.eve') }}" class="btn btn-primary btn-xs">
             {{ trans('web::seat.link_another_character') }}
           </a>
