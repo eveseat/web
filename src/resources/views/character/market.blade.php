@@ -20,7 +20,6 @@
           <th>{{ trans('web::seat.date') }}</th>
           <th></th>
           <th>{{ trans('web::seat.volume') }}</th>
-          <th>{{ trans('web::seat.status') }}</th>
           <th>{{ trans('web::seat.price') }}</th>
           <th>{{ trans('web::seat.total') }}</th>
           <th>{{ trans_choice('web::seat.type', 1) }}</th>
@@ -46,7 +45,6 @@
         {data: 'issued', name: 'issued', render: human_readable},
         {data: 'bs', name: 'bid'},
         {data: 'vol', name: 'volEntered'},
-        {data: 'state', name: 'orderState'},
         {data: 'price', name: 'price'},
         {data: 'total', name: 'price'},
         {data: 'typeName', name: 'typeName'}
