@@ -1,38 +1,39 @@
 {
-    "name": "eveseat/web",
-    "description": "SeAT Web Interface",
-    "license": "GPL-2.0",
-    "authors": [
-        {
-            "name": "Leon Jacobs",
-            "email": "leonja511@gmail.com"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "Seat\\Web\\": "src/"
-        }
-    },
-    "minimum-stability": "stable",
-    "prefer-stable": true,
-    "require": {
-        "php": ">=7.1",
-        "laravel/framework": "5.5.*",
-        "laravel/horizon": "^1.0",
-        "laravel/tinker": "~1.0",
-        "laravel/socialite": "^3.0",
-        "eveseat/eveapi": "~3",
-        "eveseat/services": "~3",
-        "league/csv": "^9.1",
-        "guzzlehttp/guzzle": "^6.3",
-        "yajra/laravel-datatables-oracle": "~6",
-        "components/font-awesome": "^4.7"
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Seat\\Web\\WebServiceProvider"
-            ]
-        }
+  "name": "eveseat/web",
+  "description": "SeAT Web Interface",
+  "license": "GPL-2.0",
+  "authors": [
+    {
+      "name": "Leon Jacobs",
+      "email": "leonja511@gmail.com"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Seat\\Web\\": "src/"
+    }
+  },
+  "minimum-stability": "alpha",
+  "prefer-stable": true,
+  "require": {
+    "php": ">=7.1",
+    "laravel/framework": "5.5.*",
+    "laravel/horizon": "^1.0",
+    "laravel/tinker": "~1.0",
+    "laravel/socialite": "^3.0",
+    "eveseat/eseye": "~1",
+    "eveseat/eveapi": "~3",
+    "eveseat/services": "~3",
+    "league/csv": "^9.1",
+    "guzzlehttp/guzzle": "^6.3",
+    "yajra/laravel-datatables-oracle": "~6",
+    "components/font-awesome": "^4.7"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Seat\\Web\\WebServiceProvider"
+      ]
+    }
+  }
 }
