@@ -247,7 +247,7 @@ trait AccessChecker
     /**
      * The affiliation map maps character / corporation
      * ID's to the permissions that they have. This allows
-     * us to simply lookup the existance of a permission
+     * us to simply lookup the existence of a permission
      * in the context of an ID. All roles are considered
      * but strict adherence to *which* affiliation ID's are
      * applicable is kept.
@@ -305,7 +305,7 @@ trait AccessChecker
             // should be inverted.
             foreach ($role->permissions as $permission) {
 
-                // If a specific permision shoul be be inverted,
+                // If a specific permission should be be inverted,
                 // update the global array with the permission name.
                 //
                 // Also make sure the permission does not exist in
@@ -324,13 +324,13 @@ trait AccessChecker
             // Add the permissions to the affiliations
             // map for each respective affiliation. We will also keep in
             // mind here that affiliations can have inversions too.
-            foreach ($role->affiliations as $affilition) {
+            foreach ($role->affiliations as $affiliation) {
 
-                if ($affilition->pivot->not) {
+                if ($affiliation->pivot->not) {
 
                     array_push(
-                        $map['inverted_affiliations'][$affilition->type],
-                        $affilition->affiliation);
+                        $map['inverted_affiliations'][$affiliation->type],
+                        $affiliation->affiliation);
 
                     continue;
                 }
@@ -339,9 +339,9 @@ trait AccessChecker
                 // is signified by the char / corp id of 0. If we encounter
                 // this id, then we need to all of the possible corp / char
                 // in the system to the affiliation map.
-                if ($affilition->affiliation === 0) {
+                if ($affiliation->affiliation === 0) {
 
-                    if ($affilition->type == 'char') {
+                    if ($affiliation->type == 'char') {
 
                         // Process all of the characters
                         foreach ($this->getAllCharacters()->pluck('character_id') as $characterID) {
@@ -355,7 +355,7 @@ trait AccessChecker
                         }
                     }
 
-                    if ($affilition->type == 'corp') {
+                    if ($affiliation->type == 'corp') {
 
                         // Process all of the corporations
                         foreach ($this->getAllCorporations()->pluck('corporation_id') as $corporationID) {
@@ -373,9 +373,9 @@ trait AccessChecker
 
                     // in case we have an affiliation of corp kind
                     // check if it's containing any character permission and append all character from this corporation
-                    if ($affilition->type == 'corp') {
+                    if ($affiliation->type == 'corp') {
 
-                        $characters = CharacterInfo::where('corporation_id', $affilition->affiliation)->get();
+                        $characters = CharacterInfo::where('corporation_id', $affiliation->affiliation)->get();
 
                         foreach ($role_permissions as $permission) {
                             if (strpos($permission, 'character.') !== false) {
@@ -398,11 +398,11 @@ trait AccessChecker
                     // multiple times when multiple roles are involved, we need to check if
                     // affiliations already exist. Not using a ternary of coalesce operator
                     // here as it makes reading this really hard.
-                    if (isset($map[$affilition->type][$affilition->affiliation]))
-                        $map[$affilition->type][$affilition->affiliation] += $role_permissions;
+                    if (isset($map[$affiliation->type][$affiliation->affiliation]))
+                        $map[$affiliation->type][$affiliation->affiliation] += $role_permissions;
 
                     else
-                        $map[$affilition->type][$affilition->affiliation] = $role_permissions;
+                        $map[$affiliation->type][$affiliation->affiliation] = $role_permissions;
                 }
 
             }
@@ -428,7 +428,7 @@ trait AccessChecker
         foreach ($map['corp'] as $corp => $permissions)
             $map['corp'][$corp] = array_diff($map['corp'][$corp], $map['inverted_permissions']);
 
-        // ESI Related corporation role <-> SeAT role maping.
+        // ESI Related corporation role <-> SeAT role mapping.
         // This is to allow characters that have in game roles
         // such as director or other wallet related roles to view
         // corporation information.
@@ -507,7 +507,7 @@ trait AccessChecker
     }
 
     /**
-     * Return the corporation_id in quetsion for the current request.
+     * Return the corporation_id in question for the current request.
      *
      * @return int
      * @throws \Seat\Web\Exceptions\BouncerException

@@ -31,10 +31,8 @@ use Illuminate\Support\ServiceProvider;
 use Laravel\Horizon\Horizon;
 use Laravel\Socialite\SocialiteManager;
 use Seat\Web\Events\Attempt;
-use Seat\Web\Events\Auth;
 use Seat\Web\Events\Login;
 use Seat\Web\Events\Logout;
-use Seat\Web\Events\SecLog;
 use Seat\Web\Events\Security;
 use Seat\Web\Extentions\EveOnlineProvider;
 use Seat\Web\Http\Composers\CharacterMenu;
@@ -48,7 +46,6 @@ use Seat\Web\Http\Middleware\Bouncer\Bouncer;
 use Seat\Web\Http\Middleware\Bouncer\CharacterBouncer;
 use Seat\Web\Http\Middleware\Bouncer\CorporationBouncer;
 use Seat\Web\Http\Middleware\Bouncer\KeyBouncer;
-use Seat\Web\Http\Middleware\ConfirmedEmailAddress;
 use Seat\Web\Http\Middleware\Locale;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
 use Seat\Web\Http\Middleware\Requirements;
@@ -203,9 +200,6 @@ class WebServiceProvider extends ServiceProvider
         // simply authenticated
         $router->aliasMiddleware('auth', Authenticate::class);
 
-        // Email Verification Requirement
-        $router->aliasMiddleware('auth.email', ConfirmedEmailAddress::class);
-
         // Ensure that all of the SeAT required modules is installed.
         $router->aliasMiddleware('requirements', Requirements::class);
 
@@ -253,7 +247,7 @@ class WebServiceProvider extends ServiceProvider
 
     /**
      * Apply any configuration overrides to those config/
-     * files published using php aprtisan vendor:publish.
+     * files published using php artisan vendor:publish.
      */
     public function apply_custom_configuration()
     {

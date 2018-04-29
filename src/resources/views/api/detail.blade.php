@@ -409,7 +409,7 @@
           q   : params.term, // search term
           page: params.page
         };
-      },
+      }
     }
   });
 

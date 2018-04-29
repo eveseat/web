@@ -65,7 +65,7 @@ class NewSchedule extends FormRequest
      * finally figured it out.
      * Lies! **I have no idea how it  works**, but for sanity
      * sake, here is the query that gets generated for the
-     * 'expression' uniquene with where validation:
+     * 'expression' unique with where validation:
      *
      * select count(*) as aggregate from `schedules` where
      *  `expression` = "cron_expression" and `command`

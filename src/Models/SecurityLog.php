@@ -36,7 +36,7 @@ class SecurityLog extends Model
     protected $fillable = ['user_id', 'message', 'category'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
     {

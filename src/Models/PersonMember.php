@@ -23,7 +23,6 @@
 namespace Seat\Web\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Seat\Eveapi\Models\Account\ApiKeyInfoCharacters;
 
 /**
  * Class PersonMember.
@@ -43,14 +42,5 @@ class PersonMember extends Model
     {
 
         return $this->belongsTo(Person::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function characters()
-    {
-
-        return $this->hasMany(ApiKeyInfoCharacters::class, 'keyID', 'key_id');
     }
 }

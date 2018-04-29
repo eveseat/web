@@ -91,7 +91,7 @@ return [
 
     // Requirements
     'requirements'          => 'Requirements',
-    'requirements_message'  => 'The following list shows missing PHP extentions. Please install' .
+    'requirements_message'  => 'The following list shows missing PHP extensions. Please install' .
         ' them first before you can continue.',
     'php_version'           => 'PHP Version',
     'php_version_message'   => 'The installed version of PHP does not meet the minimum version' .
@@ -127,7 +127,7 @@ return [
 
     // Passwords
     'password_reset'        => 'Password Reset',
-    'reset_welcome'         => 'Please enter the email address for the account whos password should be reset.',
+    'reset_welcome'         => 'Please enter the email address for the account who\'s password should be reset.',
     'remember'              => 'I remember my credentials',
     'reset_topic'           => 'Reset Password',
     'reset_token_welcome'   => 'Please enter the email and new password.',
@@ -447,7 +447,7 @@ return [
     'online_time'                  => 'Online Time',
     'jump_fatigue'                 => 'Jump Fatigue',
     'jump_clones'                  => 'Jump Clone|Jump Clones',
-    'jump_act_timer'               => 'Jump Activiation Timer',
+    'jump_act_timer'               => 'Jump Activation Timer',
     'no_jump_clones'               => 'No Jump Clones',
     'implants'                     => 'Implant|Implants',
     'no_implants'                  => 'No Implants',
@@ -499,7 +499,7 @@ return [
     'onlined_at'                   => 'Onlined At',
     'moon'                         => 'Moon',
     'use_standings_from'           => 'Use Standings From',
-    'attack_on_agression'          => 'Attack On Agression',
+    'attack_on_agression'          => 'Attack On Aggression',
     'attack_on_war'                => 'Attack On War',
     'corp_member_access'           => 'Corp Member Access',
     'alliance_member_access'       => 'Alliance Member Access',
@@ -546,8 +546,8 @@ return [
     'mail_as_threads'              => 'View Mail as Threads',
     'number_format'                => 'Number Format',
     'current_format'               => 'Current Format',
-    'thousands_seperator'          => 'Thousands Seperator',
-    'decimal_seperator'            => 'Decimal Seperator',
+    'thousands_seperator'          => 'Thousands Separator',
+    'decimal_seperator'            => 'Decimal Separator',
     'email_notifications'          => 'Email Notifications',
     'setup_token_now'              => 'Setup Token Now',
     'owned_keys'                   => 'Owned Keys',

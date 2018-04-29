@@ -95,8 +95,6 @@ class SeatController extends Controller
                 return 'Error fetching latest SDE version';
             }
 
-            return 'Loading...';
-
         });
 
         return response()->json(['version' => $sde_version]);

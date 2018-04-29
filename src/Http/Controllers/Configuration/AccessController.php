@@ -33,7 +33,7 @@ use Seat\Web\Http\Validation\RolePermission;
 use Seat\Web\Http\Validation\RoleUser;
 
 /**
- * Class AccessControllerr.
+ * Class AccessController.
  * @package Seat\Web\Http\Controllers\Configuration
  */
 class AccessController extends Controller

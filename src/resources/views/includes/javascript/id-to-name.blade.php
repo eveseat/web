@@ -6,7 +6,9 @@
     var arrays = [], size = 250;
 
     $('[rel="id-to-name"]').each(function () {
-      var val = $(this).text();
+
+      var val = $(this).text().toString();
+
       //add item to array if it's a valid integer
       if (!isNaN(parseInt(val)))
           items.push(val);

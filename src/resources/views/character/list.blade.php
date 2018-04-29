@@ -41,7 +41,7 @@
         {data: 'name', name: 'name'},
         {data: 'corporation_id', name: 'corporation_id'},
         {data: 'alliance_id', name: 'alliance_id'},
-        {data: 'security_status', name: 'security_status'},
+        {data: 'security_status', name: 'security_status'}
       ],
       dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
       "fnDrawCallback": function () {

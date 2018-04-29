@@ -76,7 +76,7 @@
       {data: 'characterName', name: 'characterName'},
       {data: 'corporationName', name: 'corporationName'},
       {data: 'allianceName', name: 'allianceName'},
-      {data: 'standing', name: 'standing'},
+      {data: 'standing', name: 'standing'}
     ],
     dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
     'fnDrawCallback': function () {
@@ -91,7 +91,7 @@
   $(document.body).on("change", "select#standings-profile-id", function () {
 
     // Shitty hack so we can replace the id. Muhaha.
-    var url = "{{ route('character.view.intel.standingscomparison.data', ['character_id' => $request->character_id, 'profile_id' => ':id']) }}"
+    var url = "{{ route('character.view.intel.standingscomparison.data', ['character_id' => $request->character_id, 'profile_id' => ':id']) }}";
     url = url.replace(':id', this.value);
 
     // Load the data from the new URL and populate the DataTable.

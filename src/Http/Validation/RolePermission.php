@@ -75,7 +75,7 @@ class RolePermission extends FormRequest
             // 'in' constraint on the validation rules. We do this by
             // running array map on the categorized permissions and
             // appending the category to the rule to match the value
-            // the form requets would have sent.
+            // the form request would have sent.
             if (str_contains($value, '.')) {
 
                 $category = explode('.', $value)[0];

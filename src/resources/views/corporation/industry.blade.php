@@ -68,7 +68,7 @@
     var filterGroup = $('<div class="btn-group btn-group-justified" role="group">');
 
     var filterRunning = $('<button class="btn btn-primary disabled">Running</button>');
-    filterRunning.click(function(){
+    filterRunning.on('click', function(){
       $(this).addClass('disabled');
       filterPaused.removeClass('disabled');
       filterCompleted.removeClass('disabled');
@@ -81,7 +81,7 @@
     });
 
     var filterPaused = $('<button class="btn btn-warning">Paused</button>');
-    filterPaused.click(function(){
+    filterPaused.on('click', function(){
       filterRunning.removeClass('disabled');
       $(this).addClass('disabled');
       filterCompleted.removeClass('disabled');
@@ -94,7 +94,7 @@
     });
 
     var filterCompleted = $('<button class="btn btn-success">Completed</button>');
-    filterCompleted.click(function(){
+    filterCompleted.on('click', function(){
       filterRunning.removeClass('disabled');
       filterPaused.removeClass('disabled');
       $(this).addClass('disabled');
@@ -107,7 +107,7 @@
     });
 
     var filterCancelled = $('<button class="btn btn-danger">Cancelled</button></div>');
-    filterCancelled.click(function(){
+    filterCancelled.on('click', function(){
         filterRunning.removeClass('disabled');
         filterPaused.removeClass('disabled');
         filterCompleted.removeClass('disabled');
@@ -120,7 +120,7 @@
     });
 
     var filterHistory = $('<button class="btn btn-default">History</button></div>');
-    filterHistory.click(function(){
+    filterHistory.on('click', function(){
       filterRunning.removeClass('disabled');
       filterPaused.removeClass('disabled');
       filterCompleted.removeClass('disabled');

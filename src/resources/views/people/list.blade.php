@@ -161,7 +161,7 @@
 <script>
 
   // Update the modal key_id to the clicked one
-  $("a#add-to-existing").click(function () {
+  $("a#add-to-existing").on('click', function () {
 
     $("input#group-add-key-id-value")
         .val($(this).attr('a-key-id'));
@@ -177,7 +177,7 @@
           q   : params.term, // search term
           page: params.page
         };
-      },
+      }
     }
   });
 

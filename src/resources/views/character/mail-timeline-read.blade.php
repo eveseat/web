@@ -84,9 +84,6 @@
 
       </div>
 
-      </div>
-      </li>
-
       <li>
         <i class="fa fa-clock-o bg-gray"></i>
       </li>
@@ -96,6 +93,6 @@
 
 @push('javascript')
 
-@include('web::includes.javascript.id-to-name')
+  @include('web::includes.javascript.id-to-name')
 
 @endpush

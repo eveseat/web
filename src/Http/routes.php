@@ -142,7 +142,7 @@ Route::group([
                 include __DIR__ . '/Routes/Configuration/User.php';
             });
 
-            // Access Mangement
+            // Access Management
             Route::group(['prefix' => 'access'], function () {
 
                 include __DIR__ . '/Routes/Configuration/Access.php';
@@ -180,8 +180,8 @@ Route::group([
 
         });
 
-        // Impersonation Helper Group. This one is Seperate purely
-        // because we dont want to restrict this to superusers only.
+        // Impersonation Helper Group. This one is Separate purely
+        // because we don't want to restrict this to superusers only.
         // For obvious reasons I hope...
         Route::group([
             'namespace' => 'Configuration',

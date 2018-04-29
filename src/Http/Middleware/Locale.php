@@ -34,6 +34,7 @@ class Locale
      * @param  \Closure                 $next
      *
      * @return mixed
+     * @throws \Seat\Services\Exceptions\SettingException
      */
     public function handle($request, Closure $next)
     {

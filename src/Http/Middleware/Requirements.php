@@ -31,11 +31,11 @@ use Closure;
 class Requirements
 {
     /**
-     * An array of extentions *required* by SeAT.
+     * An array of extensions *required* by SeAT.
      *
      * @var array
      */
-    public static $extentions = [
+    public static $extensions = [
         'mcrypt', 'intl', 'gd', 'PDO', 'curl', 'mbstring', 'dom', 'bz2',
     ];
 
@@ -50,17 +50,17 @@ class Requirements
     public function handle($request, Closure $next)
     {
 
-        // Get the status of all of the extentions
-        $requirements = collect(array_map(function ($extention) {
+        // Get the status of all of the extensions
+        $requirements = collect(array_map(function ($extension) {
 
             return [
-                'name'   => $extention,
-                'loaded' => extension_loaded($extention),
+                'name'   => $extension,
+                'loaded' => extension_loaded($extension),
             ];
 
-        }, self::$extentions))->sortBy('name');
+        }, self::$extensions))->sortBy('name');
 
-        // If there is an extention not loaded (aka false), then
+        // If there is an extension not loaded (aka false), then
         // render a view with the information in it.
         if (! $requirements->filter(function ($item) {
 
@@ -74,7 +74,7 @@ class Requirements
         if (! version_compare(phpversion(), '5.5.14', '>='))
             return view('web::requirements.phpversion');
 
-        // Everyting ok \o/
+        // Everything ok \o/
         return $next($request);
     }
 }

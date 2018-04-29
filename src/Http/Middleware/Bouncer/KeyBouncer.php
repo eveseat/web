@@ -54,7 +54,7 @@ class KeyBouncer
         if ($user->has('apikey.' . $permission, false))
             return $next($request);
 
-        // If we dont have the required permission, check
+        // If we don't have the required permission, check
         // if the current user owns the key.
         if (in_array($request->key_id, $user->keys->pluck('key_id')->all()))
             return $next($request);

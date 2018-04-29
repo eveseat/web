@@ -57,6 +57,7 @@ class CharacterMenu extends AbstractMenu
      * @param  View $view
      *
      * @return void
+     * @throws \Seat\Web\Exceptions\PackageMenuBuilderException
      */
     public function compose(View $view)
     {

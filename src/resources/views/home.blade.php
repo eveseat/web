@@ -209,7 +209,7 @@
                   }
               }
           });
-      })
+      });
 
       {{-- only request the graph data if there is a main character! --}}
       @if (setting('main_character_id') != 1 && !is_null(setting('main_character_name')))

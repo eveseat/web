@@ -51,7 +51,7 @@
         {data: 'id', name: 'id', visible: false},
         {data: 'created_at', name: 'created_at', render: human_readable},
         {data: 'type', name: 'type'},
-        {data: 'message', name: 'message'},
+        {data: 'message', name: 'message'}
       ]
     });
   });

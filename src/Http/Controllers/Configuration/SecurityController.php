@@ -59,6 +59,5 @@ class SecurityController extends Controller
                     return $row->user->name;
             })
             ->make(true);
-
     }
 }

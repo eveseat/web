@@ -67,7 +67,7 @@
 @push('javascript')
 
 <script>
-  $("a#modules-tab").click(function () {
+  $("a#modules-tab").on('click', function () {
 
     // Grab the starbaseID
     var starbase_id = $(this).attr('a-starbase-id');

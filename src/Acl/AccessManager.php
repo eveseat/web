@@ -81,15 +81,12 @@ trait AccessManager
      * Remove a role by title.
      *
      * @param string $title
-     *
-     * @return null
      */
     public function removeRoleByTitle(string $title)
     {
 
         $role = RoleModel::where('title', $title)->first();
         $this->removeRole($role->id);
-
     }
 
     /**
@@ -138,7 +135,7 @@ trait AccessManager
 
         // If the role does not already have the permission
         // add it. We will also apply the inverse rule as an
-        // extra attrivute on save()
+        // extra attribute on save()
         if (! $role->permissions->contains($permission->id))
             $role->permissions()->save($permission, ['not' => $inverse]);
 

@@ -56,7 +56,7 @@ class IntelController extends Controller
     /**
      * @param int $character_id
      *
-     * @return
+     * @return mixed
      */
     public function getTopWalletJournalData(int $character_id)
     {
@@ -89,7 +89,7 @@ class IntelController extends Controller
     /**
      * @param int $character_id
      *
-     * @return
+     * @return mixed
      */
     public function getTopTransactionsData(int $character_id)
     {
@@ -119,7 +119,7 @@ class IntelController extends Controller
     /**
      * @param int $character_id
      *
-     * @return
+     * @return mixed
      */
     public function getTopMailFromData(int $character_id)
     {

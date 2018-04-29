@@ -59,9 +59,9 @@
         {data: 'created_at', name: 'created_at', render: human_readable},
         {data: 'title', name: 'title'},
         {data: 'note', name: 'note'},
-        {data: 'actions', name: 'actions', searchable: false},
+        {data: 'actions', name: 'actions', searchable: false}
       ],
-      dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
+      dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>'
     });
   });
 

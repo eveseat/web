@@ -36,6 +36,6 @@ class Attempt
     public static function handle(Attempting $data)
     {
 
-        // TODO: Matchup the attmempt to write to the sec log
+        // TODO: Match the attempt to write to the sec log
     }
 }

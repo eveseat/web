@@ -52,7 +52,6 @@ class EveOnlineProvider extends AbstractProvider implements ProviderInterface
      * Get the User instance for the authenticated user.
      *
      * @return \Laravel\Socialite\Contracts\User
-     * @throws \Seat\Web\Extentions\InvalidStateException
      */
     public function user()
     {
