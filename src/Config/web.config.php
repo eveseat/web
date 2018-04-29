@@ -23,7 +23,6 @@
 return [
 
     'version'                  => '2.0.17',
-    'max_access_mask'          => 4294967295,
     'queue_status_update_time' => 10 * 1000, // milliseconds = seconds x 1,000
 
 ];
