@@ -93,6 +93,13 @@ return [
         'route'          => 'character.view.market',
     ],
     [
+        'name'           => 'mining-ledger',
+        'label'          => 'web::seat.mining',
+        'permission'     => 'character.mining',
+        'highlight_view' => 'mining-ledger',
+        'route'          => 'character.view.mining_ledger',
+    ],
+    [
         'name'           => 'notifications',
         'label'          => 'web::seat.notifications',
         'permission'     => 'character.notifications',
