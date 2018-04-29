@@ -25,7 +25,6 @@ namespace Seat\Web\Http\Controllers\Auth;
 use Laravel\Socialite\Contracts\Factory as Socialite;
 use Laravel\Socialite\Two\User as SocialiteUser;
 use Seat\Eveapi\Models\RefreshToken;
-use Seat\Web\Http\Controllers\Auth\Response;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\Group;
 use Seat\Web\Models\User;
