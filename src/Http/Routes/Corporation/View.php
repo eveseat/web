@@ -162,6 +162,18 @@ Route::group(['prefix' => 'view/ledger'], function () {
         'uses'       => 'LedgerController@getPlanetaryInteractionByMonth',
     ]);
 
+    Route::get('mission/{corporation_id}/{year?}/{month?}', [
+        'as'         => 'corporation.view.ledger.missionbymonth',
+        'middleware' => 'corporationbouncer:ledger',
+        'uses'       => 'LedgerController@getMissionByMonth',
+    ]);
+
+    Route::get('incursion/{corporation_id}/{year?}/{month?}', [
+        'as'         => 'corporation.view.ledger.incursionbymonth',
+        'middleware' => 'corporationbouncer:ledger',
+        'uses'       => 'LedgerController@getIncursionByMonth',
+    ]);
+
 });
 
 Route::get('/view/summary/{corporation_id}', [
