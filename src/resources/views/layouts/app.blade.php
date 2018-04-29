@@ -113,7 +113,6 @@
 {{-- This script is here as we need Laravel to generate the route --}}
 <script>
   // Periodic Queue Status Updates
-  /*
   (function worker() {
     $.ajax({
       type    : "get",
@@ -128,7 +127,6 @@
       }
     });
   })();
-  */
 </script>
 
 <!-- view specific scripts -->

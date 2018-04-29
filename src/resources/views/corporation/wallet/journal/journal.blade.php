@@ -58,6 +58,7 @@
       dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
       "fnDrawCallback": function () {
         $(document).ready(function () {
+          $("[data-toggle=tooltip]").tooltip();
           $("img").unveil(100);
           ids_to_names();
         });
