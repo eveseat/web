@@ -29,7 +29,9 @@
             <dt>{{ trans('web::seat.skill_training_end') }}</dt>
             <dd>
               @if($skill_queue->count() > 0)
-                {{ human_diff(carbon($skill_queue->first()->finish_date)->toDateString()) }} on {{ carbon($skill_queue->first()->finish_date)->toDateString() }} at {{ carbon($skill_queue->first()->finish_date)->toTimeString() }}
+                {{ human_diff(carbon($skill_queue->first()->finish_date)->toDateString()) }}
+                on {{ carbon($skill_queue->first()->finish_date)->toDateString() }}
+                at {{ carbon($skill_queue->first()->finish_date)->toTimeString() }}
               @else
                 {{ trans('web::seat.no_skill_training') }}
               @endif
@@ -46,14 +48,14 @@
                       <span class="col-md-8" data-toggle="tooltip" title=""
                             @if($skill->endTime != '0000-00-00 00:00:00')
                             data-original-title="Ends {{ human_diff(carbon($skill->finish_date)->toDateString()) }} on {{ carbon($skill->finish_date)->toDateString() }} at {{ carbon($skill->finish_date)->toTimeString() }}"
-                              @endif>{{ $skill->type->typeName }}</span>
+                          @endif>{{ $skill->type->typeName }}</span>
                       <span class="col-md-4">
                         @for($i = 1; $i <= $skill->finished_level; $i++)
-                        @if($i == $skill->finished_level)
-                        <span class="fa fa-star text-green"></span>
-                        @else
-                        <span class="fa fa-star"></span>
-                        @endif
+                          @if($i == $skill->finished_level)
+                            <span class="fa fa-star text-green"></span>
+                          @else
+                            <span class="fa fa-star"></span>
+                          @endif
                         @endfor
                       </span>
                     </li>
@@ -76,7 +78,8 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ trans('web::seat.jump_fatigue') }} &amp; {{ trans_choice('web::seat.jump_clones', 0) }}</h3>
+          <h3 class="panel-title">{{ trans('web::seat.jump_fatigue') }}
+            &amp; {{ trans_choice('web::seat.jump_clones', 0) }}</h3>
         </div>
         <div class="panel-body">
 
@@ -112,9 +115,9 @@
 
                   @foreach($jump_clones as $clone)
                     @if(!is_null($clone->location))
-                    <li>Located at <b>{{ $clone->location->stationName }}</b></li>
+                      <li>Located at <b>{{ $clone->location->stationName }}</b></li>
                     @else
-                    <li>Location is unknown</li>
+                      <li>Location is unknown</li>
                     @endif
                   @endforeach
 
@@ -171,21 +174,22 @@
         <div class="panel-body">
 
           @if(count($employment) > 0)
-          <ul class="list-unstyled">
+            <ul class="list-unstyled">
 
-            @foreach($employment as $history)
+              @foreach($employment as $history)
 
-              <li>
-                {!! img('corporation', $history->corporation_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-                <b><span rel="id-to-name">{{ $history->corporation_id }}</span></b> on {{ carbon($history->start_date)->toDateString() }}
-                <span class="pull-right">
+                <li>
+                  {!! img('corporation', $history->corporation_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  <b><span rel="id-to-name">{{ $history->corporation_id }}</span></b>
+                  on {{ carbon($history->start_date)->toDateString() }}
+                  <span class="pull-right">
                  {{ human_diff($history->start_date) }}
                 </span>
-              </li>
+                </li>
 
-            @endforeach
+              @endforeach
 
-          </ul>
+            </ul>
           @else
             {{ trans('web::seat.no_employment_information') }}
           @endif
@@ -205,11 +209,11 @@
         </div>
         <div class="panel-body">
           @if(count($titles) > 0)
-          <ul class="list-unstyled">
-            @foreach($titles as $title)
-              <li>{!! clean_ccp_html($title->name) !!}</li>
-            @endforeach
-          </ul>
+            <ul class="list-unstyled">
+              @foreach($titles as $title)
+                <li>{!! clean_ccp_html($title->name) !!}</li>
+              @endforeach
+            </ul>
           @else
             {{ trans('no_corporation_titles') }}
           @endif
@@ -225,5 +229,5 @@
 @stop
 
 @push('javascript')
-@include('web::includes.javascript.id-to-name')
+  @include('web::includes.javascript.id-to-name')
 @endpush

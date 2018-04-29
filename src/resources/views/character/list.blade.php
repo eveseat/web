@@ -30,33 +30,33 @@
 
 @push('javascript')
 
-<script>
+  <script>
 
-  $(function () {
-    $('table#character-list').DataTable({
-      processing      : true,
-      serverSide      : true,
-      ajax            : '{{ route('character.list.data') }}',
-      columns         : [
-        {data: 'name', name: 'name'},
-        {data: 'corporation_id', name: 'corporation_id'},
-        {data: 'alliance_id', name: 'alliance_id'},
-        {data: 'security_status', name: 'security_status'}
-      ],
-      dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
-      "fnDrawCallback": function () {
-        $(document).ready(function () {
-          $("img").unveil(100);
+    $(function () {
+      $('table#character-list').DataTable({
+        processing      : true,
+        serverSide      : true,
+        ajax            : '{{ route('character.list.data') }}',
+        columns         : [
+          {data: 'name', name: 'name'},
+          {data: 'corporation_id', name: 'corporation_id'},
+          {data: 'alliance_id', name: 'alliance_id'},
+          {data: 'security_status', name: 'security_status'}
+        ],
+        dom             : '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
+        "fnDrawCallback": function () {
+          $(document).ready(function () {
+            $("img").unveil(100);
 
-          ids_to_names();
-        });
-      },
-      order           : [[0, "asc"]]
+            ids_to_names();
+          });
+        },
+        order           : [[0, "asc"]]
+      });
     });
-  });
 
-</script>
+  </script>
 
-@include('web::includes.javascript.id-to-name')
+  @include('web::includes.javascript.id-to-name')
 
 @endpush

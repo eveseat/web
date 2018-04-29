@@ -126,6 +126,7 @@ class SearchController extends Controller
                     ->render();
             })
             ->addColumn('body', function (MailHeader $row) {
+
                 return str_limit(clean_ccp_html($row->body->body), 30, '...');
             })
             ->editColumn('tocounts', function ($row) {

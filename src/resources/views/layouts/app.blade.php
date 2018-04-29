@@ -25,20 +25,21 @@
   <!-- Skin -->
   <link rel="stylesheet" href="{{ asset('web/css/skins/' . setting('skin') . '.min.css') }}">
   <!-- Google Font -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <!-- SeAT CSS -->
   <link rel="stylesheet" href="{{ asset('web/css/seat.css') }}">
   <!-- Custom layout CSS -->
   @if(file_exists(public_path('custom-layout.css')))
 
-    <link rel="stylesheet" href="{{ asset('custom-layout.css') }}" />
+    <link rel="stylesheet" href="{{ asset('custom-layout.css') }}"/>
 
-  @endif
+@endif
 
-  <!-- view specific head content -->
-  @stack('head')
+<!-- view specific head content -->
+@stack('head')
 
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>

@@ -17,54 +17,54 @@
       </h4>
 
       <p>
-        <ul class="list-unstyled">
-          <li>
-            <b>Sent:</b>
-            {{ $message->timestamp }} ({{ human_diff($message->timestamp) }})
-          </li>
-          <li>
-            <b>From:</b>
-            <a href="{{ route('character.view.sheet', ['character_id' => $message->from]) }}">
-              {!! img('character', $message->from, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-              <span rel="id-to-name">{{ $message->from }}</span>
-            </a>
-          </li>
+      <ul class="list-unstyled">
+        <li>
+          <b>Sent:</b>
+          {{ $message->timestamp }} ({{ human_diff($message->timestamp) }})
+        </li>
+        <li>
+          <b>From:</b>
+          <a href="{{ route('character.view.sheet', ['character_id' => $message->from]) }}">
+            {!! img('character', $message->from, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+            <span rel="id-to-name">{{ $message->from }}</span>
+          </a>
+        </li>
 
-          @if($message->recipients->where('recipient_type', 'alliance')->count() > 0)
+        @if($message->recipients->where('recipient_type', 'alliance')->count() > 0)
           <li>
             <b>To Alliance:</b>
             @foreach($message->recipients->where('recipient_type', 'alliance') as $alliance)
-            {!! img('alliance', $alliance->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-            <span rel="id-to-name">{{ $alliance->recipient_id }}</span>
+              {!! img('alliance', $alliance->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+              <span rel="id-to-name">{{ $alliance->recipient_id }}</span>
             @endforeach
           </li>
-          @endif
+        @endif
 
-          @if($message->recipients->where('recipient_type', 'corporation')->count() > 0)
+        @if($message->recipients->where('recipient_type', 'corporation')->count() > 0)
           <li>
             <b>To Corporation:</b>
             @foreach($message->recipients->where('recipient_type', 'corporation') as $corporation)
-            {!! img('corporation', $corporation->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-            <span rel="id-to-name">{{ $corporation->recipient_id }}</span>
+              {!! img('corporation', $corporation->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+              <span rel="id-to-name">{{ $corporation->recipient_id }}</span>
             @endforeach
           </li>
-          @endif
+        @endif
 
-          @if($message->recipients->where('recipient_type', 'character')->count() > 0)
+        @if($message->recipients->where('recipient_type', 'character')->count() > 0)
           <li>
             <b>To Characters:</b>
 
             @foreach($message->recipients->where('recipient_type', 'character') as $character)
-            <a href="{{ route('character.view.sheet', ['character_id' => $character->recipient_id]) }}">
-              {!! img('character', $character->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-              <span rel="id-to-name">{{ $character->recipient_id }}</span>
-            </a>
+              <a href="{{ route('character.view.sheet', ['character_id' => $character->recipient_id]) }}">
+                {!! img('character', $character->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                <span rel="id-to-name">{{ $character->recipient_id }}</span>
+              </a>
             @endforeach
 
           </li>
-          @endif
+        @endif
 
-        </ul>
+      </ul>
       </p>
 
       <p>
@@ -88,6 +88,6 @@
 
 @push('javascript')
 
-@include('web::includes.javascript.id-to-name')
+  @include('web::includes.javascript.id-to-name')
 
 @endpush

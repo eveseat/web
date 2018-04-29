@@ -401,7 +401,8 @@
         {{ trans('web::seat.linked_characters') }}
 
         <span class="pull-right">
-          <a href="https://community.eveonline.com/support/third-party-applications/" target="_blank" class="btn btn-success btn-xs">
+          <a href="https://community.eveonline.com/support/third-party-applications/" target="_blank"
+             class="btn btn-success btn-xs">
             {{ trans('web::seat.view_third_party_access') }}
           </a>
           <a href="{{ route('auth.eve') }}" class="btn btn-primary btn-xs">

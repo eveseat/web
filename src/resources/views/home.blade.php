@@ -193,51 +193,51 @@
 @push('javascript')
   <script>
 
-      $.get("{{ route('home.chart.serverstatus') }}", function (data) {
+    $.get("{{ route('home.chart.serverstatus') }}", function (data) {
 
-          new Chart($("canvas#serverstatus"), {
-              type: 'line',
-              data: data,
-              options: {
-                  legend: {
-                      display: false
-                  },
-                  scales: {
-                      xAxes: [{
-                          display: false
-                      }]
-                  }
-              }
-          });
+      new Chart($("canvas#serverstatus"), {
+        type   : 'line',
+        data   : data,
+        options: {
+          legend: {
+            display: false
+          },
+          scales: {
+            xAxes: [{
+              display: false
+            }]
+          }
+        }
       });
+    });
 
-      {{-- only request the graph data if there is a main character! --}}
-      @if (setting('main_character_id') != 1 && !is_null(setting('main_character_name')))
+    {{-- only request the graph data if there is a main character! --}}
+    @if (setting('main_character_id') != 1 && !is_null(setting('main_character_name')))
 
-      $.get("{{ route('character.view.skills.graph.level', ['character_id' => setting('main_character_id')]) }}", function (data) {
-          new Chart($("canvas#skills-level"), {
-              type: 'pie',
-              data: data
-          });
+    $.get("{{ route('character.view.skills.graph.level', ['character_id' => setting('main_character_id')]) }}", function (data) {
+      new Chart($("canvas#skills-level"), {
+        type: 'pie',
+        data: data
       });
+    });
 
-      $.get("{{ route('character.view.skills.graph.coverage', ['character_id' => setting('main_character_id')]) }}", function (data) {
-          new Chart($('canvas#skills-coverage'), {
-              type: 'radar',
-              data: data,
-              options: {
-                  scale: {
-                      ticks: {
-                          beginAtZero: true,
-                          max: 100
-                      }
-                  },
-                  legend: {
-                      display: false
-                  }
-              }
-          });
+    $.get("{{ route('character.view.skills.graph.coverage', ['character_id' => setting('main_character_id')]) }}", function (data) {
+      new Chart($('canvas#skills-coverage'), {
+        type   : 'radar',
+        data   : data,
+        options: {
+          scale : {
+            ticks: {
+              beginAtZero: true,
+              max        : 100
+            }
+          },
+          legend: {
+            display: false
+          }
+        }
       });
+    });
 
     @endif
 

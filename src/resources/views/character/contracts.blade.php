@@ -39,7 +39,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                    aria-hidden="true">&times;</span></button>
+                aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel">{{ trans('web::seat.contract_items') }}</h4>
         </div>
         <div class="modal-body">
@@ -55,62 +55,64 @@
 
 @push('javascript')
 
-<script>
+  <script>
 
-  $(function () {
-    $('table#character-contracts').DataTable({
-      processing      : true,
-      serverSide      : true,
-      ajax            : '{{ route('character.view.contracts.data', ['character_id' => $request->character_id]) }}',
-      columns         : [
-        {data: 'date_issued', name: 'date_issued', render: human_readable},
-        {data: 'issuer_id', name: 'issuer_id'},
-        {data: 'type', name: 'type'},
-        {data: 'status', name: 'status', render: function(data, type, row){
-            var str = data.toLowerCase();
-            return str.replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g, function($1){
+    $(function () {
+      $('table#character-contracts').DataTable({
+        processing      : true,
+        serverSide      : true,
+        ajax            : '{{ route('character.view.contracts.data', ['character_id' => $request->character_id]) }}',
+        columns         : [
+          {data: 'date_issued', name: 'date_issued', render: human_readable},
+          {data: 'issuer_id', name: 'issuer_id'},
+          {data: 'type', name: 'type'},
+          {
+            data: 'status', name: 'status', render: function (data, type, row) {
+              var str = data.toLowerCase();
+              return str.replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g, function ($1) {
                 return $1.toUpperCase();
-            });
-        }},
-        {data: 'title', name: 'title'},
-        {data: 'collateral', name: 'collateral'},
-        {data: 'price', name: 'price'},
-        {data: 'reward', name: 'reward'},
-        {data: 'contents', name: 'contents', searchable: false}
-      ],
-      dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
-      "fnDrawCallback": function () {
-        $(document).ready(function () {
+              });
+            }
+          },
+          {data: 'title', name: 'title'},
+          {data: 'collateral', name: 'collateral'},
+          {data: 'price', name: 'price'},
+          {data: 'reward', name: 'reward'},
+          {data: 'contents', name: 'contents', searchable: false}
+        ],
+        dom             : '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
+        "fnDrawCallback": function () {
+          $(document).ready(function () {
 
-          // Load images when they are in the viewport
-          $("img").unveil(100);
+            // Load images when they are in the viewport
+            $("img").unveil(100);
 
-          // Resolve EVE ids to names.
-          ids_to_names();
+            // Resolve EVE ids to names.
+            ids_to_names();
 
-          // After loading the contracts data, bind a click event
-          // on items with the contract-item class.
-          $('a.contract-item').on('click', function () {
+            // After loading the contracts data, bind a click event
+            // on items with the contract-item class.
+            $('a.contract-item').on('click', function () {
 
-            // Small hack to get an ajaxable url from Laravel
-            var url = "{{ route('character.view.contracts.items', ['character_id' => $request->character_id, 'contract_id' => ':contractid']) }}";
-            var contract_id = $(this).attr('a-contract-id');
-            url = url.replace(':contractid', contract_id);
+              // Small hack to get an ajaxable url from Laravel
+              var url = "{{ route('character.view.contracts.items', ['character_id' => $request->character_id, 'contract_id' => ':contractid']) }}";
+              var contract_id = $(this).attr('a-contract-id');
+              url = url.replace(':contractid', contract_id);
 
-            // Perform an ajax request for the contract items
-            $.get(url, function (data) {
-              $('span#contract-items-result').html(data);
+              // Perform an ajax request for the contract items
+              $.get(url, function (data) {
+                $('span#contract-items-result').html(data);
+              });
+
             });
 
           });
-
-        });
-      }
+        }
+      });
     });
-  });
 
-</script>
+  </script>
 
-@include('web::includes.javascript.id-to-name')
+  @include('web::includes.javascript.id-to-name')
 
 @endpush

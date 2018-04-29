@@ -54,8 +54,8 @@ class EditUser extends FormRequest
         $user_id = $this->request->get('user_id');
 
         return [
-            'user_id'  => 'required|exists:users,id',
-            'email'    => 'required|email|unique:users,email,' . $user_id,
+            'user_id' => 'required|exists:users,id',
+            'email'   => 'required|email|unique:users,email,' . $user_id,
         ];
     }
 }

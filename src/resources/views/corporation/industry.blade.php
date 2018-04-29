@@ -35,114 +35,114 @@
 
 @push('javascript')
 
-<script>
+  <script>
 
-  $(function () {
-    var table = $('table#corporation-industry').DataTable({
-      processing      : true,
-      serverSide      : true,
-      ajax            : '{{ route('corporation.view.industry.data', ['corporation_id' => $request->corporation_id]) }}',
-      dom             : '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-12"<"corporation-industry_filters">>><"row"<"col-sm-12"rt>><"row"<"col-sm-5"i><"col-sm-7"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
-      columns         : [
-        {data: 'end_date', name: 'end_date', render: human_readable},
-        {data: 'installer_id', name: 'installer_id'},
-        {data: 'solarSystemName', name: 'solarSystemName'},
-        {data: 'activityName', name: 'activityName'},
-        {data: 'runs', name: 'runs'},
-        {data: 'blueprintTypeName', name: 'blueprintTypeName'},
-        {data: 'productTypeName', name: 'productTypeName'},
-        {data: 'status', name: 'status', visible: false}
-      ],
-      "fnDrawCallback": function () {
-        $(document).ready(function () {
-          $("img").unveil(100);
-        });
-      }
-    });
+    $(function () {
+      var table = $('table#corporation-industry').DataTable({
+        processing      : true,
+        serverSide      : true,
+        ajax            : '{{ route('corporation.view.industry.data', ['corporation_id' => $request->corporation_id]) }}',
+        dom             : '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-12"<"corporation-industry_filters">>><"row"<"col-sm-12"rt>><"row"<"col-sm-5"i><"col-sm-7"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
+        columns         : [
+          {data: 'end_date', name: 'end_date', render: human_readable},
+          {data: 'installer_id', name: 'installer_id'},
+          {data: 'solarSystemName', name: 'solarSystemName'},
+          {data: 'activityName', name: 'activityName'},
+          {data: 'runs', name: 'runs'},
+          {data: 'blueprintTypeName', name: 'blueprintTypeName'},
+          {data: 'productTypeName', name: 'productTypeName'},
+          {data: 'status', name: 'status', visible: false}
+        ],
+        "fnDrawCallback": function () {
+          $(document).ready(function () {
+            $("img").unveil(100);
+          });
+        }
+      });
 
-    // initial filter
-    table.column(7)
-      .search('[[:<:]]active[[:>:]]', true, false) // strict lookup
-      .draw();
-
-    var filterGroup = $('<div class="btn-group btn-group-justified" role="group">');
-
-    var filterRunning = $('<button class="btn btn-primary disabled">Running</button>');
-    filterRunning.on('click', function(){
-      $(this).addClass('disabled');
-      filterPaused.removeClass('disabled');
-      filterCompleted.removeClass('disabled');
-      filterCancelled.removeClass('disabled');
-      filterHistory.removeClass('disabled');
-
+      // initial filter
       table.column(7)
           .search('[[:<:]]active[[:>:]]', true, false) // strict lookup
           .draw();
-    });
 
-    var filterPaused = $('<button class="btn btn-warning">Paused</button>');
-    filterPaused.on('click', function(){
-      filterRunning.removeClass('disabled');
-      $(this).addClass('disabled');
-      filterCompleted.removeClass('disabled');
-      filterCancelled.removeClass('disabled');
-      filterHistory.removeClass('disabled');
+      var filterGroup = $('<div class="btn-group btn-group-justified" role="group">');
 
-      table.column(7)
-          .search('[[:<:]]paused[[:>:]]', true, false) // strict lookup
-          .draw();
-    });
+      var filterRunning = $('<button class="btn btn-primary disabled">Running</button>');
+      filterRunning.on('click', function () {
+        $(this).addClass('disabled');
+        filterPaused.removeClass('disabled');
+        filterCompleted.removeClass('disabled');
+        filterCancelled.removeClass('disabled');
+        filterHistory.removeClass('disabled');
 
-    var filterCompleted = $('<button class="btn btn-success">Completed</button>');
-    filterCompleted.on('click', function(){
-      filterRunning.removeClass('disabled');
-      filterPaused.removeClass('disabled');
-      $(this).addClass('disabled');
-      filterCancelled.removeClass('disabled');
-      filterHistory.removeClass('disabled');
+        table.column(7)
+            .search('[[:<:]]active[[:>:]]', true, false) // strict lookup
+            .draw();
+      });
 
-      table.column(7)
-          .search('[[:<:]]ready[[:>:]]', true, false) // strict lookup
-          .draw();
-    });
+      var filterPaused = $('<button class="btn btn-warning">Paused</button>');
+      filterPaused.on('click', function () {
+        filterRunning.removeClass('disabled');
+        $(this).addClass('disabled');
+        filterCompleted.removeClass('disabled');
+        filterCancelled.removeClass('disabled');
+        filterHistory.removeClass('disabled');
 
-    var filterCancelled = $('<button class="btn btn-danger">Cancelled</button></div>');
-    filterCancelled.on('click', function(){
+        table.column(7)
+            .search('[[:<:]]paused[[:>:]]', true, false) // strict lookup
+            .draw();
+      });
+
+      var filterCompleted = $('<button class="btn btn-success">Completed</button>');
+      filterCompleted.on('click', function () {
+        filterRunning.removeClass('disabled');
+        filterPaused.removeClass('disabled');
+        $(this).addClass('disabled');
+        filterCancelled.removeClass('disabled');
+        filterHistory.removeClass('disabled');
+
+        table.column(7)
+            .search('[[:<:]]ready[[:>:]]', true, false) // strict lookup
+            .draw();
+      });
+
+      var filterCancelled = $('<button class="btn btn-danger">Cancelled</button></div>');
+      filterCancelled.on('click', function () {
         filterRunning.removeClass('disabled');
         filterPaused.removeClass('disabled');
         filterCompleted.removeClass('disabled');
         $(this).addClass('disabled');
         filterHistory.removeClass('disabled');
 
-      table.column(7)
-          .search('[[:<:]]cancelled[[:>:]]', true, false) // strict lookup
-          .draw();
+        table.column(7)
+            .search('[[:<:]]cancelled[[:>:]]', true, false) // strict lookup
+            .draw();
+      });
+
+      var filterHistory = $('<button class="btn btn-default">History</button></div>');
+      filterHistory.on('click', function () {
+        filterRunning.removeClass('disabled');
+        filterPaused.removeClass('disabled');
+        filterCompleted.removeClass('disabled');
+        filterCancelled.removeClass('disabled');
+        $(this).addClass('disabled');
+
+        table.column(7)
+            .search('[[:<:]]delivered[[:>:]]|[[:<:]]reverted[[:>:]]', true, false) // strict lookup
+            .draw();
+      });
+
+      // build filter toolbar
+      filterGroup.append($('<div class="btn-group" role="group">').append(filterRunning));
+      filterGroup.append($('<div class="btn-group" role="group">').append(filterPaused));
+      filterGroup.append($('<div class="btn-group" role="group">').append(filterCompleted));
+      filterGroup.append($('<div class="btn-group" role="group">').append(filterCancelled));
+      filterGroup.append($('<div class="btn-group" role="group">').append(filterHistory));
+
+      $('div.corporation-industry_filters').append(filterGroup);
     });
 
-    var filterHistory = $('<button class="btn btn-default">History</button></div>');
-    filterHistory.on('click', function(){
-      filterRunning.removeClass('disabled');
-      filterPaused.removeClass('disabled');
-      filterCompleted.removeClass('disabled');
-      filterCancelled.removeClass('disabled');
-      $(this).addClass('disabled');
-
-      table.column(7)
-          .search('[[:<:]]delivered[[:>:]]|[[:<:]]reverted[[:>:]]', true, false) // strict lookup
-          .draw();
-    });
-
-    // build filter toolbar
-    filterGroup.append($('<div class="btn-group" role="group">').append(filterRunning));
-    filterGroup.append($('<div class="btn-group" role="group">').append(filterPaused));
-    filterGroup.append($('<div class="btn-group" role="group">').append(filterCompleted));
-    filterGroup.append($('<div class="btn-group" role="group">').append(filterCancelled));
-    filterGroup.append($('<div class="btn-group" role="group">').append(filterHistory));
-
-    $('div.corporation-industry_filters').append(filterGroup);
-  });
-
-</script>
+  </script>
 
 
 @endpush

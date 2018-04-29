@@ -53,25 +53,25 @@
             <div class="box-body">
               <table class="table table-striped table-hover table-condensed table-responsive">
                 @foreach($skills->where('groupID', $skill_group->groupID) as $skill)
-                <tr>
-                  <td><i class="fa fa-book"></i> {{ $skill->typeName }}</td>
-                  <td class="text-right">
-                    @if($skill->trained_skill_level == 0)
-                    <i class="fa fa-star-o"></i>
-                    @elseif($skill->trained_skill_level == 5)
-                    <span class="text-green">
+                  <tr>
+                    <td><i class="fa fa-book"></i> {{ $skill->typeName }}</td>
+                    <td class="text-right">
+                      @if($skill->trained_skill_level == 0)
+                        <i class="fa fa-star-o"></i>
+                      @elseif($skill->trained_skill_level == 5)
+                        <span class="text-green">
                       @for($i = 1; $i <= 5; $i++)
-                      <i class="fa fa-star"></i>
-                      @endfor
+                            <i class="fa fa-star"></i>
+                          @endfor
                     </span>
-                    @else
-                    @for($i = 1;  $i <= $skill->trained_skill_level; $i++)
-                    <i class="fa fa-star"></i>
-                    @endfor
-                    @endif
-                     | {{ $skill->trained_skill_level }}
-                  </td>
-                </tr>
+                      @else
+                        @for($i = 1;  $i <= $skill->trained_skill_level; $i++)
+                          <i class="fa fa-star"></i>
+                        @endfor
+                      @endif
+                      | {{ $skill->trained_skill_level }}
+                    </td>
+                  </tr>
                 @endforeach
               </table>
             </div><!-- /.box-body -->
@@ -99,34 +99,34 @@
 @stop
 
 @push('javascript')
-<script>
+  <script>
 
-  $.get("{{ route('character.view.skills.graph.level', ['character_id' => $request->character_id]) }}", function (data) {
-    new Chart($("canvas#skills-level"), {
-      type: 'pie',
-      data: data
+    $.get("{{ route('character.view.skills.graph.level', ['character_id' => $request->character_id]) }}", function (data) {
+      new Chart($("canvas#skills-level"), {
+        type: 'pie',
+        data: data
+      });
     });
-  });
 
-  $.get("{{ route('character.view.skills.graph.coverage', ['character_id' => $request->character_id]) }}", function (data) {
-    new Chart($('canvas#skills-coverage'), {
-      type   : 'radar',
-      data   : data,
-      options: {
-        scale : {
-          ticks: {
-            beginAtZero: true,
-            max        : 100
+    $.get("{{ route('character.view.skills.graph.coverage', ['character_id' => $request->character_id]) }}", function (data) {
+      new Chart($('canvas#skills-coverage'), {
+        type   : 'radar',
+        data   : data,
+        options: {
+          scale : {
+            ticks: {
+              beginAtZero: true,
+              max        : 100
+            }
+          },
+          legend: {
+            display: false
           }
-        },
-        legend: {
-          display: false
         }
-      }
+      });
     });
-  });
 
-  $('')
+    $('')
 
-</script>
+  </script>
 @endpush

@@ -25,24 +25,24 @@
         @foreach($contacts->sortByDesc('standing') as $contact)
           <tr class="
             @if($contact->standing > 0)
-                  success
-                @elseif($contact->standing < 0)
-                  danger
-                @endif
-                  ">
+              success
+@elseif($contact->standing < 0)
+              danger
+@endif
+              ">
             <td>
               {!! img($contact->contact_type, $contact->contact_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-                <span rel="id-to-name">{{ $contact->contact_id }}</span>
+              <span rel="id-to-name">{{ $contact->contact_id }}</span>
             </td>
             <td>{{ ucfirst($contact->contact_type) }}</td>
             <td>
               <span class="
                 @if($contact->standing > 0)
-                      text-success
-                @elseif($contact->standing < 0)
-                      text-danger
-                @endif
-                      ">
+                  text-success
+@elseif($contact->standing < 0)
+                  text-danger
+@endif
+                  ">
                 <b>{{ $contact->standing }}</b>
               </span>
             </td>
@@ -128,8 +128,8 @@
                 </a>
               @endif
               <a href="http://eve-prism.com/?view={{ $contact->contact_type }}&name={{ $contact->contact_id }}"
-                target="_blank">
-                <img src="{{ asset('web/img/eve-prism.png') }}" />
+                 target="_blank">
+                <img src="{{ asset('web/img/eve-prism.png') }}"/>
               </a>
             </td>
           </tr>

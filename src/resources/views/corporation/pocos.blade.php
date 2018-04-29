@@ -28,15 +28,15 @@
 
           <tr>
             <td>
-                @if (is_null($poco->location_id))
+              @if (is_null($poco->location_id))
                 {!! img('type', 0, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                 {{ $poco->system->itemName }}
-                @else
+              @else
                 <span data-toggle="tooltip" title="{{ $poco->planet->type->typeName }}">
                   {!! img('type', $poco->planet->typeID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                 </span>
                 {{ $poco->planet->itemName }}
-                @endif
+              @endif
             </td>
             <td>between {{ $poco->reinforce_exit_start }}h and {{ $poco->reinforce_exit_end }}h</td>
             <td>
@@ -55,15 +55,15 @@
             </td>
             <td>
               @if($poco->standing_level == 'terrible')
-              <span class="label label-danger">Terrible</span>
+                <span class="label label-danger">Terrible</span>
               @elseif($poco->standing_level == 'bad')
-              <span class="label label-warning">Bad</span>
+                <span class="label label-warning">Bad</span>
               @elseif($poco->standing_level == 'neutral')
-              <span class="label label-default">Neutral</span>
+                <span class="label label-default">Neutral</span>
               @elseif($poco->standing_level == 'good')
-              <span class="label label-info">Good</span>
+                <span class="label label-info">Good</span>
               @elseif($poco->standing_level == 'excellent')
-              <span class="label label-primary">Excellent</span>
+                <span class="label label-primary">Excellent</span>
               @endif
             </td>
             <td>{{ round((float)$poco->alliance_tax_rate * 100) }}%</td>

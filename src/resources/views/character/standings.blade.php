@@ -36,10 +36,10 @@
               <td>
                 <span class="
                   @if($standing->standing > 0)
-                        text-success
-                      @else
-                        text-danger
-                      @endif">
+                    text-success
+@else
+                    text-danger
+@endif">
                   {{ $standing->standing }}
                 </span>
               </td>

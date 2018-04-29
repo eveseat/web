@@ -51,7 +51,7 @@ class RoleUser extends FormRequest
 
         $rules = [
             'role_id' => 'required|exists:roles,id',
-            'users' => 'required|exists:users,name',
+            'users'   => 'required|exists:users,name',
         ];
 
         return $rules;

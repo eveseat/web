@@ -21,9 +21,9 @@
 
             <dt><i class="fa fa-users"></i> {{ trans('web::seat.member_capacity') }}</dt>
             @if(!is_null($sheet->memberLimit) && $sheet->memberLimit > 0)
-            <dd>{{ number( ($sheet->member_count / $sheet->memberLimit) * 100 ,2) }}% Full</dd>
+              <dd>{{ number( ($sheet->member_count / $sheet->memberLimit) * 100 ,2) }}% Full</dd>
             @else
-            <dd>100% Full</dd>
+              <dd>100% Full</dd>
             @endif
           </dl>
 
@@ -54,7 +54,7 @@
             <dd>
               <ol>
                 @foreach($divisions as $division)
-                <li>{{ $division->name }}</li>
+                  <li>{{ $division->name }}</li>
                 @endforeach
               </ol>
             </dd>
@@ -65,11 +65,11 @@
             <dd>
               <ol>
                 @foreach($wallet_divisions as $wallet_division)
-                @if(is_null($wallet_division->name))
-                <li>Master</li>
-                @else
-                <li>{{ $wallet_division->name }}</li>
-                @endif
+                  @if(is_null($wallet_division->name))
+                    <li>Master</li>
+                  @else
+                    <li>{{ $wallet_division->name }}</li>
+                  @endif
                 @endforeach
               </ol>
             </dd>

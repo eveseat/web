@@ -26,11 +26,11 @@
         @foreach($contacts->sortByDesc('standing') as $contact)
           <tr class="
             @if($contact->standing > 0)
-                  success
-                @elseif($contact->standing < 0)
-                  danger
-                @endif
-                  ">
+              success
+@elseif($contact->standing < 0)
+              danger
+@endif
+              ">
             <td>
               {!! img('auto', $contact->contact_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
               <span rel="id-to-name">{{ $contact->contact_id }}</span>
@@ -39,11 +39,11 @@
             <td>
               <span class="
                 @if($contact->standing > 0)
-                      text-success
-                @elseif($contact->standing < 0)
-                      text-danger
-                @endif
-                      ">
+                  text-success
+@elseif($contact->standing < 0)
+                  text-danger
+@endif
+                  ">
                 <b>{{ $contact->standing }}</b>
               </span>
             </td>

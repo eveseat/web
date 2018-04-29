@@ -54,9 +54,9 @@ class SeatSettings extends FormRequest
         $allowed_tracking = implode(',', Seat::$options['allow_tracking']);
 
         return [
-            'registration'                => 'required|in:' . $allowed_registration,
-            'admin_contact'               => 'required|email',
-            'allow_tracking'              => 'required|in:' . $allowed_tracking,
+            'registration'   => 'required|in:' . $allowed_registration,
+            'admin_contact'  => 'required|email',
+            'allow_tracking' => 'required|in:' . $allowed_tracking,
         ];
     }
 }

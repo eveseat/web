@@ -113,6 +113,7 @@ class ProfileController extends Controller
 
         // iterating over all retrieved account and updating email
         $accounts->each(function ($account) use ($request) {
+
             $account->email = $request->new_email;
             $account->save();
         });

@@ -65,6 +65,7 @@ class IntelController extends Controller
 
         return Datatables::of($top)
             ->editColumn('ref_type', function ($row) {
+
                 return ucwords(str_replace('_', ' ', $row->ref_type));
             })
             ->editColumn('characterName', function ($row) {

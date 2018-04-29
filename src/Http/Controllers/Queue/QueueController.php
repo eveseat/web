@@ -39,7 +39,7 @@ class QueueController extends Controller
     {
 
         return response()->json([
-            'queue_count'  => collect(resolve(WorkloadRepository::class)->get())
+            'queue_count' => collect(resolve(WorkloadRepository::class)->get())
                 ->sum('length'),
             'error_count' => app(JobRepository::class)->countRecentlyFailed(),
         ]);

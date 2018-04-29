@@ -11,9 +11,9 @@
         <div class="media-body">
           <h4 class="media-heading">{{ $character->name }}</h4>
 
-            @unless(empty($character->corporation))
-              <span>{{ $character->corporation->name }} [{{ $character->corporation->ticker }}]</span>
-            @endunless
+          @unless(empty($character->corporation))
+            <span>{{ $character->corporation->name }} [{{ $character->corporation->ticker }}]</span>
+          @endunless
 
         </div>
       </a>
