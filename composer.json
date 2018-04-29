@@ -13,21 +13,26 @@
             "Seat\\Web\\": "src/"
         }
     },
-    "minimum-stability": "alpha",
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
         "php": ">=7.1",
         "laravel/framework": "5.5.*",
         "laravel/horizon": "^1.0",
-        "eveseat/eveapi": "2.0.*",
-        "eveseat/services": "2.0.*",
-        "league/csv": "^8.1",
-        "laravel/socialite": "^2.0",
-        "guzzlehttp/guzzle": "^6.2",
-        "yajra/laravel-datatables-oracle": "6.21.*",
+        "laravel/tinker": "~1.0",
+        "laravel/socialite": "^3.0",
+        "eveseat/eveapi": "~3",
+        "eveseat/services": "~3",
+        "league/csv": "^9.1",
+        "guzzlehttp/guzzle": "^6.3",
+        "yajra/laravel-datatables-oracle": "~6",
         "components/font-awesome": "^4.7"
     },
-    "require-dev": {
-        "phpunit/phpunit": "~5.0"
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Seat\\Web\\WebServiceProvider"
+            ]
+        }
     }
 }
