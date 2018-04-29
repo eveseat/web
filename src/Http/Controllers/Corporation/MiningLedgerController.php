@@ -27,12 +27,25 @@ use Seat\Eveapi\Models\Corporation\CorporationMemberTracking;
 use Seat\Services\Repositories\Corporation\MiningLedger;
 use Seat\Web\Http\Controllers\Controller;
 
+/**
+ * Class MiningLedgerController.
+ *
+ * @package Seat\Web\Http\Controllers\Corporation
+ */
 class MiningLedgerController extends Controller
 {
     use MiningLedger;
 
-    public function getLedger(int $corporation_id, int $year = null, int $month = null) : View
+    /**
+     * @param int      $corporation_id
+     * @param int|null $year
+     * @param int|null $month
+     *
+     * @return \Illuminate\View\View
+     */
+    public function getLedger(int $corporation_id, int $year = null, int $month = null): View
     {
+
         if (is_null($year))
             $year = date('Y');
 
@@ -42,19 +55,27 @@ class MiningLedgerController extends Controller
         $ledgers = $this->getCorporationLedgers($corporation_id);
 
         $entries = $this->getCorporationLedger($corporation_id, $year, $month)
-                        ->groupBy('character_id')
-                        ->map(function ($row) {
-                            $row->quantity = $row->sum('quantity');
-                            $row->volumes = $row->sum('volumes');
-                            $row->amount = $row->sum('amount');
-                            return $row;
-                        });
+            ->groupBy('character_id')
+            ->map(function ($row) {
+
+                $row->quantity = $row->sum('quantity');
+                $row->volumes = $row->sum('volumes');
+                $row->amount = $row->sum('amount');
+
+                return $row;
+            });
 
         return view('web::corporation.mining.ledger', compact('ledgers', 'entries'));
     }
 
-    public function getTracking(int $corporation_id) : View
+    /**
+     * @param int $corporation_id
+     *
+     * @return \Illuminate\View\View
+     */
+    public function getTracking(int $corporation_id): View
     {
+
         $members = CorporationMemberTracking::where('corporation_id', $corporation_id)->get();
 
         return view('mining-ledger::corporation.views.tracking', compact('members'));

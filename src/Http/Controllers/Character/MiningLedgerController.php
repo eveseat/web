@@ -27,35 +27,55 @@ use Illuminate\View\View;
 use Seat\Services\Repositories\Character\MiningLedger;
 use Seat\Web\Http\Controllers\Controller;
 
+/**
+ * Class MiningLedgerController.
+ *
+ * @package Seat\Web\Http\Controllers\Character
+ */
 class MiningLedgerController extends Controller
 {
     use MiningLedger;
 
-    public function getLedger(int $character_id) : View
+    /**
+     * @param int $character_id
+     *
+     * @return \Illuminate\View\View
+     */
+    public function getLedger(int $character_id): View
     {
 
         $ledger = $this->getCharacterLedger($character_id)
-                                ->sortByDesc('date')
-                                ->groupBy('date', 'solar_system_id', 'type_id')
-                                ->map(function($row) {
-                                    $row->quantity = $row->sum('quantity');
-                                    $row->volumes  = $row->sum('volumes');
-                                    $row->amount   = $row->sum('amount');
-                                    return $row;
-                                })->flatten();
+            ->sortByDesc('date')
+            ->groupBy('date', 'solar_system_id', 'type_id')
+            ->map(function ($row) {
+
+                $row->quantity = $row->sum('quantity');
+                $row->volumes = $row->sum('volumes');
+                $row->amount = $row->sum('amount');
+
+                return $row;
+            })->flatten();
 
         return view('web::character.mining-ledger', compact('ledger'));
     }
 
-    public function getDetailedLedger(int $character_id, $date, int $system_id, int $type_id) : JsonResponse
+    /**
+     * @param int $character_id
+     * @param     $date
+     * @param int $system_id
+     * @param int $type_id
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getDetailedLedger(int $character_id, $date, int $system_id, int $type_id): JsonResponse
     {
 
         $entries = $this->getCharacterLedger($character_id, false)
-                        ->addSelect('time')
-                        ->where('date', $date)
-                        ->where('solar_system_id', $system_id)
-                        ->where('type_id', $type_id)
-                        ->get();
+            ->addSelect('time')
+            ->where('date', $date)
+            ->where('solar_system_id', $system_id)
+            ->where('type_id', $type_id)
+            ->get();
 
         return response()->json($entries);
     }
