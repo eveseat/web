@@ -33,6 +33,7 @@ use Laravel\Socialite\SocialiteManager;
 use Seat\Web\Events\Attempt;
 use Seat\Web\Events\Login;
 use Seat\Web\Events\Logout;
+use Seat\Web\Events\SecLog;
 use Seat\Web\Events\Security;
 use Seat\Web\Extentions\EveOnlineProvider;
 use Seat\Web\Http\Composers\CharacterMenu;
