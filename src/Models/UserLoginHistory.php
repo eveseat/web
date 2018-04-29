@@ -34,7 +34,7 @@ class UserLoginHistory extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'source', 'user_agent', 'action',];
+        'user_id', 'source', 'user_agent', 'action', ];
 
     /**
      * Each login history item belongs to a user.

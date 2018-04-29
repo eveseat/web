@@ -34,7 +34,7 @@ class Person extends Model
      * @var array
      */
     protected $fillable = [
-        'main_character_id', 'main_character_name',];
+        'main_character_id', 'main_character_name', ];
 
     /**
      * Make sure we cleanup on delete.
