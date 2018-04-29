@@ -69,10 +69,6 @@ class MarketController extends Controller
                 return view('web::partials.marketvolume', compact('row'))
                     ->render();
             })
-            ->addColumn('state', function ($row) {
-
-                return ucfirst($row->state);
-            })
             ->editColumn('price', function ($row) {
 
                 return number($row->price);
