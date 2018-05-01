@@ -99,16 +99,6 @@ Route::group([
             include __DIR__ . '/Routes/Queue/Status.php';
         });
 
-        // Api Key Routes
-        Route::group([
-            'namespace' => 'Api',
-            'prefix'    => 'api-key',
-        ], function () {
-
-            include __DIR__ . '/Routes/Api/Key.php';
-
-        });
-
         // Corporation Routes
         Route::group([
             'namespace' => 'Corporation',
@@ -164,12 +154,6 @@ Route::group([
             Route::group(['prefix' => 'schedule'], function () {
 
                 include __DIR__ . '/Routes/Configuration/Schedule.php';
-            });
-
-            // Import
-            Route::group(['prefix' => 'import'], function () {
-
-                include __DIR__ . '/Routes/Configuration/Import.php';
             });
 
             // SeAT Settings
