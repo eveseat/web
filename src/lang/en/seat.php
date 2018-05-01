@@ -523,6 +523,7 @@ return [
     'tax_alliance_corp'            => 'Tax: Alliance/Corp',
     'tax_standings'                => 'Tax: Standings',
     'no_storage'                   => 'There is no storage',
+    'member'                       => 'Member|Members',
 
     // Mining Ledger
     'mining'                       => 'Mining',

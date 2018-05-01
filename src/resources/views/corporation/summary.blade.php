@@ -20,11 +20,7 @@
             <dd>{{ $sheet->shares }}</dd>
 
             <dt><i class="fa fa-users"></i> {{ trans('web::seat.member_capacity') }}</dt>
-            @if(!is_null($sheet->memberLimit) && $sheet->memberLimit > 0)
-              <dd>{{ number( ($sheet->member_count / $sheet->memberLimit) * 100 ,2) }}% Full</dd>
-            @else
-              <dd>100% Full</dd>
-            @endif
+            <dd>{{ $sheet->member_count }} {{ trans_choice('web::seat.member', $sheet->member_count) }}</dd>
           </dl>
 
         </div>
