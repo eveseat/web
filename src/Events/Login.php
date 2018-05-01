@@ -57,10 +57,17 @@ class Login
         $message = 'User logged in from ' . Request::getClientIp();
         event('security.log', [$message, 'authentication']);
 
-        // Dispatch an update job for the character_id
+        // Dispatch an update jobs for the character_id
         // TODO: Write a job that can be dispatched without the need
         // to rely on Artisan.
+
+        // Character information
         Artisan::call('esi:update:characters', [
+            'character_id' => $event->user->character_id,
+        ]);
+
+        // Corporation information
+        Artisan::call('esi:update:corporations', [
             'character_id' => $event->user->character_id,
         ]);
     }
