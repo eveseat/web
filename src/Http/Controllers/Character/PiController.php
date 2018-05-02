@@ -38,9 +38,11 @@ class PiController extends Controller
     {
 
         $colonies = $this->getCharacterPlanetaryColonies($character_id);
+        $extractors = $this->getCharacterPlanetaryExtractors($character_id);
+
 
         // TODO: Complete the Links and stuff™
 
-        return view('web::character.pi', compact('colonies'));
+        return view('web::character.pi', compact('colonies','extractors'));
     }
 }

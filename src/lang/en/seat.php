@@ -468,6 +468,7 @@ return [
     'folder'                       => 'Folder',
     'skills_graph'                 => 'Skills Graph',
     'contract_items'               => 'Contract Items',
+    'progress'                     => 'Progress',
 
     // Character Intel
     'loading_journal'              => 'Loading Journal Entries ...',
