@@ -23,14 +23,27 @@
       </div><!-- /.info-box -->
 
     </div><!-- /.col -->
-    <div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="col-md-3 col-sm-3 col-xs-6">
 
       <div class="info-box">
-        <span class="info-box-icon bg-green"><i class="fa fa-key"></i></span>
+        <span class="info-box-icon bg-blue"><i class="fa fa-money"></i></span>
         <div class="info-box-content">
-          <span class="info-box-text">{{ trans('web::seat.owned_api_keys') }}</span>
+          <span class="info-box-text">{{ trans('web::seat.total_character_isk') }}</span>
           <span class="info-box-number">
-            {{ count(auth()->user()->associatedCharacterIds()) }}
+            {{ number($total_character_isk)  }}
+          </span>
+        </div><!-- /.info-box-content -->
+      </div><!-- /.info-box -->
+
+    </div><!-- /.col -->
+    <div class="col-md-3 col-sm-3 col-xs-6">
+
+      <div class="info-box">
+        <span class="info-box-icon bg-black"><i class="fa fa-graduation-cap"></i></span>
+        <div class="info-box-content">
+          <span class="info-box-text">{{ trans('web::seat.total_character_skillpoints') }}</span>
+          <span class="info-box-number">
+            {{ number($total_character_skillpoints, 0)  }}
           </span>
         </div><!-- /.info-box-content -->
       </div><!-- /.info-box -->
@@ -58,27 +71,24 @@
     </div><!-- /.col -->
     <div class="col-md-6 col-sm-6 col-xs-12">
 
-      <div class="info-box">
-        <span class="info-box-icon bg-blue"><i class="fa fa-money"></i></span>
-        <div class="info-box-content">
-          <span class="info-box-text">{{ trans('web::seat.total_character_isk') }}</span>
-          <span class="info-box-number">
-            {{ number($total_character_isk)  }}
-          </span>
-        </div><!-- /.info-box-content -->
-      </div><!-- /.info-box -->
+      <div class="box box-success">
+        <div class="box-header with-border">
+          <h3 class="box-title">Characters</h3>
+        </div>
+        <div class="box-body no-padding">
+          <ul class="users-list dashboard-users-list clearfix">
+            @foreach(auth()->user()->associatedCharacters() as $character)
+            <li>
+              {!! img('character', $character->character_id, 64, ['alt' => $character->name]) !!}
+              <a href="{{ route('character.view.sheet', [$character->character_id]) }}" class="users-list-name">{{ $character->name }}</a>
+              <span class="users-list-date">{{ human_diff($character->birthday) }}</span>
+            </li>
+            @endforeach
+          </ul>
+        </div>
+      </div>
 
-      <div class="info-box">
-        <span class="info-box-icon bg-black"><i class="fa fa-graduation-cap"></i></span>
-        <div class="info-box-content">
-          <span class="info-box-text">{{ trans('web::seat.total_character_skillpoints') }}</span>
-          <span class="info-box-number">
-            {{ number($total_character_skillpoints, 0)  }}
-          </span>
-        </div><!-- /.info-box-content -->
-      </div><!-- /.info-box -->
-
-    </div><!-- /.col -->
+    </div>
   </div>
 
   <div class="row">
