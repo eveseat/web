@@ -102,7 +102,7 @@
 
   <script type="text/javascript">
     $(document).ready(function () {
-      
+
       function updateExpiryText() {
         $(".countdown").each(function () {
           $(this).text(moment.utc($(this).attr('data-expirytime'), "YYYY-MM-DD hh:mm:ss").calendar());
@@ -115,47 +115,47 @@
           var installtime = moment.utc($(this).attr('data-installtime'), "YYYY-MM-DD hh:mm:ss").valueOf();
           var percentage_complete = (moment.utc() - installtime) / (expirytime - installtime);
           var percentage_rounded = (Math.round(percentage_complete * 100) / 100);
-          if(percentage_rounded<0.4){
+          if (percentage_rounded < 0.4) {
             $(this).html(
                 "<div class='progress active'>" +
-                '<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar"'+
-                'aria-valuenow="'+percentage_rounded*100+'" aria-valuemin="0" aria-valuemax="100" '+
-                'style="width: '+percentage_rounded*100+'%" >' +
-                100*percentage_rounded +
+                '<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar"' +
+                'aria-valuenow="' + percentage_rounded * 100 + '" aria-valuemin="0" aria-valuemax="100" ' +
+                'style="width: ' + percentage_rounded * 100 + '%" >' +
+                100 * percentage_rounded +
                 '%</div>' +
                 '</div>'
             )
-          } else if(percentage_rounded>=0.4 && percentage_rounded<0.6){
+          } else if (percentage_rounded >= 0.4 && percentage_rounded < 0.6) {
             $(this).html(
                 "<div class='progress active'>" +
-                '<div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"'+
-                'aria-valuenow="'+percentage_rounded*100+'" aria-valuemin="0" aria-valuemax="100" '+
-                'style="width: '+percentage_rounded*100+'%" >' +
-                100*percentage_rounded +
+                '<div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"' +
+                'aria-valuenow="' + percentage_rounded * 100 + '" aria-valuemin="0" aria-valuemax="100" ' +
+                'style="width: ' + percentage_rounded * 100 + '%" >' +
+                100 * percentage_rounded +
                 '%</div>' +
                 '</div>'
             )
-          } else if(percentage_rounded>=0.6 && percentage_rounded<0.8){
+          } else if (percentage_rounded >= 0.6 && percentage_rounded < 0.8) {
             $(this).html(
                 "<div class='progress active'>" +
-                '<div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar"'+
-                'aria-valuenow="'+percentage_rounded*100+'" aria-valuemin="0" aria-valuemax="100" '+
-                'style="width: '+percentage_rounded*100+'%" >' +
-                100*percentage_rounded +
+                '<div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar"' +
+                'aria-valuenow="' + percentage_rounded * 100 + '" aria-valuemin="0" aria-valuemax="100" ' +
+                'style="width: ' + percentage_rounded * 100 + '%" >' +
+                100 * percentage_rounded +
                 '%</div>' +
                 '</div>'
             )
-          } else if(percentage_rounded>=0.8 && percentage_rounded<1){
+          } else if (percentage_rounded >= 0.8 && percentage_rounded < 1) {
             $(this).html(
                 "<div class='progress active'>" +
-                '<div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar"'+
-                'aria-valuenow="'+percentage_rounded*100+'" aria-valuemin="0" aria-valuemax="100" '+
-                'style="width: '+percentage_rounded*100+'%" >' +
-                100*percentage_rounded +
+                '<div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar"' +
+                'aria-valuenow="' + percentage_rounded * 100 + '" aria-valuemin="0" aria-valuemax="100" ' +
+                'style="width: ' + percentage_rounded * 100 + '%" >' +
+                100 * percentage_rounded +
                 '%</div>' +
                 '</div>'
             )
-          } else if(percentage_rounded>=1) {
+          } else if (percentage_rounded >= 1) {
             $(this).html(
                 "<div class='progress active'>" +
                 '<div class="progress-bar progress-bar-danger" role="progressbar"' +
@@ -168,15 +168,15 @@
           }
         })
       }
+
       updateExpiryText();
       updateProgressBar();
       setInterval(function () { //this is to update every 5 secounds
         updateExpiryText();
         updateProgressBar();
-        },133700);
-      });
+      }, 133700);
+
+    });
   </script>
-
-
 
 @endpush
