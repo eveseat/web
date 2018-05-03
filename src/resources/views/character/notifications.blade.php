@@ -24,19 +24,23 @@
         @foreach($notifications as $notification)
 
           <tr>
-            <td data-order="{{ $notification->sentDate }}">
-              <span data-toggle="tooltip" title="" data-original-title="{{ $notification->sentDate }}">
-                {{ human_diff($notification->sentDate) }}
+            <td data-order="{{ $notification->timestamp }}">
+              <span data-toggle="tooltip" title="" data-original-title="{{ $notification->timestamp }}">
+                {{ human_diff($notification->timestamp) }}
               </span>
             </td>
             <td>
-              {!! img('auto', $notification->senderID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-              {{ $notification->senderName }}
+              {!! img('auto', $notification->sender_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
+              @if(in_array($notification->sender_type, ['character', 'corporation', 'alliance', 'faction']))
+              <span rel="id-to-name">{{ $notification->sender_id }}</span>
+              @else
+              System
+              @endif
             </td>
             <td>
               <i class="fa fa-comment" data-toggle="popover" data-placement="top" title="" data-html="true"
                  data-trigger="hover" data-content="{{ clean_ccp_html($notification->text) }}"></i>
-              {{ $notification->desc }}
+              {{ preg_replace('/([a-z0-9])([A-Z])/', '$1 $2', $notification->type) }}
             </td>
           </tr>
 
