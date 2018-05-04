@@ -163,6 +163,22 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
+     * Return the characters info this user is associated with as a
+     * result of common group memberships.
+     *
+     * There are basically the characters the same account has logged
+     * in with using the "link another" button.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function associatedCharacters()
+    {
+
+        return CharacterInfo::whereIn('character_id', $this->associatedCharacterIds())->get();
+
+    }
+
+    /**
      * Get the group the current user belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
