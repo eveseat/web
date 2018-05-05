@@ -84,6 +84,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         $this->login_history()->delete();
         $this->roles()->detach();
         $this->affiliations()->detach();
+        $this->groups()->detach();
+        $this->refresh_token()->delete();
+
+        $this->settings()->delete();
 
         return parent::delete();
     }
@@ -124,6 +128,35 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
+     * Get the group the current user belongs to.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function groups()
+    {
+
+        return $this->belongsToMany(Group::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function refresh_token()
+    {
+
+        return $this->hasOne(RefreshToken::class, 'character_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function settings()
+    {
+
+        return $this->hasMany(UserSetting::class);
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function character()
@@ -160,34 +193,5 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             return $group->users->pluck('id');
 
         })->flatten();
-    }
-
-    /**
-     * Get the group the current user belongs to.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function groups()
-    {
-
-        return $this->belongsToMany(Group::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function refresh_token()
-    {
-
-        return $this->hasOne(RefreshToken::class, 'character_id', 'id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function settings()
-    {
-
-        return $this->hasMany(UserSetting::class);
     }
 }
