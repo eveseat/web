@@ -29,8 +29,8 @@ use Seat\Web\Acl\AccessManager;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\Role;
 use Seat\Web\Http\Validation\RoleAffilliation;
-use Seat\Web\Http\Validation\RolePermission;
 use Seat\Web\Http\Validation\RoleGroup;
+use Seat\Web\Http\Validation\RolePermission;
 
 /**
  * Class AccessController.

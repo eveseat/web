@@ -33,7 +33,6 @@ use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\Models\UserSetting;
 use Seat\Web\Acl\AccessChecker;
 use Seat\Web\Models\Acl\Affiliation;
-use Seat\Web\Models\Acl\Role;
 
 /**
  * Class User.

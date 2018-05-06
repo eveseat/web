@@ -191,7 +191,7 @@ trait AccessManager
     {
 
         $group = Group::find($group_id);
-        $role = RoleModel::firstOrNew(['id' => $role_id,]);
+        $role = RoleModel::firstOrNew(['id' => $role_id]);
 
         // If the role does not already have the grup add it.
         if (! $role->groups->contains($group_id))
