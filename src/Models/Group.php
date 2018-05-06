@@ -30,6 +30,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Group extends Model
 {
+
+    /**
+     * @var array
+     */
+    protected $fillable = ['main_character_id'];
+
     /**
      * Return the Users that are in this group.
      *
