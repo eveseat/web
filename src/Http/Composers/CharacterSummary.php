@@ -24,10 +24,8 @@ namespace Seat\Web\Http\Composers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Services\Repositories\Configuration\UserRespository;
-use Seat\Web\Models\Group;
 
 /**
  * Class CharacterSummary.
