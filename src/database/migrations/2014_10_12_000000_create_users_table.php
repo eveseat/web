@@ -36,6 +36,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
 
             $table->bigInteger('id')->primary();
+            $table->integer('group_id');
             $table->string('name')->unique();
             $table->string('email')->unique()->nullable();
             $table->boolean('active')->default(true);
@@ -43,6 +44,8 @@ class CreateUsersTable extends Migration
             $table->dateTime('last_login')->nullable();
             $table->string('last_login_source')->nullable();
             $table->rememberToken();
+
+            $table->index('group_id');
 
             $table->timestamps();
         });

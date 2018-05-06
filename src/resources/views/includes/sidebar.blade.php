@@ -6,18 +6,14 @@
     <!-- Sidebar user panel -->
     <div class="user-panel">
       <div class="pull-left image">
-        <img src="//image.eveonline.com/Character/{{ setting('main_character_id') }}_128.jpg"
+        <img src="//image.eveonline.com/Character/{{ $user->id }}_128.jpg"
              class="img-circle" alt="User Image">
       </div>
       <div class="pull-left info">
         <p>
-          @if(is_null(setting('main_character_name')))
-            <a href="{{ route('profile.view') }}">{{ trans('web::seat.no_main_char') }}!</a>
-          @else
-            <a href="{{ route('character.view.sheet', ['character_id' => setting('main_character_id')]) }}">
-              {{ trans('web::seat.hello') }}, {{ setting('main_character_name') }}
-            </a>
-          @endif
+          <a href="{{ route('character.view.sheet', ['character_id' => setting('main_character_id')]) }}">
+            {{ trans('web::seat.hello') }}, {{ $user->name }}
+          </a>
         </p>
         <!-- Status -->
         <a href="#"><i class="fa fa-circle text-success"></i> {{ trans('web::seat.online') }}</a>

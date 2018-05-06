@@ -45,6 +45,6 @@ class User
     {
 
         $view->with('user', Auth::user());
-        $view->with('user_characters', $this->getUserGroupCharacters(auth()->user()->groups));
+        $view->with('user_characters', $this->getUserGroupCharacters(auth()->user()->group));
     }
 }

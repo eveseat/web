@@ -61,7 +61,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'character_owner_hash',
+        'name', 'email', 'character_owner_hash', 'group_id',
     ];
 
     /**
@@ -84,7 +84,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         $this->login_history()->delete();
         $this->roles()->detach();
         $this->affiliations()->detach();
-        $this->groups()->detach();
+        $this->group()->detach();
         $this->refresh_token()->delete();
 
         $this->settings()->delete();
@@ -130,12 +130,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     /**
      * Get the group the current user belongs to.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function groups()
+    public function group()
     {
 
-        return $this->belongsToMany(Group::class);
+        return $this->belongsTo(Group::class);
     }
 
     /**
@@ -188,10 +188,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function associatedCharacterIds()
     {
 
-        return $this->groups()->get()->map(function ($group) {
+        if (! $this->group) {
+            return collect();
+        }
 
-            return $group->users->pluck('id');
-
-        })->flatten();
+        return $this->group->users->pluck('id')->flatten();
     }
 }

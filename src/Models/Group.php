@@ -33,11 +33,20 @@ class Group extends Model
     /**
      * Return the Users that are in this group.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function users()
     {
 
-        return $this->belongsToMany(User::class);
+        return $this->hasMany(User::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function main_character()
+    {
+
+        return $this->hasOne(User::class, 'id', 'main_character_id');
     }
 }

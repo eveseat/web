@@ -2,7 +2,7 @@
 
   @foreach($user_characters as $character)
 
-    <li class="media user-character @if($character->character_id == setting('main_character_id')) active @endif">
+    <li class="media user-character @if($character->character_id == $user->character_id) active @endif">
 
       <a href="{{ route('profile.change-character', ['character_id' => $character->character_id]) }}">
         <div class="media-left">
