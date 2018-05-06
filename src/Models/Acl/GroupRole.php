@@ -25,10 +25,11 @@ namespace Seat\Web\Models\Acl;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class RoleUser.
+ * Class GroupRole.
  * @package Seat\Web\Models\Acl
  */
-class RoleUser extends Model
+class GroupRole extends Model
 {
+
 
 }

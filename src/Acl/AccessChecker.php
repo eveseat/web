@@ -118,7 +118,7 @@ trait AccessChecker
 
         $permissions = [];
 
-        $roles = $this->roles()->with('permissions')->get();
+        $roles = $this->group->roles()->with('permissions')->get();
 
         // Go through every role...
         foreach ($roles as $role) {
@@ -171,7 +171,7 @@ trait AccessChecker
         // and array based permission, which is stupid. Remove that
         // or plan better for it in 3.1
 
-        // Owning a key grants you '*' permissions to the owned object. In this
+        // Owning a character grants you '*' permissions to the owned object. In this
         // context, '*' acts as a wildcard for *all* permissions
         foreach ($map['char'] as $char => $permissions) {
 
@@ -295,7 +295,7 @@ trait AccessChecker
         // Next we move through the roles the user has
         // and populate the permissions that the affiliations
         // offer us.
-        foreach ($this->roles as $role) {
+        foreach ($this->group->roles as $role) {
 
             // A blank array for the permissions granted to
             // this role.
@@ -536,7 +536,7 @@ trait AccessChecker
         if ($this->hasSuperUser())
             return true;
 
-        foreach ($this->roles as $role)
+        foreach ($this->group->roles as $role)
             if ($role->title == $role_name)
                 return true;
 

@@ -30,7 +30,7 @@ use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\Role;
 use Seat\Web\Http\Validation\RoleAffilliation;
 use Seat\Web\Http\Validation\RolePermission;
-use Seat\Web\Http\Validation\RoleUser;
+use Seat\Web\Http\Validation\RoleGroup;
 
 /**
  * Class AccessController.
@@ -95,15 +95,15 @@ class AccessController extends Controller
 
         $role_permissions = $role->permissions()->get()->pluck('title')->toArray();
         $role_affiliations = $role->affiliations();
-        $role_users = $role->users()->get()->pluck('name')->toArray();
-        $all_users = $this->getAllUsers()->pluck('name')->toArray();
+        $role_groups = $role->groups()->get()->pluck('id')->toArray();
+        $all_groups = $this->getAllGroups();
         $all_characters = $this->getAllCharacters();
         $all_corporations = $this->getAllCorporations();
 
         return view(
             'web::configuration.access.edit',
             compact(
-                'role', 'role_permissions', 'role_users', 'all_users',
+                'role', 'role_permissions', 'role_groups', 'all_groups',
                 'role_affiliations', 'all_characters', 'all_corporations'
             ));
     }
@@ -141,15 +141,15 @@ class AccessController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Http\Validation\RoleUser $request
+     * @param \Seat\Web\Http\Validation\RoleGroup $request
      *
      * @return mixed
      */
-    public function addUsers(RoleUser $request)
+    public function addGroups(RoleGroup $request)
     {
 
-        $this->giveUsernamesRole(
-            $request->input('users'), $request->input('role_id'));
+        $this->giveGroupsRole(
+            $request->input('groups'), $request->input('role_id'));
 
         return redirect()->back()
             ->with('success', trans('web::seat.user_added'));
@@ -158,14 +158,14 @@ class AccessController extends Controller
 
     /**
      * @param $role_id
-     * @param $user_id
+     * @param $group_id
      *
      * @return mixed
      */
-    public function removeUser($role_id, $user_id)
+    public function removeGroup($role_id, $group_id)
     {
 
-        $this->removeUserFromRole($user_id, $role_id);
+        $this->removeGroupFromRole($group_id, $role_id);
 
         return redirect()->back()
             ->with('success', trans('web::seat.user_removed'));

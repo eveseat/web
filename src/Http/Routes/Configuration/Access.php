@@ -50,14 +50,14 @@ Route::get('/roles/edit/{role_id}/delete/permission/{permission_id}', [
     'uses' => 'AccessController@removePermissions',
 ]);
 
-Route::post('/roles/edit/users', [
-    'as'   => 'configuration.access.roles.edit.users',
-    'uses' => 'AccessController@addUsers',
+Route::post('/roles/edit/groups', [
+    'as'   => 'configuration.access.roles.edit.groups',
+    'uses' => 'AccessController@addGroups',
 ]);
 
-Route::get('/roles/edit/{role_id}/delete/user/{user_id}', [
-    'as'   => 'configuration.access.roles.edit.remove.user',
-    'uses' => 'AccessController@removeUser',
+Route::get('/roles/edit/{role_id}/delete/group/{group_id}', [
+    'as'   => 'configuration.access.roles.edit.remove.group',
+    'uses' => 'AccessController@removeGroup',
 ]);
 
 Route::post('/roles/edit/affiliations', [

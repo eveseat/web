@@ -104,17 +104,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * This user may have certain roles assigned.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function roles()
-    {
-
-        return $this->belongsToMany(Role::class);
-    }
-
-    /**
      * This user may be affiliated manually to
      * other characterID's and or corporations.
      *

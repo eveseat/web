@@ -25,7 +25,7 @@ namespace Seat\Web\Acl;
 use Seat\Web\Models\Acl\Affiliation as AffiliationModel;
 use Seat\Web\Models\Acl\Permission as PermissionModel;
 use Seat\Web\Models\Acl\Role as RoleModel;
-use Seat\Web\Models\User as UserModel;
+use Seat\Web\Models\Group;
 
 /**
  * Class AccessManager.
@@ -44,16 +44,13 @@ trait AccessManager
     public function getCompleteRole(int $role_id = null)
     {
 
-        $roles = RoleModel::with(
-            'permissions', 'users', 'affiliations');
+        $roles = RoleModel::with('permissions', 'groups', 'affiliations');
 
         if (! is_null($role_id)) {
 
-            $roles = $roles->where('id', $role_id)
-                ->first();
+            $roles = $roles->where('id', $role_id)->first();
 
-            if (! $roles)
-                abort(404);
+            if (! $roles) abort(404);
 
             return $roles;
         }
@@ -169,55 +166,49 @@ trait AccessManager
     }
 
     /**
-     * Give an array of usernames a role.
+     * Give an array of group_ids a role.
      *
-     * @param array $user_names
+     * @param array $group_ids
      * @param int   $role_id
      */
-    public function giveUsernamesRole(array $user_names, int $role_id)
+    public function giveGroupsRole(array $group_ids, int $role_id)
     {
 
-        foreach ($user_names as $user_name) {
+        foreach ($group_ids as $group_id) {
 
-            $user = UserModel::where('name', $user_name)->first();
-            $this->giveUserRole($user->id, $role_id);
+            $group = Group::where('id', $group_id)->first();
+            $this->giveGroupRole($group->id, $role_id);
         }
-
     }
 
     /**
-     * Give a user a Role.
+     * Give a group a Role.
      *
-     * @param int $user_id
+     * @param int $group_id
      * @param int $role_id
      */
-    public function giveUserRole(int $user_id, int $role_id)
+    public function giveGroupRole(int $group_id, int $role_id)
     {
 
-        $user = UserModel::find($user_id);
+        $group = Group::find($group_id);
+        $role = RoleModel::firstOrNew(['id' => $role_id,]);
 
-        $role = RoleModel::firstOrNew([
-            'id' => $role_id,
-        ]);
-
-        // If the role does not already have the user
-        // add it.
-        if (! $role->users->contains($user->id))
-            $role->users()->save($user);
-
+        // If the role does not already have the grup add it.
+        if (! $role->groups->contains($group_id))
+            $role->groups()->save($group);
     }
 
     /**
-     * Remove a user from a role.
+     * Remove a group from a role.
      *
-     * @param int $user_id
+     * @param int $group_id
      * @param int $role_id
      */
-    public function removeUserFromRole(int $user_id, int $role_id)
+    public function removeGroupFromRole(int $group_id, int $role_id)
     {
 
         $role = $this->getRole($role_id);
-        $role->users()->detach($user_id);
+        $role->groups()->detach($group_id);
 
     }
 

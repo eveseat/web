@@ -23,6 +23,7 @@
 namespace Seat\Web\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Seat\Web\Models\Acl\Role;
 
 /**
  * Class Group.
@@ -45,6 +46,17 @@ class Group extends Model
     {
 
         return $this->hasMany(User::class);
+    }
+
+    /**
+     * This group may have certain roles assigned.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles()
+    {
+
+        return $this->belongsToMany(Role::class);
     }
 
     /**

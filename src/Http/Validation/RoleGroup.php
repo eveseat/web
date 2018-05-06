@@ -20,34 +20,40 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+namespace Seat\Web\Http\Validation;
 
-class CreateRoleUsersTable extends Migration
+use Illuminate\Foundation\Http\FormRequest;
+
+/**
+ * Class RoleUser.
+ * @package Seat\Web\Http\Validation
+ */
+class RoleGroup extends FormRequest
 {
     /**
-     * Run the migrations.
+     * Authorize the request by default.
      *
-     * @return void
+     * @return bool
      */
-    public function up()
+    public function authorize()
     {
 
-        Schema::create('role_user', function (Blueprint $table) {
-
-            $table->integer('role_id');
-            $table->integer('user_id');
-        });
+        return true;
     }
 
     /**
-     * Reverse the migrations.
+     * Get the validation rules that apply to the request.
      *
-     * @return void
+     * @return array
      */
-    public function down()
+    public function rules()
     {
 
-        Schema::drop('role_user');
+        $rules = [
+            'role_id' => 'required|exists:roles,id',
+            'groups'  => 'required|exists:groups,id',
+        ];
+
+        return $rules;
     }
 }

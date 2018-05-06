@@ -23,7 +23,7 @@
 namespace Seat\Web\Models\Acl;
 
 use Illuminate\Database\Eloquent\Model;
-use Seat\Web\Models\User;
+use Seat\Web\Models\Group;
 
 /**
  * Class Role.
@@ -52,7 +52,7 @@ class Role extends Model
 
         // Remove the Role from users, permissions
         // and affiliations that it had
-        $this->users()->detach();
+        $this->groups()->detach();
         $this->permissions()->detach();
         $this->affiliations()->detach();
 
@@ -62,10 +62,10 @@ class Role extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function users()
+    public function groups()
     {
 
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(Group::class);
     }
 
     /**
