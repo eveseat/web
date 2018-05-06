@@ -40,6 +40,10 @@ class Logout
     public static function handle(LogoutEvent $event)
     {
 
+        // If there is no user, do nothing.
+        if (! $event->user)
+            return;
+
         $event->user->login_history()->save(new UserLoginHistory([
             'source'     => Request::getClientIp(),
             'user_agent' => Request::header('User-Agent'),
@@ -48,6 +52,5 @@ class Logout
 
         $message = 'User logged out from ' . Request::getClientIp();
         event('security.log', [$message, 'authentication']);
-
     }
 }
