@@ -87,7 +87,7 @@
       ajax            : '{{ route('character.view.journal.data', ['character_id' => $request->character_id]) }}',
       columns         : [
         {data: 'date', name: 'date', render: human_readable},
-        {data: 'ref_type_name', name: 'ref_type_name'},
+        {data: 'ref_type', name: 'ref_type'},
         {data: 'first_party_id', name: 'first_party_id'},
         {data: 'second_party_id', name: 'second_party_id'},
         {data: 'amount', name: 'amount'},

@@ -56,7 +56,7 @@ class WalletController extends Controller
         $journal = $this->getCharacterWalletJournal($character_id, false);
 
         return Datatables::of($journal)
-            ->editColumn('ref_type_name', function ($row) {
+            ->editColumn('ref_type', function ($row) {
 
                 return view('web::partials.journaltranstype', compact('row'))
                     ->render();
@@ -155,7 +155,7 @@ class WalletController extends Controller
                 return view('web::partials.transactiontype', compact('row'))
                     ->render();
             })
-            ->editColumn('price', function ($row) {
+            ->editColumn('unit_price', function ($row) {
 
                 return number($row->unit_price);
             })
@@ -163,7 +163,7 @@ class WalletController extends Controller
 
                 return number($row->unit_price * $row->quantity);
             })
-            ->editColumn('client', function ($row) {
+            ->editColumn('client_id', function ($row) {
 
                 return view('web::partials.transactionclient', compact('row'))
                     ->render();

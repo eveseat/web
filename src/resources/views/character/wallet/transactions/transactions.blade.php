@@ -51,9 +51,9 @@
         {data: 'date', name: 'date', render: human_readable},
         {data: 'is_buy', name: 'is_buy'},
         {data: 'quantity', name: 'quantity'},
-        {data: 'price', name: 'price'},
-        {data: 'total', name: 'price'},
-        {data: 'client', name: 'client'}
+        {data: 'unit_price', name: 'unit_price'},
+        {data: 'total', name: 'unit_price'},
+        {data: 'client_id', name: 'client_id'}
       ],
       dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
       'fnDrawCallback': function () {

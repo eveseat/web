@@ -119,7 +119,7 @@ class WalletController extends Controller
 
                 return number($row->unit_price * $row->quantity);
             })
-            ->editColumn('client', function ($row) {
+            ->editColumn('client_id', function ($row) {
 
                 return view('web::partials.transactionclient', compact('row'))
                     ->render();
