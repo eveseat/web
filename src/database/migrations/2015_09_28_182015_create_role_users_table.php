@@ -33,10 +33,10 @@ class CreateGroupRoleTable extends Migration
     public function up()
     {
 
-        Schema::create('group_role', function (Blueprint $table) {
+        Schema::create('role_user', function (Blueprint $table) {
 
             $table->integer('role_id');
-            $table->integer('group_id');
+            $table->integer('user_id');
         });
     }
 
@@ -48,6 +48,6 @@ class CreateGroupRoleTable extends Migration
     public function down()
     {
 
-        Schema::drop('role_group');
+        Schema::drop('role_user');
     }
 }
