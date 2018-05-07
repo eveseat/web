@@ -5,6 +5,8 @@
 
 @section('full')
 
+  {!! $messages->render() !!}
+
   <ul class="timeline">
 
     @foreach(
