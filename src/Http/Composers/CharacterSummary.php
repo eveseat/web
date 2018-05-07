@@ -24,10 +24,8 @@ namespace Seat\Web\Http\Composers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Services\Repositories\Configuration\UserRespository;
-use Seat\Web\Models\Group;
 
 /**
  * Class CharacterSummary.
@@ -66,12 +64,9 @@ class CharacterSummary
         // TODO: Remove direct Model / DB calls and revert to repository pattern.
 
         $summary = CharacterInfo::find($this->request->character_id);
-
-        $group = DB::table('group_user')->where('user_id', $this->request->character_id)->first();
-        $characters = $this->getUserGroupCharacters(Group::where('id', $group->group_id)->get());
+        $characters = $this->getUserGroupCharacters(auth()->user()->group);
 
         $view->with('summary', $summary);
         $view->with('characters', $characters);
-
     }
 }

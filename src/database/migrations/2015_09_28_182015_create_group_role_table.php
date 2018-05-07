@@ -20,43 +20,34 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Models;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
-use Illuminate\Database\Eloquent\Model;
-
-/**
- * Class Person.
- * @package Seat\Web\Models
- */
-class Person extends Model
+class CreateGroupRoleTable extends Migration
 {
     /**
-     * @var array
-     */
-    protected $fillable = [
-        'main_character_id', 'main_character_name', ];
-
-    /**
-     * Make sure we cleanup on delete.
+     * Run the migrations.
      *
-     * @return bool|null
-     * @throws \Exception
+     * @return void
      */
-    public function delete()
+    public function up()
     {
 
-        // Cleanup the person group
-        $this->members()->delete();
+        Schema::create('group_role', function (Blueprint $table) {
 
-        return parent::delete();
+            $table->integer('role_id');
+            $table->integer('group_id');
+        });
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * Reverse the migrations.
+     *
+     * @return void
      */
-    public function members()
+    public function down()
     {
 
-        return $this->hasMany(PersonMember::class);
+        Schema::drop('role_group');
     }
 }

@@ -40,23 +40,6 @@ Route::any('logout', [
     'uses' => 'LoginController@logout',
 ]);
 
-Route::group([
-    'middleware' => 'registration.status',
-    'prefix'     => 'register',
-], function () {
-
-    // Registration routes
-    Route::get('/', [
-        'as'   => 'auth.register',
-        'uses' => 'RegisterController@showRegistrationForm',
-    ]);
-    Route::post('/', [
-        'as'   => 'auth.register.post',
-        'uses' => 'RegisterController@register',
-    ]);
-
-});
-
 Route::get('unauthorized', [
     'as'   => 'auth.unauthorized',
     'uses' => 'AuthorizationController@getUnauthorized',

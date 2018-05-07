@@ -20,15 +20,40 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Models\Acl;
+namespace Seat\Web\Http\Validation;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * Class RoleUser.
- * @package Seat\Web\Models\Acl
+ * @package Seat\Web\Http\Validation
  */
-class RoleUser extends Model
+class RoleGroup extends FormRequest
 {
+    /**
+     * Authorize the request by default.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
 
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+
+        $rules = [
+            'role_id' => 'required|exists:roles,id',
+            'groups'  => 'required|exists:groups,id',
+        ];
+
+        return $rules;
+    }
 }

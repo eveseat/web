@@ -57,7 +57,6 @@ class SsoController extends Controller
      * @param \Laravel\Socialite\Contracts\Factory $social
      *
      * @return \Seat\Web\Http\Controllers\Auth\Response
-     * @throws \Seat\Services\Exceptions\SettingException
      */
     public function handleProviderCallback(Socialite $social)
     {
@@ -75,7 +74,7 @@ class SsoController extends Controller
                 ->with('error', 'Login failed. Please contact your administrator.');
 
         // Set the main characterID based on the response.
-        $this->setCharacterId($eve_data);
+        $this->updateMainCharacterId($user);
 
         return redirect()->intended();
     }
@@ -84,36 +83,81 @@ class SsoController extends Controller
      * Check if a user exists in the database, else, create
      * and return the User object.
      *
-     * @param \Laravel\Socialite\Two\User $user
+     * Group memberships are also managed here, ensuring that
+     * characters are automatically 'linked' via a group. If
+     * an existsing, logged in session is detected, te new login
+     * will be associated with that sessions group. Otherwise,
+     * a new group for this user will be created.
+     *
+     * @param \Laravel\Socialite\Two\User $eve_user
      *
      * @return \Seat\Web\Models\User
      */
-    private function findOrCreateUser(SocialiteUser $user): User
+    private function findOrCreateUser(SocialiteUser $eve_user): User
     {
 
-        if ($existing = User::find($user->character_id)) {
+        // Check if this user already exists in the database.
+        if ($existing = User::find($eve_user->character_id)) {
 
             // If the character_owner_hash has changed, it might be that
             // this character was transferred. We will still allow the login,
             // but the group memberships the character had will be removed.
-            if ($existing->character_owner_hash !== $user->character_owner_hash) {
+            if ($existing->character_owner_hash !== $eve_user->character_owner_hash) {
 
-                // Remove group memberships
-                $existing->groups()->detach();
+                // Update the group_id for this user based on the current
+                // session status. If there is a user already logged in,
+                // simply associate the user with a new group id. If not,
+                // a new grou is generated and given to this user.
+                $existing->group_id = auth()->check() ?
+                    auth()->user()->group->id : Group::create()->id;
 
                 // Update the new character_owner_hash
-                $existing->character_owner_hash = $user->character_owner_hash;
+                $existing->character_owner_hash = $eve_user->character_owner_hash;
+                $existing->save();
+            }
+
+            // Detect if the current session is already logged in. If
+            // it is, update the group_id for the new login to the same
+            // as the current session, thereby associating the characters.
+            if (auth()->check()) {
+
+                // Log the association update
+                event('security.log', [
+                    'Updating ' . $existing->name . ' to be part of ' . auth()->user()->name,
+                    'authentication',
+                ]);
+
+                $existing->group_id = auth()->user()->group->id;
                 $existing->save();
             }
 
             return $existing;
         }
 
+        // Log the new account creation
+        event('security.log', [
+            'Creating new account for ' . $eve_user->name, 'authentication',
+        ]);
+
+        // Detect if the current session is already logged in. If
+        // it is, update the group_id for the new login to the same
+        // as the current session, thereby associating the characters.
+        if (auth()->check()) {
+
+            // Log the association update
+            event('security.log', [
+                'Updating ' . $eve_user->name . ' to be part of ' . auth()->user()->name,
+                'authentication',
+            ]);
+        }
+
         return User::forceCreate([  // Only because I don't want to set id as fillable
-            'id'                   => $user->character_id,
-            'name'                 => $user->name,
+            'id'                   => $eve_user->character_id,
+            'group_id'             => auth()->check() ?
+                auth()->user()->group->id : Group::create()->id,
+            'name'                 => $eve_user->name,
             'active'               => true,
-            'character_owner_hash' => $user->character_owner_hash,
+            'character_owner_hash' => $eve_user->character_owner_hash,
         ]);
     }
 
@@ -160,42 +204,25 @@ class SsoController extends Controller
             return false;
         }
 
-        // If we have an already logged in session, take the current
-        // user we want to login as, make sure its part of the
-        // same group as the current user, and login that one instead.
-        if (auth()->check()) {
-
-            // Sync the groups of the new user with the existing
-            // one.
-            $user->groups()->sync(auth()->user()->groups);
-
-        } else {
-
-            // Ensure that this user has at least one group
-            // attached
-            if ($user->groups()->count() == 0)
-                $user->groups()->attach(Group::create());
-        }
-
         auth()->login($user, true);
 
         return true;
     }
 
     /**
-     * @param \Laravel\Socialite\Two\User $data
+     * Set the main character_id for a group if it is
+     * currently null.
      *
-     * @throws \Seat\Services\Exceptions\SettingException
+     * @param \Seat\Web\Models\User $user
      */
-    private function setCharacterId(SocialiteUser $data)
+    private function updateMainCharacterId(User $user)
     {
 
-        // Check if a main_character_id setting is set.
-        // If not, we can pull the one from the SSO login data
-        if (setting('main_character_id') === 1) {
+        if (! $user->group->main_character_id) {
 
-            setting(['main_character_id', $data->character_id]);
-            setting(['main_character_name', $data->name]);
+            $group = $user->group;
+            $group->main_character_id = $user->character_id;
+            $group->save();
         }
     }
 }

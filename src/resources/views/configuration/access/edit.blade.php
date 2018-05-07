@@ -231,18 +231,20 @@
     </div>
     <div class="panel-body">
 
-      <form role="form" action="{{ route('configuration.access.roles.edit.users') }}" method="post">
+      <form role="form" action="{{ route('configuration.access.roles.edit.groups') }}" method="post">
         {{ csrf_field() }}
         <input type="hidden" name="role_id" value="{{ $role->id }}">
 
         <div class="form-group">
-          <label for="users">{{ trans('web::seat.available_users') }}</label>
-          <select name="users[]" id="available_users" style="width: 100%" multiple>
+          <label for="groups">{{ trans('web::seat.available_users') }}</label>
+          <select name="groups[]" id="available_users" style="width: 100%" multiple>
 
-            @foreach($all_users as $user)
+            @foreach($all_groups as $group)
 
-              @if(!in_array($user, $role_users))
-                <option value="{{ $user }}">{{ $user }}</option>
+              @if(!in_array($group->id, $role_groups))
+                <option value="{{ $group->id }}">
+                  {{ $group->users->map(function($user) { return $user->name; })->implode(', ') }}
+                </option>
               @endif
 
             @endforeach
@@ -263,12 +265,14 @@
           <th colspan="2" class="text-center">{{ trans('web::seat.current_users') }}</th>
         </tr>
 
-        @foreach($role->users as $user)
+        @foreach($role->groups as $group)
 
           <tr>
-            <td>{{ $user->name }}</td>
             <td>
-              <a href="{{ route('configuration.access.roles.edit.remove.user', ['role_id' => $role->id, 'user_id' => $user->id]) }}"
+              {{ $group->users->map(function($user) { return $user->name; })->implode(', ') }}
+            </td>
+            <td>
+              <a href="{{ route('configuration.access.roles.edit.remove.group', ['role_id' => $role->id, 'user_id' => $group->id]) }}"
                  type="button" class="btn btn-danger btn-xs pull-right">
                 {{ trans('web::seat.remove') }}
               </a>

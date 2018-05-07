@@ -102,6 +102,8 @@ return [
         ' No jobs will be queued because of this. Please configure it in the SeAT settings.',
     'refresh_token_warning' => 'Your account does not have a valid refresh token recorded. ' .
         'Please logout and back in to correct this as soon as possible.',
+    'sso_config_warning'    => 'SSO does not appear to have been configured yet. Only administrative ' .
+        'logins are possible.',
     'sso_activation'        => 'SSO Activation',
     'sso_confirmation'      => 'It appears you already own an account. Please confirm your credentials in order to enable SSO.',
 

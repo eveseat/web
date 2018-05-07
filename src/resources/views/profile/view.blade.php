@@ -27,7 +27,7 @@
               <select id="main_character_id" name="main_character_id" class="form-control">
                 @foreach($characters as $character)
                   <option value="{{ $character->id }}"
-                          @if(setting('main_character_id') == $character->id)
+                          @if(auth()->user()->group->main_character->id == $character->id)
                           selected
                       @endif>
                     {{ $character->name }}</option>

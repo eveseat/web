@@ -54,12 +54,14 @@
           <!-- Menu Toggle Button -->
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <!-- The user image in the navbar-->
-            <img src="//image.eveonline.com/Character/{{ setting('main_character_id') }}_128.jpg"
+            <img src="//image.eveonline.com/Character/{{ $user->character_id }}_128.jpg"
                  class="user-image" alt="User Image">
             <!-- hidden-xs hides the username on small devices so only the image appears. -->
             <span class="hidden-xs">{{ $user->name }}</span>
           </a>
+
           @include('web::includes.character-selection')
+
         </li>
 
       </ul>

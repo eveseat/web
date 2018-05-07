@@ -23,6 +23,7 @@
 namespace Seat\Web\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Seat\Web\Models\Acl\Role;
 
 /**
  * Class Group.
@@ -30,14 +31,40 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Group extends Model
 {
+
+    /**
+     * @var array
+     */
+    protected $fillable = ['main_character_id'];
+
     /**
      * Return the Users that are in this group.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function users()
     {
 
-        return $this->belongsToMany(User::class);
+        return $this->hasMany(User::class);
+    }
+
+    /**
+     * This group may have certain roles assigned.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles()
+    {
+
+        return $this->belongsToMany(Role::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function main_character()
+    {
+
+        return $this->hasOne(User::class, 'id', 'main_character_id');
     }
 }

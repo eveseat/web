@@ -20,27 +20,15 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Models;
+namespace Seat\Web\Models\Acl;
 
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class PersonMember.
- * @package Seat\Web\Models
+ * Class GroupRole.
+ * @package Seat\Web\Models\Acl
  */
-class PersonMember extends Model
+class GroupRole extends Model
 {
-    /**
-     * @var array
-     */
-    protected $fillable = ['person_id', 'key_id'];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function person()
-    {
-
-        return $this->belongsTo(Person::class);
-    }
 }

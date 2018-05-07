@@ -33,7 +33,6 @@ use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\Models\UserSetting;
 use Seat\Web\Acl\AccessChecker;
 use Seat\Web\Models\Acl\Affiliation;
-use Seat\Web\Models\Acl\Role;
 
 /**
  * Class User.
@@ -61,7 +60,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'character_owner_hash',
+        'name', 'email', 'character_owner_hash', 'group_id',
     ];
 
     /**
@@ -84,6 +83,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         $this->login_history()->delete();
         $this->roles()->detach();
         $this->affiliations()->detach();
+        $this->group()->detach();
+        $this->refresh_token()->delete();
+
+        $this->settings()->delete();
 
         return parent::delete();
     }
@@ -100,17 +103,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * This user may have certain roles assigned.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function roles()
-    {
-
-        return $this->belongsToMany(Role::class);
-    }
-
-    /**
      * This user may be affiliated manually to
      * other characterID's and or corporations.
      *
@@ -121,6 +113,35 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
         return $this->belongsToMany(Affiliation::class)
             ->withPivot('not');
+    }
+
+    /**
+     * Get the group the current user belongs to.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function group()
+    {
+
+        return $this->belongsTo(Group::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function refresh_token()
+    {
+
+        return $this->hasOne(RefreshToken::class, 'character_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function settings()
+    {
+
+        return $this->hasMany(UserSetting::class);
     }
 
     /**
@@ -155,39 +176,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function associatedCharacterIds()
     {
 
-        return $this->groups()->get()->map(function ($group) {
+        if (! $this->group) {
+            return collect();
+        }
 
-            return $group->users->pluck('id');
-
-        })->flatten();
-    }
-
-    /**
-     * Get the group the current user belongs to.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function groups()
-    {
-
-        return $this->belongsToMany(Group::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function refresh_token()
-    {
-
-        return $this->hasOne(RefreshToken::class, 'character_id', 'id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function settings()
-    {
-
-        return $this->hasMany(UserSetting::class);
+        return $this->group->users->pluck('id')->flatten();
     }
 }

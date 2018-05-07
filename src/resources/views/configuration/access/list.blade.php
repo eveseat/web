@@ -45,7 +45,7 @@
         <tbody>
         <tr>
           <th>{{ trans_choice('web::seat.name', 2) }}</th>
-          <th>{{ trans_choice('web::seat.user', 2) }}</th>
+          <th>{{ trans_choice('web::seat.group', 2) }}</th>
           <th>{{ trans_choice('web::seat.permission', 2) }}</th>
           <th>{{ trans_choice('web::seat.affiliation', 2) }}</th>
           <th></th>
@@ -55,7 +55,7 @@
 
           <tr>
             <td>{{ $role->title }}</td>
-            <td>{{ count($role->users) }}</td>
+            <td>{{ count($role->groups) }}</td>
             <td>{{ count($role->permissions) }}</td>
             <td>{{ count($role->affiliations) }}</td>
             <td>
