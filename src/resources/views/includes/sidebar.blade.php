@@ -11,7 +11,7 @@
       </div>
       <div class="pull-left info">
         <p>
-          <a href="{{ route('character.view.sheet', ['character_id' => setting('main_character_id')]) }}">
+          <a href="{{ route('character.view.sheet', ['character_id' => $user->character_id]) }}">
             {{ trans('web::seat.hello') }}, {{ $user->name }}
           </a>
         </p>
