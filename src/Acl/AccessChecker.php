@@ -237,12 +237,12 @@ trait AccessChecker
 
     private function permissionCharacterLookup(string $permission)
     {
-        return (strpos($permission, 'character.') !== false);
+        return strpos($permission, 'character.') !== false;
     }
 
     private function permissionCorporationLookup(string $permission)
     {
-        return (strpos($permission, 'corporation.') !== false);
+        return strpos($permission, 'corporation.') !== false;
     }
 
     /**
