@@ -69,6 +69,10 @@ class CorporationsController extends Controller
                 return view('web::corporation.partials.alliancename', compact('row'))
                     ->render();
             })
+            ->editColumn('tax_rate', function ($row) {
+
+                return sprintf('%d%%', $row->tax_rate * 100);
+            })
             ->make(true);
     }
 }
