@@ -24,6 +24,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Seat\Web\Models\User;
 
 class AddGroupIdToUsersTable extends Migration
 {
@@ -50,6 +51,10 @@ class AddGroupIdToUsersTable extends Migration
                         ->update(['group_id' => $record->group_id]);
                 });
             }
+
+            $admin = User::where('name', 'admin')->first();
+            if (! is_null($admin))
+                $admin->delete();
 
         }
     }
