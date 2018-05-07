@@ -203,13 +203,6 @@
 
       @endforeach
 
-      {{-- live server --}}
-      <li style="position: absolute; left: 0; right: 0; bottom : 0;">
-          <a href="#">
-              <i class="fa fa-circle-o text-aqua"></i>
-              <span>{{ gethostname() }}</span>
-          </a>
-      </li>
     </ul>
     <!-- /.sidebar-menu -->
 
