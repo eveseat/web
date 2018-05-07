@@ -4,26 +4,21 @@
 
     @foreach($menu as $menu_entry)
 
-      @if(auth()->user()->has($menu_entry['permission']))
+      <li role="presentation" class="@if ($viewname == $menu_entry['highlight_view']) active @endif">
 
-        <li role="presentation"
-            class="@if ($viewname == $menu_entry['highlight_view']) active @endif">
-
-          <a href="{{ route($menu_entry['route'], $sheet->corporation_id) }}">
-            @if (array_key_exists('label', $menu_entry))
-              @if(array_key_exists('plural', $menu_entry))
-                {{ trans_choice($menu_entry['label'], 2) }}
-              @else
-                {{ trans($menu_entry['label']) }}
-              @endif
+        <a href="{{ route($menu_entry['route'], $sheet->corporation_id) }}">
+          @if (array_key_exists('label', $menu_entry))
+            @if(array_key_exists('plural', $menu_entry))
+              {{ trans_choice($menu_entry['label'], 2) }}
             @else
-              {{ $menu_entry['name'] }}
+              {{ trans($menu_entry['label']) }}
             @endif
-          </a>
+          @else
+            {{ $menu_entry['name'] }}
+          @endif
+        </a>
 
-        </li>
-
-      @endif
+      </li>
 
     @endforeach
 

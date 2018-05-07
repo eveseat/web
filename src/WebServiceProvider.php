@@ -252,7 +252,7 @@ class WebServiceProvider extends ServiceProvider
 
         Horizon::auth(function ($request) {
 
-            return $request->user()->has('queue_manager');
+            return $request->user()->has('queue_manager', false);
         });
 
     }

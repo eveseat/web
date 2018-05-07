@@ -152,6 +152,57 @@ trait AccessChecker
         return in_array($permission, $permissions);
     }
 
+    private function hasCharacterPermission(array $permission)
+    {
+        $map = $this->getAffiliationMap();
+
+        // Owning a character grants you '*' permissions to the owned object. In this
+        // context, '*' acts as a wildcard for *all* permissions
+        foreach ($map['char'] as $char => $permissions) {
+
+            // yeah, this is dumb. So if we have an array permission, we need to
+            // loop and check each in there.
+            foreach ($permission as $sub_permission) {
+
+                // specific filter for character object
+                if (strpos($sub_permission, 'character.') !== false) {
+
+                    // check only character wildcard and specific permission
+                    if ($char == $this->getCharacterId() &&
+                        (in_array('character.*', $permissions) ||
+                            in_array($sub_permission, $permissions))
+                    )
+                        return true;
+
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private function hasCorporationPermission(array $permission)
+    {
+        $map = $this->getAffiliationMap();
+
+        foreach ($map['corp'] as $corp => $permissions) {
+
+            foreach ($permission as $sub_permission) {
+
+                if ($corp != $this->getCorporationId())
+                    return false;
+
+                if (in_array('corporation.*', $permissions) && $corp == $this->getCorporationId())
+                    return true;
+
+                if (in_array($sub_permission, $permissions))
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * Check if the user is correctly affiliated
      * *and* has the requested permission on that
@@ -164,84 +215,34 @@ trait AccessChecker
      */
     public function hasAffiliationAndPermission($permission)
     {
-
-        $map = $this->getAffiliationMap();
-
         // TODO: An annoying change in the 3x migration introduced
         // and array based permission, which is stupid. Remove that
         // or plan better for it in 3.1
 
-        // Owning a character grants you '*' permissions to the owned object. In this
-        // context, '*' acts as a wildcard for *all* permissions
-        foreach ($map['char'] as $char => $permissions) {
+        $array_permission = $permission;
 
-            // yeah, this is dumb. So if we have an array permission, we need to
-            // loop and check each in there.
-            if (is_array($permission)) {
+        if (! is_array($permission))
+            $array_permission = (array) $permission;
 
-                foreach ($permission as $sub_permission) {
-
-                    // specific filter for character object
-                    if (strpos($sub_permission, 'character.') !== false) {
-
-                        // check only character wildcard and specific permission
-                        if ($char == $this->getCharacterId() &&
-                            (in_array('character.*', $permissions) ||
-                                in_array($sub_permission, $permissions))
-                        )
-                            return true;
-
-                    }
-                }
-
-            } else {
-
-                // If not an array permission, check it like normal.
-
-                // specific filter for character object
-                if (strpos($permission, 'character.') !== false) {
-
-                    // check only character wildcard and specific permission
-                    if ($char == $this->getCharacterId() && (in_array('character.*', $permissions) ||
-                            in_array($permission, $permissions))
-                    )
-                        return true;
-
-                }
-            }
-        }
+        // Process entries for character
+        if (array_filter($array_permission, [$this, 'permissionCharacterLookup']))
+            return $this->hasCharacterPermission($array_permission);
 
         // Process entries for corporations
-        foreach ($map['corp'] as $corp => $permissions) {
-
-            if (is_array($permission)) {
-
-                foreach ($permission as $sub_permission) {
-
-                    if ($corp != $this->getCorporationId())
-                        return false;
-
-                    if (in_array('corporation.*', $permissions) && $corp == $this->getCorporationId())
-                        return true;
-
-                    if (in_array($sub_permission, $permissions))
-                        return true;
-                }
-
-            } else {
-
-                if ($corp != $this->getCorporationId())
-                    return false;
-
-                if (in_array('corporation.*', $permissions) && $corp == $this->getCorporationId())
-                    return true;
-
-                if (in_array($permission, $permissions))
-                    return true;
-            }
-        }
+        if (array_filter($array_permission, [$this, 'permissionCorporationLookup']))
+            return $this->hasCorporationPermission($array_permission);
 
         return false;
+    }
+
+    private function permissionCharacterLookup(string $permission)
+    {
+        return strpos($permission, 'character.') !== false;
+    }
+
+    private function permissionCorporationLookup(string $permission)
+    {
+        return strpos($permission, 'corporation.') !== false;
     }
 
     /**
