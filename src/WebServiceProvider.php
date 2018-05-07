@@ -91,9 +91,6 @@ class WebServiceProvider extends ServiceProvider
         // Add Validators
         $this->add_custom_validators();
 
-        // Any configuration overrides
-        $this->apply_custom_configuration();
-
         // Configure the queue dashboard
         $this->configureHorizon();
     }
@@ -245,18 +242,6 @@ class WebServiceProvider extends ServiceProvider
     {
 
         Validator::extend('cron', 'Seat\Web\Http\Validation\Custom\Cron@validate');
-    }
-
-    /**
-     * Apply any configuration overrides to those config/
-     * files published using php artisan vendor:publish.
-     */
-    public function apply_custom_configuration()
-    {
-
-        // Allow the application to have any proxy configured
-        // in front of it.
-        config(['trustedproxy.proxies' => '*']);
     }
 
     /**
