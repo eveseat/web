@@ -42,7 +42,7 @@
               @if($skill_queue && count($skill_queue) > 0)
                 <ol>
 
-                  @foreach($skill_queue->slice(2)->all() as $skill)
+                  @foreach($skill_queue->slice(1)->all() as $skill)
 
                     <li>
                       <span class="col-md-8" data-toggle="tooltip" title=""
