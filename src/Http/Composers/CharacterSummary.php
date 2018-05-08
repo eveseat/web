@@ -24,7 +24,6 @@ namespace Seat\Web\Http\Composers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Services\Repositories\Configuration\UserRespository;
 
 /**
@@ -61,10 +60,9 @@ class CharacterSummary
     public function compose(View $view)
     {
 
-        // TODO: Remove direct Model / DB calls and revert to repository pattern.
-
-        $summary = CharacterInfo::find($this->request->character_id);
-        $characters = $this->getUserGroupCharacters(auth()->user()->group);
+        $owner = $this->getUser($this->request->character_id);
+        $summary = $owner->character;
+        $characters = $owner->group->users;
 
         $view->with('summary', $summary);
         $view->with('characters', $characters);
