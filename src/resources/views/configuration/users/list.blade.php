@@ -57,7 +57,7 @@
             </td>
             <td>{{ $user->last_login_source }}</td>
             <td>{{ count($user->keys) }}</td>
-            <td>{{ count($user->roles) }}</td>
+            <td>{{ count($user->group->roles) }}</td>
             <td>
               <div class="btn-group">
                 <a href="{{ route('configuration.users.edit', ['user_id' => $user->id]) }}" type="button"

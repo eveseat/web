@@ -372,7 +372,7 @@
 
           <ul class="list-unstyled">
             <li class="list-header">{{ trans_choice('web::seat.role', 2) }}</li>
-            @foreach($user->roles as $role)
+            @foreach($user->group->roles as $role)
               <li>
                 <i class="fa fa-group"></i>
                 <span @if($role->title == 'Superuser') class="text-danger" @endif>
