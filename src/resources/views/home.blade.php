@@ -84,6 +84,7 @@
   <div class="row">
 
     <!-- skills graphs -->
+    @if(auth()->user()->name != 'admin')
     <div class="col-md-6 col-sm-6 col-xs-12">
 
       <div class="box">
@@ -108,6 +109,7 @@
       </div>
 
     </div><!-- /.col -->
+    @endif
     <div class="col-md-6 col-sm-6 col-xs-12">
 
       <div class="info-box">
@@ -175,34 +177,35 @@
 @stop
 
 @push('javascript')
-  <script>
+<script type="text/javascript">
+  $.get("{{ route('home.chart.serverstatus') }}", function (data) {
 
-    $.get("{{ route('home.chart.serverstatus') }}", function (data) {
-
-      new Chart($("canvas#serverstatus"), {
-        type   : 'line',
-        data   : data,
-        options: {
-          legend: {
+    new Chart($("canvas#serverstatus"), {
+      type   : 'line',
+      data   : data,
+      options: {
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
             display: false
-          },
-          scales: {
-            xAxes: [{
-              display: false
-            }]
-          }
+          }]
         }
-      });
+      }
     });
+  });
 
-    $.get("{{ route('character.view.skills.graph.level', ['character_id' => setting('main_character_id')]) }}", function (data) {
+  if ($('canvas#skills-level').length)
+    $.get("{{ route('character.view.skills.graph.level', ['character_id' => auth()->user()->character_id]) }}", function (data) {
       new Chart($("canvas#skills-level"), {
         type: 'pie',
         data: data
       });
     });
 
-    $.get("{{ route('character.view.skills.graph.coverage', ['character_id' => setting('main_character_id')]) }}", function (data) {
+  if ($('canvas#skills-coverage').length)
+    $.get("{{ route('character.view.skills.graph.coverage', ['character_id' => auth()->user()->character_id]) }}", function (data) {
       new Chart($('canvas#skills-coverage'), {
         type   : 'radar',
         data   : data,
@@ -219,6 +222,5 @@
         }
       });
     });
-
-  </script>
+</script>
 @endpush
