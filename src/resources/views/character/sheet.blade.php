@@ -19,8 +19,8 @@
 
             <dt>{{ trans('web::seat.curr_training') }}</dt>
             <dd>
-              @if($skill_queue->count() > 0)
-                {{ $skill_queue->first()->type->typeName }} to level <b>{{ $skill_queue->first()->finished_level }}</b>
+              @if($skill_queue->where('finish_date', '>', carbon())->count() > 0)
+                {{ $skill_queue->where('finish_date', '>', carbon())->first()->type->typeName }} to level <b>{{ $skill_queue->where('finish_date', '>', carbon())->first()->finished_level }}</b>
               @else
                 {{ trans('web::seat.no_skill_training') }}
               @endif
@@ -28,10 +28,10 @@
 
             <dt>{{ trans('web::seat.skill_training_end') }}</dt>
             <dd>
-              @if($skill_queue->count() > 0)
-                {{ human_diff(carbon($skill_queue->first()->finish_date)->toDateString()) }}
-                on {{ carbon($skill_queue->first()->finish_date)->toDateString() }}
-                at {{ carbon($skill_queue->first()->finish_date)->toTimeString() }}
+              @if($skill_queue->where('finish_date', '>', carbon())->count() > 0)
+                {{ human_diff(carbon($skill_queue->where('finish_date', '>', carbon())->first()->finish_date)->toDateString()) }}
+                on {{ carbon($skill_queue->where('finish_date', '>', carbon())->first()->finish_date)->toDateString() }}
+                at {{ carbon($skill_queue->where('finish_date', '>', carbon())->first()->finish_date)->toTimeString() }}
               @else
                 {{ trans('web::seat.no_skill_training') }}
               @endif
@@ -42,11 +42,11 @@
               @if($skill_queue && count($skill_queue) > 0)
                 <ol>
 
-                  @foreach($skill_queue->slice(1)->all() as $skill)
+                  @foreach($skill_queue->where('finish_date', '>', carbon())->slice(1)->all() as $skill)
 
                     <li>
                       <span class="col-md-8" data-toggle="tooltip" title=""
-                            @if($skill->endTime != '0000-00-00 00:00:00')
+                            @if($skill->finish_date != '0000-00-00 00:00:00')
                             data-original-title="Ends {{ human_diff(carbon($skill->finish_date)->toDateString()) }} on {{ carbon($skill->finish_date)->toDateString() }} at {{ carbon($skill->finish_date)->toTimeString() }}"
                           @endif>{{ $skill->type->typeName }}</span>
                       <span class="col-md-4">
