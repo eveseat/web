@@ -56,7 +56,7 @@
             </span>
             </td>
             <td>{{ $user->last_login_source }}</td>
-            <td>{{ count($user->keys) }}</td>
+            <td>{{ count($user->group->refresh_tokens) }}</td>
             <td>{{ count($user->group->roles) }}</td>
             <td>
               <div class="btn-group">

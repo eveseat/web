@@ -23,6 +23,7 @@
 namespace Seat\Web\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Models\Acl\Role;
 
 /**
@@ -46,6 +47,17 @@ class Group extends Model
     {
 
         return $this->hasMany(User::class);
+    }
+
+    /**
+     * Return all refresh tokens tied to the group.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function refresh_tokens()
+    {
+
+        return $this->hasManyThrough(RefreshToken::class, User::class, 'group_id', 'character_id', 'id', 'id');
     }
 
     /**
