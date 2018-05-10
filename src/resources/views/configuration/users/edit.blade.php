@@ -110,7 +110,7 @@
 
         </div>
         <div class="panel-footer">
-          <b>{{ count($user->roles) }}</b> {{ trans_choice('web::seat.role', count($user->roles)) }}
+          <b>{{ count($user->group->roles) }}</b> {{ trans_choice('web::seat.role', count($user->group->roles)) }}
         </div>
       </div>
 
