@@ -200,21 +200,22 @@ trait AccessChecker
         // context, '*' acts as a wildcard for *all* permissions
         foreach ($map['char'] as $char => $permissions) {
 
+            // in case the permissions array is not related to the character for which we're requesting access
+            // skip
+            if ($char != $this->getCharacterId())
+                continue;
+
+            // in case a wildcard access has been assigned (user is owner), grant access
+            if (in_array('character.*', $permissions))
+                return true;
+
             // yeah, this is dumb. So if we have an array permission, we need to
             // loop and check each in there.
             foreach ($permission as $sub_permission) {
 
-                // specific filter for character object
-                if (strpos($sub_permission, 'character.') !== false) {
-
-                    // check only character wildcard and specific permission
-                    if ($char == $this->getCharacterId() &&
-                        (in_array('character.*', $permissions) ||
-                            in_array($sub_permission, $permissions))
-                    )
-                        return true;
-
-                }
+                // check only character wildcard and specific permission
+                if (in_array($sub_permission, $permissions))
+                    return true;
             }
         }
 
@@ -496,13 +497,16 @@ trait AccessChecker
 
         foreach ($map['corp'] as $corp => $permissions) {
 
+            // in case the permissions array is not related to the corporation for which we're checking access
+            // skip
+            if ($corp != $this->getCorporationId())
+                continue;
+
+            // in case a wildcard access is in the permissions array, grant access
+            if (in_array('corporation.*', $permissions) && $corp == $this->getCorporationId())
+                return true;
+
             foreach ($permission as $sub_permission) {
-
-                if ($corp != $this->getCorporationId())
-                    return false;
-
-                if (in_array('corporation.*', $permissions) && $corp == $this->getCorporationId())
-                    return true;
 
                 if (in_array($sub_permission, $permissions))
                     return true;
