@@ -503,7 +503,7 @@ trait AccessChecker
                 continue;
 
             // in case a wildcard access is in the permissions array, grant access
-            if (in_array('corporation.*', $permissions) && $corp == $this->getCorporationId())
+            if (in_array('corporation.*', $permissions))
                 return true;
 
             foreach ($permission as $sub_permission) {
