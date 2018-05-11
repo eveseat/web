@@ -60,6 +60,7 @@ return [
     'corporation' => [
         'assets',
         'bookmarks',
+        'contacts',
         'contracts',
         'industry',
         'killmails',
