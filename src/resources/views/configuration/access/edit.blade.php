@@ -286,7 +286,8 @@
 
     </div>
     <div class="panel-footer">
-      <b>{{ count($role->users) }}</b> {{ trans_choice('web::seat.user', count($role->users)) }}
+        <b>{{ $role->groups->map(function ($group){ return $group->users; })->unique()->count() }}</b>
+        {{ trans_choice('web::seat.user', $role->groups->map(function ($group){ return $group->users; })->unique()->count()) }}
     </div>
   </div>
 
