@@ -9,6 +9,7 @@
 
     <div class="col-md-6">
 
+      @if(auth()->user()->has('character.skills'))
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">{{ trans('web::seat.skills_summary') }}</h3>
@@ -75,6 +76,7 @@
           {{ count($skill_queue) }} {{ trans_choice('web::seat.skill', count($skill_queue)) }}
         </div>
       </div>
+      @endif
 
       <div class="panel panel-default">
         <div class="panel-heading">
