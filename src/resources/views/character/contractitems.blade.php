@@ -4,7 +4,7 @@
     <th>{{ trans('web::seat.quantity') }}</th>
     <th>{{ trans_choice('web::seat.type', 1) }}</th>
     <th>{{ trans('web::seat.volume') }}</th>
-    <th>{{ trans('web::seat.group') }}</th>
+    <th>{{ trans_choice('web::seat.group',1) }}</th>
   </tr>
   </thead>
   <tbody>
