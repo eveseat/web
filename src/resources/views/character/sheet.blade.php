@@ -10,72 +10,72 @@
     <div class="col-md-6">
 
       @if(auth()->user()->has('character.skills'))
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">{{ trans('web::seat.skills_summary') }}</h3>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">{{ trans('web::seat.skills_summary') }}</h3>
+          </div>
+          <div class="panel-body">
+
+            <dl>
+
+              <dt>{{ trans('web::seat.curr_training') }}</dt>
+              <dd>
+                @if($skill_queue->where('finish_date', '>', carbon())->count() > 0)
+                  {{ $skill_queue->where('finish_date', '>', carbon())->first()->type->typeName }} to level <b>{{ $skill_queue->where('finish_date', '>', carbon())->first()->finished_level }}</b>
+                @else
+                  {{ trans('web::seat.no_skill_training') }}
+                @endif
+              </dd>
+
+              <dt>{{ trans('web::seat.skill_training_end') }}</dt>
+              <dd>
+                @if($skill_queue->where('finish_date', '>', carbon())->count() > 0)
+                  {{ human_diff(carbon($skill_queue->where('finish_date', '>', carbon())->first()->finish_date)->toDateString()) }}
+                  on {{ carbon($skill_queue->where('finish_date', '>', carbon())->first()->finish_date)->toDateString() }}
+                  at {{ carbon($skill_queue->where('finish_date', '>', carbon())->first()->finish_date)->toTimeString() }}
+                @else
+                  {{ trans('web::seat.no_skill_training') }}
+                @endif
+              </dd>
+
+              <dt>{{ trans('web::seat.skill_queue') }}</dt>
+              <dd>
+                @if($skill_queue && count($skill_queue) > 0)
+                  <ol>
+
+                    @foreach($skill_queue->where('finish_date', '>', carbon())->slice(1)->all() as $skill)
+
+                      <li>
+                        <span class="col-md-8" data-toggle="tooltip" title=""
+                              @if($skill->finish_date != '0000-00-00 00:00:00')
+                              data-original-title="Ends {{ human_diff(carbon($skill->finish_date)->toDateString()) }} on {{ carbon($skill->finish_date)->toDateString() }} at {{ carbon($skill->finish_date)->toTimeString() }}"
+                            @endif>{{ $skill->type->typeName }}</span>
+                        <span class="col-md-4">
+                          @for($i = 1; $i <= $skill->finished_level; $i++)
+                            @if($i == $skill->finished_level)
+                              <span class="fa fa-star text-green"></span>
+                            @else
+                              <span class="fa fa-star"></span>
+                            @endif
+                          @endfor
+                        </span>
+                      </li>
+
+                    @endforeach
+
+                  </ol>
+                @else
+                  {{ trans('web::seat.empty_skill_queue') }}
+                @endif
+              </dd>
+
+            </dl>
+
+          </div>
+          <div class="panel-footer">
+            {{ count($skill_queue) }} {{ trans_choice('web::seat.skill', count($skill_queue)) }}
+          </div>
         </div>
-        <div class="panel-body">
-
-          <dl>
-
-            <dt>{{ trans('web::seat.curr_training') }}</dt>
-            <dd>
-              @if($skill_queue->where('finish_date', '>', carbon())->count() > 0)
-                {{ $skill_queue->where('finish_date', '>', carbon())->first()->type->typeName }} to level <b>{{ $skill_queue->where('finish_date', '>', carbon())->first()->finished_level }}</b>
-              @else
-                {{ trans('web::seat.no_skill_training') }}
-              @endif
-            </dd>
-
-            <dt>{{ trans('web::seat.skill_training_end') }}</dt>
-            <dd>
-              @if($skill_queue->where('finish_date', '>', carbon())->count() > 0)
-                {{ human_diff(carbon($skill_queue->where('finish_date', '>', carbon())->first()->finish_date)->toDateString()) }}
-                on {{ carbon($skill_queue->where('finish_date', '>', carbon())->first()->finish_date)->toDateString() }}
-                at {{ carbon($skill_queue->where('finish_date', '>', carbon())->first()->finish_date)->toTimeString() }}
-              @else
-                {{ trans('web::seat.no_skill_training') }}
-              @endif
-            </dd>
-
-            <dt>{{ trans('web::seat.skill_queue') }}</dt>
-            <dd>
-              @if($skill_queue && count($skill_queue) > 0)
-                <ol>
-
-                  @foreach($skill_queue->where('finish_date', '>', carbon())->slice(1)->all() as $skill)
-
-                    <li>
-                      <span class="col-md-8" data-toggle="tooltip" title=""
-                            @if($skill->finish_date != '0000-00-00 00:00:00')
-                            data-original-title="Ends {{ human_diff(carbon($skill->finish_date)->toDateString()) }} on {{ carbon($skill->finish_date)->toDateString() }} at {{ carbon($skill->finish_date)->toTimeString() }}"
-                          @endif>{{ $skill->type->typeName }}</span>
-                      <span class="col-md-4">
-                        @for($i = 1; $i <= $skill->finished_level; $i++)
-                          @if($i == $skill->finished_level)
-                            <span class="fa fa-star text-green"></span>
-                          @else
-                            <span class="fa fa-star"></span>
-                          @endif
-                        @endfor
-                      </span>
-                    </li>
-
-                  @endforeach
-
-                </ol>
-              @else
-                {{ trans('web::seat.empty_skill_queue') }}
-              @endif
-            </dd>
-
-          </dl>
-
-        </div>
-        <div class="panel-footer">
-          {{ count($skill_queue) }} {{ trans_choice('web::seat.skill', count($skill_queue)) }}
-        </div>
-      </div>
       @endif
 
       <div class="panel panel-default">

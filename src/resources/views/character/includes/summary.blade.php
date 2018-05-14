@@ -53,17 +53,17 @@
         </dd>
 
         @if(auth()->user()->has('character.skills'))
-        <dt>{{ trans_choice('web::seat.skillpoint', 2) }}</dt>
-        <dd>{{ number($summary->skills->sum('skillpoints_in_skill'), 0) }}</dd>
+          <dt>{{ trans_choice('web::seat.skillpoint', 2) }}</dt>
+          <dd>{{ number($summary->skills->sum('skillpoints_in_skill'), 0) }}</dd>
         @endif
 
         @if(auth()->user()->has('character.journal') || auth()->user()->has('character.transactions'))
-        <dt>{{ trans('web::seat.account_balance') }}</dt>
-        <dd>
-          @if(!is_null($summary->balance))
-            {{ number($summary->balance->balance) }}
-          @endif
-        </dd>
+          <dt>{{ trans('web::seat.account_balance') }}</dt>
+          <dd>
+            @if(!is_null($summary->balance))
+              {{ number($summary->balance->balance) }}
+            @endif
+          </dd>
         @endif
 
       <dt>{{ trans('web::seat.current_ship') }}</dt>
