@@ -236,7 +236,7 @@
         <input type="hidden" name="role_id" value="{{ $role->id }}">
 
         <div class="form-group">
-          <label for="groups">{{ trans('web::seat.available_groups') }}</label>
+          <label for="groups">{{ trans_choice('web::seat.available_groups',2) }}</label>
           <select name="groups[]" id="available_users" style="width: 100%" multiple>
 
             @foreach($all_groups as $group)
@@ -262,7 +262,7 @@
         <tbody>
 
         <tr>
-          <th colspan="2" class="text-center">{{ trans('web::seat.current_groups') }}</th>
+          <th colspan="2" class="text-center">{{ trans_choice('web::seat.current_groups',2) }}</th>
         </tr>
 
         @foreach($role->groups as $group)
