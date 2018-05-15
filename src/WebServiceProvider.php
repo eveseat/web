@@ -50,7 +50,6 @@ use Seat\Web\Http\Middleware\Bouncer\KeyBouncer;
 use Seat\Web\Http\Middleware\Locale;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
 use Seat\Web\Http\Middleware\Requirements;
-use Supervisor\Supervisor;
 use Validator;
 
 /**
@@ -92,7 +91,7 @@ class WebServiceProvider extends ServiceProvider
         $this->add_custom_validators();
 
         // Configure the queue dashboard
-        $this->configureHorizon();
+        $this->configure_horizon();
     }
 
     /**
@@ -245,16 +244,35 @@ class WebServiceProvider extends ServiceProvider
     }
 
     /**
-     * Specify the constraint for access to the Queue dashboard.
+     * Configure Horizon.
+     *
+     * This includes the access rules for the dashboard, as
+     * well as the number of workers to use for the job processor.
      */
-    public function configureHorizon()
+    public function configure_horizon()
     {
 
+        // Require the queue_manager role to view the dashboard
         Horizon::auth(function ($request) {
 
             return $request->user()->has('queue_manager', false);
         });
 
+        // Configure the workers for SeAT.
+        $horizon_environments = [
+            'local' => [
+                'seat-workers' => [
+                    'connection' => 'redis',
+                    'queue'      => ['high', 'medium', 'low', 'default'],
+                    'balance'    => false,
+                    'processes'  => setting('queue_workers', true),
+                    'tries'      => 1,
+                ],
+            ],
+        ];
+
+        // Set the environment configuration.
+        config(['horizon.environments' => $horizon_environments]);
     }
 
     /**

@@ -31,6 +31,20 @@
             </div>
           </div>
 
+          <legend>{{ trans_choice('web::seat.queue_worker', 2) }}</legend>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="worker">{{ trans_choice('web::seat.worker', 2) }}</label>
+            <div class="col-md-6">
+              <input id="worker" name="queue_workers" type="text"
+                     class="form-control input-md" value="{{ setting('queue_workers', true) }}">
+              <span class="help-block">
+                {{ trans('web::seat.queue_worker_help') }}
+              </span>
+            </div>
+          </div>
+
           <legend>{{ trans('web::seat.registration') }}</legend>
 
           <!-- Select Basic -->

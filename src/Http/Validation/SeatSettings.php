@@ -57,6 +57,7 @@ class SeatSettings extends FormRequest
             'registration'   => 'required|in:' . $allowed_registration,
             'admin_contact'  => 'required|email',
             'allow_tracking' => 'required|in:' . $allowed_tracking,
+            'queue_workers'  => 'required|int',
         ];
     }
 }
