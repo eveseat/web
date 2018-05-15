@@ -29,6 +29,10 @@ use Seat\Services\Repositories\Eve\EveRepository;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\StarbaseModule;
 
+/**
+ * Class StarbaseController.
+ * @package Seat\Web\Http\Controllers\Corporation
+ */
 class StarbaseController extends Controller
 {
     use Assets;

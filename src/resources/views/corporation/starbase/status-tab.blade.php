@@ -145,13 +145,14 @@
           Strontium
         </span>
         <span class="progress-number">
-          <b>{{ number($starbase->fuelBays->where('type_id', 16275)->first()->quantity, 0) }}</b>/{{ number($starbase->strontiumBaySize / 3, 0) }}
+          <b>
+            {{ number(optional($starbase->fuelBays->where('type_id', 16275))->first()->quantity ?? 0, 0) }}</b>/{{ number($starbase->strontiumBaySize / 3, 0) }}
           {{ trans_choice('web::seat.unit', 2) }}
         </span>
 
         <div class="progress sm">
           <div class="progress-bar progress-bar-green"
-               style="width: {{ 100 * (($starbase->fuelBays->where('type_id', 16275)->first()->quantity * 3) / $starbase->strontiumBaySize) }}%">
+               style="width: {{ 100 * ((optional($starbase->fuelBays->where('type_id', 16275))->first()->quantity ?? 0 * 3) / $starbase->strontiumBaySize) }}%">
           </div>
         </div>
       </div>
@@ -222,7 +223,7 @@
           @else
             @if($starbase->system->sovereignty->alliance_id == $sheet->alliance_id || $starbase->system->sovereignty->corporation_id == $starbase->corporation_id)
               {{
-                round($starbase->fuelBays->where('type_id', 16275)->first()->quantity / ceil($starbase->baseStrontiumUsage * 0.75))
+                round(optional($starbase->fuelBays->where('type_id', 16275))->first()->quantity ?? 0 / ceil($starbase->baseStrontiumUsage * 0.75))
               }} hours at
               {{
                 carbon('now')->addHours($starbase->strontium / ceil($starbase->baseStrontiumUsage * 0.75))
