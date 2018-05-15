@@ -227,7 +227,7 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ trans_choice('web::seat.user', 2) }}</h3>
+      <h3 class="panel-title">{{ trans_choice('web::seat.group', 2) }}</h3>
     </div>
     <div class="panel-body">
 
@@ -236,7 +236,7 @@
         <input type="hidden" name="role_id" value="{{ $role->id }}">
 
         <div class="form-group">
-          <label for="groups">{{ trans('web::seat.available_users') }}</label>
+          <label for="groups">{{ trans_choice('web::seat.available_groups',2) }}</label>
           <select name="groups[]" id="available_users" style="width: 100%" multiple>
 
             @foreach($all_groups as $group)
@@ -252,7 +252,7 @@
           </select>
         </div>
 
-        <button type="submit" class="btn btn-success btn-block">{{ trans_choice('web::seat.add_user', 2) }}</button>
+        <button type="submit" class="btn btn-success btn-block">{{ trans_choice('web::seat.add_group', 2) }}</button>
 
       </form>
 
@@ -262,7 +262,7 @@
         <tbody>
 
         <tr>
-          <th colspan="2" class="text-center">{{ trans('web::seat.current_users') }}</th>
+          <th colspan="2" class="text-center">{{ trans_choice('web::seat.current_groups',2) }}</th>
         </tr>
 
         @foreach($role->groups as $group)
@@ -286,7 +286,8 @@
 
     </div>
     <div class="panel-footer">
-      <b>{{ count($role->users) }}</b> {{ trans_choice('web::seat.user', count($role->users)) }}
+        <b>{{ count($role->groups) }}</b>
+        {{ trans_choice('web::seat.group', count($role->groups)) }}
     </div>
   </div>
 
