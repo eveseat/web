@@ -3,6 +3,8 @@
 @section('title', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.sheet'))
 @section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.sheet'))
 
+@inject('request', 'Illuminate\Http\Request')
+
 @section('character_content')
 
   <div class="row">
@@ -12,7 +14,17 @@
       @if(auth()->user()->has('character.skills'))
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title">{{ trans('web::seat.skills_summary') }}</h3>
+            <h3 class="panel-title">
+              {{ trans('web::seat.skills_summary') }}
+              @if(auth()->user()->has('character.jobs'))
+                <span class="pull-right">
+                  <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.skillqueue']) }}"
+                     style="color: #000000">
+                  <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_skill_queue') }}"></i>
+                  </a>
+                </span>
+              @endif
+            </h3>
           </div>
           <div class="panel-body">
 
@@ -171,7 +183,17 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ trans('web::seat.employment_history') }}</h3>
+          <h3 class="panel-title">
+            {{ trans('web::seat.employment_history') }}
+            @if(auth()->user()->has('character.jobs'))
+              <span class="pull-right">
+                <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.corphistory']) }}"
+                   style="color: #000000">
+                  <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_corp_history') }}"></i>
+                </a>
+              </span>
+            @endif
+          </h3>
         </div>
         <div class="panel-body">
 

@@ -402,6 +402,14 @@ return [
         'and should maybe be :suggested',
     'client_callback_not_ok'       => 'Callback URL not set. Check .env and set as :url',
 
+    // Updaters
+    'update_dispatched'            => 'Update job has successfully been dispatched. Please check back again ' .
+        'in a few moments.',
+    'update_failed'                => 'Update job dispatching failed. Please contact your SeAT administrator.',
+    'update_skill_queue'           => 'Update Skill Queue',
+    'update_assets'                => 'Update Assets',
+    'update_corp_history'          => 'Update Employment History',
+
     // Character
     'joined_curr_corp'             => 'Joined Current Corporation',
     'skillpoint'                   => 'Skillpoint|Skillpoints',

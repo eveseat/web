@@ -181,6 +181,7 @@ Route::group([
             'prefix'    => 'tools',
         ], function () {
 
+            include __DIR__ . '/Routes/Tools/Job.php';
             include __DIR__ . '/Routes/Tools/Standings.php';
         });
 

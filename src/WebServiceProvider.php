@@ -302,6 +302,9 @@ class WebServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__ . '/Config/package.corporation.menu.php', 'package.corporation.menu');
 
+        // Helper configurations
+        $this->mergeConfigFrom(__DIR__ . '/Config/web.jobnames.php', 'web.jobnames');
+
         // Register any extra services.
         $this->register_services();
 
