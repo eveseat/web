@@ -25,7 +25,6 @@ namespace Seat\Web\Http\Controllers\Tools;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Http\Controllers\Controller;
 
-
 /**
  * Class JobController.
  * @package Seat\Web\Http\Controllers
