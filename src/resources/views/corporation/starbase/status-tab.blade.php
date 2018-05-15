@@ -230,10 +230,10 @@
               }}
             @else
               {{
-                round(($starbase->fuelBays->where('type_id', 16275)->first()->quantity / $starbase->baseStrontiumUsage))
+                round(optional($starbase->fuelBays->where('type_id', 16275))->first()->quantity ?? 0 / $starbase->baseStrontiumUsage)
               }} hours at
               {{
-                carbon('now')->addHours($starbase->fuelBays->where('type_id', 16275)->first()->quantity / $starbase->baseStrontiumUsage)
+                carbon('now')->addHours(optional($starbase->fuelBays->where('type_id', 16275))->first()->quantity ?? 0 / $starbase->baseStrontiumUsage)
               }}
             @endif
           @endif
