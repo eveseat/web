@@ -57,38 +57,6 @@
                   <img src="{{ asset('web/img/eveboard.png') }}">
                 </a>
               @endif
-              @if ($contact->contact_type == 'corporation')
-                <a href="https://gate.eveonline.com/Corporation/{{ $contact->contactName }}"
-                   target="_blank">
-                  <img src="{{ asset('web/img/evegate.png') }}">
-                </a>
-              @elseif ($contact->contact_type == 'alliance')
-                <a href="https://gate.eveonline.com/Alliance/{{ $contact->contactName }}"
-                   target="_blank">
-                  <img src="{{ asset('web/img/evegate.png') }}">
-                </a>
-              @else
-                <a href="https://gate.eveonline.com/Profile/{{ $contact->contactName }}"
-                   target="_blank">
-                  <img src="{{ asset('web/img/evegate.png') }}">
-                </a>
-              @endif
-              @if ($contact->contact_type == 'corporation')
-                <a href="https://eve-kill.net/?a=corp_detail&crp_external_id={{ $contact->contact_id }}"
-                   target="_blank">
-                  <img src="{{ asset('web/img/evekill.png') }}">
-                </a>
-              @elseif ($contact->contact_type == 'alliance')
-                <a href="https://eve-kill.net/?a=alliance_detail&all_external_id={{ $contact->contact_id }}"
-                   target="_blank">
-                  <img src="{{ asset('web/img/evekill.png') }}">
-                </a>
-              @else
-                <a href="https://eve-kill.net/?a=pilot_detail&plt_external_id={{ $contact->contact_id }}"
-                   target="_blank">
-                  <img src="{{ asset('web/img/evekill.png') }}">
-                </a>
-              @endif
               @if (!in_array($contact->contact_type, ['corporation', 'alliance']))
                 <a href="http://eve-search.com/search/author/{{ $contact->contactName }}"
                    target="_blank">
