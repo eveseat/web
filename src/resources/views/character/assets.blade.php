@@ -41,7 +41,7 @@
                   {{
                     number_metric($assets->where('location_id', $location->first()->location_id)->map(
                       function($value){
-                        return $value->quantity * $value->type->volume;
+                        return $value->quantity * optional($value->type)->volume ?? 0;
                       })->sum()
                     )
                   }}
@@ -67,17 +67,27 @@
               </td>
               <td>
                 {!! img('type', $container->type_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-                @if($container->name != $container->type->typeName)
-                  {{ $container->name }} ({{ $container->type->typeName }})
+                @if($container->type)
+                  @if($container->name != $container->type->typeName)
+                    {{ $container->name }} ({{ $container->type->typeName }})
+                  @else
+                    {{ $container->type->typeName }}
+                  @endif
                 @else
-                  {{ $container->type->typeName }}
+                  Unknown
                 @endif
                 @if(! $container->is_singleton)
                   <span class="text-red">(packaged)</span>
                 @endif
               </td>
-              <td>{{ number_metric($container->quantity * $container->type->volume) }}m&sup3;</td>
-              <td>{{ $container->type->group->groupName }}</td>
+              <td>{{ number_metric($container->quantity * optional($container->type)->volume ?? 0) }}m&sup3;</td>
+              <td>
+                @if($container->type)
+                  {{ $container->type->group->groupName }}
+                @else
+                  Unknown
+                @endif
+              </td>
             </tr>
 
             @if($container->content->count() > 0)
