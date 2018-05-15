@@ -85,13 +85,22 @@
           </h2>
           <div class="timeline-body">
 
-            @if(setting('mail_threads') == "yes")
+            @if($message->body)
 
-              @include('web::character.partials.messagethread')
+              @if(setting('mail_threads') == "yes")
+
+
+                @include('web::character.partials.messagethread')
+
+              @else
+
+                {!! clean_ccp_html($message->body) !!}
+
+              @endif
 
             @else
 
-              {!! clean_ccp_html($message->body) !!}
+              {{ trans('web::seat.missing_body') }}
 
             @endif
 

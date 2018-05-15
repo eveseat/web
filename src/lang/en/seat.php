@@ -429,6 +429,7 @@ return [
     'subject'                      => 'Subject',
     'to'                           => 'To',
     'to_corp'                      => 'To Corporation',
+    'missing_body'                 => 'Message Body not yet downloaded',
     'to_alliance'                  => 'To Alliance',
     'to_char'                      => 'To Characters',
     'total'                        => 'Total',
