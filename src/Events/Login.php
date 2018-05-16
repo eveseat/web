@@ -47,16 +47,16 @@ class Login
 
         // Create a log entry for this login.
         $event->user->last_login_source = Request::getClientIp();
-        $event->user->last_login        = new DateTime();
+        $event->user->last_login = new DateTime();
         $event->user->save();
 
         $event->user->login_history()->save(new UserLoginHistory([
-            'source'     => Request::getClientIp(),
+            'source' => Request::getClientIp(),
             'user_agent' => Request::header('User-Agent'),
-            'action'     => 'login',
+            'action' => 'login',
         ]));
 
-        $message = 'User logged in from '.Request::getClientIp();
+        $message = 'User logged in from ' . Request::getClientIp();
         event('security.log', [$message, 'authentication']);
 
         if ($event->user->refresh_token()->exists()) {
@@ -66,6 +66,5 @@ class Login
             // Update Corporation information
             (new CorporationTokenShouldUpdate($event->user->refresh_token, 'high'))->fire();
         }
-
     }
 }
