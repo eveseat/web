@@ -31,6 +31,7 @@ use Seat\Web\Models\UserLoginHistory;
 
 /**
  * Class Login.
+ *
  * @package Seat\Web\Events
  */
 class Login
@@ -46,7 +47,7 @@ class Login
 
         // Create a log entry for this login.
         $event->user->last_login_source = Request::getClientIp();
-        $event->user->last_login = new DateTime();
+        $event->user->last_login        = new DateTime();
         $event->user->save();
 
         $event->user->login_history()->save(new UserLoginHistory([
@@ -55,13 +56,16 @@ class Login
             'action'     => 'login',
         ]));
 
-        $message = 'User logged in from ' . Request::getClientIp();
+        $message = 'User logged in from '.Request::getClientIp();
         event('security.log', [$message, 'authentication']);
 
-        // Update Character information
-        (new CharacterTokenShouldUpdate($event->user->refresh_token, 'high'))->fire();
+        if ($event->user->refresh_token()->exists()) {
+            // Update Character information
+            (new CharacterTokenShouldUpdate($event->user->refresh_token, 'high'))->fire();
 
-        // Update Corporation information
-        (new CorporationTokenShouldUpdate($event->user->refresh_token, 'high'))->fire();
+            // Update Corporation information
+            (new CorporationTokenShouldUpdate($event->user->refresh_token, 'high'))->fire();
+        }
+
     }
 }
