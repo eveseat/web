@@ -22,6 +22,7 @@
 
 namespace Seat\Web;
 
+use Exception;
 use Illuminate\Auth\Events\Attempting;
 use Illuminate\Auth\Events\Login as LoginEvent;
 use Illuminate\Auth\Events\Logout as LogoutEvent;
@@ -258,6 +259,20 @@ class WebServiceProvider extends ServiceProvider
             return $request->user()->has('queue_manager', false);
         });
 
+        // During autoload-dumping and other cases, it may happen
+        // that the MySQL database is not yet ready. In that case,
+        // we need to catch the exception the call to `setting()`
+        // will cause.
+
+        try {
+
+            $worker_count = setting('queue_workers', true);
+
+        } catch (Exception $e) {
+
+            $worker_count = 3;
+        }
+
         // Configure the workers for SeAT.
         $horizon_environments = [
             'local' => [
@@ -265,7 +280,7 @@ class WebServiceProvider extends ServiceProvider
                     'connection' => 'redis',
                     'queue'      => ['high', 'medium', 'low', 'default'],
                     'balance'    => false,
-                    'processes'  => setting('queue_workers', true),
+                    'processes'  => $worker_count,
                     'tries'      => 1,
                 ],
             ],
