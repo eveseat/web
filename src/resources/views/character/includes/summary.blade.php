@@ -99,9 +99,9 @@
   </div>
   <div class="panel-footer">
     <span class="text-center center-block">
-      <a href="http://eveboard.com/pilot/{{ $summary->name }}"
+      <a href="http://eveskillboard.com/pilot/{{ $summary->name }}"
          target="_blank">
-        <img src="{{ asset('web/img/eveboard.png') }}">
+        <img src="{{ asset('web/img/eveskillboard.png') }}">
       </a>
       <a href="https://forums.eveonline.com/u/{{ str_replace(' ', '_', $summary->name) }}/summary"
          target="_blank">
