@@ -11,7 +11,7 @@
     </div>
     <div class="panel-body">
 
-      <table class="table datatable compact table-condensed table-hover table-responsive">
+      <table class="table compact table-condensed table-hover table-responsive">
         <thead>
         <tr>
           <th>{{ trans('web::seat.date') }}</th>
