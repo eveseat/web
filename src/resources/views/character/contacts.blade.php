@@ -52,9 +52,9 @@
             </td>
             <td>
               @if (!in_array($contact->contact_type, ['corporation', 'alliance']))
-                <a href="http://eveboard.com/pilot/{{ $contact->contactName }}"
+                <a href="http://eveskillboard.com/pilot/{{ $contact->contactName }}"
                    target="_blank">
-                  <img src="{{ asset('web/img/eveboard.png') }}">
+                  <img src="{{ asset('web/img/eveskillboard.png') }}">
                 </a>
               @endif
               @if (!in_array($contact->contact_type, ['corporation', 'alliance']))
