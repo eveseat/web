@@ -51,15 +51,16 @@ class Login
         $event->user->save();
 
         $event->user->login_history()->save(new UserLoginHistory([
-            'source' => Request::getClientIp(),
+            'source'     => Request::getClientIp(),
             'user_agent' => Request::header('User-Agent'),
-            'action' => 'login',
+            'action'     => 'login',
         ]));
 
         $message = 'User logged in from ' . Request::getClientIp();
         event('security.log', [$message, 'authentication']);
 
         if ($event->user->refresh_token()->exists()) {
+
             // Update Character information
             (new CharacterTokenShouldUpdate($event->user->refresh_token, 'high'))->fire();
 
