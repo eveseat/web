@@ -31,6 +31,7 @@ use Illuminate\Notifications\Notifiable;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\Models\UserSetting;
+use Seat\Services\Settings\Profile;
 use Seat\Web\Acl\AccessChecker;
 use Seat\Web\Models\Acl\Affiliation;
 
@@ -114,17 +115,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Get the group the current user belongs to.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function group()
-    {
-
-        return $this->belongsTo(Group::class);
-    }
-
-    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function refresh_token()
@@ -140,6 +130,17 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
 
         return $this->hasMany(UserSetting::class);
+    }
+
+    /**
+     * Get the group the current user belongs to.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function group()
+    {
+
+        return $this->belongsTo(Group::class);
     }
 
     /**
@@ -160,6 +161,19 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
 
         return $this->id;
+    }
+
+    /**
+     * Return the email address for this user based on the
+     * email address setting.
+     *
+     * @return mixed
+     * @throws \Seat\Services\Exceptions\SettingException
+     */
+    public function getEmailAttribute()
+    {
+
+        return Profile::get('email_address', $this->group->id);
     }
 
     /**
