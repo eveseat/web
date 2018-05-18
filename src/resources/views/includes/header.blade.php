@@ -60,7 +60,47 @@
             <span class="hidden-xs">{{ $user->name }}</span>
           </a>
 
-          @include('web::includes.character-selection')
+          <ul class="dropdown-menu">
+            <!-- The user image in the menu -->
+            <li class="user-header">
+              <img src="//image.eveonline.com/Character/{{ $user->id }}_256.jpg"
+                   class="img-circle" alt="User Image">
+              <p>
+                {{ $user->name }}
+                <small>{{ trans('web::seat.joined') }}: {{ human_diff($user->created_at) }}</small>
+                <small>{{ count(auth()->user()->associatedCharacterIds()) }}
+                  {{ trans_choice('web::seat.characters_in_group', count(auth()->user()->associatedCharacterIds())) }}</small>
+              </p>
+            </li>
+
+            <li class="user-body">
+              <div class="row">
+                <div class="col-xs-6 text-center">
+                  <a class="btn btn-default btn-flat" type="button" data-toggle="modal" data-target="#characterSwitchModal">
+                    {{ trans('web::seat.switch_character') }}</a>
+                </div>
+                <div class="col-xs-6 text-center">
+                  <a class="btn btn-default btn-flat" href="{{ route('auth.eve') }}">{{ trans('web::seat.link_character') }}</a>
+                </div>
+              </div>
+            </li>
+
+            <!-- Menu Footer-->
+            <li class="user-footer">
+              <div class="pull-left">
+                <a href="{{ route('profile.view') }}"
+                   class="btn btn-default btn-flat">{{ trans('web::seat.profile') }}</a>
+              </div>
+              <div class="pull-right">
+                <form role="form" action="{{ route('auth.logout') }}" method="post">
+                  {{ csrf_field() }}
+                  <button type="submit" class="btn btn-default btn-flat">
+                    {{ trans('web::seat.sign_out') }}
+                  </button>
+                </form>
+              </div>
+            </li>
+          </ul>
 
         </li>
 
@@ -68,3 +108,49 @@
     </div>
   </nav>
 </header>
+
+<!-- Character switching modal -->
+<div class="modal fade off" id="characterSwitchModal" tabindex="-1" role="dialog"
+     aria-labelledby="characterSwitchModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="characterSwitchModalLabel">{{ trans('web::seat.switch_character') }}</h4>
+      </div>
+      <div class="modal-body">
+
+        <table class="table datatable compact table-condensed table-hover table-responsive">
+          <thead>
+          <tr>
+            <th>{{ trans_choice('web::seat.user', count(auth()->user()->group->users)) }}</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+
+          @foreach(auth()->user()->group->users as $user)
+
+            <tr>
+              <td>
+                {!! img('character', $user->character_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
+                {{ $user->name }}
+              </td>
+              <td>
+                <a href="{{ route('profile.change-character', ['character_id' => $user->character_id]) }}">
+                  {{ trans('web::seat.switch_character') }}
+                </a>
+              </td>
+            </tr>
+
+          @endforeach
+
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div>

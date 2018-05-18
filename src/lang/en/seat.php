@@ -142,6 +142,9 @@ return [
     'profile'               => 'Profile',
     'sign_out'              => 'Sign Out',
     'stop_impersonation'    => 'Stop Impersonation',
+    'switch_character'      => 'Switch Character',
+    'link_character'        => 'Link Character',
+    'characters_in_group'   => 'Character in group|Characters in group',
 
     // Notifications
     'error'                 => 'Error',
