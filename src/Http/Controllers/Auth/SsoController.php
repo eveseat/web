@@ -57,6 +57,7 @@ class SsoController extends Controller
      * @param \Laravel\Socialite\Contracts\Factory $social
      *
      * @return \Seat\Web\Http\Controllers\Auth\Response
+     * @throws \Seat\Services\Exceptions\SettingException
      */
     public function handleProviderCallback(Socialite $social)
     {
@@ -211,18 +212,16 @@ class SsoController extends Controller
 
     /**
      * Set the main character_id for a group if it is
-     * currently null.
+     * not already set.
      *
      * @param \Seat\Web\Models\User $user
+     *
+     * @throws \Seat\Services\Exceptions\SettingException
      */
     private function updateMainCharacterId(User $user)
     {
 
-        if (! $user->group->main_character_id) {
-
-            $group = $user->group;
-            $group->main_character_id = $user->character_id;
-            $group->save();
-        }
+        if (setting('main_character_id') == 0)
+            setting(['main_character_id', $user->character_id]);
     }
 }

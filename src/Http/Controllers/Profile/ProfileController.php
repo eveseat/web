@@ -72,18 +72,6 @@ class ProfileController extends Controller
     public function getUpdateUserSettings(ProfileSettings $request)
     {
 
-        // If the multifactor authentication is being disabled,
-        // clear out the token we have on record too.
-        if ($request->require_mfa == 'no' && Profile::get('require_mfa') == 'yes') {
-
-            auth()->user()->update(['mfa_token' => null]);
-        }
-
-        // Update the main character_id
-        $group = auth()->user()->group;
-        $group->main_character_id = $request->main_character_id;
-        $group->save();
-
         // Update the rest of the settings
         Profile::set('main_character_id', $request->main_character_id);
         Profile::set('skin', $request->skin);
@@ -96,30 +84,20 @@ class ProfileController extends Controller
 
         Profile::set('email_notifications', $request->email_notifications);
 
-        Profile::set('require_mfa', $request->require_mfa);
-
         return redirect()->back()
             ->with('success', 'Profile settings updated!');
-
     }
 
     /**
      * @param \Seat\Web\Http\Validation\EmailUpdate $request
      *
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Seat\Services\Exceptions\SettingException
      */
     public function postUpdateEmail(EmailUpdate $request)
     {
 
-        // retrieving all tied accounts
-        $accounts = $this->getUserGroupCharacters(auth()->user()->group);
-
-        // iterating over all retrieved account and updating email
-        $accounts->each(function ($account) use ($request) {
-
-            $account->email = $request->new_email;
-            $account->save();
-        });
+        Profile::set('email_address', $request->new_email);
 
         return redirect()->back()
             ->with('success', 'Email updated!');

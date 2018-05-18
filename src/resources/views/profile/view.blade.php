@@ -27,7 +27,7 @@
               <select id="main_character_id" name="main_character_id" class="form-control">
                 @foreach($characters as $character)
                   <option value="{{ $character->id }}"
-                          @if(auth()->user()->group->main_character->id == $character->id)
+                          @if(setting('main_character_id') == $character->id)
                           selected
                       @endif>
                     {{ $character->name }}</option>
@@ -235,7 +235,7 @@
                           <div class="form-group">
                             <label for="current_email">{{ trans('web::seat.current_email') }}</label>
                             <input type="email" name="current_email" class="form-control" placeholder="Current Email"
-                                   value="{{ auth()->user()->email }}" disabled="disabled"/>
+                                   value="{{ setting('email_address') }}" disabled="disabled"/>
                           </div>
 
                           <div class="form-group">
