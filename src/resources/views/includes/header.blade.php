@@ -68,11 +68,14 @@
               <p>
                 {{ $user->name }}
                 <small>{{ trans('web::seat.joined') }}: {{ human_diff($user->created_at) }}</small>
+                @if(auth()->user()->name != 'admin')
                 <small>{{ count(auth()->user()->associatedCharacterIds()) }}
                   {{ trans_choice('web::seat.characters_in_group', count(auth()->user()->associatedCharacterIds())) }}</small>
+                @endif
               </p>
             </li>
 
+            @if(auth()->user()->name != 'admin')
             <li class="user-body">
               <div class="row">
                 <div class="col-xs-6 text-center">
@@ -84,6 +87,7 @@
                 </div>
               </div>
             </li>
+            @endif
 
             <!-- Menu Footer-->
             <li class="user-footer">
@@ -110,6 +114,7 @@
 </header>
 
 <!-- Character switching modal -->
+@if(auth()->user()->name != 'admin')
 <div class="modal fade off" id="characterSwitchModal" tabindex="-1" role="dialog"
      aria-labelledby="characterSwitchModalLabel">
   <div class="modal-dialog" role="document">
@@ -154,3 +159,4 @@
     </div>
   </div>
 </div>
+@endif

@@ -11,9 +11,13 @@
       </div>
       <div class="pull-left info">
         <p>
+          @if(auth()->user()->name == 'admin')
+          <span>{{ trans('web::seat.hello') }}, {{ $user->name }}</span>
+          @else
           <a href="{{ route('character.view.sheet', ['character_id' => $user->character_id]) }}">
             {{ trans('web::seat.hello') }}, {{ $user->name }}
           </a>
+          @endif
         </p>
         <!-- Status -->
         <a href="#"><i class="fa fa-circle text-success"></i> {{ trans('web::seat.online') }}</a>

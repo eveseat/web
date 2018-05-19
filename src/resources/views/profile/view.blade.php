@@ -19,6 +19,7 @@
 
           <legend>{{ trans('web::seat.user_interface') }}</legend>
 
+          @if(auth()->user()->name != 'admin')
           <!-- Select Basic -->
           <div class="form-group">
             <label class="col-md-4 control-label"
@@ -35,6 +36,7 @@
               </select>
             </div>
           </div>
+          @endif
 
           <!-- Select Basic -->
           <div class="form-group">
@@ -321,6 +323,7 @@
             </li>
 
             <!-- scopes -->
+            @if(auth()->user()->name != 'admin')
             <li>
 
               <!-- Button trigger modal -->
@@ -365,6 +368,7 @@
               </div>
 
             </li>
+            @endif
           </ul>
 
         </div>
@@ -400,6 +404,7 @@
     </div>
   </div>
 
+  @if(auth()->user()->name != 'admin')
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">
@@ -438,6 +443,7 @@
 
     </div>
   </div>
+  @endif
 
   <span class="text-center">
     {{ trans('web::seat.account_help') }}
