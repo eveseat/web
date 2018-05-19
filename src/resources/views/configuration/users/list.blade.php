@@ -13,8 +13,8 @@
     </div>
     <div class="panel-body">
 
-      <table class="table table-hover table-condensed">
-        <tbody>
+      <table class="table datatable compact table-condensed table-hover table-responsive">
+        <thead>
         <tr>
           <th>{{ trans_choice('web::seat.name', 1) }}</th>
           <th>{{ trans('web::seat.status') }}</th>
@@ -26,6 +26,9 @@
           <th>{{ trans_choice('web::seat.role', 2) }}</th>
           <th></th>
         </tr>
+        </thead>
+
+        <tbody>
 
         @foreach($users as $user)
 
@@ -34,12 +37,12 @@
             <td>
               @if($user->active)
                 <span class="label label-success">
-                  {{ trans('web::seat.enabled') }}
-                </span>
+                    {{ trans('web::seat.enabled') }}
+                  </span>
               @else
                 <span class="label label-danger">
-                  {{ trans('web::seat.disabled') }}
-                </span>
+                    {{ trans('web::seat.disabled') }}
+                  </span>
               @endif
             </td>
             <td>
@@ -51,9 +54,9 @@
             </td>
             <td>{{ $user->email }}</td>
             <td>
-            <span data-toggle="tooltip" title="" data-original-title="{{ $user->last_login }}">
-              {{ human_diff($user->last_login) }}
-            </span>
+              <span data-toggle="tooltip" title="" data-original-title="{{ $user->last_login }}">
+                {{ human_diff($user->last_login) }}
+              </span>
             </td>
             <td>{{ $user->last_login_source }}</td>
             <td>{{ count($user->group->refresh_tokens) }}</td>
@@ -84,7 +87,6 @@
           </tr>
 
         @endforeach
-
         </tbody>
       </table>
 
