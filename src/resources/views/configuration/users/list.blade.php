@@ -45,7 +45,7 @@
                   </span>
               @endif
             </td>
-            <td>
+            <td data-order="{{ $user->refresh_token ? 1 : 0 }}">
               @if($user->refresh_token)
                 <i class="fa fa-check text-success"></i>
               @else
@@ -53,7 +53,7 @@
               @endif
             </td>
             <td>{{ $user->email }}</td>
-            <td>
+            <td data-order="{{ $user->last_login }}">
               <span data-toggle="tooltip" title="" data-original-title="{{ $user->last_login }}">
                 {{ human_diff($user->last_login) }}
               </span>
