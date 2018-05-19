@@ -24,6 +24,7 @@ namespace Seat\Web\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Seat\Eveapi\Models\RefreshToken;
+use Seat\Services\Settings\Profile;
 use Seat\Web\Models\Acl\Role;
 
 /**
@@ -37,6 +38,39 @@ class Group extends Model
      * @var array
      */
     protected $fillable = ['main_character_id'];
+
+    /**
+     * Return the ID of main character tied to this group.
+     *
+     * @throws \Seat\Services\Exceptions\SettingException
+     */
+    public function getMainCharacterIdAttribute()
+    {
+        return Profile::get('main_character_id', $this->id);
+    }
+
+    /**
+     * Return the main character tied to this group.
+     *
+     * @return null|User
+     */
+    public function getMainCharacterAttribute() : ?User
+    {
+        return User::find($this->main_character_id);
+    }
+
+    /**
+     * Return the email address for this user based on the
+     * email address setting.
+     *
+     * @return mixed
+     * @throws \Seat\Services\Exceptions\SettingException
+     */
+    public function getEmailAttribute()
+    {
+
+        return Profile::get('email_address', $this->id);
+    }
 
     /**
      * Return the Users that are in this group.
@@ -69,14 +103,5 @@ class Group extends Model
     {
 
         return $this->belongsToMany(Role::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function main_character()
-    {
-
-        return $this->hasOne(User::class, 'id', 'main_character_id');
     }
 }
