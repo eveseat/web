@@ -30,6 +30,11 @@ Route::post('/update', [
     'uses' => 'UserController@updateUser',
 ]);
 
+Route::post('/reassign', [
+    'as'   => 'configuration.access.users.reassign',
+    'uses' => 'UserController@postReassignuser',
+]);
+
 Route::get('/delete/{user_id}', [
     'as'   => 'configuration.users.delete',
     'uses' => 'UserController@deleteUser',

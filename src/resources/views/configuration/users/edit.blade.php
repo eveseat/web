@@ -51,6 +51,60 @@
     </div>
   </div>
 
+  <!-- account re-assignment -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">{{ trans('web::seat.reassign_user') }}</h3>
+    </div>
+    <div class="panel-body">
+
+      <div>
+        <dl>
+          <dt>Current User Group</dt>
+          <dd>
+            <ul>
+              @foreach($user->group->users as $group_user)
+                <li>
+                  {!! img('character', $group_user->id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  {{ $group_user->name }}
+                </li>
+              @endforeach
+            </ul>
+          </dd>
+        </dl>
+      </div>
+
+      <form role="form" action="{{ route('configuration.access.users.reassign') }}" method="post">
+        {{ csrf_field() }}
+        <input type="hidden" name="user_id" value="{{ $user->id }}">
+
+        <div class="form-group">
+          <label for="group">{{ trans_choice('web::seat.available_groups', 2) }}</label>
+          <select name="group_id" id="available_users" style="width: 100%">
+
+            @foreach($groups as $group)
+
+              <option value="{{ $group->id }}">
+                {{ $group->users->map(function($user) { return $user->name; })->implode(', ') }}
+              </option>
+
+            @endforeach
+
+          </select>
+        </div>
+
+        <div class="box-footer">
+
+          <button type="submit" class="btn btn-primary pull-right">
+            {{ trans('web::seat.reassign') }}
+          </button>
+
+        </div>
+      </form>
+
+    </div>
+  </div>
+
 @stop
 @section('right')
 
@@ -80,7 +134,8 @@
                 <td>{{ $role->title }}</td>
                 <td>
                   @foreach($role->permissions as $permission)
-                    <span class="label label-{{ $permission->title == 'superuser' ? 'danger' : 'info' }}">{{ studly_case($permission->title) }}</span>
+                    <span
+                        class="label label-{{ $permission->title == 'superuser' ? 'danger' : 'info' }}">{{ studly_case($permission->title) }}</span>
                   @endforeach
                 </td>
                 <td>
@@ -166,3 +221,15 @@
 
 
 @stop
+
+@push('javascript')
+
+  @include('web::includes.javascript.id-to-name')
+
+  <script>
+    $("#available_users").select2({
+      placeholder: "{{ trans('web::seat.select_group_to_assign') }}"
+    });
+  </script>
+
+@endpush

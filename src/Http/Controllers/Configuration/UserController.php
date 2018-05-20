@@ -26,6 +26,7 @@ use Illuminate\Http\Request;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\EditUser;
+use Seat\Web\Http\Validation\ReassignUser;
 
 /**
  * Class UserController.
@@ -55,12 +56,13 @@ class UserController extends Controller
     {
 
         $user = $this->getFullUser($user_id);
+        $groups = $this->getAllGroups();
 
         $login_history = $user->login_history()->orderBy('created_at', 'desc')->take(15)
             ->get();
 
         return view('web::configuration.users.edit',
-            compact('user', 'login_history'));
+            compact('user', 'groups', 'login_history'));
     }
 
     /**
@@ -75,6 +77,26 @@ class UserController extends Controller
 
         $user->fill([
             'email' => $request->input('email'),
+        ]);
+
+        $user->save();
+
+        return redirect()->back()
+            ->with('success', trans('web::seat.user_updated'));
+    }
+
+    /**
+     * @param \Seat\Web\Http\Validation\ReassignUser $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postReassignuser(ReassignUser $request)
+    {
+
+        $user = $this->getUser($request->input('user_id'));
+
+        $user->fill([
+            'group_id' => $request->input('group_id'),
         ]);
 
         $user->save();

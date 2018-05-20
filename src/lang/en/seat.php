@@ -290,6 +290,8 @@ return [
     'impersonate'                 => 'Impersonate',
     'edit_user'                   => 'Edit User',
     'activate_user'               => 'Activate User',
+    'reassign_user'               => 'Reassign User',
+    'reassign'                    => 'Reassign',
     'deactivate_user'             => 'Deactivate User',
     'account_status_change'       => 'The account status has been changed',
     'user_agent'                  => 'User Agent String',
