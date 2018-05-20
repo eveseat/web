@@ -101,6 +101,14 @@ return [
         'route'          => 'corporation.view.starbases',
     ],
     [
+        'name'           => 'structure',
+        'label'          => 'web::seat.structure',
+        'plural'         => true,
+        'permission'     => 'corporation.structures',
+        'highlight_view' => 'structures',
+        'route'          => 'corporation.view.structures',
+    ],
+    [
         'name'           => 'summary',
         'label'          => 'web::seat.summary',
         'permission'     => 'corporation.summary',

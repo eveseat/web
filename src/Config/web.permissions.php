@@ -74,6 +74,7 @@ return [
         'tracking',
         'pocos',
         'starbases',
+        'structures',
         'summary',
         'journal',
         'transactions',

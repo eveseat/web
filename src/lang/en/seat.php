@@ -515,6 +515,8 @@ return [
     'unknown_corporation'          => 'Unknown Corporation. Is the API Key on record and updated?',
     'created_by'                   => 'Created By',
     'starbase'                     => 'Starbase|Starbases',
+    'structure'                    => 'Structure|Structures',
+    'reinforce_week_hour'          => 'Reinf. Week/Hour',
     'state'                        => 'State',
     'fuel_level'                   => 'Fuel Level',
     'offline'                      => 'Offline Est.',

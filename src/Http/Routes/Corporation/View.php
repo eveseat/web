@@ -188,6 +188,12 @@ Route::post('/view/starbase/modules/{corporation_id}', [
     'uses'       => 'StarbaseController@postStarbaseModules',
 ]);
 
+Route::get('/view/structures/{corporation_id}', [
+    'as'         => 'corporation.view.structures',
+    'middleware' => 'corporationbouncer:structures',
+    'uses'       => 'StructureController@getStructures',
+]);
+
 Route::get('/view/tracking/{corporation_id}', [
     'as'         => 'corporation.view.tracking',
     'middleware' => 'corporationbouncer:tracking',
