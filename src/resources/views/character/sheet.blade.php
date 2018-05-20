@@ -20,7 +20,8 @@
                 <span class="pull-right">
                   <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.skillqueue']) }}"
                      style="color: #000000">
-                  <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_skill_queue') }}"></i>
+                  <i class="fa fa-refresh" data-toggle="tooltip"
+                     title="{{ trans('web::seat.update_skill_queue') }}"></i>
                   </a>
                 </span>
               @endif
@@ -33,7 +34,8 @@
               <dt>{{ trans('web::seat.curr_training') }}</dt>
               <dd>
                 @if($skill_queue->where('finish_date', '>', carbon())->count() > 0)
-                  {{ $skill_queue->where('finish_date', '>', carbon())->first()->type->typeName }} to level <b>{{ $skill_queue->where('finish_date', '>', carbon())->first()->finished_level }}</b>
+                  {{ $skill_queue->where('finish_date', '>', carbon())->first()->type->typeName }} to level
+                  <b>{{ $skill_queue->where('finish_date', '>', carbon())->first()->finished_level }}</b>
                 @else
                   {{ trans('web::seat.no_skill_training') }}
                 @endif
@@ -189,7 +191,8 @@
               <span class="pull-right">
                 <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.corphistory']) }}"
                    style="color: #000000">
-                  <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_corp_history') }}"></i>
+                  <i class="fa fa-refresh" data-toggle="tooltip"
+                     title="{{ trans('web::seat.update_corp_history') }}"></i>
                 </a>
               </span>
             @endif
@@ -224,6 +227,43 @@
         </div>
       </div>
 
+    </div>
+
+    <!-- character attributes -->
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{ trans_choice('web::seat.attribute', 2) }}</h3>
+        </div>
+        <div class="panel-body">
+
+          <div class="row">
+
+            <div class="col-md-6">
+              <ul class="list-unstyled">
+                <li>Charisma: {{ $attributes->charisma }}</li>
+                <li>Intelligence: {{ $attributes->intelligence }}</li>
+                <li>Memory: {{ $attributes->memory }}</li>
+                <li>Perception: {{ $attributes->perception }}</li>
+                <li>Willpower: {{ $attributes->willpower }}</li>
+              </ul>
+            </div>
+
+            <div class="col-md-6">
+              <dl>
+                <dt>{{ trans('web::seat.bonus_remaps') }}</dt>
+                <dd>{{ $attributes->bonus_remaps }}</dd>
+                <dt>{{ trans('web::seat.last_remap_date') }}</dt>
+                <dd>{{ $attributes->last_remap_date }}</dd>
+                <dt>{{ trans('web::seat.accrued_remap_cooldown_date') }}</dt>
+                <dd>{{ $attributes->accrued_remap_cooldown_date }}</dd>
+              </dl>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
     </div>
 
     <div class="col-md-6">

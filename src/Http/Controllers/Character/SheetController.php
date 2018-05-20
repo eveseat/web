@@ -29,6 +29,7 @@ use Seat\Eveapi\Models\Character\CharacterTitle;
 use Seat\Eveapi\Models\Clones\CharacterClone;
 use Seat\Eveapi\Models\Clones\CharacterImplant;
 use Seat\Eveapi\Models\Clones\CharacterJumpClone;
+use Seat\Eveapi\Models\Skills\CharacterAttribute;
 use Seat\Eveapi\Models\Skills\CharacterSkillQueue;
 use Seat\Services\Repositories\Character\Character;
 use Seat\Services\Repositories\Character\Implants;
@@ -63,6 +64,7 @@ class SheetController extends Controller
             return redirect()->back()
                 ->with('error', trans('web::seat.unknown_character'));
 
+        $attributes = CharacterAttribute::find($character_id);
         $fatigue = CharacterFatigue::find($character_id);
         $employment = CharacterCorporationHistory::where('character_id', $character_id)->orderBy('record_id', 'desc')->get();
         $implants = CharacterImplant::where('character_id', $character_id)->get();
@@ -72,7 +74,7 @@ class SheetController extends Controller
         $titles = CharacterTitle::where('character_id', $character_id)->get();
 
         return view('web::character.sheet',
-            compact('fatigue', 'character_info', 'employment',
+            compact('attributes', 'fatigue', 'character_info', 'employment',
                 'implants', 'last_jump', 'jump_clones', 'skill_queue', 'titles'));
     }
 }
