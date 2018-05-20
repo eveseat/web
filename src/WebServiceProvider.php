@@ -282,6 +282,7 @@ class WebServiceProvider extends ServiceProvider
                     'balance'    => false,
                     'processes'  => $worker_count,
                     'tries'      => 1,
+                    'timeout'    => 900, // 15 minutes
                 ],
             ],
         ];
