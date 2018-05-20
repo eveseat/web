@@ -56,7 +56,7 @@ class ProfileSettings extends FormRequest
         $mail_threads = implode(',', Profile::$options['mail_threads']);
 
         return [
-            'main_character_id'   => 'required|in:' . $allowed_main_character_ids,
+            'main_character_id'   => auth()->user()->name == 'admin' ? 'optional' : 'required|in:' . $allowed_main_character_ids,
             'skin'                => 'required|in:' . $allowed_skins,
             'language'            => 'required|in:' . $allowed_languages,
             'sidebar'             => 'required|in:' . $allowed_sidebar,
