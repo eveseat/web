@@ -23,6 +23,7 @@
 namespace Seat\Web\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\Settings\Profile;
 use Seat\Web\Models\Acl\Role;
@@ -52,11 +53,11 @@ class Group extends Model
     /**
      * Return the main character tied to this group.
      *
-     * @return null|User
+     * @return null|CharacterInfo
      */
-    public function getMainCharacterAttribute() : ?User
+    public function getMainCharacterAttribute() : ?CharacterInfo
     {
-        return User::find($this->main_character_id);
+        return CharacterInfo::find($this->main_character_id);
     }
 
     /**
