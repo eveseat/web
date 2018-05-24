@@ -76,7 +76,7 @@ class LoginController extends Controller
     {
 
         // Warn if SSO has not been configured yet.
-        if (strlen(env('EVE_CLIENT_SECRET')) < 5 || strlen(env('EVE_CLIENT_ID')) < 5)
+        if (strlen(env('LOGIN_CLIENT_SECRET')) < 5 || strlen(env('LOGIN_CLIENT_ID')) < 5)
             session()->flash('warning', trans('web::seat.sso_config_warning'));
 
         return view('web::auth.login');

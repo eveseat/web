@@ -349,7 +349,7 @@ class WebServiceProvider extends ServiceProvider
         $eveonline->extend('eveonline',
             function ($app) use ($eveonline) {
 
-                $config = $app['config']['services.eveonline'];
+                $config = $app['config']['services.evelogin'];
 
                 return $eveonline->buildProvider(EveOnlineProvider::class, $config);
             }
