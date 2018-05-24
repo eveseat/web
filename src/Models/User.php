@@ -129,7 +129,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function settings()
     {
 
-        return $this->hasMany(UserSetting::class);
+        return $this->hasMany(UserSetting::class, 'group_id', 'group_id');
     }
 
     /**
