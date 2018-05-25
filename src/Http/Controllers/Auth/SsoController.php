@@ -46,6 +46,10 @@ class SsoController extends Controller
     public function redirectToProvider(Socialite $social)
     {
 
+        // if using external auth dont ask for scopes
+        if (env('EXTERNAL_AUTH')) return $social->driver('eveonline')->redirect();
+
+        // Standard Login - ask for Scopes
         return $social->driver('eveonline')
             ->scopes(setting('sso_scopes', true))
             ->redirect();
@@ -133,6 +137,11 @@ class SsoController extends Controller
             }
 
             return $existing;
+        }
+
+        // If using external Auth and user does not exist
+        if (env('EXTERNAL_AUTH')){
+            abort(403, 'No Authorized User Found');
         }
 
         // Log the new account creation
