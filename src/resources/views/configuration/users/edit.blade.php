@@ -62,7 +62,7 @@
         <dl>
           <dt>Current User Group</dt>
           <dd>
-            <ul>
+            <ul class="list-unstyled">
               @foreach($user->group->users as $group_user)
                 <li>
                   {!! img('character', $group_user->id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
@@ -79,7 +79,7 @@
         <input type="hidden" name="user_id" value="{{ $user->id }}">
 
         <div class="form-group">
-          <label for="group">{{ trans_choice('web::seat.available_groups', 2) }}</label>
+          <label for="available_users">{{ trans_choice('web::seat.available_groups', 2) }}</label>
           <select name="group_id" id="available_users" style="width: 100%">
 
             @foreach($groups as $group)

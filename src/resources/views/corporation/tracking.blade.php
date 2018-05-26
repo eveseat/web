@@ -68,6 +68,7 @@
       </table>
 
     </div>
+    <div class="panel-footer">Registered users <b>{{ $tracking->where('key_ok', true)->count() }} / {{ $tracking->count() }}</b></div>
   </div>
 
 @stop
