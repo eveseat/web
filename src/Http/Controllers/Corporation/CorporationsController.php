@@ -74,7 +74,7 @@ class CorporationsController extends Controller
 
                 return sprintf('%d%%', $row->tax_rate * 100);
             })
-            ->editColumn('actions', function($row) {
+            ->editColumn('actions', function ($row) {
 
                 return view('web::corporation.partials.delete', compact('row'))
                     ->render();
