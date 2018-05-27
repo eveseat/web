@@ -20,17 +20,34 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/home', [
-    'as'   => 'home',
-    'uses' => 'HomeController@getHome',
-]);
+namespace Seat\Web\Http\Composers;
 
-Route::get('/home/chart/server-status', [
-    'as'   => 'home.chart.serverstatus',
-    'uses' => 'HomeController@getServerStatusChartData',
-]);
+use Illuminate\Contracts\View\View;
+use Seat\Eveapi\Models\Status\EsiStatus;
+use Seat\Eveapi\Traits\RateLimitsEsiCalls;
+use Seat\Services\Repositories\Configuration\UserRespository;
 
-Route::get('/home/chart/server-response-times', [
-    'as'   => 'home.chart.serverresponse',
-    'uses' => 'HomeController@getEsiResponseTimeChartData',
-]);
+/**
+ * Class Esi.
+ * @package Seat\Web\Http\Composers
+ */
+class Esi
+{
+    use UserRespository, RateLimitsEsiCalls;
+
+    /**
+     * Bind data to the view.
+     *
+     * @param  View $view
+     *
+     * @return void
+     * @throws \Exception
+     */
+    public function compose(View $view)
+    {
+
+        $view->with('esi_status', EsiStatus::latest()->first());
+        $view->with('is_rate_limited', $this->isEsiRateLimited());
+        $view->with('rate_limit_ttl', $this->getRateLimitKeyTtl());
+    }
+}

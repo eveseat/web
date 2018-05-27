@@ -25,7 +25,7 @@
       <div class="info-box">
         <span class="info-box-icon bg-green"><i class="fa fa-key"></i></span>
         <div class="info-box-content">
-          <span class="info-box-text">{{ trans('web::seat.owned_api_keys') }}</span>
+          <span class="info-box-text">{{ trans('web::seat.linked_characters') }}</span>
           <span class="info-box-number">
             {{ count(auth()->user()->associatedCharacterIds()) }}
           </span>
@@ -73,63 +73,9 @@
         </div><!-- /.info-box-content -->
       </div><!-- /.info-box -->
 
-      @if($newest_mail->count() > 0)
-
-        <div class="box">
-          <div class="box-header with-border">
-            <h3 class="box-title">Newest EVEMail</h3>
-          </div>
-          <!-- /.box-header -->
-          <div class="box-body">
-
-            <table class="table compact table-condensed table-hover table-responsive">
-              <thead>
-              <tr>
-                <th>From</th>
-                <th>Title</th>
-                <th></th>
-              </tr>
-              </thead>
-              <tbody>
-
-              @foreach($newest_mail as $message)
-
-                <tr>
-                  <td>
-                    {!! img('auto', $message->senderID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-                    {{ $message->senderName }}
-                  </td>
-                  <td>{{ $message->title }}</td>
-                  <td>
-                    <a href="{{ route('character.view.mail.timeline.read', ['message_id' => $message->messageID]) }}"
-                       class="btn btn-primary btn-xs">
-                      <i class="fa fa-envelope"></i>
-                      {{ trans('web::seat.read') }}
-                    </a>
-                  </td>
-                </tr>
-
-              @endforeach
-
-              </tbody>
-            </table>
-
-          </div>
-          <!-- /.box-body -->
-        </div>
-
-      @endif
-
     </div><!-- /.col -->
 
-  </div>
-
-@stop
-
-@section('right')
-
-  <div class="row">
-
+    <!-- player count -->
     <div class="col-md-12 col-sm-6 col-xs-12">
 
       <div class="box box-info">
@@ -139,7 +85,33 @@
         <div class="box-body">
           <div class="chart">
 
-            <canvas id="serverstatus" style="height: 249px; width: 555px;" height="265" width="1110"></canvas>
+            <canvas id="serverstatus" height="150" width="1110"></canvas>
+
+          </div>
+        </div>
+        <!-- /.box-body -->
+      </div>
+    </div>
+
+  </div>
+
+@stop
+
+@section('right')
+
+  <div class="row">
+
+    <!-- response times -->
+    <div class="col-md-12 col-sm-6 col-xs-12">
+
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">ESI Response Times</h3>
+        </div>
+        <div class="box-body">
+          <div class="chart">
+
+            <canvas id="serverresponse" height="150" width="1110"></canvas>
 
           </div>
         </div>
@@ -181,9 +153,30 @@
 
 @push('javascript')
   <script type="text/javascript">
+
+    // Player Count
     $.get("{{ route('home.chart.serverstatus') }}", function (data) {
 
       new Chart($("canvas#serverstatus"), {
+        type   : 'line',
+        data   : data,
+        options: {
+          legend: {
+            display: false
+          },
+          scales: {
+            xAxes: [{
+              display: false
+            }]
+          }
+        }
+      });
+    });
+
+    // Esi Response Times
+    $.get("{{ route('home.chart.serverresponse') }}", function (data) {
+
+      new Chart($("canvas#serverresponse"), {
         type   : 'line',
         data   : data,
         options: {

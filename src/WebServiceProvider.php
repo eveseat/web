@@ -41,6 +41,7 @@ use Seat\Web\Http\Composers\CharacterMenu;
 use Seat\Web\Http\Composers\CharacterSummary;
 use Seat\Web\Http\Composers\CorporationMenu;
 use Seat\Web\Http\Composers\CorporationSummary;
+use Seat\Web\Http\Composers\Esi;
 use Seat\Web\Http\Composers\Sidebar;
 use Seat\Web\Http\Composers\User;
 use Seat\Web\Http\Middleware\Authenticate;
@@ -144,6 +145,11 @@ class WebServiceProvider extends ServiceProvider
             'web::includes.header',
             'web::includes.sidebar',
         ], User::class);
+
+        // ESI Status view composer
+        $this->app['view']->composer([
+            'web::includes.footer',
+        ], Esi::class);
 
         // Sidebar menu view composer
         $this->app['view']->composer(
