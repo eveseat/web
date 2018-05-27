@@ -30,6 +30,12 @@ Route::get('/list/data', [
     'uses' => 'CharacterController@getCharactersData',
 ]);
 
+Route::get('/delete/{character_id}', [
+    'as'         => 'character.delete',
+    'middleware' => 'bouncer:superuser',
+    'uses'       => 'CharacterController@deleteCharacter',
+]);
+
 Route::get('/view/assets/{character_id}', [
     'as'         => 'character.view.assets',
     'middleware' => 'characterbouncer:assets',

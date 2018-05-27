@@ -30,6 +30,12 @@ Route::get('/list/data', [
     'uses' => 'CorporationsController@getCorporationsData',
 ]);
 
+Route::get('/delete/{corporation_id}', [
+    'as'         => 'corporation.delete',
+    'middleware' => 'bouncer:superuser',
+    'uses'       => 'CorporationsController@deleteCorporation',
+]);
+
 Route::get('/view/assets/{corporation_id}', [
     'as'         => 'corporation.view.assets',
     'middleware' => 'corporationbouncer:assets',

@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Services\Repositories\Character\Character;
 use Seat\Web\Http\Controllers\Controller;
 use Yajra\Datatables\Datatables;
@@ -68,7 +69,27 @@ class CharacterController extends Controller
                 return view('web::character.partials.alliancename', compact('row'))
                     ->render();
             })
+            ->editColumn('actions', function($row) {
+
+                return view('web::character.partials.delete', compact('row'))
+                    ->render();
+            })
             ->make(true);
 
+    }
+
+    /**
+     * @param int $character_id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deleteCharacter(int $character_id)
+    {
+
+        CharacterInfo::find($character_id)->delete();
+
+        return redirect()->back()->with(
+            'success', 'Character deleted!'
+        );
     }
 }

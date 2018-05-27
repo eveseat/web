@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Corporation\Corporation;
 use Seat\Web\Http\Controllers\Controller;
 use Yajra\Datatables\Datatables;
@@ -73,6 +74,26 @@ class CorporationsController extends Controller
 
                 return sprintf('%d%%', $row->tax_rate * 100);
             })
+            ->editColumn('actions', function($row) {
+
+                return view('web::corporation.partials.delete', compact('row'))
+                    ->render();
+            })
             ->make(true);
+    }
+
+    /**
+     * @param int $corporation_id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deleteCorporation(int $corporation_id)
+    {
+
+        CorporationInfo::find($corporation_id)->delete();
+
+        return redirect()->back()->with(
+            'success', 'Corporation deleted!'
+        );
     }
 }

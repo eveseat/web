@@ -19,6 +19,7 @@
           <th>{{ trans_choice('web::seat.corporation', 1) }}</th>
           <th>{{ trans('web::seat.alliance') }}</th>
           <th>{{ trans('web::seat.security_status') }}</th>
+          <th></th>
         </tr>
         </thead>
       </table>
@@ -41,7 +42,8 @@
           {data: 'name', name: 'name'},
           {data: 'corporation_id', name: 'corporation_id'},
           {data: 'alliance_id', name: 'alliance_id'},
-          {data: 'security_status', name: 'security_status'}
+          {data: 'security_status', name: 'security_status'},
+          {data: 'actions', name: 'actions'}
         ],
         dom             : '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
         "fnDrawCallback": function () {

@@ -42,7 +42,7 @@ return [
         'contracts',
         'industry',
         'intel',
-        'jobs',     // Allows for the dispatching of jobs
+        'jobs',     // Allows for the dispatching of jobs.
         'killmails',
         'list',
         'mail',

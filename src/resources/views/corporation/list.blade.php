@@ -20,6 +20,7 @@
           <th>{{ trans('web::seat.alliance') }}</th>
           <th>{{ trans('web::seat.tax_rate') }}</th>
           <th>{{ trans('web::seat.member_count') }}</th>
+          <th></th>
         </tr>
         </thead>
       </table>
@@ -42,7 +43,8 @@
           {data: 'ceo_id', name: 'ceo_id'},
           {data: 'alliance_id', name: 'alliance_id'},
           {data: 'tax_rate', name: 'tax_rate'},
-          {data: 'member_count', name: 'member_count'}
+          {data: 'member_count', name: 'member_count'},
+          {data: 'actions', name: 'actions'}
         ],
         dom             : '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
         "fnDrawCallback": function () {
