@@ -51,10 +51,12 @@ class SeatSettings extends FormRequest
     {
 
         $allowed_registration = implode(',', Seat::$options['registration']);
+        $allowed_cleanup = implode(',', Seat::$options['cleanup_data']);
         $allowed_tracking = implode(',', Seat::$options['allow_tracking']);
 
         return [
             'registration'   => 'required|in:' . $allowed_registration,
+            'cleanup_data'   => 'required|in:' . $allowed_cleanup,
             'admin_contact'  => 'required|email',
             'allow_tracking' => 'required|in:' . $allowed_tracking,
             'queue_workers'  => 'required|int',

@@ -364,6 +364,11 @@ return [
     'min_corporation_access_mask'  => 'Minimum Required Corporation Access Mask',
     'force_min_mask'               => 'Force Min. Access Mask',
     'registration'                 => 'Registration',
+    'maintenance'                  => 'Maintenance',
+    'cleanup_data'                 => 'Cleanup Stale Data',
+    'cleanup_data_help'            => 'When configured to cleanup stale data, the SeAT maintenance job ' .
+        'will delete stale data such as users and corporations without valid tokens from this ' .
+        'instance.',
     'single_signon'                => 'Eve Online Single Signon',
     'admin_warn_sso'               => 'Double check you EVE_CLIENT_ID, EVE_CLIENT_SECRET and EVE_CALLBACK_URL' .
         ' values in the .env file as they may be empty or invalid. SSO can fail because of this!',
