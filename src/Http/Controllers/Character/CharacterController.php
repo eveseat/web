@@ -69,7 +69,7 @@ class CharacterController extends Controller
                 return view('web::character.partials.alliancename', compact('row'))
                     ->render();
             })
-            ->editColumn('actions', function($row) {
+            ->editColumn('actions', function ($row) {
 
                 return view('web::character.partials.delete', compact('row'))
                     ->render();
