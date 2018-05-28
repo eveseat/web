@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\Controllers\Configuration;
 
 use Illuminate\Http\Request;
+use Seat\Services\Models\UserSetting;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\EditUser;
@@ -95,11 +96,20 @@ class UserController extends Controller
 
         $user = $this->getUser($request->input('user_id'));
 
+        $group = $user->group;
+
         $user->fill([
             'group_id' => $request->input('group_id'),
         ]);
 
         $user->save();
+
+        // in case the previous group is non longer owning a single account
+        // drop it with associated settings
+        if ($group->users->isEmpty()) {
+            UserSetting::where('group_id', $group->id)->delete();
+            $group->delete();
+        }
 
         return redirect()->back()
             ->with('success', trans('web::seat.user_updated'));
