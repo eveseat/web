@@ -22,7 +22,7 @@
 
 return [
 
-    'version'                  => '3.0.0-beta18',
+    'version'                  => '3.0.0-beta19',
     'queue_status_update_time' => 10 * 1000, // milliseconds = seconds x 1,000
 
 ];
