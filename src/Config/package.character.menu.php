@@ -58,6 +58,13 @@ return [
         'route'          => 'character.view.contracts',
     ],
     [
+        'name'           => 'fittings',
+        'label'          => 'web::seat.fittings',
+        'permission'     => 'character.fittings',
+        'highlight_view' => 'fittings',
+        'route'          => 'character.view.fittings',
+    ],
+    [
         'name'           => 'industry',
         'label'          => 'web::seat.industry',
         'permission'     => 'character.industry',

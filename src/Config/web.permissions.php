@@ -40,6 +40,7 @@ return [
         'channels',
         'contacts',
         'contracts',
+        'fittings',
         'industry',
         'intel',
         'jobs',     // Allows for the dispatching of jobs.

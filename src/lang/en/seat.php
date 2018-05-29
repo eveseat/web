@@ -184,6 +184,8 @@ return [
     'channels'                    => 'Channels',
     'contacts'                    => 'Contacts',
     'contracts'                   => 'Contracts',
+    'fittings'                    => 'Fittings',
+    'fitting_items'               => 'Fitting Items',
     'industry'                    => 'Industry',
     'intel'                       => 'Intel',
     'killmails'                   => 'Killmails',
