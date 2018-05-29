@@ -94,12 +94,16 @@ class UserController extends Controller
     {
 
         $user = $this->getUser($request->input('user_id'));
+        $current_group = $user->group;
 
         $user->fill([
             'group_id' => $request->input('group_id'),
         ]);
 
         $user->save();
+
+        // Ensure the old group is not an orphan now.
+        if ($current_group->users->isEmpty()) $current_group->delete();
 
         return redirect()->back()
             ->with('success', trans('web::seat.user_updated'));
@@ -132,7 +136,14 @@ class UserController extends Controller
             return redirect()->back()
                 ->with('warning', trans('web::seat.self_delete_warning'));
 
-        $this->getUser($user_id)->delete();
+        $user = $this->getUser($user_id);
+        $group = $user->group;
+
+        // Delete the user.
+        $user->delete();
+
+        // Ensure the orphan group is cleaned up.
+        if ($group->users->isEmpty()) $group->delete();
 
         return redirect()->back()
             ->with('success', trans('web::seat.user_deleted'));

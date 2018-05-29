@@ -25,6 +25,7 @@ namespace Seat\Web\Models;
 use Illuminate\Database\Eloquent\Model;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\RefreshToken;
+use Seat\Services\Models\UserSetting;
 use Seat\Services\Settings\Profile;
 use Seat\Web\Models\Acl\Role;
 
@@ -41,12 +42,41 @@ class Group extends Model
     protected $fillable = ['main_character_id'];
 
     /**
+     * Make sure we cleanup on delete.
+     *
+     * @return bool|null
+     * @throws \Exception
+     */
+    public function delete()
+    {
+
+        $this->settings()->delete();
+
+        return parent::delete();
+    }
+
+    /**
+     * Returns the settings for this group.
+     *
+     * Warning. Using this method _skips_ the cache, meaning
+     * that it can cause load!
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function settings()
+    {
+
+        return $this->hasMany(UserSetting::class, 'group_id', 'group_id');
+    }
+
+    /**
      * Return the ID of main character tied to this group.
      *
      * @throws \Seat\Services\Exceptions\SettingException
      */
     public function getMainCharacterIdAttribute()
     {
+
         return Profile::get('main_character_id', $this->id);
     }
 
@@ -55,8 +85,9 @@ class Group extends Model
      *
      * @return null|CharacterInfo
      */
-    public function getMainCharacterAttribute() : ?CharacterInfo
+    public function getMainCharacterAttribute(): ?CharacterInfo
     {
+
         return CharacterInfo::find($this->main_character_id);
     }
 
