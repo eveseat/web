@@ -42,6 +42,7 @@ use Seat\Web\Http\Composers\CharacterSummary;
 use Seat\Web\Http\Composers\CorporationMenu;
 use Seat\Web\Http\Composers\CorporationSummary;
 use Seat\Web\Http\Composers\Esi;
+use Seat\Web\Http\Composers\ProfileWidgets;
 use Seat\Web\Http\Composers\Sidebar;
 use Seat\Web\Http\Composers\User;
 use Seat\Web\Http\Middleware\Authenticate;
@@ -52,6 +53,7 @@ use Seat\Web\Http\Middleware\Bouncer\KeyBouncer;
 use Seat\Web\Http\Middleware\Locale;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
 use Seat\Web\Http\Middleware\Requirements;
+use Seat\Web\Repositories\Widgets\ProfileWidgetRepository;
 use Validator;
 
 /**
@@ -154,6 +156,10 @@ class WebServiceProvider extends ServiceProvider
         // Sidebar menu view composer
         $this->app['view']->composer(
             'web::includes.sidebar', Sidebar::class);
+
+        // Profile widgets composer
+        $this->app['view']->composer(
+            'web::profile.includes.widgets', ProfileWidgets::class);
 
         // Character info composer
         $this->app['view']->composer([
@@ -367,16 +373,10 @@ class WebServiceProvider extends ServiceProvider
         $loader = AliasLoader::getInstance();
         $loader->alias('Datatables', 'Yajra\Datatables\Facades\Datatables');
 
-        // Register the Supervisor RPC helper into the IoC
-        $this->app->singleton('supervisor', function () {
+        // Register Widget repositories
+        $this->app->singleton('profile_widgets', function () {
 
-            return new Supervisor(
-                config('web.supervisor.name'),
-                config('web.supervisor.rpc.address'),
-                config('web.supervisor.rpc.username'),
-                config('web.supervisor.rpc.password'),
-                (int) config('web.supervisor.rpc.port')
-            );
+            return new ProfileWidgetRepository();
         });
 
     }
