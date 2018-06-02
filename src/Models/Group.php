@@ -92,7 +92,7 @@ class Group extends Model
     }
 
     /**
-     * Return the main character user tied to this group
+     * Return the main character user tied to this group.
      *
      * @return null|\Seat\Web\Models\User
      */
