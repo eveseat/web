@@ -92,6 +92,17 @@ class Group extends Model
     }
 
     /**
+     * Return the main character user tied to this group
+     *
+     * @return null|\Seat\Web\Models\User
+     */
+    public function getMainCharacterUserAttribute(): ?User
+    {
+
+        return User::find($this->main_character_id);
+    }
+
+    /**
      * Return the email address for this user based on the
      * email address setting.
      *
@@ -135,5 +146,19 @@ class Group extends Model
     {
 
         return $this->belongsToMany(Role::class);
+    }
+
+    public function isActive()
+    {
+
+        if (in_array(0, $this->users->map(function ($user) {
+
+            return $user->active;
+        })->toArray())) {
+            return false;
+        }
+
+        return true;
+
     }
 }

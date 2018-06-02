@@ -42,9 +42,9 @@ class UserController extends Controller
     public function getAll()
     {
 
-        $users = $this->getAllFullUsers();
+        $groups = $this->getAllGroups();
 
-        return view('web::configuration.users.list', compact('users'));
+        return view('web::configuration.users.list', compact('groups'));
     }
 
     /**
