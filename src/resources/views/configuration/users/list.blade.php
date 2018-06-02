@@ -31,7 +31,7 @@
 
         @foreach($groups as $user_group)
           <tr>
-            @if(in_array('admin',$user_group->users->map(function ($user){ return $user->name;})->toArray()))
+            @if($user_group->users->where('name','admin')->isNotEmpty())
               @foreach($user_group->users as $user)
                 <td>{{  $user->name }}</td>
                 <td>
@@ -90,7 +90,7 @@
 
         <td>{{ $user_group->main_character->name }}</td>
         <td>
-          @if($user_group->isActive())
+          @if($user_group->allUserActive())
             <span class="label label-success">
                     {{ trans('web::seat.enabled') }}
                   </span>
@@ -100,7 +100,7 @@
                   </span>
           @endif
         </td>
-        <td data-order="{{$user_group->mainCharacterUser->refresh_token ? 1 : 0 }}">
+        <td data-order="{{$user_group->main_character_user->refresh_token ? 1 : 0 }}">
           <ul class="list-unstyled">
             @foreach($user_group->users as $user)
               <li>
@@ -126,21 +126,21 @@
         <td>{{ count($user_group->roles) }}</td>
         <td>
           <div class="btn-group">
-            <a href="{{ route('configuration.users.edit', ['user_id' => $user_group->mainCharacterUser->id]) }}"
+            <a href="{{ route('configuration.users.edit', ['user_id' => $user_group->main_character_user->id]) }}"
                type="button"
                class="btn btn-warning btn-xs">
               {{ trans('web::seat.edit') }}
             </a>
           </div>
 
-          @if(auth()->user()->id != $user_group->mainCharacterUser->id)
+          @if(auth()->user()->id != $user_group->main_character_user->id)
             <div class="btn-group">
-              <a href="{{ route('configuration.users.delete', ['user_id' => $user_group->mainCharacterUser->id]) }}"
+              <a href="{{ route('configuration.users.delete', ['user_id' => $user_group->main_character_user->id]) }}"
                  type="button"
                  class="btn btn-danger btn-xs confirmlink">
                 {{ trans('web::seat.delete') }}
               </a>
-              <a href="{{ route('configuration.users.impersonate', ['user_id' => $user_group->mainCharacterUser->id]) }}"
+              <a href="{{ route('configuration.users.impersonate', ['user_id' => $user_group->main_character_user->id]) }}"
                  type="button"
                  class="btn btn-success btn-xs">
                 {{ trans('web::seat.impersonate') }}

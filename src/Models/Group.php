@@ -94,12 +94,12 @@ class Group extends Model
     /**
      * Return the main character user tied to this group.
      *
-     * @return null|\Seat\Web\Models\User
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function getMainCharacterUserAttribute(): ?User
+    public function main_character_user()
     {
 
-        return User::find($this->main_character_id);
+        return $this->hasOne('Seat\Web\Models\User');
     }
 
     /**
@@ -148,13 +148,15 @@ class Group extends Model
         return $this->belongsToMany(Role::class);
     }
 
-    public function isActive()
+    /**
+     * This function returns a bool if all users in a user group are activated.
+     *
+     * @return bool
+     */
+    public function allUserActive()
     {
 
-        if (in_array(0, $this->users->map(function ($user) {
-
-            return $user->active;
-        })->toArray())) {
+        if ($this->users->where('active', 0)->isNotEmpty()) {
             return false;
         }
 
