@@ -101,16 +101,18 @@
           @endif
         </td>
         <td data-order="{{$user_group->mainCharacterUser->refresh_token ? 1 : 0 }}">
-          @foreach($user_group->users as $user)
-            <li>
-              {{$user->name . " "}}
-              @if($user->refresh_token)
-                <i class="fa fa-check text-success"></i>
-              @else
-                <i class="fa fa-exclamation-triangle text-danger"></i>
-              @endif
-            </li>
-          @endforeach
+          <ul class="list-unstyled">
+            @foreach($user_group->users as $user)
+              <li>
+                {{$user->name . " "}}
+                @if($user->refresh_token)
+                  <i class="fa fa-check text-success"></i>
+                @else
+                  <i class="fa fa-exclamation-triangle text-danger"></i>
+                @endif
+              </li>
+            @endforeach
+          </ul>
         </td>
         <td>{{ $user_group->email }}</td>
         <td data-order="{{ $user_group->users->sortByDesc('last_login')->first()->last_login }}">
