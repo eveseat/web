@@ -85,9 +85,9 @@
       columns         : [
         {data: 'total', name: 'total', searchable: false},
         {data: 'ref_type', name: 'ref_type'},
-        {data: 'characterName', name: 'characterName'},
-        {data: 'corporationName', name: 'corporationName'},
-        {data: 'allianceName', name: 'allianceName'}
+        {data: 'character_id', name: 'character_id'},
+        {data: 'corporation_id', name: 'corporation_id'},
+        {data: 'alliance_id', name: 'alliance_id'}
       ],
       dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
       'fnDrawCallback': function () {
@@ -106,9 +106,9 @@
       ajax            : '{{ route('character.view.intel.summary.transactions.data', ['character_id' => $request->character_id]) }}',
       columns         : [
         {data: 'total', name: 'total', searchable: false},
-        {data: 'characterName', name: 'characterName'},
-        {data: 'corporationName', name: 'corporationName'},
-        {data: 'allianceName', name: 'allianceName'}
+        {data: 'character_id', name: 'character_id'},
+        {data: 'corporation_id', name: 'corporation_id'},
+        {data: 'alliance_id', name: 'alliance_id'}
       ],
       dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
       'fnDrawCallback': function () {
@@ -127,9 +127,9 @@
       ajax            : '{{ route('character.view.intel.summary.mail.data', ['character_id' => $request->character_id]) }}',
       columns         : [
         {data: 'total', name: 'total', searchable: false},
-        {data: 'characterName', name: 'characterName'},
-        {data: 'corporationName', name: 'corporationName'},
-        {data: 'allianceName', name: 'allianceName'}
+        {data: 'character_id', name: 'character_id'},
+        {data: 'corporation_id', name: 'corporation_id'},
+        {data: 'alliance_id', name: 'alliance_id'}
       ],
       dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
       'fnDrawCallback': function () {

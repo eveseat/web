@@ -68,17 +68,17 @@ class IntelController extends Controller
 
                 return ucwords(str_replace('_', ' ', $row->ref_type));
             })
-            ->editColumn('characterName', function ($row) {
+            ->editColumn('character_id', function ($row) {
 
                 return view('web::character.intel.partials.charactername', compact('row'))
                     ->render();
             })
-            ->editColumn('corporationName', function ($row) {
+            ->editColumn('corporation_id', function ($row) {
 
                 return view('web::character.intel.partials.corporationname', compact('row'))
                     ->render();
             })
-            ->editColumn('allianceName', function ($row) {
+            ->editColumn('alliance_id', function ($row) {
 
                 return view('web::character.intel.partials.alliancename', compact('row'))
                     ->render();
@@ -98,17 +98,17 @@ class IntelController extends Controller
         $top = $this->characterTopWalletTransactionInteractions($character_id);
 
         return Datatables::of($top)
-            ->editColumn('characterName', function ($row) {
+            ->editColumn('character_id', function ($row) {
 
                 return view('web::character.intel.partials.charactername', compact('row'))
                     ->render();
             })
-            ->editColumn('corporationName', function ($row) {
+            ->editColumn('corporation_id', function ($row) {
 
                 return view('web::character.intel.partials.corporationname', compact('row'))
                     ->render();
             })
-            ->editColumn('allianceName', function ($row) {
+            ->editColumn('alliance_id', function ($row) {
 
                 return view('web::character.intel.partials.alliancename', compact('row'))
                     ->render();
@@ -128,17 +128,17 @@ class IntelController extends Controller
         $top = $this->characterTopMailInteractions($character_id);
 
         return Datatables::of($top)
-            ->editColumn('characterName', function ($row) {
+            ->editColumn('character_id', function ($row) {
 
                 return view('web::character.intel.partials.charactername', compact('row'))
                     ->render();
             })
-            ->editColumn('corporationName', function ($row) {
+            ->editColumn('corporation_id', function ($row) {
 
                 return view('web::character.intel.partials.corporationname', compact('row'))
                     ->render();
             })
-            ->editColumn('allianceName', function ($row) {
+            ->editColumn('alliance_id', function ($row) {
 
                 return view('web::character.intel.partials.alliancename', compact('row'))
                     ->render();
