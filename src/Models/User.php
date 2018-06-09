@@ -83,7 +83,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         // Cleanup the user
         $this->login_history()->delete();
         $this->affiliations()->detach();
-        $this->refresh_token()->delete();
+        $this->refresh_token()->forceDelete();
 
         $this->settings()->delete();
 
