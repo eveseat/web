@@ -92,6 +92,17 @@ class Group extends Model
     }
 
     /**
+     * Return the main character user tied to this group.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function main_character_user()
+    {
+
+        return $this->hasOne('Seat\Web\Models\User');
+    }
+
+    /**
      * Return the email address for this user based on the
      * email address setting.
      *
@@ -135,5 +146,21 @@ class Group extends Model
     {
 
         return $this->belongsToMany(Role::class);
+    }
+
+    /**
+     * This function returns a bool if all users in a user group are activated.
+     *
+     * @return bool
+     */
+    public function allUserActive()
+    {
+
+        if ($this->users->where('active', 0)->isNotEmpty()) {
+            return false;
+        }
+
+        return true;
+
     }
 }
