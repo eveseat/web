@@ -43,7 +43,7 @@
               @endif
             </td>
             <td>
-              {{--{{ dump($group) }}--}}
+
               <table class="table compact table-condensed table-hover table-responsive">
                 <thead>
                 <tr>
@@ -110,8 +110,8 @@
                 @endforeach
                 </tbody>
               </table>
-            </td>
 
+            </td>
           </tr>
 
         @endforeach
