@@ -317,6 +317,10 @@ return [
     'affiliations_added'           => 'Affiliations were added to this role',
     'affiliation_removed'          => 'Affiliation has been removed from this role',
 
+    // Tokens
+    'valid_token'                  => 'Valid Token',
+    'invalid_token'                => 'Invalid Token',
+
     // Import
     'api_import_title'             => 'Import Eve Online API Keys',
     'csv_data_source'              => 'CSV Data Source File',
