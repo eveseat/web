@@ -96,7 +96,8 @@
 
     </div>
     <div class="panel-footer">
-      <b>{{ count($groups) }}</b> {{ trans_choice('web::seat.group', count($groups)) }}
+      <b>{{ count($groups) }}</b> {{ trans_choice('web::seat.group', count($groups)) }} |
+      <b>{{ $groups->map(function($r) { return $r->users->count(); })->sum() }}</b> {{ trans_choice('web::seat.user', 2) }}
     </div>
 
   </div>
