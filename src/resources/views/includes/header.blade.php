@@ -7,7 +7,7 @@
   </a>
 
   <!-- Header Navbar -->
-  <nav class="navbar navbar-static-top" role="navigation">
+  <nav class="navbar navbar-static-top">
 
     <!-- Sidebar toggle button-->
     <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
@@ -96,7 +96,7 @@
                    class="btn btn-default btn-flat">{{ trans('web::seat.profile') }}</a>
               </div>
               <div class="pull-right">
-                <form role="form" action="{{ route('auth.logout') }}" method="post">
+                <form action="{{ route('auth.logout') }}" method="post">
                   {{ csrf_field() }}
                   <button type="submit" class="btn btn-default btn-flat">
                     {{ trans('web::seat.sign_out') }}
