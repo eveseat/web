@@ -44,7 +44,7 @@
               <dt>{{ trans('web::seat.skill_training_end') }}</dt>
               <dd>
                 @if($skill_queue->where('finish_date', '>', carbon())->count() > 0)
-                  {{ human_diff(carbon($skill_queue->where('finish_date', '>', carbon())->first()->finish_date)->toDateString()) }}
+                  {{ human_diff(carbon($skill_queue->where('finish_date', '>', carbon())->first()->finish_date)) }}
                   on {{ carbon($skill_queue->where('finish_date', '>', carbon())->first()->finish_date)->toDateString() }}
                   at {{ carbon($skill_queue->where('finish_date', '>', carbon())->first()->finish_date)->toTimeString() }}
                 @else
