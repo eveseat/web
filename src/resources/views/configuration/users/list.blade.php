@@ -18,6 +18,7 @@
         <tr>
           <th>{{ trans('web::seat.main_character') }}</th>
           <th>{{ trans_choice('web::seat.role', 2) }}</th>
+          <th>{{ trans('web::seat.email') }}</th>
           <th>{{ trans_choice('web::seat.character', 2) }}</th>
         </tr>
         </thead>
@@ -42,6 +43,7 @@
                 No Roles
               @endif
             </td>
+            <td>{{ $group->email }}</td>
             <td>
 
               <ul class="list-unstyled">
