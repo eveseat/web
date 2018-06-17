@@ -206,7 +206,7 @@
             }}
           @else
             {{
-              carbon('now')->addHours(optional(($starbase->fuelBays->whereIn('type_id', [4051, 4246, 4247, 4312, 36945]))->first()->quantity ?? 0) / $starbase->baseFuelUsage)
+              carbon('now')->addHours((optional($starbase->fuelBays->whereIn('type_id', [4051, 4246, 4247, 4312, 36945]))->first()->quantity ?? 0) / $starbase->baseFuelUsage)
                 ->diffForHumans()
             }} at
             {{
