@@ -36,7 +36,7 @@ class Requirements
      * @var array
      */
     public static $extensions = [
-        'mcrypt', 'intl', 'gd', 'PDO', 'curl', 'mbstring', 'dom', 'bz2',
+        'intl', 'gd', 'PDO', 'curl', 'mbstring', 'dom', 'bz2',
     ];
 
     /**

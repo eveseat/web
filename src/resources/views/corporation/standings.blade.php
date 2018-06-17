@@ -65,6 +65,9 @@
 
       @endforeach
     </div>
+    <div class="panel-footer">
+      {!! $standings->render() !!}
+    </div>
   </div>
 
 @stop

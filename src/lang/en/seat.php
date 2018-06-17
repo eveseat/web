@@ -317,6 +317,10 @@ return [
     'affiliations_added'           => 'Affiliations were added to this role',
     'affiliation_removed'          => 'Affiliation has been removed from this role',
 
+    // Tokens
+    'valid_token'                  => 'Valid Token',
+    'invalid_token'                => 'Invalid Token',
+
     // Import
     'api_import_title'             => 'Import Eve Online API Keys',
     'csv_data_source'              => 'CSV Data Source File',
@@ -420,7 +424,22 @@ return [
     'update_failed'                => 'Update job dispatching failed. Please contact your SeAT administrator.',
     'update_skill_queue'           => 'Update Skill Queue',
     'update_assets'                => 'Update Assets',
+    'update_bookmarks'             => 'Update Bookmarks',
+    'update_calendar'              => 'Update Calendar',
+    'update_contacts'              => 'Update Contacts',
+    'update_contracts'             => 'Update Contracts',
     'update_corp_history'          => 'Update Employment History',
+    'update_fittings'              => 'Update Fittings',
+    'update_industry'              => 'Update Industry Jobs',
+    'update_killmails'             => 'Update Killmails',
+    'update_mail'                  => 'Update Mail',
+    'update_market'                => 'Update Market',
+    'update_mining'                => 'Update Mining Ledger',
+    'update_notifications'         => 'Update Notifications',
+    'update_pi'                    => 'Update Planetary Interaction',
+    'update_research'              => 'Update Agents Research',
+    'update_skills'              => 'Update Skills',
+    'update_wallet'              => 'Update Wallet',
 
     // Character
     'joined_curr_corp'             => 'Joined Current Corporation',

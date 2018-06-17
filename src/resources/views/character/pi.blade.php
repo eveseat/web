@@ -3,11 +3,23 @@
 @section('title', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.pi'))
 @section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.pi'))
 
+@inject('request', 'Illuminate\Http\Request')
+
 @section('character_content')
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::seat.pi') }}</h3>
+      <h3 class="panel-title">
+        {{ trans('web::seat.pi') }}
+        @if(auth()->user()->has('character.jobs'))
+          <span class="pull-right">
+            <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.pi']) }}"
+               style="color: #000000">
+              <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_pi') }}"></i>
+            </a>
+          </span>
+        @endif
+      </h3>
     </div>
     <div class="panel-body">
 

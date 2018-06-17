@@ -40,11 +40,11 @@ class JobController extends Controller
     public function getDispatchUpdateJob(int $character_id, string $job_name)
     {
 
-        $job_class = config('web.jobnames.' . $job_name);
+        $job_classes = collect(config('web.jobnames.' . $job_name));
 
         // If we could not find the jon to dispatch, log this as a
         // security event as someone might be trying something funny.
-        if (! $job_class) {
+        if ($job_classes->isEmpty()) {
 
             $message = 'Failed to find the jobclass for job_name ' . $job_name .
                 ' Someone might be trying something strange.';
@@ -54,15 +54,17 @@ class JobController extends Controller
             return redirect()->back()->with('warning', trans('web::seat.update_failed'));
         }
 
-        // Find the refresh token for this job.
+        // Find the refresh token for the jobs.
         $refresh_token = RefreshToken::findOrFail($character_id);
 
-        // Dispatch the job with high priority!
-        (new $job_class($refresh_token))->dispatch($refresh_token)->onQueue('high');
+        // Dispatch jobs for each jobclass
+        $job_classes->each(function ($job) use ($refresh_token, $character_id) {
 
-        // Log the manual dispatch
-        logger()->info('Manually dispatched job \'' . $job_name . '\' for character ' .
-            $character_id);
+            (new $job($refresh_token))->dispatch($refresh_token)->onQueue('high');
+
+            logger()->info('Manually dispatched job \'' . $job . '\' for character ' .
+                $character_id);
+        });
 
         // Redirect back!
         return redirect()->back()->with('success', trans('web::seat.update_dispatched'));

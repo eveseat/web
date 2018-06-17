@@ -18,7 +18,7 @@
           <th>{{ trans('web::seat.joined') }}</th>
           <th>{{ trans('web::seat.location') }}</th>
           <th>{{ trans('web::seat.last_login') }}</th>
-          <th>{{ trans('web::seat.key') }}</th>
+          <th>{{ trans('web::seat.token') }}</th>
         </tr>
         </thead>
         <tbody>

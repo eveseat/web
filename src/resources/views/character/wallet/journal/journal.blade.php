@@ -29,7 +29,17 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ trans('web::seat.wallet_journal') }}</h3>
+          <h3 class="panel-title">
+            {{ trans('web::seat.wallet_journal') }}
+            @if(auth()->user()->has('character.jobs'))
+              <span class="pull-right">
+                <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.wallet']) }}"
+                    style="color: #000000">
+                  <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_wallet') }}"></i>
+                </a>
+              </span>
+            @endif
+          </h3>
         </div>
         <div class="panel-body">
 
@@ -57,52 +67,53 @@
 
 @push('javascript')
 
-<script type="text/javascript">
+  <script type="text/javascript">
 
-  // ChartJS Spending Graph
-  $.get("{{ route('character.view.journal.graph.balance', ['character_id' => $request->character_id]) }}", function (data) {
+    // ChartJS Spending Graph
+    $.get("{{ route('character.view.journal.graph.balance', ['character_id' => $request->character_id]) }}", function (data) {
 
-    new Chart($("canvas#balance-over-time"), {
-      type   : 'line',
-      data   : data,
-      options: {
-        tooltips: {
-          mode: 'index'
-        },
+      new Chart($("canvas#balance-over-time"), {
+        type   : 'line',
+        data   : data,
+        options: {
+          tooltips: {
+            mode: 'index'
+          },
 
-        scales: {
-          xAxes: [{
-            display: false
-          }]
+          scales: {
+            xAxes: [{
+              display: false
+            }]
+          }
         }
-      }
+      });
     });
-  });
 
-  // DataTable
-  $(function () {
-    $('table#character-journal').DataTable({
-      processing      : true,
-      serverSide      : true,
-      ajax            : '{{ route('character.view.journal.data', ['character_id' => $request->character_id]) }}',
-      columns         : [
-        {data: 'date', name: 'date', render: human_readable},
-        {data: 'ref_type', name: 'ref_type'},
-        {data: 'first_party_id', name: 'first_party_id'},
-        {data: 'second_party_id', name: 'second_party_id'},
-        {data: 'amount', name: 'amount'},
-        {data: 'balance', name: 'balance'}
-      ],
-      dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
-      'fnDrawCallback': function () {
-        $(document).ready(function () {
-          $('img').unveil(100);
-          ids_to_names();
-        });
-      }
+    // DataTable
+    $(function () {
+      $('table#character-journal').DataTable({
+        processing      : true,
+        serverSide      : true,
+        ajax            : '{{ route('character.view.journal.data', ['character_id' => $request->character_id]) }}',
+        columns         : [
+          {data: 'date', name: 'date', render: human_readable},
+          {data: 'ref_type', name: 'ref_type'},
+          {data: 'first_party_id', name: 'first_party_id'},
+          {data: 'second_party_id', name: 'second_party_id'},
+          {data: 'amount', name: 'amount'},
+          {data: 'balance', name: 'balance'}
+        ],
+        dom             : '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
+        'fnDrawCallback': function () {
+          $(document).ready(function () {
+            $("[data-toggle=tooltip]").tooltip();
+            $('img').unveil(100);
+            ids_to_names();
+          });
+        }
+      });
     });
-  });
 
-</script>
+  </script>
 
 @endpush

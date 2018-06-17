@@ -18,7 +18,8 @@
         <tr>
           <th>{{ trans('web::seat.main_character') }}</th>
           <th>{{ trans_choice('web::seat.role', 2) }}</th>
-          <th>{{ trans_choice('web::seat.group', 2) }}</th>
+          <th>{{ trans('web::seat.email') }}</th>
+          <th>{{ trans_choice('web::seat.character', 2) }}</th>
         </tr>
         </thead>
 
@@ -42,74 +43,51 @@
                 No Roles
               @endif
             </td>
+            <td>{{ $group->email }}</td>
             <td>
 
-              <table class="table compact table-condensed table-hover table-responsive">
-                <thead>
-                <tr>
-                  <th>{{ trans_choice('web::seat.name', 1) }}</th>
-                  <th>{{ trans('web::seat.status') }}</th>
-                  <th>{{ trans('web::seat.token') }}</th>
-                  <th>{{ trans('web::seat.last_login') }}</th>
-                  <th>{{ trans('web::seat.from') }}</th>
-                  <th></th>
-                </tr>
-                </thead>
-
-                <tbody>
+              <ul class="list-unstyled">
                 @foreach($group->users as $user)
-                  <tr>
-                    <td>
-                      {!! img('character', $user->id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                      {{ $user->name }}
-                    </td>
-                    <td>
-                      @if($user->active)
-                        <span class="label label-success">{{ trans('web::seat.enabled') }}</span>
-                      @else
-                        <span class="label label-danger">{{ trans('web::seat.disabled') }}</span>
-                      @endif
-                    </td>
-                    <td data-order="{{ $user->refresh_token ? 1 : 0 }}">
-                      @if($user->refresh_token)
+                  <li>
+                    <!-- token status -->
+                    @if($user->refresh_token)
+                      <span data-toggle="tooltip" title="{{ trans('web::seat.valid_token') }}">
                         <i class="fa fa-check text-success"></i>
-                      @else
-                        <i class="fa fa-exclamation-triangle text-danger"></i>
-                      @endif
-                    </td>
-                    <td data-order="{{ $user->last_login }}">
-                      <span data-toggle="tooltip" title="" data-original-title="{{ $user->last_login }}">
-                        {{ human_diff($user->last_login) }}
                       </span>
-                    </td>
-                    <td>{{ $user->last_login_source }}</td>
-                    <td>
-                      <div class="btn-group">
-                        <a href="{{ route('configuration.users.edit', ['user_id' => $user->id]) }}" type="button"
-                           class="btn btn-warning btn-xs">
-                          {{ trans('web::seat.edit') }}
-                        </a>
-                      </div>
+                    @else
+                      <span data-toggle="tooltip" title="{{ trans('web::seat.invalid_token') }}">
+                        <i class="fa fa-exclamation-triangle text-danger"></i>
+                      </span>
+                    @endif
+                    |
+                    <!-- actions -->
+                    <a href="{{ route('configuration.users.edit', ['user_id' => $user->id]) }}"
+                       data-toggle="tooltip" title="{{ trans('web::seat.edit') }}">
+                      <i style="color: #333;" class="fa fa-pencil"></i>
+                    </a>
 
-                      @if(auth()->user()->id != $user->id)
-                        <div class="btn-group">
-                          <a href="{{ route('configuration.users.delete', ['user_id' => $user->id]) }}" type="button"
-                             class="btn btn-danger btn-xs confirmlink">
-                            {{ trans('web::seat.delete') }}
-                          </a>
-                          <a href="{{ route('configuration.users.impersonate', ['user_id' => $user->id]) }}" type="button"
-                             class="btn btn-success btn-xs">
-                            {{ trans('web::seat.impersonate') }}
-                          </a>
-                        </div>
-                      @else
-                        <em class="text-danger">(This is you!)</em>
-                      @endif
-                    </td>
-                  </tr>
+                    @if(auth()->user()->id != $user->id)
+                      <a href="{{ route('configuration.users.delete', ['user_id' => $user->id]) }}"
+                         data-toggle="tooltip" title="{{ trans('web::seat.delete') }}"
+                         class="confirmlink">
+                        <i style="color: #333;" class="fa fa-times"></i>
+                      </a>
+                      <a href="{{ route('configuration.users.impersonate', ['user_id' => $user->id]) }}"
+                         data-toggle="tooltip" title="{{ trans('web::seat.impersonate') }}">
+                        <i style="color: #333;" class="fa fa-user-secret"></i>
+                      </a>
+                    @else
+                      <em class="text-danger">(This is you!)</em>
+                    @endif
+                    |
+                    <!-- user information -->
+                    {!! img('character', $user->id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                    {{ $user->name }}
+                    (last logged in {{ human_diff($user->last_login) }} from {{ $user->last_login_source }})
+
+                  </li>
                 @endforeach
-                </tbody>
-              </table>
+              </ul>
 
             </td>
           </tr>
@@ -120,7 +98,8 @@
 
     </div>
     <div class="panel-footer">
-      <b>{{ count($groups) }}</b> {{ trans_choice('web::seat.group', count($groups)) }}
+      <b>{{ count($groups) }}</b> {{ trans_choice('web::seat.group', count($groups)) }} |
+      <b>{{ $groups->map(function($r) { return $r->users->count(); })->sum() }}</b> {{ trans_choice('web::seat.user', 2) }}
     </div>
 
   </div>

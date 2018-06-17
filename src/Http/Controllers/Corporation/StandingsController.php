@@ -37,7 +37,7 @@ class StandingsController extends Controller
     public function getStandings(int $corporation_id)
     {
 
-        $standings = $this->getCorporationStandings($corporation_id);
+        $standings = $this->getCorporationStandings($corporation_id, 50);
 
         return view('web::corporation.standings', compact('standings'));
     }

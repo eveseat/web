@@ -313,8 +313,6 @@ class WebServiceProvider extends ServiceProvider
             __DIR__ . '/Config/web.permissions.php', 'web.permissions');
         $this->mergeConfigFrom(
             __DIR__ . '/Config/web.locale.php', 'web.locale');
-        $this->mergeConfigFrom(
-            __DIR__ . '/Config/web.supervisor.php', 'web.supervisor');
 
         // Menu Configurations
         $this->mergeConfigFrom(
