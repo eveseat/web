@@ -28,9 +28,9 @@
         @foreach($groups->sortBy(function($item, $key) { return strtolower(optional($item->main_character)->name); }) as $group)
 
           <tr>
-            <td>
-              <div class="thumbnail text-center no-border bg-none">
-                {!! img('character', optional($group->main_character)->character_id, 128, ['class' => 'img-circle eve-icon large-icon']) !!}
+            <td class="align-middle">
+              <div class="text-center">
+                {!! img('character', optional($group->main_character)->character_id, 64, ['class' => 'img-circle eve-icon']) !!}
                 <span class="users-list-name">{{ optional($group->main_character)->name }}</span>
               </div>
             </td>
