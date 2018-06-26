@@ -29,8 +29,10 @@
 
           <tr>
             <td>
-              {!! img('character', optional($group->main_character)->character_id, 128, ['class' => 'img-circle eve-icon medium-icon']) !!}
-              <br><i>{{ optional($group->main_character)->name }}</i>
+              <div class="thumbnail text-center no-border bg-none">
+                {!! img('character', optional($group->main_character)->character_id, 128, ['class' => 'img-circle eve-icon large-icon']) !!}
+                <span class="users-list-name">{{ optional($group->main_character)->name }}</span>
+              </div>
             </td>
             <td>
               @if(count($group->roles) > 0)
