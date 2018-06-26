@@ -50,6 +50,16 @@
       </div><!-- /.info-box -->
 
       <div class="info-box">
+        <span class="info-box-icon bg-purple"><i class="fa fa-diamond"></i></span>
+        <div class="info-box-content">
+          <span class="info-box-text">{{ trans('web::seat.total_character_mined_isk') }}</span>
+          <span class="info-box-number">
+            {{number($total_character_mining)}}
+          </span>
+        </div><!-- /.info-box-content -->
+      </div><!-- /.info-box -->
+
+      <div class="info-box">
         <span class="info-box-icon bg-black"><i class="fa fa-graduation-cap"></i></span>
         <div class="info-box-content">
           <span class="info-box-text">{{ trans('web::seat.total_character_skillpoints') }}</span>
