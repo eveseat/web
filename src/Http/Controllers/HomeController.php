@@ -56,10 +56,11 @@ class HomeController extends Controller
         $total_character_isk = $this->getTotalCharacterIsk();
         $total_character_skillpoints = $this->getTotalCharacterSkillpoints();
         $total_character_killmails = $this->getTotalCharacterKillmails();
+        $total_character_mining = $this->getTotalCharacterMiningIsk();
 
         return view('web::home', compact(
             'server_status', 'total_character_isk', 'total_character_skillpoints',
-            'total_character_killmails'
+            'total_character_killmails', 'total_character_mining'
         ));
     }
 

@@ -48,46 +48,58 @@
 
               <ul class="list-group margin-0">
                 @foreach($group->users->sortBy(function($item, $key) { return strtolower($item->name); }) as $user)
+
+
                   <li class="list-group-item border-0 bg-none">
-                    <!-- token status -->
-                    @if($user->refresh_token)
-                      <button data-toggle="tooltip" title="{{ trans('web::seat.valid_token') }}" class="btn btn-xs btn-link">
-                        <i class="fa fa-check text-success"></i>
-                      </button>
-                    @else
-                      <button data-toggle="tooltip" title="{{ trans('web::seat.invalid_token') }}" class="btn btn-xs btn-link">
-                        <i class="fa fa-exclamation-triangle text-danger"></i>
-                      </button>
-                    @endif
 
-                    <!-- actions -->
-                    <div class="btn-group btn-group-xs" role="group">
-                      <a href="{{ route('configuration.users.edit', ['user_id' => $user->id]) }}"
-                         title="{{ trans('web::seat.edit') }}" class="btn btn-warning">
-                        <i class="fa fa-pencil"></i> {{ trans('web::seat.edit') }}
-                      </a>
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-md-1">
+                          <!-- token status -->
+                          @if($user->refresh_token)
+                            <button data-toggle="tooltip" title="{{ trans('web::seat.valid_token') }}" class="btn btn-xs btn-link">
+                              <i class="fa fa-check text-success"></i>
+                            </button>
+                          @else
+                            <button data-toggle="tooltip" title="{{ trans('web::seat.invalid_token') }}" class="btn btn-xs btn-link">
+                              <i class="fa fa-exclamation-triangle text-danger"></i>
+                            </button>
+                          @endif
+                        </div>
+                        <div class="col-md-8">
+                          <!-- user information -->
+                          {!! img('character', $user->id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                          {{ $user->name }}
+                          (last logged in {{ human_diff($user->last_login) }} from {{ $user->last_login_source }})
+                        </div>
+                        <div class="col-md-3">
+                          <!-- actions -->
+                          <div class="btn-group btn-group-xs" role="group">
+                            <a href="{{ route('configuration.users.edit', ['user_id' => $user->id]) }}"
+                               title="{{ trans('web::seat.edit') }}" class="btn btn-warning">
+                              <i class="fa fa-pencil"></i> {{ trans('web::seat.edit') }}
+                            </a>
 
-                      @if(auth()->user()->id != $user->id)
-                        <a href="{{ route('configuration.users.delete', ['user_id' => $user->id]) }}"
-                           title="{{ trans('web::seat.delete') }}"
-                           class="confirmlink btn btn-danger">
-                          <i class="fa fa-times"></i> {{ trans('web::seat.delete') }}
-                        </a>
-                        <a href="{{ route('configuration.users.impersonate', ['user_id' => $user->id]) }}"
-                           title="{{ trans('web::seat.impersonate') }}" class="btn btn-default">
-                          <i class="fa fa-user-secret"></i> {{ trans('web::seat.impersonate') }}
-                        </a>
-                      @endif
+                            @if(auth()->user()->id != $user->id)
+                              <a href="{{ route('configuration.users.delete', ['user_id' => $user->id]) }}"
+                                 title="{{ trans('web::seat.delete') }}"
+                                 class="confirmlink btn btn-danger">
+                                <i class="fa fa-times"></i> {{ trans('web::seat.delete') }}
+                              </a>
+                              <a href="{{ route('configuration.users.impersonate', ['user_id' => $user->id]) }}"
+                                 title="{{ trans('web::seat.impersonate') }}" class="btn btn-default">
+                                <i class="fa fa-user-secret"></i> {{ trans('web::seat.impersonate') }}
+                              </a>
+                            @endif
+                          </div>
+
+                          @if(auth()->user()->id == $user->id)
+                            <em class="text-danger">(This is you!)</em>
+                          @endif
+                        </div>
+                      </div>
+
                     </div>
-
-                    @if(auth()->user()->id == $user->id)
-                      <em class="text-danger">(This is you!)</em>
-                    @endif
-
-                    <!-- user information -->
-                    {!! img('character', $user->id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                    {{ $user->name }}
-                    (last logged in {{ human_diff($user->last_login) }} from {{ $user->last_login_source }})
 
                   </li>
                 @endforeach
