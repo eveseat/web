@@ -14,11 +14,10 @@
       <table class="table datatable compact table-condensed table-hover table-responsive">
         <thead>
         <tr>
+          <th>{{ trans('web::seat.token') }}</th>
           <th>{{ trans_choice('web::seat.name', 1) }}</th>
           <th>{{ trans('web::seat.joined') }}</th>
-          <th>{{ trans('web::seat.location') }}</th>
           <th>{{ trans('web::seat.last_login') }}</th>
-          <th>{{ trans('web::seat.token') }}</th>
         </tr>
         </thead>
         <tbody>
@@ -26,20 +25,18 @@
         @foreach($tracking as $character)
 
           <tr>
+            <td data-order="{{ $character->key_ok }}">
+              @if($character->key_ok == 1)
+                <i class="fa fa-check text-success"></i>
+              @else
+                <i class="fa fa-exclamation-triangle text-danger"></i>
+              @endif
+            </td>
             <td>
               <a href="{{ route('character.view.sheet', ['character_id' => $character->character_id]) }}">
                 {!! img('character', $character->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                 <span rel="id-to-name">{{ $character->character_id }}</span>
               </a>
-            </td>
-            <td data-order="{{ $character->start_date }}">
-              <span data-toggle="tooltip"
-                    title="" data-original-title="{{ $character->start_date }}">
-                {{ human_diff($character->start_date) }}
-              </span>
-            </td>
-            <td>
-              {{ $character->location_id }}
               @if(!is_null($character->ship_type_id))
                 <i class="pull-right" data-toggle="tooltip"
                    title="" data-original-title="{{ $character->type->typeName }}">
@@ -47,18 +44,17 @@
                 </i>
               @endif
             </td>
+            <td data-order="{{ $character->start_date }}">
+              <span data-toggle="tooltip"
+                    title="" data-original-title="{{ $character->start_date }}">
+                {{ human_diff($character->start_date) }}
+              </span>
+            </td>
             <td data-order="{{ $character->logon_date }}">
               <span data-toggle="tooltip"
                     title="" data-original-title="{{ $character->logon_date }}">
                 {{ human_diff($character->logon_date) }}
               </span>
-            </td>
-            <td data-order="{{ $character->key_ok }}">
-              @if($character->key_ok == 1)
-                <i class="fa fa-check text-success"></i>
-              @else
-                <i class="fa fa-exclamation-triangle text-danger"></i>
-              @endif
             </td>
           </tr>
 
