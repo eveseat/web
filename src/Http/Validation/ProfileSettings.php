@@ -55,13 +55,19 @@ class ProfileSettings extends FormRequest
         $allowed_sidebar = implode(',', Profile::$options['sidebar']);
         $mail_threads = implode(',', Profile::$options['mail_threads']);
 
+        // Workaround if the thousands seperator is null to convert it
+        // to a space. We dont receive a space from the request as a
+        // result of the TrimStrings middleware. Thats ok.
+        if (is_null($this->request->get('thousand_seperator')))
+            $this->request->set('thousand_seperator', ' ');
+
         return [
             'main_character_id'   => auth()->user()->name == 'admin' ? 'optional' : 'required|in:' . $allowed_main_character_ids,
             'skin'                => 'required|in:' . $allowed_skins,
             'language'            => 'required|in:' . $allowed_languages,
             'sidebar'             => 'required|in:' . $allowed_sidebar,
             'mail_threads'        => 'required|in:' . $mail_threads,
-            'thousand_seperator'  => 'nullable|in:,",","."|size:1',
+            'thousand_seperator'  => 'nullable|in:" ",",","."|size:1',
             'decimal_seperator'   => 'required|in:",","."|size:1',
             'email_notifications' => 'required|in:yes,no',
         ];
