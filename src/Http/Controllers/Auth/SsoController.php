@@ -86,7 +86,7 @@ class SsoController extends Controller
      *
      * Group memberships are also managed here, ensuring that
      * characters are automatically 'linked' via a group. If
-     * an existsing, logged in session is detected, te new login
+     * an existsing, logged in session is detected, the new login
      * will be associated with that sessions group. Otherwise,
      * a new group for this user will be created.
      *
@@ -128,8 +128,18 @@ class SsoController extends Controller
                     'authentication',
                 ]);
 
+                // Take note of the current group_id. We want to remove it
+                // if the re-association causes the origin group to be empty
+                $current_group = Group::find($existing->group_id);
+
+                // Re-associate the group membership for the newly logged in user.
                 $existing->group_id = auth()->user()->group->id;
                 $existing->save();
+
+                // Remove the original group if it no longer has any users.
+                if ($current_group->doesntHave('users'))
+                    $current_group->delete();
+
             }
 
             return $existing;
