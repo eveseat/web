@@ -50,10 +50,10 @@
               {!! img('type', $entry->type->typeID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
               {{ $entry->type->typeName }}
             </td>
-            <td class="text-right" data-order="{{ $entry->quantity }}">{{ number_format($entry->quantity) }}</td>
-            <td class="text-right" data-order="{{ $entry->volumes }}">{{ number_format($entry->volumes, 2) }} m3</td>
+            <td class="text-right" data-order="{{ $entry->quantity }}">{{ number($entry->quantity) }}</td>
+            <td class="text-right" data-order="{{ $entry->volumes }}">{{ number($entry->volumes) }} m3</td>
             <td class="text-right" data-order="{{ $entry->amount }}">
-              {{ number_format($entry->amount, 2) }} ISK
+              {{ number($entry->amount) }} ISK
               <a href="#" class="btn btn-sm btn-link" data-toggle="modal" data-target="#detailed-ledger">
                 <i class="fa fa-cubes"></i>
               </a>
