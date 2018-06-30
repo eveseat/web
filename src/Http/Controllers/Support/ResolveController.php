@@ -117,8 +117,8 @@ class ResolveController extends Controller
         });
 
         // Grr. Without this, arbitrary things will get replaced as
-        // #System in the UI. Infuriating to say the least.
-        $response->forget(0);
+        // #System/Corporation in the UI. Infuriating to say the least.
+        $response->forget([0, 2]);
 
         return response()->json($response);
     }
