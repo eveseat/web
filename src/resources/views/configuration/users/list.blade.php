@@ -28,11 +28,11 @@
         @foreach($groups->sortBy(function($item, $key) { return strtolower(optional($item->main_character)->name); }) as $group)
 
           <tr>
-            <td>
+            <td class="align-middle text-center">
               {!! img('character', optional($group->main_character)->character_id, 64, ['class' => 'img-circle eve-icon medium-icon']) !!}
-              <span>{{ optional($group->main_character)->name }}</span>
+              <span class="users-list-name">{{ optional($group->main_character)->name }}</span>
             </td>
-            <td>
+            <td class="align-middle text-center">
               @if(count($group->roles) > 0)
                 <ul class="list-unstyled">
                   @foreach($group->roles as $role)
@@ -40,16 +40,16 @@
                   @endforeach
                 </ul>
               @else
-                No Roles
+                <span class="label label-warning">No Roles</span>
               @endif
             </td>
-            <td>{{ $group->email }}</td>
+            <td class="align-middle text-center">{{ $group->email }}</td>
             <td>
 
-              <ul class="list-group">
+              <ul class="list-group no-margin">
                 @foreach($group->users->sortBy(function($item) { return strtolower($item->name); }) as $user)
 
-                  <li class="list-group-item">
+                  <li class="list-group-item no-border bg-none">
 
                     <div class="container-fluid">
                       <div class="row">
@@ -67,7 +67,7 @@
                         @endif
 
                       <!-- user information -->
-                        {!! img('character', $user->id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                        {!! img('character', $user->id, 64, ['class' => 'img-circle eve-icon small-icon', 'alt' => $user->name]) !!}
                         {{ $user->name }}
                         (last logged in {{ human_diff($user->last_login) }} from {{ $user->last_login_source }})
                         <!-- actions -->
