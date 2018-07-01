@@ -60,19 +60,15 @@
                         <div class="col-xs-12 col-sm-6 col-md-6">
                           <ul class="list-unstyled">
                             <li>
-                              <!-- token status -->
-                              @if($user->refresh_token)
-                                <button data-toggle="tooltip" title="{{ trans('web::seat.valid_token') }}"
-                                        class="btn btn-xs btn-link">
-                                  <i class="fa fa-check text-success"></i>
-                                </button>
-                              @else
-                                <button data-toggle="tooltip" title="{{ trans('web::seat.invalid_token') }}"
-                                        class="btn btn-xs btn-link">
-                                  <i class="fa fa-exclamation-triangle text-danger"></i>
-                                </button>
-                              @endif
-                              <span>{{ $user->name }}</span>
+                              <span class="users-list-name">
+                                <!-- token status -->
+                                @if($user->refresh_token)
+                                  <i class="fa fa-check text-success" data-toggle="tooltip" data-placement="top" title="{{ trans('web::seat.valid_token') }}"></i>
+                                @else
+                                  <i class="fa fa-exclamation-triangle text-danger" data-toggle="tooltip" data-placement="top" title="{{ trans('web::seat.invalid_token') }}"></i>
+                                @endif
+                                {{ $user->name }}
+                              </span>
                             </li>
                             <li>(last logged in {{ human_diff($user->last_login) }} from {{ $user->last_login_source }})</li>
                             <li class="hidden-sm hidden-md hidden-lg">
