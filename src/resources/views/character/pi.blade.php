@@ -166,10 +166,10 @@
 
       updateExpiryText();
       updateProgressBar();
-      setInterval(function () { //this is to update every 5 seconds
+      setInterval(function () { //this is to update every 15 seconds
         updateExpiryText();
         updateProgressBar();
-      }, 133700);
+      }, 15000);
 
     });
   </script>
