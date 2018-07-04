@@ -16,6 +16,8 @@
         <tr>
           <th>{{ trans('web::seat.token') }}</th>
           <th>{{ trans_choice('web::seat.name', 1) }}</th>
+          {{--<th>{{ trans_choice('web::seat.current_ship', 1) }}</th>--}}
+          <th>{{trans('web::seat.group_main')}}</th>
           <th>{{ trans('web::seat.joined') }}</th>
           <th>{{ trans('web::seat.last_login') }}</th>
         </tr>
@@ -37,12 +39,22 @@
                 {!! img('character', $character->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                 <span rel="id-to-name">{{ $character->character_id }}</span>
               </a>
+            </td>
+            {{--<td>
               @if(!is_null($character->ship_type_id))
                 <i class="pull-right" data-toggle="tooltip"
                    title="" data-original-title="{{ $character->type->typeName }}">
                   {!! img('type', $character->ship_type_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                 </i>
               @endif
+
+            </td>--}}
+            <td data-order="{{ optional(optional(optional($character->user)->group)->main_character)->character_id }}>
+              <a href="{{ route('character.view.sheet', ['character_id' => optional(optional(optional($character->user)->group)->main_character)->character_id]) }}">
+                {!! img('character', optional(optional(optional($character->user)->group)->main_character)->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                <span rel="id-to-name">{{ optional(optional(optional($character->user)->group)->main_character)->character_id }}</span>
+              </a>
+
             </td>
             <td data-order="{{ $character->start_date }}">
               <span data-toggle="tooltip"
