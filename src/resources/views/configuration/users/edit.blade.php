@@ -52,6 +52,7 @@
   </div>
 
   <!-- account re-assignment -->
+  @if($user->name != 'admin')
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">{{ trans('web::seat.reassign_user') }}</h3>
@@ -104,6 +105,7 @@
 
     </div>
   </div>
+  @endif
 
 @stop
 @section('right')
