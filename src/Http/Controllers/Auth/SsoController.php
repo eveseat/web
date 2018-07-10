@@ -133,17 +133,12 @@ class SsoController extends Controller
                     'authentication',
                 ]);
 
-                // Take note of the current group_id. We want to remove it
-                // if the re-association causes the origin group to be empty
-                $current_group = Group::find($existing->group_id);
-
                 // Re-associate the group membership for the newly logged in user.
                 $existing->group_id = auth()->user()->group->id;
                 $existing->save();
 
-                // Remove the original group if it no longer has any users.
-                if ($current_group->doesntHave('users'))
-                    $current_group->delete();
+                // Remove any orphan groups we could create during the attachment process
+                Group::doesntHave('users')->delete();
 
             }
 
