@@ -178,7 +178,7 @@ class SsoController extends Controller
     public function updateRefreshToken(SocialiteUser $eve_data): void
     {
 
-        RefreshToken::firstOrNew(['character_id' => $eve_data->character_id])
+        RefreshToken::withTrashed()->firstOrNew(['character_id' => $eve_data->character_id])
             ->fill([
                 'refresh_token' => $eve_data->refresh_token,
                 'scopes'        => explode(' ', $eve_data->scopes),
@@ -186,6 +186,9 @@ class SsoController extends Controller
                 'expires_on'    => $eve_data->expires_on,
             ])
             ->save();
+
+        // restore soft deleted token if any
+        RefreshToken::onlyTrashed()->where('character_id', $eve_data->character_id)->restore();
     }
 
     /**
