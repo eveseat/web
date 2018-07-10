@@ -115,6 +115,7 @@
     <div class="col-md-12">
 
       <!-- role summary -->
+      @if($user->name != 'admin')
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">{{ trans('web::seat.role_summary') }}</h3>
@@ -170,6 +171,7 @@
           <b>{{ count($user->group->roles) }}</b> {{ trans_choice('web::seat.role', count($user->group->roles)) }}
         </div>
       </div>
+      @endif
 
     </div>
 
