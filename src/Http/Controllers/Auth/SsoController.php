@@ -64,6 +64,11 @@ class SsoController extends Controller
 
         $eve_data = $social->driver('eveonline')->user();
 
+        // Avoid self attachment
+        if (auth()->check() && auth()->user()->id == $eve_data->character_id)
+            return redirect()->route('home')
+                ->with('error', 'You cannot add yourself. Did you forget to change character in Eve Online SSO form ?');
+
         // Get or create the User bound to this login.
         $user = $this->findOrCreateUser($eve_data);
 
