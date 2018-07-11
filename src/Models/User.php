@@ -33,7 +33,6 @@ use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\Models\UserSetting;
 use Seat\Services\Settings\Profile;
 use Seat\Web\Acl\AccessChecker;
-use Seat\Web\Exceptions\SpecialAccountException;
 use Seat\Web\Models\Acl\Affiliation;
 
 /**
@@ -71,27 +70,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
-
-    /**
-     * @param array $options
-     * @return bool
-     * @throws SpecialAccountException
-     */
-    public function save(array $options = [])
-    {
-        // retrieve admin group, if any
-        $admin_group = Group::whereHas('users', function ($query) {
-            $query->where('name', '=', 'admin');
-        })->first();
-
-        // ensure currently adding user will not be attached to the admin group relationship
-        if (! is_null($admin_group) && $this->getAttributeValue('name') != 'admin' &&
-            $this->getAttributeValue('group_id') == $admin_group->id)
-            throw new SpecialAccountException('You cannot attach any user to the a admin group relationship.');
-
-        // continue standard process
-        return parent::save($options);
-    }
 
     /**
      * Make sure we cleanup on delete.
