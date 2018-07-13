@@ -24,7 +24,6 @@ namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Services\Repositories\Character\Mail;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
 
 /**
  * Class MailController.
@@ -56,7 +55,7 @@ class MailController extends Controller
 
         $mail = $this->getCharacterMail($character_id, false);
 
-        return Datatables::of($mail)
+        return app('DataTables')::of($mail)
             ->editColumn('from', function ($row) {
 
                 return view('web::character.partials.mailsendername', compact('row'))

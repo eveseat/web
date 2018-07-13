@@ -26,7 +26,6 @@ use Illuminate\Http\Request;
 use Seat\Eveapi\Models\Mail\MailHeader;
 use Seat\Services\Search\Search;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
 
 /**
  * Class SearchController.
@@ -60,7 +59,7 @@ class SearchController extends Controller
 
         $characters = $this->doSearchCharacters();
 
-        return Datatables::of($characters)
+        return app('DataTables')::of($characters)
             ->editColumn('name', function ($row) {
 
                 return view('web::search.partials.charactername', compact('row'))
@@ -85,7 +84,7 @@ class SearchController extends Controller
 
         $corporations = $this->doSearchCorporations();
 
-        return Datatables::of($corporations)
+        return app('DataTables')::of($corporations)
             ->editColumn('name', function ($row) {
 
                 return view('web::search.partials.corporationname', compact('row'))
@@ -114,7 +113,7 @@ class SearchController extends Controller
 
         $mail = $this->doSearchCharacterMail();
 
-        return Datatables::of($mail)
+        return app('DataTables')::of($mail)
             ->editColumn('from', function ($row) {
 
                 return view('web::character.partials.mailsendername', compact('row'))
@@ -153,7 +152,7 @@ class SearchController extends Controller
 
         $assets = $this->doSearchCharacterAssets();
 
-        return Datatables::of($assets)
+        return app('DataTables')::of($assets)
             ->editColumn('characterName', function ($row) {
 
                 return view('web::search.partials.charactername', compact('row'))
@@ -178,7 +177,7 @@ class SearchController extends Controller
 
         $skills = $this->doSearchCharacterSkills();
 
-        return Datatables::of($skills)
+        return app('DataTables')::of($skills)
             ->editColumn('character_name', function ($row) {
 
                 return view('web::search.partials.charactername', compact('row'))

@@ -27,7 +27,6 @@ use Seat\Services\Repositories\Character\Intel;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\NewIntelNote;
 use Seat\Web\Http\Validation\UpdateIntelNote;
-use Yajra\Datatables\Datatables;
 
 /**
  * Class IntelController.
@@ -63,7 +62,7 @@ class IntelController extends Controller
 
         $top = $this->characterTopWalletJournalInteractions($character_id);
 
-        return Datatables::of($top)
+        return app('DataTables')::of($top)
             ->editColumn('ref_type', function ($row) {
 
                 return ucwords(str_replace('_', ' ', $row->ref_type));
@@ -97,7 +96,7 @@ class IntelController extends Controller
 
         $top = $this->characterTopWalletTransactionInteractions($character_id);
 
-        return Datatables::of($top)
+        return app('DataTables')::of($top)
             ->editColumn('character_id', function ($row) {
 
                 return view('web::character.intel.partials.charactername', compact('row'))
@@ -127,7 +126,7 @@ class IntelController extends Controller
 
         $top = $this->characterTopMailInteractions($character_id);
 
-        return Datatables::of($top)
+        return app('DataTables')::of($top)
             ->editColumn('character_id', function ($row) {
 
                 return view('web::character.intel.partials.charactername', compact('row'))
@@ -170,7 +169,7 @@ class IntelController extends Controller
 
         $journal = $this->getCharacterJournalStandingsWithProfile($character_id, $profile_id);
 
-        return Datatables::of($journal)
+        return app('DataTables')::of($journal)
             ->editColumn('characterName', function ($row) {
 
                 return view('web::character.intel.partials.charactername', compact('row'))
@@ -210,7 +209,7 @@ class IntelController extends Controller
     public function getNotesData(int $character_id)
     {
 
-        return Datatables::of(CharacterInfo::getNotes($character_id))
+        return app('DataTables')::of(CharacterInfo::getNotes($character_id))
             ->addColumn('actions', function ($row) {
 
                 return view('web::character.intel.partials.notesactions', compact('row'))

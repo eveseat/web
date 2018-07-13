@@ -25,7 +25,6 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Services\Repositories\Character\Character;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
 
 /**
  * Class CharacterController.
@@ -53,7 +52,7 @@ class CharacterController extends Controller
 
         $characters = $this->getAllCharactersWithAffiliations();
 
-        return Datatables::of($characters)
+        return app('DataTables')::of($characters)
             ->editColumn('name', function ($row) {
 
                 return view('web::character.partials.charactername', compact('row'))

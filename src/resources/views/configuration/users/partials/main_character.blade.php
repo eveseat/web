@@ -1,0 +1,2 @@
+{!! img('character', optional($row->main_character)->character_id, 64, ['class' => 'img-circle eve-icon medium-icon'], false) !!}
+<span class="users-list-name">{{ optional($row->main_character)->name }}</span>

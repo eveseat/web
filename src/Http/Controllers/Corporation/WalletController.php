@@ -24,7 +24,6 @@ namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Services\Repositories\Corporation\Wallet;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
 
 /**
  * Class WalletController.
@@ -56,7 +55,7 @@ class WalletController extends Controller
 
         $journal = $this->getCorporationWalletJournal($corporation_id, false);
 
-        return Datatables::of($journal)
+        return app('DataTables')::of($journal)
             ->editColumn('ref_type', function ($row) {
 
                 return view('web::partials.journaltranstype', compact('row'))
@@ -105,7 +104,7 @@ class WalletController extends Controller
 
         $transactions = $this->getCorporationWalletTransactions($corporation_id, false);
 
-        return Datatables::of($transactions)
+        return app('DataTables')::of($transactions)
             ->editColumn('is_buy', function ($row) {
 
                 return view('web::partials.transactiontype', compact('row'))
