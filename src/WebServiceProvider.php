@@ -94,6 +94,9 @@ class WebServiceProvider extends ServiceProvider
 
         // Configure the queue dashboard
         $this->configure_horizon();
+
+        // Configure API
+        $this->configure_api();
     }
 
     /**
@@ -377,5 +380,23 @@ class WebServiceProvider extends ServiceProvider
             );
         });
 
+    }
+
+    /**
+     * Update Laravel 5 Swagger annotation path.
+     */
+    private function configure_api()
+    {
+        // ensure current annotations setting is an array of path or transform into it
+        $current_annotations = config('l5-swagger.paths.annotations');
+        if (! is_array($current_annotations))
+            $current_annotations = [$current_annotations];
+
+        // merge paths together and update config
+        config([
+            'l5-swagger.paths.annotations' => array_unique(array_merge($current_annotations, [
+                __DIR__ . '/Models',
+                ])),
+            ]);
     }
 }
