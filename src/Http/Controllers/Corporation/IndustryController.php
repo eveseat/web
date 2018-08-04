@@ -24,7 +24,6 @@ namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Services\Repositories\Corporation\Industry;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
 
 /**
  * Class IndustryController.
@@ -55,7 +54,7 @@ class IndustryController extends Controller
 
         $jobs = $this->getCorporationIndustry($corporation_id, false);
 
-        return Datatables::of($jobs)
+        return app('DataTables')::of($jobs)
             ->editColumn('installerName', function ($row) {
 
                 return view('web::partials.industryinstaller', compact('row'))

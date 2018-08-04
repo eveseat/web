@@ -28,6 +28,7 @@ use Illuminate\Auth\Events\Login as LoginEvent;
 use Illuminate\Auth\Events\Logout as LogoutEvent;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Horizon\Horizon;
 use Laravel\Socialite\SocialiteManager;
@@ -35,7 +36,6 @@ use Seat\Web\Events\Attempt;
 use Seat\Web\Events\Login;
 use Seat\Web\Events\Logout;
 use Seat\Web\Events\SecLog;
-use Seat\Web\Events\Security;
 use Seat\Web\Extentions\EveOnlineProvider;
 use Seat\Web\Http\Composers\CharacterMenu;
 use Seat\Web\Http\Composers\CharacterSummary;
@@ -52,7 +52,6 @@ use Seat\Web\Http\Middleware\Bouncer\KeyBouncer;
 use Seat\Web\Http\Middleware\Locale;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
 use Seat\Web\Http\Middleware\Requirements;
-use Validator;
 
 /**
  * Class EveapiServiceProvider.
@@ -339,7 +338,7 @@ class WebServiceProvider extends ServiceProvider
      * Currently this consists of:
      *  - PragmaRX\Google2FA
      *  - Laravel\Socialite
-     *  - Yajra\Datatables
+     *  - Yajra\DataTables
      */
     public function register_services()
     {
@@ -364,21 +363,9 @@ class WebServiceProvider extends ServiceProvider
 
         // Register the datatables package! Thanks
         //  https://laracasts.com/discuss/channels/laravel/register-service-provider-and-facade-within-service-provider
-        $this->app->register('Yajra\Datatables\DatatablesServiceProvider');
+        $this->app->register('Yajra\DataTables\DataTablesServiceProvider');
         $loader = AliasLoader::getInstance();
-        $loader->alias('Datatables', 'Yajra\Datatables\Facades\Datatables');
-
-        // Register the Supervisor RPC helper into the IoC
-        $this->app->singleton('supervisor', function () {
-
-            return new Supervisor(
-                config('web.supervisor.name'),
-                config('web.supervisor.rpc.address'),
-                config('web.supervisor.rpc.username'),
-                config('web.supervisor.rpc.password'),
-                (int) config('web.supervisor.rpc.port')
-            );
-        });
+        $loader->alias('DataTables', 'Yajra\DataTables\Facades\DataTables');
 
     }
 

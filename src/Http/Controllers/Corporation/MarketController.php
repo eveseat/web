@@ -25,7 +25,6 @@ namespace Seat\Web\Http\Controllers\Corporation;
 use Seat\Services\Repositories\Corporation\Market;
 use Seat\Services\Repositories\Eve\EveRepository;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\Datatables\Facades\Datatables;
 
 /**
  * Class MarketController.
@@ -57,7 +56,7 @@ class MarketController extends Controller
 
         $orders = $this->getCorporationMarketOrders($corporation_id, false);
 
-        return Datatables::of($orders)
+        return app('DataTables')::of($orders)
             ->addColumn('bs', function ($row) {
 
                 return view('web::partials.marketbuysell', compact('row'))

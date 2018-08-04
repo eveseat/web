@@ -27,6 +27,8 @@ use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\EditUser;
 use Seat\Web\Http\Validation\ReassignUser;
+use Seat\Web\Models\Group;
+use Seat\Web\Models\User;
 
 /**
  * Class UserController.
@@ -41,10 +43,41 @@ class UserController extends Controller
      */
     public function getAll()
     {
+        $group_counter = Group::count();
+        $user_counter = User::count();
 
-        $groups = $this->getAllGroups();
+        return view('web::configuration.users.list', compact('group_counter', 'user_counter'));
+    }
 
-        return view('web::configuration.users.list', compact('groups'));
+    public function getUsersData()
+    {
+        $groups = Group::with('roles', 'users')
+            ->get()
+            ->sortBy(function ($item, $key) { return strtolower(optional($item->main_character)->name); });
+
+        return app('DataTables')::of($groups)
+            ->addColumn('main_character', function ($row) {
+
+                return view('web::configuration.users.partials.main_character', compact('row'))
+                    ->render();
+            })
+            ->addColumn('email', function ($row) {
+                return $row->email;
+            })
+            ->editColumn('roles', function ($row) {
+
+                return view('web::configuration.users.partials.roles', compact('row'))
+                    ->render();
+            })
+            ->editColumn('users', function ($row) {
+
+                return view('web::configuration.users.partials.characters', compact('row'))
+                    ->render();
+
+            })
+            ->removeColumn('created_at', 'updated_at')
+            ->rawColumns(['main_character', 'roles', 'users'])
+            ->make(true);
     }
 
     /**

@@ -25,6 +25,11 @@ Route::get('/', [
     'uses' => 'UserController@getAll',
 ]);
 
+Route::get('/users/data', [
+    'as'   => 'configuration.users.data',
+    'uses' => 'UserController@getUsersData',
+]);
+
 Route::post('/update', [
     'as'   => 'configuration.access.users.update',
     'uses' => 'UserController@updateUser',

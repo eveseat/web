@@ -24,7 +24,6 @@ namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Services\Repositories\Corporation\Contracts;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
 
 /**
  * Class ContractsController.
@@ -55,7 +54,7 @@ class ContractsController extends Controller
 
         $contracts = $this->getCorporationContracts($corporation_id, false);
 
-        return Datatables::of($contracts)
+        return app('DataTables')::of($contracts)
             ->editColumn('issuer_id', function ($row) {
 
                 return view('web::partials.contractissuer', compact('row'))
