@@ -61,7 +61,7 @@ class IndustryController extends Controller
                 return view('web::partials.industryinstaller', compact('row'))
                     ->render();
             })
-            ->editColumn('solarSystemName', function ($row) {
+            ->editColumn('facilityName', function ($row) {
 
                 return view('web::partials.industrysystem', compact('row'))
                     ->render();

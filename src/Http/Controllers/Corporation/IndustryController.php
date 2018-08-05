@@ -56,12 +56,12 @@ class IndustryController extends Controller
         $jobs = $this->getCorporationIndustry($corporation_id, false);
 
         return Datatables::of($jobs)
-            ->editColumn('installerName', function ($row) {
+            ->editColumn('installer_id', function ($row) {
 
                 return view('web::partials.industryinstaller', compact('row'))
                     ->render();
             })
-            ->editColumn('solarSystemName', function ($row) {
+            ->editColumn('facilityName', function ($row) {
 
                 return view('web::partials.industrysystem', compact('row'))
                     ->render();
