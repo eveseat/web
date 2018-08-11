@@ -39,6 +39,7 @@
                 {!! img('character', $character->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                 <span rel="id-to-name">{{ $character->character_id }}</span>
               </a>
+
             </td>
             {{--<td>
               @if(!is_null($character->ship_type_id))
@@ -49,11 +50,8 @@
               @endif
 
             </td>--}}
-            <td data-order="{{ optional(optional(optional($character->user)->group)->main_character)->character_id }}>
-              <a href="{{ route('character.view.sheet', ['character_id' => optional(optional(optional($character->user)->group)->main_character)->character_id]) }}">
-                {!! img('character', optional(optional(optional($character->user)->group)->main_character)->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                <span rel="id-to-name">{{ optional(optional(optional($character->user)->group)->main_character)->character_id }}</span>
-              </a>
+            <td>
+              <div class="character-id-to-main-character">{{ $character->character_id }}</div>
 
             </td>
             <td data-order="{{ $character->start_date }}">
@@ -80,3 +78,9 @@
   </div>
 
 @stop
+
+@push('javascript')
+
+  @include('web::includes.javascript.character-id-to-main-character')
+
+@endpush
