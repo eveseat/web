@@ -61,8 +61,6 @@ class CharacterController extends Controller
                 break;
         }
 
-
-
         return Datatables::of($characters)
             ->editColumn('name', function ($row) {
 
