@@ -36,6 +36,7 @@
                 <thead>
                     <tr>
                         <th>{{ trans_choice('web::seat.name', 1) }}</th>
+                        <th>{{trans('web::seat.group_main') }}</th>
                         <th>{{ trans('web::seat.quantity') }}</th>
                         <th>{{ trans('web::seat.volume') }}</th>
                         <th>{{ trans('web::seat.amount') }}</th>
@@ -49,6 +50,9 @@
                             <a href="{{ route('character.view.sheet', ['character_id' => $character_id]) }}">
                                 <span rel="id-to-name">{{ $character_id }}</span>
                             </a>
+                        </td>
+                        <td>
+                            <div class="character-id-to-main-character">{{ $character_id }}</div>
                         </td>
                         <td class="text-right" data-order="{{ $entry->quantity }}">{{ number_format($entry->quantity, 2) }}</td>
                         <td class="text-right" data-order="{{ $entry->volumes }}">{{ number_format($entry->volumes, 2) }} m3</td>
@@ -73,4 +77,5 @@
         });
     });
 </script>
+@include('web::includes.javascript.character-id-to-main-character')
 @endpush

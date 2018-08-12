@@ -25,6 +25,7 @@ namespace Seat\Web\Http\Controllers\Support;
 use Illuminate\Http\Request;
 use Seat\Eveapi\Models\Sde\ChrFaction;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Models\User;
 
 /**
  * Class ResolveController.
@@ -119,6 +120,30 @@ class ResolveController extends Controller
         // Grr. Without this, arbitrary things will get replaced as
         // #System/Corporation in the UI. Infuriating to say the least.
         $response->forget([0, 2]);
+
+        return response()->json($response);
+    }
+
+    public function resolveMainCharacter(Request $request)
+    {
+
+        // Init the initial return array
+        $response = collect();
+        // Grab the ids from the request for processing
+        collect(explode(',', $request->ids))->map(function ($id) {
+
+            // Convert them all to integers
+            return (int) $id;
+        })->each(function ($chunk) use (&$response) {
+
+            $character = User::find($chunk);
+            if (is_null($character)) {
+                $maincharacter = null;
+            } else {
+                $maincharacter = $character->group->main_character;
+            }
+            $response[$chunk] = view('web::partials.maincharacter', compact('maincharacter'))->render();
+        });
 
         return response()->json($response);
     }
