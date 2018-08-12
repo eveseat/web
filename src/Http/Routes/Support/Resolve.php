@@ -28,4 +28,5 @@ Route::post('/names/resolve', [
 Route::post('/main/resolve', [
     'as'   => 'support.main.resolve',
     'uses' => 'ResolveController@resolveMainCharacter',
+
 ]);
