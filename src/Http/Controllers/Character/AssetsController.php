@@ -22,6 +22,8 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
+
+use Illuminate\Http\Response;
 use Seat\Services\Repositories\Character\Assets;
 use Seat\Web\Http\Controllers\Controller;
 
@@ -41,7 +43,14 @@ class AssetsController extends Controller
     public function getAssets(int $character_id)
     {
 
-        $assets = $this->getCharacterAssets($character_id);
+        if (request()->ajax()) {
+            $assets = $this->getCharacterAssets($character_id);
+            $view = view('web::character.partials.assets', compact('assets'))->render();
+
+            return response()->json(['html' => $view]);
+        }
+
+        $assets = collect();
 
         return view('web::character.assets', compact('assets'));
     }
