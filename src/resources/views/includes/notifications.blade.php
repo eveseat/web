@@ -23,10 +23,10 @@
     <p class="message">
       @if(is_array($message))
         @foreach ($message as $m)
-          {{ $m }}<br>
+          {!! $m !!}<br>
         @endforeach
       @else
-        {{ $message }}
+        {!! $message !!}
       @endif
     </p>
   </div>
@@ -40,10 +40,10 @@
     <p class="message">
       @if(is_array($message))
         @foreach ($message as $m)
-          {{ $m }}<br>
+          {!! $m !!}<br>
         @endforeach
       @else
-        {{ $message }}
+        {!! $message !!}
       @endif
     </p>
   </div>
@@ -57,10 +57,10 @@
     <p class="message">
       @if(is_array($message))
         @foreach ($message as $m)
-          {{ $m }}<br>
+          {!! $m !!}<br/>
         @endforeach
       @else
-        {{ $message }}
+        {!! $message !!}
       @endif
     </p>
   </div>
@@ -74,10 +74,10 @@
     <p class="message">
       @if(is_array($message))
         @foreach ($message as $m)
-          {{ $m }}<br>
+          {!! $m !!}<br/>
         @endforeach
       @else
-        {{ $message }}
+        {!! $message !!}
       @endif
     </p>
   </div>
@@ -91,10 +91,10 @@
     <p class="message">
       @if(is_array($message))
         @foreach ($message as $m)
-          {{ $m }}<br>
+          {!! $m !!}<br/>
         @endforeach
       @else
-        {{ $message }}
+        {!! $message !!}
       @endif
     </p>
   </div>
@@ -108,10 +108,10 @@
     <p class="message">
       @if(is_array($message))
         @foreach ($message as $m)
-          {{ $m }}
+          {!! $m !!}<br/>
         @endforeach
       @else
-        {{ $message }}
+        {!! $message !!}
       @endif
     </p>
   </div>
