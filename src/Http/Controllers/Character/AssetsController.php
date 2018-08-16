@@ -41,9 +41,14 @@ class AssetsController extends Controller
     public function getAssets(int $character_id)
     {
 
-        $assets = $this->getCharacterAssets($character_id);
+        if (request()->ajax()) {
+            $assets = $this->getCharacterAssets($character_id);
+            $view = view('web::character.partials.assets', compact('assets'))->render();
 
-        return view('web::character.assets', compact('assets'));
+            return response()->json(['html' => $view]);
+        }
+
+        return view('web::character.assets');
     }
 
     /**
