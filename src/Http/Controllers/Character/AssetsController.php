@@ -50,9 +50,7 @@ class AssetsController extends Controller
             return response()->json(['html' => $view]);
         }
 
-        $assets = collect();
-
-        return view('web::character.assets', compact('assets'));
+        return view('web::character.assets');
     }
 
     /**
