@@ -17,7 +17,8 @@
              id="corporation-industry">
         <thead>
         <tr>
-          <th>{{ trans('web::seat.date') }}</th>
+          <th>{{ trans('web::seat.start') }}</th>
+          <th>{{ trans('web::seat.end') }}</th>
           <th>{{ trans('web::seat.installer') }}</th>
           <th>{{ trans('web::seat.system') }}</th>
           <th>{{ trans('web::seat.activity') }}</th>
@@ -44,6 +45,7 @@
         ajax            : '{{ route('corporation.view.industry.data', ['corporation_id' => $request->corporation_id]) }}',
         dom             : '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-12"<"corporation-industry_filters">>><"row"<"col-sm-12"rt>><"row"<"col-sm-5"i><"col-sm-7"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
         columns         : [
+          {data: 'start_date', name: 'a.start_date', render: human_readable},
           {data: 'end_date', name: 'a.end_date', render: human_readable},
           {data: 'installer_id', name: 'a.installer_id'},
           {data: 'facilityName', name: 'a.facility_id'},
@@ -62,7 +64,7 @@
       });
 
       // initial filter
-      table.columns(7)
+      table.column(8)
           .search('[[:<:]]active[[:>:]]', true, false) // strict lookup
           .draw();
 
@@ -76,7 +78,7 @@
         filterCancelled.removeClass('disabled');
         filterHistory.removeClass('disabled');
 
-        table.columns(7)
+        table.column(8)
             .search('[[:<:]]active[[:>:]]', true, false) // strict lookup
             .draw();
       });
@@ -89,7 +91,7 @@
         filterCancelled.removeClass('disabled');
         filterHistory.removeClass('disabled');
 
-        table.columns(7)
+        table.column(8)
             .search('[[:<:]]paused[[:>:]]', true, false) // strict lookup
             .draw();
       });
@@ -102,7 +104,7 @@
         filterCancelled.removeClass('disabled');
         filterHistory.removeClass('disabled');
 
-        table.columns(7)
+        table.column(8)
             .search('[[:<:]]ready[[:>:]]', true, false) // strict lookup
             .draw();
       });
@@ -115,7 +117,7 @@
         $(this).addClass('disabled');
         filterHistory.removeClass('disabled');
 
-        table.columns(7)
+        table.column(8)
             .search('[[:<:]]cancelled[[:>:]]', true, false) // strict lookup
             .draw();
       });
@@ -128,7 +130,7 @@
         filterCancelled.removeClass('disabled');
         $(this).addClass('disabled');
 
-        table.columns(7)
+        table.column(8)
             .search('[[:<:]]delivered[[:>:]]|[[:<:]]reverted[[:>:]]', true, false) // strict lookup
             .draw();
       });

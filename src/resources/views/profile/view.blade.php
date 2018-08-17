@@ -433,6 +433,17 @@
                 {!! img('character', $character->id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                 {{ $character->name }}
 
+                @if ($character->refresh_token )
+                  <button data-toggle="tooltip" title="" class="btn btn-xs btn-link" data-original-title="Valid Token">
+                    <i class="fa fa-check text-success"></i>
+                  </button>
+                @else
+                  <button data-toggle="tooltip" title="" class="btn btn-xs btn-link" data-original-title="Invalid Token"
+                          aria-describedby="tooltip257244">
+                    <i class="fa fa-exclamation-triangle text-danger"></i>
+                  </button>
+                @endif
+
               </li>
             @endforeach
 

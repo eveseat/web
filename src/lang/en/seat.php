@@ -455,6 +455,7 @@ return [
     'neutral_standings'            => 'Neutral Standings',
     'negative_standings'           => 'Negative Standings',
     'start'                        => 'Start',
+    'end'                          => 'End',
     'installer'                    => 'Installer',
     'system'                       => 'System',
     'activity'                     => 'Activity',
