@@ -47,19 +47,16 @@ class CharacterController extends Controller
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return mixed
      */
     public function getCharactersData(Request $request)
     {
 
-        switch ($request->filtered) {
-            case 'true':
-                $characters = auth()->user()->character();
-                break;
-            case 'false':
-                $characters = $this->getAllCharactersWithAffiliations();
-                break;
-        }
+        $characters = ($request->filtered === 'true') ?
+            auth()->user()->character() :
+            $this->getAllCharactersWithAffiliations();
 
         return Datatables::of($characters)
             ->editColumn('name', function ($row) {
