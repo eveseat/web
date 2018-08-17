@@ -25,6 +25,7 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Services\Repositories\Character\Character;
 use Seat\Web\Http\Controllers\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Yajra\Datatables\Datatables;
 
 /**
@@ -48,10 +49,17 @@ class CharacterController extends Controller
     /**
      * @return mixed
      */
-    public function getCharactersData()
+    public function getCharactersData(Request $request)
     {
 
-        $characters = $this->getAllCharactersWithAffiliations();
+        switch ($request->filtered) {
+            case 'true':
+                $characters = auth()->user()->character();
+                break;
+            case 'false':
+                $characters = $this->getAllCharactersWithAffiliations();
+                break;
+        }
 
         return Datatables::of($characters)
             ->editColumn('name', function ($row) {
