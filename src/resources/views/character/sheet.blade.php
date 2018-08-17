@@ -130,11 +130,17 @@
                 <ul>
 
                   @foreach($jump_clones as $clone)
-                    @if(!is_null($clone->location))
-                      <li>Located at <b>{{ $clone->location->stationName }}</b></li>
-                    @else
-                      <li>Location is unknown</li>
-                    @endif
+                    <li>
+                        @if(! is_null($clone->name))
+                        ({{ $clone->name }})
+                        @endif
+
+                        @if(! is_null($clone->location))
+                        Located at <b>{{ $clone->location->name }}</b>
+                        @else
+                        Location is unknown
+                        @endif
+                    </li>
                   @endforeach
 
                 </ul>
