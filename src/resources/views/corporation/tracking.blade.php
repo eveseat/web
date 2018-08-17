@@ -16,6 +16,7 @@
         <tr>
           <th>{{ trans('web::seat.token') }}</th>
           <th>{{ trans_choice('web::seat.name', 1) }}</th>
+          <th>{{ trans('web::seat.last_location') }}</th>
           <th>{{ trans('web::seat.joined') }}</th>
           <th>{{ trans('web::seat.last_login') }}</th>
         </tr>
@@ -42,6 +43,13 @@
                    title="" data-original-title="{{ $character->type->typeName }}">
                   {!! img('type', $character->ship_type_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                 </i>
+              @endif
+            </td>
+            <td>
+              @if(! is_null($character->location))
+              {{ $character->location->name }}
+              @else
+              Unknown Location
               @endif
             </td>
             <td data-order="{{ $character->start_date }}">
