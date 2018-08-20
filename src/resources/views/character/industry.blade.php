@@ -29,7 +29,6 @@
         <tr>
           <th>{{ trans('web::seat.start') }}</th>
           <th>{{ trans('web::seat.end') }}</th>
-          <th>{{ trans('web::seat.installer') }}</th>
           <th>{{ trans('web::seat.system') }}</th>
           <th>{{ trans('web::seat.activity') }}</th>
           <th>{{ trans_choice('web::seat.run', 2) }}</th>
@@ -55,15 +54,14 @@
         ajax            : '{{ route('character.view.industry.data', ['character_id' => $request->character_id]) }}',
         dom             : '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-12"<"character-industry_filters">>><"row"<"col-sm-12"rt>><"row"<"col-sm-5"i><"col-sm-7"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
         columns         : [
-          {data: 'start_date', name: 'start_date', render: human_readable},
-          {data: 'end_date', name: 'end_date', render: human_readable},
-          {data: 'installer_id', name: 'installer_id'},
-          {data: 'solarSystemName', name: 'solarSystemName'},
-          {data: 'activityName', name: 'activityName'},
-          {data: 'runs', name: 'runs'},
-          {data: 'blueprintTypeName', name: 'blueprintTypeName'},
-          {data: 'productTypeName', name: 'productTypeName'},
-          {data: 'status', name: 'status', visible: false}
+          {data: 'start_date', name: 'a.start_date', render: human_readable},
+          {data: 'end_date', name: 'a.end_date', render: human_readable},
+          {data: 'facilityName', name: 'a.facility_id'},
+          {data: 'activityName', name: 'ramActivities.activityName'},
+          {data: 'runs', name: 'a.runs'},
+          {data: 'blueprintTypeName', name: 'blueprintType.TypeName'},
+          {data: 'productTypeName', name: 'productType.typeName'},
+          {data: 'status', name: 'a.status', visible: false}
         ],
         'fnDrawCallback': function () {
           $(document).ready(function () {
@@ -73,7 +71,7 @@
       });
 
       // initial filter
-      table.column(8)
+      table.column(6)
           .search('[[:<:]]active[[:>:]]', true, false) // strict lookup
           .draw();
 
@@ -87,7 +85,7 @@
         filterCancelled.removeClass('disabled');
         filterHistory.removeClass('disabled');
 
-        table.column(8)
+        table.column(6)
             .search('[[:<:]]active[[:>:]]', true, false) // strict lookup
             .draw();
       });
@@ -100,7 +98,7 @@
         filterCancelled.removeClass('disabled');
         filterHistory.removeClass('disabled');
 
-        table.column(8)
+        table.column(6)
             .search('[[:<:]]paused[[:>:]]', true, false) // strict lookup
             .draw();
       });
@@ -113,7 +111,7 @@
         filterCancelled.removeClass('disabled');
         filterHistory.removeClass('disabled');
 
-        table.column(8)
+        table.column(6)
             .search('[[:<:]]ready[[:>:]]', true, false) // strict lookup
             .draw();
       });
@@ -126,7 +124,7 @@
         $(this).addClass('disabled');
         filterHistory.removeClass('disabled');
 
-        table.column(8)
+        table.column(6)
             .search('[[:<:]]cancelled[[:>:]]', true, false) // strict lookup
             .draw();
       });
@@ -139,7 +137,7 @@
         filterCancelled.removeClass('disabled');
         $(this).addClass('disabled');
 
-        table.column(8)
+        table.column(6)
             .search('[[:<:]]delivered[[:>:]]|[[:<:]]reverted[[:>:]]', true, false) // strict lookup
             .draw();
       });
