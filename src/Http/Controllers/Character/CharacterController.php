@@ -55,7 +55,7 @@ class CharacterController extends Controller
     {
 
         $characters = ($request->filtered === 'true') ?
-            auth()->user()->character() :
+            $this->getAllCharactersInGroup() :
             $this->getAllCharactersWithAffiliations();
 
         return Datatables::of($characters)
