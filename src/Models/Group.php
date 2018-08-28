@@ -32,6 +32,45 @@ use Seat\Web\Models\Acl\Role;
 /**
  * Class Group.
  * @package Seat\Web\Models
+ *
+ * @SWG\Definition(
+ *     description="SeAT User Group relationship",
+ *     title="Group",
+ *     type="object"
+ * )
+ *
+ * @SWG\Property(
+ *     type="integer",
+ *     minimum=1,
+ *     description="Group unique ID",
+ *     property="id"
+ * )
+ *
+ * @SWG\Property(
+ *     type="array",
+ *     description="User information attached to this group",
+ *     property="users",
+ *     @SWG\Items(
+ *          type="object",
+ *          @SWG\Property(
+ *              type="boolean",
+ *              description="Determine if the user is active (1) or disabled (0)",
+ *              property="active"
+ *          ),
+ *          @SWG\Property(
+ *              type="integer",
+ *              format="int64",
+ *              minimum=90000000,
+ *              description="Character ID",
+ *              property="character_id"
+ *          ),
+ *          @SWG\Property(
+ *              type="string",
+ *              description="Character Name",
+ *              property="name"
+ *          )
+ *     )
+ * )
  */
 class Group extends Model
 {

@@ -64,6 +64,11 @@ class SsoController extends Controller
 
         $eve_data = $social->driver('eveonline')->user();
 
+        // Avoid self attachment
+        if (auth()->check() && auth()->user()->id == $eve_data->character_id)
+            return redirect()->route('home')
+                ->with('error', 'You cannot add yourself. Did you forget to change character in Eve Online SSO form ?');
+
         // Get or create the User bound to this login.
         $user = $this->findOrCreateUser($eve_data);
 
@@ -128,17 +133,12 @@ class SsoController extends Controller
                     'authentication',
                 ]);
 
-                // Take note of the current group_id. We want to remove it
-                // if the re-association causes the origin group to be empty
-                $current_group = Group::find($existing->group_id);
-
                 // Re-associate the group membership for the newly logged in user.
                 $existing->group_id = auth()->user()->group->id;
                 $existing->save();
 
-                // Remove the original group if it no longer has any users.
-                if ($current_group->doesntHave('users'))
-                    $current_group->delete();
+                // Remove any orphan groups we could create during the attachment process
+                Group::doesntHave('users')->delete();
 
             }
 
@@ -178,7 +178,7 @@ class SsoController extends Controller
     public function updateRefreshToken(SocialiteUser $eve_data): void
     {
 
-        RefreshToken::firstOrNew(['character_id' => $eve_data->character_id])
+        RefreshToken::withTrashed()->firstOrNew(['character_id' => $eve_data->character_id])
             ->fill([
                 'refresh_token' => $eve_data->refresh_token,
                 'scopes'        => explode(' ', $eve_data->scopes),
@@ -186,6 +186,9 @@ class SsoController extends Controller
                 'expires_on'    => $eve_data->expires_on,
             ])
             ->save();
+
+        // restore soft deleted token if any
+        RefreshToken::onlyTrashed()->where('character_id', $eve_data->character_id)->restore();
     }
 
     /**

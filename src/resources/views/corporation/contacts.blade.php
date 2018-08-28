@@ -48,8 +48,7 @@
               </span>
             </td>
             <td>
-              {{ $labels->filter(function($item) use ($contact) {
-                 return $item->label_id & $contact->label_id; })->implode('label_name', ', ') }}
+              {{ $labels->whereIn('label_id', $contact->label_ids)->implode('label_name', ', ') }}
             </td>
             <td>
               @if (!in_array($contact->contact_type, ['corporation', 'alliance']))

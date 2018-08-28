@@ -42,10 +42,10 @@
                 <td>
                   {{ ucfirst(str_replace('_', ' ', $structure->state)) }}
                 </td>
-                <td>
-            <span data-toggle="tooltip" title="" data-original-title="{{ $structure->fuel_expires }}">
-              {{ human_diff($structure->fuel_expires) }}
-            </span>
+                <td data-sort="{{ $structure->fuel_expires }}">
+                    <span data-toggle="tooltip" title="" data-original-title="{{ $structure->fuel_expires }}">
+                      {{ human_diff($structure->fuel_expires) }}
+                    </span>
                 </td>
                 <td>
             <span data-toggle="tooltip" title=""

@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\Validation;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Seat\Web\Models\Group;
 
 /**
  * Class ReassignUser.
@@ -51,7 +52,23 @@ class ReassignUser extends FormRequest
 
         return [
             'user_id'  => 'required|exists:users,id',
-            'group_id' => 'required|exists:groups,id',
+            'group_id' => [
+                'required',
+                'exists:groups,id',
+                function ($attribute, $value, $fail) {
+
+                    // retrieve admin group, if any
+                    $admin_group = Group::whereHas('users', function ($query) {
+
+                        $query->where('name', 'admin');
+                    })->first();
+
+                    // if the requested group_id is matching the admin one; skip
+                    if (! is_null($admin_group) && $admin_group->id == $value) {
+                        return $fail('You cannot attach any user to the admin group relationship.');
+                    }
+                },
+            ],
         ];
     }
 }

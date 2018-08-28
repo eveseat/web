@@ -16,8 +16,7 @@
         <tr>
           <th>{{ trans('web::seat.token') }}</th>
           <th>{{ trans_choice('web::seat.name', 1) }}</th>
-          {{--<th>{{ trans_choice('web::seat.current_ship', 1) }}</th>--}}
-          <th>{{trans('web::seat.group_main')}}</th>
+          <th>{{ trans('web::seat.last_location') }}</th>
           <th>{{ trans('web::seat.joined') }}</th>
           <th>{{ trans('web::seat.last_login') }}</th>
         </tr>
@@ -39,20 +38,19 @@
                 {!! img('character', $character->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                 <span rel="id-to-name">{{ $character->character_id }}</span>
               </a>
-
-            </td>
-            {{--<td>
               @if(!is_null($character->ship_type_id))
                 <i class="pull-right" data-toggle="tooltip"
                    title="" data-original-title="{{ $character->type->typeName }}">
                   {!! img('type', $character->ship_type_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                 </i>
               @endif
-
-            </td>--}}
+            </td>
             <td>
-              <div class="character-id-to-main-character">{{ $character->character_id }}</div>
-
+              @if(! is_null($character->location))
+              {{ $character->location->name }}
+              @else
+              Unknown Location
+              @endif
             </td>
             <td data-order="{{ $character->start_date }}">
               <span data-toggle="tooltip"
@@ -78,9 +76,3 @@
   </div>
 
 @stop
-
-@push('javascript')
-
-  @include('web::includes.javascript.character-id-to-main-character')
-
-@endpush

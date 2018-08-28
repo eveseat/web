@@ -18,7 +18,7 @@
           items.push(val);
     });
 
-    var items = $.unique(items);
+    items = $.unique(items);
 
     while (items.length > 0)
       arrays.push(items.splice(0, size));
