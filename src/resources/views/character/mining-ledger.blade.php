@@ -29,11 +29,12 @@
           <th>{{ trans('web::seat.ore') }}</th>
           <th>{{ trans('web::seat.quantity') }}</th>
           <th>{{ trans('web::seat.volume') }}</th>
-          <th>{{ trans('web::seat.amount') }}</th>
+          <th>{{ trans_choice('web::seat.value',1) }}</th>
         </tr>
         </thead>
         <tbody>
         @foreach($ledger as $entry)
+          {{--{{dd($entry)}}--}}
           <tr data-character-id="{{ request()->character_id }}" data-date="{{ $entry->date }}"
               data-system-id="{{ $entry->system->itemID }}" data-system-name="{{ $entry->system->itemName }}"
               data-type-id="{{ $entry->type_id }}" data-type-name="{{ $entry->type->typeName }}">
@@ -52,8 +53,8 @@
             </td>
             <td class="text-right" data-order="{{ $entry->quantity }}">{{ number($entry->quantity) }}</td>
             <td class="text-right" data-order="{{ $entry->volumes }}">{{ number($entry->volumes) }} m3</td>
-            <td class="text-right" data-order="{{ $entry->amount }}">
-              {{ number($entry->amount) }} ISK
+            <td class="text-right" data-order="{{ $entry->quantity * $entry->average_price }}">
+              {{ number($entry->quantity * $entry->average_price) }} ISK
               <a href="#" class="btn btn-sm btn-link" data-toggle="modal" data-target="#detailed-ledger">
                 <i class="fa fa-cubes"></i>
               </a>
@@ -97,40 +98,14 @@
             var table = $('#hourly-ledger');
 
             table.DataTable({
-              "ajax"      : {
-                "url"    : link,
-                "dataSrc": ""
-              },
-              "processing": true,
-              "columns"   : [
-                {"data": "time"},
-                {"data": "quantity"},
-                {"data": "volumes"},
-                {"data": "amount"}
-              ],
-              "columnDefs": [
-                {
-                  "render" : function (data, type, row) {
-                    return data.toLocaleString();
-                  },
-                  "targets": 1
-                },
-                {
-                  "render" : function (data, type, row) {
-                    return data.toLocaleString() + " m3";
-                  },
-                  "targets": 2
-                },
-                {
-                  "render" : function (data, type, row) {
-                    return data.toLocaleString() + " ISK";
-                  },
-                  "targets": 3
-                }
-              ],
-              "order"     : [
-                [0, 'asc'],
-                [3, 'desc']
+              processing: true,
+              serverSide: true,
+              ajax: link,
+              columns : [
+                {data: 'time'},
+                {data: 'quantity'},
+                {data: 'volumes'},
+                {data: 'value'}
               ]
             });
 
