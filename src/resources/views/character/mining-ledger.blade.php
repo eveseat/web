@@ -34,7 +34,6 @@
         </thead>
         <tbody>
         @foreach($ledger as $entry)
-          {{--{{dd($entry)}}--}}
           <tr data-character-id="{{ request()->character_id }}" data-date="{{ $entry->date }}"
               data-system-id="{{ $entry->system->itemID }}" data-system-name="{{ $entry->system->itemName }}"
               data-type-id="{{ $entry->type_id }}" data-type-name="{{ $entry->type->typeName }}">
@@ -53,8 +52,8 @@
             </td>
             <td class="text-right" data-order="{{ $entry->quantity }}">{{ number($entry->quantity) }}</td>
             <td class="text-right" data-order="{{ $entry->volumes }}">{{ number($entry->volumes) }} m3</td>
-            <td class="text-right" data-order="{{ $entry->quantity * $entry->average_price }}">
-              {{ number($entry->quantity * $entry->average_price) }} ISK
+            <td class="text-right" data-order="{{ $entry->value }}">
+              {{ number($entry->value) }} ISK
               <a href="#" class="btn btn-sm btn-link" data-toggle="modal" data-target="#detailed-ledger">
                 <i class="fa fa-cubes"></i>
               </a>
@@ -76,7 +75,12 @@
         'order': [
           [0, 'desc'],
           [3, 'desc']
-        ]
+        ],
+        'fnDrawCallback': function () {
+          $(document).ready(function () {
+            $('img').unveil(100);
+          });
+        }
       });
 
       $('#detailed-ledger')
@@ -106,8 +110,9 @@
                 {data: 'quantity'},
                 {data: 'volumes'},
                 {data: 'value'}
-              ]
+              ],
             });
+
 
           })
           .on('hidden.bs.modal', function (e) {
