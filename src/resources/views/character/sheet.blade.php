@@ -285,7 +285,7 @@
               @endforeach
             </ul>
           @else
-            {{ trans('no_corporation_titles') }}
+            {{ trans('web::seat.no_corporation_titles') }}
           @endif
         </div>
         <div class="panel-footer">
