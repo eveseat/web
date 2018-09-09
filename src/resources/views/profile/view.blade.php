@@ -392,6 +392,7 @@
     </div>
   </div>
 
+  @if(auth()->user()->name != 'admin')
   <div class="panel panel-default">
     <div class="panel-body">
       <p>
@@ -404,7 +405,6 @@
     </div>
   </div>
 
-  @if(auth()->user()->name != 'admin')
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">
@@ -455,6 +455,8 @@
     </div>
   </div>
   @endif
+
+  @include('web::profile.includes.widgets')
 
   <span class="text-center">
     {{ trans('web::seat.account_help') }}
