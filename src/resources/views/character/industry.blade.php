@@ -71,7 +71,7 @@
       });
 
       // initial filter
-      table.column(6)
+      table.column(7)
           .search('[[:<:]]active[[:>:]]', true, false) // strict lookup
           .draw();
 
@@ -85,7 +85,7 @@
         filterCancelled.removeClass('disabled');
         filterHistory.removeClass('disabled');
 
-        table.column(6)
+        table.column(7)
             .search('[[:<:]]active[[:>:]]', true, false) // strict lookup
             .draw();
       });
@@ -98,7 +98,7 @@
         filterCancelled.removeClass('disabled');
         filterHistory.removeClass('disabled');
 
-        table.column(6)
+        table.column(7)
             .search('[[:<:]]paused[[:>:]]', true, false) // strict lookup
             .draw();
       });
@@ -111,7 +111,7 @@
         filterCancelled.removeClass('disabled');
         filterHistory.removeClass('disabled');
 
-        table.column(6)
+        table.column(7)
             .search('[[:<:]]ready[[:>:]]', true, false) // strict lookup
             .draw();
       });
@@ -124,7 +124,7 @@
         $(this).addClass('disabled');
         filterHistory.removeClass('disabled');
 
-        table.column(6)
+        table.column(7)
             .search('[[:<:]]cancelled[[:>:]]', true, false) // strict lookup
             .draw();
       });
@@ -137,7 +137,7 @@
         filterCancelled.removeClass('disabled');
         $(this).addClass('disabled');
 
-        table.column(6)
+        table.column(7)
             .search('[[:<:]]delivered[[:>:]]|[[:<:]]reverted[[:>:]]', true, false) // strict lookup
             .draw();
       });
