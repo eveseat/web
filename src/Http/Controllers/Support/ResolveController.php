@@ -140,11 +140,7 @@ class ResolveController extends Controller
 
             $character = User::find($chunk);
 
-            if (is_null($character)) {
-                $maincharacter = null;
-            } else {
-                $maincharacter = $character->group->main_character;
-            }
+            $maincharacter = is_null($character) ? null : $character->group->main_character;
 
             $response[$chunk] = view('web::partials.maincharacter', compact('maincharacter'))->render();
         });
