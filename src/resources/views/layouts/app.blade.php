@@ -86,7 +86,7 @@
   @include('web::includes.footer')
 
   <!-- Right Sidebar Content -->
-  @yield('right-sidebar')
+  @include('web::includes.right_sidebar')
 </div>
 <!-- ./wrapper -->
 
