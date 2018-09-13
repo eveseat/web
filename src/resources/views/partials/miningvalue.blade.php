@@ -1,1 +1,1 @@
-{{number($row->quantity * $row->average_price)}} ISK
+{{number($row->value)}} ISK
