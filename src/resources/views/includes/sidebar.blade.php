@@ -6,10 +6,8 @@
     <!-- Sidebar user panel -->
     <div class="user-panel">
       <div class="pull-left image">
-        <a href="{{ route('character.view.sheet', ['character_id' => $user->character_id]) }}">
           <img src="//image.eveonline.com/Character/{{ $user->id }}_128.jpg"
              class="img-circle" alt="User Image">
-           </a>
       </div>
       <div class="pull-left info">
         <p>
