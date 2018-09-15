@@ -47,7 +47,7 @@
                         <td data-order="{{ $character_id }}">
                             {!! img('character', $character_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
                             <a href="{{ route('character.view.sheet', ['character_id' => $character_id]) }}">
-                                <span rel="id-to-name">{{ $character_id }}</span>
+                                <span class="id-to-name" data-id="{{ $character_id }}">Unknown</span>
                             </a>
                         </td>
                         <td class="text-right" data-order="{{ $entry->quantity }}">{{ number_format($entry->quantity, 2) }}</td>

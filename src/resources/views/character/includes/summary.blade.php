@@ -11,7 +11,8 @@
         {{ $summary->name }}
       </h3>
 
-      <p class="text-muted text-center"><span rel="id-to-name">{{ $summary->corporation_id }}</span></p>
+      <p class="text-muted text-center"><span class="id-to-name" data-id="{{ $summary->corporation_id }}">Unknown</span>
+      </p>
 
       <table class="table table-condensed table-hover">
         <thead></thead>
@@ -30,7 +31,9 @@
                   {{ $character->name }}
                 </a>
 
-                <span rel="id-to-name" class="text-muted pull-right">{{ $character->corporation_id }}</span>
+                <p class="text-muted pull-right"><span class="id-to-name"
+                                                       data-id="{{ $character->character->corporation_id }}">Unknown</span>
+                </p>
               </td>
             </tr>
 

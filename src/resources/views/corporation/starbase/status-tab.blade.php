@@ -70,10 +70,10 @@
         <dd>
           @if($starbase->detail->use_alliance_standings)
           {!! img('alliance', $sheet->alliance_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-          <span rel="id-to-name">{{ $sheet->alliance_id }}</span>
+            <span class="id-to-name" data-id="{{ $sheet->alliance_id }}">Unknown</span>
           @else
           {!! img('corporation', $starbase->corporation_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-          <span rel="id-to-name">{{ $starbase->corporation_id }}</span>
+            <span class="id-to-name" data-id="{{ $starbase->corporation_id }}">Unknown</span>
           @endif
         </dd>
 

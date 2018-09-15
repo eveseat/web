@@ -44,7 +44,7 @@
             </td>
             <td>
               {!! img('auto', $event->detail->owner_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-              <span rel="id-to-name">{{ $event->detail->owner_id }}</span>
+              <span class="id-to-name" data-id="{{ $event->detail->owner_id }}">Unknown</span>
             </td>
             <td>
               <i class="fa fa-comment" data-toggle="popover" data-placement="top" title="" data-html="true"

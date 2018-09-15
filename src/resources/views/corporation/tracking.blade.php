@@ -37,11 +37,12 @@
               <td>
                 <a href="{{ route('character.view.sheet', ['character_id' => $character->character_id]) }}">
                   {!! img('character', $character->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                  <span rel="id-to-name">{{ $character->character_id }}</span>
+                  <span class="id-to-name" data-id="{{$character->character_id}}">Unknown</span>
                 </a>
               </td>
               <td>
-                <span class="character-id-to-main-character">{{ $character->character_id }}</span>
+                <span class="character-id-to-main-character"
+                      data-character-id="{{$character->character_id}}">Unknown</span>
                 @if(!is_null($character->ship_type_id))
                   <i class="pull-right" data-toggle="tooltip" title="" data-original-title="{{ $character->type->typeName }}">
                     {!! img('type', $character->ship_type_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
