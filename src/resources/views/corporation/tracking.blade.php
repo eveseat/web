@@ -24,7 +24,7 @@
         </thead>
         <tbody>
 
-          @foreach($tracking as $character)
+        @foreach($tracking as $character)
 
             <tr>
               <td data-order="{{ $character->key_ok }}">
@@ -68,7 +68,7 @@
               </td>
             </tr>
 
-          @endforeach
+        @endforeach
 
         </tbody>
       </table>
