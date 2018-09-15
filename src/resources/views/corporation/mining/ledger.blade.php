@@ -52,7 +52,8 @@
                             </a>
                         </td>
                         <td>
-                            <div class="character-id-to-main-character">{{ $character_id }}</div>
+                            <span class="character-id-to-main-character"
+                                  data-character-id="{{$character_id}}">Unknown</span>
                         </td>
                         <td class="text-right" data-order="{{ $entry->quantity }}">{{ number_format($entry->quantity, 2) }}</td>
                         <td class="text-right" data-order="{{ $entry->volumes }}">{{ number_format($entry->volumes, 2) }} m3</td>
