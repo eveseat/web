@@ -7,7 +7,7 @@
 
     $(".character-id-to-main-character").each(function () {
 
-      var val = $(this).text().toString();
+      var val = $(this).attr("data-character-id").toString();
 
       //add item to array if it's a valid integer
       if (!isNaN(parseInt(val)))
@@ -29,7 +29,7 @@
         },
         success: function (result) {
           $.each(result, function (id, name) {
-            $(".character-id-to-main-character:contains('" + id + "')").html(name);
+            $("span.character-id-to-main-character[data-character-id= '" + id + "']").html(name);
           });
         },
         error  : function (xhr, textStatus, errorThrown) {

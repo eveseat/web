@@ -129,22 +129,23 @@ class ResolveController extends Controller
 
         // Init the initial return array
         $response = collect();
+
         // Grab the ids from the request for processing
         collect(explode(',', $request->ids))->map(function ($id) {
 
             // Convert them all to integers
             return (int) $id;
+
         })->each(function ($chunk) use (&$response) {
 
             $character = User::find($chunk);
-            if (is_null($character)) {
-                $maincharacter = null;
-            } else {
-                $maincharacter = $character->group->main_character;
-            }
+
+            $maincharacter = is_null($character) ? null : $character->group->main_character;
+
             $response[$chunk] = view('web::partials.maincharacter', compact('maincharacter'))->render();
         });
 
         return response()->json($response);
+
     }
 }

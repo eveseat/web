@@ -26,7 +26,7 @@
           <b>From:</b>
           <a href="{{ route('character.view.sheet', ['character_id' => $message->from]) }}">
             {!! img('character', $message->from, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-            <span rel="id-to-name">{{ $message->from }}</span>
+            <span class="id-to-name" data-id="{{ $message->from }}">Unknown</span>
           </a>
         </li>
 
@@ -35,7 +35,7 @@
             <b>To Alliance:</b>
             @foreach($message->recipients->where('recipient_type', 'alliance') as $alliance)
               {!! img('alliance', $alliance->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-              <span rel="id-to-name">{{ $alliance->recipient_id }}</span>
+              <span class="id-to-name" data-id="{{ $alliance->recipient_id }}">Unknown</span>
             @endforeach
           </li>
         @endif
@@ -45,7 +45,7 @@
             <b>To Corporation:</b>
             @foreach($message->recipients->where('recipient_type', 'corporation') as $corporation)
               {!! img('corporation', $corporation->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-              <span rel="id-to-name">{{ $corporation->recipient_id }}</span>
+              <span class="id-to-name" data-id="{{ $corporation->recipient_id }}">Unknown</span>
             @endforeach
           </li>
         @endif
@@ -57,7 +57,7 @@
             @foreach($message->recipients->where('recipient_type', 'character') as $character)
               <a href="{{ route('character.view.sheet', ['character_id' => $character->recipient_id]) }}">
                 {!! img('character', $character->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                <span rel="id-to-name">{{ $character->recipient_id }}</span>
+                <span class="id-to-name" data-id="{{ $character->recipient_id }}">Unknown</span>
               </a>
             @endforeach
 
