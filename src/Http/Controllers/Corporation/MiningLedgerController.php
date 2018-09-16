@@ -60,7 +60,7 @@ class MiningLedgerController extends Controller
 
                 $row->quantity = $row->sum('quantity');
                 $row->volumes = $row->sum('volumes');
-                $row->amount = $row->sum('amount');
+                $row->value = $row->sum('value');
 
                 return $row;
             });
