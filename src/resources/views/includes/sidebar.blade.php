@@ -5,10 +5,10 @@
 
     <!-- Sidebar user panel -->
     <div class="user-panel">
-      <div class="pull-left image">
-        <img src="//image.eveonline.com/Character/{{ $user->id }}_128.jpg"
+		<div class="pull-left image">
+			<img src="//image.eveonline.com/Character/{{ $user->id }}_128.jpg"
              class="img-circle" alt="User Image">
-      </div>
+		</div>
       <div class="pull-left info">
         <p>
           @if(auth()->user()->name == 'admin')
