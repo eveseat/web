@@ -51,7 +51,7 @@
                 <td data-order="{{ $bpbm->second_party_id }}">
                   <a href="{{ route('character.view.sheet', ['character_id' => $bpbm->second_party_id]) }}">
                     {!! img('character', $bpbm->second_party_id, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-                    <span rel="id-to-name">{{ $bpbm->second_party_id }}</span>
+                    <span class="id-to-name" data-id="{{ $bpbm->second_party_id }}">Unknown</span>
                   </a>
                 </td>
                 <td data-order="{{ $bpbm->total }}">{{ number($bpbm->total) }}</td>
