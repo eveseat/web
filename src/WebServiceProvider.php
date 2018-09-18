@@ -364,9 +364,9 @@ class WebServiceProvider extends ServiceProvider
 
         // Register the datatables package! Thanks
         //  https://laracasts.com/discuss/channels/laravel/register-service-provider-and-facade-within-service-provider
-        $this->app->register('Yajra\Datatables\DatatablesServiceProvider');
+        $this->app->register('Yajra\DataTables\DataTablesServiceProvider');
         $loader = AliasLoader::getInstance();
-        $loader->alias('Datatables', 'Yajra\Datatables\Facades\Datatables');
+        $loader->alias('DataTables', 'Yajra\DataTables\Facades\DataTables');
 
         // Register the Supervisor RPC helper into the IoC
         $this->app->singleton('supervisor', function () {
