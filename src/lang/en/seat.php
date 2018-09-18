@@ -213,6 +213,8 @@ return [
     'main_char_skills'            => ':character_name\'s Skills',
     'main_char_skills_per_level'  => 'Skills Per Level',
     'main_char_skills_coverage'   => 'Skills Coverage (in percent)',
+    'concurrent_player_count'     => 'Concurrent Player Count',
+    'esi_response_time'           => 'ESI Response Times',
 
     // Api Keys
     'api_key_add'                 => 'Add a New API Key',
