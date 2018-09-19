@@ -24,7 +24,7 @@ namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Services\Repositories\Corporation\Industry;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class IndustryController.
@@ -49,13 +49,14 @@ class IndustryController extends Controller
      * @param int $corporation_id
      *
      * @return mixed
+     * @throws \Exception
      */
     public function getIndustryData(int $corporation_id)
     {
 
         $jobs = $this->getCorporationIndustry($corporation_id, false);
 
-        return Datatables::of($jobs)
+        return Datatables::of($jobs)//TODO: Test this
             ->editColumn('installer_id', function ($row) {
 
                 return view('web::partials.industryinstaller', compact('row'))
@@ -76,6 +77,7 @@ class IndustryController extends Controller
                 return view('web::partials.industryproduct', compact('row'))
                     ->render();
             })
+            ->escapeColumns([])
             ->make(true);
 
     }
