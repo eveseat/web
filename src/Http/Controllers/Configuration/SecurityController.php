@@ -24,7 +24,7 @@ namespace Seat\Web\Http\Controllers\Configuration;
 
 use Seat\Services\Repositories\Configuration\SecurityRepository;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class SecurityController.
@@ -46,13 +46,14 @@ class SecurityController extends Controller
 
     /**
      * @return mixed
+     * @throws \Exception
      */
     public function getLogsData()
     {
 
         $logs = $this->getAllSecurityLogs();
 
-        return Datatables::of($logs)
+        return DataTables::of($logs)
             ->editColumn('user', function ($row) {
 
                 if ($row->user)
