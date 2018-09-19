@@ -24,7 +24,7 @@ namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Services\Repositories\Corporation\Wallet;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class WalletController.
@@ -50,13 +50,14 @@ class WalletController extends Controller
      * @param int $corporation_id
      *
      * @return mixed
+     * @throws \Exception
      */
     public function getJournalData(int $corporation_id)
     {
 
         $journal = $this->getCorporationWalletJournal($corporation_id, false);
 
-        return Datatables::of($journal)
+        return DataTables::of($journal)//TODO: testing
             ->editColumn('ref_type', function ($row) {
 
                 return view('web::partials.journaltranstype', compact('row'))
@@ -80,6 +81,7 @@ class WalletController extends Controller
 
                 return number($row->balance);
             })
+            ->escapeColumns([])
             ->make(true);
 
     }
@@ -99,13 +101,14 @@ class WalletController extends Controller
      * @param int $corporation_id
      *
      * @return mixed
+     * @throws \Exception
      */
     public function getTransactionsData(int $corporation_id)
     {
 
         $transactions = $this->getCorporationWalletTransactions($corporation_id, false);
 
-        return Datatables::of($transactions)
+        return DataTables::of($transactions)//TODO: testing
             ->editColumn('is_buy', function ($row) {
 
                 return view('web::partials.transactiontype', compact('row'))
@@ -124,6 +127,7 @@ class WalletController extends Controller
                 return view('web::partials.transactionclient', compact('row'))
                     ->render();
             })
+            ->escapeColumns([])
             ->make(true);
 
     }
