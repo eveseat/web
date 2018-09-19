@@ -56,7 +56,7 @@ class IndustryController extends Controller
 
         $jobs = $this->getCorporationIndustry($corporation_id, false);
 
-        return Datatables::of($jobs)//TODO: Test this
+        return Datatables::of($jobs)
             ->editColumn('installer_id', function ($row) {
 
                 return view('web::partials.industryinstaller', compact('row'))
