@@ -28,7 +28,6 @@ use Seat\Web\Http\Controllers\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Yajra\DataTables\DataTables;
 
-
 /**
  * Class CharacterController.
  * @package Seat\Web\Http\Controllers\Character
