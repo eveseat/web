@@ -50,6 +50,7 @@ class ContractsController extends Controller
      * @param int $character_id
      *
      * @return mixed
+     * @throws \Exception
      */
     public function getContractsData(int $character_id)
     {
