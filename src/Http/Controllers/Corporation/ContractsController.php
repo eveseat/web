@@ -24,7 +24,7 @@ namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Services\Repositories\Corporation\Contracts;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class ContractsController.
@@ -49,13 +49,14 @@ class ContractsController extends Controller
      * @param int $corporation_id
      *
      * @return mixed
+     * @throws \Exception
      */
     public function getContractsData(int $corporation_id)
     {
 
         $contracts = $this->getCorporationContracts($corporation_id, false);
 
-        return Datatables::of($contracts)
+        return DataTables::of($contracts)
             ->editColumn('issuer_id', function ($row) {
 
                 return view('web::partials.contractissuer', compact('row'))
@@ -84,7 +85,8 @@ class ContractsController extends Controller
                 return view('web::partials.contractcontentsbutton', compact('row'))
                     ->render();
             })
-            ->make('true');
+            ->escapeColumns([])
+            ->make(true);
     }
 
     /**
