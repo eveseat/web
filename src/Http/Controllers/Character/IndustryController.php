@@ -24,7 +24,7 @@ namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Services\Repositories\Character\Industry;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class IndustryController.
@@ -55,7 +55,7 @@ class IndustryController extends Controller
 
         $jobs = $this->getCharacterIndustry($character_id, false);
 
-        return Datatables::of($jobs)
+        return DataTables::of($jobs)// TODO: test industry Datatable
             ->editColumn('installerName', function ($row) {
 
                 return view('web::partials.industryinstaller', compact('row'))
@@ -76,6 +76,7 @@ class IndustryController extends Controller
                 return view('web::partials.industryproduct', compact('row'))
                     ->render();
             })
+            ->escapeColumns([])
             ->make(true);
 
     }
