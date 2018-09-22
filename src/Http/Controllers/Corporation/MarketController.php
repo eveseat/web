@@ -58,7 +58,7 @@ class MarketController extends Controller
 
         $orders = $this->getCorporationMarketOrders($corporation_id, false);
 
-        return DataTables::of($orders)//TODO: Needs Testing
+        return DataTables::of($orders)
             ->addColumn('bs', function ($row) {
 
                 return view('web::partials.marketbuysell', compact('row'))
