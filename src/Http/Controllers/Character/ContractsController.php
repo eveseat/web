@@ -57,7 +57,7 @@ class ContractsController extends Controller
 
         $contracts = $this->getCharacterContracts($character_id, false);
 
-        return DataTables::of($contracts)//TODO: Test this new DataTable
+        return DataTables::of($contracts)
             ->editColumn('issuer_id', function ($row) {
 
                 return view('web::partials.contractissuer', compact('row'))
