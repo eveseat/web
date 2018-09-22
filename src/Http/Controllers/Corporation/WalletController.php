@@ -57,7 +57,7 @@ class WalletController extends Controller
 
         $journal = $this->getCorporationWalletJournal($corporation_id, false);
 
-        return DataTables::of($journal)//TODO: testing
+        return DataTables::of($journal)
             ->editColumn('ref_type', function ($row) {
 
                 return view('web::partials.journaltranstype', compact('row'))
@@ -108,7 +108,7 @@ class WalletController extends Controller
 
         $transactions = $this->getCorporationWalletTransactions($corporation_id, false);
 
-        return DataTables::of($transactions)//TODO: testing
+        return DataTables::of($transactions)
             ->editColumn('is_buy', function ($row) {
 
                 return view('web::partials.transactiontype', compact('row'))
