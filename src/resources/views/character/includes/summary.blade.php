@@ -11,7 +11,8 @@
         {{ $summary->name }}
       </h3>
 
-      <p class="text-muted text-center"><span class="id-to-name" data-id="{{ $summary->corporation_id }}">Unknown</span>
+      <p class="text-muted text-center"><span class="id-to-name"
+                                              data-id="{{ $summary->corporation_id }}">{{ trans('web::seat.unknown') }}</span>
       </p>
 
       <table class="table table-condensed table-hover">
@@ -32,7 +33,7 @@
                 </a>
 
                 <p class="text-muted pull-right"><span class="id-to-name"
-                                                       data-id="{{ $character->character->corporation_id }}">Unknown</span>
+                                                       data-id="{{ $character->character->corporation_id }}">{{ trans('web::seat.unknown') }}</span>
                 </p>
               </td>
             </tr>

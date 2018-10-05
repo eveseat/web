@@ -213,7 +213,8 @@
 
                 <li>
                   {!! img('corporation', $history->corporation_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-                  <b><span class="id-to-name" data-id="{{ $history->corporation_id }}">Unknown</span></b>
+                  <b><span class="id-to-name"
+                           data-id="{{ $history->corporation_id }}">{{ trans('web::seat.unknown') }}</span></b>
                   on {{ carbon($history->start_date)->toDateString() }}
                   <span class="pull-right">
                  {{ human_diff($history->start_date) }}
