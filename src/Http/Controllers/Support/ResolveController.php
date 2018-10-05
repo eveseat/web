@@ -100,7 +100,6 @@ class ResolveController extends Controller
 
             $this->resolveIDsfromESI($chunk, $response, $eseye);
 
-
         });
 
         // Grr. Without this, arbitrary things will get replaced as
@@ -218,7 +217,6 @@ class ResolveController extends Controller
             }
 
         }
-
 
     }
 }
