@@ -133,14 +133,14 @@ class ResolveController extends Controller
         // TODO CCP WIP : https://github.com/ccpgames/esi-issues/issues/736
         $names = ChrFaction::whereIn('factionID', $ids->flatten()->toArray())
             ->get()
-            ->map(function ($faction){
+            ->map(function ($faction) {
                 return collect([
                     'id' => $faction->factionID,
-                    'name' => $faction->factionName
+                    'name' => $faction->factionName,
                 ]);
             });
 
-        return $this->cacheIDsAndReturnUnresolvedIDs($names,$ids);
+        return $this->cacheIDsAndReturnUnresolvedIDs($names, $ids);
     }
 
     private function resolveCharacterIDsFromSeat($ids)
@@ -150,14 +150,14 @@ class ResolveController extends Controller
         // no unnecessary api calls the request can be resolved internally.
         $names = CharacterInfo::whereIn('character_id', $ids->flatten()->toArray())
             ->get()
-            ->map(function ($character){
+            ->map(function ($character) {
                 return collect([
                     'id' => $character->character_id,
-                    'name' => $character->name
+                    'name' => $character->name,
                 ]);
             });
 
-        return $this->cacheIDsAndReturnUnresolvedIDs($names,$ids);
+        return $this->cacheIDsAndReturnUnresolvedIDs($names, $ids);
     }
 
     private function resolveCorporationIDsFromSeat($ids)
@@ -167,14 +167,14 @@ class ResolveController extends Controller
         // no unnecessary api calls the request can be resolved internally.
         $names = CorporationInfo::whereIn('corporation_id', $ids->flatten()->toArray())
             ->get()
-            ->map(function ($corporation){
+            ->map(function ($corporation) {
                 return collect([
                     'id' => $corporation->corporation_id,
-                    'name' => $corporation->name
+                    'name' => $corporation->name,
                 ]);
             });
 
-        return $this->cacheIDsAndReturnUnresolvedIDs($names,$ids);
+        return $this->cacheIDsAndReturnUnresolvedIDs($names, $ids);
     }
 
     private function resolveIDsfromESI($ids, $eseye)
