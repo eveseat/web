@@ -68,6 +68,11 @@ class ResolveController extends Controller
             ->unique()
             ->filter(function ($id) {
 
+                // Filter out ids that are System items
+                // see: https://gist.github.com/a-tal/5ff5199fdbeb745b77cb633b7f4400bb
+                if ($id <= 10000)
+                    return false;
+
                 // Next, filter the ids we have in the cache, setting
                 // the appropriate response values as we go along.
                 if ($cached_entry = cache($this->prefix . $id)) {
@@ -77,11 +82,6 @@ class ResolveController extends Controller
                     // Remove this as a valid id, we already have the value we want.
                     return false;
                 }
-
-                // Filter out ids that are System items
-                // see: https://gist.github.com/a-tal/5ff5199fdbeb745b77cb633b7f4400bb
-                if ($id <= 10000)
-                    return false;
 
                 // We don't have this id in the cache. Return it
                 // so that we can update it later.
