@@ -42,24 +42,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($entries as $character_id => $entry)
+                    @foreach($entries as $entry)
                     <tr>
-                        <td data-order="{{ $character_id }}">
-                            {!! img('character', $character_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-                            <a href="{{ route('character.view.sheet', ['character_id' => $character_id]) }}">
+                        <td data-order="{{ $entry->character_id }}">
+                            {!! img('character', $entry->character_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
+                            <a href="{{ route('character.view.sheet', ['character_id' => $entry->character_id]) }}">
                               <span class="id-to-name"
-                                    data-id="{{ $character_id }}">{{ trans('web::seat.unknown') }}</span>
+                                    data-id="{{ $entry->character_id }}">{{ trans('web::seat.unknown') }}</span>
                             </a>
                         </td>
                         <td class="text-right" data-order="{{ $entry->quantity }}">{{ number($entry->quantity) }}</td>
                         <td class="text-right" data-order="{{ $entry->volumes }}">{{ number($entry->volumes) }} m3</td>
-                        <td class="text-right" data-order="{{ $entry->value }}">{{ number($entry->value) }} ISK</td>
+                        <td class="text-right" data-order="{{ $entry->amounts }}">{{ number($entry->amounts) }} ISK</td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-        <div class="panel-footer">Total : {{ number($entries->sum('value')) }} ISK</div>
+        <div class="panel-footer">Total : {{ number($entries->sum('amounts')) }} ISK</div>
     </div>
 @stop
 

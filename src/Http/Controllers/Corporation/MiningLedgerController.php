@@ -54,16 +54,7 @@ class MiningLedgerController extends Controller
 
         $ledgers = $this->getCorporationLedgers($corporation_id);
 
-        $entries = $this->getCorporationLedger($corporation_id, $year, $month)
-            ->groupBy('character_id')
-            ->map(function ($row) {
-
-                $row->quantity = $row->sum('quantity');
-                $row->volumes = $row->sum('volumes');
-                $row->value = $row->sum('value');
-
-                return $row;
-            });
+        $entries = $this->getCorporationLedger($corporation_id, $year, $month);
 
         return view('web::corporation.mining.ledger', compact('ledgers', 'entries'));
     }
