@@ -39,7 +39,7 @@
                         <th>{{trans('web::seat.group_main') }}</th>
                         <th>{{ trans('web::seat.quantity') }}</th>
                         <th>{{ trans('web::seat.volume') }}</th>
-                        <th>{{ trans('web::seat.amount') }}</th>
+                        <th>{{ trans_choice('web::seat.value',1) }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,7 +48,7 @@
                         <td data-order="{{ $character_id }}">
                             {!! img('character', $character_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
                             <a href="{{ route('character.view.sheet', ['character_id' => $character_id]) }}">
-                                <span class="id-to-name" data-id="{{ $character_id }}">Unknown</span>
+                              <span class="id-to-name" data-id="{{ $character_id }}">{{ trans('web::seat.unknown') }}</span>
                             </a>
                         </td>
                         <td>
@@ -63,7 +63,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="panel-footer">Total : {{ number_format($entries->sum('amount'), 2) }}</div>
+        <div class="panel-footer">Total : {{ number_format($entries->sum('value'), 2) }} ISK</div>
     </div>
 @stop
 

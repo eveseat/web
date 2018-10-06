@@ -85,6 +85,8 @@
   <!-- Main Footer -->
   @include('web::includes.footer')
 
+  <!-- Right Sidebar Content -->
+  @include('web::includes.right_sidebar')
 </div>
 <!-- ./wrapper -->
 

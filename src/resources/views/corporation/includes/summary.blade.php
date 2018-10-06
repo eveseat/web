@@ -13,7 +13,7 @@
 
       @if($sheet->alliance_id)
         <p class="text-muted text-center">
-          <span class="id-to-name" data-id="{{ $sheet->alliance_id }}">Unknown</span>
+          <span class="id-to-name" data-id="{{ $sheet->alliance_id }}">{{ trans('web::seat.unknown') }}</span>
         </p>
       @endif
 
@@ -23,7 +23,7 @@
 
         @if($sheet->alliance_id)
           <dt>{{ trans('web::seat.alliance') }}</dt>
-          <dd><span class="id-to-name" data-id="{{ $sheet->alliance_id }}">Unknown</span></dd>
+          <dd><span class="id-to-name" data-id="{{ $sheet->alliance_id }}">{{ trans('web::seat.unknown') }}</span></dd>
         @endif
 
         <dt>{{ trans('web::seat.ticker') }}</dt>
@@ -33,7 +33,7 @@
         <dd>
           <a href="{{ route('character.view.sheet', ['character_id' => $sheet->ceo_id]) }}">
             {!! img('character', $sheet->ceo_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-            <span class="id-to-name" data-id="{{ $sheet->ceo_id }}">Unknown</span>
+            <span class="id-to-name" data-id="{{ $sheet->ceo_id }}">{{ trans('web::seat.unknown') }}</span>
           </a>
         </dd>
 

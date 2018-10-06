@@ -162,6 +162,8 @@ return [
     'home_page'                   => 'Die Tuisblad',
     'online_layers'               => 'Spelers Aanlyn',
     'owned_api_keys'              => 'Besitte API Sleutels',
+    'concurrent_player_count'     => 'Gelyktydige speler telling',
+    'esi_response_time'           => 'ESI Response Times',
 
     // Api Keys
     'api_key_add'                 => "Voeg 'n nuwe API Sleutel By",

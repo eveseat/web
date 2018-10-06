@@ -192,7 +192,7 @@
               @else
 
                 {!! img('auto', $affiliation->affiliation, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                <span class="id-to-name" data-id="{{$affiliation->affiliation}}">Unknown</span>
+                <span class="id-to-name" data-id="{{$affiliation->affiliation}}">{{ trans('web::seat.unknown') }}</span>
 
               @endif
             </td>

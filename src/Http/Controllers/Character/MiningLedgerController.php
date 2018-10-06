@@ -26,6 +26,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
 use Seat\Services\Repositories\Character\MiningLedger;
 use Seat\Web\Http\Controllers\Controller;
+use Yajra\Datatables\Datatables;
 
 /**
  * Class MiningLedgerController.
@@ -51,7 +52,7 @@ class MiningLedgerController extends Controller
 
                 $row->quantity = $row->sum('quantity');
                 $row->volumes = $row->sum('volumes');
-                $row->amount = $row->sum('amount');
+                $row->value = $row->sum('value');
 
                 return $row;
             })->flatten();
@@ -77,6 +78,27 @@ class MiningLedgerController extends Controller
             ->where('type_id', $type_id)
             ->get();
 
-        return response()->json($entries);
+        return Datatables::of($entries)
+            ->removeColumn('solar_system_id')
+            ->removeColumn('date')
+            ->removeColumn('type_id')
+            ->removeColumn('average_price')
+            ->removeColumn('type')
+            ->editColumn('quantity', function ($row) {
+
+                return view('web::partials.miningquantity', compact('row'))
+                    ->render();
+            })
+            ->editColumn('volumes', function ($row) {
+
+                return view('web::partials.miningvolume', compact('row'))
+                    ->render();
+            })
+            ->addColumn('value', function ($row) {
+
+                return view('web::partials.miningvalue', compact('row'))
+                    ->render();
+            })
+            ->make(true);
     }
 }

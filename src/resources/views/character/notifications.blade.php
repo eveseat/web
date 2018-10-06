@@ -44,7 +44,8 @@
             <td>
               {!! img('auto', $notification->sender_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
               @if(in_array($notification->sender_type, ['character', 'corporation', 'alliance', 'faction']))
-                <span class="id-to-name" data-id="{{ $notification->sender_id }}">Unknown</span>
+                <span class="id-to-name"
+                      data-id="{{ $notification->sender_id }}">{{ trans('web::seat.unknown') }}</span>
               @else
               System
               @endif
