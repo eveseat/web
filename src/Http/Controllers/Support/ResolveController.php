@@ -41,6 +41,8 @@ class ResolveController extends Controller
      */
     protected $prefix = 'name_id:';
 
+    protected $response;
+
     /**
      * @param \Illuminate\Http\Request $request
      *
@@ -57,106 +59,111 @@ class ResolveController extends Controller
         $eseye = app('esi-client')->get();
 
         // Grab the ids from the request for processing
-        collect(explode(',', $request->ids))->map(function ($id) {
+        collect(explode(',', $request->ids))
+            ->map(function ($id) {
 
             // Convert them all to integers
             return (int) $id;
+            })
+            ->unique()
+            ->filter(function ($id) {
 
-        })->unique()->filter(function ($id) use (&$response) {
+                // Next, filter the ids we have in the cache, setting
+                // the appropriate response values as we go along.
+                if ($cached_entry = cache($this->prefix . $id)) {
 
-            // Next, filter the ids we have in the cache, setting
-            // the appropriate response values as we go along.
-            if ($cached_entry = cache($this->prefix . $id)) {
+                    $this->response[$id] = $cached_entry;
 
-                $response[$id] = $cached_entry;
+                    // Remove this as a valid id, we already have the value we want.
+                    return false;
+                }
 
-                // Remove this as a valid id, we already have the value we want.
-                return false;
-            }
+                // Filter out ids that are System items
+                // see: https://gist.github.com/a-tal/5ff5199fdbeb745b77cb633b7f4400bb
+                if ($id <= 10000)
+                    return false;
 
-            // We don't have this id in the cache. Return it
-            // so that we can update it later.
-            return true;
+                // We don't have this id in the cache. Return it
+                // so that we can update it later.
+                return true;
+            })
+            ->pipe(function ($collection) {
+                return $collection->when($collection->isNotEmpty(),function ($ids) {
+                    return $this->resolveFactionIDs($ids);
+                });
+            })
+            ->pipe(function ($collection) {
+                return $collection->when($collection->isNotEmpty(),function ($ids) {
+                    return $this->resolveCharacterIDsFromSeat($ids);
+                });
+            })
+            ->pipe(function ($collection) {
+                return $collection->when($collection->isNotEmpty(),function ($ids) {
+                    return $this->resolveCorporationIDsFromSeat($ids);
+                });
+            })
+            ->chunk(1000)
+            ->each(function ($chunk) use ($eseye) {
 
-        })->chunk(1000)->each(function ($chunk) use (&$response, $eseye) {
+                // quick break if no more IDs must be resolve by ESI
+                if ($chunk->isEmpty())
+                    return;
 
-            $chunk = $this->resolveFactionIDs($chunk, $response);
+                $this->resolveIDsfromESI($chunk, $eseye);
 
-            // quick break if no more IDs must be resolve by ESI
-            if ($chunk->count() == 0)
-                return;
+            });
 
-            $chunk = $this->resolveCharacterIDsFromSeat($chunk, $response);
-
-            // quick break if no more IDs must be resolve by ESI
-            if ($chunk->count() == 0)
-                return;
-
-            $chunk = $this->resolveCorporationIDsFromSeat($chunk, $response);
-
-            // quick break if no more IDs must be resolve by ESI
-            if ($chunk->count() == 0)
-                return;
-
-            $this->resolveIDsfromESI($chunk, $response, $eseye);
-
-        });
-
-        // Grr. Without this, arbitrary things will get replaced as
-        // #System/Corporation in the UI. Infuriating to say the least.
-        $response->forget([0, 2]);
-
-        return response()->json($response);
+        return response()->json($this->response);
     }
 
-    private function resolveFactionIDs($chunk, $response)
+    private function resolveFactionIDs($ids)
     {
 
         // universe resolver is not working on factions at this time
         // retrieve them from SDE and remove them from collection
         // TODO CCP WIP : https://github.com/ccpgames/esi-issues/issues/736
-        $names = ChrFaction::whereIn('factionID', $chunk->flatten()->toArray())
+        $names = ChrFaction::whereIn('factionID', $ids->flatten()->toArray())
             ->get();
 
-        collect($names)->each(function ($name) use (&$response) {
+        collect($names)->each(function ($name){
 
             cache([$this->prefix . $name->factionID => $name->factionName], carbon()->addCentury());
-            $response[$name->factionID] = $name->factionName;
+            $this->response[$name->factionID] = $name->factionName;
 
         });
 
-        $chunk = $chunk->filter(function ($id) use ($names) {
+        $ids = $ids->filter(function ($id) use ($names) {
 
             return ! $names->contains('factionID', $id);
         });
 
-        return $chunk;
+        return $ids;
     }
 
-    private function resolveCharacterIDsFromSeat($chunk, $response)
+    private function resolveCharacterIDsFromSeat($ids)
     {
 
         // resolve names that are already in SeAT
         // no unnecessary api calls the request can be resolved internally.
-        $names = CharacterInfo::whereIn('character_id', $chunk->flatten()->toArray())
+        $names = CharacterInfo::whereIn('character_id', $ids->flatten()->toArray())
             ->get();
 
-        collect($names)->each(function ($name) use (&$response) {
+        collect($names)->each(function ($name) {
 
             cache([$this->prefix . $name->character_id => $name->name], carbon()->addCentury());
-            $response[$name->character_id] = $name->name;
+            $this->response[$name->character_id] = $name->name;
 
         });
 
-        $chunk = $chunk->filter(function ($id) use ($names) {
+        $ids = $ids->filter(function ($id) use ($names) {
 
             return ! $names->contains('character_id', $id);
         });
 
-        return $chunk;
+        return $ids;
     }
 
-    private function resolveCorporationIDsFromSeat($chunk, $response)
+    private function resolveCorporationIDsFromSeat($chunk)
     {
 
         // resolve names that are already in SeAT
@@ -164,10 +171,10 @@ class ResolveController extends Controller
         $names = CorporationInfo::whereIn('corporation_id', $chunk->flatten()->toArray())
             ->get();
 
-        collect($names)->each(function ($name) use (&$response) {
+        collect($names)->each(function ($name) {
 
             cache([$this->prefix . $name->corporation_id => $name->name], carbon()->addCentury());
-            $response[$name->corporation_id] = $name->name;
+            $this->response[$name->corporation_id] = $name->name;
 
         });
 
@@ -179,7 +186,7 @@ class ResolveController extends Controller
         return $chunk;
     }
 
-    private function resolveIDsfromESI($ids, $response, $eseye)
+    private function resolveIDsfromESI($ids, $eseye)
     {
 
         // Finally, grab outstanding ids and resolve their names
@@ -190,11 +197,11 @@ class ResolveController extends Controller
             $eseye->setBody($ids->flatten()->toArray());
             $names = $eseye->invoke('post', '/universe/names/');
 
-            collect($names)->each(function ($name) use (&$response) {
+            collect($names)->each(function ($name) {
 
                 // Cache the name resolution for this id for a long time.
                 cache([$this->prefix . $name->id => $name->name], carbon()->addCentury());
-                $response[$name->id] = $name->name;
+                $this->response[$name->id] = $name->name;
 
             });
 
@@ -203,16 +210,16 @@ class ResolveController extends Controller
             // until all possible resolvable ids has processed.
             if ($ids->count() === 1) {
                 // return a singleton unresolvable id as 'unknown'
-                $response[$ids->first()] = trans('web::seat.unknown');
+                $this->response[$ids->first()] = trans('web::seat.unknown');
             } else {
                 //split the chunk in two
                 $half = ceil($ids->count() / 2);
                 //keep on processing the halfs independently,
                 //ideally one of the halfs will process just perfect
-                $ids->chunk($half)->each(function ($half_chunk) use ($response, $eseye) {
+                $ids->chunk($half)->each(function ($half_chunk) use ($eseye) {
 
                     //this is a selfrefrencial call.
-                    $this->resolveIDsfromESI($half_chunk, $response, $eseye);
+                    $this->resolveIDsfromESI($half_chunk, $eseye);
                 });
             }
 
