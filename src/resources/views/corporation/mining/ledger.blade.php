@@ -55,15 +55,15 @@
                             <span class="character-id-to-main-character"
                                   data-character-id="{{$character_id}}">Unknown</span>
                         </td>
-                        <td class="text-right" data-order="{{ $entry->quantity }}">{{ number_format($entry->quantity, 2) }}</td>
-                        <td class="text-right" data-order="{{ $entry->volumes }}">{{ number_format($entry->volumes, 2) }} m3</td>
-                        <td class="text-right" data-order="{{ $entry->amount }}">{{ number_format($entry->amount, 2) }} ISK</td>
+                      <td class="text-right" data-order="{{ $entry->quantity }}">{{ number($entry->quantity) }}</td>
+                      <td class="text-right" data-order="{{ $entry->volumes }}">{{ number($entry->volumes) }} m3</td>
+                      <td class="text-right" data-order="{{ $entry->value }}">{{ number($entry->value) }} ISK</td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-        <div class="panel-footer">Total : {{ number_format($entries->sum('value'), 2) }} ISK</div>
+      <div class="panel-footer">Total : {{ number($entries->sum('value')) }} ISK</div>
     </div>
 @stop
 
