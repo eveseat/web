@@ -62,8 +62,8 @@ class ResolveController extends Controller
         collect(explode(',', $request->ids))
             ->map(function ($id) {
 
-            // Convert them all to integers
-            return (int) $id;
+                // Convert them all to integers
+                return (int) $id;
             })
             ->unique()
             ->filter(function ($id) {
