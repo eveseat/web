@@ -33,13 +33,13 @@
             <td>
               <a href="{{ route('character.view.sheet', ['character_id' => $log->issuer_id]) }}">
                 {!! img('character', $log->issuer_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                <span rel="id-to-name">{{ $log->issuer_id }}</span>
+                <span class="id-to-name" data-id="{{ $log->issuer_id }}">{{ trans('web::seat.unknown') }}</span>
               </a>
             </td>
             <td>
               <a href="{{ route('character.view.sheet', ['character_id' => $log->character_id]) }}">
                 {!! img('character', $log->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                <span rel="id-to-name">{{ $log->character_id }}</span>
+                <span class="id-to-name" data-id="{{ $log->character_id }}">{{ trans('web::seat.unknown') }}</span>
               </a>
             </td>
             <td>
