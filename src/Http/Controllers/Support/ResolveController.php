@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\Controllers\Support;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Sde\ChrFaction;
@@ -42,6 +43,14 @@ class ResolveController extends Controller
     protected $prefix = 'name_id:';
 
     protected $response;
+
+    /**
+     * ResolveController constructor.
+     */
+    public function __construct()
+    {
+        $this->response = collect();
+    }
 
     /**
      * @param \Illuminate\Http\Request $request
@@ -123,21 +132,15 @@ class ResolveController extends Controller
         // retrieve them from SDE and remove them from collection
         // TODO CCP WIP : https://github.com/ccpgames/esi-issues/issues/736
         $names = ChrFaction::whereIn('factionID', $ids->flatten()->toArray())
-            ->get();
+            ->get()
+            ->map(function ($faction){
+                return collect([
+                    'id' => $faction->factionID,
+                    'name' => $faction->factionName
+                ]);
+            });
 
-        collect($names)->each(function ($name) {
-
-            cache([$this->prefix . $name->factionID => $name->factionName], carbon()->addCentury());
-            $this->response[$name->factionID] = $name->factionName;
-
-        });
-
-        $ids = $ids->filter(function ($id) use ($names) {
-
-            return ! $names->contains('factionID', $id);
-        });
-
-        return $ids;
+        return $this->cacheIDsAndReturnUnresolvedIDs($names,$ids);
     }
 
     private function resolveCharacterIDsFromSeat($ids)
@@ -146,44 +149,32 @@ class ResolveController extends Controller
         // resolve names that are already in SeAT
         // no unnecessary api calls the request can be resolved internally.
         $names = CharacterInfo::whereIn('character_id', $ids->flatten()->toArray())
-            ->get();
+            ->get()
+            ->map(function ($character){
+                return collect([
+                    'id' => $character->character_id,
+                    'name' => $character->name
+                ]);
+            });
 
-        collect($names)->each(function ($name) {
-
-            cache([$this->prefix . $name->character_id => $name->name], carbon()->addCentury());
-            $this->response[$name->character_id] = $name->name;
-
-        });
-
-        $ids = $ids->filter(function ($id) use ($names) {
-
-            return ! $names->contains('character_id', $id);
-        });
-
-        return $ids;
+        return $this->cacheIDsAndReturnUnresolvedIDs($names,$ids);
     }
 
-    private function resolveCorporationIDsFromSeat($chunk)
+    private function resolveCorporationIDsFromSeat($ids)
     {
 
         // resolve names that are already in SeAT
         // no unnecessary api calls the request can be resolved internally.
-        $names = CorporationInfo::whereIn('corporation_id', $chunk->flatten()->toArray())
-            ->get();
+        $names = CorporationInfo::whereIn('corporation_id', $ids->flatten()->toArray())
+            ->get()
+            ->map(function ($corporation){
+                return collect([
+                    'id' => $corporation->corporation_id,
+                    'name' => $corporation->name
+                ]);
+            });
 
-        collect($names)->each(function ($name) {
-
-            cache([$this->prefix . $name->corporation_id => $name->name], carbon()->addCentury());
-            $this->response[$name->corporation_id] = $name->name;
-
-        });
-
-        $chunk = $chunk->filter(function ($id) use ($names) {
-
-            return ! $names->contains('corporation_id', $id);
-        });
-
-        return $chunk;
+        return $this->cacheIDsAndReturnUnresolvedIDs($names,$ids);
     }
 
     private function resolveIDsfromESI($ids, $eseye)
@@ -224,6 +215,30 @@ class ResolveController extends Controller
             }
 
         }
+
+    }
+
+    /**
+     * @param \Illuminate\Support\Collection $names
+     * @param \Illuminate\Support\Collection $ids
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    private function cacheIDsAndReturnUnresolvedIDs(Collection $names, Collection $ids) : Collection
+    {
+        $names->each(function ($name) {
+
+            cache([$this->prefix . $name['id'] => $name['name']], carbon()->addCentury());
+            $this->response[$name['id']] = $name['name'];
+
+        });
+
+        $ids = $ids->filter(function ($id) use ($names) {
+
+            return ! $names->contains('id', $id);
+        });
+
+        return $ids;
 
     }
 }
