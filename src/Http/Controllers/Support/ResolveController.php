@@ -88,17 +88,17 @@ class ResolveController extends Controller
                 return true;
             })
             ->pipe(function ($collection) {
-                return $collection->when($collection->isNotEmpty(),function ($ids) {
+                return $collection->when($collection->isNotEmpty(), function ($ids) {
                     return $this->resolveFactionIDs($ids);
                 });
             })
             ->pipe(function ($collection) {
-                return $collection->when($collection->isNotEmpty(),function ($ids) {
+                return $collection->when($collection->isNotEmpty(), function ($ids) {
                     return $this->resolveCharacterIDsFromSeat($ids);
                 });
             })
             ->pipe(function ($collection) {
-                return $collection->when($collection->isNotEmpty(),function ($ids) {
+                return $collection->when($collection->isNotEmpty(), function ($ids) {
                     return $this->resolveCorporationIDsFromSeat($ids);
                 });
             })
@@ -125,7 +125,7 @@ class ResolveController extends Controller
         $names = ChrFaction::whereIn('factionID', $ids->flatten()->toArray())
             ->get();
 
-        collect($names)->each(function ($name){
+        collect($names)->each(function ($name) {
 
             cache([$this->prefix . $name->factionID => $name->factionName], carbon()->addCentury());
             $this->response[$name->factionID] = $name->factionName;
