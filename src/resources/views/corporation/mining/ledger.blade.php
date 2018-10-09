@@ -36,6 +36,7 @@
                 <thead>
                     <tr>
                         <th>{{ trans_choice('web::seat.name', 1) }}</th>
+                        <th>{{trans('web::seat.group_main') }}</th>
                         <th>{{ trans('web::seat.quantity') }}</th>
                         <th>{{ trans('web::seat.volume') }}</th>
                         <th>{{ trans_choice('web::seat.value',1) }}</th>
@@ -47,9 +48,12 @@
                         <td data-order="{{ $character_id }}">
                             {!! img('character', $character_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
                             <a href="{{ route('character.view.sheet', ['character_id' => $character_id]) }}">
-                              <span class="id-to-name"
-                                    data-id="{{ $character_id }}">{{ trans('web::seat.unknown') }}</span>
+                              <span class="id-to-name" data-id="{{ $character_id }}">{{ trans('web::seat.unknown') }}</span>
                             </a>
+                        </td>
+                        <td>
+                            <span class="character-id-to-main-character"
+                                  data-character-id="{{$character_id}}">Unknown</span>
                         </td>
                         <td class="text-right" data-order="{{ $entry->quantity }}">{{ number($entry->quantity) }}</td>
                         <td class="text-right" data-order="{{ $entry->volumes }}">{{ number($entry->volumes) }} m3</td>
@@ -74,4 +78,5 @@
         });
     });
 </script>
+@include('web::includes.javascript.character-id-to-main-character')
 @endpush
