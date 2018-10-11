@@ -56,8 +56,10 @@ class ReassignUser extends FormRequest
                 'required',
                 'exists:groups,id',
                 function ($attribute, $value, $fail) {
+
                     // retrieve admin group, if any
                     $admin_group = Group::whereHas('users', function ($query) {
+
                         $query->where('name', 'admin');
                     })->first();
 

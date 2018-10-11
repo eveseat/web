@@ -60,6 +60,7 @@ class UserController extends Controller
         // get all groups except the one containing admin as admin account is special account
         // and the one to which the current user is already attached.
         $groups = $this->getAllGroups()->filter(function ($group, $key) use ($user_id) {
+
             return $group->users->where('name', 'admin')->isEmpty() && $group->users->where('id', $user_id)->isEmpty();
         });
 

@@ -36,9 +36,10 @@
                 <thead>
                     <tr>
                         <th>{{ trans_choice('web::seat.name', 1) }}</th>
+                        <th>{{trans('web::seat.group_main') }}</th>
                         <th>{{ trans('web::seat.quantity') }}</th>
                         <th>{{ trans('web::seat.volume') }}</th>
-                        <th>{{ trans('web::seat.amount') }}</th>
+                        <th>{{ trans_choice('web::seat.value',1) }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,18 +48,22 @@
                         <td data-order="{{ $character_id }}">
                             {!! img('character', $character_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
                             <a href="{{ route('character.view.sheet', ['character_id' => $character_id]) }}">
-                                <span rel="id-to-name">{{ $character_id }}</span>
+                              <span class="id-to-name" data-id="{{ $character_id }}">{{ trans('web::seat.unknown') }}</span>
                             </a>
                         </td>
-                        <td class="text-right" data-order="{{ $entry->quantity }}">{{ number_format($entry->quantity, 2) }}</td>
-                        <td class="text-right" data-order="{{ $entry->volumes }}">{{ number_format($entry->volumes, 2) }} m3</td>
-                        <td class="text-right" data-order="{{ $entry->amount }}">{{ number_format($entry->amount, 2) }} ISK</td>
+                        <td>
+                            <span class="character-id-to-main-character"
+                                  data-character-id="{{$character_id}}">Unknown</span>
+                        </td>
+                        <td class="text-right" data-order="{{ $entry->quantity }}">{{ number($entry->quantity) }}</td>
+                        <td class="text-right" data-order="{{ $entry->volumes }}">{{ number($entry->volumes) }} m3</td>
+                        <td class="text-right" data-order="{{ $entry->value }}">{{ number($entry->value) }} ISK</td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-        <div class="panel-footer">Total : {{ number_format($entries->sum('amount'), 2) }}</div>
+        <div class="panel-footer">Total : {{ number($entries->sum('value')) }} ISK</div>
     </div>
 @stop
 
@@ -73,4 +78,5 @@
         });
     });
 </script>
+@include('web::includes.javascript.character-id-to-main-character')
 @endpush

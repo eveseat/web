@@ -34,7 +34,7 @@
               <td>
                 <a href="{{ route('character.view.sheet', ['character_id' => $member->character_id]) }}">
                   {!! img('character', $member->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                  <span rel="id-to-name">{{ $member->character_id }}</span>
+                  <span class="id-to-name" data-id="{{ $member->character_id }}">{{ trans('web::seat.unknown') }}</span>
                 </a>
               </td>
             </tr>

@@ -39,24 +39,25 @@
       <div>
         <table class="table datatable table-condensed table-hover table-responsive">
           <thead>
-          <tr>
-            <th>{{ trans_choice('web::seat.name', 1) }}</th>
-            <th>{{ trans_choice('web::seat.bountyprizetotal', 1) }}</th>
-          </tr>
+            <tr>
+              <th>{{ trans_choice('web::seat.name', 1) }}</th>
+              <th>{{ trans_choice('web::seat.bountyprizetotal', 1) }}</th>
+            </tr>
           </thead>
           <tbody>
 
-          @foreach ($bountyprizedates as $bpbm)
-            <tr>
-              <td data-order="{{ $bpbm->second_party_id }}">
-                <a href="{{ route('character.view.sheet', ['character_id' => $bpbm->second_party_id]) }}">
-                  {!! img('character', $bpbm->second_party_id, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-                  <span rel="id-to-name">{{ $bpbm->second_party_id }}</span>
-                </a>
-              </td>
-              <td data-order="{{ number($bpbm->total) }}">{{ number($bpbm->total) }}</td>
-            </tr>
-          @endforeach
+            @foreach ($bountyprizedates as $bpbm)
+              <tr>
+                <td data-order="{{ $bpbm->second_party_id }}">
+                  <a href="{{ route('character.view.sheet', ['character_id' => $bpbm->second_party_id]) }}">
+                    {!! img('character', $bpbm->second_party_id, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
+                    <span class="id-to-name"
+                          data-id="{{ $bpbm->second_party_id }}">{{ trans('web::seat.unknown') }}</span>
+                  </a>
+                </td>
+                <td data-order="{{ $bpbm->total }}">{{ number($bpbm->total) }}</td>
+              </tr>
+            @endforeach
 
           </tbody>
         </table>

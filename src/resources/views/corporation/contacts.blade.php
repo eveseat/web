@@ -33,7 +33,7 @@
               ">
             <td>
               {!! img('auto', $contact->contact_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-              <span rel="id-to-name">{{ $contact->contact_id }}</span>
+              <span class="id-to-name" data-id="{{$contact->contact_id}}">{{ $contact->contact_id }}</span>
             </td>
             <td>{{ ucfirst($contact->contact_type) }}</td>
             <td>
@@ -48,35 +48,34 @@
               </span>
             </td>
             <td>
-              {{ $labels->filter(function($item) use ($contact) {
-                 return $item->label_id & $contact->label_id; })->implode('label_name', ', ') }}
+              {{ $labels->whereIn('label_id', $contact->label_ids)->implode('label_name', ', ') }}
             </td>
             <td>
               @if (!in_array($contact->contact_type, ['corporation', 'alliance']))
                 <a href="http://eveskillboard.com/pilot/{{ $contact->contact_id }}"
-                   target="_blank" rel="id-to-name">
+                   target="_blank" class="id-to-name" data-id="{{$contact->contact_id}}">
                   <img src="{{ asset('web/img/eveskillboard.png') }}">
                 </a>
               @endif
               @if (!in_array($contact->contact_type, ['corporation', 'alliance']))
                 <a href="http://eve-search.com/search/author/{{ $contact->contact_id }}"
-                   target="_blank" rel="id-to-name">
+                   target="_blank" class="id-to-name" data-id="{{$contact->contact_id}}">
                   <img src="{{ asset('web/img/evesearch.png') }}">
                 </a>
               @endif
               @if ($contact->contact_type == 'corporation')
                 <a href="http://evewho.com/corp/{{ $contact->contact_id }}"
-                   target="_blank" rel="id-to-name">
+                   target="_blank" class="id-to-name" data-id="{{$contact->contact_id}}">
                   <img src="{{ asset('web/img/evewho.png') }}">
                 </a>
               @elseif ($contact->contact_type == 'alliance')
                 <a href="http://evewho.com/alli/{{ $contact->contact_id }}"
-                   target="_blank" rel="id-to-name">
+                   target="_blank" class="id-to-name" data-id="{{$contact->contact_id}}">
                   <img src="{{ asset('web/img/evewho.png') }}">
                 </a>
               @else
                 <a href="http://evewho.com/pilot/{{ $contact->contact_id }}"
-                   target="_blank" rel="id-to-name">
+                   target="_blank" class="id-to-name" data-id="{{$contact->contact_id}}">
                   <img src="{{ asset('web/img/evewho.png') }}">
                 </a>
               @endif
@@ -87,7 +86,7 @@
                 </a>
               @endif
               <a href="http://eve-prism.com/?view={{ $contact->contact_type }}&name={{ $contact->contact_id }}"
-                 target="_blank" rel="id-to-name">
+                 target="_blank" class="id-to-name" data-id="{{$contact->contact_id}}">
                   <img src="{{ asset('web/img/eve-prism.png') }}"/>
               </a>
             </td>

@@ -90,7 +90,7 @@
 
       <div class="box box-info">
         <div class="box-header with-border">
-          <h3 class="box-title">Concurrent Player Count</h3>
+          <h3 class="box-title">{{ trans('web::seat.concurrent_player_count') }}</h3>
         </div>
         <div class="box-body">
           <div class="chart">
@@ -116,7 +116,7 @@
 
       <div class="box box-info">
         <div class="box-header with-border">
-          <h3 class="box-title">ESI Response Times</h3>
+          <h3 class="box-title">{{ trans('web::seat.esi_response_time') }}</h3>
         </div>
         <div class="box-body">
           <div class="chart">

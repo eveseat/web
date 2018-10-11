@@ -15,10 +15,10 @@
                 <table class="table table-condensed table-striped" id="hourly-ledger">
                     <thead>
                         <tr>
-                            <th>Time</th>
-                            <th>Quantity</th>
-                            <th>Volume</th>
-                            <th>Amount</th>
+                            <th>{{ trans('web::seat.online_time') }}</th>
+                            <th>{{ trans('web::seat.quantity') }}</th>
+                            <th>{{ trans('web::seat.volume') }}</th>
+                            <th>{{ trans_choice('web::seat.value',1) }}</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
