@@ -47,6 +47,14 @@ use Seat\Web\Models\Acl\Role;
  * )
  *
  * @SWG\Property(
+ *     type="integer",
+ *     format="int64",
+ *     minimum=90000000,
+ *     description="Character ID of main character",
+ *     property="main_character_id"
+ * )
+ *
+ * @SWG\Property(
  *     type="array",
  *     description="User information attached to this group",
  *     property="users",
