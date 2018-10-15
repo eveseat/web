@@ -23,9 +23,10 @@
 namespace Seat\Web\Http\Controllers\Character;
 
 
-use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 use Seat\Services\Repositories\Character\Assets;
 use Seat\Web\Http\Controllers\Controller;
+use Yajra\Datatables\Datatables;
 
 /**
  * Class AssetsController.
@@ -40,18 +41,69 @@ class AssetsController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function getAssets(int $character_id)
+    public function getAssets(int $character_id, Request $request)
     {
+        if($request->ajax())
+        {
+            $asset_locations =  $this->getCharacterAssetsLocation($character_id);
 
-        if (request()->ajax()) {
-            $assets = $this->getCharacterAssets($character_id);
-            $view = view('web::character.partials.assets', compact('assets'))->render();
+            return Datatables::of($asset_locations)
+                ->addColumn('location', function($row) {
 
-            return response()->json(['html' => $view]);
+                    $assets = $this->getCharacterAssetsAtLocation($row->character_id, $row->location_id)
+                        ->get()
+                        ->map(function ($value){
+                            return $value->quantity * optional($value->type)->volume ?? 0;
+                        });
+                    $volume = $assets->sum();
+                    $number_items = $assets->count();
+
+                    return view('web::character.partials.assets-location',compact('row','volume', 'number_items'));
+                })
+                ->addColumn('details_url', function ($row){
+                    return route('character.view.location.assets',['character_id' => $row->character_id, 'location_id' => $row->location_id]);
+                })
+                ->make(true);
+
         }
 
-        return view('web::character.assets');
+        $assets = $this->getCharacterAssets($character_id);
+
+        return view('web::character.assets', compact('assets', 'locations'));
     }
+
+    public function getLocationAssets(int $character_id) //TODO: refactor this to not use request
+    {
+
+        $assets = $this->getCharacterAssetsAtLocation($character_id, request('location_id'));
+
+        return Datatables::of($assets)
+            ->editColumn('quantity', function ($row){
+                if($row->content->count() < 1)
+                    return number($row->quantity,0);
+            })
+            ->addColumn('type', function ($row){
+                return view('web::character.partials.asset-type', compact('row'));
+            })
+            ->addColumn('volume', function ($row){
+                return number_metric($row->quantity * optional($row->type)->volume ?? 0) . "m&sup3";
+            })
+            ->addColumn('group', function ($row){
+                if($row->type)
+                    return $row->type->group->groupName;
+
+                return "Unknown";
+            })
+            ->addColumn('details_url', function ($row){
+                if($row->content->count() > 0)
+                    return route('character.view.assets.contents', ['character_id' => $row->character_id, 'item_id' => $row->item_id]);
+
+                return "";
+            })
+            ->make(true);
+
+    }
+
 
     /**
      * @param int $character_id
@@ -62,8 +114,31 @@ class AssetsController extends Controller
     public function getAssetsContents(int $character_id, int $item_id)
     {
 
-        $contents = $this->getCharacterAssetContents($character_id, $item_id);
+            $contents = $this->getCharacterAssetContents($character_id, $item_id);
 
-        return view('web::partials.assetscontents', compact('contents'));
+            return Datatables::of($contents)
+                ->editColumn('quantity', function ($row){
+
+                    return number($row->quantity,0);
+                })
+                ->addColumn('type', function ($row){
+                    return view('web::character.partials.asset-type', compact('row'));
+                })
+                ->addColumn('volume', function ($row){
+                    return number_metric($row->quantity * optional($row->type)->volume ?? 0) . "m&sup3";
+                })
+                ->addColumn('group', function ($row){
+                    if($row->type)
+                        return $row->type->group->groupName;
+
+                    return "Unknown";
+                })
+                ->make(true);
+
+
+        //TODO: this getAssetContent is missing a class, maybe remove this?
+       /* $contents = $this->getCharacterAssetContents($character_id, $item_id);
+
+        return view('web::partials.assetscontents', compact('contents'));*/
     }
 }

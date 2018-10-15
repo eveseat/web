@@ -1,117 +1,132 @@
-@foreach($assets->whereIn('location_flag', ['Hangar', 'AssetSafety', 'Deliveries'])->sortBy('locationName')->groupBy('location_id') as $location)
-  <tr class="active">
-    <td colspan="5">
-      <b>
-        @if($location->first()->locationName == '')
-          Unknown Structure ({{ $location->first()->location_id }})
-        @else
-          {{ $location->first()->locationName }}
-        @endif
-      </b>
-      <span class="pull-right">
-                <i>{{ $assets->where('location_id', $location->first()->location_id)->count() }}
-                  {{ trans('web::seat.items_taking') }}
-                  {{
-                    number_metric($assets->where('location_id', $location->first()->location_id)->map(
-                      function($value){
-                        return $value->quantity * optional($value->type)->volume ?? 0;
-                      })->sum()
-                    )
-                  }}
-                  m&sup3;</i>
-              </span>
-    </td>
+<table class="table compact table-condensed table-responsive assets-table" id="assets-table">
+  <thead>
+  <tr>
+    <th></th>
   </tr>
+  </thead>
+</table>
 
-  @foreach($assets->where('location_id', $location->first()->location_id) as $container)
+@push('javascript')
 
-    <tr>
-      <td>
-        @if($container->content->count() > 0)
-          <button class="btn btn-xs btn-link viewcontent">
-            <i class="fa fa-plus"></i>
-          </button>
-        @endif
-      </td>
-      <td>
-        @if($container->content->count() < 1)
-          {{ number($container->quantity, 0) }}
-        @endif
-      </td>
-      <td>
-        {!! img('type', $container->type_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-        @if($container->type)
-          @if($container->name != $container->type->typeName)
-            {{ $container->name }} ({{ $container->type->typeName }})
-          @else
-            {{ $container->type->typeName }}
-          @endif
-        @else
-          Unknown
-        @endif
-        @if(! $container->is_singleton)
-          <span class="text-red">(packaged)</span>
-        @endif
-      </td>
-      <td>{{ number_metric($container->quantity * optional($container->type)->volume ?? 0) }}m&sup3;</td>
-      <td>
-        @if($container->type)
-          {{ $container->type->group->groupName }}
-        @else
-          Unknown
-        @endif
-      </td>
-    </tr>
+  <script type="text/javascript">
 
-    @if($container->content->count() > 0)
-      <tr style="display: none;">
-        <td colspan="5">
-          <table class="table compact table-condensed table-hover table-responsive">
-            <tbody>
-            @foreach($container->content as $content)
-              <tr>
-                <td>
-                  @if($content->content->count() > 0)
-                    <button class="btn btn-xs btn-link viewcontent">
-                      <i class="fa fa-plus"></i>
-                    </button>
-                  @endif
-                </td>
-                <td>
-                  @if($content->content->count() < 1)
-                    {{ number($content->quantity, 0) }}
-                  @endif
-                </td>
-                <td>{!! img('type', $content->type_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!} {{ $content->type->typeName }}</td>
-                <td>{{ number_metric($content->quantity * $content->type->volume) }}m&sup3;</td>
-                <td>{{ $content->type->group->groupName }}</td>
-              </tr>
-              @if($content->content->count() > 0)
-                <tr style="display: none;">
-                  <td colspan="5">
-                    <table class="table compact table-condensed table-hover table-responsive">
-                      <tbody>
-                      @foreach($content->content as $cargo)
-                        <tr>
-                          <td></td>
-                          <td>{{ number($cargo->quantity, 0) }}</td>
-                          <td>{!! img('type', $cargo->type_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!} {{ $cargo->type->typeName }}</td>
-                          <td>{{ number_metric($cargo->quantity * $cargo->type->volume) }}m&sup3;</td>
-                          <td>{{ $cargo->type->group->groupName }}</td>
-                        </tr>
-                      @endforeach
-                      </tbody>
-                    </table>
-                  </td>
-                </tr>
-              @endif
-            @endforeach
-            </tbody>
-          </table>
-        </td>
-      </tr>
-    @endif
+    function template ( d ) {
+      // `d` is the original data object for the row
+      return  '<table class="table compact table-condensed table-hover table-responsive" id="assets-contents" data-item-id='+ d.item_id +'>'+
+              '<thead>'+
+                  '<tr>'+
+                    '<th>Quantity</th>'+
+                    '<th>Item</th>'+
+                    '<th>Volume</th>'+
+                    '<th>Group</th>'+
+                    '<th></th>'+
+                  '</tr>'+
+              '</thead>'+
+              '</table>';
+    }
 
-  @endforeach
+    var table={};
 
-@endforeach
+    var assetTable = $('#assets-table').DataTable({
+      processing: true,
+      serverSide: true,
+      ajax      : '{{ route('character.view.assets',['character_id' => $request->character_id]) }}',
+      columns   : [
+        {data: 'location', name: 'location', orderable: false, searchable: false}
+      ],
+      searching : false,
+      paging: false,
+      info: false,
+      "drawCallback" : function () {
+
+        $('#assets-table thead:first').remove();
+
+        $(".location-table").each(function () {
+
+          var location_id = $(this).attr("data-location-id").toString();
+          var url= "{{route('character.view.location.assets',['character_id' => $request->character_id, 'location_id' => ':location_id'])}}";
+          url = url.replace(':location_id',location_id);
+
+
+          table[location_id] = $(this).DataTable({
+            processing: true,
+            serverSide: true,
+            paging: false,
+            info: false,
+            ajax      :{
+              url: url
+            },
+            columns   : [
+              {orderable: false, data: null, defaultContent: ''},
+              {data: 'quantity', name: 'quantity'},
+              {data: 'type', name: 'type', orderable: false, searchable: false}, //TODO: test if sorting/search is possible
+              {data: 'volume', name: 'volume', orderable: false, searchable: false},
+              {data: 'group', name: 'group', orderable: false, searchable: false}
+            ],
+            createdRow: function(row, data, dataIndex) {
+              if(data.quantity == null){
+                $(row).find("td:eq(0)")
+                    .addClass('details-control')
+                    .attr('data-location-id',data.location_id)
+                    .append('<button class="btn btn-xs btn-link"><i class="fa fa-plus"></i></button>');
+              }
+            },
+            drawCallback : function () {
+              $("img").unveil(100);
+            }
+          })
+        });
+
+        $('.location-table tbody').on('click', 'td.details-control', function () {
+
+          var location_id = $(this).attr("data-location-id").toString();
+          var tr = $(this).closest('tr');
+          var row = table[location_id].row(tr);
+          var symbol = tr.find('i');
+
+
+          if (row.child.isShown()) {
+            // This row is already open - close it
+            row.child.hide();
+            symbol.removeClass("fa-minus").addClass("fa-plus");
+
+            tr.removeClass('shown').css("background-color", "");
+          } else {
+            // Open this row
+            symbol.removeClass("fa-plus").addClass("fa-minus");
+            row.child(template(row.data())).show();
+
+            initTable(row.data());
+            tr.addClass('shown').css("background-color", "#D4D4D4"); // Heading Color;
+            tr.next('tr').find('td').css("background-color", "#E5E5E5");
+          }
+        });
+
+        function initTable(data) {
+          $("#assets-contents[data-item-id=" + data.item_id +"]").DataTable({
+            processing: true,
+            serverSide: true,
+            paging: false,
+            info: false,
+            searching: false,
+            ajax: data.details_url,
+            columns: [
+              {data: 'quantity', name: 'quantity'},
+              {data: 'type', name: 'type', orderable: false, searchable: false},
+              {data: 'volume', name: 'volume', orderable: false, searchable: false},
+              {data: 'group', name: 'group', orderable: false, searchable: false},
+            ],
+            drawCallback : function () {
+              $("img").unveil(100);
+            }
+          })
+
+        }
+
+        //
+      }
+    });
+
+  </script>
+
+@endpush

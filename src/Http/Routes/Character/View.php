@@ -42,6 +42,12 @@ Route::get('/view/assets/{character_id}', [
     'uses'       => 'AssetsController@getAssets',
 ]);
 
+Route::get('/view/assets/{character_id}/location/{location_id}', [
+    'as'         => 'character.view.location.assets',
+    'middleware' => 'characterbouncer:assets',
+    'uses'       => 'AssetsController@getLocationAssets',
+]);
+
 Route::get('/view/assets/contents/{character_id}/{item_id}', [
     'as'         => 'character.view.assets.contents',
     'middleware' => 'characterbouncer:assets',
