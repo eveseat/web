@@ -1,3 +1,5 @@
+<input type="search" class="form-control input-sm" placeholder="" id="searchbar">
+
 <table class="table compact table-condensed table-responsive assets-table" id="assets-table">
   <thead>
   <tr>
@@ -30,12 +32,19 @@
     var assetTable = $('#assets-table').DataTable({
       processing: true,
       serverSide: true,
-      ajax      : '{{ route('character.view.assets',['character_id' => $request->character_id]) }}',
+      //dom: 'ltp',
+      ajax      : {
+        url: '{{ route('character.view.assets',['character_id' => $request->character_id]) }}',
+        data: function ( d ) {
+          return $.extend( {}, d, {
+            "extra_search": $("#searchbar").val()
+          });
+
+        }
+      },
       columns   : [
         {data: 'location', name: 'location', orderable: false, searchable: false}
       ],
-      searching : false,
-      paging: false,
       info: false,
       "drawCallback" : function () {
 
@@ -52,16 +61,24 @@
             processing: true,
             serverSide: true,
             paging: false,
+            searching: true,
+            dom: 'rt',
             info: false,
             ajax      :{
-              url: url
+              url: url,
+              data: function ( d ) {
+                return $.extend( {}, d, {
+                  "extra_search": $("#searchbar").val()
+                });
+              }
             },
             columns   : [
-              {orderable: false, data: null, defaultContent: ''},
-              {data: 'quantity', name: 'quantity'},
+              {orderable: false, data: null, defaultContent: '', searchable: false},
+              {data: 'quantity', name: 'quantity', searchable: false},
               {data: 'type', name: 'type', orderable: false, searchable: false}, //TODO: test if sorting/search is possible
               {data: 'volume', name: 'volume', orderable: false, searchable: false},
-              {data: 'group', name: 'group', orderable: false, searchable: false}
+              {data: 'group', name: 'group', orderable: false, searchable: false},
+              {data: 'typeName', name: 'invTypes.typeName', visible: false }
             ],
             createdRow: function(row, data, dataIndex) {
               if(data.quantity == null){
@@ -73,7 +90,7 @@
             },
             drawCallback : function () {
               $("img").unveil(100);
-            }
+            },
           })
         });
 
@@ -102,6 +119,8 @@
           }
         });
 
+
+
         function initTable(data) {
           $("#assets-contents[data-item-id=" + data.item_id +"]").DataTable({
             processing: true,
@@ -126,6 +145,23 @@
         //
       }
     });
+
+    $("#searchbar").on('keyup', function () {
+      for(var property in table){
+        if(table.hasOwnProperty(property)){
+          table[property].search(this.value).draw();
+        }
+      }
+
+
+    });
+
+
+
+    function globalFilter() {
+
+
+    }
 
   </script>
 

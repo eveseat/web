@@ -24,6 +24,7 @@ namespace Seat\Web\Http\Controllers\Character;
 
 
 use Illuminate\Http\Request;
+use Monolog\Logger;
 use Seat\Services\Repositories\Character\Assets;
 use Seat\Web\Http\Controllers\Controller;
 use Yajra\Datatables\Datatables;
@@ -45,7 +46,12 @@ class AssetsController extends Controller
     {
         if($request->ajax())
         {
+
+            //$asset_locations =  $this->getCharacterAssetsLocation($character_id, request('extra_search'));
+
             $asset_locations =  $this->getCharacterAssetsLocation($character_id);
+
+
 
             return Datatables::of($asset_locations)
                 ->addColumn('location', function($row) {
@@ -63,6 +69,15 @@ class AssetsController extends Controller
                 ->addColumn('details_url', function ($row){
                     return route('character.view.location.assets',['character_id' => $row->character_id, 'location_id' => $row->location_id]);
                 })
+                ->filter(function ($query) use ($character_id){
+                    if(request()->has('extra_search')){
+
+                        $location_ids = $this->getCharacterAssetsLocation($character_id,\request('extra_search'))
+                            ->get()
+                            ->pluck('location_id');
+                        $query->whereIn('location_id', $location_ids->toArray());
+                    }
+                }, true)
                 ->make(true);
 
         }
