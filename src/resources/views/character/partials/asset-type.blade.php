@@ -1,4 +1,7 @@
-{!! img('type', $row->type_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
+@if(request('all_linked_characters') === "true")
+  {!! img('character', $row->character_id, 32, ['class' => 'img-circle eve-icon small-icon'],false) !!}
+@endif
+{!! img('type', $row->type_id, 32, ['class' => 'img-circle eve-icon small-icon'],false) !!}
 @if($row->type)
   @if($row->name != $row->type->typeName)
     {{ $row->name }} ({{ $row->type->typeName }})
