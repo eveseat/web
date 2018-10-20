@@ -11,6 +11,14 @@
     <ul class="nav nav-tabs">
       <li class="active"><a href="#" data-toggle="tab" data-characters="single">Character Assets</a></li>
       <li><a href="#" data-toggle="tab" data-characters="all">Linked Character Assets</a></li>
+      @if(auth()->user()->has('character.jobs'))
+      <li class="pull-right">
+        <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.assets']) }}"
+           style="color: #000000">
+          <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_assets') }}"></i>
+        </a>
+      </li>
+      @endif
     </ul>
     <div class="tab-content">
       <table id="characterTable" class="table compact table-hover table-condensed table-responsive location-table">
