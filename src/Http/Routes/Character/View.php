@@ -39,13 +39,13 @@ Route::get('/delete/{character_id}', [
 Route::get('/view/assets/{character_id}', [
     'as'         => 'character.view.assets',
     'middleware' => 'characterbouncer:assets',
-    'uses'       => 'AssetsController@getAssets',
+    'uses'       => 'AssetsController@getAssetsView',
 ]);
 
-Route::get('/view/assets/{character_id}/location/{location_id}', [
-    'as'         => 'character.view.location.assets',
+Route::get('/view/assets/{character_id}/details', [
+    'as'         => 'character.view.assets.details',
     'middleware' => 'characterbouncer:assets',
-    'uses'       => 'AssetsController@getLocationAssets',
+    'uses'       => 'AssetsController@getCharacterAssets',
 ]);
 
 Route::get('/view/assets/contents/{character_id}/{item_id}', [
