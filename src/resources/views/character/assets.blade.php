@@ -25,10 +25,10 @@
         <thead>
         <tr>
           <th></th>
-          <th>Quantity</th>
-          <th>Type</th>
-          <th>Volume</th>
-          <th>Group</th>
+          <th>{{ trans('web::seat.quantity') }}</th>
+          <th>{{ trans_choice('web::seat.type', 1) }}</th>
+          <th>{{ trans('web::seat.volume') }}</th>
+          <th>{{ trans_choice('web::seat.group',1) }}</th>
         </tr>
         </thead>
       </table>
@@ -159,10 +159,10 @@
       return  '<table class="table compact table-condensed table-hover table-responsive" id="assets-contents" data-item-id='+ d.item_id +'>'+
           '<thead>'+
           '<tr>'+
-          '<th>Quantity</th>'+
-          '<th>Item</th>'+
-          '<th>Volume</th>'+
-          '<th>Group</th>'+
+          '<th>'+"{{ trans('web::seat.quantity') }}"+'</th>'+
+          '<th>'+"{{ trans_choice('web::seat.type', 1) }}"+'</th>'+
+          '<th>'+"{{ trans('web::seat.volume') }}"+'</th>'+
+          '<th>'+"{{ trans_choice('web::seat.group',1) }}"+'</th>'+
           '<th></th>'+
           '</tr>'+
           '</thead>'+
