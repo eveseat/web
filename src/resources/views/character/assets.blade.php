@@ -61,7 +61,7 @@
       scrollY: '50vh',
       processing: true,
       serverSide: true,
-      paging: false,
+      pageLength: 50,
       ajax: {
         url: url,
         data: function ( d ) {
