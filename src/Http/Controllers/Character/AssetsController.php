@@ -55,7 +55,7 @@ class AssetsController extends Controller
     public function getAssetsContents(int $character_id, int $item_id)
     {
 
-            $contents = $this->getCharacterAssetContents($character_id, $item_id);
+            $contents = $this->getCharacterAssetContentsBuilder($character_id, $item_id);
 
             return Datatables::of($contents)
                 ->editColumn('quantity', function ($row){
