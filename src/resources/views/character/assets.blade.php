@@ -42,7 +42,7 @@
 
   <script type="text/javascript">
 
-    var url = "{{route('character.view.assets.details', ['character_id' => auth()->user()->id])}}";
+    var url = "{{route('character.view.assets.details', ['character_id' => request()->character_id])}}";
 
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
       var target = $(e.target).data("characters"); // activated tab
