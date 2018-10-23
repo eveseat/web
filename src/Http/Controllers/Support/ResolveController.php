@@ -43,6 +43,11 @@ class ResolveController extends Controller
      */
     protected $prefix = 'name_id:';
 
+    /**
+     * The collection to return after resolving the submitted ids.
+     *
+     * @var Collection
+     */
     protected $response;
 
     /**
@@ -61,9 +66,6 @@ class ResolveController extends Controller
      */
     public function resolveIdsToNames(Request $request)
     {
-
-        // Init the initial return array
-        $response = collect();
 
         // Resolve the Esi client library from the IoC
         $eseye = app('esi-client')->get();
@@ -246,25 +248,22 @@ class ResolveController extends Controller
     public function resolveMainCharacter(Request $request)
     {
 
-        // Init the initial return array
-        $response = collect();
-
         // Grab the ids from the request for processing
         collect(explode(',', $request->ids))->map(function ($id) {
 
             // Convert them all to integers
             return (int) $id;
 
-        })->each(function ($chunk) use (&$response) {
+        })->each(function ($chunk) {
 
             $character = User::find($chunk);
 
             $maincharacter = is_null($character) ? null : $character->group->main_character;
 
-            $response[$chunk] = view('web::partials.maincharacter', compact('maincharacter'))->render();
+            $this->response[$chunk] = view('web::partials.maincharacter', compact('maincharacter'))->render();
         });
 
-        return response()->json($response);
+        return response()->json($this->response);
 
     }
 }
