@@ -28,6 +28,7 @@ use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Sde\ChrFaction;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Models\User;
 
 /**
  * Class ResolveController.
@@ -239,6 +240,31 @@ class ResolveController extends Controller
         });
 
         return $ids;
+
+    }
+
+    public function resolveMainCharacter(Request $request)
+    {
+
+        // Init the initial return array
+        $response = collect();
+
+        // Grab the ids from the request for processing
+        collect(explode(',', $request->ids))->map(function ($id) {
+
+            // Convert them all to integers
+            return (int) $id;
+
+        })->each(function ($chunk) use (&$response) {
+
+            $character = User::find($chunk);
+
+            $maincharacter = is_null($character) ? null : $character->group->main_character;
+
+            $response[$chunk] = view('web::partials.maincharacter', compact('maincharacter'))->render();
+        });
+
+        return response()->json($response);
 
     }
 }

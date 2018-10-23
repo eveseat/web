@@ -135,7 +135,7 @@
             <td>{{ ucfirst($standing->type) }}</td>
             <td>
               {!! img('auto', $standing->elementID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-              <span rel="id-to-name">{{ $standing->elementID }}</span>
+              <span class="id-to-name" data-id="{{ $standing->elementID }}">{{ trans('web::seat.unknown') }}</span>
             </td>
             <td>{{ $standing->standing }}</td>
             <td>

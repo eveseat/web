@@ -52,7 +52,7 @@
               <td>
                 <a href="{{ route('character.view.sheet', ['character_id' => $bookmark->creator_id]) }}">
                   {!! img('character', $bookmark->creator_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                  <span rel="id-to-name">{{ $bookmark->creator_id }}</span>
+                  <span class="id-to-name" data-id="{{ $bookmark->creator_id }}">{{ trans('web::seat.unknown') }}</span>
                 </a>
               </td>
               <td>{{ clean_ccp_html($bookmark->label) }}</td>

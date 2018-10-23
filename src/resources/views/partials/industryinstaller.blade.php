@@ -1,2 +1,2 @@
 {!! img('character', $row->installer_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-<span rel="id-to-name">{{ $row->installer_id }}</span>
+<span class="id-to-name" data-id="{{ $row->installer_id }}">{{ trans('web::seat.unknown') }}</span>
