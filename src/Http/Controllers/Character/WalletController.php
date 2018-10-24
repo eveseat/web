@@ -80,7 +80,7 @@ class WalletController extends Controller
 
                 return number($row->balance);
             })
-            ->rawColumns(['ref_type','first_party_id','second_party_id'])
+            ->rawColumns(['ref_type', 'first_party_id', 'second_party_id'])
             ->make(true);
 
     }
@@ -171,7 +171,7 @@ class WalletController extends Controller
                 return view('web::partials.transactionclient', compact('row'))
                     ->render();
             })
-            ->rawColumns(['is_buy','client_id'])
+            ->rawColumns(['is_buy', 'client_id'])
             ->make(true);
 
     }

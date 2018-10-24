@@ -82,7 +82,7 @@ class MarketController extends Controller
                 return view('web::partials.markettype', compact('row'))
                     ->render();
             })
-            ->rawColumns(['bs','vol','typeName'])
+            ->rawColumns(['bs', 'vol', 'typeName'])
             ->make(true);
 
     }
