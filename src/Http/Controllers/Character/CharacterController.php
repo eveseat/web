@@ -56,9 +56,15 @@ class CharacterController extends Controller
     {
 
         $characters = ($request->filtered === 'true') ?
-            auth()->user()->group->users->map(function ($user) {
+            auth()->user()->group->users
+                ->filter(function ($user) {
+                    if(! $user->name === 'admin' || $user->id === 1)
+                        return false;
 
-                return $user->character;
+                    return true;
+                })
+                ->map(function ($user) {
+                    return $user->character;
             }) :
             $this->getAllCharactersWithAffiliations();
 

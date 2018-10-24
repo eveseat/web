@@ -1,4 +1,4 @@
 <a href="{{ route('character.view.sheet', ['character_id' => $row->ceo_id]) }}">
   {!! img('character', $row->ceo_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-  <span rel="id-to-name">{{ $row->ceo_id }}</span>
+  <span class="id-to-name" data-id="{{ $row->ceo_id }}">{{ trans('web::seat.unknown') }}</span>
 </a>

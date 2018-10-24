@@ -167,6 +167,8 @@ return [
     'home_page'                   => 'Home',
     'online_layers'               => 'Spieler Online',
     'owned_api_keys'              => 'Eigene API Keys',
+    'concurrent_player_count'     => 'Anzahl gleichzeitiger Spieler',
+    'esi_response_time'           => 'ESI Reaktionszeiten',
 
     // Api Keys
     'api_key_add'                 => 'Einen neuen API Key hinzufügen',

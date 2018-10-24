@@ -211,6 +211,8 @@ return [
     'main_char_skills'            => ':character_name / умения',
     'main_char_skills_per_level'  => 'Умения по уровням',
     'main_char_skills_coverage'   => 'Умения в процентах',
+    'concurrent_player_count'     => 'Количество одновременных игроков',
+    'esi_response_time'           => 'Время отклика ESI',
 
     // Api Keys
     'api_key_add'                 => 'Добавить новый API ключ',

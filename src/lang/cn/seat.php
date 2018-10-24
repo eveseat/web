@@ -207,6 +207,8 @@ return [
     'main_char_skills'            => ':character_name 的技能',
     'main_char_skills_per_level'  => '每级的技能',
     'main_char_skills_coverage'   => '技能覆盖率 (百分比)',
+    'concurrent_player_count'     => '並發播放器計數',
+    'esi_response_time'           => 'ESI響應時間',
 
     // Api Keys
     'api_key_add'                 => '添加一个新的 API Key',
