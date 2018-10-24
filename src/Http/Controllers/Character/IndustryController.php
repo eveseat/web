@@ -76,7 +76,7 @@ class IndustryController extends Controller
                 return view('web::partials.industryproduct', compact('row'))
                     ->render();
             })
-            ->escapeColumns([])
+            ->rawColumns(['installerName','facilityName','blueprintTypeName','productTypeName'])
             ->make(true);
 
     }

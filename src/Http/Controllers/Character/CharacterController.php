@@ -83,7 +83,7 @@ class CharacterController extends Controller
                 return view('web::character.partials.delete', compact('row'))
                     ->render();
             })
-            ->escapeColumns([])
+            ->rawColumns(['name','corporation_id','alliance_id','actions'])
             ->make(true);
 
     }

@@ -77,7 +77,7 @@ class KillmailsController extends Controller
                 return view('web::partials.killmailzkb', compact('row'))
                     ->render();
             })
-            ->escapeColumns([])
+            ->rawColumns(['character_name','type_name','item_name','zkb'])
             ->make(true);
 
     }

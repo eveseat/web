@@ -87,20 +87,17 @@ class MiningLedgerController extends Controller
             ->removeColumn('type')
             ->editColumn('quantity', function ($row) {
 
-                return view('web::partials.miningquantity', compact('row'))
-                    ->render();
+                return number($row->quantity,0);
             })
             ->editColumn('volumes', function ($row) {
 
-                return view('web::partials.miningvolume', compact('row'))
-                    ->render();
+                return number($row->volumes) . " m&sup3";
             })
-            ->addColumn('value', function ($row) {
+            ->editColumn('value', function ($row) {
 
-                return view('web::partials.miningvalue', compact('row'))
-                    ->render();
+                return number($row->value) . " ISK";
             })
-            ->escapeColumns([])
+            ->rawColumns(['volumes'])
             ->make(true);
     }
 }

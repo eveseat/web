@@ -1,1 +1,0 @@
-{{number($row->volumes)}} m3

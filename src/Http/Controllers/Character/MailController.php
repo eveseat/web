@@ -79,7 +79,7 @@ class MailController extends Controller
                     ->render();
 
             })
-            ->escapeColumns([])
+            ->rawColumns(['from','subject','tocounts','read'])
             ->make(true);
 
     }
