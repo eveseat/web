@@ -84,7 +84,7 @@ class IntelController extends Controller
                 return view('web::character.intel.partials.alliancename', compact('row'))
                     ->render();
             })
-            ->rawColumns(['character_id','corporation_id','alliance_id'])
+            ->rawColumns(['character_id', 'corporation_id', 'alliance_id'])
             ->make(true);
 
     }
@@ -116,7 +116,7 @@ class IntelController extends Controller
                 return view('web::character.intel.partials.alliancename', compact('row'))
                     ->render();
             })
-            ->rawColumns(['character_id','corporation_id','alliance_id'])
+            ->rawColumns(['character_id', 'corporation_id', 'alliance_id'])
             ->make(true);
 
     }
@@ -148,7 +148,7 @@ class IntelController extends Controller
                 return view('web::character.intel.partials.alliancename', compact('row'))
                     ->render();
             })
-            ->rawColumns(['character_id','corporation_id','alliance_id'])
+            ->rawColumns(['character_id', 'corporation_id', 'alliance_id'])
             ->make(true);
     }
 
@@ -193,7 +193,7 @@ class IntelController extends Controller
                 return view('web::character.intel.partials.alliancename', compact('row'))
                     ->render();
             })
-            ->rawColumns(['characterName','corporationName','allianceName'])
+            ->rawColumns(['characterName', 'corporationName', 'allianceName'])
             ->make(true);
 
     }

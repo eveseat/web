@@ -77,7 +77,7 @@ class IndustryController extends Controller
                 return view('web::partials.industryproduct', compact('row'))
                     ->render();
             })
-            ->rawColumns(['installer_id','facilityName','blueprintTypeName','productTypeName'])
+            ->rawColumns(['installer_id', 'facilityName', 'blueprintTypeName', 'productTypeName'])
             ->make(true);
 
     }

@@ -81,7 +81,7 @@ class ContractsController extends Controller
                 return view('web::partials.contractcontentsbutton', compact('row'))
                     ->render();
             })
-            ->rawColumns(['issuer_id','type','contents'])
+            ->rawColumns(['issuer_id', 'type', 'contents'])
             ->make(true);
 
     }

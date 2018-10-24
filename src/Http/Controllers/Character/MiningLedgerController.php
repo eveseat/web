@@ -87,15 +87,15 @@ class MiningLedgerController extends Controller
             ->removeColumn('type')
             ->editColumn('quantity', function ($row) {
 
-                return number($row->quantity,0);
+                return number($row->quantity, 0);
             })
             ->editColumn('volumes', function ($row) {
 
-                return number($row->volumes) . " m&sup3";
+                return number($row->volumes) . ' m&sup3';
             })
             ->editColumn('value', function ($row) {
 
-                return number($row->value) . " ISK";
+                return number($row->value) . ' ISK';
             })
             ->rawColumns(['volumes'])
             ->make(true);

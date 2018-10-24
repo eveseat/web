@@ -80,7 +80,7 @@ class CorporationsController extends Controller
                 return view('web::corporation.partials.delete', compact('row'))
                     ->render();
             })
-            ->rawColumns(['name','ceo_id','alliance_id','actions'])
+            ->rawColumns(['name', 'ceo_id', 'alliance_id', 'actions'])
             ->make(true);
     }
 

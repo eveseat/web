@@ -72,7 +72,7 @@ class SearchController extends Controller
                 return view('web::search.partials.corporationname', compact('row'))
                     ->render();
             })
-            ->rawColumns(['name','corporation_id'])
+            ->rawColumns(['name', 'corporation_id'])
             ->make(true);
 
     }
@@ -104,7 +104,7 @@ class SearchController extends Controller
                 return view('web::search.partials.alliancename', compact('row'))
                     ->render();
             })
-            ->rawColumns(['name','ceo_id','alliance_id'])
+            ->rawColumns(['name', 'ceo_id', 'alliance_id'])
             ->make(true);
     }
 
@@ -145,7 +145,7 @@ class SearchController extends Controller
                     ->render();
 
             })
-            ->rawColumns(['from','subject','tocounts','read'])
+            ->rawColumns(['from', 'subject', 'tocounts', 'read'])
             ->make(true);
     }
 
@@ -171,7 +171,7 @@ class SearchController extends Controller
                 return view('web::search.partials.typename', compact('row'))
                     ->render();
             })
-            ->rawColumns(['characterName','typeName'])
+            ->rawColumns(['characterName', 'typeName'])
             ->make(true);
 
     }
@@ -203,7 +203,7 @@ class SearchController extends Controller
                 return view('web::search.partials.typename', compact('row'))
                     ->render();
             })
-            ->rawColumns(['character_name','corporation_id','typeName'])
+            ->rawColumns(['character_name', 'corporation_id', 'typeName'])
             ->make(true);
 
     }
