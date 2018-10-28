@@ -23,6 +23,9 @@
 namespace Seat\Web\Http\Controllers\Support;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Sde\ChrFaction;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\User;
@@ -41,6 +44,21 @@ class ResolveController extends Controller
     protected $prefix = 'name_id:';
 
     /**
+     * The collection to return after resolving the submitted ids.
+     *
+     * @var Collection
+     */
+    protected $response;
+
+    /**
+     * ResolveController constructor.
+     */
+    public function __construct()
+    {
+        $this->response = collect();
+    }
+
+    /**
      * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\JsonResponse
@@ -49,103 +67,203 @@ class ResolveController extends Controller
     public function resolveIdsToNames(Request $request)
     {
 
-        // Init the initial return array
-        $response = collect();
-
         // Resolve the Esi client library from the IoC
         $eseye = app('esi-client')->get();
 
         // Grab the ids from the request for processing
-        collect(explode(',', $request->ids))->map(function ($id) {
+        collect(explode(',', $request->ids))
+            ->map(function ($id) {
 
-            // Convert them all to integers
-            return (int) $id;
+                // Convert them all to integers
+                return (int) $id;
+            })
+            ->unique()
+            ->filter(function ($id) {
 
-        })->unique()->filter(function ($id) use (&$response) {
+                // Filter out ids that are System items
+                // see: https://gist.github.com/a-tal/5ff5199fdbeb745b77cb633b7f4400bb
+                if ($id <= 10000)
+                    return false;
 
-            // Next, filter the ids we have in the cache, setting
-            // the appropriate response values as we go along.
-            if ($cached_entry = cache($this->prefix . $id)) {
+                // Next, filter the ids we have in the cache, setting
+                // the appropriate response values as we go along.
+                if ($cached_entry = cache($this->prefix . $id)) {
 
-                $response[$id] = $cached_entry;
+                    $this->response[$id] = $cached_entry;
 
-                // Remove this as a valid id, we already have the value we want.
-                return false;
-            }
+                    // Remove this as a valid id, we already have the value we want.
+                    return false;
+                }
 
-            // We don't have this id in the cache. Return it
-            // so that we can update it later.
-            return true;
+                // We don't have this id in the cache. Return it
+                // so that we can update it later.
+                return true;
+            })
+            ->pipe(function ($collection) {
+                return $collection->when($collection->isNotEmpty(), function ($ids) {
+                    return $this->resolveFactionIDs($ids);
+                });
+            })
+            ->pipe(function ($collection) {
+                return $collection->when($collection->isNotEmpty(), function ($ids) {
+                    return $this->resolveCharacterIDsFromSeat($ids);
+                });
+            })
+            ->pipe(function ($collection) {
+                return $collection->when($collection->isNotEmpty(), function ($ids) {
+                    return $this->resolveCorporationIDsFromSeat($ids);
+                });
+            })
+            ->chunk(1000)
+            ->each(function ($chunk) use ($eseye) {
 
-        })->chunk(1000)->each(function ($chunk) use (&$response, $eseye) {
+                // quick break if no more IDs must be resolve by ESI
+                if ($chunk->isEmpty())
+                    return;
 
-            // universe resolver is not working on factions at this time
-            // retrieve them from SDE and remove them from collection
-            // TODO CCP WIP : https://github.com/ccpgames/esi-issues/issues/736
-            $names = ChrFaction::whereIn('factionID', $chunk->flatten()->toArray())
-                ->get();
-
-            collect($names)->each(function ($name) use (&$response) {
-
-                cache([$this->prefix . $name->factionID => $name->factionName], carbon()->addCentury());
-                $response[$name->factionID] = $name->factionName;
+                $this->resolveIDsfromESI($chunk, $eseye);
 
             });
 
-            $chunk = $chunk->filter(function ($id) use ($names) {
+        return response()->json($this->response);
+    }
 
-                return ! $names->contains('factionID', $id);
+    private function resolveFactionIDs($ids)
+    {
+
+        // universe resolver is not working on factions at this time
+        // retrieve them from SDE and remove them from collection
+        // TODO CCP WIP : https://github.com/ccpgames/esi-issues/issues/736
+        $names = ChrFaction::whereIn('factionID', $ids->flatten()->toArray())
+            ->get()
+            ->map(function ($faction) {
+                return collect([
+                    'id' => $faction->factionID,
+                    'name' => $faction->factionName,
+                ]);
             });
 
-            // quick break if no more IDs must be resolve by ESI
-            if ($chunk->count() == 0)
-                return;
+        return $this->cacheIDsAndReturnUnresolvedIDs($names, $ids);
+    }
 
-            // Finally, grab outstanding ids and resolve their names
-            // using Esi.
+    private function resolveCharacterIDsFromSeat($ids)
+    {
 
+        // resolve names that are already in SeAT
+        // no unnecessary api calls the request can be resolved internally.
+        $names = CharacterInfo::whereIn('character_id', $ids->flatten()->toArray())
+            ->get()
+            ->map(function ($character) {
+                return collect([
+                    'id' => $character->character_id,
+                    'name' => $character->name,
+                ]);
+            });
+
+        return $this->cacheIDsAndReturnUnresolvedIDs($names, $ids);
+    }
+
+    private function resolveCorporationIDsFromSeat($ids)
+    {
+
+        // resolve names that are already in SeAT
+        // no unnecessary api calls the request can be resolved internally.
+        $names = CorporationInfo::whereIn('corporation_id', $ids->flatten()->toArray())
+            ->get()
+            ->map(function ($corporation) {
+                return collect([
+                    'id' => $corporation->corporation_id,
+                    'name' => $corporation->name,
+                ]);
+            });
+
+        return $this->cacheIDsAndReturnUnresolvedIDs($names, $ids);
+    }
+
+    private function resolveIDsfromESI($ids, $eseye)
+    {
+
+        // Finally, grab outstanding ids and resolve their names
+        // using Esi.
+
+        try {
             $eseye->setVersion('v2');
-            $eseye->setBody($chunk->flatten()->toArray());
+            $eseye->setBody($ids->flatten()->toArray());
             $names = $eseye->invoke('post', '/universe/names/');
 
-            collect($names)->each(function ($name) use (&$response) {
+            collect($names)->each(function ($name) {
 
                 // Cache the name resolution for this id for a long time.
                 cache([$this->prefix . $name->id => $name->name], carbon()->addCentury());
+                $this->response[$name->id] = $name->name;
 
-                $response[$name->id] = $name->name;
             });
+
+        } catch (\Exception $e) {
+            // If this fails split the ids in half and try to self referential resolve the half_chunks
+            // until all possible resolvable ids has processed.
+            if ($ids->count() === 1) {
+                // return a singleton unresolvable id as 'unknown'
+                $this->response[$ids->first()] = trans('web::seat.unknown');
+            } else {
+                //split the chunk in two
+                $half = ceil($ids->count() / 2);
+                //keep on processing the halfs independently,
+                //ideally one of the halfs will process just perfect
+                $ids->chunk($half)->each(function ($half_chunk) use ($eseye) {
+
+                    //this is a selfrefrencial call.
+                    $this->resolveIDsfromESI($half_chunk, $eseye);
+                });
+            }
+
+        }
+
+    }
+
+    /**
+     * @param \Illuminate\Support\Collection $names
+     * @param \Illuminate\Support\Collection $ids
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    private function cacheIDsAndReturnUnresolvedIDs(Collection $names, Collection $ids) : Collection
+    {
+        $names->each(function ($name) {
+
+            cache([$this->prefix . $name['id'] => $name['name']], carbon()->addCentury());
+            $this->response[$name['id']] = $name['name'];
+
         });
 
-        // Grr. Without this, arbitrary things will get replaced as
-        // #System/Corporation in the UI. Infuriating to say the least.
-        $response->forget([0, 2]);
+        $ids = $ids->filter(function ($id) use ($names) {
 
-        return response()->json($response);
+            return ! $names->contains('id', $id);
+        });
+
+        return $ids;
+
     }
 
     public function resolveMainCharacter(Request $request)
     {
 
-        // Init the initial return array
-        $response = collect();
-
         // Grab the ids from the request for processing
         collect(explode(',', $request->ids))->map(function ($id) {
 
             // Convert them all to integers
             return (int) $id;
 
-        })->each(function ($chunk) use (&$response) {
+        })->each(function ($chunk) {
 
             $character = User::find($chunk);
 
             $maincharacter = is_null($character) ? null : $character->group->main_character;
 
-            $response[$chunk] = view('web::partials.maincharacter', compact('maincharacter'))->render();
+            $this->response[$chunk] = view('web::partials.maincharacter', compact('maincharacter'))->render();
         });
 
-        return response()->json($response);
+        return response()->json($this->response);
 
     }
 }
