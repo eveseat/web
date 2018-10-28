@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\Controllers\Character;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Seat\Services\Repositories\Character\MiningLedger;
 use Seat\Web\Http\Controllers\Controller;
@@ -45,17 +46,10 @@ class MiningLedgerController extends Controller
     public function getLedger(int $character_id): View
     {
 
-        $ledger = $this->getCharacterLedger($character_id)
-            ->sortByDesc('date')
-            ->groupBy('date', 'solar_system_id', 'type_id')
-            ->map(function ($row) {
-
-                $row->quantity = $row->sum('quantity');
-                $row->volumes = $row->sum('volumes');
-                $row->value = $row->sum('value');
-
-                return $row;
-            })->flatten();
+        $ledger = $this->getCharacterLedger($character_id, false)
+            ->addSelect(DB::raw('SUM(quantity) as quantity'), DB::raw('SUM(quantity * volume) as volumes'), DB::raw('SUM(quantity * adjusted_price) as amounts'))
+            ->groupBy('character_id', 'date', 'solar_system_id', 'type_id')
+            ->get();
 
         return view('web::character.mining-ledger', compact('ledger'));
     }
@@ -72,10 +66,10 @@ class MiningLedgerController extends Controller
     {
 
         $entries = $this->getCharacterLedger($character_id, false)
-            ->addSelect('time')
-            ->where('date', $date)
+            ->addSelect('time', 'quantity', DB::raw('(quantity * volume) as volumes'), DB::raw('(quantity * adjusted_price) as amounts'))
+            ->where('character_minings.date', $date)
             ->where('solar_system_id', $system_id)
-            ->where('type_id', $type_id)
+            ->where('character_minings.type_id', $type_id)
             ->get();
 
         return Datatables::of($entries)
@@ -94,7 +88,7 @@ class MiningLedgerController extends Controller
                 return view('web::partials.miningvolume', compact('row'))
                     ->render();
             })
-            ->addColumn('value', function ($row) {
+            ->editColumn('amounts', function ($row) {
 
                 return view('web::partials.miningvalue', compact('row'))
                     ->render();
