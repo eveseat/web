@@ -106,12 +106,12 @@ class ResolveController extends Controller
             })
             ->pipe(function ($collection) {
                 return $collection->when($collection->isNotEmpty(), function ($ids) {
-                    return $this->resolveCharacterIDsFromSeat($ids);
+                    return $this->resolveInternalCharacterIDs($ids);
                 });
             })
             ->pipe(function ($collection) {
                 return $collection->when($collection->isNotEmpty(), function ($ids) {
-                    return $this->resolveCorporationIDsFromSeat($ids);
+                    return $this->resolveInternalCorporationIDs($ids);
                 });
             })
             ->chunk(1000)
@@ -146,7 +146,7 @@ class ResolveController extends Controller
         return $this->cacheIDsAndReturnUnresolvedIDs($names, $ids);
     }
 
-    private function resolveCharacterIDsFromSeat($ids)
+    private function resolveInternalCharacterIDs($ids)
     {
 
         // resolve names that are already in SeAT
@@ -163,7 +163,7 @@ class ResolveController extends Controller
         return $this->cacheIDsAndReturnUnresolvedIDs($names, $ids);
     }
 
-    private function resolveCorporationIDsFromSeat($ids)
+    private function resolveInternalCorporationIDs($ids)
     {
 
         // resolve names that are already in SeAT
