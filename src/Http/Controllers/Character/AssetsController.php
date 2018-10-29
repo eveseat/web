@@ -58,8 +58,8 @@ class AssetsController extends Controller
 
             return Datatables::of($contents)
                 ->editColumn('quantity', function ($row) {
-
-                    return number($row->quantity, 0);
+                    if($row->content->count() < 1)
+                        return number($row->quantity, 0);
                 })
                 ->addColumn('type', function ($row) {
                     return view('web::character.partials.asset-type', compact('row'));
@@ -72,6 +72,12 @@ class AssetsController extends Controller
                         return $row->type->group->groupName;
 
                     return 'Unknown';
+                })
+                ->addColumn('details_url', function ($row) {
+                    if($row->content->count() > 0)
+                        return route('character.view.assets.contents', ['character_id' => $row->character_id, 'item_id' => $row->item_id]);
+
+                    return '';
                 })
                 ->make(true);
     }
@@ -120,6 +126,9 @@ class AssetsController extends Controller
                     return route('character.view.assets.contents', ['character_id' => $row->character_id, 'item_id' => $row->item_id]);
 
                 return '';
+            })
+            ->editColumn('content',function ($row){
+                return view('web::character.partials.content',compact('row'));
             })
             ->make(true);
 

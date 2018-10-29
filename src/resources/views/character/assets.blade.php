@@ -77,7 +77,8 @@
         {data: 'typeName', name: 'invTypes.typeName', visible: false },
         {data: 'locationName', name: 'locationName', searchable: false, visible: false },
         {data: 'name', name: 'name', visible: false },
-        {data: 'character_id', name: 'character_id', visible: false }
+        {data: 'character_id', name: 'character_id', visible: false },
+        //{data: 'content', name: 'content', visible: false}
       ],
       rowGroup: {
 
@@ -97,7 +98,6 @@
         if(data.quantity == null){
           $(row).find("td:eq(0)")
               .addClass('details-control')
-              .attr('data-location-id',data.location_id)
               .append('<button class="btn btn-xs btn-link"><i class="fa fa-plus"></i></button>');
         }
       },
@@ -106,12 +106,27 @@
       },
     });
 
-    $('.location-table tbody').on('click', 'td.details-control', function (e) {
+    //$('.location-table tbody').on('click', 'td.details-control', function (e) {
+    assetGroupTable.on('click', 'td.details-control', function () {
+
+      var td = $(this);
+      var table = $(td).closest('table');
+      var row = $(table).DataTable().row(td.closest('tr'));
+
+      console.log(row.data());
 
       var tr = $(this).closest('tr');
-      var row = assetGroupTable.row(tr);
+      //var row = assetGroupTable.row(tr);
+
       var symbol = tr.find('i');
 
+    /*  var itemId = $(this).attr('data-item-id');
+      var detailsUrl = $(this).attr('data-details-url');*/
+
+      //var row = $("#assets-contents[data-item-id=" + itemId +"]" )
+
+      /*console.log(itemId);
+      console.log(detailsUrl);*/
 
       if (row.child.isShown()) {
         // This row is already open - close it
@@ -122,36 +137,62 @@
       } else {
         // Open this row
         symbol.removeClass("fa-plus").addClass("fa-minus");
-        row.child(template(row.data())).show();
 
-        initTable(row.data());
+        //assetGroupTable.rowGroup().disable();
+        row.child(template2(row.data())).show();
+        console.log(row.data().item_id);
+        //assetGroupTable.rowGroup().enable();
+
+        initTable2(row.data());
+
 
         tr.addClass('shown').css("background-color", "#D4D4D4"); // Heading Color;
-        tr.next('tr').find('td').css("background-color", "#E5E5E5");
+        //tr.next('tr').find('td').css("background-color", "#E5E5E5");
       }
     }).on('draw.dt', function () {
       // remove additonal created group-rows
-      $(".dtrg-group").remove();
+      //$(".dtrg-group").remove();
     });
 
     function initTable(data) {
-      $("#assets-contents[data-item-id=" + data.item_id +"]").DataTable({
-        processing: false,
+      console.log('init table ' + data.name +' and '+ data.item_id + ' url: '+ data.details_url);
+
+      console.log("table#assets-contents[data-item-id='" + data.item_id +"']");
+
+      $("table#assets-contents[data-item-id=" + data.item_id +"]").DataTable({
+        processing: true,
         serverSide: true,
         paging: false,
         info: false,
         searching: false,
         ajax: data.details_url,
         columns: [
+          {orderable: false, data: null, defaultContent: '', searchable: false},
           {data: 'quantity', name: 'quantity'},
           {data: 'type', name: 'type', orderable: false, searchable: false},
           {data: 'volume', name: 'volume', orderable: false, searchable: false},
           {data: 'group', name: 'group', orderable: false, searchable: false},
         ],
+        createdRow: function(row, data, dataIndex) {
+          if(data.quantity == null){
+            $(row).find("td:eq(0)")
+                .addClass('details-control')
+                .attr('data-location-id', data.item_id )
+                .attr('data-origin', data.location_id )
+                .append('<button class="btn btn-xs btn-link"><i class="fa fa-plus"></i></button>');
+          }
+        },
         drawCallback : function () {
           $("img").unveil(100);
+          // remove additonal created group-rows
+          $(".dtrg-group").remove();
+        },
+        "initComplete": function(settings, json) {
+          alert('DataTables has finished its initialisation.');
         }
-      })
+      });
+
+      console.log("finalised init " + data.name);
     }
 
     function template ( d ) {
@@ -159,15 +200,50 @@
       return  '<table class="table compact table-condensed table-hover table-responsive" id="assets-contents" data-item-id='+ d.item_id +'>'+
           '<thead>'+
           '<tr>'+
+          '<th></th>'+
           '<th>'+"{{ trans('web::seat.quantity') }}"+'</th>'+
           '<th>'+"{{ trans_choice('web::seat.type', 1) }}"+'</th>'+
           '<th>'+"{{ trans('web::seat.volume') }}"+'</th>'+
           '<th>'+"{{ trans_choice('web::seat.group',1) }}"+'</th>'+
-          '<th></th>'+
           '</tr>'+
           '</thead>'+
           '</table>';
     }
+
+    function template2 ( d ) {
+      return d.content;
+    }
+    function initTable2(data) {
+      $("table#assets-contents[data-item-id=" + data.item_id +"]").DataTable({
+        processing: true,
+        paging: false,
+        info: false,
+        searching: false,
+        columns: [
+          {orderable: false, data: null, defaultContent: '', searchable: false},
+          {data: 'quantity', name: 'quantity'},
+          {data: 'type', name: 'type', orderable: false, searchable: false},
+          {data: 'volume', name: 'volume', orderable: false, searchable: false},
+          {data: 'group', name: 'group', orderable: false, searchable: false},
+          {data: 'content', name: 'group', orderable: false, searchable: false, visible: false},
+        ],
+        createdRow: function(row, data, dataIndex) {
+          if(data.quantity === ""){
+            $(row).find("td:eq(0)")
+                .addClass('details-control')
+                .attr('data-location-id', data.item_id )
+                .attr('data-origin', data.location_id )
+                .append('<button class="btn btn-xs btn-link"><i class="fa fa-plus"></i></button>');
+          }
+        },
+        drawCallback : function () {
+          $("img").unveil(100);
+          // remove additonal created group-rows
+          $(".dtrg-group").remove();
+        },
+      });
+    }
+
 
     var SI_SYMBOL = ["", "k", "M", "G", "T", "P", "E"];
 
