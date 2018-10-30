@@ -86,8 +86,8 @@ class AssetsController extends Controller
 
                 return 'Unknown';
             })
-            ->editColumn('content',function ($row){
-                return view('web::character.partials.content',compact('row'));
+            ->editColumn('content', function ($row) {
+                return view('web::character.partials.content', compact('row'));
             })
             ->make(true);
     }
