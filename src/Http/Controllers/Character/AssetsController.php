@@ -24,6 +24,7 @@ namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Services\Repositories\Character\Assets;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Models\User;
 use Yajra\Datatables\Datatables;
 
 /**
@@ -47,53 +48,17 @@ class AssetsController extends Controller
 
     /**
      * @param int $character_id
-     * @param int $item_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getAssetsContents(int $character_id, int $item_id)
-    {
-
-            $contents = $this->getCharacterAssetContentsBuilder($character_id, $item_id);
-
-            return Datatables::of($contents)
-                ->editColumn('quantity', function ($row) {
-                    if($row->content->count() < 1)
-                        return number($row->quantity, 0);
-                })
-                ->addColumn('type', function ($row) {
-                    return view('web::character.partials.asset-type', compact('row'));
-                })
-                ->addColumn('volume', function ($row) {
-                    return number_metric($row->quantity * optional($row->type)->volume ?? 0) . 'm&sup3';
-                })
-                ->addColumn('group', function ($row) {
-                    if($row->type)
-                        return $row->type->group->groupName;
-
-                    return 'Unknown';
-                })
-                ->addColumn('details_url', function ($row) {
-                    if($row->content->count() > 0)
-                        return route('character.view.assets.contents', ['character_id' => $row->character_id, 'item_id' => $row->item_id]);
-
-                    return '';
-                })
-                ->make(true);
-    }
-
-    /**
-     * @param int $character_id
      *
      * @return mixed
      */
     public function getCharacterAssets(int $character_id)
     {
+
         if(request('all_linked_characters') === 'false')
             $character_ids = collect($character_id);
 
         if(request('all_linked_characters') === 'true')
-            $character_ids = auth()->user()->group->users
+            $character_ids = User::find($character_id)->group->users
                 ->filter(function ($user) {
                     if(! $user->name === 'admin' || $user->id === 1)
                         return false;
@@ -121,16 +86,9 @@ class AssetsController extends Controller
 
                 return 'Unknown';
             })
-            ->addColumn('details_url', function ($row) {
-                if($row->content->count() > 0)
-                    return route('character.view.assets.contents', ['character_id' => $row->character_id, 'item_id' => $row->item_id]);
-
-                return '';
-            })
             ->editColumn('content',function ($row){
                 return view('web::character.partials.content',compact('row'));
             })
             ->make(true);
-
     }
 }
