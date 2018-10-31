@@ -23,7 +23,7 @@
     </div>
     <div class="panel-body">
 
-      <table class="table datatable compact table-condensed table-hover table-responsive">
+      <table id="contact-table" class="table compact table-condensed table-hover table-responsive">
         <thead>
         <tr>
           <th>{{ trans_choice('web::seat.name', 1) }}</th>
@@ -33,7 +33,7 @@
           <th class="no-sort"></th>
         </tr>
         </thead>
-        <tbody>
+        {{--<tbody>
         @foreach($contacts->sortByDesc('standing') as $contact)
           <tr class="
             @if($contact->standing > 0)
@@ -104,10 +104,34 @@
           </tr>
         @endforeach
 
-        </tbody>
+        </tbody>--}}
       </table>
-
     </div>
   </div>
 
 @stop
+
+@push('javascript')
+
+  <script type="text/javascript">
+
+    $('#contact-table').DataTable({
+      "processing": true,
+      "serverSide": true,
+      "ajax": {
+        url: "{{$url}}"
+      },
+      columns: [
+        {data: 'contact_id', name: 'contact_id'},
+        {data: 'contact_type', name: 'contact_type'},
+        {data: 'standing', name: 'standing'},
+        {data: 'label_ids', name: 'label_ids'},
+        {data: 'name', name: 'character_infos.name',visible: false}
+
+
+      ]
+    });
+
+  </script>
+
+@endpush

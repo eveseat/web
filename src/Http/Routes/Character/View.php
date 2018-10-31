@@ -66,6 +66,12 @@ Route::get('/view/contacts/{character_id}', [
     'uses'       => 'ContactsController@getContacts',
 ]);
 
+Route::get('/view/contacts/{character_id}/details', [
+    'as'         => 'character.view.contacts.details',
+    'middleware' => 'characterbouncer:contacts',
+    'uses'       => 'ContactsController@getContactsDetails',
+]);
+
 Route::get('/view/contracts/{character_id}', [
     'as'         => 'character.view.contracts',
     'middleware' => 'characterbouncer:contracts',

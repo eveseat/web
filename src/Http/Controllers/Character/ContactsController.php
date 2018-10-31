@@ -24,6 +24,7 @@ namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Services\Repositories\Character\Contacts;
 use Seat\Web\Http\Controllers\Controller;
+use Yajra\Datatables\Datatables;
 
 class ContactsController extends Controller
 {
@@ -37,9 +38,23 @@ class ContactsController extends Controller
     public function getContacts(int $character_id)
     {
 
-        $contacts = $this->getCharacterContacts($character_id);
+
         $labels = $this->getCharacterContactLabels($character_id);
 
-        return view('web::character.contacts', compact('contacts', 'labels'));
+        $url = route('character.view.contacts.details', ['character_id' => $character_id]);
+
+        return view('web::character.contacts', compact('url'));
+
+
+    }
+
+    public function getContactsDetails(int $character_id)
+    {
+
+        $contacts = $this->getCharacterContacts($character_id);
+
+        return Datatables::of($contacts)
+            ->make(true);
+
     }
 }
