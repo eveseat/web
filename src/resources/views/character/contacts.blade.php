@@ -30,7 +30,7 @@
           <th>{{ trans_choice('web::seat.type', 1) }}</th>
           <th>{{ trans('web::seat.standings') }}</th>
           <th>{{ trans('web::seat.labels') }}</th>
-          <th class="no-sort"></th>
+          <th></th>
         </tr>
         </thead>
         {{--<tbody>
@@ -122,14 +122,27 @@
         url: "{{$url}}"
       },
       columns: [
-        {data: 'contact_id', name: 'contact_id'},
+        {data: 'contact_id', name: 'contact_id', sortable: false},
         {data: 'contact_type', name: 'contact_type'},
-        {data: 'standing', name: 'standing'},
+        {data: 'standing_view', name: 'standing', searchable: false},
         {data: 'label_ids', name: 'label_ids'},
-        {data: 'name', name: 'character_infos.name',visible: false}
+        {data: 'links', name: 'links', sortable: false, searchable: false},
+        {data: 'characterName', name: 'character_infos.name',visible: false},
+        {data: 'corporationName', name: 'corporation_infos.name',visible: false},
+      ],
+      createdRow: function( row, data ) {
+        if ( data.standing > 0 ) {
+          $(row).addClass('success')
+        }
 
-
-      ]
+        if ( data.standing < 0 ) {
+          $(row).addClass('danger')
+        }
+      },
+      drawCallback : function () {
+        $("img").unveil(100);
+        ids_to_names();
+      },
     });
 
   </script>

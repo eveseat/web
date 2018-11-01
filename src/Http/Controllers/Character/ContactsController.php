@@ -22,6 +22,8 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
+use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Character\Contacts;
 use Seat\Web\Http\Controllers\Controller;
 use Yajra\Datatables\Datatables;
@@ -38,22 +40,55 @@ class ContactsController extends Controller
     public function getContacts(int $character_id)
     {
 
+        $url = url()->current();
 
-        $labels = $this->getCharacterContactLabels($character_id);
-
-        $url = route('character.view.contacts.details', ['character_id' => $character_id]);
-
-        return view('web::character.contacts', compact('url'));
-
-
-    }
-
-    public function getContactsDetails(int $character_id)
-    {
+        if(! request()->ajax())
+            return view('web::character.contacts', compact('url'));
 
         $contacts = $this->getCharacterContacts($character_id);
 
         return Datatables::of($contacts)
+            ->editColumn('contact_id', function ($row) {
+
+                if($row->contact_type === 'character'){
+                    $character = CharacterInfo::find($row->contact_id) ?: $row->contact_id;
+                    return view('web::partials.character', compact('character'));
+                }
+
+                if($row->contact_type === 'corporation'){
+                    $corporation = CorporationInfo::find($row->contact_id) ?: $row->contact_id;
+                    return view('web::partials.corporation', compact('corporation'));
+                }
+
+                return view('web::partials.unknown', ['unknown_id' => $row->contact_id]);
+            })
+            ->editColumn('label_ids', function ($row) {
+
+                if(isset($row->label_ids)) {
+                    $labels = $this->getCharacterContactLabels($row->character_id);
+
+                    return $labels->whereIn('label_id', $row->label_ids)->implode('label_name', ', ');
+                }
+
+                return '';
+            })
+            ->addColumn('standing_view', function ($row){
+
+                if($row->standing > 0)
+                    return "<b class='text-success'>". $row->standing ."</b>";
+
+                if($row->standing < 0)
+                    return "<b class='text-danger'>". $row->standing ."</b>";
+
+                return "<b>". $row->standing ."</b>";
+
+            })
+            ->addColumn('links', function ($row){
+                return view('web::character.partials.contact-links', compact('row'));
+            })
+            ->addColumn('name', function ($row){
+                return cache('name_id:' . $row->contact_id);
+            })
             ->make(true);
 
     }
