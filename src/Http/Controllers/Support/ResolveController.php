@@ -251,7 +251,7 @@ class ResolveController extends Controller
     public function saveResolvedIDs()
     {
 
-        $this->response->each(function ($name, $id){
+        $this->response->each(function ($name, $id) {
             ResolvedIds::updateOrCreate(
                 ['id'   => $id],
                 ['name' => $name]

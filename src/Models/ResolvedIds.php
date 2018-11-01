@@ -8,5 +8,5 @@ class ResolvedIds extends Model
 {
     protected $primaryKey = 'id';
 
-    protected $fillable = ['id','name'];
+    protected $fillable = ['id', 'name'];
 }

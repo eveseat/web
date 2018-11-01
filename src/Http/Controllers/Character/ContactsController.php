@@ -52,11 +52,13 @@ class ContactsController extends Controller
 
                 if($row->contact_type === 'character'){
                     $character = CharacterInfo::find($row->contact_id) ?: $row->contact_id;
+
                     return view('web::partials.character', compact('character'));
                 }
 
                 if($row->contact_type === 'corporation'){
                     $corporation = CorporationInfo::find($row->contact_id) ?: $row->contact_id;
+
                     return view('web::partials.corporation', compact('corporation'));
                 }
 
@@ -72,21 +74,21 @@ class ContactsController extends Controller
 
                 return '';
             })
-            ->addColumn('standing_view', function ($row){
+            ->addColumn('standing_view', function ($row) {
 
                 if($row->standing > 0)
-                    return "<b class='text-success'>". $row->standing ."</b>";
+                    return "<b class='text-success'>" . $row->standing . '</b>';
 
                 if($row->standing < 0)
-                    return "<b class='text-danger'>". $row->standing ."</b>";
+                    return "<b class='text-danger'>" . $row->standing . '</b>';
 
-                return "<b>". $row->standing ."</b>";
+                return '<b>' . $row->standing . '</b>';
 
             })
-            ->addColumn('links', function ($row){
+            ->addColumn('links', function ($row) {
                 return view('web::character.partials.contact-links', compact('row'));
             })
-            ->addColumn('name', function ($row){
+            ->addColumn('name', function ($row) {
                 return cache('name_id:' . $row->contact_id);
             })
             ->make(true);
