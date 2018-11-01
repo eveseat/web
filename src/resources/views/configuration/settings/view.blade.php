@@ -104,7 +104,7 @@
               </select>
               <span class="help-block">
                 {{ trans('web::seat.tracking_help') }}
-                <a href="https://eveseat.github.io/docs/guides/admin/tracking/">Usage Tracking</a>
+                <a href="https://eveseat.github.io/docs/admin_guides/understanding_tracking/">Usage Tracking</a>
               </span>
             </div>
           </div>
