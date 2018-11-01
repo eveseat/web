@@ -48,7 +48,7 @@ class ContactsController extends Controller
         $contacts = $this->getCharacterContacts($character_id);
 
         return Datatables::of($contacts)
-            ->editColumn('contact_id', function ($row) {
+            ->editColumn('name', function ($row) {
 
                 if($row->contact_type === 'character'){
                     $character = CharacterInfo::find($row->contact_id) ?: $row->contact_id;
