@@ -40,10 +40,8 @@ class ContactsController extends Controller
     public function getContacts(int $character_id)
     {
 
-        $url = url()->current();
-
         if(! request()->ajax())
-            return view('web::character.contacts', compact('url'));
+            return view('web::character.contacts');
 
         $contacts = $this->getCharacterContacts($character_id);
 
@@ -86,7 +84,8 @@ class ContactsController extends Controller
 
             })
             ->addColumn('links', function ($row) {
-                return view('web::character.partials.contact-links', compact('row'));
+
+                return view('web::partials.links', ['id' => $row->contact_id , 'type' => $row->contact_type]);
             })
             ->addColumn('name', function ($row) {
                 return cache('name_id:' . $row->contact_id);

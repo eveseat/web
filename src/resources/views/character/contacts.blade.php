@@ -47,7 +47,7 @@
       "processing": true,
       "serverSide": true,
       "ajax": {
-        url: "{{$url}}"
+        url: "{{url()->current()}}"
       },
       columns: [
         {data: 'name', name: 'resolved_ids.name', sortable: false},
