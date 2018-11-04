@@ -85,7 +85,7 @@ class ContactsController extends Controller
             })
             ->addColumn('links', function ($row) {
 
-                return view('web::partials.links', ['id' => $row->contact_id , 'type' => $row->contact_type]);
+                return view('web::partials.links', ['id' => $row->contact_id, 'type' => $row->contact_type]);
             })
             ->addColumn('name', function ($row) {
                 return cache('name_id:' . $row->contact_id);
