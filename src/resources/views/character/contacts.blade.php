@@ -7,21 +7,21 @@
 
 @section('character_content')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">
-        {{ trans('web::seat.contacts') }}
+  <div class="nav-tabs-custom">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#" data-toggle="tab" data-characters="single">{{ trans('web::seat.contacts') }}</a></li>
+        <li><a href="#" data-toggle="tab" data-characters="all">{{ trans('web::seat.linked_characters') }} {{ trans('web::seat.contacts') }}</a></li>
         @if(auth()->user()->has('character.jobs'))
-          <span class="pull-right">
+          <li class="pull-right">
             <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.contacts']) }}"
                style="color: #000000">
               <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_contacts') }}"></i>
             </a>
-          </span>
+          </li>
         @endif
-      </h3>
-    </div>
-    <div class="panel-body">
+      </ul>
+
+    <div class="tab-content">
 
       <table id="contact-table" class="table compact table-condensed table-hover table-responsive">
         <thead>
@@ -43,11 +43,24 @@
 
   <script type="text/javascript">
 
-    $('#contact-table').DataTable({
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+      var target = $(e.target).data("characters"); // activated tab
+      contact_table.draw();
+    });
+
+    function allLinkedCharacters() {
+      var character_ids = $("div.nav-tabs-custom > ul > li.active > a").data('characters');
+      return character_ids !== 'single';
+    }
+
+    var contact_table = $('#contact-table').DataTable({
       "processing": true,
       "serverSide": true,
       "ajax": {
-        url: "{{url()->current()}}"
+        url: "{{url()->current()}}",
+        data: function ( d ) {
+          d.all_linked_characters = allLinkedCharacters();
+        }
       },
       columns: [
         {data: 'name', name: 'resolved_ids.name', sortable: false},
@@ -63,6 +76,10 @@
 
         if ( data.standing < 0 ) {
           $(row).addClass('danger')
+        }
+
+        if (data.is_in_group === 1){
+          $(row).addClass('info')
         }
       },
       drawCallback : function () {

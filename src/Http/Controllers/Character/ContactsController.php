@@ -26,6 +26,7 @@ use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Character\Contacts;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Models\User;
 use Yajra\Datatables\Datatables;
 
 class ContactsController extends Controller
@@ -43,24 +44,46 @@ class ContactsController extends Controller
         if(! request()->ajax())
             return view('web::character.contacts');
 
-        $contacts = $this->getCharacterContacts($character_id);
+        if(! request()->has('all_linked_characters'))
+            return response('required url parameter is missing!', 400);
+
+        if(request('all_linked_characters') === 'false')
+            $character_ids = collect($character_id);
+
+        $user_group = User::find($character_id)->group->users
+            ->filter(function ($user) {
+                if(! $user->name === 'admin' || $user->id === 1)
+                    return false;
+                return true;
+            })
+            ->pluck('id');
+
+        if(request('all_linked_characters') === 'true')
+            $character_ids = $user_group;
+
+        $contacts = $this->getCharacterContacts($character_ids);
 
         return Datatables::of($contacts)
-            ->editColumn('name', function ($row) {
+            ->editColumn('name', function ($row){
+
+                $character_id = $row->character_id;
 
                 if($row->contact_type === 'character'){
                     $character = CharacterInfo::find($row->contact_id) ?: $row->contact_id;
 
-                    return view('web::partials.character', compact('character'));
+                    return view('web::partials.character', compact('character', 'character_id' ));
                 }
 
                 if($row->contact_type === 'corporation'){
                     $corporation = CorporationInfo::find($row->contact_id) ?: $row->contact_id;
 
-                    return view('web::partials.corporation', compact('corporation'));
+                    return view('web::partials.corporation', compact('corporation', 'character_id'));
                 }
 
-                return view('web::partials.unknown', ['unknown_id' => $row->contact_id]);
+                return view('web::partials.unknown', [
+                    'unknown_id' => $row->contact_id,
+                    'character_id' => $character_id
+                    ]);
             })
             ->editColumn('label_ids', function ($row) {
 
@@ -89,6 +112,9 @@ class ContactsController extends Controller
             })
             ->addColumn('name', function ($row) {
                 return cache('name_id:' . $row->contact_id);
+            })
+            ->addColumn('is_in_group', function ($row) use ($user_group){
+                return $user_group->search($row->contact_id);
             })
             ->make(true);
 
