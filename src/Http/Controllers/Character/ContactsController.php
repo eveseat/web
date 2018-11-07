@@ -54,6 +54,7 @@ class ContactsController extends Controller
             ->filter(function ($user) {
                 if(! $user->name === 'admin' || $user->id === 1)
                     return false;
+
                 return true;
             })
             ->pluck('id');
@@ -64,14 +65,14 @@ class ContactsController extends Controller
         $contacts = $this->getCharacterContacts($character_ids);
 
         return Datatables::of($contacts)
-            ->editColumn('name', function ($row){
+            ->editColumn('name', function ($row) {
 
                 $character_id = $row->character_id;
 
                 if($row->contact_type === 'character'){
                     $character = CharacterInfo::find($row->contact_id) ?: $row->contact_id;
 
-                    return view('web::partials.character', compact('character', 'character_id' ));
+                    return view('web::partials.character', compact('character', 'character_id'));
                 }
 
                 if($row->contact_type === 'corporation'){
@@ -82,7 +83,7 @@ class ContactsController extends Controller
 
                 return view('web::partials.unknown', [
                     'unknown_id' => $row->contact_id,
-                    'character_id' => $character_id
+                    'character_id' => $character_id,
                     ]);
             })
             ->editColumn('label_ids', function ($row) {
@@ -113,7 +114,7 @@ class ContactsController extends Controller
             ->addColumn('name', function ($row) {
                 return cache('name_id:' . $row->contact_id);
             })
-            ->addColumn('is_in_group', function ($row) use ($user_group){
+            ->addColumn('is_in_group', function ($row) use ($user_group) {
                 return $user_group->search($row->contact_id);
             })
             ->make(true);
