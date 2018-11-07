@@ -49,21 +49,23 @@ class UserController extends Controller
             $groups = $this->getAllFullUsers();
 
             return Datatables::of($groups)
-                ->editColumn('refresh_token_deleted_at', function ($row){
+                ->editColumn('refresh_token_deleted_at', function ($row) {
                     return view('web::configuration.users.partials.refresh-token', compact('row'));
                 })
-                ->editColumn('main_character_id', function ($row){
+                ->editColumn('main_character_id', function ($row) {
                     $character = CharacterInfo::find($row->main_character_id) ?: $row->main_character_id;
+
                     return view('web::partials.character', compact('character'));
                 })
-                ->editColumn('name', function ($row){
+                ->editColumn('name', function ($row) {
                     $character = CharacterInfo::find($row->id) ?: $row->id;
+
                     return view('web::partials.character', compact('character'));
                 })
-                ->editColumn('last_login',function ($row){
+                ->editColumn('last_login', function ($row) {
                     return human_diff($row->last_login);
                 })
-                ->addColumn('action_buttons', function ($row){
+                ->addColumn('action_buttons', function ($row) {
                     return view('web::configuration.users.partials.action-buttons', compact('row'));
                 })
                 ->make(true);
