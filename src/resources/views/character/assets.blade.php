@@ -9,8 +9,8 @@
 
   <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#" data-toggle="tab" data-characters="single">Character Assets</a></li>
-      <li><a href="#" data-toggle="tab" data-characters="all">Linked Character Assets</a></li>
+      <li class="active"><a href="#" data-toggle="tab" data-characters="single">{{trans_choice('web::seat.character',1)}} {{ trans('web::seat.assets') }}</a></li>
+      <li><a href="#" data-toggle="tab" data-characters="all">{{ trans('web::seat.linked_characters') }} {{ trans('web::seat.assets') }}</a></li>
       @if(auth()->user()->has('character.jobs'))
       <li class="pull-right">
         <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.assets']) }}"
@@ -89,7 +89,7 @@
           },0);
 
           return $('<tr/>')
-              .append( '<td colspan="5"><b>'+group+'</b><span class="pull-right">'+ numberItems +' items taking '+ abbreviateNumber(volume) +' m&sup3</span></td>' )
+              .append( '<td colspan="5"><b>'+group+'</b><span class="pull-right">'+ numberItems +' {{ trans('web::seat.items_taking') }} '+ abbreviateNumber(volume) +' m&sup3</span></td>' )
         },
         dataSrc: 'locationName'
       },
