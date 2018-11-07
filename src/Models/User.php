@@ -144,6 +144,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected $hidden = ['password', 'remember_token'];
 
+    protected $appends =['email'];
+
     /**
      * Make sure we cleanup on delete.
      *
