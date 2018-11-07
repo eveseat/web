@@ -65,11 +65,13 @@
             role_titles.push(role.title.toString())
           });
 
-          return '{{trans('web::seat.main_character')}}: ' + group
+          var character_group = rows.data().pluck('main_character_id')[0];
+
+          return '{{trans('web::seat.main_character')}}: ' + character_group
               + '{{ trans('web::seat.email') }}: ' + email
               + '<span class="pull-right"> {{ trans_choice('web::seat.role', 2) }}: ' + role_titles.join(', ') + '</span>';
         },
-        dataSrc: 'main_character_id'
+        dataSrc: 'group_id'
       },
       drawCallback : function () {
         $("img").unveil(100);
