@@ -46,7 +46,7 @@
         {data: 'name', name: 'name'},
         {data: 'last_login', name: 'last_login'},
         {data: 'last_login_source', name: 'last_login_source'},
-        {data: 'action_buttons', name: 'action_buttons', searchable: false},
+        {data: 'action_buttons', name: 'action_buttons', searchable: false, orderable: false},
         {data: 'main_character_id', name: 'main_character_id', visible: false, searchable: false}
       ],
       rowGroup: {
@@ -65,11 +65,13 @@
             role_titles.push(role.title.toString())
           });
 
+          var wraped_role_titles = wordwrap(role_titles.join(', '), 100, '<br/>n');
+
           var character_group = rows.data().pluck('main_character_id')[0];
 
           return '{{trans('web::seat.main_character')}}: ' + character_group
               + '{{ trans('web::seat.email') }}: ' + email
-              + '<span class="pull-right"> {{ trans_choice('web::seat.role', 2) }}: ' + role_titles.join(', ') + '</span>';
+              + '<span class="pull-right"> {{ trans_choice('web::seat.role', 2) }}: ' + wraped_role_titles + '</span>';
         },
         dataSrc: 'group_id'
       },
@@ -78,6 +80,20 @@
         ids_to_names();
       },
     });
+
+    function wordwrap( str, width, brk, cut ) {
+
+      brk = brk || 'n';
+      width = width || 75;
+      cut = cut || false;
+
+      if (!str) { return str; }
+
+      var regex = '.{1,' +width+ '}(\s|$)' + (cut ? '|.{' +width+ '}|.+$' : '|\S+?(\s|$)');
+
+      return str.match( RegExp(regex, 'g') ).join( brk );
+
+    }
   </script>
 
 @endpush
