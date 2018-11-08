@@ -23,10 +23,13 @@
 namespace Seat\Web\Http\Controllers\Configuration;
 
 use Illuminate\Http\Request;
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\EditUser;
+use Seat\Web\Http\Validation\NewIntelNote;
 use Seat\Web\Http\Validation\ReassignUser;
+use Seat\Web\Models\Group;
 
 /**
  * Class UserController.
@@ -116,12 +119,40 @@ class UserController extends Controller
     }
 
     /**
-     * @param $user_id
+     * @param \Seat\Web\Http\Validation\NewIntelNote $request
+     * @param int                                    $user_id
      *
      * @return mixed
      */
-    public function editUserAccountStatus($user_id)
+    public function editUserAccountStatus(NewIntelNote $request, int $user_id)
     {
+
+        $user = $this->getUser($user_id);
+        $current_group = $user->group;
+
+        if ($current_group->users->count() > 1) {
+
+            $note = collect(sprintf('This character has been deactivated by %s and it formerly belonged to the following user group: %s.',
+                auth()->user()->name, $current_group->users->map(function ($user) {
+
+                    return $user->name;
+                })->implode(', ')));
+
+            $user->fill([
+                'group_id' => Group::create()->id,
+            ]);
+
+            $user->save();
+
+        } else {
+            $note = collect(sprintf('This character has been deactivated by %s.',
+                auth()->user()->name));
+        }
+
+        $note->push($request->input('note'));
+
+        CharacterInfo::addNote(
+            $user_id, $request->input('title'), $note->implode('<br/><br/>'));
 
         $this->flipUserAccountStatus($user_id);
 
