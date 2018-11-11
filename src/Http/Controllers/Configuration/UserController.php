@@ -25,6 +25,7 @@ namespace Seat\Web\Http\Controllers\Configuration;
 use Illuminate\Http\Request;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Services\Repositories\Configuration\UserRespository;
+use Seat\Services\Settings\Profile;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\EditUser;
 use Seat\Web\Http\Validation\NewIntelNote;
@@ -78,17 +79,14 @@ class UserController extends Controller
      * @param \Seat\Web\Http\Validation\EditUser $request
      *
      * @return mixed
+     * @throws \Seat\Services\Exceptions\SettingException
      */
     public function updateUser(EditUser $request)
     {
 
         $user = $this->getUser($request->input('user_id'));
 
-        $user->fill([
-            'email' => $request->input('email'),
-        ]);
-
-        $user->save();
+        Profile::set('email_address',$request->input('email'),$user->group->id);
 
         return redirect()->back()
             ->with('success', trans('web::seat.user_updated'));
@@ -130,22 +128,25 @@ class UserController extends Controller
         $user = $this->getUser($user_id);
         $current_group = $user->group;
 
-        if ($current_group->users->count() > 1) {
+        if($user->active){
 
-            $note = collect(sprintf('This character has been deactivated by %s and it formerly belonged to the following user group: %s.',
-                auth()->user()->name, $current_group->users->map(function ($user) {
+            if ($current_group->users->count() > 1) {
 
-                    return $user->name;
-                })->implode(', ')));
+                $note = collect(sprintf('This character has been deactivated by %s and it formerly belonged to the following user group: %s.',
+                    auth()->user()->name, $current_group->users->map(function ($user) { return $user->name; })->implode(', ')));
 
-            $user->fill([
-                'group_id' => Group::create()->id,
-            ]);
+                $user->fill([
+                    'group_id' => Group::create()->id,
+                ]);
 
-            $user->save();
+                $user->save();
 
+            } else {
+                $note = collect(sprintf('This character has been deactivated by %s.',
+                    auth()->user()->name));
+            }
         } else {
-            $note = collect(sprintf('This character has been deactivated by %s.',
+            $note = collect(sprintf('This character has been reactivated by %s.',
                 auth()->user()->name));
         }
 

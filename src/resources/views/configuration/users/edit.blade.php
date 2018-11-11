@@ -14,7 +14,7 @@
     </div>
     <div class="panel-body">
 
-      <form id="form" role="form" action="{{ route('configuration.access.users.update') }}" method="post">
+      <form id="set-email-form" role="form" action="{{ route('configuration.access.users.update') }}" method="post">
         {{ csrf_field() }}
         <input type="hidden" name="user_id" value="{{ $user->id }}">
 
@@ -35,10 +35,15 @@
 
         <div class="box-footer">
 
-          @if(auth()->user()->id != $user->id && $user->active)
-            <a type="button" class="btn btn-warning pull-left" data-toggle="modal" data-target="#deactivateModal">
 
-              {{ trans('web::seat.deactivate_user') }}
+          @if(auth()->user()->id != $user->id)
+            <a type="button" class="btn btn-{{ $user->active ? 'warning' : 'success' }} pull-left" data-toggle="modal" data-target="{{ $user->active ? '#deactivateModal' : '#activateModal' }}">
+
+              @if($user->active)
+                {{ trans('web::seat.deactivate_user') }}
+              @else
+                {{ trans('web::seat.activate_user') }}
+              @endif
             </a>
 
             <!-- Deactivate Modal -->
@@ -50,7 +55,7 @@
                       <span aria-hidden="true">&times;</span>
                     </button>
                     <h4 class="modal-title" id="deactivateModalLabel">
-                      Add a Note
+                      Deactivate a user
                     </h4>
                   </div>
                   <div class="modal-body">
@@ -93,8 +98,54 @@
               </div>
             </div>
 
+            <!-- Active Modal -->
+            <div class="modal fade" id="activateModal" tabindex="-1" role="dialog" aria-labelledby="activateModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="activateModalLabel">
+                      Reactivate a user
+                    </h4>
+                  </div>
+                  <div class="modal-body">
+
+                    <div class="callout callout-warning">
+                      <h4>Activate users with caution!</h4>
+
+                      <p>You'd better have a real good reason</p>
+                    </div>
+
+                    <form id="activateUserForm" role="form" action="{{ route('configuration.users.edit.account_status', ['user_id' => $user->id]) }}" method="post">
+                      {{ csrf_field() }}
+                      <input type="hidden" id="title" name="title" value="User reactivated">
+
+                      <div class="box-body">
+
+                        <div class="form-group">
+                          <label>Note</label>
+                          <textarea class="form-control" rows="15" name="note" placeholder="Explain the reason of reactivation" required></textarea>
+                        </div>
+
+                      </div><!-- /.box-body -->
+
+                      <div class="box-footer">
+                        <button type="submit" form="activateUserForm" class="btn btn-primary pull-right">
+                          Add
+                        </button>
+                      </div>
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
           @endif
-          <button form="form" type="submit" class="btn btn-primary pull-right">
+          <button form="set-email-form" type="submit" class="btn btn-primary pull-right">
             {{ trans('web::seat.edit') }}
           </button>
         </div>
