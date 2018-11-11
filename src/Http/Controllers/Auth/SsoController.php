@@ -77,7 +77,7 @@ class SsoController extends Controller
         $this->updateRefreshToken($eve_data);
 
         // If a deactivated user provides a new RefreshToken, the user should be reactivated
-        if(!$user->active)
+        if(! $user->active)
             $this->activateUser($user);
 
         if (! $this->loginUser($user))
@@ -197,7 +197,7 @@ class SsoController extends Controller
     }
 
     /**
-     * Login the user
+     * Login the user.
      *
      * This method returns a boolean as a status flag for the
      * login routine. If a false is returned, it might mean
@@ -232,7 +232,7 @@ class SsoController extends Controller
 
     /**
      * If a deactivated user provides a new RefreshToken
-     * the user is reactivated and a note is created
+     * the user is reactivated and a note is created.
      *
      * @param \Seat\Web\Models\User $user
      */
@@ -241,6 +241,6 @@ class SsoController extends Controller
         $user->active = true;
 
         CharacterInfo::addNote(
-            $user->id, 'User reactivated' , 'User has been reactivated by providing a new refresh token.');
+            $user->id, 'User reactivated', 'User has been reactivated by providing a new refresh token.');
     }
 }
