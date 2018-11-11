@@ -86,7 +86,7 @@ class UserController extends Controller
 
         $user = $this->getUser($request->input('user_id'));
 
-        Profile::set('email_address',$request->input('email'),$user->group->id);
+        Profile::set('email_address', $request->input('email'), $user->group->id);
 
         return redirect()->back()
             ->with('success', trans('web::seat.user_updated'));
