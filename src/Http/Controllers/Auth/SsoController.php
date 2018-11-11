@@ -24,6 +24,7 @@ namespace Seat\Web\Http\Controllers\Auth;
 
 use Laravel\Socialite\Contracts\Factory as Socialite;
 use Laravel\Socialite\Two\User as SocialiteUser;
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\Group;
@@ -74,6 +75,10 @@ class SsoController extends Controller
 
         // Update the refresh token for this character.
         $this->updateRefreshToken($eve_data);
+
+        // If a deactivated user provides a new RefreshToken, the user should be reactivated
+        if(!$user->active)
+            $this->activateUser($user);
 
         if (! $this->loginUser($user))
             return redirect()->route('auth.login')
@@ -192,10 +197,7 @@ class SsoController extends Controller
     }
 
     /**
-     * Login the user, ensuring that a group is attached.
-     *
-     * If no group is attached, ensure that the user at least
-     * has *a* group attached to it.
+     * Login the user
      *
      * This method returns a boolean as a status flag for the
      * login routine. If a false is returned, it might mean
@@ -207,16 +209,6 @@ class SsoController extends Controller
      */
     public function loginUser(User $user): bool
     {
-
-        // If this account is disabled, refuse to login
-        if (! $user->active) {
-
-            event('security.log', [
-                'Login for ' . $user->name . ' refused due to a disabled account', 'authentication',
-            ]);
-
-            return false;
-        }
 
         auth()->login($user, true);
 
@@ -236,5 +228,19 @@ class SsoController extends Controller
 
         if (setting('main_character_id') == 0)
             setting(['main_character_id', $user->character_id]);
+    }
+
+    /**
+     * If a deactivated user provides a new RefreshToken
+     * the user is reactivated and a note is created
+     *
+     * @param \Seat\Web\Models\User $user
+     */
+    private function activateUser(User $user)
+    {
+        $user->active = true;
+
+        CharacterInfo::addNote(
+            $user->id, 'User reactivated' , 'User has been reactivated by providing a new refresh token.');
     }
 }

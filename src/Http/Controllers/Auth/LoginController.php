@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\Controllers\Auth;
 
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Seat\Services\Settings\Seat;
 use Seat\Web\Http\Controllers\Controller;
 
 /**
@@ -71,6 +72,7 @@ class LoginController extends Controller
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Seat\Services\Exceptions\SettingException
      */
     public function showLoginForm()
     {
@@ -79,6 +81,8 @@ class LoginController extends Controller
         if (strlen(env('EVE_CLIENT_SECRET')) < 5 || strlen(env('EVE_CLIENT_ID')) < 5)
             session()->flash('warning', trans('web::seat.sso_config_warning'));
 
-        return view('web::auth.login');
+        $allow_registration = Seat::get('registration') === 'no' ? false : true;
+
+        return view('web::auth.login', compact('allow_registration'));
     }
 }

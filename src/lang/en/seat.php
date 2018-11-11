@@ -119,6 +119,7 @@ return [
     'sign_in'               => 'Sign In',
     'email_verify'          => 'Email Verification',
     'email_verify_welcome'  => 'Please enter a valid email address for your account.',
+    'no_register'           => 'Registration has been disabled. Please contact your administrator if you find this erroneous.',
 
     // Registration
     'new_account'           => 'New Account',
