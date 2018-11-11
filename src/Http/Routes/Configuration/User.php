@@ -25,11 +25,6 @@ Route::get('/', [
     'uses' => 'UserController@getAll',
 ]);
 
-Route::post('/update', [
-    'as'   => 'configuration.access.users.update',
-    'uses' => 'UserController@updateUser',
-]);
-
 Route::post('/reassign', [
     'as'   => 'configuration.access.users.reassign',
     'uses' => 'UserController@postReassignuser',

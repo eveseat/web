@@ -75,26 +75,6 @@ class UserController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Http\Validation\EditUser $request
-     *
-     * @return mixed
-     */
-    public function updateUser(EditUser $request)
-    {
-
-        $user = $this->getUser($request->input('user_id'));
-
-        $user->fill([
-            'email' => $request->input('email'),
-        ]);
-
-        $user->save();
-
-        return redirect()->back()
-            ->with('success', trans('web::seat.user_updated'));
-    }
-
-    /**
      * @param \Seat\Web\Http\Validation\ReassignUser $request
      *
      * @return \Illuminate\Http\RedirectResponse

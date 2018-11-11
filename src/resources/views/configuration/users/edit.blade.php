@@ -8,30 +8,48 @@
 
 @section('left')
 
+  <!-- account re-assignment -->
+  @if($user->name != 'admin')
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::seat.edit_user') }}</h3>
+      <h3 class="panel-title">{{ trans('web::seat.reassign_user') }}</h3>
     </div>
     <div class="panel-body">
 
-      <form id="form" role="form" action="{{ route('configuration.access.users.update') }}" method="post">
+      <div>
+        <dl>
+          <dt>Current User Group</dt>
+          <dd>
+            <ul class="list-unstyled">
+              @foreach($user->group->users as $group_user)
+                <li>
+                  {!! img('character', $group_user->id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  {{ $group_user->name }}
+                </li>
+              @endforeach
+            </ul>
+          </dd>
+        </dl>
+      </div>
+
+      <form role="form" action="{{ route('configuration.access.users.reassign') }}" method="post">
         {{ csrf_field() }}
         <input type="hidden" name="user_id" value="{{ $user->id }}">
 
-        <div class="box-body">
+        <div class="form-group">
+          <label for="available_users">{{ trans_choice('web::seat.available_groups', 2) }}</label>
+          <select name="group_id" id="available_users" style="width: 100%">
 
-          <div class="form-group">
-            <label for="username">{{ trans_choice('web::seat.username', 1) }}</label>
-            <input type="text" name="username" class="form-control" id="username" value="{{ $user->name }}" disabled>
-          </div>
+            @foreach($groups as $group)
 
-          <div class="form-group">
-            <label for="email">{{ trans_choice('web::seat.email', 1) }}</label>
-            <input type="email" name="email" class="form-control" id="email" value="{{ $user->email }}">
-          </div>
+              <option value="{{ $group->id }}">
+                {{ $group->users->map(function($user) { return $user->name; })->implode(', ') }}
+              </option>
 
-        </div><!-- /.box-body -->
-      </form>
+            @endforeach
+
+          </select>
+        </div>
 
         <div class="box-footer">
 
@@ -94,57 +112,6 @@
             </div>
 
           @endif
-          <button form="form" type="submit" class="btn btn-primary pull-right">
-            {{ trans('web::seat.edit') }}
-          </button>
-        </div>
-    </div>
-  </div>
-
-  <!-- account re-assignment -->
-  @if($user->name != 'admin')
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::seat.reassign_user') }}</h3>
-    </div>
-    <div class="panel-body">
-
-      <div>
-        <dl>
-          <dt>Current User Group</dt>
-          <dd>
-            <ul class="list-unstyled">
-              @foreach($user->group->users as $group_user)
-                <li>
-                  {!! img('character', $group_user->id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                  {{ $group_user->name }}
-                </li>
-              @endforeach
-            </ul>
-          </dd>
-        </dl>
-      </div>
-
-      <form role="form" action="{{ route('configuration.access.users.reassign') }}" method="post">
-        {{ csrf_field() }}
-        <input type="hidden" name="user_id" value="{{ $user->id }}">
-
-        <div class="form-group">
-          <label for="available_users">{{ trans_choice('web::seat.available_groups', 2) }}</label>
-          <select name="group_id" id="available_users" style="width: 100%">
-
-            @foreach($groups as $group)
-
-              <option value="{{ $group->id }}">
-                {{ $group->users->map(function($user) { return $user->name; })->implode(', ') }}
-              </option>
-
-            @endforeach
-
-          </select>
-        </div>
-
-        <div class="box-footer">
 
           <button type="submit" class="btn btn-primary pull-right">
             {{ trans('web::seat.reassign') }}
