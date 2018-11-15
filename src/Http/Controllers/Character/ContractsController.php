@@ -22,8 +22,11 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
+use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Character\Contracts;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Models\User;
 use Yajra\Datatables\Datatables;
 
 /**
@@ -53,14 +56,45 @@ class ContractsController extends Controller
      */
     public function getContractsData(int $character_id)
     {
+        if(! request()->ajax())
+            return view('web::character.contacts');
 
-        $contracts = $this->getCharacterContracts($character_id, false);
+        if(! request()->has('all_linked_characters'))
+            return response('required url parameter is missing!', 400);
+
+        if(request('all_linked_characters') === 'false')
+            $character_ids = collect($character_id);
+
+        $user_group = User::find($character_id)->group->users
+            ->filter(function ($user) {
+                if(! $user->name === 'admin' || $user->id === 1)
+                    return false;
+                return true;
+            })
+            ->pluck('id');
+
+        if(request('all_linked_characters') === 'true')
+            $character_ids = $user_group;
+
+        $contracts = $this->getCharacterContracts($character_ids);
 
         return Datatables::of($contracts)
             ->editColumn('issuer_id', function ($row) {
 
-                return view('web::partials.contractissuer', compact('row'))
-                    ->render();
+                if($row->for_corporation){
+
+                    $corporation = CorporationInfo::find($row->issuer_corporation_id) ?: $row->issuer_corporation_id;
+
+                    return view('web::partials.corporation', compact('corporation', 'character_id'));
+                }
+
+                $character = CharacterInfo::find($row->issuer_id) ?: $row->issuer_id;
+
+                return view('web::partials.character', compact('character', 'character_id'));
+
+
+                /*return view('web::partials.contractissuer', compact('row'))
+                    ->render();*/
             })
             ->editColumn('type', function ($row) {
 

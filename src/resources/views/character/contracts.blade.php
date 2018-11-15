@@ -7,20 +7,20 @@
 
 @section('character_content')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">
-        {{ trans('web::seat.contracts') }}
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#" data-toggle="tab" data-characters="single">{{ trans('web::seat.contracts') }}</a></li>
+      <li><a href="#" data-toggle="tab" data-characters="all">{{ trans('web::seat.linked_characters') }} {{ trans('web::seat.contracts') }} </a></li>
         @if(auth()->user()->has('character.jobs'))
-          <span class="pull-right">
+          <li class="pull-right">
             <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.contracts']) }}"
                style="color: #000000">
               <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_contracts') }}"></i>
             </a>
-          </span>
+          </li>
         @endif
-      </h3>
-    </div>
+      </li>
+    </ul>
     <div class="panel-body">
 
       <table class="table compact table-condensed table-hover table-responsive"
@@ -66,12 +66,26 @@
 @push('javascript')
 
   <script>
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+      var target = $(e.target).data("characters"); // activated tab
+      contact_table.draw();
+    });
+    function allLinkedCharacters() {
+      var character_ids = $("div.nav-tabs-custom > ul > li.active > a").data('characters');
+      return character_ids !== 'single';
+    }
+
 
     $(function () {
       $('table#character-contracts').DataTable({
         processing      : true,
         serverSide      : true,
-        ajax            : '{{ route('character.view.contracts.data', ['character_id' => $request->character_id]) }}',
+        ajax            : {
+          url: '{{ route('character.view.contracts.data', ['character_id' => $request->character_id]) }}',
+          data: function ( d ) {
+            d.all_linked_characters = allLinkedCharacters();
+          }
+        },
         columns         : [
           {data: 'date_issued', name: 'date_issued', render: human_readable},
           {data: 'issuer_id', name: 'issuer_id'},
