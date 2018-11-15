@@ -69,6 +69,7 @@ class ContractsController extends Controller
             ->filter(function ($user) {
                 if(! $user->name === 'admin' || $user->id === 1)
                     return false;
+
                 return true;
             })
             ->pluck('id');
@@ -89,7 +90,7 @@ class ContractsController extends Controller
                     $character = CharacterInfo::find($row->issuer_id) ?: $row->issuer_id;
 
                     return view('web::partials.corporation', compact('corporation', 'character_id'))
-                        ." (" . view('web::partials.character', compact('character', 'character_id')) . ")";
+                        . ' (' . view('web::partials.character', compact('character', 'character_id')) . ')';
                 }
 
                 $character = CharacterInfo::find($row->issuer_id) ?: $row->issuer_id;
@@ -108,7 +109,7 @@ class ContractsController extends Controller
             ->editColumn('acceptor_id', function ($row) {
 
                 if($row->acceptor_id === 0)
-                    return "";
+                    return '';
 
                 return view('web::partials.unknown', [
                     'unknown_id' => $row->acceptor_id,
@@ -136,10 +137,10 @@ class ContractsController extends Controller
             })
             ->addColumn('is_in_group', function ($row) use ($user_group) {
 
-                if (in_array($row->acceptor_id,$user_group->toArray()))
+                if (in_array($row->acceptor_id, $user_group->toArray()))
                     return true;
 
-                if (in_array($row->assignee_id,$user_group->toArray()))
+                if (in_array($row->assignee_id, $user_group->toArray()))
                     return true;
 
                 return false;
