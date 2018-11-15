@@ -63,6 +63,8 @@ return [
     'price'                 => 'Price',
     'reward'                => 'Reward',
     'collateral'            => 'Collateral',
+    'assignee'              => 'Assignee',
+    'acceptor'              => 'Acceptor',
     'location'              => 'Location',
     'filter'                => 'Filter|Filters',
     'clear'                 => 'Clear',

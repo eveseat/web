@@ -86,14 +86,34 @@ class ContractsController extends Controller
                 if($row->for_corporation){
 
                     $corporation = CorporationInfo::find($row->issuer_corporation_id) ?: $row->issuer_corporation_id;
+                    $character = CharacterInfo::find($row->issuer_id) ?: $row->issuer_id;
 
-                    return view('web::partials.corporation', compact('corporation', 'character_id'));
+                    return view('web::partials.corporation', compact('corporation', 'character_id'))
+                        ." (" . view('web::partials.character', compact('character', 'character_id')) . ")";
                 }
 
                 $character = CharacterInfo::find($row->issuer_id) ?: $row->issuer_id;
 
                 return view('web::partials.character', compact('character', 'character_id'));
 
+            })
+            ->editColumn('assignee_id', function ($row) {
+
+                return view('web::partials.unknown', [
+                    'unknown_id' => $row->assignee_id,
+                    'character_id' => $row->character_id,
+                ]);
+
+            })
+            ->editColumn('acceptor_id', function ($row) {
+
+                if($row->acceptor_id === 0)
+                    return "";
+
+                return view('web::partials.unknown', [
+                    'unknown_id' => $row->acceptor_id,
+                    'character_id' => $row->character_id,
+                ]);
 
             })
             ->editColumn('type', function ($row) {
@@ -113,6 +133,16 @@ class ContractsController extends Controller
 
                 return view('web::partials.contractcontentsbutton', compact('row'))
                     ->render();
+            })
+            ->addColumn('is_in_group', function ($row) use ($user_group) {
+
+                if (in_array($row->acceptor_id,$user_group->toArray()))
+                    return true;
+
+                if (in_array($row->assignee_id,$user_group->toArray()))
+                    return true;
+
+                return false;
             })
             ->make(true);
 
