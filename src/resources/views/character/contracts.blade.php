@@ -68,7 +68,7 @@
   <script>
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
       var target = $(e.target).data("characters"); // activated tab
-      contact_table.draw();
+      contract_table.draw();
     });
     function allLinkedCharacters() {
       var character_ids = $("div.nav-tabs-custom > ul > li.active > a").data('characters');
@@ -76,8 +76,8 @@
     }
 
 
-    $(function () {
-      $('table#character-contracts').DataTable({
+    var contract_table =   $('table#character-contracts').DataTable({
+
         processing      : true,
         serverSide      : true,
         ajax            : {
@@ -133,7 +133,6 @@
           });
         }
       });
-    });
 
   </script>
 

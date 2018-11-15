@@ -81,6 +81,8 @@ class ContractsController extends Controller
         return Datatables::of($contracts)
             ->editColumn('issuer_id', function ($row) {
 
+                $character_id = $row->character_id;
+
                 if($row->for_corporation){
 
                     $corporation = CorporationInfo::find($row->issuer_corporation_id) ?: $row->issuer_corporation_id;
@@ -93,8 +95,6 @@ class ContractsController extends Controller
                 return view('web::partials.character', compact('character', 'character_id'));
 
 
-                /*return view('web::partials.contractissuer', compact('row'))
-                    ->render();*/
             })
             ->editColumn('type', function ($row) {
 
