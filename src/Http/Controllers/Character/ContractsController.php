@@ -100,6 +100,17 @@ class ContractsController extends Controller
             })
             ->editColumn('assignee_id', function ($row) {
 
+                $character_id = $row->character_id;
+                $character = CharacterInfo::find($row->assignee_id) ?: null;
+
+                if(!is_null($character))
+                    return view('web::partials.character', compact('character', 'character_id'));
+
+                $corporation = CorporationInfo::find($row->assignee_id) ?: null;
+
+                if(!is_null($corporation))
+                    return view('web::partials.corporation', compact('corporation', 'character_id'));
+
                 return view('web::partials.unknown', [
                     'unknown_id' => $row->assignee_id,
                     'character_id' => $row->character_id,
@@ -110,6 +121,17 @@ class ContractsController extends Controller
 
                 if($row->acceptor_id === 0)
                     return '';
+
+                $character_id = $row->character_id;
+                $character = CharacterInfo::find($row->acceptor_id) ?: null;
+
+                if(!is_null($character))
+                    return view('web::partials.character', compact('character', 'character_id'));
+
+                $corporation = CorporationInfo::find($row->acceptor_id) ?: null;
+
+                if(!is_null($corporation))
+                    return view('web::partials.corporation', compact('corporation', 'character_id'));
 
                 return view('web::partials.unknown', [
                     'unknown_id' => $row->acceptor_id,
