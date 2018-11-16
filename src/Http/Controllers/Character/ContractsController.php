@@ -130,6 +130,10 @@ class ContractsController extends Controller
 
                 return number($row->reward);
             })
+            ->editColumn('collateral', function ($row) {
+
+                return number($row->collateral);
+            })
             ->addColumn('contents', function ($row) {
 
                 return view('web::partials.contractcontentsbutton', compact('row'))
@@ -137,10 +141,10 @@ class ContractsController extends Controller
             })
             ->addColumn('is_in_group', function ($row) use ($user_group) {
 
-                if (in_array($row->acceptor_id, $user_group->toArray()))
+                if (in_array($row->issuer_id, $user_group->toArray()) && in_array($row->acceptor_id, $user_group->toArray()))
                     return true;
 
-                if (in_array($row->assignee_id, $user_group->toArray()))
+                if (in_array($row->issuer_id, $user_group->toArray()) && in_array($row->assignee_id, $user_group->toArray()))
                     return true;
 
                 return false;
