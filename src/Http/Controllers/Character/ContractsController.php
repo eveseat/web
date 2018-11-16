@@ -103,12 +103,12 @@ class ContractsController extends Controller
                 $character_id = $row->character_id;
                 $character = CharacterInfo::find($row->assignee_id) ?: null;
 
-                if(!is_null($character))
+                if(! is_null($character))
                     return view('web::partials.character', compact('character', 'character_id'));
 
                 $corporation = CorporationInfo::find($row->assignee_id) ?: null;
 
-                if(!is_null($corporation))
+                if(! is_null($corporation))
                     return view('web::partials.corporation', compact('corporation', 'character_id'));
 
                 return view('web::partials.unknown', [
@@ -125,12 +125,12 @@ class ContractsController extends Controller
                 $character_id = $row->character_id;
                 $character = CharacterInfo::find($row->acceptor_id) ?: null;
 
-                if(!is_null($character))
+                if(! is_null($character))
                     return view('web::partials.character', compact('character', 'character_id'));
 
                 $corporation = CorporationInfo::find($row->acceptor_id) ?: null;
 
-                if(!is_null($corporation))
+                if(! is_null($corporation))
                     return view('web::partials.corporation', compact('corporation', 'character_id'));
 
                 return view('web::partials.unknown', [
