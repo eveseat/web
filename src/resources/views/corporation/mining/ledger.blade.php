@@ -53,7 +53,7 @@
                         </td>
                         <td>
                             <span class="character-id-to-main-character"
-                                  data-character-id="{{$character_id}}">Unknown</span>
+                                  data-character-id="{{ $entry->character_id }}">Unknown</span>
                         </td>
                         <td class="text-right" data-order="{{ $entry->quantity }}">{{ number($entry->quantity) }}</td>
                         <td class="text-right" data-order="{{ $entry->volumes }}">{{ number($entry->volumes) }} m3</td>
