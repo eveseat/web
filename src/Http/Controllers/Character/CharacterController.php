@@ -26,7 +26,7 @@ use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Services\Repositories\Character\Character;
 use Seat\Web\Http\Controllers\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class CharacterController.
@@ -50,6 +50,7 @@ class CharacterController extends Controller
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return mixed
+     * @throws \Exception
      */
     public function getCharactersData(Request $request)
     {
@@ -67,7 +68,7 @@ class CharacterController extends Controller
             }) :
             $this->getAllCharactersWithAffiliations();
 
-        return Datatables::of($characters)
+        return DataTables::of($characters)
             ->editColumn('name', function ($row) {
 
                 return view('web::character.partials.charactername', compact('row'))
@@ -88,6 +89,7 @@ class CharacterController extends Controller
                 return view('web::character.partials.delete', compact('row'))
                     ->render();
             })
+            ->rawColumns(['name', 'corporation_id', 'alliance_id', 'actions'])
             ->make(true);
 
     }
