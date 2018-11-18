@@ -28,6 +28,7 @@ use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\EditUser;
 use Seat\Web\Http\Validation\ReassignUser;
+use Seat\Web\Models\User;
 use Yajra\Datatables\Datatables;
 
 /**
@@ -67,6 +68,11 @@ class UserController extends Controller
                 })
                 ->addColumn('action_buttons', function ($row) {
                     return view('web::configuration.users.partials.action-buttons', compact('row'));
+                })
+                ->addColumn('roles', function (User $user) {
+                    return $user->group->roles->map(function ($role){
+                        return $role->title;
+                    })->implode(', ');
                 })
                 ->make(true);
 

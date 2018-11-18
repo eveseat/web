@@ -48,7 +48,7 @@
         {data: 'last_login_source', name: 'last_login_source'},
         {data: 'action_buttons', name: 'action_buttons', searchable: false, orderable: false},
         {data: 'main_character_id', name: 'main_character_id', visible: false, searchable: false},
-        //{data: 'group.main_character.name', name: 'group.main_character.name'}
+        {data: 'roles', name: 'group.roles.title', visible: false}
       ],
       rowGroup: {
         startRender: function(rows, group) {
@@ -58,15 +58,7 @@
           if (email === "")
             email = "not defined";
 
-          var roles = rows.data().pluck('group').pluck('roles')[0];
-
-          var role_titles = [];
-
-          roles.forEach(function (role) {
-            role_titles.push(role.title.toString())
-          });
-
-          var wraped_role_titles = wordwrap(role_titles.join(', '), 100, '<br/>n');
+          var wraped_role_titles = wordwrap(rows.data().pluck('roles').join(', '), 100, '<br/>n');
 
           var character_group = rows.data().pluck('main_character_id')[0];
 
