@@ -93,7 +93,7 @@ class MiningLedgerController extends Controller
 
                 return number($row->value) . ' ISK';
             })
-            ->rawColumns(['volumes'])
+            ->rawColumns(['quantity', 'volumes'])
             ->make(true);
     }
 }
