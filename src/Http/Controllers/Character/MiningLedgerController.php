@@ -91,9 +91,10 @@ class MiningLedgerController extends Controller
             })
             ->editColumn('amounts', function ($row) {
 
-                return number($row->value) . ' ISK';
+                return view('web::partials.miningvalue', compact('row'))
+                    ->render();
             })
-            ->rawColumns(['quantity', 'volumes'])
+            ->rawColumns(['quantity', 'volumes', 'amounts'])
             ->make(true);
     }
 }
