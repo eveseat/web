@@ -1,4 +1,4 @@
-@if(is_null($row->refresh_token_deleted_at))
+@if(!is_null($row->refresh_token))
   <button data-toggle="tooltip" title="{{ trans('web::seat.valid_token') }}"
           class="btn btn-xs btn-link">
     <i class="fa fa-check text-success"></i>

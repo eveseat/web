@@ -88,6 +88,8 @@ class Group extends Model
      */
     protected $fillable = ['main_character_id'];
 
+    protected $appends = ['main_character'];
+
     /**
      * Make sure we cleanup on delete.
      *

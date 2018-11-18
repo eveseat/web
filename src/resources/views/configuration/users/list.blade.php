@@ -42,12 +42,13 @@
         url: "{{url()->current()}}"
       },
       columns: [
-        {data: 'refresh_token_deleted_at', name: 'refresh_tokens.deleted_at', searchable: false},
+        {data: 'refresh_token', name: 'refresh_token', searchable: false, orderable: false},
         {data: 'name', name: 'name'},
         {data: 'last_login', name: 'last_login'},
         {data: 'last_login_source', name: 'last_login_source'},
         {data: 'action_buttons', name: 'action_buttons', searchable: false, orderable: false},
-        {data: 'main_character_id', name: 'main_character_id', visible: false, searchable: false}
+        {data: 'main_character_id', name: 'main_character_id', visible: false, searchable: false},
+        //{data: 'group.main_character.name', name: 'group.main_character.name'}
       ],
       rowGroup: {
         startRender: function(rows, group) {

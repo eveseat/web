@@ -49,7 +49,7 @@ class UserController extends Controller
             $groups = $this->getAllFullUsers();
 
             return Datatables::of($groups)
-                ->editColumn('refresh_token_deleted_at', function ($row) {
+                ->editColumn('refresh_token', function ($row) {
                     return view('web::configuration.users.partials.refresh-token', compact('row'));
                 })
                 ->editColumn('main_character_id', function ($row) {
