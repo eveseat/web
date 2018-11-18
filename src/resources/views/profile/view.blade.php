@@ -430,8 +430,10 @@
             @foreach($characters as $character)
               <li>
 
-                {!! img('character', $character->id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                {{ $character->name }}
+                <a href="{{ route('character.view.sheet', ['character_id' => $character->character_id]) }}">
+                  {!! img('character', $character->id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  {{ $character->name }}
+                </a>
 
                 @if ($character->refresh_token )
                   <button data-toggle="tooltip" title="" class="btn btn-xs btn-link" data-original-title="Valid Token">
