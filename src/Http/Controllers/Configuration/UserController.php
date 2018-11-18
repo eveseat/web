@@ -74,6 +74,14 @@ class UserController extends Controller
                         return $role->title;
                     })->implode(', ');
                 })
+                ->filterColumn('email', function ($query,$keyword){
+                    $user_id = User::all()->filter(function ($user) use ($keyword) {
+
+                        return false !== stristr($user->email,$keyword);
+                    })->map(function ($user){ return $user->id; });
+
+                    $query->whereIn('users.id',$user_id->toArray());
+                })
                 ->make(true);
 
         }
