@@ -63,9 +63,9 @@
         }
       },
       columns: [
-        {data: 'name', name: 'resolved_ids.name', sortable: false},
+        {data: 'name', name: 'name', sortable: false},
         {data: 'contact_type', name: 'contact_type'},
-        {data: 'standing_view', name: 'standing', searchable: false},
+        {data: 'standing_view', name: 'standing'},
         {data: 'label_ids', name: 'label_ids'},
         {data: 'links', name: 'links', sortable: false, searchable: false},
       ],

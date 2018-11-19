@@ -23,9 +23,11 @@
 namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Contacts\CharacterContactLabel;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Character\Contacts;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Models\ResolvedIds;
 use Seat\Web\Models\User;
 use Yajra\Datatables\Datatables;
 
@@ -34,9 +36,10 @@ class ContactsController extends Controller
     use Contacts;
 
     /**
-     * @param $character_id
+     * @param int $character_id
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Exception
      */
     public function getContacts(int $character_id)
     {
@@ -111,12 +114,23 @@ class ContactsController extends Controller
 
                 return view('web::partials.links', ['id' => $row->contact_id, 'type' => $row->contact_type]);
             })
-            ->addColumn('name', function ($row) {
-                return cache('name_id:' . $row->contact_id);
-            })
             ->addColumn('is_in_group', function ($row) use ($user_group) {
                 return $user_group->search($row->contact_id);
             })
+            ->filterColumn('name', function ($query,$keyword) {
+                $resolved_ids = ResolvedIds::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($resolved_id) { return $resolved_id->id; });
+                $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($character_info) { return $character_info->character_id; });
+                $corporation_info_ids = CorporationInfo::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($corporation_info) { return $corporation_info->corproation_id; });
+
+                $query->whereIn('contact_id', array_merge($resolved_ids->toArray(), $character_info_ids->toArray(), $corporation_info_ids->toArray()));
+            })
+            ->filterColumn('label_ids', function ($query,$keyword) {
+
+                $label_ids = CharacterContactLabel::where('label_name', 'like', '%' . $keyword . '%')->get()->map(function ($contact_label) {return $contact_label->label_id;});
+
+                $query->where('label_ids', 'like', '%'.$label_ids->first().'%');
+            })
+            ->rawColumns(['name','standing_view','links'])
             ->make(true);
 
     }
