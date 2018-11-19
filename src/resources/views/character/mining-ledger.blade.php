@@ -52,8 +52,7 @@
             </td>
             <td class="text-right" data-order="{{ $entry->quantity }}">{{ number($entry->quantity) }}</td>
             <td class="text-right" data-order="{{ $entry->volumes }}">{{ number($entry->volumes) }} m3</td>
-            <td class="text-right" data-order="{{ $entry->value }}">
-              {{ number($entry->value) }} ISK
+            <td class="text-right" data-order="{{ $entry->amounts }}">{{ number($entry->amounts) }} ISK
               <a href="#" class="btn btn-sm btn-link" data-toggle="modal" data-target="#detailed-ledger">
                 <i class="fa fa-cubes"></i>
               </a>
@@ -109,8 +108,8 @@
                 {data: 'time'},
                 {data: 'quantity'},
                 {data: 'volumes'},
-                {data: 'value'}
-              ],
+                {data: 'amounts'}
+              ]
             });
 
 

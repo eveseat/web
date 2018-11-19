@@ -25,7 +25,7 @@ namespace Seat\Web\Http\Controllers\Corporation;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Corporation\Corporation;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class CorporationsController.
@@ -47,13 +47,14 @@ class CorporationsController extends Controller
 
     /**
      * @return mixed
+     * @throws \Exception
      */
     public function getCorporationsData()
     {
 
         $corporations = $this->getAllCorporationsWithAffiliationsAndFilters();
 
-        return Datatables::of($corporations)
+        return DataTables::of($corporations)
             // Edit some columns to include links and icons
             ->editColumn('name', function ($row) {
 
@@ -79,6 +80,7 @@ class CorporationsController extends Controller
                 return view('web::corporation.partials.delete', compact('row'))
                     ->render();
             })
+            ->rawColumns(['name', 'ceo_id', 'alliance_id', 'actions'])
             ->make(true);
     }
 
