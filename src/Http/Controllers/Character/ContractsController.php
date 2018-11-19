@@ -70,7 +70,7 @@ class ContractsController extends Controller
         $user_group = User::find($character_id)->group->users
             ->filter(function ($user) {
 
-                return ( $user->name !== 'admin' && $user->id !== 1);
+                return  $user->name !== 'admin' && $user->id !== 1;
             })
             ->pluck('id');
 
@@ -101,7 +101,7 @@ class ContractsController extends Controller
             ->editColumn('assignee_id', function ($row) {
 
                 if($row->assignee_id === 0)
-                    return  trans('web::seat.public') ;
+                    return  trans('web::seat.public');
 
                 $character_id = $row->character_id;
                 $character = CharacterInfo::find($row->assignee_id) ?: null;
@@ -174,23 +174,23 @@ class ContractsController extends Controller
 
                 return false;
             })
-            ->filterColumn('issuer_id', function ($query,$keyword){
-                $resolved_ids = ResolvedIds::where('name','like','%'.$keyword.'%')->get()->map(function ($resolved_id){ return $resolved_id->id; });
-                $character_info_ids = CharacterInfo::where('name','like','%'.$keyword.'%')->get()->map(function ($character_info){ return $character_info->character_id; });
+            ->filterColumn('issuer_id', function ($query, $keyword) {
+                $resolved_ids = ResolvedIds::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($resolved_id) { return $resolved_id->id; });
+                $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($character_info) { return $character_info->character_id; });
 
-                $query->whereIn('a.assignee_id', array_merge($resolved_ids->toArray(),$character_info_ids->toArray()));
+                $query->whereIn('a.assignee_id', array_merge($resolved_ids->toArray(), $character_info_ids->toArray()));
             })
-            ->filterColumn('assignee_id', function ($query,$keyword){
-                $resolved_ids = ResolvedIds::where('name','like','%'.$keyword.'%')->get()->map(function ($resolved_id){ return $resolved_id->id; });
-                $character_info_ids = CharacterInfo::where('name','like','%'.$keyword.'%')->get()->map(function ($character_info){ return $character_info->character_id; });
+            ->filterColumn('assignee_id', function ($query, $keyword) {
+                $resolved_ids = ResolvedIds::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($resolved_id) { return $resolved_id->id; });
+                $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($character_info) { return $character_info->character_id; });
 
-                $query->whereIn('a.assignee_id', array_merge($resolved_ids->toArray(),$character_info_ids->toArray()));
+                $query->whereIn('a.assignee_id', array_merge($resolved_ids->toArray(), $character_info_ids->toArray()));
             })
-            ->filterColumn('acceptor_id', function ($query,$keyword){
-                $resolved_ids = ResolvedIds::where('name','like','%'.$keyword.'%')->get()->map(function ($resolved_id){ return $resolved_id->id; });
-                $character_info_ids = CharacterInfo::where('name','like','%'.$keyword.'%')->get()->map(function ($character_info){ return $character_info->character_id; });
+            ->filterColumn('acceptor_id', function ($query, $keyword) {
+                $resolved_ids = ResolvedIds::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($resolved_id) { return $resolved_id->id; });
+                $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($character_info) { return $character_info->character_id; });
 
-                $query->whereIn('a.acceptor_id', array_merge($resolved_ids->toArray(),$character_info_ids->toArray()));
+                $query->whereIn('a.acceptor_id', array_merge($resolved_ids->toArray(), $character_info_ids->toArray()));
             })
             ->rawColumns(['issuer_id', 'type', 'contents', 'assignee_id', 'acceptor_id'])
             ->make(true);
