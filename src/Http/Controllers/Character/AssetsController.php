@@ -25,7 +25,7 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Services\Repositories\Character\Assets;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\User;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class AssetsController.
@@ -50,6 +50,7 @@ class AssetsController extends Controller
      * @param int $character_id
      *
      * @return mixed
+     * @throws \Exception
      */
     public function getCharacterAssets(int $character_id)
     {
@@ -71,7 +72,7 @@ class AssetsController extends Controller
 
         $assets = $this->getCharacterAssetsBuilder($character_ids);
 
-        return Datatables::of($assets)
+        return DataTables::of($assets)
             ->editColumn('quantity', function ($row) {
                 if($row->content->count() < 1)
                     return number($row->quantity, 0);
@@ -91,6 +92,7 @@ class AssetsController extends Controller
             ->editColumn('content', function ($row) {
                 return view('web::character.partials.content', compact('row'));
             })
+            ->rawColumns(['item', 'volume', 'content'])
             ->make(true);
     }
 }
