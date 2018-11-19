@@ -131,7 +131,7 @@ class ContactsController extends Controller
 
                 $query->where('label_ids', 'like', '%' . $label_ids->first() . '%');
                 if($label_ids->isNotEmpty())
-                    $query->where('label_ids', 'like', '%'.$label_ids->first().'%');
+                    $query->where('label_ids', 'like', '%' . $label_ids->first() . '%');
             })
             ->rawColumns(['name', 'standing_view', 'links'])
             ->make(true);
