@@ -24,7 +24,7 @@ namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Services\Repositories\Corporation\Killmails;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class KillmailsController.
@@ -49,13 +49,14 @@ class KillmailsController extends Controller
      * @param int $corporation_id
      *
      * @return mixed
+     * @throws \Exception
      */
     public function getKillmailsData(int $corporation_id)
     {
 
         $killmails = $this->getCorporationKillmails($corporation_id, false);
 
-        return Datatables::of($killmails)
+        return DataTables::of($killmails)
             ->editColumn('character_name', function ($row) {
 
                 return view('web::partials.killmailcharacter', compact('row'))
@@ -76,6 +77,7 @@ class KillmailsController extends Controller
                 return view('web::partials.killmailzkb', compact('row'))
                     ->render();
             })
+            ->rawColumns(['character_name', 'type_name', 'item_name', 'zkb'])
             ->make(true);
 
     }

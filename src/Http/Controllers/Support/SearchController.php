@@ -26,7 +26,7 @@ use Illuminate\Http\Request;
 use Seat\Eveapi\Models\Mail\MailHeader;
 use Seat\Services\Search\Search;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class SearchController.
@@ -54,13 +54,14 @@ class SearchController extends Controller
      * @param \Illuminate\Http\Request $request
      *
      * @return mixed
+     * @throws \Exception
      */
     public function getSearchCharactersData(Request $request)
     {
 
         $characters = $this->doSearchCharacters();
 
-        return Datatables::of($characters)
+        return DataTables::of($characters)
             ->editColumn('name', function ($row) {
 
                 return view('web::search.partials.charactername', compact('row'))
@@ -71,6 +72,7 @@ class SearchController extends Controller
                 return view('web::search.partials.corporationname', compact('row'))
                     ->render();
             })
+            ->rawColumns(['name', 'corporation_id'])
             ->make(true);
 
     }
@@ -79,13 +81,14 @@ class SearchController extends Controller
      * @param \Illuminate\Http\Request $request
      *
      * @return mixed
+     * @throws \Exception
      */
     public function getSearchCorporationsData(Request $request)
     {
 
         $corporations = $this->doSearchCorporations();
 
-        return Datatables::of($corporations)
+        return DataTables::of($corporations)
             ->editColumn('name', function ($row) {
 
                 return view('web::search.partials.corporationname', compact('row'))
@@ -101,6 +104,7 @@ class SearchController extends Controller
                 return view('web::search.partials.alliancename', compact('row'))
                     ->render();
             })
+            ->rawColumns(['name', 'ceo_id', 'alliance_id'])
             ->make(true);
     }
 
@@ -108,13 +112,14 @@ class SearchController extends Controller
      * @param \Illuminate\Http\Request $request
      *
      * @return mixed
+     * @throws \Exception
      */
     public function getSearchMailData(Request $request)
     {
 
         $mail = $this->doSearchCharacterMail();
 
-        return Datatables::of($mail)
+        return DataTables::of($mail)
             ->editColumn('from', function ($row) {
 
                 return view('web::character.partials.mailsendername', compact('row'))
@@ -140,6 +145,7 @@ class SearchController extends Controller
                     ->render();
 
             })
+            ->rawColumns(['from', 'subject', 'tocounts', 'read'])
             ->make(true);
     }
 
@@ -147,13 +153,14 @@ class SearchController extends Controller
      * @param \Illuminate\Http\Request $request
      *
      * @return mixed
+     * @throws \Exception
      */
     public function getSearchCharacterAssetsData(Request $request)
     {
 
         $assets = $this->doSearchCharacterAssets();
 
-        return Datatables::of($assets)
+        return DataTables::of($assets)
             ->editColumn('characterName', function ($row) {
 
                 return view('web::search.partials.charactername', compact('row'))
@@ -164,6 +171,7 @@ class SearchController extends Controller
                 return view('web::search.partials.typename', compact('row'))
                     ->render();
             })
+            ->rawColumns(['characterName', 'typeName'])
             ->make(true);
 
     }
@@ -172,13 +180,14 @@ class SearchController extends Controller
      * @param \Illuminate\Http\Request $request
      *
      * @return mixed
+     * @throws \Exception
      */
     public function getSearchCharacterSkillsData(Request $request)
     {
 
         $skills = $this->doSearchCharacterSkills();
 
-        return Datatables::of($skills)
+        return DataTables::of($skills)
             ->editColumn('character_name', function ($row) {
 
                 return view('web::search.partials.charactername', compact('row'))
@@ -194,6 +203,7 @@ class SearchController extends Controller
                 return view('web::search.partials.typename', compact('row'))
                     ->render();
             })
+            ->rawColumns(['character_name', 'corporation_id', 'typeName'])
             ->make(true);
 
     }

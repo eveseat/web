@@ -24,7 +24,7 @@ namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Services\Repositories\Corporation\Industry;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class IndustryController.
@@ -49,6 +49,7 @@ class IndustryController extends Controller
      * @param int $corporation_id
      *
      * @return mixed
+     * @throws \Exception
      */
     public function getIndustryData(int $corporation_id)
     {
@@ -76,6 +77,7 @@ class IndustryController extends Controller
                 return view('web::partials.industryproduct', compact('row'))
                     ->render();
             })
+            ->rawColumns(['installer_id', 'facilityName', 'blueprintTypeName', 'productTypeName'])
             ->make(true);
 
     }

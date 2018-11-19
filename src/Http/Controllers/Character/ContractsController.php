@@ -27,7 +27,7 @@ use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Character\Contracts;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\User;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class ContractsController.
@@ -53,6 +53,7 @@ class ContractsController extends Controller
      * @param int $character_id
      *
      * @return mixed
+     * @throws \Exception
      */
     public function getContractsData(int $character_id)
     {
@@ -79,7 +80,7 @@ class ContractsController extends Controller
 
         $contracts = $this->getCharacterContracts($character_ids);
 
-        return Datatables::of($contracts)
+        return DataTables::of($contracts)
             ->editColumn('issuer_id', function ($row) {
 
                 $character_id = $row->character_id;
@@ -171,6 +172,7 @@ class ContractsController extends Controller
 
                 return false;
             })
+            ->rawColumns(['issuer_id', 'type', 'contents'])
             ->make(true);
 
     }
