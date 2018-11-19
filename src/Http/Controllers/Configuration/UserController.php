@@ -30,7 +30,7 @@ use Seat\Web\Http\Validation\EditUser;
 use Seat\Web\Http\Validation\ReassignUser;
 use Seat\Web\Models\Group;
 use Seat\Web\Models\User;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class UserController.
@@ -50,7 +50,7 @@ class UserController extends Controller
 
             $groups = $this->getAllFullUsers();
 
-            return Datatables::of($groups)
+            return DataTables::of($groups)
                 ->editColumn('refresh_token', function ($row) {
                     return view('web::configuration.users.partials.refresh-token', compact('row'));
                 })
@@ -108,6 +108,7 @@ class UserController extends Controller
 
                     $query->whereIn('users.id',$user_id->toArray());
                 })
+                ->rawColumns(['refresh_token','name', 'action_buttons', 'main_character_blade'])
                 ->make(true);
 
         }
