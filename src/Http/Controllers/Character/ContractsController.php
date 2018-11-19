@@ -68,10 +68,8 @@ class ContractsController extends Controller
 
         $user_group = User::find($character_id)->group->users
             ->filter(function ($user) {
-                if(! $user->name === 'admin' || $user->id === 1)
-                    return false;
 
-                return true;
+                return ( $user->name !== 'admin' && $user->id !== 1);
             })
             ->pluck('id');
 
@@ -91,7 +89,7 @@ class ContractsController extends Controller
                     $character = CharacterInfo::find($row->issuer_id) ?: $row->issuer_id;
 
                     return view('web::partials.corporation', compact('corporation', 'character_id'))
-                        . ' (' . view('web::partials.character', compact('character', 'character_id')) . ')';
+                        . '<br/>(' . view('web::partials.character', compact('character', 'character_id')) . ')';
                 }
 
                 $character = CharacterInfo::find($row->issuer_id) ?: $row->issuer_id;
@@ -100,6 +98,9 @@ class ContractsController extends Controller
 
             })
             ->editColumn('assignee_id', function ($row) {
+
+                if($row->assignee_id === 0)
+                    return  trans('web::seat.public') ;
 
                 $character_id = $row->character_id;
                 $character = CharacterInfo::find($row->assignee_id) ?: null;
@@ -172,7 +173,7 @@ class ContractsController extends Controller
 
                 return false;
             })
-            ->rawColumns(['issuer_id', 'type', 'contents'])
+            ->rawColumns(['issuer_id', 'type', 'contents', 'assignee_id', 'acceptor_id'])
             ->make(true);
 
     }

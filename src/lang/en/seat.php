@@ -65,6 +65,7 @@ return [
     'collateral'            => 'Collateral',
     'assignee'              => 'Assignee',
     'acceptor'              => 'Acceptor',
+    'public'                => 'Public',
     'location'              => 'Location',
     'filter'                => 'Filter|Filters',
     'clear'                 => 'Clear',
