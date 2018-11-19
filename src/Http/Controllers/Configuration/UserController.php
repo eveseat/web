@@ -28,6 +28,7 @@ use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\EditUser;
 use Seat\Web\Http\Validation\ReassignUser;
+use Seat\Web\Models\Group;
 use Seat\Web\Models\User;
 use Yajra\Datatables\Datatables;
 
@@ -81,6 +82,18 @@ class UserController extends Controller
                     })->map(function ($user){ return $user->id; });
 
                     $query->whereIn('users.id',$user_id->toArray());
+                })
+                ->addColumn('main_character', function (User $user) {
+
+                    return optional($user->group->main_character)->name ?: "";
+                })
+                ->filterColumn('main_character', function ($query,$keyword){
+                    $group_id = Group::all()->filter(function ($group) use ($keyword) {
+
+                        return false !== stristr(optional($group->main_character)->name,$keyword);
+                    })->map(function ($group){ return $group->id; });
+
+                    $query->whereIn('users.group_id',$group_id->toArray());
                 })
                 ->make(true);
 

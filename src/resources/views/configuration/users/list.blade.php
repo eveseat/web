@@ -49,7 +49,8 @@
         {data: 'action_buttons', name: 'action_buttons', searchable: false, orderable: false},
         {data: 'main_character_id', name: 'main_character_id', visible: false, searchable: false},
         {data: 'roles', name: 'group.roles.title', visible: false},
-        {data: 'email', name: 'email'}
+        {data: 'email', name: 'email', visible: false},
+        {data: 'main_character', name: 'main_character',visible: false}
       ],
       rowGroup: {
         startRender: function(rows, group) {
