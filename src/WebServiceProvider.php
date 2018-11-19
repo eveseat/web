@@ -131,7 +131,7 @@ class WebServiceProvider extends ServiceProvider
     /**
      * Set the path for migrations which should
      * be migrated by laravel. More informations:
-     * https://laravel.com/docs/5.5/packages#migrations
+     * https://laravel.com/docs/5.5/packages#migrations.
      */
     public function add_migrations()
     {
