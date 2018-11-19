@@ -26,7 +26,7 @@
     "eveseat/services": "~3",
     "league/csv": "^9.1",
     "guzzlehttp/guzzle": "^6.3",
-    "yajra/laravel-datatables-oracle": "~6",
+    "yajra/laravel-datatables-oracle": "~8",
     "components/font-awesome": "^4.7"
   },
   "extra": {

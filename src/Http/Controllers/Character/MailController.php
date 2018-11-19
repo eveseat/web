@@ -24,7 +24,7 @@ namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Services\Repositories\Character\Mail;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class MailController.
@@ -50,13 +50,14 @@ class MailController extends Controller
      * @param int $character_id
      *
      * @return mixed
+     * @throws \Exception
      */
     public function getMailData(int $character_id)
     {
 
         $mail = $this->getCharacterMail($character_id, false);
 
-        return Datatables::of($mail)
+        return DataTables::of($mail)
             ->editColumn('from', function ($row) {
 
                 return view('web::character.partials.mailsendername', compact('row'))
@@ -78,6 +79,7 @@ class MailController extends Controller
                     ->render();
 
             })
+            ->rawColumns(['from', 'subject', 'tocounts', 'read'])
             ->make(true);
 
     }

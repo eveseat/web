@@ -109,7 +109,7 @@
       </a>
       <a href="https://forums.eveonline.com/u/{{ str_replace(' ', '_', $summary->name) }}/summary"
          target="_blank">
-        <img src="{{ asset('web/img/evegate.png') }}">
+        <img src="{{ asset('web/img/evelogo.png') }}">
       </a>
       <a href="http://eve-search.com/search/author/{{ $summary->name }}"
          target="_blank">
