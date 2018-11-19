@@ -47,7 +47,6 @@
         {data: 'last_login', name: 'last_login'},
         {data: 'last_login_source', name: 'last_login_source'},
         {data: 'action_buttons', name: 'action_buttons', searchable: false, orderable: false},
-        {data: 'main_character_id', name: 'main_character_id', visible: false, searchable: false},
         {data: 'roles', name: 'group.roles.title', visible: false},
         {data: 'email', name: 'email', visible: false},
         {data: 'main_character', name: 'main_character',visible: false}
@@ -57,18 +56,15 @@
 
           var email = rows.data().pluck('email')[0];
 
-          if (email === "")
-            email = "not defined";
-
           var wraped_role_titles = wordwrap(rows.data().pluck('roles').unique().join(', '), 100, '<br/>n');
 
-          var character_group = rows.data().pluck('main_character_id')[0];
+          var character_group = rows.data().pluck('main_character_blade')[0];
 
           return '{{trans('web::seat.main_character')}}: ' + character_group
               + '{{ trans('web::seat.email') }}: ' + email
               + '<span class="pull-right"> {{ trans_choice('web::seat.role', 2) }}: ' + wraped_role_titles + '</span>';
         },
-        dataSrc: 'group_id'
+        dataSrc: 'main_character'
       },
       drawCallback : function () {
         $("img").unveil(100);

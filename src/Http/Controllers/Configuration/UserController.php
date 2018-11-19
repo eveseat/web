@@ -54,18 +54,23 @@ class UserController extends Controller
                 ->editColumn('refresh_token', function ($row) {
                     return view('web::configuration.users.partials.refresh-token', compact('row'));
                 })
-                ->editColumn('main_character_id', function ($row) {
-                    $character = CharacterInfo::find($row->main_character_id) ?: $row->main_character_id;
-
-                    return view('web::partials.character', compact('character'));
-                })
                 ->editColumn('name', function ($row) {
+
+                    if($row->id === 1)
+                        return "Admin";
+
                     $character = CharacterInfo::find($row->id) ?: $row->id;
 
                     return view('web::partials.character', compact('character'));
                 })
                 ->editColumn('last_login', function ($row) {
                     return human_diff($row->last_login);
+                })
+                ->editColumn('email', function ($row){
+                    if( empty($row->email) )
+                        return trans('web::seat.no_email');
+
+                    return $row->email;
                 })
                 ->addColumn('action_buttons', function ($row) {
                     return view('web::configuration.users.partials.action-buttons', compact('row'));
@@ -75,17 +80,17 @@ class UserController extends Controller
                         return $role->title;
                     })->implode(', ');
                 })
-                ->filterColumn('email', function ($query,$keyword){
-                    $user_id = User::all()->filter(function ($user) use ($keyword) {
-
-                        return false !== stristr($user->email,$keyword);
-                    })->map(function ($user){ return $user->id; });
-
-                    $query->whereIn('users.id',$user_id->toArray());
-                })
                 ->addColumn('main_character', function (User $user) {
 
                     return optional($user->group->main_character)->name ?: "";
+                })
+                ->addColumn('main_character_blade', function (User $user) {
+
+                    $main_character_id = optional($user->group->main_character)->character_id ?: null;
+
+                    $character = CharacterInfo::find($main_character_id) ?: $main_character_id;
+
+                    return view('web::partials.character', compact('character'));
                 })
                 ->filterColumn('main_character', function ($query,$keyword){
                     $group_id = Group::all()->filter(function ($group) use ($keyword) {
@@ -94,6 +99,14 @@ class UserController extends Controller
                     })->map(function ($group){ return $group->id; });
 
                     $query->whereIn('users.group_id',$group_id->toArray());
+                })
+                ->filterColumn('email', function ($query,$keyword){
+                    $user_id = User::all()->filter(function ($user) use ($keyword) {
+
+                        return false !== stristr($user->email,$keyword);
+                    })->map(function ($user){ return $user->id; });
+
+                    $query->whereIn('users.id',$user_id->toArray());
                 })
                 ->make(true);
 

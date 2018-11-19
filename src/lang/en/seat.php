@@ -169,6 +169,7 @@ return [
     'settings'              => 'SeAT Settings',
     'schedule'              => 'Schedule',
     'no_main_char'          => 'No Main Character',
+    'no_email'              => 'No email defined',
     'hello'                 => 'Hello',
     'online'                => 'Online',
     'search'                => 'Search',
