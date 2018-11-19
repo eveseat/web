@@ -18,8 +18,7 @@
             <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_contracts') }}"></i>
           </a>
         </li>
-        @endif
-        </li>
+      @endif
     </ul>
     <div class="panel-body">
 
@@ -90,7 +89,7 @@
       },
       columns         : [
         {data: 'date_issued', name: 'date_issued', render: human_readable, responsivePriority: 1 },
-        {data: 'issuer_id', name: 'issuer_id', responsivePriority: 2 },
+        {data: 'issuer_id', name: 'issuer_id', responsivePriority: 1 },
         {data: 'type', name: 'type', responsivePriority: 1},
         {data: 'assignee_id', name: 'assignee_id', responsivePriority: 1},
         {data: 'acceptor_id', name: 'acceptor_id', responsivePriority: 1},
@@ -107,9 +106,6 @@
         {data: 'price', name: 'price', responsivePriority: 2},
         {data: 'reward', name: 'reward', responsivePriority: 2},
         {data: 'contents', name: 'contents', searchable: false, responsivePriority: 1 },
-        {data: 'issuer_name', name: 'resolved_issuer_id.name', visible: false},
-        {data: 'acceptor_name', name: 'resolved_acceptor_id.name', visible: false},
-        {data: 'assignee_name', name: 'resolved_assignee_id.name', visible: false},
       ],
       drawCallback: function () {
         $(document).ready(function () {
