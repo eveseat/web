@@ -117,20 +117,20 @@ class ContactsController extends Controller
             ->addColumn('is_in_group', function ($row) use ($user_group) {
                 return $user_group->search($row->contact_id);
             })
-            ->filterColumn('name', function ($query,$keyword) {
+            ->filterColumn('name', function ($query, $keyword) {
                 $resolved_ids = ResolvedIds::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($resolved_id) { return $resolved_id->id; });
                 $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($character_info) { return $character_info->character_id; });
                 $corporation_info_ids = CorporationInfo::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($corporation_info) { return $corporation_info->corproation_id; });
 
                 $query->whereIn('contact_id', array_merge($resolved_ids->toArray(), $character_info_ids->toArray(), $corporation_info_ids->toArray()));
             })
-            ->filterColumn('label_ids', function ($query,$keyword) {
+            ->filterColumn('label_ids', function ($query, $keyword) {
 
-                $label_ids = CharacterContactLabel::where('label_name', 'like', '%' . $keyword . '%')->get()->map(function ($contact_label) {return $contact_label->label_id;});
+                $label_ids = CharacterContactLabel::where('label_name', 'like', '%' . $keyword . '%')->get()->map(function ($contact_label) {return $contact_label->label_id; });
 
-                $query->where('label_ids', 'like', '%'.$label_ids->first().'%');
+                $query->where('label_ids', 'like', '%' . $label_ids->first() . '%');
             })
-            ->rawColumns(['name','standing_view','links'])
+            ->rawColumns(['name', 'standing_view', 'links'])
             ->make(true);
 
     }
