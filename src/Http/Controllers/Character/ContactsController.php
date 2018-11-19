@@ -115,7 +115,8 @@ class ContactsController extends Controller
                 return view('web::partials.links', ['id' => $row->contact_id, 'type' => $row->contact_type]);
             })
             ->addColumn('is_in_group', function ($row) use ($user_group) {
-                return $user_group->search($row->contact_id);
+
+                return $user_group->intersect(collect($row->contact_id))->isNotEmpty();
             })
             ->filterColumn('name', function ($query, $keyword) {
                 $resolved_ids = ResolvedIds::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($resolved_id) { return $resolved_id->id; });
@@ -129,6 +130,8 @@ class ContactsController extends Controller
                 $label_ids = CharacterContactLabel::where('label_name', 'like', '%' . $keyword . '%')->get()->map(function ($contact_label) {return $contact_label->label_id; });
 
                 $query->where('label_ids', 'like', '%' . $label_ids->first() . '%');
+                if($label_ids->isNotEmpty())
+                    $query->where('label_ids', 'like', '%'.$label_ids->first().'%');
             })
             ->rawColumns(['name', 'standing_view', 'links'])
             ->make(true);

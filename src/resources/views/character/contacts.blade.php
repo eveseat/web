@@ -78,7 +78,7 @@
           $(row).addClass('danger')
         }
 
-        if (data.is_in_group === 1){
+        if (data.is_in_group === "1"){
           $(row).addClass('info')
         }
       },
