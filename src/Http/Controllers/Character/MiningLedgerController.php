@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Seat\Services\Repositories\Character\MiningLedger;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class MiningLedgerController.
@@ -61,6 +61,7 @@ class MiningLedgerController extends Controller
      * @param int $type_id
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function getDetailedLedger(int $character_id, $date, int $system_id, int $type_id): JsonResponse
     {
@@ -72,7 +73,7 @@ class MiningLedgerController extends Controller
             ->where('character_minings.type_id', $type_id)
             ->get();
 
-        return Datatables::of($entries)
+        return DataTables::of($entries)
             ->removeColumn('solar_system_id')
             ->removeColumn('date')
             ->removeColumn('type_id')
@@ -93,6 +94,7 @@ class MiningLedgerController extends Controller
                 return view('web::partials.miningvalue', compact('row'))
                     ->render();
             })
+            ->rawColumns(['quantity', 'volumes', 'amounts'])
             ->make(true);
     }
 }
