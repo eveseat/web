@@ -98,8 +98,8 @@
         columns         : [
           {data: 'date', name: 'date', render: human_readable},
           {data: 'ref_type', name: 'ref_type'},
-          {data: 'first_party_id', name: 'first_party_id'},
-          {data: 'second_party_id', name: 'second_party_id'},
+          {data: 'first_party_id', name: 'first_party.name'},
+          {data: 'second_party_id', name: 'second_party.name'},
           {data: 'amount', name: 'amount'},
           {data: 'balance', name: 'balance'}
         ],
