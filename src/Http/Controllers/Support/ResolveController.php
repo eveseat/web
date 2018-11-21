@@ -27,6 +27,7 @@ use Illuminate\Support\Collection;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Sde\ChrFaction;
+use Seat\Eveapi\Models\Universe\UniverseName;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\User;
 
@@ -106,6 +107,11 @@ class ResolveController extends Controller
             })
             ->pipe(function ($collection) {
                 return $collection->when($collection->isNotEmpty(), function ($ids) {
+                    return $this->resolveInternalUniverseIDs($ids);
+                });
+            })
+            ->pipe(function ($collection) {
+                return $collection->when($collection->isNotEmpty(), function ($ids) {
                     return $this->resolveInternalCharacterIDs($ids);
                 });
             })
@@ -140,6 +146,24 @@ class ResolveController extends Controller
                 return collect([
                     'id' => $faction->factionID,
                     'name' => $faction->factionName,
+                    'category' => 'faction',
+                ]);
+            });
+
+        return $this->cacheIDsAndReturnUnresolvedIDs($names, $ids);
+    }
+
+    private function resolveInternalUniverseIDs($ids)
+    {
+        // resolve names that are already in SeAT
+        // no unnecessary api calls the request can be resolved internally.
+        $names = UniverseName::whereIn('entity_id', $ids->flatten()->toArray())
+            ->get()
+            ->map(function ($entity) {
+                return collect([
+                    'id' => $entity->entity_id,
+                    'name' => $entity->name,
+                    'category' =>$entity->category
                 ]);
             });
 
@@ -157,6 +181,7 @@ class ResolveController extends Controller
                 return collect([
                     'id' => $character->character_id,
                     'name' => $character->name,
+                    'category' => 'character',
                 ]);
             });
 
@@ -174,6 +199,7 @@ class ResolveController extends Controller
                 return collect([
                     'id' => $corporation->corporation_id,
                     'name' => $corporation->name,
+                    'category' => 'corporation'
                 ]);
             });
 
@@ -196,6 +222,12 @@ class ResolveController extends Controller
                 // Cache the name resolution for this id for a long time.
                 cache([$this->prefix . $name->id => $name->name], carbon()->addCentury());
                 $this->response[$name->id] = $name->name;
+
+                UniverseName::firstOrCreate([
+                    'entity_id' => $name->id,
+                    'name'      => $name->name,
+                    'category'  => $name->category,
+                ]);
 
             });
 
@@ -234,6 +266,14 @@ class ResolveController extends Controller
             cache([$this->prefix . $name['id'] => $name['name']], carbon()->addCentury());
             $this->response[$name['id']] = $name['name'];
 
+            // Faction is not allowed in UniverseNames table
+            if($name['category'] !== 'faction') {
+                UniverseName::firstOrCreate([
+                    'entity_id' => $name['id'],
+                    'name'      => $name['name'],
+                    'category'  => $name['category']
+                ]);
+            }
         });
 
         $ids = $ids->filter(function ($id) use ($names) {
