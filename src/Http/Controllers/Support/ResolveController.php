@@ -163,7 +163,7 @@ class ResolveController extends Controller
                 return collect([
                     'id' => $entity->entity_id,
                     'name' => $entity->name,
-                    'category' =>$entity->category
+                    'category' =>$entity->category,
                 ]);
             });
 
@@ -199,7 +199,7 @@ class ResolveController extends Controller
                 return collect([
                     'id' => $corporation->corporation_id,
                     'name' => $corporation->name,
-                    'category' => 'corporation'
+                    'category' => 'corporation',
                 ]);
             });
 
@@ -271,7 +271,7 @@ class ResolveController extends Controller
                 UniverseName::firstOrCreate([
                     'entity_id' => $name['id'],
                     'name'      => $name['name'],
-                    'category'  => $name['category']
+                    'category'  => $name['category'],
                 ]);
             }
         });
