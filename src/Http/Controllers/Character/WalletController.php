@@ -22,6 +22,8 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
+use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Character\Wallet;
 use Seat\Web\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
@@ -59,18 +61,43 @@ class WalletController extends Controller
         return DataTables::of($journal)
             ->editColumn('ref_type', function ($row) {
 
-                return view('web::partials.journaltranstype', compact('row'))
-                    ->render();
+                return view('web::partials.journaltranstype', compact('row'));
             })
             ->editColumn('first_party_id', function ($row) {
 
-                return view('web::partials.journalfrom', compact('row'))
-                    ->render();
+                $character_id = $row->character_id;
+
+                $character = CharacterInfo::find($row->first_party_id);
+                $corporation = CorporationInfo::find($row->first_party_id);
+
+                if(!empty($character))
+                    return view('web::partials.character', compact('character', 'character_id'));
+
+                if(!empty($corporation))
+                    return view('web::partials.corporation', compact('corporation', 'character_id'));
+
+                return view('web::partials.unknown', [
+                    'unknown_id' => $row->first_party_id,
+                    'character_id' => $character_id,
+                ]);
             })
             ->editColumn('second_party_id', function ($row) {
 
-                return view('web::partials.journalto', compact('row'))
-                    ->render();
+                $character_id = $row->character_id;
+
+                $character = CharacterInfo::find($row->second_party_id);
+                $corporation = CorporationInfo::find($row->second_party_id);
+
+                if(!empty($character))
+                    return view('web::partials.character', compact('character', 'character_id'));
+
+                if(!empty($corporation))
+                    return view('web::partials.corporation', compact('corporation', 'character_id'));
+
+                return view('web::partials.unknown', [
+                    'unknown_id' => $row->second_party_id,
+                    'character_id' => $character_id,
+                ]);
             })
             ->editColumn('amount', function ($row) {
 
@@ -80,6 +107,7 @@ class WalletController extends Controller
 
                 return number($row->balance);
             })
+
             ->rawColumns(['ref_type', 'first_party_id', 'second_party_id'])
             ->make(true);
 
