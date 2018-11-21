@@ -64,7 +64,7 @@ class WalletController extends Controller
 
         $user_group = User::find($character_id)->group->users
             ->filter(function ($user) {
-                return ($user->name !== 'admin' && $user->id !== 1);
+                return $user->name !== 'admin' && $user->id !== 1;
             })
             ->pluck('id');
 
@@ -85,12 +85,14 @@ class WalletController extends Controller
                 if($row->first_party->category === 'character'){
 
                     $character = CharacterInfo::find($row->first_party_id) ?: $row->first_party_id;
+
                     return view('web::partials.character', compact('character', 'character_id'));
                 }
 
                 if($row->first_party->category === 'corporation'){
 
                     $corporation = CorporationInfo::find($row->first_party_id) ?: $row->first_party_id;
+
                     return view('web::partials.corporation', compact('corporation', 'character_id'));
                 }
 
@@ -106,12 +108,14 @@ class WalletController extends Controller
                 if($row->second_party->category === 'character'){
 
                     $character = CharacterInfo::find($row->second_party_id) ?: $row->second_party_id;
+
                     return view('web::partials.character', compact('character', 'character_id'));
                 }
 
                 if($row->second_party->category === 'corporation'){
 
                     $corporation = CorporationInfo::find($row->second_party_id) ?: $row->second_party_id;
+
                     return view('web::partials.corporation', compact('corporation', 'character_id'));
                 }
 
