@@ -26,6 +26,7 @@ use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Character\Wallet;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Models\User;
 use Yajra\DataTables\DataTables;
 
 /**
@@ -55,8 +56,22 @@ class WalletController extends Controller
      */
     public function getJournalData(int $character_id)
     {
+        if(! request()->has('all_linked_characters'))
+            return response('required url parameter is missing!', 400);
 
-        $journal = $this->getCharacterWalletJournal($character_id, false);
+        if(request('all_linked_characters') === 'false')
+            $character_ids = collect($character_id);
+
+        $user_group = User::find($character_id)->group->users
+            ->filter(function ($user) {
+                return ($user->name !== 'admin' && $user->id !== 1);
+            })
+            ->pluck('id');
+
+        if(request('all_linked_characters') === 'true')
+            $character_ids = $user_group;
+
+        $journal = $this->getCharacterWalletJournal($character_ids);
 
         return DataTables::of($journal)
             ->editColumn('ref_type', function ($row) {
@@ -121,7 +136,7 @@ class WalletController extends Controller
     public function getJournalGraphBalance(int $character_id)
     {
 
-        $data = $this->getCharacterWalletJournal($character_id, false)
+        $data = $this->getCharacterWalletJournal(collect($character_id))
             ->orderBy('date', 'desc')
             ->take(150)
             ->get();
