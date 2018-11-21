@@ -101,7 +101,8 @@
           {data: 'first_party_id', name: 'first_party.name'},
           {data: 'second_party_id', name: 'second_party.name'},
           {data: 'amount', name: 'amount'},
-          {data: 'balance', name: 'balance'}
+          {data: 'balance', name: 'balance'},
+          {data: 'reason', name: 'reason', visible: false}
         ],
         drawCallback : function () {
             $("[data-toggle=tooltip]").tooltip();
