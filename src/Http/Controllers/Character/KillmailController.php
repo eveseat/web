@@ -22,6 +22,8 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
+use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Character\Killmails;
 use Seat\Web\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
@@ -55,22 +57,41 @@ class KillmailController extends Controller
     public function getKillmailsData(int $character_id)
     {
 
-        $killmails = $this->getCharacterKillmails($character_id, false);
+        $killmails = $this->getCharacterKillmails($character_id);
 
         return DataTables::of($killmails)
-            ->editColumn('character_name', function ($row) {
+            ->addColumn('victim', function ($row) {
 
-                return view('web::partials.killmailcharacter', compact('row'))
+                $character_id = $row->character_id;
+
+                $character = CharacterInfo::find($row->killmail_victims->character_id) ?: $row->killmail_victims->character_id;
+                $corporation = CorporationInfo::find($row->killmail_victims->corporation_id) ?: $row->killmail_victims->corporation_id;
+
+                $view = view('web::partials.character', compact('character', 'character_id'))
+                    . '</br>'
+                    . view('web::partials.corporation', compact('corporation', 'character_id'));
+
+                if(!empty($row->killmail_victims->alliance_id)){
+                    $alliance = ' ('
+                    . img('alliance', $row->killmail_victims->alliance_id, 64, ['class' => 'img-circle eve-icon small-icon'], false)
+                        . '<span class="id-to-name" data-id=' . $row->killmail_victims->alliance_id . '>' . trans("web::seat.unknown") . '</span>'
+                    . ')';
+                } else $alliance = '';
+
+                    return $view . $alliance;
+            })
+            ->addColumn('ship', function ($row) {
+
+                $ship_type = $row->killmail_victims->ship_type;
+
+                return view('web::partials.killmailtype', compact('ship_type'))
                     ->render();
             })
-            ->editColumn('type_name', function ($row) {
+            ->addColumn('place', function ($row) {
 
-                return view('web::partials.killmailtype', compact('row'))
-                    ->render();
-            })
-            ->editColumn('item_name', function ($row) {
+                $place = $row->killmail_details->solar_system;
 
-                return view('web::partials.killmailsystem', compact('row'))
+                return view('web::partials.killmailsystem', compact('place'))
                     ->render();
             })
             ->addColumn('zkb', function ($row) {
@@ -78,7 +99,7 @@ class KillmailController extends Controller
                 return view('web::partials.killmailzkb', compact('row'))
                     ->render();
             })
-            ->rawColumns(['character_name', 'type_name', 'item_name', 'zkb'])
+            ->rawColumns(['victim', 'ship', 'place', 'zkb'])
             ->make(true);
 
     }
