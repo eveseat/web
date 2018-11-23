@@ -26,6 +26,7 @@ use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Character\Killmails;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Models\User;
 use Yajra\DataTables\DataTables;
 
 /**
@@ -56,8 +57,22 @@ class KillmailController extends Controller
      */
     public function getKillmailsData(int $character_id)
     {
+        if(! request()->has('all_linked_characters'))
+            return response('required url parameter is missing!', 400);
 
-        $killmails = $this->getCharacterKillmails($character_id);
+        if(request('all_linked_characters') === 'false')
+            $character_ids = collect($character_id);
+
+        $user_group = User::find($character_id)->group->users
+            ->filter(function ($user) {
+                return $user->name !== 'admin' && $user->id !== 1;
+            })
+            ->pluck('id');
+
+        if(request('all_linked_characters') === 'true')
+            $character_ids = $user_group;
+
+        $killmails = $this->getCharacterKillmails($character_ids);
 
         return DataTables::of($killmails)
             ->addColumn('victim', function ($row) {

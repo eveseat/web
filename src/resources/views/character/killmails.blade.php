@@ -7,21 +7,20 @@
 
 @section('character_content')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">
-        {{ trans('web::seat.killmails') }}
-        @if(auth()->user()->has('character.jobs'))
-          <span class="pull-right">
-            <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.killmails']) }}"
-               style="color: #000000">
-              <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_killmails') }}"></i>
-            </a>
-          </span>
-        @endif
-      </h3>
-    </div>
-    <div class="panel-body">
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#" data-toggle="tab" data-characters="single">{{ trans('web::seat.killmails') }}</a></li>
+      <li><a href="#" data-toggle="tab" data-characters="all">{{ trans('web::seat.linked_characters') }} {{ trans('web::seat.killmails') }}</a></li>
+      @if(auth()->user()->has('character.jobs'))
+        <li class="pull-right">
+          <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.killmails']) }}"
+             style="color: #000000">
+            <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_killmails') }}"></i>
+          </a>
+        </li>
+      @endif
+    </ul>
+    <div class="tab-content">
 
       <table class="table compact table-condensed table-hover table-responsive"
              id="character-killmails" data-page-length=100>
@@ -46,27 +45,41 @@
 
   <script>
 
-    $(function () {
-      $('table#character-killmails').DataTable({
-        processing      : true,
-        serverSide      : true,
-        ajax            : '{{ route('character.view.killmails.data', ['character_id' => $request->character_id]) }}',
-        columns         : [
-          {data: 'killmail_details.killmail_time', name: 'killmail_details.killmail_time', render: human_readable},
-          {data: 'ship', name: 'killmail_victims.ship_type.typeName'},
-          {data: 'place', name: 'killmail_details.solar_system'},
-          {data: 'victim', name: 'character_name'},
-          {data: 'zkb', name: 'zkb'}
-        ],
-        dom             : '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
-        'fnDrawCallback': function () {
-          $(document).ready(function () {
-            $('img').unveil(100);
-            ids_to_names();
-          });
-        }
-      });
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+      var target = $(e.target).data("characters"); // activated tab
+      character_killmails.draw();
     });
+
+    function allLinkedCharacters() {
+      var character_ids = $("div.nav-tabs-custom > ul > li.active > a").data('characters');
+      return character_ids !== 'single';
+    }
+
+
+    var character_killmails = $('table#character-killmails').DataTable({
+      processing      : true,
+      serverSide      : true,
+      ajax            : {
+        url: '{{ route('character.view.killmails.data', ['character_id' => $request->character_id]) }}',
+        data: function ( d ) {
+          d.all_linked_characters = allLinkedCharacters();
+        }
+      },
+      columns         : [
+        {data: 'killmail_details.killmail_time', name: 'killmail_details.killmail_time', render: human_readable},
+        {data: 'ship', name: 'killmail_victims.ship_type.typeName'},
+        {data: 'place', name: 'killmail_details.solar_system.itemName'},
+        {data: 'victim', name: 'killmail_victims.victim_character.name'},
+        {data: 'zkb', name: 'zkb', searchable: false},
+        {data: 'killmail_hash', name: 'killmail_victims.victim_corporation.name', visible: false},
+        {data: 'killmail_id', name: 'killmail_victims.victim_alliance.name', visible: false},
+      ],
+      drawCallback: function () {
+        $('img').unveil(100);
+        ids_to_names();
+      }
+    });
+
 
   </script>
 
