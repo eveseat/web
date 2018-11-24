@@ -65,7 +65,7 @@ class UserController extends Controller
                 return human_diff($row->last_login);
             })
             ->editColumn('email', function ($row) {
-                if( empty($row->email) )
+                if(empty($row->email))
                     return trans('web::seat.no_email');
 
                 return $row->email;
@@ -74,11 +74,11 @@ class UserController extends Controller
                 return view('web::configuration.users.partials.action-buttons', compact('row'));
             })
             ->addColumn('roles', function (User $user) {
-                $roles =  $user->group->roles->map(function ($role) {
+                $roles = $user->group->roles->map(function ($role) {
                     return $role->title;
                 })->implode(', ');
 
-                return !empty($roles) ? $roles : trans('web::seat.no') . ' ' . trans_choice('web::seat.role',2);
+                return ! empty($roles) ? $roles : trans('web::seat.no') . ' ' . trans_choice('web::seat.role', 2);
             })
             ->addColumn('main_character', function (User $user) {
 
@@ -106,9 +106,9 @@ class UserController extends Controller
                     return false !== stristr($user->email, $keyword);
                 })->map(function ($user) { return $user->id; });
 
-                $query->whereIn('users.id',$user_id->toArray());
+                $query->whereIn('users.id', $user_id->toArray());
             })
-            ->rawColumns(['refresh_token','name', 'action_buttons', 'main_character_blade'])
+            ->rawColumns(['refresh_token', 'name', 'action_buttons', 'main_character_blade'])
             ->make(true);
     }
 
