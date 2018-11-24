@@ -29,7 +29,7 @@ use Seat\Services\Repositories\Character\Contacts;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\ResolvedIds;
 use Seat\Web\Models\User;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 class ContactsController extends Controller
 {
@@ -67,7 +67,7 @@ class ContactsController extends Controller
 
         $contacts = $this->getCharacterContacts($character_ids);
 
-        return Datatables::of($contacts)
+        return DataTables::of($contacts)
             ->editColumn('name', function ($row) {
 
                 $character_id = $row->character_id;
