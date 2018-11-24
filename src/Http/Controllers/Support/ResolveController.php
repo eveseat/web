@@ -225,6 +225,7 @@ class ResolveController extends Controller
 
                 UniverseName::firstOrCreate([
                     'entity_id' => $name->id,
+                ], [
                     'name'      => $name->name,
                     'category'  => $name->category,
                 ]);
@@ -270,6 +271,7 @@ class ResolveController extends Controller
             if($name['category'] !== 'faction') {
                 UniverseName::firstOrCreate([
                     'entity_id' => $name['id'],
+                ], [
                     'name'      => $name['name'],
                     'category'  => $name['category'],
                 ]);
