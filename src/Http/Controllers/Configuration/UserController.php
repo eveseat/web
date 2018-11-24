@@ -78,7 +78,7 @@ class UserController extends Controller
                     return $role->title;
                 })->implode(', ');
 
-                return !empty($roles) ?: trans('web::seat.no') . ' ' . trans_choice('web::seat.role',2);
+                return !empty($roles) ? $roles : trans('web::seat.no') . ' ' . trans_choice('web::seat.role',2);
             })
             ->addColumn('main_character', function (User $user) {
 
