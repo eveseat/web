@@ -64,7 +64,7 @@ class UserController extends Controller
             ->editColumn('last_login', function ($row) {
                 return human_diff($row->last_login);
             })
-            ->editColumn('email', function ($row){
+            ->editColumn('email', function ($row) {
                 if( empty($row->email) )
                     return trans('web::seat.no_email');
 
@@ -74,7 +74,7 @@ class UserController extends Controller
                 return view('web::configuration.users.partials.action-buttons', compact('row'));
             })
             ->addColumn('roles', function (User $user) {
-                $roles =  $user->group->roles->map(function ($role){
+                $roles =  $user->group->roles->map(function ($role) {
                     return $role->title;
                 })->implode(', ');
 
@@ -82,9 +82,9 @@ class UserController extends Controller
             })
             ->addColumn('main_character', function (User $user) {
 
-                return optional($user->group->main_character)->name ?: "";
-            })
-            ->addColumn('main_character_blade', function (User $user) {
+                    return optional($user->group->main_character)->name ?: '';
+                })
+                ->addColumn('main_character_blade', function (User $user) {
 
                 $main_character_id = optional($user->group->main_character)->character_id ?: null;
 
@@ -92,19 +92,19 @@ class UserController extends Controller
 
                 return view('web::partials.character', compact('character'));
             })
-            ->filterColumn('main_character', function ($query,$keyword){
+            ->filterColumn('main_character', function ($query, $keyword) {
                 $group_id = Group::all()->filter(function ($group) use ($keyword) {
 
-                    return false !== stristr(optional($group->main_character)->name,$keyword);
-                })->map(function ($group){ return $group->id; });
+                    return false !== stristr(optional($group->main_character)->name, $keyword);
+                })->map(function ($group) { return $group->id; });
 
-                $query->whereIn('users.group_id',$group_id->toArray());
+                $query->whereIn('users.group_id', $group_id->toArray());
             })
-            ->filterColumn('email', function ($query,$keyword){
+            ->filterColumn('email', function ($query, $keyword) {
                 $user_id = User::all()->filter(function ($user) use ($keyword) {
 
-                    return false !== stristr($user->email,$keyword);
-                })->map(function ($user){ return $user->id; });
+                    return false !== stristr($user->email, $keyword);
+                })->map(function ($user) { return $user->id; });
 
                 $query->whereIn('users.id',$user_id->toArray());
             })
