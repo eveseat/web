@@ -68,7 +68,7 @@ class ContactsController extends Controller
 
         $standings = array_map('intval', explode(',', request('selected_standings')));
 
-        $contacts = $this->getCharacterContacts($character_ids,$standings);
+        $contacts = $this->getCharacterContacts($character_ids, $standings);
 
         return DataTables::of($contacts)
             ->editColumn('name', function ($row) {
