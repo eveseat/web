@@ -23,6 +23,23 @@
 
     <div class="tab-content">
 
+      <label>{{ trans('web::seat.standings') }}: </label>
+      <label id="contact-standing" class="checkbox-inline">
+        <input type="checkbox" value="-10" checked>-10
+      </label>
+      <label id="contact-standing" class="checkbox-inline">
+        <input type="checkbox" value="-5" checked>-5
+      </label>
+      <label id="contact-standing" class="checkbox-inline">
+        <input type="checkbox" value="0" checked>0
+      </label>
+      <label id="contact-standing"class="checkbox-inline">
+        <input type="checkbox" value="5" checked>5
+      </label>
+      <label id="contact-standing" class="checkbox-inline">
+        <input type="checkbox" value="10" checked>10
+      </label>
+
       <table id="contact-table" class="table compact table-condensed table-hover table-responsive">
         <thead>
         <tr>
@@ -53,6 +70,17 @@
       return character_ids !== 'single';
     }
 
+    function standingCeckboxes() {
+      return $('#contact-standing > input[type="checkbox"]').map(function(){
+        if(this.checked)
+          return $(this).val()
+      }).get().join();
+    }
+
+    $( '#contact-standing > input[type="checkbox"]' ).click(function() {
+      contact_table.draw();
+    });
+
     var contact_table = $('#contact-table').DataTable({
       "processing": true,
       "serverSide": true,
@@ -60,12 +88,13 @@
         url: "{{url()->current()}}",
         data: function ( d ) {
           d.all_linked_characters = allLinkedCharacters();
+          d.selected_standings = standingCeckboxes();
         }
       },
       columns: [
         {data: 'name', name: 'name', sortable: false},
         {data: 'contact_type', name: 'contact_type'},
-        {data: 'standing_view', name: 'standing'},
+        {data: 'standing_view', name: 'standing', searchable: false},
         {data: 'label_ids', name: 'label_ids'},
         {data: 'links', name: 'links', sortable: false, searchable: false},
       ],

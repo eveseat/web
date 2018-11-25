@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
+use Illuminate\Support\Facades\DB;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Contacts\CharacterContactLabel;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
@@ -65,7 +66,9 @@ class ContactsController extends Controller
         if(request('all_linked_characters') === 'true')
             $character_ids = $user_group;
 
-        $contacts = $this->getCharacterContacts($character_ids);
+        $standings = array_map('intval', explode(',', request('selected_standings')));
+
+        $contacts = $this->getCharacterContacts($character_ids,$standings);
 
         return DataTables::of($contacts)
             ->editColumn('name', function ($row) {
