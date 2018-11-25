@@ -26,9 +26,9 @@ use Illuminate\Support\Facades\DB;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Contacts\CharacterContactLabel;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
+use Seat\Eveapi\Models\Universe\UniverseName;
 use Seat\Services\Repositories\Character\Contacts;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Models\ResolvedIds;
 use Seat\Web\Models\User;
 use Yajra\DataTables\DataTables;
 
@@ -122,7 +122,7 @@ class ContactsController extends Controller
                 return $user_group->intersect(collect($row->contact_id))->isNotEmpty();
             })
             ->filterColumn('name', function ($query, $keyword) {
-                $resolved_ids = ResolvedIds::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($resolved_id) { return $resolved_id->id; });
+                $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($resolved_id) { return $resolved_id->id; });
                 $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($character_info) { return $character_info->character_id; });
                 $corporation_info_ids = CorporationInfo::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($corporation_info) { return $corporation_info->corproation_id; });
 
