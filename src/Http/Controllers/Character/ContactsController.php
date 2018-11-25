@@ -125,13 +125,14 @@ class ContactsController extends Controller
 
                 $query->whereIn('contact_id', array_merge($resolved_ids->toArray(), $character_info_ids->toArray(), $corporation_info_ids->toArray()));
             })
-            ->filterColumn('label_ids', function ($query, $keyword) {
+            ->filterColumn('label_ids', function ($query, $keyword) use ($character_ids) {
 
-                $label_ids = CharacterContactLabel::where('label_name', 'like', '%' . $keyword . '%')->get()->map(function ($contact_label) {return $contact_label->label_id; });
+                $labels = CharacterContactLabel::where('label_name', 'like', '%' . $keyword . '%')
+                    ->whereIn('character_id', $character_ids)
+                    ->get();
 
-                $query->where('label_ids', 'like', '%' . $label_ids->first() . '%');
-                if($label_ids->isNotEmpty())
-                    $query->where('label_ids', 'like', '%' . $label_ids->first() . '%');
+                foreach ($labels as $label)
+                    $query->whereRaw(DB::raw('JSON_CONTAINS(label_ids, ' . $label->label_id . ')'));
             })
             ->rawColumns(['name', 'standing_view', 'links'])
             ->make(true);
