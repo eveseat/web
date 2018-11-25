@@ -28,7 +28,6 @@ use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Sde\ChrFaction;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Models\ResolvedIds;
 use Seat\Web\Models\User;
 
 /**
@@ -125,8 +124,6 @@ class ResolveController extends Controller
                 $this->resolveIDsfromESI($chunk, $eseye);
 
             });
-
-        $this->saveResolvedIDs();
 
         return response()->json($this->response);
     }
@@ -248,17 +245,6 @@ class ResolveController extends Controller
 
     }
 
-    public function saveResolvedIDs()
-    {
-
-        $this->response->each(function ($name, $id) {
-            ResolvedIds::updateOrCreate(
-                ['id'   => $id],
-                ['name' => $name]
-            );
-        });
-    }
-
     public function resolveMainCharacter(Request $request)
     {
 
@@ -276,8 +262,6 @@ class ResolveController extends Controller
 
             $this->response[$chunk] = view('web::partials.maincharacter', compact('maincharacter'))->render();
         });
-
-        $this->saveResolvedIDs();
 
         return response()->json($this->response);
 
