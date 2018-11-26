@@ -90,8 +90,7 @@
     });
 
     // DataTable
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-      var target = $(e.target).data("characters"); // activated tab
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function () {
       character_journal.draw();
     });
 
