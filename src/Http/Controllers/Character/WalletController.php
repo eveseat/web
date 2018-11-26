@@ -132,7 +132,10 @@ class WalletController extends Controller
 
                 return number($row->balance);
             })
+            ->addColumn('is_in_group', function ($row) use ($user_group) {
 
+                return in_array($row->first_party_id, $user_group->toArray()) && in_array($row->second_party_id, $user_group->toArray());
+            })
             ->rawColumns(['ref_type', 'first_party_id', 'second_party_id'])
             ->make(true);
 

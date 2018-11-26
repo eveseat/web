@@ -122,6 +122,11 @@
           $("[data-toggle=tooltip]").tooltip();
           $('img').unveil(100);
           ids_to_names();
+      },
+      createdRow: function (row, data) {
+        if (data.is_in_group === '1'){
+          $(row).addClass('info')
+        }
       }
     });
 
