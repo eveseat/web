@@ -31,7 +31,7 @@
         <ul class="nav nav-tabs">
           <li class="active"><a href="#" data-toggle="tab" data-characters="single">{{ trans('web::seat.wallet_journal') }}</a></li>
           <li><a href="#" data-toggle="tab" data-characters="all">{{ trans('web::seat.linked_characters') }} {{ trans('web::seat.wallet_journal') }}</a></li>
-          @if(auth()->user()->has('character.jobs'))
+          @if (auth()->user()->has('character.jobs'))
             <li class="pull-right">
               <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.wallet']) }}"
                   style="color: #000000">
@@ -101,15 +101,15 @@
     }
 
     var character_journal = $('table#character-journal').DataTable({
-      processing      : true,
-      serverSide      : true,
-      ajax            : {
+      processing: true,
+      serverSide: true,
+      ajax: {
         url: '{{ route('character.view.journal.data', ['character_id' => $request->character_id]) }}',
         data: function ( d ) {
           d.all_linked_characters = allLinkedCharacters();
         }
       },
-      columns         : [
+      columns: [
         {data: 'date', name: 'date', render: human_readable, type: 'date'},
         {data: 'ref_type', name: 'ref_type'},
         {data: 'first_party_id', name: 'first_party.name'},
