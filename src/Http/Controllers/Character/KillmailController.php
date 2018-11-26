@@ -79,17 +79,17 @@ class KillmailController extends Controller
 
                 $character_id = $row->character_id;
 
-                $character = CharacterInfo::find($row->killmail_victims->character_id) ?: $row->killmail_victims->character_id;
-                $corporation = CorporationInfo::find($row->killmail_victims->corporation_id) ?: $row->killmail_victims->corporation_id;
+                $character = CharacterInfo::find($row->killmail_victim->character_id) ?: $row->killmail_victim->character_id;
+                $corporation = CorporationInfo::find($row->killmail_victim->corporation_id) ?: $row->killmail_victim->corporation_id;
 
                 $view = view('web::partials.character', compact('character', 'character_id'))
                     . '</br>'
                     . view('web::partials.corporation', compact('corporation', 'character_id'));
 
-                if(! empty($row->killmail_victims->alliance_id)){
+                if(! empty($row->killmail_victim->alliance_id)){
                     $alliance = ' ('
-                    . img('alliance', $row->killmail_victims->alliance_id, 64, ['class' => 'img-circle eve-icon small-icon'], false)
-                        . '<span class="id-to-name" data-id=' . $row->killmail_victims->alliance_id . '>' . trans('web::seat.unknown') . '</span>'
+                    . img('alliance', $row->killmail_victim->alliance_id, 64, ['class' => 'img-circle eve-icon small-icon'], false)
+                        . '<span class="id-to-name" data-id=' . $row->killmail_victim->alliance_id . '>' . trans('web::seat.unknown') . '</span>'
                     . ')';
                 } else $alliance = '';
 
@@ -97,14 +97,14 @@ class KillmailController extends Controller
             })
             ->addColumn('ship', function ($row) {
 
-                $ship_type = $row->killmail_victims->ship_type;
+                $ship_type = $row->killmail_victim->ship_type;
 
                 return view('web::partials.killmailtype', compact('ship_type'))
                     ->render();
             })
             ->addColumn('place', function ($row) {
 
-                $place = $row->killmail_details->solar_system;
+                $place = $row->killmail_detail->solar_system;
 
                 return view('web::partials.killmailsystem', compact('place'))
                     ->render();

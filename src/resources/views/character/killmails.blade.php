@@ -66,13 +66,13 @@
         }
       },
       columns         : [
-        {data: 'killmail_details.killmail_time', name: 'killmail_details.killmail_time', render: human_readable},
-        {data: 'ship', name: 'killmail_victims.ship_type.typeName'},
-        {data: 'place', name: 'killmail_details.solar_system.itemName'},
-        {data: 'victim', name: 'killmail_victims.victim_character.name'},
+        {data: 'killmail_detail.killmail_time', name: 'killmail_detail.killmail_time', render: human_readable},
+        {data: 'ship', name: 'killmail_victim.ship_type.typeName'},
+        {data: 'place', name: 'killmail_detail.solar_system.itemName'},
+        {data: 'victim', name: 'killmail_victim.victim_character.name'},
         {data: 'zkb', name: 'zkb', searchable: false},
-        {data: 'killmail_hash', name: 'killmail_victims.victim_corporation.name', visible: false},
-        {data: 'killmail_id', name: 'killmail_victims.victim_alliance.name', visible: false},
+        {data: 'killmail_hash', name: 'killmail_victim.victim_corporation.name', visible: false},
+        {data: 'killmail_id', name: 'killmail_victim.victim_alliance.name', visible: false},
       ],
       drawCallback: function () {
         $('img').unveil(100);
