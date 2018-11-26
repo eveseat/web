@@ -11,7 +11,7 @@
     <ul class="nav nav-tabs">
       <li class="active"><a href="#" data-toggle="tab" data-characters="single">{{ trans('web::seat.killmails') }}</a></li>
       <li><a href="#" data-toggle="tab" data-characters="all">{{ trans('web::seat.linked_characters') }} {{ trans('web::seat.killmails') }}</a></li>
-      @if(auth()->user()->has('character.jobs'))
+      @if (auth()->user()->has('character.jobs') )
         <li class="pull-right">
           <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.killmails']) }}"
              style="color: #000000">
@@ -45,8 +45,7 @@
 
   <script>
 
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-      var target = $(e.target).data("characters"); // activated tab
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function () {
       character_killmails.draw();
     });
 
@@ -57,15 +56,15 @@
 
 
     var character_killmails = $('table#character-killmails').DataTable({
-      processing      : true,
-      serverSide      : true,
-      ajax            : {
+      processing: true,
+      serverSide: true,
+      ajax: {
         url: '{{ route('character.view.killmails.data', ['character_id' => $request->character_id]) }}',
         data: function ( d ) {
           d.all_linked_characters = allLinkedCharacters();
         }
       },
-      columns         : [
+      columns: [
         {data: 'killmail_detail.killmail_time', name: 'killmail_detail.killmail_time', render: human_readable},
         {data: 'ship', name: 'killmail_victim.ship_type.typeName'},
         {data: 'place', name: 'killmail_detail.solar_system.itemName'},
