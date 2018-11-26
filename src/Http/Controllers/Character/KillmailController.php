@@ -57,10 +57,11 @@ class KillmailController extends Controller
      */
     public function getKillmailsData(int $character_id)
     {
-        if(! request()->has('all_linked_characters'))
+
+        if (! request()->has('all_linked_characters'))
             return response('required url parameter is missing!', 400);
 
-        if(request('all_linked_characters') === 'false')
+        if (request('all_linked_characters') === 'false')
             $character_ids = collect($character_id);
 
         $user_group = User::find($character_id)->group->users
@@ -69,7 +70,7 @@ class KillmailController extends Controller
             })
             ->pluck('id');
 
-        if(request('all_linked_characters') === 'true')
+        if (request('all_linked_characters') === 'true')
             $character_ids = $user_group;
 
         $killmails = $this->getCharacterKillmails($character_ids);
@@ -86,7 +87,7 @@ class KillmailController extends Controller
                     . '</br>'
                     . view('web::partials.corporation', compact('corporation', 'character_id'));
 
-                if(! empty($row->killmail_victim->alliance_id)){
+                if (! empty($row->killmail_victim->alliance_id)) {
                     $alliance = ' ('
                     . img('alliance', $row->killmail_victim->alliance_id, 64, ['class' => 'img-circle eve-icon small-icon'], false)
                         . '<span class="id-to-name" data-id=' . $row->killmail_victim->alliance_id . '>' . trans('web::seat.unknown') . '</span>'
