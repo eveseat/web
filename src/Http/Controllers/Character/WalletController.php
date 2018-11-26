@@ -59,7 +59,7 @@ class WalletController extends Controller
         if(! request()->has('all_linked_characters'))
             return response('required url parameter is missing!', 400);
 
-        if(request('all_linked_characters') === 'false')
+        if (request('all_linked_characters') === 'false')
             $character_ids = collect($character_id);
 
         $user_group = User::find($character_id)->group->users
@@ -82,7 +82,7 @@ class WalletController extends Controller
 
                 $character_id = $row->character_id;
 
-                if($row->first_party->category === 'character'){
+                if ($row->first_party->category === 'character') {
 
                     $character = CharacterInfo::find($row->first_party_id) ?: $row->first_party_id;
                     return view('web::partials.character', compact('character', 'character_id'));
@@ -103,13 +103,13 @@ class WalletController extends Controller
 
                 $character_id = $row->character_id;
 
-                if($row->second_party->category === 'character'){
+                if ($row->second_party->category === 'character') {
 
                     $character = CharacterInfo::find($row->second_party_id) ?: $row->second_party_id;
                     return view('web::partials.character', compact('character', 'character_id'));
                 }
 
-                if($row->second_party->category === 'corporation'){
+                if ($row->second_party->category === 'corporation') {
 
                     $corporation = CorporationInfo::find($row->second_party_id) ?: $row->second_party_id;
                     return view('web::partials.corporation', compact('corporation', 'character_id'));
