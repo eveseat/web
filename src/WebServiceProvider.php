@@ -129,16 +129,6 @@ class WebServiceProvider extends ServiceProvider
     }
 
     /**
-     * Set the path for migrations which should
-     * be migrated by laravel. More informations:
-     * https://laravel.com/docs/5.5/packages#migrations.
-     */
-    public function add_migrations()
-    {
-        $this->loadMigrationsFrom(__DIR__ . '/database/migrations/');
-    }
-
-    /**
      * Set the path and namespace for the vies.
      */
     public function add_views()
@@ -392,6 +382,16 @@ class WebServiceProvider extends ServiceProvider
             );
         });
 
+    }
+
+    /**
+     * Set the path for migrations which should
+     * be migrated by laravel. More informations:
+     * https://laravel.com/docs/5.5/packages#migrations.
+     */
+    private function add_migrations()
+    {
+        $this->loadMigrationsFrom(__DIR__ . '/database/migrations/');
     }
 
     /**
