@@ -94,7 +94,7 @@ class KillmailController extends Controller
                         . img('alliance', $row->killmail_victim->alliance_id, 64, ['class' => 'img-circle eve-icon small-icon'], false)
                         . '<span class="id-to-name" data-id=' . $row->killmail_victim->alliance_id . '>' . trans('web::seat.unknown') . '</span>'
                         . ')';
-                };
+                }
 
                     return $view . $alliance;
             })
