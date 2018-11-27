@@ -87,12 +87,14 @@ class KillmailController extends Controller
                     . '</br>'
                     . view('web::partials.corporation', compact('corporation', 'character_id'));
 
+                $alliance = '';
+
                 if (! empty($row->killmail_victim->alliance_id)) {
                     $alliance = ' ('
-                    . img('alliance', $row->killmail_victim->alliance_id, 64, ['class' => 'img-circle eve-icon small-icon'], false)
+                        . img('alliance', $row->killmail_victim->alliance_id, 64, ['class' => 'img-circle eve-icon small-icon'], false)
                         . '<span class="id-to-name" data-id=' . $row->killmail_victim->alliance_id . '>' . trans('web::seat.unknown') . '</span>'
-                    . ')';
-                } else $alliance = '';
+                        . ')';
+                };
 
                     return $view . $alliance;
             })
