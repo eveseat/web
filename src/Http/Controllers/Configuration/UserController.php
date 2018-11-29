@@ -25,7 +25,6 @@ namespace Seat\Web\Http\Controllers\Configuration;
 use Illuminate\Http\Request;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Services\Repositories\Configuration\UserRespository;
-use Seat\Services\Settings\Profile;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\EditUser;
 use Seat\Web\Http\Validation\NewIntelNote;
