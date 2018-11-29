@@ -81,8 +81,6 @@ class LoginController extends Controller
         if (strlen(env('EVE_CLIENT_SECRET')) < 5 || strlen(env('EVE_CLIENT_ID')) < 5)
             session()->flash('warning', trans('web::seat.sso_config_warning'));
 
-        $allow_registration = Seat::get('registration') === 'no' ? false : true;
-
-        return view('web::auth.login', compact('allow_registration'));
+        return view('web::auth.login');
     }
 }

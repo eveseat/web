@@ -103,6 +103,7 @@ class SsoController extends Controller
      * @param \Laravel\Socialite\Two\User $eve_user
      *
      * @return \Seat\Web\Models\User
+     * @throws \Seat\Services\Exceptions\SettingException
      */
     private function findOrCreateUser(SocialiteUser $eve_user): User
     {
@@ -118,7 +119,7 @@ class SsoController extends Controller
                 // Update the group_id for this user based on the current
                 // session status. If there is a user already logged in,
                 // simply associate the user with a new group id. If not,
-                // a new grou is generated and given to this user.
+                // a new group is generated and given to this user.
                 $existing->group_id = auth()->check() ?
                     auth()->user()->group->id : Group::create()->id;
 
@@ -148,6 +149,20 @@ class SsoController extends Controller
             }
 
             return $existing;
+        }
+
+        // Detect if registration is disabled
+        // Abort user creation.
+        if (setting('registration', true) === 'no') {
+
+            // Log the account creation attempt
+            event('security.log', [
+                'Attempt of account creation for ' . $eve_user->name, ' blocked, as registration is turned off.',
+            ]);
+
+            return redirect()->route('auth.login')
+                ->with('error', 'Registration is administratively disabled.')
+                ->send();
         }
 
         // Log the new account creation

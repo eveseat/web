@@ -86,7 +86,7 @@ class UserController extends Controller
 
         $user = $this->getUser($request->input('user_id'));
 
-        Profile::set('email_address', $request->input('email'), $user->group->id);
+        setting(['email_address', $request->input('email'), $user->group->id]);
 
         return redirect()->back()
             ->with('success', trans('web::seat.user_updated'));
@@ -128,26 +128,25 @@ class UserController extends Controller
         $user = $this->getUser($user_id);
         $current_group = $user->group;
 
-        if($user->active){
+        // Set default note
+        $note = collect(sprintf('This character has been reactivated by %s.',
+            auth()->user()->name));
+
+        if ($user->active){
+
+            // Initial setting of deactivation note
+            $note = collect(sprintf('This character has been deactivated by %s.', auth()->user()->name));
 
             if ($current_group->users->count() > 1) {
 
+                // If deactivated user is part of a larger user group, use another note
                 $note = collect(sprintf('This character has been deactivated by %s and it formerly belonged to the following user group: %s.',
                     auth()->user()->name, $current_group->users->map(function ($user) { return $user->name; })->implode(', ')));
 
                 $user->fill([
                     'group_id' => Group::create()->id,
-                ]);
-
-                $user->save();
-
-            } else {
-                $note = collect(sprintf('This character has been deactivated by %s.',
-                    auth()->user()->name));
+                ])->save();
             }
-        } else {
-            $note = collect(sprintf('This character has been reactivated by %s.',
-                auth()->user()->name));
         }
 
         $note->push($request->input('note'));
