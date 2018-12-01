@@ -12,12 +12,12 @@
       <li class="active"><a href="#" data-toggle="tab" data-characters="single">{{trans_choice('web::seat.character',1)}} {{ trans('web::seat.assets') }}</a></li>
       <li><a href="#" data-toggle="tab" data-characters="all">{{ trans('web::seat.linked_characters') }} {{ trans('web::seat.assets') }}</a></li>
       @if(auth()->user()->has('character.jobs'))
-      <li class="pull-right">
-        <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.assets']) }}"
-           style="color: #000000">
-          <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_assets') }}"></i>
-        </a>
-      </li>
+        <li class="pull-right">
+          <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.assets']) }}"
+             style="color: #000000">
+            <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_assets') }}"></i>
+          </a>
+        </li>
       @endif
     </ul>
     <div class="tab-content">
@@ -168,28 +168,6 @@
           $(".dtrg-group").remove();
         },
       });
-    }
-
-
-    var SI_SYMBOL = ["", "k", "M", "G", "T", "P", "E"];
-
-    function abbreviateNumber(number){
-
-      // what tier? (determines SI symbol)
-      var tier = Math.log10(number) / 3 | 0;
-
-      // if zero, we don't need a suffix
-      if(tier == 0) return number;
-
-      // get suffix and determine scale
-      var suffix = SI_SYMBOL[tier];
-      var scale = Math.pow(10, tier * 3);
-
-      // scale the number
-      var scaled = number / scale;
-
-      // format number and add suffix
-      return scaled.toFixed(1) + suffix;
     }
 
   </script>

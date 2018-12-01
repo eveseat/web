@@ -55,7 +55,7 @@ class AssetsController extends Controller
     public function getCharacterAssets(int $character_id)
     {
         if(! request()->has('all_linked_characters'))
-            return response('required url parameter is missing!', 400);
+            return abort(500);
 
         if(request('all_linked_characters') === 'false')
             $character_ids = collect($character_id);
