@@ -74,8 +74,6 @@ class WebServiceProvider extends ServiceProvider
         // Publish the JS & CSS, and Database migrations
         $this->add_publications();
 
-        $this->add_migrations();
-
         // Add the views for the 'web' namespace
         $this->add_views();
 
@@ -120,16 +118,12 @@ class WebServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__ . '/resources/assets'                                        => public_path('web'),
+            __DIR__ . '/database/migrations/'                                    => database_path('migrations'),
 
             // Font Awesome Pulled from packagist
             base_path('vendor/components/font-awesome/css/font-awesome.min.css') => public_path('web/css/font-awesome.min.css'),
             base_path('vendor/components/font-awesome/fonts')                    => public_path('web/fonts'),
         ]);
-    }
-
-    public function add_migrations()
-    {
-        $this->loadMigrationsFrom(__DIR__ . '/database/migrations/');
     }
 
     /**
