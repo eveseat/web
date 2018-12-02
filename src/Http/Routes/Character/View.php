@@ -25,7 +25,7 @@ Route::get('/list', [
     'uses' => 'CharacterController@getCharacters',
 ]);
 
-Route::post('/list/data', [
+Route::get('/list/data', [
     'as'   => 'character.list.data',
     'uses' => 'CharacterController@getCharactersData',
 ]);

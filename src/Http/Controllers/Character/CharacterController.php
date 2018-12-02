@@ -58,10 +58,7 @@ class CharacterController extends Controller
         $characters = ($request->filtered === 'true') ?
             auth()->user()->group->users
                 ->filter(function ($user) {
-                    if(! $user->name === 'admin' || $user->id === 1)
-                        return false;
-
-                    return true;
+                    return $user->name !== 'admin' && $user->id !== 1;
                 })
                 ->map(function ($user) {
                     return $user->character;
@@ -69,27 +66,33 @@ class CharacterController extends Controller
             $this->getAllCharactersWithAffiliations();
 
         return DataTables::of($characters)
-            ->editColumn('name', function ($row) {
+            ->addColumn('name_view', function ($row) {
 
-                return view('web::character.partials.charactername', compact('row'))
-                    ->render();
+                $character = $row;
+
+                return view('web::partials.character', compact('character'));
             })
             ->editColumn('corporation_id', function ($row) {
 
-                return view('web::character.partials.corporationname', compact('row'))
-                    ->render();
+                $corporation = $row->corporation_id;
+
+                return view('web::partials.corporation', compact('corporation'));
             })
             ->editColumn('alliance_id', function ($row) {
 
-                return view('web::character.partials.alliancename', compact('row'))
-                    ->render();
+                $alliance = $row->alliance_id;
+
+                if (empty($alliance))
+                    return '';
+
+                return view('web::partials.alliance', compact('alliance'));
             })
             ->editColumn('actions', function ($row) {
 
                 return view('web::character.partials.delete', compact('row'))
                     ->render();
             })
-            ->rawColumns(['name', 'corporation_id', 'alliance_id', 'actions'])
+            ->rawColumns(['name_view', 'corporation_id', 'alliance_id', 'actions'])
             ->make(true);
 
     }
