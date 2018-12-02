@@ -7,21 +7,21 @@
 
 @section('character_content')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">
-        {{ trans('web::seat.market') }}
-        @if(auth()->user()->has('character.jobs'))
-          <span class="pull-right">
-            <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.market']) }}"
-               style="color: #000000">
-              <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_market') }}"></i>
-            </a>
-          </span>
-        @endif
-      </h3>
-    </div>
-    <div class="panel-body">
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#" data-toggle="tab" data-characters="single">{{ trans('web::seat.market') }}</a></li>
+      <li><a href="#" data-toggle="tab" data-characters="all">{{ trans('web::seat.linked_characters') }} {{ trans('web::seat.market') }}</a></li>
+      @if(auth()->user()->has('character.jobs'))
+        <li class="pull-right">
+          <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.market']) }}"
+             style="color: #000000">
+            <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_market') }}"></i>
+          </a>
+        </li>
+      @endif
+    </ul>
+
+    <div class="tab-content">
 
       <table class="table compact table-condensed table-hover table-responsive"
              id="character-market">
@@ -45,28 +45,40 @@
 @push('javascript')
 
   <script>
-
-    $(function () {
-      $('table#character-market').DataTable({
-        processing      : true,
-        serverSide      : true,
-        ajax            : '{{ route('character.view.market.data', ['character_id' => $request->character_id]) }}',
-        columns         : [
-          {data: 'issued', name: 'issued', render: human_readable},
-          {data: 'bs', name: 'bid'},
-          {data: 'vol', name: 'volEntered'},
-          {data: 'price', name: 'price'},
-          {data: 'total', name: 'price'},
-          {data: 'typeName', name: 'typeName'}
-        ],
-        dom             : '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
-        'fnDrawCallback': function () {
-          $(document).ready(function () {
-            $('img').unveil(100);
-          });
-        }
-      });
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function () {
+      character_market.draw();
     });
+
+    function allLinkedCharacters() {
+
+      var character_ids = $("div.nav-tabs-custom > ul > li.active > a").data('characters');
+      return character_ids !== 'single';
+    }
+
+    var character_market = $('table#character-market').DataTable({
+      processing  : true,
+      serverSide  : true,
+      ajax        : {
+        url: '{{ route('character.view.market.data', ['character_id' => $request->character_id]) }}',
+        data: function ( d ) {
+          d.all_linked_characters = allLinkedCharacters();
+        }
+      },
+      columns     : [
+        {data: 'issued', name: 'issued', render: human_readable},
+        {data: 'bs', name: 'is_buy_order'},
+        {data: 'vol', name: 'volume_total'},
+        {data: 'price', name: 'price'},
+        {data: 'total', name: 'total'},
+        {data: 'typeName', name: 'typeName'}
+      ],
+      drawCallback: function () {
+
+        $('img').unveil(100);
+        $('[data-toggle="tooltip"]').tooltip();
+      }
+    });
+
 
   </script>
 
