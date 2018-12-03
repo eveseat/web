@@ -85,9 +85,9 @@
       columns         : [
         {data: 'total', name: 'total', searchable: false},
         {data: 'ref_type', name: 'ref_type'},
-        {data: 'character_id', name: 'character_id'},
-        {data: 'corporation_id', name: 'corporation_id'},
-        {data: 'alliance_id', name: 'alliance_id'}
+        {data: 'character', name: 'first_party.name'},
+        {data: 'corporation', name: 'corporation_id'},
+        {data: 'alliance', name: 'alliance_id'}
       ],
       dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
       'fnDrawCallback': function () {

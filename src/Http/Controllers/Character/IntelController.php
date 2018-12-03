@@ -22,7 +22,10 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
+use Seat\Eveapi\Models\Alliances\AllianceMember;
+use Seat\Eveapi\Models\Character\CharacterAffiliation;
 use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Character\Intel;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\NewIntelNote;
@@ -69,22 +72,70 @@ class IntelController extends Controller
 
                 return ucwords(str_replace('_', ' ', $row->ref_type));
             })
-            ->editColumn('character_id', function ($row) {
+            ->addColumn('character', function ($row) {
 
-                return view('web::character.intel.partials.charactername', compact('row'))
-                    ->render();
-            })
-            ->editColumn('corporation_id', function ($row) {
+                $character_id = $row->character_id;
 
-                return view('web::character.intel.partials.corporationname', compact('row'))
-                    ->render();
-            })
-            ->editColumn('alliance_id', function ($row) {
+                $character_helper = $row->character_id !== $row->first_party->entity_id ? $row->first_party : $row->second_party;
 
-                return view('web::character.intel.partials.alliancename', compact('row'))
-                    ->render();
+                if ($character_helper->category !== 'character')
+                    return '';
+
+                $character = CharacterInfo::find($character_helper->entity_id) ?: $character_helper->entity_id;
+
+                return view('web::partials.character', compact('character', 'character_id'));
             })
-            ->rawColumns(['character_id', 'corporation_id', 'alliance_id'])
+            ->editColumn('corporation', function ($row) {
+
+                $character_id = $row->character_id;
+
+                $corporation_helper = $row->character_id !== $row->first_party->entity_id ? $row->first_party : $row->second_party;
+
+                $corporation_id = '';
+
+                if ($corporation_helper->category === 'character'){
+                    $corporation_id = optional(CharacterInfo::find($corporation_helper->entity_id))->corporation_id ?: optional(CharacterAffiliation::find($corporation_helper->entity_id))->corporation_id;
+                }
+
+                if ($corporation_helper->category === 'corporation'){
+                    $corporation_id = $corporation_helper->entity_id;
+                }
+
+                if (is_a($corporation_id, 'Illuminate\Support\Optional'))
+                    return '';
+
+                $corporation = CorporationInfo::find($corporation_id) ?: $corporation_id;
+
+                return view('web::partials.corporation', compact('corporation', 'character_id'));
+
+
+            })
+            ->addColumn('alliance', function ($row) {
+
+                $character_id = $row->character_id;
+
+                $alliance_helper = $row->character_id !== $row->first_party->entity_id ? $row->first_party : $row->second_party;
+
+                $alliance_id = '';
+
+                if ($alliance_helper->category === 'character'){
+                    $alliance_id = optional(CharacterAffiliation::find($alliance_helper->entity_id))->alliance_id;
+                }
+
+                if ($alliance_helper->category === 'corporation'){
+                    $alliance_id = optional(CorporationInfo::find($alliance_helper->entity_id))->alliance_id ?: optional(CharacterAffiliation::where('corporation_id', $alliance_helper->entity_id));
+
+                }
+
+                if (is_a($alliance_id, 'Illuminate\Support\Optional'))
+                    return '';
+
+
+                $alliance = $alliance_id;
+
+                return view('web::partials.alliance', compact('alliance', 'character_id'));
+            })
+            ->rawColumns(['character', 'corporation', 'alliance'])
             ->make(true);
 
     }
