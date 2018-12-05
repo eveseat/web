@@ -89,7 +89,8 @@
         {data: 'ref_type', name: 'ref_type'},
         {data: 'character', name: 'first_party.name'},
         {data: 'corporation', name: 'corporation_id'},
-        {data: 'alliance', name: 'alliance_id'}
+        {data: 'alliance', name: 'alliance_id'},
+        {data: 'button'}
       ],
       drawCallback : function () {
 

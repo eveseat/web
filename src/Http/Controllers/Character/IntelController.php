@@ -142,7 +142,10 @@ class IntelController extends Controller
 
                 return view('web::partials.alliance', compact('alliance', 'character_id'));
             })
-            ->rawColumns(['character', 'corporation', 'alliance'])
+            ->addColumn('button', function ($row){
+                return view('web::character.intel.partials.topwalletjournalinteractionsbutton', compact('row'));
+            })
+            ->rawColumns(['character', 'corporation', 'alliance', 'button'])
             ->make(true);
 
     }
