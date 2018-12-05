@@ -25,6 +25,7 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Services\Repositories\Character\Wallet;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Models\User;
 use Yajra\DataTables\DataTables;
 
 /**
@@ -151,7 +152,23 @@ class WalletController extends Controller
     public function getTransactionsData(int $character_id)
     {
 
-        $transactions = $this->getCharacterWalletTransactions($character_id);
+        if (! request()->has('all_linked_characters'))
+            return abort( 500);
+
+        if (request('all_linked_characters') === 'false')
+            $character_ids = collect($character_id);
+
+        $user_group = User::find($character_id)->group->users
+            ->filter(function ($user) {
+                return $user->name !== 'admin' && $user->id !== 1;
+            })
+            ->pluck('id');
+
+        if (request('all_linked_characters') === 'true')
+            $character_ids = $user_group;
+
+
+        $transactions = $this->getCharacterWalletTransactions($character_ids);
 
         return DataTables::of($transactions)
             ->editColumn('is_buy', function ($row) {

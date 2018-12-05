@@ -10,20 +10,20 @@
   <div class="row">
     <div class="col-md-12">
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-            {{ trans('web::seat.wallet_transactions') }}
-            @if(auth()->user()->has('character.jobs'))
-              <span class="pull-right">
-                <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.wallet']) }}"
-                   style="color: #000000">
-                  <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_wallet') }}"></i>
-                </a>
-              </span>
-            @endif
-          </h3>
-        </div>
+      <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#" data-toggle="tab" data-characters="single">{{ trans('web::seat.wallet_transactions') }}</a></li>
+          <li><a href="#" data-toggle="tab" data-characters="all">{{ trans('web::seat.linked_characters') }} {{ trans('web::seat.wallet_transactions') }}</a></li>
+          @if(auth()->user()->has('character.jobs'))
+            <span class="pull-right">
+              <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.wallet']) }}"
+                 style="color: #000000">
+                <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_wallet') }}"></i>
+              </a>
+            </span>
+          @endif
+
+        </ul>
         <div class="panel-body">
 
           <table class="table compact table-condensed table-hover table-responsive"
@@ -52,11 +52,25 @@
 
 <script type="text/javascript">
 
-  $(function () {
-    $('table#character-transactions').DataTable({
+  $('a[data-toggle="tab"]').on('shown.bs.tab', function () {
+    character_transactions.draw();
+  });
+
+  function allLinkedCharacters() {
+    var character_ids = $("div.nav-tabs-custom > ul > li.active > a").data('characters');
+    return character_ids !== 'single';
+  }
+
+
+  var character_transactions = $('table#character-transactions').DataTable({
       processing      : true,
       serverSide      : true,
-      ajax            : '{{ route('character.view.transactions.data', ['character_id' => $request->character_id]) }}',
+      ajax            : {
+        url: '{{ route('character.view.transactions.data', ['character_id' => $request->character_id]) }}',
+        data: function ( d ) {
+          d.all_linked_characters = allLinkedCharacters();
+        }
+      },
       columns         : [
         {data: 'date', name: 'date', render: human_readable},
         {data: 'is_buy', name: 'type.typeName'},
@@ -71,7 +85,7 @@
         $('[data-toggle="tooltip"]').tooltip();
       }
     });
-  });
+
 
 </script>
 
