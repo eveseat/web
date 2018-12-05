@@ -98,7 +98,7 @@ class IntelController extends Controller
 
                 return view('web::partials.character', compact('character', 'character_id'));
             })
-            ->editColumn('corporation', function ($row) {
+            ->addColumn('corporation', function ($row) {
 
                 $character_id = $row->character_id;
 
@@ -354,6 +354,13 @@ class IntelController extends Controller
 
     }
 
+    /**
+     * @param int      $character_id
+     * @param int      $first_party_id
+     * @param int|null $second_party_id
+     *
+     * @return \Illuminate\Support\Collection
+     */
     private function getUniverseNameResolved(int $character_id, int $first_party_id, int $second_party_id = null) : Collection
     {
         // f.e. market escrow -> self referential payment.

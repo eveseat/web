@@ -81,6 +81,8 @@
     $('table#character-top-journal-interactions').DataTable({
       processing      : true,
       serverSide      : true,
+      searching       : false,
+      ordering        : false,
       ajax            : '{{ route('character.view.intel.summary.journal.data', ['character_id' => $request->character_id]) }}',
       columns         : [
         {data: 'total', name: 'total', searchable: false},
@@ -89,12 +91,11 @@
         {data: 'corporation', name: 'corporation_id'},
         {data: 'alliance', name: 'alliance_id'}
       ],
-      dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
-      'fnDrawCallback': function () {
-        $(document).ready(function () {
-          $('img').unveil(100);
-          ids_to_names();
-        });
+      drawCallback : function () {
+
+        $('img').unveil(100);
+        ids_to_names();
+
       }
     });
   });
