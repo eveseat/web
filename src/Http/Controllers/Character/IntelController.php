@@ -22,10 +22,11 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
-use Seat\Eveapi\Models\Alliances\AllianceMember;
+use Illuminate\Support\Collection;
 use Seat\Eveapi\Models\Character\CharacterAffiliation;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
+use Seat\Eveapi\Models\Universe\UniverseName;
 use Seat\Services\Repositories\Character\Intel;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\NewIntelNote;
@@ -76,12 +77,21 @@ class IntelController extends Controller
 
                 $character_id = $row->character_id;
 
-                $character_helper = $row->character_id !== $row->first_party->entity_id ? $row->first_party : $row->second_party;
+                $universe_name = $this->getUniverseNameResolved($character_id, $row->first_party_id, $row->second_party_id);
 
-                if ($character_helper->category !== 'character')
+
+                if ($universe_name->has('unknown_id'))
+                    return view('web::partials.unknown', [
+                        'unknown_id' => $universe_name['unknown_id'],
+                        'character_id' => $character_id,
+                    ]);
+
+                if (!$universe_name->has('character_id')) {
+
                     return '';
+                }
 
-                $character = CharacterInfo::find($character_helper->entity_id) ?: $character_helper->entity_id;
+                $character = CharacterInfo::find($universe_name['character_id']) ?: $universe_name['character_id'];
 
                 return view('web::partials.character', compact('character', 'character_id'));
             })
@@ -89,22 +99,20 @@ class IntelController extends Controller
 
                 $character_id = $row->character_id;
 
-                $corporation_helper = $row->character_id !== $row->first_party->entity_id ? $row->first_party : $row->second_party;
+                $universe_name = $this->getUniverseNameResolved($character_id, $row->first_party_id, $row->second_party_id);
 
-                $corporation_id = '';
+                if ($universe_name->has('unknown_id'))
+                    return view('web::partials.unknown', [
+                        'unknown_id' => $universe_name['unknown_id'],
+                        'character_id' => $character_id,
+                    ]);
 
-                if ($corporation_helper->category === 'character'){
-                    $corporation_id = optional(CharacterInfo::find($corporation_helper->entity_id))->corporation_id ?: optional(CharacterAffiliation::find($corporation_helper->entity_id))->corporation_id;
-                }
+                if (!$universe_name->has('corporation_id')) {
 
-                if ($corporation_helper->category === 'corporation'){
-                    $corporation_id = $corporation_helper->entity_id;
-                }
-
-                if (is_a($corporation_id, 'Illuminate\Support\Optional'))
                     return '';
+                }
 
-                $corporation = CorporationInfo::find($corporation_id) ?: $corporation_id;
+                $corporation = CorporationInfo::find($universe_name['corporation_id']) ?: $universe_name['corporation_id'];
 
                 return view('web::partials.corporation', compact('corporation', 'character_id'));
 
@@ -114,24 +122,20 @@ class IntelController extends Controller
 
                 $character_id = $row->character_id;
 
-                $alliance_helper = $row->character_id !== $row->first_party->entity_id ? $row->first_party : $row->second_party;
+                $universe_name = $this->getUniverseNameResolved($character_id, $row->first_party_id, $row->second_party_id);
 
-                $alliance_id = '';
+                if ($universe_name->has('unknown_id'))
+                    return view('web::partials.unknown', [
+                        'unknown_id' => $universe_name['unknown_id'],
+                        'character_id' => $character_id,
+                    ]);
 
-                if ($alliance_helper->category === 'character'){
-                    $alliance_id = optional(CharacterAffiliation::find($alliance_helper->entity_id))->alliance_id;
-                }
+                if (!$universe_name->has('alliance_id')) {
 
-                if ($alliance_helper->category === 'corporation'){
-                    $alliance_id = optional(CorporationInfo::find($alliance_helper->entity_id))->alliance_id ?: optional(CharacterAffiliation::where('corporation_id', $alliance_helper->entity_id));
-
-                }
-
-                if (is_a($alliance_id, 'Illuminate\Support\Optional'))
                     return '';
+                }
 
-
-                $alliance = $alliance_id;
+                $alliance = $universe_name['alliance_id'];
 
                 return view('web::partials.alliance', compact('alliance', 'character_id'));
             })
@@ -345,5 +349,55 @@ class IntelController extends Controller
         return redirect()->back()
             ->with('success', 'Note updated!');
 
+    }
+
+    private function getUniverseNameResolved(int $character_id, int $first_party_id, int $second_party_id = null) : Collection
+    {
+        // f.e. market escrow -> self referential payment.
+        if($first_party_id === $second_party_id)
+            return collect([
+                'character_id' => $character_id,
+                'corporation_id' => CharacterInfo::find($character_id)->corporation_id,
+                'alliance_id' => CharacterInfo::find($character_id)->alliance_id
+            ]);
+
+        return collect([UniverseName::find($first_party_id), UniverseName::find($second_party_id)])
+            ->filter()
+            ->filter(function ($universe_name) use ($character_id){
+
+                return $universe_name->entity_id !== $character_id;
+            })
+            ->pipe(function ($collection) use ($character_id, $first_party_id,$second_party_id) {
+
+                if ($collection->isNotEmpty()){
+
+                    return $collection->flatten()->map(function ($item) {
+
+                        if($item->category === 'character')
+                            return collect([
+                                'character_id' => $item->entity_id,
+                                'corporation_id' => optional(CharacterAffiliation::find($item->entity_id))->corporation_id,
+                                'alliance_id' => optional(CharacterAffiliation::find($item->entity_id))->alliance_id
+                            ])->filter();
+
+                        if($item->category === 'corporation')
+                            return collect([
+                                'corporation_id' => $item->entity_id,
+                                'alliance_id' => optional(CharacterAffiliation::where('corporation_id',$item->entity_id)->get()->first())->alliance_id
+                            ])->filter();
+
+                        if($item->category === 'alliance')
+                            return collect(['alliance_id' => $item->entity_id]);
+
+                        return collect(['other_resolved_id' => $item->entity_id]);
+                    })->filter();
+                }
+
+                return $collection->push(collect(['unknown_id' => $character_id !== $first_party_id ? $first_party_id : $second_party_id]));
+            })
+            ->flatMap(function ($value) {
+
+                return $value;
+            });
     }
 }
