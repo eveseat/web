@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Services\Repositories\Character\Wallet;
 use Seat\Web\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
@@ -150,13 +151,12 @@ class WalletController extends Controller
     public function getTransactionsData(int $character_id)
     {
 
-        $transactions = $this->getCharacterWalletTransactions($character_id, false);
+        $transactions = $this->getCharacterWalletTransactions($character_id);
 
         return DataTables::of($transactions)
             ->editColumn('is_buy', function ($row) {
 
-                return view('web::partials.transactiontype', compact('row'))
-                    ->render();
+                return view('web::partials.transactiontype', compact('row'));
             })
             ->editColumn('unit_price', function ($row) {
 
@@ -166,12 +166,15 @@ class WalletController extends Controller
 
                 return number($row->unit_price * $row->quantity);
             })
-            ->editColumn('client_id', function ($row) {
+            ->addColumn('client_view', function ($row) {
 
-                return view('web::partials.transactionclient', compact('row'))
-                    ->render();
+                $character_id = $row->character_id;
+
+                $character = CharacterInfo::find($row->client_id) ?: $row->client_id;
+
+                return view('web::partials.character', compact('character', 'character_id'));
             })
-            ->rawColumns(['is_buy', 'client_id'])
+            ->rawColumns(['is_buy', 'client_view'])
             ->make(true);
 
     }

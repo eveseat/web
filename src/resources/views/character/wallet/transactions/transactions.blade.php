@@ -59,19 +59,16 @@
       ajax            : '{{ route('character.view.transactions.data', ['character_id' => $request->character_id]) }}',
       columns         : [
         {data: 'date', name: 'date', render: human_readable},
-        {data: 'is_buy', name: 'is_buy'},
+        {data: 'is_buy', name: 'type.typeName'},
         {data: 'quantity', name: 'quantity'},
         {data: 'unit_price', name: 'unit_price'},
         {data: 'total', name: 'unit_price'},
-        {data: 'client_id', name: 'client_id'}
+        {data: 'client_view', name: 'client.name'}
       ],
-      dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
-      'fnDrawCallback': function () {
-        $(document).ready(function () {
-          $('img').unveil(100);
-
-          ids_to_names();
-        });
+      drawCallback: function () {
+        $('img').unveil(100);
+        ids_to_names();
+        $('[data-toggle="tooltip"]').tooltip();
       }
     });
   });
