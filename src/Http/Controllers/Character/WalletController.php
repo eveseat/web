@@ -153,13 +153,14 @@ class WalletController extends Controller
     {
 
         if (! request()->has('all_linked_characters'))
-            return abort( 500);
+            return abort(500);
 
         if (request('all_linked_characters') === 'false')
             $character_ids = collect($character_id);
 
         $user_group = User::find($character_id)->group->users
             ->filter(function ($user) {
+
                 return $user->name !== 'admin' && $user->id !== 1;
             })
             ->pluck('id');
