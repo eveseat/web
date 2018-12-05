@@ -136,7 +136,7 @@ class ResolveController extends Controller
 
     /**
      * Resolve received sets of ids with the help of chrFactions table
-     * map the resolved names, cache the results and return unresolved ids
+     * map the resolved names, cache the results and return unresolved ids.
      *
      * @param \Illuminate\Support\Collection $ids
      *
@@ -163,7 +163,7 @@ class ResolveController extends Controller
 
     /**
      * Resolve received sets of ids with the help of universe_names table
-     * map the resolved names, cache the results and return unresolved ids
+     * map the resolved names, cache the results and return unresolved ids.
      *
      * @param \Illuminate\Support\Collection $ids
      *
@@ -188,7 +188,7 @@ class ResolveController extends Controller
 
     /**
      * Resolve received sets of ids with the help of character_infos table
-     * map the resolved names, cache the results and return unresolved ids
+     * map the resolved names, cache the results and return unresolved ids.
      *
      * @param \Illuminate\Support\Collection $ids
      *
@@ -214,7 +214,7 @@ class ResolveController extends Controller
 
     /**
      * Resolve received sets of ids with the help of corporation_infos table
-     * map the resolved names, cache the results and return unresolved ids
+     * map the resolved names, cache the results and return unresolved ids.
      *
      * @param \Illuminate\Support\Collection $ids
      *
@@ -296,7 +296,7 @@ class ResolveController extends Controller
     }
 
     /**
-     * Cache and save resolved IDs. Return unresolved collection of ids
+     * Cache and save resolved IDs. Return unresolved collection of ids.
      *
      * @param \Illuminate\Support\Collection $names resolved names
      * @param \Illuminate\Support\Collection $ids
