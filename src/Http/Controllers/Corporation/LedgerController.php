@@ -185,4 +185,26 @@ class LedgerController extends Controller
             compact('jumpclonedates', 'jumpclonetotals',
                 'corporation_id', 'month', 'year'));
     }
+    /**
+     * @param      $corporation_id
+     * @param null $year
+     * @param null $month
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getJumpBridgeTotalsByMonth(int $corporation_id, $year = null, $month = null)
+    {
+
+        ! is_null($year) ? $year : $year = date('Y');
+        ! is_null($month) ? $year : $month = date('m');
+
+        $jumpclonedates = $this->getCorporationLedgerJumpBrudgeDates($corporation_id);
+
+        $jumpclonetotals = $this->getCorporationLedgeJumpBridgeTotalsTotalsByMonth(
+            $corporation_id, $year, $month);
+
+        return view('web::corporation.ledger.jumpbridge',
+            compact('jumpbridgedates', 'jumpbridgetotals',
+                'corporation_id', 'month', 'year'));
+    }
 }
