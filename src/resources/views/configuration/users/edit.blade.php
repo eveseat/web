@@ -20,23 +20,12 @@
 
           <div class="form-group">
             <label for="username">{{ trans_choice('web::seat.username', 1) }}</label>
-            <input type="text" name="username" class="form-control" id="username" value="{{ $user->name }}">
+            <input type="text" name="username" class="form-control" id="username" value="{{ $user->name }}" disabled>
           </div>
 
           <div class="form-group">
             <label for="email">{{ trans_choice('web::seat.email', 1) }}</label>
             <input type="email" name="email" class="form-control" id="email" value="{{ $user->email }}">
-          </div>
-
-          <div class="form-group">
-            <label for="password">{{ trans_choice('web::seat.password', 1) }}</label>
-            <input type="password" name="password" class="form-control" id="password" placeholder="Password">
-          </div>
-
-          <div class="form-group">
-            <label for="password_confirm">{{ trans_choice('web::seat.password_again', 1) }}</label>
-            <input type="password" name="password_confirmation" class="form-control" id="password_confirmation"
-                   placeholder="Password">
           </div>
 
         </div><!-- /.box-body -->
@@ -62,6 +51,62 @@
     </div>
   </div>
 
+  <!-- account re-assignment -->
+  @if($user->name != 'admin')
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">{{ trans('web::seat.reassign_user') }}</h3>
+    </div>
+    <div class="panel-body">
+
+      <div>
+        <dl>
+          <dt>Current User Group</dt>
+          <dd>
+            <ul class="list-unstyled">
+              @foreach($user->group->users as $group_user)
+                <li>
+                  {!! img('character', $group_user->id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  {{ $group_user->name }}
+                </li>
+              @endforeach
+            </ul>
+          </dd>
+        </dl>
+      </div>
+
+      <form role="form" action="{{ route('configuration.access.users.reassign') }}" method="post">
+        {{ csrf_field() }}
+        <input type="hidden" name="user_id" value="{{ $user->id }}">
+
+        <div class="form-group">
+          <label for="available_users">{{ trans_choice('web::seat.available_groups', 2) }}</label>
+          <select name="group_id" id="available_users" style="width: 100%">
+
+            @foreach($groups as $group)
+
+              <option value="{{ $group->id }}">
+                {{ $group->users->map(function($user) { return $user->name; })->implode(', ') }}
+              </option>
+
+            @endforeach
+
+          </select>
+        </div>
+
+        <div class="box-footer">
+
+          <button type="submit" class="btn btn-primary pull-right">
+            {{ trans('web::seat.reassign') }}
+          </button>
+
+        </div>
+      </form>
+
+    </div>
+  </div>
+  @endif
+
 @stop
 @section('right')
 
@@ -70,6 +115,7 @@
     <div class="col-md-12">
 
       <!-- role summary -->
+      @if($user->name != 'admin')
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">{{ trans('web::seat.role_summary') }}</h3>
@@ -85,13 +131,14 @@
               <th></th>
             </tr>
 
-            @foreach($user->roles as $role)
+            @foreach($user->group->roles as $role)
 
               <tr>
                 <td>{{ $role->title }}</td>
                 <td>
                   @foreach($role->permissions as $permission)
-                    <span class="label label-{{ $permission->title == 'superuser' ? 'danger' : 'info' }}">{{ studly_case($permission->title) }}</span>
+                    <span
+                        class="label label-{{ $permission->title == 'superuser' ? 'danger' : 'info' }}">{{ studly_case($permission->title) }}</span>
                   @endforeach
                 </td>
                 <td>
@@ -100,14 +147,16 @@
                   @endforeach
                 </td>
                 <td>
-                  <a href="{{ route('configuration.access.roles.edit', ['id' => $role->id]) }}" type="button"
-                     class="btn btn-warning btn-xs">
-                    {{ trans('web::seat.edit') }}
-                  </a>
-                  <a href="{{ route('configuration.access.roles.edit.remove.user', ['role_id' => $role->id, 'user_id' => $user->id]) }}"
-                     type="button" class="btn btn-danger btn-xs">
-                    {{ trans('web::seat.remove') }}
-                  </a>
+                  @if(auth()->user()->id != $user->id)
+                    <a href="{{ route('configuration.access.roles.edit', ['id' => $role->id]) }}" type="button"
+                       class="btn btn-warning btn-xs">
+                      {{ trans('web::seat.edit') }}
+                    </a>
+                    <a href="{{ route('configuration.access.roles.edit.remove.group', ['role_id' => $role->id, 'user_id' => $user->group->id]) }}"
+                       type="button" class="btn btn-danger btn-xs">
+                      {{ trans('web::seat.remove') }}
+                    </a>
+                  @endif
                 </td>
 
               </tr>
@@ -119,9 +168,10 @@
 
         </div>
         <div class="panel-footer">
-          <b>{{ count($user->roles) }}</b> {{ trans_choice('web::seat.role', count($user->roles)) }}
+          <b>{{ count($user->group->roles) }}</b> {{ trans_choice('web::seat.role', count($user->group->roles)) }}
         </div>
       </div>
+      @endif
 
     </div>
 
@@ -175,3 +225,15 @@
 
 
 @stop
+
+@push('javascript')
+
+  @include('web::includes.javascript.id-to-name')
+
+  <script>
+    $("#available_users").select2({
+      placeholder: "{{ trans('web::seat.select_group_to_assign') }}"
+    });
+  </script>
+
+@endpush

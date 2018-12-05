@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,9 +25,15 @@ Route::get('/list', [
     'uses' => 'CharacterController@getCharacters',
 ]);
 
-Route::get('/list/data', [
+Route::post('/list/data', [
     'as'   => 'character.list.data',
     'uses' => 'CharacterController@getCharactersData',
+]);
+
+Route::get('/delete/{character_id}', [
+    'as'         => 'character.delete',
+    'middleware' => 'bouncer:superuser',
+    'uses'       => 'CharacterController@deleteCharacter',
 ]);
 
 Route::get('/view/assets/{character_id}', [
@@ -54,12 +60,6 @@ Route::get('/view/calendar/{character_id}', [
     'uses'       => 'CalendarController@getCalendar',
 ]);
 
-Route::get('/view/channels/{character_id}', [
-    'as'         => 'character.view.channels',
-    'middleware' => 'characterbouncer:channels',
-    'uses'       => 'ChannelsController@getChannels',
-]);
-
 Route::get('/view/contacts/{character_id}', [
     'as'         => 'character.view.contacts',
     'middleware' => 'characterbouncer:contacts',
@@ -82,6 +82,18 @@ Route::get('/view/contracts/items/{character_id}/{contract_id}', [
     'as'         => 'character.view.contracts.items',
     'middleware' => 'characterbouncer:contracts',
     'uses'       => 'ContractsController@getContractsItemsData',
+]);
+
+Route::get('/view/fittings/{character_id}', [
+    'as'         => 'character.view.fittings',
+    'middleware' => 'characterbouncer:fittings',
+    'uses'       => 'FittingController@getFittings',
+]);
+
+Route::get('/view/fittings/items/{character_id}/{fitting_id}', [
+    'as'         => 'character.view.fittings.items',
+    'middleware' => 'characterbouncer:fittings',
+    'uses'       => 'FittingController@getFittingItems',
 ]);
 
 Route::get('/view/industry/{character_id}', [
@@ -245,6 +257,18 @@ Route::get('/view/market/data/{character_id}', [
     'as'         => 'character.view.market.data',
     'middleware' => 'characterbouncer:market',
     'uses'       => 'MarketController@getMarketData',
+]);
+
+Route::get('/view/mining-ledger/{character_id}', [
+    'as'         => 'character.view.mining_ledger',
+    'middleware' => 'characterbouncer:mining',
+    'uses'       => 'MiningLedgerController@getLedger',
+]);
+
+Route::get('/view/mining-ledger/{character_id}/{date}/{system_id}/{type_id}', [
+    'as'         => 'character.view.detailed_mining_ledger',
+    'middleware' => 'characterbouncer:mining',
+    'uses'       => 'MiningLedgerController@getDetailedLedger',
 ]);
 
 Route::get('/view/notifications/{character_id}', [

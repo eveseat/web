@@ -9,7 +9,17 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::seat.killmails') }}</h3>
+      <h3 class="panel-title">
+        {{ trans('web::seat.killmails') }}
+        @if(auth()->user()->has('character.jobs'))
+          <span class="pull-right">
+            <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.killmails']) }}"
+               style="color: #000000">
+              <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_killmails') }}"></i>
+            </a>
+          </span>
+        @endif
+      </h3>
     </div>
     <div class="panel-body">
 
@@ -34,29 +44,30 @@
 
 @push('javascript')
 
-<script>
+  <script>
 
-  $(function () {
-    $('table#character-killmails').DataTable({
-      processing      : true,
-      serverSide      : true,
-      ajax            : '{{ route('character.view.killmails.data', ['character_id' => $request->character_id]) }}',
-      columns         : [
-        {data: 'killTime', name: 'killTime', render: human_readable},
-        {data: 'characterName', name: 'characterName'},
-        {data: 'typeName', name: 'typeName'},
-        {data: 'itemName', name: 'itemName'},
-        {data: 'zkb', name: 'itemName'},
-      ],
-      dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
-      'fnDrawCallback': function () {
-        $(document).ready(function () {
-          $('img').unveil(100);
-        });
-      }
+    $(function () {
+      $('table#character-killmails').DataTable({
+        processing      : true,
+        serverSide      : true,
+        ajax            : '{{ route('character.view.killmails.data', ['character_id' => $request->character_id]) }}',
+        columns         : [
+          {data: 'killmail_time', name: 'killmail_time', render: human_readable},
+          {data: 'character_name', name: 'character_name'},
+          {data: 'type_name', name: 'type_name'},
+          {data: 'item_name', name: 'item_name'},
+          {data: 'zkb', name: 'zkb'}
+        ],
+        dom             : '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
+        'fnDrawCallback': function () {
+          $(document).ready(function () {
+            $('img').unveil(100);
+            ids_to_names();
+          });
+        }
+      });
     });
-  });
 
-</script>
+  </script>
 
 @endpush

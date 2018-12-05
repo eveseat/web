@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@ class ScheduleController extends Controller
             'every minute'         => '* * * * *',
             'every five minutes'   => '*/5 * * * *',
             'every ten minutes'    => '*/10 * * * *',
-            'every thirty minutes' => '0,30 * * * *',
+            'every thirty minutes' => '0/30 * * * *',
 
         ];
 

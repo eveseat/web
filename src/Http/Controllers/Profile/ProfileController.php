@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,8 +27,8 @@ use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Services\Settings\Profile;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\EmailUpdate;
-use Seat\Web\Http\Validation\PasswordUpdate;
 use Seat\Web\Http\Validation\ProfileSettings;
+use Seat\Web\Models\User;
 
 /**
  * Class ProfileController.
@@ -49,7 +49,8 @@ class ProfileController extends Controller
             ->take(50)->sortByDesc('created_at');
 
         // Settings value possibilities
-        $characters = $this->getUserCharacters(auth()->user()->id);
+        $characters = $this->getUserGroupCharacters(auth()->user()->group);
+        $scopes = optional(auth()->user()->refresh_token)->scopes;
         $skins = Profile::$options['skins'];
         $languages = config('web.locale.languages');
         $sidebar = Profile::$options['sidebar'];
@@ -58,7 +59,7 @@ class ProfileController extends Controller
         $decimal = Profile::$options['decimal_seperator'];
 
         return view('web::profile.view',
-            compact('user', 'history', 'characters', 'skins', 'languages',
+            compact('user', 'history', 'characters', 'scopes', 'skins', 'languages',
                 'sidebar', 'thousand', 'decimal'));
     }
 
@@ -66,21 +67,13 @@ class ProfileController extends Controller
      * @param \Seat\Web\Http\Validation\ProfileSettings $request
      *
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Seat\Services\Exceptions\SettingException
      */
     public function getUpdateUserSettings(ProfileSettings $request)
     {
 
-        // If the multifactor authentication is being disabled,
-        // clear out the token we have on record too.
-        if ($request->require_mfa == 'no' && Profile::get('require_mfa') == 'yes') {
-
-            auth()->user()->update(['mfa_token' => null]);
-        }
-
-        // Update the settings
+        // Update the rest of the settings
         Profile::set('main_character_id', $request->main_character_id);
-        Profile::set('main_character_name', $this->getCharacterNameById(
-            $request->main_character_id));
         Profile::set('skin', $request->skin);
         Profile::set('language', $request->language);
         Profile::set('sidebar', $request->sidebar);
@@ -91,50 +84,55 @@ class ProfileController extends Controller
 
         Profile::set('email_notifications', $request->email_notifications);
 
-        Profile::set('require_mfa', $request->require_mfa);
-
         return redirect()->back()
             ->with('success', 'Profile settings updated!');
-
-    }
-
-    /**
-     * @param \Seat\Web\Http\Validation\PasswordUpdate $request
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function postUpdatePassword(PasswordUpdate $request)
-    {
-
-        if (! auth()->validate([
-            'name'     => auth()->user()->name,
-            'password' => $request->current_password, ])
-        )
-            return redirect()->back()
-                ->with('error',
-                    'Your current password is incorrect, please try again.');
-
-        $user = auth()->user();
-        $user->password = bcrypt($request->new_password);
-        $user->save();
-
-        return redirect()->back()
-            ->with('success', 'Password updated!');
     }
 
     /**
      * @param \Seat\Web\Http\Validation\EmailUpdate $request
      *
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Seat\Services\Exceptions\SettingException
      */
     public function postUpdateEmail(EmailUpdate $request)
     {
 
-        $user = auth()->user();
-        $user->email = $request->new_email;
-        $user->save();
+        Profile::set('email_address', $request->new_email);
 
         return redirect()->back()
             ->with('success', 'Email updated!');
+    }
+
+    /**
+     * @param int $character_id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function getChangeCharacter(int $character_id)
+    {
+
+        $user_characters = $this->getUserGroupCharacters(
+            auth()->user()->group)->pluck('id');
+
+        // Prevent logins to arbitrary characters.
+        if (! $user_characters->contains($character_id)) {
+
+            // Log this attempt
+            event('security.log', ['Character change denied ', 'authentication']);
+            abort(404);
+        }
+
+        // Find the new user to login as.
+        $user = User::findOrFail($character_id);
+
+        // Log the character change login event.
+        event('security.log', [
+            'Character change to ' . $user->name . ' from ' . auth()->user()->name,
+            'authentication',
+        ]);
+
+        auth()->login($user, true);
+
+        return redirect()->back();
     }
 }

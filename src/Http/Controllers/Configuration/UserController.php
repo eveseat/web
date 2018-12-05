@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,8 +26,7 @@ use Illuminate\Http\Request;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\EditUser;
-use Seat\Web\Http\Validation\NewUser;
-use Seat\Web\Models\User;
+use Seat\Web\Http\Validation\ReassignUser;
 
 /**
  * Class UserController.
@@ -43,9 +42,9 @@ class UserController extends Controller
     public function getAll()
     {
 
-        $users = $this->getAllFullUsers();
+        $groups = $this->getAllGroups();
 
-        return view('web::configuration.users.list', compact('users'));
+        return view('web::configuration.users.list', compact('groups'));
     }
 
     /**
@@ -58,13 +57,18 @@ class UserController extends Controller
 
         $user = $this->getFullUser($user_id);
 
-        $login_history = $user->login_history()
-            ->orderBy('created_at', 'desc')
-            ->take(15)
+        // get all groups except the one containing admin as admin account is special account
+        // and the one to which the current user is already attached.
+        $groups = $this->getAllGroups()->filter(function ($group, $key) use ($user_id) {
+
+            return $group->users->where('name', 'admin')->isEmpty() && $group->users->where('id', $user_id)->isEmpty();
+        });
+
+        $login_history = $user->login_history()->orderBy('created_at', 'desc')->take(15)
             ->get();
 
         return view('web::configuration.users.edit',
-            compact('user', 'login_history'));
+            compact('user', 'groups', 'login_history'));
     }
 
     /**
@@ -78,13 +82,8 @@ class UserController extends Controller
         $user = $this->getUser($request->input('user_id'));
 
         $user->fill([
-            'name'  => $request->input('username'),
             'email' => $request->input('email'),
         ]);
-
-        // Update the password if it was set.
-        if ($request->has('password'))
-            $user->password = bcrypt($request->input('password'));
 
         $user->save();
 
@@ -93,22 +92,27 @@ class UserController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Http\Validation\NewUser $request
+     * @param \Seat\Web\Http\Validation\ReassignUser $request
      *
-     * @return mixed
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function addUser(NewUser $request)
+    public function postReassignuser(ReassignUser $request)
     {
 
-        User::create([
-            'name'     => $request->input('username'),
-            'email'    => $request->input('email'),
-            'password' => bcrypt($request->input('password')),
-            'active'   => true,
+        $user = $this->getUser($request->input('user_id'));
+        $current_group = $user->group;
+
+        $user->fill([
+            'group_id' => $request->input('group_id'),
         ]);
 
+        $user->save();
+
+        // Ensure the old group is not an orphan now.
+        if ($current_group->users->isEmpty()) $current_group->delete();
+
         return redirect()->back()
-            ->with('success', trans('web::seat.user_created'));
+            ->with('success', trans('web::seat.user_updated'));
     }
 
     /**
@@ -138,7 +142,14 @@ class UserController extends Controller
             return redirect()->back()
                 ->with('warning', trans('web::seat.self_delete_warning'));
 
-        $this->getUser($user_id)->delete();
+        $user = $this->getUser($user_id);
+        $group = $user->group;
+
+        // Delete the user.
+        $user->delete();
+
+        // Ensure the orphan group is cleaned up.
+        if ($group->users->isEmpty()) $group->delete();
 
         return redirect()->back()
             ->with('success', trans('web::seat.user_deleted'));
@@ -178,12 +189,12 @@ class UserController extends Controller
     {
 
         // If there is no user set in the session, abort!
-        if (! session('impersonation_origin', false))
+        if (! session()->has('impersonation_origin'))
             abort(404);
 
         // Log the impersonation revert event.
         event('security.log', [
-            'Reverting impersonation back to ' . session('impersonation_origin')->name,
+            'Reverting impersonation back to ' . session()->get('impersonation_origin')->name,
             'authentication',
         ]);
 

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,8 +23,8 @@
 namespace Seat\Web\Http\Validation;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Seat\Eveapi\Models\Account\ApiKeyInfoCharacters;
-use Seat\Eveapi\Models\Corporation\CorporationSheet;
+use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 
 /**
  * Class RoleAffilliation.
@@ -56,13 +56,13 @@ class RoleAffilliation extends FormRequest
         // value, which will signal a wild card for either all characters
         // or all corporations.
         $character_ids = implode(',',
-            array_prepend(ApiKeyInfoCharacters::pluck('characterID')->toArray(), 0));
+            array_prepend(CharacterInfo::pluck('character_id')->toArray(), 0));
         $corporation_ids = implode(',',
-            array_prepend(CorporationSheet::pluck('corporationID')->toArray(), 0));
+            array_prepend(CorporationInfo::pluck('corporation_id')->toArray(), 0));
 
         $rules = [
             'role_id'        => 'required|exists:roles,id',
-            'inverse'        => 'required|nullable|in:on',
+            'inverse'        => 'nullable|in:on',
             'characters'     => 'required_without_all:corporations',
             'corporations'   => 'required_without_all:characters',
             'characters.*'   => 'in:' . $character_ids,

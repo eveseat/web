@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,12 +40,15 @@ return [
         'channels',
         'contacts',
         'contracts',
+        'fittings',
         'industry',
         'intel',
+        'jobs',     // Allows for the dispatching of jobs.
         'killmails',
         'list',
         'mail',
         'market',
+        'mining',
         'notifications',
         'pi',
         'research',
@@ -59,17 +62,20 @@ return [
     'corporation' => [
         'assets',
         'bookmarks',
+        'contacts',
         'contracts',
         'industry',
         'killmails',
         'ledger',
         'list_all',
         'market',
+        'mining',
         'security',
         'standings',
         'tracking',
         'pocos',
         'starbases',
+        'structures',
         'summary',
         'journal',
         'transactions',

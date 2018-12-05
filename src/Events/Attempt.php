@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,6 +36,6 @@ class Attempt
     public static function handle(Attempting $data)
     {
 
-        // TODO: Matchup the attmempt to write to the sec log
+        // TODO: Match the attempt to write to the sec log
     }
 }

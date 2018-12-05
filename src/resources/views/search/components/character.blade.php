@@ -10,8 +10,6 @@
       <tr>
         <th>{{ trans_choice('web::seat.name', 1) }}</th>
         <th>{{ trans_choice('web::seat.corporation', 1) }}</th>
-        <th>{{ trans('web::seat.ship_type') }}</th>
-        <th>{{ trans('web::seat.last_location') }}</th>
       </tr>
       </thead>
     </table>
@@ -29,15 +27,14 @@
       serverSide      : true,
       ajax            : '{{ route('support.search.characters.data') }}',
       columns         : [
-        {data: 'characterName', name: 'characterName'},
-        {data: 'corporationName', name: 'corporationName'},
-        {data: 'shipTypeName', name: 'shipTypeName'},
-        {data: 'lastKnownLocation', name: 'lastKnownLocation'},
+        {data: 'name',              name: 'name'},
+        {data: 'corporation_id',    name: 'corporation_id'}
       ],
       dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
       'fnDrawCallback': function () {
         $(document).ready(function () {
           $('img').unveil(100);
+          ids_to_names();
         });
       },
       'search'        : {

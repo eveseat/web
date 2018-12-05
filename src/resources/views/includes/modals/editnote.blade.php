@@ -62,7 +62,7 @@
     $("input#update-object-id").val(object_id);
 
     // Shitty hack so we can replace the ids. Muhaha.
-    var url = "{{ route('character.view.intel.notes.single.data', ['character_id' => ':object_id', 'profile_id' => ':note_id']) }}"
+    var url = "{{ route('character.view.intel.notes.single.data', ['character_id' => ':object_id', 'profile_id' => ':note_id']) }}";
     url = url.replace(':note_id', note_id);
     url = url.replace(':object_id', object_id);
 

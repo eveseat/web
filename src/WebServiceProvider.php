@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,16 +22,16 @@
 
 namespace Seat\Web;
 
+use Exception;
 use Illuminate\Auth\Events\Attempting;
 use Illuminate\Auth\Events\Login as LoginEvent;
 use Illuminate\Auth\Events\Logout as LogoutEvent;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Horizon\Horizon;
 use Laravel\Socialite\SocialiteManager;
-use PragmaRX\Google2FA\Google2FA;
 use Seat\Web\Events\Attempt;
-use Seat\Web\Events\Auth;
 use Seat\Web\Events\Login;
 use Seat\Web\Events\Logout;
 use Seat\Web\Events\SecLog;
@@ -41,6 +41,7 @@ use Seat\Web\Http\Composers\CharacterMenu;
 use Seat\Web\Http\Composers\CharacterSummary;
 use Seat\Web\Http\Composers\CorporationMenu;
 use Seat\Web\Http\Composers\CorporationSummary;
+use Seat\Web\Http\Composers\Esi;
 use Seat\Web\Http\Composers\Sidebar;
 use Seat\Web\Http\Composers\User;
 use Seat\Web\Http\Middleware\Authenticate;
@@ -48,12 +49,9 @@ use Seat\Web\Http\Middleware\Bouncer\Bouncer;
 use Seat\Web\Http\Middleware\Bouncer\CharacterBouncer;
 use Seat\Web\Http\Middleware\Bouncer\CorporationBouncer;
 use Seat\Web\Http\Middleware\Bouncer\KeyBouncer;
-use Seat\Web\Http\Middleware\ConfirmedEmailAddress;
 use Seat\Web\Http\Middleware\Locale;
-use Seat\Web\Http\Middleware\Mfa;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
 use Seat\Web\Http\Middleware\Requirements;
-use Supervisor\Supervisor;
 use Validator;
 
 /**
@@ -94,6 +92,11 @@ class WebServiceProvider extends ServiceProvider
         // Add Validators
         $this->add_custom_validators();
 
+        // Configure the queue dashboard
+        $this->configure_horizon();
+
+        // Configure API
+        $this->configure_api();
     }
 
     /**
@@ -114,12 +117,12 @@ class WebServiceProvider extends ServiceProvider
     {
 
         $this->publishes([
-            __DIR__ . '/resources/assets'     => public_path('web'),
-            __DIR__ . '/database/migrations/' => database_path('migrations'),
+            __DIR__ . '/resources/assets'                                        => public_path('web'),
+            __DIR__ . '/database/migrations/'                                    => database_path('migrations'),
 
             // Font Awesome Pulled from packagist
             base_path('vendor/components/font-awesome/css/font-awesome.min.css') => public_path('web/css/font-awesome.min.css'),
-            base_path('vendor/components/font-awesome/fonts') => public_path('web/fonts'),
+            base_path('vendor/components/font-awesome/fonts')                    => public_path('web/fonts'),
         ]);
     }
 
@@ -143,7 +146,13 @@ class WebServiceProvider extends ServiceProvider
         // User information view composer
         $this->app['view']->composer([
             'web::includes.header',
+            'web::includes.sidebar',
         ], User::class);
+
+        // ESI Status view composer
+        $this->app['view']->composer([
+            'web::includes.footer',
+        ], Esi::class);
 
         // Sidebar menu view composer
         $this->app['view']->composer(
@@ -154,7 +163,7 @@ class WebServiceProvider extends ServiceProvider
             'web::character.includes.summary',
             'web::character.includes.menu',
             'web::character.intel.includes.menu',
-            'web::character.journal.includes.menu',
+            'web::character.wallet.includes.menu',
         ], CharacterSummary::class);
 
         // Character menu composer
@@ -168,6 +177,7 @@ class WebServiceProvider extends ServiceProvider
             'web::corporation.includes.menu',
             'web::corporation.security.includes.menu',
             'web::corporation.ledger.includes.menu',
+            'web::corporation.wallet.includes.menu',
         ], CorporationSummary::class);
 
         // Corporation menu composer
@@ -198,17 +208,11 @@ class WebServiceProvider extends ServiceProvider
         // simply authenticated
         $router->aliasMiddleware('auth', Authenticate::class);
 
-        // Email Verification Requirement
-        $router->aliasMiddleware('auth.email', ConfirmedEmailAddress::class);
-
         // Ensure that all of the SeAT required modules is installed.
         $router->aliasMiddleware('requirements', Requirements::class);
 
         // Localization support
         $router->aliasMiddleware('locale', Locale::class);
-
-        // Optional multifactor authentication if required
-        $router->aliasMiddleware('mfa', Mfa::class);
 
         // Registration Middleware checks of the app is
         // allowing new user registration to occur.
@@ -250,6 +254,53 @@ class WebServiceProvider extends ServiceProvider
     }
 
     /**
+     * Configure Horizon.
+     *
+     * This includes the access rules for the dashboard, as
+     * well as the number of workers to use for the job processor.
+     */
+    public function configure_horizon()
+    {
+
+        // Require the queue_manager role to view the dashboard
+        Horizon::auth(function ($request) {
+
+            return $request->user()->has('queue_manager', false);
+        });
+
+        // During autoload-dumping and other cases, it may happen
+        // that the MySQL database is not yet ready. In that case,
+        // we need to catch the exception the call to `setting()`
+        // will cause.
+
+        try {
+
+            $worker_count = setting('queue_workers', true);
+
+        } catch (Exception $e) {
+
+            $worker_count = 3;
+        }
+
+        // Configure the workers for SeAT.
+        $horizon_environments = [
+            'local' => [
+                'seat-workers' => [
+                    'connection' => 'redis',
+                    'queue'      => ['high', 'medium', 'low', 'default'],
+                    'balance'    => false,
+                    'processes'  => $worker_count,
+                    'tries'      => 1,
+                    'timeout'    => 900, // 15 minutes
+                ],
+            ],
+        ];
+
+        // Set the environment configuration.
+        config(['horizon.environments' => $horizon_environments]);
+    }
+
+    /**
      * Register the application services.
      *
      * @return void
@@ -265,8 +316,6 @@ class WebServiceProvider extends ServiceProvider
             __DIR__ . '/Config/web.permissions.php', 'web.permissions');
         $this->mergeConfigFrom(
             __DIR__ . '/Config/web.locale.php', 'web.locale');
-        $this->mergeConfigFrom(
-            __DIR__ . '/Config/web.supervisor.php', 'web.supervisor');
 
         // Menu Configurations
         $this->mergeConfigFrom(
@@ -275,6 +324,9 @@ class WebServiceProvider extends ServiceProvider
             __DIR__ . '/Config/package.character.menu.php', 'package.character.menu');
         $this->mergeConfigFrom(
             __DIR__ . '/Config/package.corporation.menu.php', 'package.corporation.menu');
+
+        // Helper configurations
+        $this->mergeConfigFrom(__DIR__ . '/Config/web.jobnames.php', 'web.jobnames');
 
         // Register any extra services.
         $this->register_services();
@@ -291,12 +343,6 @@ class WebServiceProvider extends ServiceProvider
      */
     public function register_services()
     {
-
-        // Register the Google2FA into the IoC
-        $this->app->bind('google_2fa', function () {
-
-            return new Google2FA;
-        });
 
         // Register the Socialite Factory.
         // From: Laravel\Socialite\SocialiteServiceProvider
@@ -318,9 +364,9 @@ class WebServiceProvider extends ServiceProvider
 
         // Register the datatables package! Thanks
         //  https://laracasts.com/discuss/channels/laravel/register-service-provider-and-facade-within-service-provider
-        $this->app->register('Yajra\Datatables\DatatablesServiceProvider');
+        $this->app->register('Yajra\DataTables\DataTablesServiceProvider');
         $loader = AliasLoader::getInstance();
-        $loader->alias('Datatables', 'Yajra\Datatables\Facades\Datatables');
+        $loader->alias('DataTables', 'Yajra\DataTables\Facades\DataTables');
 
         // Register the Supervisor RPC helper into the IoC
         $this->app->singleton('supervisor', function () {
@@ -334,5 +380,24 @@ class WebServiceProvider extends ServiceProvider
             );
         });
 
+    }
+
+    /**
+     * Update Laravel 5 Swagger annotation path.
+     */
+    private function configure_api()
+    {
+
+        // ensure current annotations setting is an array of path or transform into it
+        $current_annotations = config('l5-swagger.paths.annotations');
+        if (! is_array($current_annotations))
+            $current_annotations = [$current_annotations];
+
+        // merge paths together and update config
+        config([
+            'l5-swagger.paths.annotations' => array_unique(array_merge($current_annotations, [
+                __DIR__ . '/Models',
+            ])),
+        ]);
     }
 }

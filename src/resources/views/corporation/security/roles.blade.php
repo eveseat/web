@@ -18,31 +18,26 @@
           <th>{{ trans_choice('web::seat.name', 1) }}</th>
         </tr>
 
-        @foreach($security->unique('characterName')->groupBy('characterName') as $character_name => $data)
+        @foreach($security->groupBy('character_id') as $character_id => $roles)
 
           <tr class="active">
             <td colspan="4">
               <b>
-                <a href="{{ route('character.view.sheet', ['character_id' => $data[0]->characterID]) }}">
-                  {!! img('character', $data[0]->characterID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                  {{ $character_name }}
+                <a href="{{ route('character.view.sheet', ['character_id' => $character_id]) }}">
+                  {!! img('character', $character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  <span class="id-to-name" data-id="{{ $character_id }}">{{ trans('web::seat.unknown') }}</span>
                 </a>
               </b>
               <span class="pull-right">
-                {{ count($security->where('characterName', $character_name)) }}
-                {{ trans_choice('web::seat.role', count($security->where('characterName', $character_name))) }}
+                {{ count($security->where('character_id', $character_id)) }}
+                {{ trans_choice('web::seat.role', count($security->where('character_id', $character_id))) }}
               </span>
             </td>
           </tr>
 
-          @foreach($security->where('characterName', $character_name) as $character)
-
-            <tr>
-              <td>{{ ucfirst($character->roleType) }}</td>
-              <td>{{ ucfirst($character->roleName) }}</td>
-            </tr>
-
-          @endforeach
+          <tr>
+            <td>{{ $roles->pluck('role')->unique()->map(function($role) { return str_replace('_', ' ', $role); })->implode(', ') }}</td>
+          </tr>
 
         @endforeach
 

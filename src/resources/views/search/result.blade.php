@@ -6,8 +6,6 @@
 
 @section('full')
 
-  @include('web::search.components.apikey')
-
   @include('web::search.components.character')
 
   @include('web::search.components.corporation')
@@ -19,3 +17,7 @@
   @include('web::search.components.skills')
 
 @stop
+
+@push('javascript')
+  @include('web::includes.javascript.id-to-name')
+@endpush

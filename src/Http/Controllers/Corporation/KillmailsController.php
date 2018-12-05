@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Services\Repositories\Corporation\Killmails;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class KillmailsController.
@@ -49,24 +49,25 @@ class KillmailsController extends Controller
      * @param int $corporation_id
      *
      * @return mixed
+     * @throws \Exception
      */
     public function getKillmailsData(int $corporation_id)
     {
 
         $killmails = $this->getCorporationKillmails($corporation_id, false);
 
-        return Datatables::of($killmails)
-            ->editColumn('characterName', function ($row) {
+        return DataTables::of($killmails)
+            ->editColumn('character_name', function ($row) {
 
                 return view('web::partials.killmailcharacter', compact('row'))
                     ->render();
             })
-            ->editColumn('typeName', function ($row) {
+            ->editColumn('type_name', function ($row) {
 
                 return view('web::partials.killmailtype', compact('row'))
                     ->render();
             })
-            ->editColumn('itemName', function ($row) {
+            ->editColumn('item_name', function ($row) {
 
                 return view('web::partials.killmailsystem', compact('row'))
                     ->render();
@@ -76,6 +77,7 @@ class KillmailsController extends Controller
                 return view('web::partials.killmailzkb', compact('row'))
                     ->render();
             })
+            ->rawColumns(['character_name', 'type_name', 'item_name', 'zkb'])
             ->make(true);
 
     }

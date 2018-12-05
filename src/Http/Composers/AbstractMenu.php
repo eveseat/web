@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,9 +63,21 @@ abstract class AbstractMenu
 
         // Check if the current user has the permission
         // required to see the menu
-        if (isset($menu_data['permission']))
+        if (isset($menu_data['permission'])) {
+
+            // Check if the parameter is an array
+            // in such case, we grant access if user has at least one permission
+            if (is_array($menu_data['permission'])) {
+                foreach ($menu_data['permission'] as $menu_permission)
+                    if (auth()->user()->has($menu_permission, $require_affiliation))
+                        return $menu_data;
+
+                return null;
+            }
+
             if (! auth()->user()->has($menu_data['permission'], $require_affiliation))
                 return null;
+        }
 
         return $menu_data;
     }

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,7 +52,6 @@ class EveOnlineProvider extends AbstractProvider implements ProviderInterface
      * Get the User instance for the authenticated user.
      *
      * @return \Laravel\Socialite\Contracts\User
-     * @throws \Seat\Web\Extentions\InvalidStateException
      */
     public function user()
     {
@@ -80,14 +79,17 @@ class EveOnlineProvider extends AbstractProvider implements ProviderInterface
      *
      * @return \Laravel\Socialite\Two\User
      */
-    protected function mapUserToObject(array $user)
+    protected function mapUserToObject(array $user): User
     {
 
         return (new User)->setRaw($user)->map([
-            'character_id' => $user['CharacterID'],
-            'name'         => $user['CharacterName'],
-            'eve_id'       => $user['CharacterOwnerHash'],
-            'avatar'       => $this->imageUrl . $user['CharacterID'] . '_128.jpg',
+            'character_id'         => $user['CharacterID'],
+            'name'                 => $user['CharacterName'],
+            'character_owner_hash' => $user['CharacterOwnerHash'],
+            'scopes'               => $user['Scopes'],
+            'refresh_token'        => $user['RefreshToken'],
+            'expires_on'           => Carbon($user['ExpiresOn']),
+            'avatar'               => $this->imageUrl . $user['CharacterID'] . '_128.jpg',
         ]);
     }
 
@@ -155,9 +157,9 @@ class EveOnlineProvider extends AbstractProvider implements ProviderInterface
      *
      * @param  string $body
      *
-     * @return string
+     * @return array
      */
-    protected function parseAccessToken($body)
+    protected function parseAccessToken($body): array
     {
 
         $jsonResponse = json_decode($body, true);

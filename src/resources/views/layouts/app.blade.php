@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ setting('language') ?: 'en' }}">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,19 +24,22 @@
   <link rel="stylesheet" href="{{ asset('web/css/adminlte.min.css') }}">
   <!-- Skin -->
   <link rel="stylesheet" href="{{ asset('web/css/skins/' . setting('skin') . '.min.css') }}">
+  <!-- Google Font -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <!-- SeAT CSS -->
   <link rel="stylesheet" href="{{ asset('web/css/seat.css') }}">
   <!-- Custom layout CSS -->
   @if(file_exists(public_path('custom-layout.css')))
 
-    <link rel="stylesheet" href="{{ asset('custom-layout.css') }}" />
+    <link rel="stylesheet" href="{{ asset('custom-layout.css') }}"/>
 
-  @endif
+@endif
 
-  <!-- view specfic head content -->
-  @stack('head')
+<!-- view specific head content -->
+@stack('head')
 
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -82,6 +85,8 @@
   <!-- Main Footer -->
   @include('web::includes.footer')
 
+  <!-- Right Sidebar Content -->
+  @include('web::includes.right_sidebar')
 </div>
 <!-- ./wrapper -->
 
@@ -116,9 +121,8 @@
       type    : "get",
       url     : "{{ route('queue.status.short') }}",
       success : function (data) {
-        $("span#queue_count").text(data.queued_jobs);
-        $("span#working_count").text(data.working_jobs);
-        $("span#error_count").text(data.error_jobs);
+        $("span#queue_count").text(data.queue_count);
+        $("span#error_count").text(data.error_count);
       },
       complete: function () {
         // Schedule the next request when the current one's complete

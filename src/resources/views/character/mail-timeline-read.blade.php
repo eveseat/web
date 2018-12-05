@@ -13,40 +13,61 @@
 
         <span class="time">
           <i class="fa fa-clock-o"></i>
-          {{ $message->sentDate }} ({{ human_diff($message->sentDate) }})
+          {{ $message->timestamp }} ({{ human_diff($message->timestamp) }})
         </span>
 
         <h2 class="timeline-header">
           <b>{{ trans('web::seat.from') }}: </b>
-          <a href="{{ route('character.view.sheet', ['character_id' => $message->senderID]) }}">
-            {!! img('character', $message->senderID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-            {{ $message->senderName }}
+          <a href="{{ route('character.view.sheet', ['character_id' => $message->from]) }}">
+            {!! img('character', $message->from, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+            <span class="id-to-name" data-id="{{ $message->from }}">{{ trans('web::seat.unknown') }}</span>
           </a>
-    @if($message->toCorpOrAllianceID)
+
+    @if($message->recipients->where('recipient_type', 'alliance')->count() > 0)
 
       <li>
-        <b>{{ trans('web::seat.to_corp_alliance') }}:</b>
-        {!! img('auto', $message->toCorpOrAllianceID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-        <span rel="id-to-name">{{ $message->toCorpOrAllianceID }}</span>
-      </li>
+        <b>{{ trans('web::seat.to_alliance') }}:</b>
 
+        @foreach($message->recipients->where('recipient_type', 'alliance') as $recipient)
+
+          {!! img('alliance', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+          <span class="id-to-name" data-id="{{ $recipient->recipient_id }}">{{ trans('web::seat.unknown') }}</span>
+
+        @endforeach
+
+      </li>
     @endif
 
-    @if($message->toCharacterIDs)
+    @if($message->recipients->where('recipient_type', 'corporation')->count() > 0)
+
+      <li>
+        <b>{{ trans('web::seat.to_corp') }}:</b>
+
+        @foreach($message->recipients->where('recipient_type', 'corporation') as $recipient)
+
+          {!! img('corporation', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+          <span class="id-to-name" data-id="{{ $recipient->recipient_id }}">{{ trans('web::seat.unknown') }}</span>
+
+        @endforeach
+
+      </li>
+    @endif
+
+    @if($message->recipients->where('recipient_type', 'character')->count() > 0)
 
       <li>
         <b>{{ trans('web::seat.to_char') }}:</b>
 
-        @foreach(explode(',', $message->toCharacterIDs) as $char_id)
+        @foreach($message->recipients->where('recipient_type', 'character') as $recipient)
 
-          <a href="{{ route('character.view.sheet', ['character_id' => $char_id]) }}">
-            {!! img('character', $char_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-            <span rel="id-to-name">{{ $char_id }}</span>
-          </a>
+          {!! img('character', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+          <span class="id-to-name" data-id="{{ $recipient->recipient_id }}">{{ trans('web::seat.unknown') }}</span>
+
         @endforeach
 
       </li>
       @endif
+
       </h2>
 
       <div class="timeline-body">
@@ -63,9 +84,6 @@
 
       </div>
 
-      </div>
-      </li>
-
       <li>
         <i class="fa fa-clock-o bg-gray"></i>
       </li>
@@ -75,6 +93,6 @@
 
 @push('javascript')
 
-@include('web::includes.javascript.id-to-name')
+  @include('web::includes.javascript.id-to-name')
 
 @endpush

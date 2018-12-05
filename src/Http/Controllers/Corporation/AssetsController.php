@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Services\Repositories\Corporation\Assets;
+use Seat\Services\Repositories\Corporation\Divisions;
 use Seat\Web\Http\Controllers\Controller;
 
 /**
@@ -31,7 +32,7 @@ use Seat\Web\Http\Controllers\Controller;
  */
 class AssetsController extends Controller
 {
-    use Assets;
+    use Assets, Divisions;
 
     /**
      * @param $corporation_id
@@ -41,10 +42,10 @@ class AssetsController extends Controller
     public function getAssets(int $corporation_id)
     {
 
+        $divisions = $this->getCorporationDivisions($corporation_id);
         $assets = $this->getCorporationAssets($corporation_id);
-        $asset_contents = $this->getCorporationAssetContents($corporation_id);
 
-        return view('web::corporation.assets', compact('assets', 'asset_contents'));
+        return view('web::corporation.assets', compact('divisions', 'assets'));
     }
 
     /**

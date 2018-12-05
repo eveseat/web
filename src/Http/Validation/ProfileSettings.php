@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,6 @@
 namespace Seat\Web\Http\Validation;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Seat\Eveapi\Models\Account\ApiKeyInfoCharacters;
 use Seat\Services\Settings\Profile;
 
 class ProfileSettings extends FormRequest
@@ -47,19 +46,7 @@ class ProfileSettings extends FormRequest
     public function rules()
     {
 
-        $user_id = auth()->user()->id;
-
-        // For some fail reson I cant get the UserRepository trait
-        // to be happy here.
-        // TODO: Fix that!
-        $allowed_main_character_ids = implode(',', ApiKeyInfoCharacters::with('key')
-            ->whereHas('key', function ($query) use ($user_id) {
-
-                $query->where('user_id', $user_id);
-            })
-            ->pluck('characterID')
-            ->toArray());
-
+        $allowed_main_character_ids = auth()->user()->associatedCharacterIds()->implode(',');
         $allowed_skins = implode(',', Profile::$options['skins']);
         $allowed_languages = implode(',', array_map(function ($entry) {
 
@@ -68,16 +55,21 @@ class ProfileSettings extends FormRequest
         $allowed_sidebar = implode(',', Profile::$options['sidebar']);
         $mail_threads = implode(',', Profile::$options['mail_threads']);
 
+        // Workaround if the thousands seperator is null to convert it
+        // to a space. We dont receive a space from the request as a
+        // result of the TrimStrings middleware. Thats ok.
+        if (is_null($this->request->get('thousand_seperator')))
+            $this->request->set('thousand_seperator', ' ');
+
         return [
-            'main_character_id'   => 'required|in:' . $allowed_main_character_ids,
+            'main_character_id'   => auth()->user()->name == 'admin' ? 'optional' : 'required|in:' . $allowed_main_character_ids,
             'skin'                => 'required|in:' . $allowed_skins,
             'language'            => 'required|in:' . $allowed_languages,
             'sidebar'             => 'required|in:' . $allowed_sidebar,
             'mail_threads'        => 'required|in:' . $mail_threads,
-            'thousand_seperator'  => 'in:" ",",","."|size:1',
+            'thousand_seperator'  => 'nullable|in:" ",",","."|size:1',
             'decimal_seperator'   => 'required|in:",","."|size:1',
             'email_notifications' => 'required|in:yes,no',
-            'require_mfa'         => 'required|in:yes,no',
         ];
     }
 }

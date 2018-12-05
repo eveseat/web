@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,85 +20,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/status', [
-    'as'         => 'queue.status',
-    'middleware' => 'bouncer:queue_manager',
-    'uses'       => 'QueueController@getStatus',
-]);
-
-Route::get('/json/supervisor/status', [
-    'as'         => 'json.supervisor.status',
-    'middleware' => 'bouncer:queue_manager',
-    'uses'       => 'QueueController@getSupervisorStatus',
-]);
-
-Route::get('/json/supervisor/processes', [
-    'as'         => 'json.supervisor.processes',
-    'middleware' => 'bouncer:queue_manager',
-    'uses'       => 'QueueController@getSupervisorProcesses',
-]);
-
-Route::get('/supervisor/information', [
-    'as'         => 'queue.supervisor.information',
-    'middleware' => 'bouncer:queue_manager',
-    'uses'       => 'QueueController@getSupervisorInformation',
-]);
-
-Route::get('/json/jobs/queued', [
-    'as'         => 'json.jobs.queued',
-    'middleware' => 'bouncer:queue_manager',
-    'uses'       => 'QueueController@getQueuedJobs',
-]);
-
-Route::get('/json/jobs/working', [
-    'as'         => 'json.jobs.working',
-    'middleware' => 'bouncer:queue_manager',
-    'uses'       => 'QueueController@getWorkingJobs',
-]);
-
-Route::get('/kill/{job_id}', [
-    'as'         => 'kill.job',
-    'middleware' => 'bouncer:queue_manager',
-    'uses'       => 'QueueController@getKillJob',
-]);
-
 Route::get('/short-status', [
     'as'   => 'queue.status.short',
     'uses' => 'QueueController@getShortStatus',
-]);
-
-Route::get('/run/{command_name}', [
-    'as'         => 'queue.command.run',
-    'middleware' => 'bouncer:queue_manager',
-    'uses'       => 'QueueController@getSubmitJob',
-]);
-
-Route::get('/errors', [
-    'as'         => 'queue.errors',
-    'middleware' => 'bouncer:queue_manager',
-    'uses'       => 'QueueController@getErrors',
-]);
-
-Route::get('/errors/detail/{job_id}', [
-    'as'         => 'queue.errors.detail',
-    'middleware' => 'bouncer:queue_manager',
-    'uses'       => 'QueueController@getErrorDetail',
-]);
-
-Route::get('/errors/clear', [
-    'as'         => 'queue.errors.clear',
-    'middleware' => 'bouncer:queue_manager',
-    'uses'       => 'QueueController@getClearErrors',
-]);
-
-Route::get('/history', [
-    'as'         => 'queue.history',
-    'middleware' => 'bouncer:queue_manager',
-    'uses'       => 'QueueController@getHistory',
-]);
-
-Route::get('/history/clear', [
-    'as'         => 'queue.history.clear',
-    'middleware' => 'bouncer:queue_manager',
-    'uses'       => 'QueueController@getClearHistory',
 ]);

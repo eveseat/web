@@ -6,17 +6,17 @@
     <!-- Sidebar user panel -->
     <div class="user-panel">
       <div class="pull-left image">
-        <img src="//image.eveonline.com/Character/{{ setting('main_character_id') }}_128.jpg"
+        <img src="//image.eveonline.com/Character/{{ $user->id }}_128.jpg"
              class="img-circle" alt="User Image">
       </div>
       <div class="pull-left info">
         <p>
-          @if(is_null(setting('main_character_name')))
-            <a href="{{ route('profile.view') }}">{{ trans('web::seat.no_main_char') }}!</a>
+          @if(auth()->user()->name == 'admin')
+          <span>{{ trans('web::seat.hello') }}, {{ $user->name }}</span>
           @else
-            <a href="{{ route('character.view.sheet', ['character_id' => setting('main_character_id')]) }}">
-              {{ trans('web::seat.hello') }}, {{ setting('main_character_name') }}
-            </a>
+          <a href="{{ route('character.view.sheet', ['character_id' => $user->character_id]) }}">
+            {{ trans('web::seat.hello') }}, {{ $user->name }}
+          </a>
           @endif
         </p>
         <!-- Status -->
@@ -37,7 +37,7 @@
     <!-- /.search form -->
 
     <!-- Sidebar Menu -->
-    <ul class="sidebar-menu">
+    <ul class="sidebar-menu" data-widget="tree">
       <li class="header">{{ trans('web::seat.main_menu') }}</li>
 
       @foreach($menu as $entry)
@@ -58,7 +58,9 @@
                     {{ trans($entry['label']) }}
                   @endif
                 </span>
-                <i class="fa fa-angle-left pull-right"></i>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
 
               @else
 
@@ -96,7 +98,7 @@
                         @endif
 
                         @if(array_key_exists('entries', $item))
-                        <span class="pull-right-container">
+                          <span class="pull-right-container">
                           <i class="fa fa-angle-left pull-right"></i>
                         </span>
                         @endif
@@ -104,24 +106,24 @@
                       </a>
 
                       @if(array_key_exists('entries', $item))
-                      <ul class="treeview-menu">
-                        @foreach($item['entries'] as $subitem)
-                        <li class="{{ isset($subitem['route']) ? (Request::url() === route($subitem['route']) ? 'active' : null) : null }}">
-                            <a href="{{ isset($subitem['route']) ? route($subitem['route']) : '#' }}">
-                              @if (array_key_exists('label', $subitem))
-                              <i class="fa {{ $subitem['icon'] or 'fa-circle-o' }}"></i>
-                              @if(array_key_exists('plural', $subitem))
-                                {{ trans_choice($subitem['label'], 2) }}
-                              @else
-                                {{ trans($subitem['label']) }}
-                              @endif
-                              @else
-                              <i class="fa {{ $subitem['icon'] or 'fa-circle-o' }}"></i> {{ $subitem['name'] }}
-                              @endif
-                            </a>
-                        </li>
-                        @endforeach
-                      </ul>
+                        <ul class="treeview-menu">
+                          @foreach($item['entries'] as $subitem)
+                            <li class="{{ isset($subitem['route']) ? (Request::url() === route($subitem['route']) ? 'active' : null) : null }}">
+                              <a href="{{ isset($subitem['route']) ? route($subitem['route']) : '#' }}">
+                                @if (array_key_exists('label', $subitem))
+                                  <i class="fa {{ $subitem['icon'] or 'fa-circle-o' }}"></i>
+                                  @if(array_key_exists('plural', $subitem))
+                                    {{ trans_choice($subitem['label'], 2) }}
+                                  @else
+                                    {{ trans($subitem['label']) }}
+                                  @endif
+                                @else
+                                  <i class="fa {{ $subitem['icon'] or 'fa-circle-o' }}"></i> {{ $subitem['name'] }}
+                                @endif
+                              </a>
+                            </li>
+                          @endforeach
+                        </ul>
                       @endif
 
                     </li>
@@ -150,7 +152,7 @@
                       @endif
 
                       @if(array_key_exists('entries', $item))
-                      <span class="pull-right-container">
+                        <span class="pull-right-container">
                           <i class="fa fa-angle-left pull-right"></i>
                       </span>
                       @endif
@@ -160,20 +162,20 @@
                     @if(array_key_exists('entries', $item))
                       <ul class="treeview-menu">
                         @foreach($item['entries'] as $subitem)
-                        <li class="{{ isset($subitem['route']) ? (Request::url() === route($subitem['route']) ? 'active' : null) : null }}">
-                          <a href="{{ isset($subitem['route']) ? route($subitem['route']) : '#' }}">
-                            @if (array_key_exists('label', $subitem))
-                              <i class="fa {{ $subitem['icon'] or 'fa-circle-o' }}"></i>
-                              @if(array_key_exists('plural', $subitem))
-                              {{ trans_choice($subitem['label'], 2) }}
+                          <li class="{{ isset($subitem['route']) ? (Request::url() === route($subitem['route']) ? 'active' : null) : null }}">
+                            <a href="{{ isset($subitem['route']) ? route($subitem['route']) : '#' }}">
+                              @if (array_key_exists('label', $subitem))
+                                <i class="fa {{ $subitem['icon'] or 'fa-circle-o' }}"></i>
+                                @if(array_key_exists('plural', $subitem))
+                                  {{ trans_choice($subitem['label'], 2) }}
+                                @else
+                                  {{ trans($subitem['label']) }}
+                                @endif
                               @else
-                              {{ trans($subitem['label']) }}
+                                <i class="fa {{ $subitem['icon'] or 'fa-circle-o' }}"></i> {{ $subitem['name'] }}
                               @endif
-                              @else
-                              <i class="fa {{ $subitem['icon'] or 'fa-circle-o' }}"></i> {{ $subitem['name'] }}
-                              @endif
-                          </a>
-                        </li>
+                            </a>
+                          </li>
                         @endforeach
                       </ul>
                     @endif
@@ -204,6 +206,7 @@
         @endif
 
       @endforeach
+
     </ul>
     <!-- /.sidebar-menu -->
 

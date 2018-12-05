@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@ return [
     'summary'             => 'Zusammenfassung',
     'quantity'            => 'Menge',
     'volume'              => 'Volumen',
-    'group'               => 'Gruppe',
+    'group'               => 'Gruppe|Gruppen',
     'owner'               => 'Besitzer',
     'description'         => 'Beschreibung',
     'labels'              => 'Labels',
@@ -167,6 +167,8 @@ return [
     'home_page'                   => 'Home',
     'online_layers'               => 'Spieler Online',
     'owned_api_keys'              => 'Eigene API Keys',
+    'concurrent_player_count'     => 'Anzahl gleichzeitiger Spieler',
+    'esi_response_time'           => 'ESI Reaktionszeiten',
 
     // Api Keys
     'api_key_add'                 => 'Einen neuen API Key hinzufügen',
@@ -219,8 +221,11 @@ return [
     'add_affiliations'            => 'Mitgliedschaft hinzufügen (Affiliations)',
     'current_affiliations'        => 'Aktuelle Mitgliedschaften',
     'available_users'             => 'Verfügbare Benutzer',
+    'available_groups'            => 'Verfügbare Gruppe|Verfügbare Gruppen',
     'add_user'                    => 'Benutzer hinzufügen|Meherere Benutzer hinzufügen',
+    'add_group'                   => 'Gruppe hinzufügen|Meherere Gruppen hinzufügen',
     'current_users'               => 'Aktuelle Benutzer',
+    'current_groups'              => 'Aktuelle Gruppe|Aktuelle Gruppen',
     'select_item_add'             => 'Wähle ein Item zum hinzufügen .DE',
     'impersonate'                 => 'Impersonate',
     'edit_user'                   => 'Benutzer bearbeiten',

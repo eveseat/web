@@ -3,106 +3,99 @@
 @section('title', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.sheet'))
 @section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.sheet'))
 
+@inject('request', 'Illuminate\Http\Request')
+
 @section('character_content')
 
   <div class="row">
 
     <div class="col-md-6">
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">{{ trans('web::seat.skills_summary') }}</h3>
-        </div>
-        <div class="panel-body">
-
-          <dl>
-
-            <dt>{{ trans('web::seat.curr_training') }}</dt>
-            <dd>
-              @if($skill_in_training && strlen($skill_in_training->typeName) > 0)
-                {{ $skill_in_training->typeName }} to level <b>{{ $skill_in_training->trainingToLevel }}</b>
-              @else
-                {{ trans('web::seat.no_skill_training') }}
+      @if(auth()->user()->has('character.skills'))
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              {{ trans('web::seat.skills_summary') }}
+              @if(auth()->user()->has('character.jobs'))
+                <span class="pull-right">
+                  <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.skillqueue']) }}"
+                     style="color: #000000">
+                  <i class="fa fa-refresh" data-toggle="tooltip"
+                     title="{{ trans('web::seat.update_skill_queue') }}"></i>
+                  </a>
+                </span>
               @endif
-            </dd>
-
-            <dt>{{ trans('web::seat.skill_training_end') }}</dt>
-            <dd>
-              @if($skill_in_training)
-                {{ human_diff($skill_in_training->trainingEndTime) }} at {{ $skill_in_training->trainingEndTime }}
-              @else
-                {{ trans('web::seat.no_skill_training') }}
-              @endif
-            </dd>
-
-            <dt>{{ trans('web::seat.skill_queue') }}</dt>
-            <dd>
-              @if($skill_queue && count($skill_queue) > 0)
-                <ol>
-
-                  @foreach($skill_queue as $skill)
-
-                    <li data-toggle="tooltip" title=""
-                        @if($skill->endTime != '0000-00-00 00:00:00')
-                        data-original-title="Ends {{ human_diff($skill->endTime) }} at {{ $skill->endTime }}"
-                            @endif
-                    >
-                      {{ $skill->typeName }} {{ $skill->level }}
-                    </li>
-
-                  @endforeach
-
-                </ol>
-              @else
-                {{ trans('web::seat.empty_skill_queue') }}
-              @endif
-            </dd>
-
-          </dl>
-
-        </div>
-      </div>
-
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">{{ trans('web::seat.account_info') }}</h3>
-        </div>
-        <div class="panel-body">
-
-          @if(!empty($account_info))
+            </h3>
+          </div>
+          <div class="panel-body">
 
             <dl>
 
-              <dt>{{ trans('web::seat.key_id') }}</dt>
-              <dd>{{ $account_info->keyID }}</dd>
-
-              <dt>{{ trans('web::seat.paid_until') }}</dt>
-              <dd>{{ $account_info->paidUntil }} ( payment due {{ human_diff($account_info->paidUntil) }} )</dd>
-
-              <dt>{{ trans('web::seat.logon_count') }}</dt>
-              <dd>{{ $account_info->logonCount }} logins to Eve related services</dd>
-
-              <dt>{{ trans('web::seat.online_time') }}</dt>
+              <dt>{{ trans('web::seat.curr_training') }}</dt>
               <dd>
-                {{ $account_info->logonMinutes }} minutes,
-                {{ round(((int)$account_info->logonMinutes/60),0) }} hours or
-                {{ round(((int)$account_info->logonMinutes/60)/24,0) }} days
+                @if($skill_queue->where('finish_date', '>', carbon())->count() > 0)
+                  {{ $skill_queue->where('finish_date', '>', carbon())->first()->type->typeName }} to level
+                  <b>{{ $skill_queue->where('finish_date', '>', carbon())->first()->finished_level }}</b>
+                @else
+                  {{ trans('web::seat.no_skill_training') }}
+                @endif
+              </dd>
+
+              <dt>{{ trans('web::seat.skill_training_end') }}</dt>
+              <dd>
+                @if($skill_queue->where('finish_date', '>', carbon())->count() > 0)
+                  {{ human_diff(carbon($skill_queue->where('finish_date', '>', carbon())->first()->finish_date)) }}
+                  on {{ carbon($skill_queue->where('finish_date', '>', carbon())->first()->finish_date)->toDateString() }}
+                  at {{ carbon($skill_queue->where('finish_date', '>', carbon())->first()->finish_date)->toTimeString() }}
+                @else
+                  {{ trans('web::seat.no_skill_training') }}
+                @endif
+              </dd>
+
+              <dt>{{ trans('web::seat.skill_queue') }}</dt>
+              <dd>
+                @if($skill_queue && count($skill_queue) > 0)
+                  <ol>
+
+                    @foreach($skill_queue->where('finish_date', '>', carbon())->slice(1)->all() as $skill)
+
+                      <li>
+                        <span class="col-md-8" data-toggle="tooltip" title=""
+                              @if($skill->finish_date != '0000-00-00 00:00:00')
+                              data-original-title="Ends {{ human_diff(carbon($skill->finish_date)->toDateString()) }} on {{ carbon($skill->finish_date)->toDateString() }} at {{ carbon($skill->finish_date)->toTimeString() }}"
+                            @endif>{{ $skill->type->typeName }}</span>
+                        <span class="col-md-4">
+                          @for($i = 1; $i <= $skill->finished_level; $i++)
+                            @if($i == $skill->finished_level)
+                              <span class="fa fa-star text-green"></span>
+                            @else
+                              <span class="fa fa-star"></span>
+                            @endif
+                          @endfor
+                        </span>
+                      </li>
+
+                    @endforeach
+
+                  </ol>
+                @else
+                  {{ trans('web::seat.empty_skill_queue') }}
+                @endif
               </dd>
 
             </dl>
 
-          @else
-
-            <p>{{ trans('web::seat.no_account_info') }}</p>
-
-          @endif
-
+          </div>
+          <div class="panel-footer">
+            {{ count($skill_queue) }} {{ trans_choice('web::seat.skill', count($skill_queue)) }}
+          </div>
         </div>
-      </div>
+      @endif
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ trans('web::seat.jump_fatigue') }} &amp; {{ trans('web::seat.jump_clones') }}</h3>
+          <h3 class="panel-title">{{ trans('web::seat.jump_fatigue') }}
+            &amp; {{ trans_choice('web::seat.jump_clones', 0) }}</h3>
         </div>
         <div class="panel-body">
 
@@ -110,9 +103,9 @@
             <dt>{{ trans('web::seat.jump_fatigue') }}</dt>
             <dd>
 
-              @if(carbon($character_sheet->jumpFatigue)->gt(carbon(null)))
-                {{ $character_sheet->jumpFatigue }}
-                <span class="pull-right">Ends approx {{ human_diff($character_sheet->jumpFatigue) }}</span>
+              @if(!is_null($fatigue) && carbon($fatigue->jump_fatigue_expire_date)->gt(carbon(null)))
+                {{ $fatigue->jump_fatigue_expire_date }}
+                <span class="pull-right">Ends approx {{ human_diff($fatigue->jump_fatigue_expire_date) }}</span>
               @else
                 None
               @endif
@@ -121,15 +114,15 @@
 
             <dt>{{ trans('web::seat.jump_act_timer') }}</dt>
             <dd>
-              @if(carbon($character_sheet->jumpActivation)->gt(carbon(null)))
-                {{ $character_sheet->jumpActivation }}
-                <span class="pull-right">Ends approx {{ human_diff($character_sheet->jumpActivation) }}</span>
+              @if(!is_null($last_jump) && carbon($last_jump->last_clone_jump_date)->gt(carbon(null)))
+                {{ $last_jump->last_clone_jump_date }}
+                <span class="pull-right">Ends approx {{ human_diff($last_jump->last_clone_jump_date) }}</span>
               @else
                 {{ trans('web::seat.none') }}
               @endif
             </dd>
 
-            <dt>{{ trans('web::seat.jump_clones') }}</dt>
+            <dt>{{ trans_choice('web::seat.jump_clones', 0) }}</dt>
             <dd>
 
               @if(count($jump_clones) > 0)
@@ -137,11 +130,17 @@
                 <ul>
 
                   @foreach($jump_clones as $clone)
-
                     <li>
-                      <i>{{ $clone->typeName }}</i> located at <b>{{ $clone->location }}</b>
-                    </li>
+                        @if(! is_null($clone->name))
+                        ({{ $clone->name }})
+                        @endif
 
+                        @if(! is_null($clone->location))
+                        Located at <b>{{ $clone->location->name }}</b>
+                        @else
+                        Location is unknown
+                        @endif
+                    </li>
                   @endforeach
 
                 </ul>
@@ -155,12 +154,14 @@
           </dl>
 
         </div>
-
+        <div class="panel-footer">
+          {{ count($jump_clones) }} {{ trans_choice('web::seat.jump_clones', count($jump_clones)) }}
+        </div>
       </div>
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ trans('web::seat.implants') }}</h3>
+          <h3 class="panel-title">{{ trans_choice('web::seat.implants', 0) }}</h3>
         </div>
         <div class="panel-body">
 
@@ -169,7 +170,7 @@
             <ul>
 
               @foreach($implants as $implant)
-                <li>{{ $implant->typeName }}</li>
+                <li>{{ $implant->type->typeName }}</li>
               @endforeach
 
             </ul>
@@ -180,7 +181,7 @@
 
         </div>
         <div class="panel-footer">
-          {{ count($implants) }} {{ trans('web::seat.implants') }}
+          {{ count($implants) }} {{ trans_choice('web::seat.implants', count($implants)) }}
         </div>
       </div>
 
@@ -190,25 +191,42 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ trans('web::seat.employment_history') }}</h3>
+          <h3 class="panel-title">
+            {{ trans('web::seat.employment_history') }}
+            @if(auth()->user()->has('character.jobs'))
+              <span class="pull-right">
+                <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.corphistory']) }}"
+                   style="color: #000000">
+                  <i class="fa fa-refresh" data-toggle="tooltip"
+                     title="{{ trans('web::seat.update_corp_history') }}"></i>
+                </a>
+              </span>
+            @endif
+          </h3>
         </div>
         <div class="panel-body">
 
-          <ul class="list-unstyled">
+          @if(count($employment) > 0)
+            <ul class="list-unstyled">
 
-            @foreach($employment as $history)
+              @foreach($employment as $history)
 
-              <li>
-                {!! img('corporation', $history->corporationID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-                <b>{{ $history->corporationName  }}</b> on {{ carbon($history->startDate)->toDateString() }}
-                <span class="pull-right">
-                 {{ human_diff($history->startDate) }}
+                <li>
+                  {!! img('corporation', $history->corporation_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  <b><span class="id-to-name"
+                           data-id="{{ $history->corporation_id }}">{{ trans('web::seat.unknown') }}</span></b>
+                  on {{ carbon($history->start_date)->toDateString() }}
+                  <span class="pull-right">
+                 {{ human_diff($history->start_date) }}
                 </span>
-              </li>
+                </li>
 
-            @endforeach
+              @endforeach
 
-          </ul>
+            </ul>
+          @else
+            {{ trans('web::seat.no_employment_information') }}
+          @endif
 
         </div>
         <div class="panel-footer">
@@ -218,17 +236,61 @@
 
     </div>
 
+    <!-- character attributes -->
     <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ trans('web::seat.corporation_titles') }}</h3>
+          <h3 class="panel-title">{{ trans_choice('web::seat.attribute', 2) }}</h3>
         </div>
         <div class="panel-body">
-          <ul class="list-unstyled">
-            @foreach($titles as $title)
-              <li>{!! clean_ccp_html($title->titleName) !!}</li>
-            @endforeach
-          </ul>
+
+          <div class="row">
+
+            <div class="col-md-6">
+              <ul class="list-unstyled">
+                <li>Charisma: {{ $attributes->charisma }}</li>
+                <li>Intelligence: {{ $attributes->intelligence }}</li>
+                <li>Memory: {{ $attributes->memory }}</li>
+                <li>Perception: {{ $attributes->perception }}</li>
+                <li>Willpower: {{ $attributes->willpower }}</li>
+              </ul>
+            </div>
+
+            <div class="col-md-6">
+              <dl>
+                <dt>{{ trans('web::seat.bonus_remaps') }}</dt>
+                <dd>{{ $attributes->bonus_remaps }}</dd>
+                <dt>{{ trans('web::seat.last_remap_date') }}</dt>
+                <dd>{{ $attributes->last_remap_date }}</dd>
+                <dt>{{ trans('web::seat.accrued_remap_cooldown_date') }}</dt>
+                <dd>{{ $attributes->accrued_remap_cooldown_date }}</dd>
+              </dl>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{ trans_choice('web::seat.corporation_titles', 0) }}</h3>
+        </div>
+        <div class="panel-body">
+          @if(count($titles) > 0)
+            <ul class="list-unstyled">
+              @foreach($titles as $title)
+                <li>{!! clean_ccp_html($title->name) !!}</li>
+              @endforeach
+            </ul>
+          @else
+            {{ trans('web::seat.no_corporation_titles') }}
+          @endif
+        </div>
+        <div class="panel-footer">
+          {{ count($titles) }} {{ trans_choice('web::seat.corporation_titles', count($titles)) }}
         </div>
       </div>
     </div>
@@ -236,3 +298,7 @@
   </div>
 
 @stop
+
+@push('javascript')
+  @include('web::includes.javascript.id-to-name')
+@endpush

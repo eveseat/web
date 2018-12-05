@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,12 @@ Route::get('/list', [
 Route::get('/list/data', [
     'as'   => 'corporation.list.data',
     'uses' => 'CorporationsController@getCorporationsData',
+]);
+
+Route::get('/delete/{corporation_id}', [
+    'as'         => 'corporation.delete',
+    'middleware' => 'bouncer:superuser',
+    'uses'       => 'CorporationsController@deleteCorporation',
 ]);
 
 Route::get('/view/assets/{corporation_id}', [
@@ -108,6 +114,12 @@ Route::get('/view/market/data/{corporation_id}', [
     'uses'       => 'MarketController@getMarketData',
 ]);
 
+Route::get('/view/mining-ledger/{corporation_id}/{year?}/{month?}', [
+    'as'         => 'corporation.view.mining_ledger',
+    'middleware' => 'corporationbouncer:mining',
+    'uses'       => 'MiningLedgerController@getLedger',
+]);
+
 Route::get('/view/pocos/{corporation_id}', [
     'as'         => 'corporation.view.pocos',
     'middleware' => 'corporationbouncer:pocos',
@@ -180,6 +192,12 @@ Route::post('/view/starbase/modules/{corporation_id}', [
     'as'         => 'corporation.view.starbase.modules',
     'middleware' => 'corporationbouncer:starbases',
     'uses'       => 'StarbaseController@postStarbaseModules',
+]);
+
+Route::get('/view/structures/{corporation_id}', [
+    'as'         => 'corporation.view.structures',
+    'middleware' => 'corporationbouncer:structures',
+    'uses'       => 'StructureController@getStructures',
 ]);
 
 Route::get('/view/tracking/{corporation_id}', [

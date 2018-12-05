@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,6 @@ namespace Seat\Web\Http\Controllers\Tools;
 
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Seat\Services\Repositories\Character\Character;
 use Seat\Services\Repositories\Character\Contacts as CharacterContacts;
 use Seat\Services\Repositories\Corporation\Contacts as CorporationContacts;
@@ -47,7 +46,7 @@ class StandingsController extends Controller
     /**
      * @var string
      */
-    protected $cache_prefix = 'standingbuilder';
+    protected $cache_prefix = 'name_id:';
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -121,34 +120,68 @@ class StandingsController extends Controller
     public function getStandingsAjaxElementName(Request $request)
     {
 
-        $response = ['results' => []];
+        $response = [
+            'results' => [],
+        ];
 
-        if (strlen($request->input('q')) > 0) {
+        if (strlen($request->input('search')) > 0) {
 
             try {
 
-                $pheal = app()
-                    ->make('Seat\Eveapi\Helpers\PhealSetup')
-                    ->getPheal();
-
-                $names = $pheal->eveScope->CharacterID([
-                    'names' => $request->input('q'),
+                // Resolve the Esi client library from the IoC
+                $eseye = app('esi-client')->get();
+                $eseye->setVersion('v2');
+                $eseye->setQueryString([
+                    'categories' => $request->input('type'),
+                    'search'     => $request->input('search'),
                 ]);
 
-                foreach ($names->characters as $result) {
+                $entityIds = $eseye->invoke('get', '/search/');
 
-                    $response['results'] = [
-                        [
-                            'id'   => $result->characterID,
-                            'text' => $result->name,
-                        ], ];
+                if (! property_exists($entityIds, $request->input('type')))
+                    return response()->json([]);
 
-                    // Cache the entry
-                    Cache::forever(
-                        $this->cache_prefix . $result->characterID,
-                        $result->name
-                    );
-                }
+                if (count($entityIds->{$request->input('type')}) < 1)
+                    return response()->json();
+
+                collect($entityIds->{$request->input('type')})->unique()
+                    ->filter(function ($id) use (&$response) {
+
+                        // Next, filter the ids we have in the cache, setting
+                        // the appropriate response values as we go along.
+                        if ($cached_entry = cache('name_id:' . $id)) {
+
+                            $response['results'][] = [
+                                'id'   => $id,
+                                'text' => $cached_entry,
+                            ];
+
+                            // Remove this as a valid id, we already have the value we want.
+                            return false;
+                        }
+
+                        // We don't have this id in the cache. Return it
+                        // so that we can update it later.
+                        return true;
+
+                    })->chunk(1000)->each(function ($chunk) use (&$response, $eseye) {
+
+                        $eseye->setVersion('v2');
+                        $eseye->setBody($chunk->flatten()->toArray());
+                        $names = $eseye->invoke('post', '/universe/names/');
+
+                        collect($names)->each(function ($name) use (&$response) {
+
+                            // Cache the name resolution for this id for a long time.
+                            cache(['name_id:' . $name->id => $name->name], carbon()->addCentury());
+
+                            $response['results'][] = [
+                                'id'   => $name->id,
+                                'text' => $name->name,
+                            ];
+                        });
+
+                    });
 
             } catch (Exception $e) {
             }
@@ -161,6 +194,7 @@ class StandingsController extends Controller
      * @param \Seat\Web\Http\Validation\StandingsElementAdd $request
      *
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function postAddElementToStanding(StandingsElementAdd $request)
     {
@@ -199,24 +233,14 @@ class StandingsController extends Controller
         $standings_profile = StandingsProfile::find($request->input('id'));
 
         // Character Contacts
-        if ($request->has('character')) {
+        if ($request->filled('character')) {
             foreach ($this->getCharacterContacts($request->input('character')) as $contact) {
-
-                // Determine the contact type. We will default
-                // to a character if its not a corp/alliance.
-                $type = 'character';
-
-                if (strpos($contact->typeName, 'Corporation') !== false)
-                    $type = 'corporation';
-
-                if (strpos($contact->typeName, 'Alliance') !== false)
-                    $type = 'alliance';
 
                 // Prepare the standings entry.
                 $standing = StandingsProfileStanding::firstOrNew([
                     'standings_profile_id' => $request->input('id'),
-                    'elementID'            => $contact->contactID,
-                    'type'                 => $type,
+                    'elementID'            => $contact->contact_id,
+                    'type'                 => $contact->contact_type,
                 ])->fill([
 
                     // Update the standing incase its different to an
@@ -230,24 +254,14 @@ class StandingsController extends Controller
         }
 
         // Corporation Contacts
-        if ($request->has('corporation')) {
+        if ($request->filled('corporation')) {
             foreach ($this->getCorporationContacts($request->input('corporation')) as $contact) {
-
-                // Determine the contact type. We will default
-                // to a character if its not a corp/alliance.
-                $type = 'character';
-
-                if (strpos($contact->typeName, 'Corporation') !== false)
-                    $type = 'corporation';
-
-                if (strpos($contact->typeName, 'Alliance') !== false)
-                    $type = 'alliance';
 
                 // Prepare the standings entry.
                 $standing = StandingsProfileStanding::firstOrNew([
                     'standings_profile_id' => $request->input('id'),
-                    'elementID'            => $contact->contactID,
-                    'type'                 => $type,
+                    'elementID'            => $contact->contact_id,
+                    'type'                 => $contact->contact_type,
                 ])->fill([
 
                     // Update the standing incase its different to an

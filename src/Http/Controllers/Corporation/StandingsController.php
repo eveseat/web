@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ class StandingsController extends Controller
     public function getStandings(int $corporation_id)
     {
 
-        $standings = $this->getCorporationStandings($corporation_id);
+        $standings = $this->getCorporationStandings($corporation_id, 50);
 
         return view('web::corporation.standings', compact('standings'));
     }

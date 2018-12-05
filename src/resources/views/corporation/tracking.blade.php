@@ -13,54 +13,61 @@
 
       <table class="table datatable compact table-condensed table-hover table-responsive">
         <thead>
-        <tr>
-          <th>{{ trans_choice('web::seat.name', 1) }}</th>
-          <th>{{ trans('web::seat.joined') }}</th>
-          <th>{{ trans('web::seat.location') }}</th>
-          <th>{{ trans('web::seat.last_login') }}</th>
-          <th>{{ trans('web::seat.key') }}</th>
-        </tr>
+          <tr>
+            <th>{{ trans('web::seat.token') }}</th>
+            <th>{{ trans_choice('web::seat.name', 1) }}</th>
+            <th>{{trans('web::seat.group_main')}}</th>
+            <th>{{ trans('web::seat.last_location') }}</th>
+            <th>{{ trans('web::seat.joined') }}</th>
+            <th>{{ trans('web::seat.last_login') }}</th>
+          </tr>
         </thead>
         <tbody>
 
         @foreach($tracking as $character)
 
-          <tr>
-            <td>
-              <a href="{{ route('character.view.sheet', ['character_id' => $character->characterID]) }}">
-                {!! img('character', $character->characterID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                {{ $character->name }}
-              </a>
-            </td>
-            <td data-order="{{ $character->startDateTime }}">
-              <span data-toggle="tooltip"
-                    title="" data-original-title="{{ $character->startDateTime }}">
-                {{ human_diff($character->startDateTime) }}
-              </span>
-            </td>
-            <td>
-              {{ $character->location }}
-              @if($character->shipType != 'Unknown Type')
-                <i class="pull-right" data-toggle="tooltip"
-                   title="" data-original-title="{{ $character->shipType }}">
-                  {!! img('type', $character->shipTypeID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                </i>
-              @endif
-            </td>
-            <td data-order="{{ $character->logonDateTime }}">
-              <span data-toggle="tooltip"
-                    title="" data-original-title="{{ $character->logonDateTime }}">
-                {{ human_diff($character->logonDateTime) }}
-              </span>
-            </td>
-            <td data-order="{{ $character->key_ok }}">
-              @if($character->key_ok == 1)
-                <i class="fa fa-check"></i>
-              @else
-                <i class="fa fa-exclamation-triangle"></i>
-              @endif
-            </td>
-          </tr>
+            <tr>
+              <td data-order="{{ $character->key_ok }}">
+                @if($character->key_ok == 1)
+                  <i class="fa fa-check text-success"></i>
+                @else
+                  <i class="fa fa-exclamation-triangle text-danger"></i>
+                @endif
+              </td>
+              <td>
+                <a href="{{ route('character.view.sheet', ['character_id' => $character->character_id]) }}">
+                  {!! img('character', $character->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  <span class="id-to-name"
+                        data-id="{{$character->character_id}}">{{ trans('web::seat.unknown') }}</span>
+                </a>
+              </td>
+              <td>
+                <span class="character-id-to-main-character"
+                      data-character-id="{{$character->character_id}}">{{ trans('web::seat.unknown') }}</span>
+                @if(!is_null($character->ship_type_id))
+                  <i class="pull-right" data-toggle="tooltip" title="" data-original-title="{{ $character->type->typeName }}">
+                    {!! img('type', $character->ship_type_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  </i>
+                @endif
+              </td>
+              <td>
+                @if(! is_null($character->location))
+                {{ $character->location->name }}
+                @else
+                Unknown Location
+                @endif
+              </td>
+              <td data-order="{{ $character->start_date }}">
+                <span data-toggle="tooltip" title="" data-original-title="{{ $character->start_date }}">
+                  {{ human_diff($character->start_date) }}
+                </span>
+              </td>
+              <td data-order="{{ $character->logon_date }}">
+                <span data-toggle="tooltip" title="" data-original-title="{{ $character->logon_date }}">
+                  {{ human_diff($character->logon_date) }}
+                </span>
+              </td>
+            </tr>
 
         @endforeach
 
@@ -68,6 +75,11 @@
       </table>
 
     </div>
+    <div class="panel-footer">Registered users <b>{{ $tracking->where('key_ok', true)->count() }} / {{ $tracking->count() }}</b></div>
   </div>
 
 @stop
+
+@push('javascript')
+  @include('web::includes.javascript.character-id-to-main-character')
+@endpush

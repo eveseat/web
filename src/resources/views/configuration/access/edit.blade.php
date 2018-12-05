@@ -43,14 +43,13 @@
             @endforeach
 
           </select>
+        </div>
 
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" name="inverse">
-              {{ trans('web::seat.inverse_permission') }}
-            </label>
-          </div>
-
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" name="inverse">
+            {{ trans('web::seat.inverse_permission') }}
+          </label>
         </div>
 
         <button type="submit" class="btn btn-success btn-block">
@@ -132,8 +131,8 @@
 
             <option value="0">All Corporations</option>
             @foreach($all_corporations as $corporation)
-              <option value="{{ $corporation->corporationID }}">
-                {{ $corporation->corporationName }}
+              <option value="{{ $corporation->corporation_id }}">
+                {{ $corporation->name }}
               </option>
             @endforeach
 
@@ -146,8 +145,8 @@
 
             <option value="0">All Characters</option>
             @foreach($all_characters as $character)
-              <option value="{{ $character->characterID }}">
-                {{ $character->characterName }}
+              <option value="{{ $character->character_id }}">
+                {{ $character->name }}
               </option>
             @endforeach
 
@@ -193,7 +192,7 @@
               @else
 
                 {!! img('auto', $affiliation->affiliation, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                <span rel="id-to-name">{{ $affiliation->affiliation }}</span>
+                <span class="id-to-name" data-id="{{$affiliation->affiliation}}">{{ trans('web::seat.unknown') }}</span>
 
               @endif
             </td>
@@ -228,22 +227,24 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ trans_choice('web::seat.user', 2) }}</h3>
+      <h3 class="panel-title">{{ trans_choice('web::seat.group', 2) }}</h3>
     </div>
     <div class="panel-body">
 
-      <form role="form" action="{{ route('configuration.access.roles.edit.users') }}" method="post">
+      <form role="form" action="{{ route('configuration.access.roles.edit.groups') }}" method="post">
         {{ csrf_field() }}
         <input type="hidden" name="role_id" value="{{ $role->id }}">
 
         <div class="form-group">
-          <label for="users">{{ trans('web::seat.available_users') }}</label>
-          <select name="users[]" id="available_users" style="width: 100%" multiple>
+          <label for="groups">{{ trans_choice('web::seat.available_groups',2) }}</label>
+          <select name="groups[]" id="available_users" style="width: 100%" multiple>
 
-            @foreach($all_users as $user)
+            @foreach($all_groups as $group)
 
-              @if(!in_array($user, $role_users))
-                <option value="{{ $user }}">{{ $user }}</option>
+              @if(!in_array($group->id, $role_groups))
+                <option value="{{ $group->id }}">
+                  {{ $group->users->map(function($user) { return $user->name; })->implode(', ') }}
+                </option>
               @endif
 
             @endforeach
@@ -251,7 +252,7 @@
           </select>
         </div>
 
-        <button type="submit" class="btn btn-success btn-block">{{ trans_choice('web::seat.add_user', 2) }}</button>
+        <button type="submit" class="btn btn-success btn-block">{{ trans_choice('web::seat.add_group', 2) }}</button>
 
       </form>
 
@@ -261,15 +262,17 @@
         <tbody>
 
         <tr>
-          <th colspan="2" class="text-center">{{ trans('web::seat.current_users') }}</th>
+          <th colspan="2" class="text-center">{{ trans_choice('web::seat.current_groups',2) }}</th>
         </tr>
 
-        @foreach($role->users as $user)
+        @foreach($role->groups as $group)
 
           <tr>
-            <td>{{ $user->name }}</td>
             <td>
-              <a href="{{ route('configuration.access.roles.edit.remove.user', ['role_id' => $role->id, 'user_id' => $user->id]) }}"
+              {{ $group->users->map(function($user) { return $user->name; })->implode(', ') }}
+            </td>
+            <td>
+              <a href="{{ route('configuration.access.roles.edit.remove.group', ['role_id' => $role->id, 'user_id' => $group->id]) }}"
                  type="button" class="btn btn-danger btn-xs pull-right">
                 {{ trans('web::seat.remove') }}
               </a>
@@ -283,7 +286,8 @@
 
     </div>
     <div class="panel-footer">
-      <b>{{ count($role->users) }}</b> {{ trans_choice('web::seat.user', count($role->users)) }}
+        <b>{{ count($role->groups) }}</b>
+        {{ trans_choice('web::seat.group', count($role->groups)) }}
     </div>
   </div>
 
@@ -291,15 +295,15 @@
 
 @push('javascript')
 
-@include('web::includes.javascript.id-to-name')
+  @include('web::includes.javascript.id-to-name')
 
-<script>
-  $("#available_permissions," +
-      "#available_users," +
-      "#available_characters," +
-      "#available_corporations").select2({
-    placeholder: "{{ trans('web::seat.select_item_add') }}"
-  });
-</script>
+  <script>
+    $("#available_permissions," +
+        "#available_users," +
+        "#available_characters," +
+        "#available_corporations").select2({
+      placeholder: "{{ trans('web::seat.select_item_add') }}"
+    });
+  </script>
 
 @endpush

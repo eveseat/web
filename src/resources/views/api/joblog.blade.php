@@ -40,21 +40,21 @@
 @stop
 
 @push('javascript')
-<script>
+  <script>
 
-  $(function () {
-    $('table#joblog-table').DataTable({
-      processing: true,
-      serverSide: true,
-      ajax      : '{{ route('api.key.joblog.data', ['key_id' => $request->key_id]) }}',
-      columns   : [
-        {data: 'id', name: 'id', visible: false},
-        {data: 'created_at', name: 'created_at', render: human_readable},
-        {data: 'type', name: 'type'},
-        {data: 'message', name: 'message'},
-      ]
+    $(function () {
+      $('table#joblog-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax      : '{{ route('api.key.joblog.data', ['key_id' => $request->key_id]) }}',
+        columns   : [
+          {data: 'id', name: 'id', visible: false},
+          {data: 'created_at', name: 'created_at', render: human_readable},
+          {data: 'type', name: 'type'},
+          {data: 'message', name: 'message'}
+        ]
+      });
     });
-  });
 
-</script>
+  </script>
 @endpush

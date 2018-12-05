@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Services\Repositories\Corporation\Contracts;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class ContractsController.
@@ -49,14 +49,15 @@ class ContractsController extends Controller
      * @param int $corporation_id
      *
      * @return mixed
+     * @throws \Exception
      */
     public function getContractsData(int $corporation_id)
     {
 
         $contracts = $this->getCorporationContracts($corporation_id, false);
 
-        return Datatables::of($contracts)
-            ->editColumn('issuerID', function ($row) {
+        return DataTables::of($contracts)
+            ->editColumn('issuer_id', function ($row) {
 
                 return view('web::partials.contractissuer', compact('row'))
                     ->render();
@@ -65,6 +66,11 @@ class ContractsController extends Controller
 
                 return view('web::partials.contracttype', compact('row'))
                     ->render();
+            })
+            ->editColumn('status', function ($row) {
+
+                return ucfirst($row->status);
+
             })
             ->editColumn('price', function ($row) {
 
@@ -79,7 +85,8 @@ class ContractsController extends Controller
                 return view('web::partials.contractcontentsbutton', compact('row'))
                     ->render();
             })
-            ->make('true');
+            ->rawColumns(['issuer_id', 'type', 'contents'])
+            ->make(true);
     }
 
     /**

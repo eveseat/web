@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -162,6 +162,8 @@ return [
     'home_page'                   => 'Die Tuisblad',
     'online_layers'               => 'Spelers Aanlyn',
     'owned_api_keys'              => 'Besitte API Sleutels',
+    'concurrent_player_count'     => 'Gelyktydige speler telling',
+    'esi_response_time'           => 'ESI Response Times',
 
     // Api Keys
     'api_key_add'                 => "Voeg 'n nuwe API Sleutel By",

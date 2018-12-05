@@ -18,7 +18,7 @@
           <th>{{ trans('web::seat.standings') }}</th>
         </tr>
 
-        @foreach($standings->unique('type')->groupBy('type') as $type => $data)
+        @foreach($standings->unique('from_type')->groupBy('from_type') as $type => $data)
 
           <tr class="active">
             <td colspan="2">
@@ -26,22 +26,29 @@
             </td>
           </tr>
 
-          @foreach($standings->where('type', $data[0]->type) as $standing)
+          @foreach($standings->where('from_type', $data[0]->from_type) as $standing)
 
             <tr>
               <td>
-                {!! img('auto', $standing->fromID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                {{ $standing->fromName }}
+                {!! img('auto', $standing->from_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                @if(is_null($standing->factionName))
+                  <span class="id-to-name" data-id="{{$standing->from_id }}">{{ trans('web::seat.unknown') }}</span>
+                @else
+                  {{ $standing->factionName }}
+                @endif
               </td>
               <td>
-                <span class="
-                  @if($standing->standing > 0)
-                        text-success
-                      @else
-                        text-danger
-                      @endif">
-                  {{ $standing->standing }}
-                </span>
+                @if($standing->standing > 5)
+                  <span class="label label-primary">{{ $standing->standing }}</span>
+                @elseif($standing->standing >= 1)
+                  <span class="label label-info">{{ $standing->standing }}</span>
+                @elseif($standing->standing > -1)
+                  <span class="label label-default">{{ $standing->standing }}</span>
+                @elseif($standing->standing >= -5)
+                  <span class="label label-warning">{{ $standing->standing }}</span>
+                @else
+                  <span class="label label-danger">{{ $standing->standing }}</span>
+                @endif
               </td>
             </tr>
 

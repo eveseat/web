@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,9 +54,8 @@ class EditUser extends FormRequest
         $user_id = $this->request->get('user_id');
 
         return [
-            'user_id'  => 'required|exists:users,id',
-            'email'    => 'required|email|unique:users,email,' . $user_id,
-            'password' => 'min:6|confirmed',
+            'user_id' => 'required|exists:users,id',
+            'email'   => 'required|email|unique:users,email,' . $user_id,
         ];
     }
 }

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,6 +72,13 @@ return [
         'route'          => 'corporation.view.market',
     ],
     [
+        'name'           => 'mining',
+        'label'          => 'web::seat.mining',
+        'permission'     => 'corporation.mining',
+        'highlight_view' => 'mining',
+        'route'          => 'corporation.view.mining_ledger',
+    ],
+    [
         'name'           => 'pocos',
         'label'          => 'web::seat.pocos',
         'permission'     => 'corporation.pocos',
@@ -92,6 +99,14 @@ return [
         'permission'     => 'corporation.starbases',
         'highlight_view' => 'starbases',
         'route'          => 'corporation.view.starbases',
+    ],
+    [
+        'name'           => 'structure',
+        'label'          => 'web::seat.structure',
+        'plural'         => true,
+        'permission'     => 'corporation.structures',
+        'highlight_view' => 'structures',
+        'route'          => 'corporation.view.structures',
     ],
     [
         'name'           => 'summary',
@@ -122,17 +137,10 @@ return [
         'route'          => 'corporation.view.ledger.summary',
     ],
     [
-        'name'           => 'wallet journal',
-        'label'          => 'web::seat.wallet_journal',
-        'permission'     => 'corporation.journal',
-        'highlight_view' => 'journal',
+        'name'           => 'wallet',
+        'label'          => 'web::seat.wallet',
+        'permission'     => ['corporation.journal', 'corporation.transactions'],
+        'highlight_view' => 'wallet',
         'route'          => 'corporation.view.journal',
-    ],
-    [
-        'name'           => 'wallet transactions',
-        'label'          => 'web::seat.wallet_transactions',
-        'permission'     => 'corporation.transactions',
-        'highlight_view' => 'transactions',
-        'route'          => 'corporation.view.transactions',
     ],
 ];

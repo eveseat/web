@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,6 @@ namespace Seat\Web\Http\Controllers\Configuration;
 use Cache;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
-use Seat\Services\Settings\Seat;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\SeatSettings;
 
@@ -57,18 +56,22 @@ class SeatController extends Controller
      * @param \Seat\Web\Http\Validation\SeatSettings $request
      *
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Seat\Services\Exceptions\SettingException
      */
     public function postUpdateSettings(SeatSettings $request)
     {
 
-        Seat::set('registration', $request->registration);
-        Seat::set('admin_contact', $request->admin_contact);
-        Seat::set('force_min_mask', $request->force_min_mask);
-        Seat::set('min_character_access_mask', $request->min_character_access_mask);
-        Seat::set('min_corporation_access_mask', $request->min_corporation_access_mask);
-        Seat::set('allow_sso', $request->allow_sso);
-        Seat::set('allow_tracking', $request->allow_tracking);
-        Seat::set('require_activation', $request->require_activation);
+        setting(['registration', $request->registration], true);
+        setting(['admin_contact', $request->admin_contact], true);
+        setting(['allow_tracking', $request->allow_tracking], true);
+        setting(['cleanup_data', $request->cleanup_data], true);
+
+        // If the queue workers number has changed, kick off the horizon
+        // temrinate command to restart the workers.
+        if (setting('queue_workers', true) !== $request->queue_workers)
+            session()->flash('info', trans('web::seat.horizon_restart'));
+
+        setting(['queue_workers', $request->queue_workers], true);
 
         return redirect()->back()
             ->with('success', 'SeAT settings updated!');
@@ -99,8 +102,6 @@ class SeatController extends Controller
 
                 return 'Error fetching latest SDE version';
             }
-
-            return 'Loading...';
 
         });
 

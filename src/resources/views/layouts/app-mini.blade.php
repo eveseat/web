@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,18 +17,21 @@
   <link rel="stylesheet" href="{{ asset('web/css/font-awesome.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('web/css/adminlte.min.css') }}">
+  <!-- Google Font -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
   <!-- Custom layout CSS -->
   @if(file_exists(public_path('custom-layout-mini.css')))
 
-    <link rel="stylesheet" href="{{ asset('custom-layout-mini.css') }}" />
+    <link rel="stylesheet" href="{{ asset('custom-layout-mini.css') }}"/>
 
-  @endif
+@endif
 
-  <!-- view specfic head content -->
-  @stack('head')
+<!-- view specific head content -->
+@stack('head')
 
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>

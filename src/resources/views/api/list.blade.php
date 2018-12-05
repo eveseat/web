@@ -42,54 +42,54 @@
 @stop
 
 @push('javascript')
-<script>
+  <script>
 
-  $(function () {
-    $('table#keys-table').DataTable({
-      processing      : true,
-      serverSide      : true,
-      ajax            : '{{ route('api.key.list.data') }}',
-      columns         : [
-        {data: 'key_id', name: 'key_id'},
-        {
-          data: 'enabled', name: 'enabled', render: function (data) {
-          if (data == 1) return 'Yes';
-          if (data == 0) return 'No';
+    $(function () {
+      $('table#keys-table').DataTable({
+        processing      : true,
+        serverSide      : true,
+        ajax            : '{{ route('api.key.list.data') }}',
+        columns         : [
+          {data: 'key_id', name: 'key_id'},
+          {
+            data: 'enabled', name: 'enabled', render: function (data) {
+              if (data == 1) return 'Yes';
+              if (data == 0) return 'No';
+            }
+          },
+          {
+            data: 'info.type', name: 'info.type', render: function (data) {
+
+              if (typeof data === 'undefined') {
+                return 'Unknown';
+              }
+
+              return data
+
+            }
+          },
+          {
+            data: 'info.expires', name: 'info.expires', render: function (data) {
+
+              if (typeof data === 'undefined') {
+                return 'Unknown';
+              }
+
+              return data
+
+            }
+          },
+          {data: 'characters', name: 'characters', orderable: false},
+          {data: 'actions', name: 'actions', orderable: false}
+        ],
+        dom             : '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
+        "fnDrawCallback": function () {
+          $(document).ready(function () {
+            $("img").unveil(100);
+          });
         }
-        },
-        {
-          data: 'info.type', name: 'info.type', render: function (data) {
-
-          if (typeof data === 'undefined') {
-            return 'Unknown';
-          }
-
-          return data
-
-        }
-        },
-        {
-          data: 'info.expires', name: 'info.expires', render: function (data) {
-
-          if (typeof data === 'undefined') {
-            return 'Unknown';
-          }
-
-          return data
-
-        }
-        },
-        {data: 'characters', name: 'characters', orderable: false},
-        {data: 'actions', name: 'actions', orderable: false},
-      ],
-      dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
-      "fnDrawCallback": function () {
-        $(document).ready(function () {
-          $("img").unveil(100);
-        });
-      }
+      });
     });
-  });
 
-</script>
+  </script>
 @endpush

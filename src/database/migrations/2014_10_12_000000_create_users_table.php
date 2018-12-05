@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,15 +35,17 @@ class CreateUsersTable extends Migration
 
         Schema::create('users', function (Blueprint $table) {
 
-            $table->increments('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password', 60);
-            $table->boolean('active')->default(false);
-            $table->string('mfa_token')->nullable();
+            $table->bigInteger('id')->primary();
+            $table->integer('group_id');
+            $table->string('name')->unique();
+            $table->string('email')->unique()->nullable();
+            $table->boolean('active')->default(true);
+            $table->string('character_owner_hash');
             $table->dateTime('last_login')->nullable();
             $table->string('last_login_source')->nullable();
             $table->rememberToken();
+
+            $table->index('group_id');
 
             $table->timestamps();
         });

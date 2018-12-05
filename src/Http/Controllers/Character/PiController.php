@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,9 +38,10 @@ class PiController extends Controller
     {
 
         $colonies = $this->getCharacterPlanetaryColonies($character_id);
+        $extractors = $this->getCharacterPlanetaryExtractors($character_id);
 
         // TODO: Complete the Links and stuff™
 
-        return view('web::character.pi', compact('colonies'));
+        return view('web::character.pi', compact('colonies', 'extractors'));
     }
 }

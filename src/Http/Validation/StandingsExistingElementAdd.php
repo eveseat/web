@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,10 +55,10 @@ class StandingsExistingElementAdd extends FormRequest
 
         return [
             'id'          => 'required|exists:standings_profiles,id',
-            'character*'  => 'in:' . $this->getAllCharactersWithAffiliations()
-                    ->pluck('characterID')->implode(','),
-            'corporation' => 'in:' . $this->getAllCorporationsWithAffiliationsAndFilters()
-                    ->pluck('corporationID')->implode(','),
+            'character'   => 'nullable|in:' .
+                $this->getAllCharactersWithAffiliations()->pluck('character_id')->implode(','),
+            'corporation' => 'nullable|in:' .
+                $this->getAllCorporationsWithAffiliationsAndFilters()->pluck('corporation_id')->implode(','),
         ];
     }
 }

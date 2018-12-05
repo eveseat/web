@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,9 +34,9 @@ class AddPermissionInversionFlags extends Migration
     public function up()
     {
 
-        Schema::table('role_user', function (Blueprint $table) {
+        Schema::table('group_role', function (Blueprint $table) {
 
-            $table->boolean('not')->after('user_id')->default(false);
+            $table->boolean('not')->after('group_id')->default(false);
         });
 
         Schema::table('permission_role', function (Blueprint $table) {
@@ -63,7 +63,7 @@ class AddPermissionInversionFlags extends Migration
     public function down()
     {
 
-        Schema::table('role_user', function (Blueprint $table) {
+        Schema::table('group_role', function (Blueprint $table) {
 
             $table->dropColumn('not');
         });

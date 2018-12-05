@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Services\Repositories\Character\Industry;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class IndustryController.
@@ -55,13 +55,13 @@ class IndustryController extends Controller
 
         $jobs = $this->getCharacterIndustry($character_id, false);
 
-        return Datatables::of($jobs)
+        return DataTables::of($jobs)
             ->editColumn('installerName', function ($row) {
 
                 return view('web::partials.industryinstaller', compact('row'))
                     ->render();
             })
-            ->editColumn('solarSystemName', function ($row) {
+            ->editColumn('facilityName', function ($row) {
 
                 return view('web::partials.industrysystem', compact('row'))
                     ->render();
@@ -76,6 +76,7 @@ class IndustryController extends Controller
                 return view('web::partials.industryproduct', compact('row'))
                     ->render();
             })
+            ->rawColumns(['installerName', 'facilityName', 'blueprintTypeName', 'productTypeName'])
             ->make(true);
 
     }

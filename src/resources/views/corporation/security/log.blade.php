@@ -11,13 +11,14 @@
     </div>
     <div class="panel-body">
 
-      <table class="table datatable compact table-condensed table-hover table-responsive">
+      <table class="table compact table-condensed table-hover table-responsive">
         <thead>
         <tr>
           <th>{{ trans('web::seat.date') }}</th>
           <th>{{ trans('web::seat.issuer') }}</th>
           <th>{{ trans('web::seat.affected') }}</th>
-          <th>{{ trans_choice('web::seat.type', 1) }}</th>
+          <th>{{ trans_choice('web::seat.state', 1) }}</th>
+          <th>{{ trans_choice('web::seat.role', 1) }}</th>
           <th></th>
         </tr>
         </thead>
@@ -26,37 +27,26 @@
         @foreach($logs as $log)
 
           <tr>
-            <td data-order="{{ $log->changeTime }}">
-              {{ human_diff($log->changeTime) }}
+            <td data-order="{{ $log->changed_at }}">
+              {{ human_diff($log->changed_at) }}
             </td>
             <td>
-              <a href="{{ route('character.view.sheet', ['character_id' => $log->issuerID]) }}">
-                {!! img('character', $log->issuerID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                {{ $log->issuerName }}
+              <a href="{{ route('character.view.sheet', ['character_id' => $log->issuer_id]) }}">
+                {!! img('character', $log->issuer_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                <span class="id-to-name" data-id="{{ $log->issuer_id }}">{{ trans('web::seat.unknown') }}</span>
               </a>
             </td>
             <td>
-              <a href="{{ route('character.view.sheet', ['character_id' => $log->characterID]) }}">
-                {!! img('character', $log->characterID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                {{ $log->characterName }}
+              <a href="{{ route('character.view.sheet', ['character_id' => $log->character_id]) }}">
+                {!! img('character', $log->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                <span class="id-to-name" data-id="{{ $log->character_id }}">{{ trans('web::seat.unknown') }}</span>
               </a>
             </td>
             <td>
-              {{ $log->roleLocationType }}
+              {{ $log->state }}
             </td>
             <td>
-              <span class="label label-default" data-toggle="tooltip"
-                    title=""
-                    data-original-title="{{ implode(" ", array_flatten(json_decode($log->oldRoles, true))) }}">
-                {{ count(array_flatten(json_decode($log->oldRoles, true))) }}
-              </span>
-              <i class="fa fa-long-arrow-right"></i>
-              <span class="label label-default" data-toggle="tooltip"
-                    title=""
-                    data-original-title="{{ implode(" ", array_flatten(json_decode($log->newRoles, true))) }}">
-                {{ count(array_flatten(json_decode($log->newRoles, true))) }}
-              </span>
-
+              {{ $log->role }}
             </td>
           </tr>
 

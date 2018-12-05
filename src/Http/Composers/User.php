@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ namespace Seat\Web\Http\Composers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
+use Seat\Services\Repositories\Configuration\UserRespository;
 
 /**
  * Class User.
@@ -31,13 +32,7 @@ use Illuminate\Support\Facades\Auth;
  */
 class User
 {
-    /**
-     * Create a new user composer.
-     */
-    public function __construct()
-    {
-
-    }
+    use UserRespository;
 
     /**
      * Bind data to the view.
@@ -50,5 +45,6 @@ class User
     {
 
         $view->with('user', Auth::user());
+        $view->with('user_characters', $this->getUserGroupCharacters(auth()->user()->group));
     }
 }

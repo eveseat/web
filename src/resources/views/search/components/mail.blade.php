@@ -11,6 +11,7 @@
         <th>{{ trans('web::seat.date') }}</th>
         <th>{{ trans('web::seat.from') }}</th>
         <th>{{ trans_choice('web::seat.title', 1) }}</th>
+        <th>{{ trans('content') }}</th>
         <th>{{ trans('web::seat.to') }}</th>
       </tr>
       </thead>
@@ -21,7 +22,7 @@
 
 @push('javascript')
 
-<script>
+<script type="text/javascript">
 
   $(function () {
     $('table#mail').DataTable({
@@ -29,16 +30,18 @@
       serverSide      : true,
       ajax            : '{{ route('support.search.mail.data') }}',
       columns         : [
-        {data: 'sentDate', name: 'sentDate', render: human_readable},
-        {data: 'senderName', name: 'senderName'},
-        {data: 'title', name: 'title'},
-        {data: 'tocounts', name: 'tocounts', searchable: false},
-        {data: 'read', name: 'read', searchable: false},
+        {data: 'timestamp', name: 'mail_headers.timestamp', render: human_readable},
+        {data: 'from',      name: 'mail_headers.from', searchable: false},
+        {data: 'subject',   name: 'mail_headers.subject'},
+        {data: 'body',      name: 'body.body'},
+        {data: 'tocounts',  name: 'tocounts', searchable: false},
+        {data: 'read',      name: 'read', searchable: false}
       ],
       dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
       'fnDrawCallback': function () {
         $(document).ready(function () {
           $('img').unveil(100);
+          ids_to_names();
         });
       },
       'search'        : {

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,26 +28,105 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Seat\Eveapi\Models\Eve\ApiKey;
+use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\Models\UserSetting;
+use Seat\Services\Settings\Profile;
 use Seat\Web\Acl\AccessChecker;
 use Seat\Web\Models\Acl\Affiliation;
-use Seat\Web\Models\Acl\Role;
 
 /**
  * Class User.
  * @package Seat\Web\Models
+ *
+ * @SWG\Definition(
+ *     description="User",
+ *     title="User",
+ *     type="object"
+ * )
+ *
+ * @SWG\Property(
+ *     type="integer",
+ *     format="int64",
+ *     minimum=90000000,
+ *     description="ID",
+ *     property="id"
+ * )
+ *
+ * @SWG\Property(
+ *     type="string",
+ *     description="Name",
+ *     maxLength=255,
+ *     property="name"
+ * )
+ *
+ * @SWG\Property(
+ *     type="string",
+ *     format="email",
+ *     description="E-Mail address",
+ *     property="email"
+ * )
+ *
+ * @SWG\Property(
+ *     type="boolean",
+ *     description="Account status",
+ *     property="active"
+ * )
+ *
+ * @SWG\Property(
+ *     type="string",
+ *     description="Unique character/EVE Account hash",
+ *     maxLength=255,
+ *     property="character_owner_hash"
+ * )
+ *
+ * @SWG\Property(
+ *     type="string",
+ *     format="date-time",
+ *     description="Last login to SeAT time",
+ *     property="last_login"
+ * )
+ *
+ * @SWG\Property(
+ *     type="string",
+ *     description="Last IP address used to sign in to SeAT",
+ *     property="last_login_source"
+ * )
+ *
+ * @SWG\Property(
+ *     type="integer",
+ *     minimum=1,
+ *     description="Group ID",
+ *     property="group_id"
+ * )
+ *
+ * @SWG\Property(
+ *     type="array",
+ *     description="Array of attached character ID",
+ *     property="associated_character_ids",
+ *     @SWG\Items(type="integer", format="int64", minimum=90000000)
+ * )
+ *
+ * @SWG\Property(
+ *     property="token",
+ *     ref="#/definitions/RefreshToken"
+ * )
  */
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
     use Authenticatable, CanResetPassword, AccessChecker, Notifiable;
 
     /**
-     * The database table used by the model.
-     *
-     * @var string
+     * @var bool
      */
-    protected $table = 'users';
+    public $incrementing = false;
+
+    /**
+     * @var array
+     */
+    protected $casts = [
+        'active' => 'boolean',
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -55,7 +134,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'mfa_token', 'active', 'eve_id', 'token', ];
+        'name', 'email', 'character_owner_hash', 'group_id',
+    ];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -63,23 +143,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
-
-    /**
-     * Boot the model.
-     *
-     * We are simply adding the active_token.
-     */
-    public static function boot()
-    {
-
-        parent::boot();
-
-        static::creating(function ($user) {
-
-            $user->activation_token = str_random(64);
-
-        });
-    }
 
     /**
      * Make sure we cleanup on delete.
@@ -92,11 +155,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
         // Cleanup the user
         $this->login_history()->delete();
-        $this->roles()->detach();
         $this->affiliations()->detach();
+        $this->refresh_token()->forceDelete();
 
-        // Return keys to the super user
-        $this->keys()->update(['user_id' => 0]);
+        $this->settings()->delete();
 
         return parent::delete();
     }
@@ -113,17 +175,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * This user may have certain roles assigned.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function roles()
-    {
-
-        return $this->belongsToMany(Role::class);
-    }
-
-    /**
      * This user may be affiliated manually to
      * other characterID's and or corporations.
      *
@@ -137,25 +188,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function keys()
+    public function refresh_token()
     {
 
-        return $this->hasMany(ApiKey::class);
-    }
-
-    /**
-     * Confirm the user.
-     *
-     * @return void
-     */
-    public function confirmEmail()
-    {
-
-        $this->active = true;
-        $this->activation_token = null;
-        $this->save();
+        return $this->hasOne(RefreshToken::class, 'character_id', 'id');
     }
 
     /**
@@ -164,6 +202,69 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function settings()
     {
 
-        return $this->hasMany(UserSetting::class);
+        return $this->hasMany(UserSetting::class, 'group_id', 'group_id');
+    }
+
+    /**
+     * Get the group the current user belongs to.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function group()
+    {
+
+        return $this->belongsTo(Group::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function character()
+    {
+
+        return $this->belongsTo(CharacterInfo::class, 'id', 'character_id');
+    }
+
+    /**
+     * An alias attribute for the character_id.
+     *
+     * @return mixed
+     */
+    public function getCharacterIdAttribute()
+    {
+
+        return $this->id;
+    }
+
+    /**
+     * Return the email address for this user based on the
+     * email address setting.
+     *
+     * @return mixed
+     * @throws \Seat\Services\Exceptions\SettingException
+     */
+    public function getEmailAttribute()
+    {
+
+        return Profile::get('email_address', $this->group->id);
+    }
+
+    /**
+     * Return the character ID's this user is associated with as a
+     * result of common group memberships.
+     *
+     * These are basically the characters the same account has logged
+     * in with using the "link another" button.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function associatedCharacterIds()
+    {
+
+        if (! $this->group) {
+            return collect();
+        }
+
+        return $this->group->users->pluck('id')->flatten();
     }
 }

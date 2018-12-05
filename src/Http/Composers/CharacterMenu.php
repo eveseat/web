@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,6 +57,7 @@ class CharacterMenu extends AbstractMenu
      * @param  View $view
      *
      * @return void
+     * @throws \Seat\Web\Exceptions\PackageMenuBuilderException
      */
     public function compose(View $view)
     {
@@ -71,7 +72,8 @@ class CharacterMenu extends AbstractMenu
             foreach (config('package.character.menu') as $menu_data) {
 
                 $prepared_menu = $this->load_plugin_menu('character', $menu_data, true);
-                array_push($menu, $prepared_menu);
+                if (! is_null($prepared_menu))
+                    array_push($menu, $prepared_menu);
 
             }
         }

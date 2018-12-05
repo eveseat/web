@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -74,6 +74,10 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
+
+        // Warn if SSO has not been configured yet.
+        if (strlen(env('EVE_CLIENT_SECRET')) < 5 || strlen(env('EVE_CLIENT_ID')) < 5)
+            session()->flash('warning', trans('web::seat.sso_config_warning'));
 
         return view('web::auth.login');
     }

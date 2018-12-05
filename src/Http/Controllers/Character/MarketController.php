@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Services\Repositories\Character\Market;
 use Seat\Services\Repositories\Eve\EveRepository;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class MarketController.
@@ -52,14 +52,14 @@ class MarketController extends Controller
      * @param int $character_id
      *
      * @return mixed
+     * @throws \Exception
      */
     public function getMarketData(int $character_id)
     {
 
         $orders = $this->getCharacterMarketOrders($character_id, false);
-        $states = $this->getEveMarketOrderStates();
 
-        return Datatables::of($orders)
+        return DataTables::of($orders)
             ->addColumn('bs', function ($row) {
 
                 return view('web::partials.marketbuysell', compact('row'))
@@ -70,23 +70,20 @@ class MarketController extends Controller
                 return view('web::partials.marketvolume', compact('row'))
                     ->render();
             })
-            ->addColumn('state', function ($row) use ($states) {
-
-                return $states[$row->orderState];
-            })
             ->editColumn('price', function ($row) {
 
                 return number($row->price);
             })
             ->addColumn('total', function ($row) {
 
-                return number($row->price * $row->volEntered);
+                return number($row->price * $row->volume_total);
             })
             ->editColumn('typeName', function ($row) {
 
                 return view('web::partials.markettype', compact('row'))
                     ->render();
             })
+            ->rawColumns(['bs', 'vol', 'typeName'])
             ->make(true);
 
     }

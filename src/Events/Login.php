@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,10 +25,13 @@ namespace Seat\Web\Events;
 use DateTime;
 use Illuminate\Auth\Events\Login as LoginEvent;
 use Illuminate\Support\Facades\Request;
+use Seat\Console\Bus\CharacterTokenShouldUpdate;
+use Seat\Console\Bus\CorporationTokenShouldUpdate;
 use Seat\Web\Models\UserLoginHistory;
 
 /**
  * Class Login.
+ *
  * @package Seat\Web\Events
  */
 class Login
@@ -42,6 +45,7 @@ class Login
     public static function handle(LoginEvent $event)
     {
 
+        // Create a log entry for this login.
         $event->user->last_login_source = Request::getClientIp();
         $event->user->last_login = new DateTime();
         $event->user->save();
@@ -55,5 +59,13 @@ class Login
         $message = 'User logged in from ' . Request::getClientIp();
         event('security.log', [$message, 'authentication']);
 
+        if ($event->user->refresh_token()->exists()) {
+
+            // Update Character information
+            (new CharacterTokenShouldUpdate($event->user->refresh_token, 'high'))->fire();
+
+            // Update Corporation information
+            (new CorporationTokenShouldUpdate($event->user->refresh_token, 'high'))->fire();
+        }
     }
 }

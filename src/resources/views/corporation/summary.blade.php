@@ -16,11 +16,11 @@
         <div class="panel-body">
 
           <dl>
-            <dt>{{ trans('web::seat.shares') }}</dt>
+            <dt><i class="fa fa-handshake-o"></i> {{ trans('web::seat.shares') }}</dt>
             <dd>{{ $sheet->shares }}</dd>
 
-            <dt>{{ trans('web::seat.member_capacity') }}</dt>
-            <dd>{{ number( ($sheet->memberCount / $sheet->memberLimit) * 100 ,2) }}% Full</dd>
+            <dt><i class="fa fa-users"></i> {{ trans('web::seat.member_capacity') }}</dt>
+            <dd>{{ $sheet->member_count }} {{ trans_choice('web::seat.member', $sheet->member_count) }}</dd>
           </dl>
 
         </div>
@@ -45,17 +45,31 @@
         </div>
         <div class="panel-body">
 
-          <ul>
-            <li class="list-header list-unstyled">{{ trans('web::seat.corporation_divisions') }}</li>
-            @foreach($divisions as $division)
-              <li>{{ $division->description }}</li>
-            @endforeach
+          <dl>
+            <dt><i class="fa fa-cubes"></i> {{ trans('web::seat.corporation_divisions') }}</dt>
+            <dd>
+              <ol>
+                @foreach($divisions as $division)
+                  <li>{{ $division->name }}</li>
+                @endforeach
+              </ol>
+            </dd>
+          </dl>
 
-            <li class="list-header list-unstyled">{{ trans('web::seat.wallet_divisions') }}</li>
-            @foreach($wallet_divisions as $wallet_division)
-              <li>{{ $wallet_division->description }}</li>
-            @endforeach
-          </ul>
+          <dl>
+            <dt><i class="fa fa-money"></i> {{ trans('web::seat.wallet_divisions') }}</dt>
+            <dd>
+              <ol>
+                @foreach($wallet_divisions as $wallet_division)
+                  @if(is_null($wallet_division->name))
+                    <li>Master</li>
+                  @else
+                    <li>{{ $wallet_division->name }}</li>
+                  @endif
+                @endforeach
+              </ol>
+            </dd>
+          </dl>
 
         </div>
       </div>

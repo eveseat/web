@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,14 +50,14 @@ Route::get('/roles/edit/{role_id}/delete/permission/{permission_id}', [
     'uses' => 'AccessController@removePermissions',
 ]);
 
-Route::post('/roles/edit/users', [
-    'as'   => 'configuration.access.roles.edit.users',
-    'uses' => 'AccessController@addUsers',
+Route::post('/roles/edit/groups', [
+    'as'   => 'configuration.access.roles.edit.groups',
+    'uses' => 'AccessController@addGroups',
 ]);
 
-Route::get('/roles/edit/{role_id}/delete/user/{user_id}', [
-    'as'   => 'configuration.access.roles.edit.remove.user',
-    'uses' => 'AccessController@removeUser',
+Route::get('/roles/edit/{role_id}/delete/group/{group_id}', [
+    'as'   => 'configuration.access.roles.edit.remove.group',
+    'uses' => 'AccessController@removeGroup',
 ]);
 
 Route::post('/roles/edit/affiliations', [

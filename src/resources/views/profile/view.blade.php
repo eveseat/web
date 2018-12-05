@@ -19,6 +19,7 @@
 
           <legend>{{ trans('web::seat.user_interface') }}</legend>
 
+          @if(auth()->user()->name != 'admin')
           <!-- Select Basic -->
           <div class="form-group">
             <label class="col-md-4 control-label"
@@ -26,15 +27,16 @@
             <div class="col-md-6">
               <select id="main_character_id" name="main_character_id" class="form-control">
                 @foreach($characters as $character)
-                  <option value="{{ $character->characterID }}"
-                          @if(setting('main_character_id') == $character->characterID)
+                  <option value="{{ $character->id }}"
+                          @if(setting('main_character_id') == $character->id)
                           selected
-                          @endif>
-                    {{ $character->characterName }}</option>
+                      @endif>
+                    {{ $character->name }}</option>
                 @endforeach
               </select>
             </div>
           </div>
+          @endif
 
           <!-- Select Basic -->
           <div class="form-group">
@@ -45,7 +47,7 @@
                   <option value="{{ $skin }}"
                           @if(setting('skin') == $skin)
                           selected
-                          @endif>
+                      @endif>
                     {{ str_replace('skin-', '', $skin) }}</option>
                 @endforeach
               </select>
@@ -61,7 +63,7 @@
                   <option value="{{ $language['short'] }}"
                           @if(setting('language') == $language['short'])
                           selected
-                          @endif>
+                      @endif>
                     {{ $language['full'] }}</option>
                 @endforeach
               </select>
@@ -77,7 +79,7 @@
                   <option value="{{ $style }}"
                           @if(setting('sidebar') == $style)
                           selected
-                          @endif>
+                      @endif>
                     {{ str_replace('sidebar-', '', $style) }}</option>
                 @endforeach
               </select>
@@ -166,41 +168,6 @@
             </div>
           </div>
 
-          <legend>{{ trans('web::seat.mfa') }}</legend>
-
-          <!-- Select Basic -->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="require_mfa">{{ trans('web::seat.require_mfa') }}</label>
-            <div class="col-md-6">
-              <div class="form-inline input-group">
-                <select id="require_mfa" name="require_mfa" class="form-control">
-                  <option value="yes"
-                          @if(setting('require_mfa') == "yes") selected @endif>
-                    {{ trans('web::seat.yes') }}
-                  </option>
-                  <option value="no"
-                          @if(setting('require_mfa') == "no") selected @endif>
-                    {{ trans('web::seat.no') }}
-                  </option>
-                </select>
-                <span class="help-block">
-                  <p>
-                    <b>Warning:</b> To use the two factor authentication, you
-                                    will have to install a Google Authenticator
-                                    compatible app on your smartphone.
-                  </p>
-                  <p>
-                    @if(setting('require_mfa') == "yes")
-                      <a href="{{ route('profile.mfa.new') }}">
-                        {{ trans('web::seat.setup_token_now') }}
-                      </a>
-                    @endif
-                  </p>
-                </span>
-              </div>
-            </div>
-          </div>
-
         </div>
         <!-- /.box-body -->
 
@@ -218,6 +185,8 @@
 
     </div>
   </div>
+
+
 
 @stop
 
@@ -240,63 +209,6 @@
 
           <ul class="list-unstyled">
             <li class="list-header">{{ trans('web::seat.account_settings') }}</li>
-            <li>
-
-              <!-- Button trigger modal -->
-              <a type="button" data-toggle="modal" data-target="#passwordModal">
-                <i class="fa fa-lock"></i>
-                {{ trans('web::seat.change_password') }}
-              </a>
-
-              <!-- Modal -->
-              <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog"
-                   aria-labelledby="passwordModalLabel">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                      <h4 class="modal-title" id="passwordModalLabel">{{ trans('web::seat.change_password') }}</h4>
-                    </div>
-                    <div class="modal-body">
-
-                      <form role="form" action="{{ route('profile.update.password') }}" method="post">
-                        {{ csrf_field() }}
-
-                        <div class="box-body">
-
-                          <div class="form-group">
-                            <label for="current_password">{{ trans('web::seat.current_password') }}</label>
-                            <input type="password" name="current_password" class="form-control" placeholder="Password">
-                          </div>
-
-                          <div class="form-group">
-                            <label for="new_password">{{ trans('web::seat.new_password') }}</label>
-                            <input type="password" name="new_password" class="form-control" placeholder="Password">
-                          </div>
-
-                          <div class="form-group">
-                            <label for="new_password_confirmation">{{ trans('web::seat.confirm_new_password') }}</label>
-                            <input type="password" name="new_password_confirmation" class="form-control"
-                                   id="password_confirmation" placeholder="Password">
-                          </div>
-
-                        </div><!-- /.box-body -->
-
-                        <div class="box-footer">
-                          <button type="submit" class="btn btn-primary pull-right">
-                            {{ trans('web::seat.change_password') }}
-                          </button>
-                        </div>
-                      </form>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </li>
             <li>
 
               <!-- Button trigger modal -->
@@ -325,18 +237,19 @@
                           <div class="form-group">
                             <label for="current_email">{{ trans('web::seat.current_email') }}</label>
                             <input type="email" name="current_email" class="form-control" placeholder="Current Email"
-                                   value="{{ auth()->user()->email }}" disabled="disabled"/>
+                                   value="{{ setting('email_address') }}" disabled="disabled"/>
                           </div>
 
                           <div class="form-group">
                             <label for="new_email">{{ trans('web::seat.new_email') }}</label>
-                            <input type="email" name="new_email" class="form-control" placeholder="New Email"/>
+                            <input type="email" name="new_email" class="form-control" placeholder="New Email"
+                                   required="required"/>
                           </div>
 
                           <div class="form-group">
                             <label for="new_email_confirmation">{{ trans('web::seat.confirm_new_email') }}</label>
                             <input type="email" name="new_email_confirmation" class="form-control"
-                                   id="email_confirmation" placeholder="New Email Confirmation"/>
+                                   id="email_confirmation" placeholder="New Email Confirmation" required="required"/>
                           </div>
 
                         </div><!-- /.box-body -->
@@ -409,21 +322,52 @@
 
             </li>
 
-            {{-- option to upgrade account to an SSO account --}}
-            @if(setting('allow_sso', true) === 'yes')
+            <!-- scopes -->
+            @if(auth()->user()->name != 'admin')
+            <li>
 
-              @if(is_null(auth()->user()->eve_id))
+              <!-- Button trigger modal -->
+              <a type="button" data-toggle="modal" data-target="#scopesModal">
+                <i class="fa fa-shield"></i>
+                {{ trans_choice('web::seat.scope', 2) }}
+              </a>
 
-                <li class="list-header">{{ trans('web::seat.upgrade_sso') }}</li>
+              <!-- Modal -->
+              <div class="modal fade" id="scopesModal" tabindex="-1" role="dialog" aria-labelledby="scopesModalLabel">
+                <div class="modal-dialog modal-lg" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      <h4 class="modal-title" id="scopesModalLabel">{{ trans_choice('web::seat.scope', 2) }}</h4>
+                    </div>
+                    <div class="modal-body">
 
-                <li>
-                  <a href="{{ route('auth.eve') }}">
-                    <img src="{{ asset('web/img/evesso.png') }}">
-                  </a>
-                </li>
+                      <table class="table table-condensed table-hover table-responsive">
+                        <tbody>
 
-              @endif
+                        @unless(is_null($scopes))
 
+                          @foreach($scopes as $scope)
+
+                            <tr>
+                              <td>{{ $scope }}</td>
+                            </tr>
+
+                          @endforeach
+
+                        @endunless
+
+                        </tbody>
+                      </table>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </li>
             @endif
           </ul>
 
@@ -432,7 +376,7 @@
 
           <ul class="list-unstyled">
             <li class="list-header">{{ trans_choice('web::seat.role', 2) }}</li>
-            @foreach($user->roles as $role)
+            @foreach($user->group->roles as $role)
               <li>
                 <i class="fa fa-group"></i>
                 <span @if($role->title == 'Superuser') class="text-danger" @endif>
@@ -446,18 +390,73 @@
       </div>
 
     </div>
-    <div class="panel-footer">
-      @if(auth()->user()->hasSuperUser())
-        <span class="label label-danger">
-          {{ trans('web::seat.superuser') }}
-        </span>
-      @endif
+  </div>
 
-      <span class="pull-right">
-        {{ count($user->keys) }} {{ trans('web::seat.owned_keys') }}
-      </span>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <p>
+        {{ trans('web::seat.third_party_access') }}
+      </p>
+      <a href="https://community.eveonline.com/support/third-party-applications/" target="_blank"
+         class="btn btn-success btn-xs pull-right">
+        {{ trans('web::seat.view_third_party_access') }}
+      </a>
     </div>
   </div>
+
+  @if(auth()->user()->name != 'admin')
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+
+        {{ trans('web::seat.linked_characters') }}
+
+        <span class="pull-right">
+
+          <a href="{{ route('auth.eve') }}" class="btn btn-primary btn-xs">
+            {{ trans('web::seat.link_another_character') }}
+          </a>
+        </span>
+
+      </h3>
+    </div>
+    <div class="panel-body">
+
+      <div class="row">
+        <div class="col-md-12">
+
+          <ul class="list-unstyled">
+
+            @foreach($characters as $character)
+              <li>
+
+                <a href="{{ route('character.view.sheet', ['character_id' => $character->character_id]) }}">
+                  {!! img('character', $character->id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  {{ $character->name }}
+                </a>
+
+                @if ($character->refresh_token )
+                  <button data-toggle="tooltip" title="" class="btn btn-xs btn-link" data-original-title="Valid Token">
+                    <i class="fa fa-check text-success"></i>
+                  </button>
+                @else
+                  <button data-toggle="tooltip" title="" class="btn btn-xs btn-link" data-original-title="Invalid Token"
+                          aria-describedby="tooltip257244">
+                    <i class="fa fa-exclamation-triangle text-danger"></i>
+                  </button>
+                @endif
+
+              </li>
+            @endforeach
+
+          </ul>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+  @endif
 
   <span class="text-center">
     {{ trans('web::seat.account_help') }}
@@ -467,10 +466,10 @@
 
 @push('javascript')
 
-<script>
+  <script>
 
-  $("select#main_character_id").select2();
+    $("select#main_character_id").select2();
 
-</script>
+  </script>
 
 @endpush

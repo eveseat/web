@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,9 +22,10 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Corporation\Corporation;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class CorporationsController.
@@ -46,29 +47,55 @@ class CorporationsController extends Controller
 
     /**
      * @return mixed
+     * @throws \Exception
      */
     public function getCorporationsData()
     {
 
         $corporations = $this->getAllCorporationsWithAffiliationsAndFilters();
 
-        return Datatables::of($corporations)
+        return DataTables::of($corporations)
             // Edit some columns to include links and icons
-            ->editColumn('corporationName', function ($row) {
+            ->editColumn('name', function ($row) {
 
                 return view('web::corporation.partials.corporationname', compact('row'))
                     ->render();
             })
-            ->editColumn('ceoName', function ($row) {
+            ->editColumn('ceo_id', function ($row) {
 
                 return view('web::corporation.partials.ceoname', compact('row'))
                     ->render();
             })
-            ->editColumn('allianceName', function ($row) {
+            ->editColumn('alliance_id', function ($row) {
 
                 return view('web::corporation.partials.alliancename', compact('row'))
                     ->render();
             })
+            ->editColumn('tax_rate', function ($row) {
+
+                return sprintf('%d%%', $row->tax_rate * 100);
+            })
+            ->editColumn('actions', function ($row) {
+
+                return view('web::corporation.partials.delete', compact('row'))
+                    ->render();
+            })
+            ->rawColumns(['name', 'ceo_id', 'alliance_id', 'actions'])
             ->make(true);
+    }
+
+    /**
+     * @param int $corporation_id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deleteCorporation(int $corporation_id)
+    {
+
+        CorporationInfo::find($corporation_id)->delete();
+
+        return redirect()->back()->with(
+            'success', 'Corporation deleted!'
+        );
     }
 }

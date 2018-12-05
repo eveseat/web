@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,9 +22,11 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Services\Repositories\Character\Character;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
+use Symfony\Component\HttpFoundation\Request;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class CharacterController.
@@ -45,30 +47,65 @@ class CharacterController extends Controller
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return mixed
+     * @throws \Exception
      */
-    public function getCharactersData()
+    public function getCharactersData(Request $request)
     {
 
-        $characters = $this->getAllCharactersWithAffiliations();
+        $characters = ($request->filtered === 'true') ?
+            auth()->user()->group->users
+                ->filter(function ($user) {
+                    if(! $user->name === 'admin' || $user->id === 1)
+                        return false;
 
-        return Datatables::of($characters)
-            ->editColumn('characterName', function ($row) {
+                    return true;
+                })
+                ->map(function ($user) {
+                    return $user->character;
+            }) :
+            $this->getAllCharactersWithAffiliations();
+
+        return DataTables::of($characters)
+            ->editColumn('name', function ($row) {
 
                 return view('web::character.partials.charactername', compact('row'))
                     ->render();
             })
-            ->editColumn('corporationName', function ($row) {
+            ->editColumn('corporation_id', function ($row) {
 
                 return view('web::character.partials.corporationname', compact('row'))
                     ->render();
             })
-            ->editColumn('alliance', function ($row) {
+            ->editColumn('alliance_id', function ($row) {
 
                 return view('web::character.partials.alliancename', compact('row'))
                     ->render();
             })
+            ->editColumn('actions', function ($row) {
+
+                return view('web::character.partials.delete', compact('row'))
+                    ->render();
+            })
+            ->rawColumns(['name', 'corporation_id', 'alliance_id', 'actions'])
             ->make(true);
 
+    }
+
+    /**
+     * @param int $character_id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deleteCharacter(int $character_id)
+    {
+
+        CharacterInfo::find($character_id)->delete();
+
+        return redirect()->back()->with(
+            'success', 'Character deleted!'
+        );
     }
 }

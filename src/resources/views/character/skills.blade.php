@@ -30,9 +30,19 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::seat.skills') }}</h3>
+      <h3 class="panel-title">
+        {{ trans('web::seat.skills') }}
+        @if(auth()->user()->has('character.jobs'))
+          <span class="pull-right">
+            <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.skills']) }}"
+               style="color: #000000">
+              <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_skills') }}"></i>
+            </a>
+          </span>
+        @endif
+      </h3>
     </div>
-    <div class="panel-body">
+    <div class="panel-body no-padding">
 
       @foreach($skill_groups as $skill_group)
 
@@ -40,61 +50,43 @@
 
           <div class="box box-solid">
             <div class="box-header with-border">
+              <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-minus"></i>
+              </button>
               <h3 class="box-title">
                 {{ $skill_group->groupName }}
               </h3>
               <span class="pull-right">
-                  {{ count($skills->where('groupID', $skill_group->groupID)) }}
-                skills
-                </span>
+                {{ count($skills->where('groupID', $skill_group->groupID)) }} skills
+              </span>
             </div>
             <div class="box-body">
-
-              <ul class="list-unstyled">
-
+              <table class="table table-striped table-hover table-condensed table-responsive">
                 @foreach($skills->where('groupID', $skill_group->groupID) as $skill)
-                  @if($loop->iteration % 2 == 0)
-                    <li style="background-color:#efefef;">
-                  @else
-                    <li>
-                  @endif
-                    <i class="fa fa-book"></i> {{ $skill->typeName }}
-                    <span class="pull-right">
-
-                      @if($skill->level == 0)
-
+                  <tr>
+                    <td><i class="fa fa-book"></i> {{ $skill->typeName }}</td>
+                    <td class="text-right">
+                      @if($skill->trained_skill_level == 0)
                         <i class="fa fa-star-o"></i>
-
-                      @elseif($skill->level == 5)
-
+                      @elseif($skill->trained_skill_level == 5)
                         <span class="text-green">
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                        </span>
-
-                      @else
-
-                        @for ($i=0; $i < $skill->level ; $i++)
-
-                          <i class="fa fa-star"></i>
-
-                        @endfor
-
-                      @endif
-
-                      | {{ $skill->level }}
+                      @for($i = 1; $i <= 5; $i++)
+                            <i class="fa fa-star"></i>
+                          @endfor
                     </span>
-                  </li>
-
+                      @else
+                        @for($i = 1;  $i <= $skill->trained_skill_level; $i++)
+                          <i class="fa fa-star"></i>
+                        @endfor
+                      @endif
+                      | {{ $skill->trained_skill_level }}
+                    </td>
+                  </tr>
                 @endforeach
-
-              </ul>
+              </table>
             </div><!-- /.box-body -->
             <div class="box-footer">
-              {{ number($skills->where('groupID', $skill_group->groupID)->sum('skillpoints'), 0) }}
+              {{ number($skills->where('groupID', $skill_group->groupID)->sum('skillpoints_in_skill'), 0) }}
               total skillpoints
             </div>
           </div>
@@ -104,37 +96,47 @@
       @endforeach
 
     </div>
+    <div class="panel-footer clearfix">
+      <span class="pull-left">
+        {{ number($skills->sum('skillpoints_in_skill'), 0) }} total skillpoints
+      </span>
+      <span class="pull-right">
+        {{ number(count($skills), 0) }} skills
+      </span>
+    </div>
   </div>
 
 @stop
 
 @push('javascript')
-<script>
+  <script>
 
-  $.get("{{ route('character.view.skills.graph.level', ['character_id' => $request->character_id]) }}", function (data) {
-    new Chart($("canvas#skills-level"), {
-      type: 'pie',
-      data: data
+    $.get("{{ route('character.view.skills.graph.level', ['character_id' => $request->character_id]) }}", function (data) {
+      new Chart($("canvas#skills-level"), {
+        type: 'pie',
+        data: data
+      });
     });
-  });
 
-  $.get("{{ route('character.view.skills.graph.coverage', ['character_id' => $request->character_id]) }}", function (data) {
-    new Chart($('canvas#skills-coverage'), {
-      type   : 'radar',
-      data   : data,
-      options: {
-        scale : {
-          ticks: {
-            beginAtZero: true,
-            max        : 100
+    $.get("{{ route('character.view.skills.graph.coverage', ['character_id' => $request->character_id]) }}", function (data) {
+      new Chart($('canvas#skills-coverage'), {
+        type   : 'radar',
+        data   : data,
+        options: {
+          scale : {
+            ticks: {
+              beginAtZero: true,
+              max        : 100
+            }
+          },
+          legend: {
+            display: false
           }
-        },
-        legend: {
-          display: false
         }
-      }
+      });
     });
-  });
 
-</script>
+    $('')
+
+  </script>
 @endpush

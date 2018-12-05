@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,7 +65,7 @@ class NewSchedule extends FormRequest
      * finally figured it out.
      * Lies! **I have no idea how it  works**, but for sanity
      * sake, here is the query that gets generated for the
-     * 'expression' uniquene with where validation:
+     * 'expression' unique with where validation:
      *
      * select count(*) as aggregate from `schedules` where
      *  `expression` = "cron_expression" and `command`

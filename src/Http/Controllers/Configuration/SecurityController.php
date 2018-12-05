@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ namespace Seat\Web\Http\Controllers\Configuration;
 
 use Seat\Services\Repositories\Configuration\SecurityRepository;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class SecurityController.
@@ -46,19 +46,19 @@ class SecurityController extends Controller
 
     /**
      * @return mixed
+     * @throws \Exception
      */
     public function getLogsData()
     {
 
         $logs = $this->getAllSecurityLogs();
 
-        return Datatables::of($logs)
+        return DataTables::of($logs)
             ->editColumn('user', function ($row) {
 
                 if ($row->user)
                     return $row->user->name;
             })
             ->make(true);
-
     }
 }

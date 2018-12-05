@@ -1,5 +1,5 @@
-@if($row->bid)
-  {{ $row->volEntered }}
+@if($row->is_buy_order)
+  {{ $row->volume_total }}
 @else
-  {{ $row->volRemaining }}/{{ $row->volEntered }}
+  {{ $row->volume_remain }} / {{ $row->volume_total }}
 @endif

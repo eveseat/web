@@ -261,7 +261,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                          aria-hidden="true">&times;</span></button>
+                      aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">{{ trans('web::seat.transfer_ownership') }}</h4>
               </div>
               <div class="modal-body">
@@ -397,22 +397,22 @@
 
 @push('javascript')
 
-<script>
+  <script>
 
-  $("#user_id").select2({
-    ajax: {
-      url     : "{{ route('support.api-key.userlist') }}",
-      dataType: 'json',
-      delay   : 250,
-      data    : function (params) {
-        return {
-          q   : params.term, // search term
-          page: params.page
-        };
-      },
-    }
-  });
+    $("#user_id").select2({
+      ajax: {
+        url     : "{{ route('support.api-key.userlist') }}",
+        dataType: 'json',
+        delay   : 250,
+        data    : function (params) {
+          return {
+            q   : params.term, // search term
+            page: params.page
+          };
+        }
+      }
+    });
 
-</script>
+  </script>
 
 @endpush

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,8 +24,7 @@ namespace Seat\Web\Http\Composers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Seat\Services\Repositories\Character\Character;
-use Seat\Services\Repositories\Character\Info;
+use Seat\Services\Repositories\Configuration\UserRespository;
 
 /**
  * Class CharacterSummary.
@@ -33,8 +32,7 @@ use Seat\Services\Repositories\Character\Info;
  */
 class CharacterSummary
 {
-    use Character;
-    use Info;
+    use UserRespository;
 
     /**
      * @var \Illuminate\Http\Request
@@ -62,14 +60,11 @@ class CharacterSummary
     public function compose(View $view)
     {
 
-        $summary = $this->getCharacterInformation(
-            $this->request->character_id);
-
-        $characters = $this->getCharactersOnApiKey(
-            $summary->keyID);
+        $owner = $this->getUser($this->request->character_id);
+        $summary = $owner->character;
+        $characters = $owner->group->users;
 
         $view->with('summary', $summary);
         $view->with('characters', $characters);
-
     }
 }

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,7 +53,7 @@ class RolePermission extends FormRequest
         // role_id check
         $rules = [
             'role_id' => 'required|exists:roles,id',
-            'inverse' => 'required|nullable|in:on',
+            'inverse' => 'nullable|in:on',
         ];
 
         // Ensure that the permissions is set, if not,
@@ -75,7 +75,7 @@ class RolePermission extends FormRequest
             // 'in' constraint on the validation rules. We do this by
             // running array map on the categorized permissions and
             // appending the category to the rule to match the value
-            // the form requets would have sent.
+            // the form request would have sent.
             if (str_contains($value, '.')) {
 
                 $category = explode('.', $value)[0];

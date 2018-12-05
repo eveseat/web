@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,7 +53,7 @@ return [
     'summary'               => 'Summary',
     'quantity'              => 'Quantity',
     'volume'                => 'Volume',
-    'group'                 => 'Group',
+    'group'                 => 'Group|Groups',
     'owner'                 => 'Owner',
     'description'           => 'Description',
     'labels'                => 'Labels',
@@ -87,10 +87,11 @@ return [
     'inverse'               => 'Inverse',
     'read'                  => 'Read',
     'level'                 => 'Level',
+    'token'                 => 'Token',
 
     // Requirements
     'requirements'          => 'Requirements',
-    'requirements_message'  => 'The following list shows missing PHP extentions. Please install' .
+    'requirements_message'  => 'The following list shows missing PHP extensions. Please install' .
         ' them first before you can continue.',
     'php_version'           => 'PHP Version',
     'php_version_message'   => 'The installed version of PHP does not meet the minimum version' .
@@ -99,23 +100,23 @@ return [
     'min_version'           => 'Minimum Version',
     'admin_contact_warning' => 'An administrative contact for this install has not been set.' .
         ' No jobs will be queued because of this. Please configure it in the SeAT settings.',
-    'sso_email_warning'     => 'This profile is using an auto generated email addres due to it ' .
-        ' being an EVE SSO login. Please set a valid email address in your profile settings.',
+    'refresh_token_warning' => 'Your account does not have a valid refresh token recorded. ' .
+        'Please logout and back in to correct this as soon as possible.',
+    'sso_config_warning'    => 'SSO does not appear to have been configured yet. Only administrative ' .
+        'logins are possible.',
     'sso_activation'        => 'SSO Activation',
     'sso_confirmation'      => 'It appears you already own an account. Please confirm your credentials in order to enable SSO.',
 
     // Auth
     'failed'                => 'These credentials do not match our records.',
     'throttle'              => 'Too many login attempts. Please try again in :seconds seconds.',
-    'login_welcome'         => 'Welcome, please enter your credentials.',
+    'login_welcome'         => 'Welcome, please login using EVE Online SSO',
     'remember_me'           => 'Remember me',
     'password'              => 'Password',
     'password_again'        => 'Password Again',
     'forgot'                => 'I forgot my password',
     'register'              => 'Register a new membership',
     'sign_in'               => 'Sign In',
-    'mfa_welcome'           => 'Please enter an Authentication Code to proceed.',
-    'mfa'                   => 'Multifactor Auth',
     'email_verify'          => 'Email Verification',
     'email_verify_welcome'  => 'Please enter a valid email address for your account.',
 
@@ -128,7 +129,7 @@ return [
 
     // Passwords
     'password_reset'        => 'Password Reset',
-    'reset_welcome'         => 'Please enter the email address for the account whos password should be reset.',
+    'reset_welcome'         => 'Please enter the email address for the account who\'s password should be reset.',
     'remember'              => 'I remember my credentials',
     'reset_topic'           => 'Reset Password',
     'reset_token_welcome'   => 'Please enter the email and new password.',
@@ -141,6 +142,9 @@ return [
     'profile'               => 'Profile',
     'sign_out'              => 'Sign Out',
     'stop_impersonation'    => 'Stop Impersonation',
+    'switch_character'      => 'Switch Character',
+    'link_character'        => 'Link Character',
+    'characters_in_group'   => 'Character in group|Characters in group',
 
     // Notifications
     'error'                 => 'Error',
@@ -170,14 +174,18 @@ return [
     'search'                => 'Search',
     'main_menu'             => 'Main Menu',
     'security'              => 'Security',
+    'sso'                   => 'Single Sign-on',
     'tracking'              => 'Tracking',
     'worker_constraints'    => 'Worker Constraints',
 
     'assets'                      => 'Assets',
+    'location_flag'               => 'Location Flag',
     'calendar'                    => 'Calendar',
     'channels'                    => 'Channels',
     'contacts'                    => 'Contacts',
     'contracts'                   => 'Contracts',
+    'fittings'                    => 'Fittings',
+    'fitting_items'               => 'Fitting Items',
     'industry'                    => 'Industry',
     'intel'                       => 'Intel',
     'killmails'                   => 'Killmails',
@@ -189,6 +197,7 @@ return [
     'sheet'                       => 'Sheet',
     'skills'                      => 'Skills',
     'standings'                   => 'Standings',
+    'wallet'                      => 'Wallet',
     'wallet_journal'              => 'Wallet Journal',
     'wallet_transactions'         => 'Wallet Transactions',
 
@@ -199,10 +208,13 @@ return [
     'owned_api_keys'              => 'Owned API Keys',
     'total_character_isk'         => 'Total Character ISK',
     'total_character_skillpoints' => 'Total Character Skillpoints',
+    'total_character_mined_isk'   => 'Total Mined ISK',
     'total_killmails'             => 'Total Killmails',
     'main_char_skills'            => ':character_name\'s Skills',
     'main_char_skills_per_level'  => 'Skills Per Level',
     'main_char_skills_coverage'   => 'Skills Coverage (in percent)',
+    'concurrent_player_count'     => 'Concurrent Player Count',
+    'esi_response_time'           => 'ESI Response Times',
 
     // Api Keys
     'api_key_add'                 => 'Add a New API Key',
@@ -233,7 +245,7 @@ return [
     'transfer'                    => 'Transfer',
     'mask_map_fail'               => 'Unable to load the Access Mask map',
     'recent_jobs'                 => 'Recent Jobs',
-    'scope'                       => 'Scope',
+    'scope'                       => 'Scope|Scopes',
     'api_all'                     => 'All API Keys',
     'reveal'                      => 'Reveal',
     'add_success'                 => 'Api Key Successfully Added. Update Job :jobid Dispatched',
@@ -274,12 +286,17 @@ return [
     'add_affiliations'            => 'Add Affiliations',
     'current_affiliations'        => 'Current Affiliations',
     'available_users'             => 'Available Users',
+    'available_groups'            => 'Available Group|Available Groups',
     'add_user'                    => 'Add User|Add Users',
+    'add_group'                   => 'Add Group|Add Groups',
     'current_users'               => 'Current Users',
+    'current_groups'              => 'Current Group|Current Groups',
     'select_item_add'             => 'Select a Item to Add',
     'impersonate'                 => 'Impersonate',
     'edit_user'                   => 'Edit User',
     'activate_user'               => 'Activate User',
+    'reassign_user'               => 'Reassign User',
+    'reassign'                    => 'Reassign',
     'deactivate_user'             => 'Deactivate User',
     'account_status_change'       => 'The account status has been changed',
     'user_agent'                  => 'User Agent String',
@@ -302,6 +319,10 @@ return [
     'user_removed'                 => 'User has been removed from this role',
     'affiliations_added'           => 'Affiliations were added to this role',
     'affiliation_removed'          => 'Affiliation has been removed from this role',
+
+    // Tokens
+    'valid_token'                  => 'Valid Token',
+    'invalid_token'                => 'Invalid Token',
 
     // Import
     'api_import_title'             => 'Import Eve Online API Keys',
@@ -352,6 +373,11 @@ return [
     'min_corporation_access_mask'  => 'Minimum Required Corporation Access Mask',
     'force_min_mask'               => 'Force Min. Access Mask',
     'registration'                 => 'Registration',
+    'maintenance'                  => 'Maintenance',
+    'cleanup_data'                 => 'Cleanup Stale Data',
+    'cleanup_data_help'            => 'When configured to cleanup stale data, the SeAT maintenance job ' .
+        'will delete stale data such as users and corporations without valid users from this ' .
+        'instance.',
     'single_signon'                => 'Eve Online Single Signon',
     'admin_warn_sso'               => 'Double check you EVE_CLIENT_ID, EVE_CLIENT_SECRET and EVE_CALLBACK_URL' .
         ' values in the .env file as they may be empty or invalid. SSO can fail because of this!',
@@ -370,6 +396,53 @@ return [
     'tracking_help'                => 'Before disabling the usage tracking, please refer to the below' .
         ' document first.',
     'worker'                       => 'Worker|Workers',
+    'queue_worker'                 => 'Queue Worker|Queue Workers',
+    'queue_worker_help'            => 'The number of workers to spawn for the background queue workers. ' .
+        'Note: Spawning too many workers may slow down the overall updating process due to load.',
+    'horizon_restart'              => 'Remember to terminate horizon for the new worker amount to take effect. ' .
+        ' It should start back up again automatically.',
+
+    // SSO Settings
+    'sso_scopes'                   => 'SSO Scopes',
+    'available_scopes'             => 'Available SSO Scopes',
+    'enable_all'                   => 'Enable All',
+    'remove_all'                   => 'Remove All',
+    'update_sso_scopes'            => 'Update SSO Scopes',
+    'current_configuration_status' => 'Current SSO Configuration',
+    'client_id_status'             => 'Client ID Status',
+    'client_id_ok'                 => 'Client ID OK',
+    'client_id_not_ok'             => 'Client ID Not OK. Check .env file',
+    'client_secret_status'         => 'Client Secret Status',
+    'client_secret_ok'             => 'Client Secret OK',
+    'client_secret_not_ok'         => 'Client Secret not OK. Check .env file',
+    'callback_url_status'          => 'Callback URL Status',
+    'callback_url_ok'              => 'Callback URL OK as :url',
+    'callback_maybe_wrong'         => 'Callback URL set but might be incorrect. Currently set as :current ' .
+        'and should maybe be :suggested',
+    'client_callback_not_ok'       => 'Callback URL not set. Check .env and set as :url',
+
+    // Updaters
+    'update_dispatched'            => 'Update job has successfully been dispatched. Please check back again ' .
+        'in a few moments.',
+    'update_failed'                => 'Update job dispatching failed. Please contact your SeAT administrator.',
+    'update_skill_queue'           => 'Update Skill Queue',
+    'update_assets'                => 'Update Assets',
+    'update_bookmarks'             => 'Update Bookmarks',
+    'update_calendar'              => 'Update Calendar',
+    'update_contacts'              => 'Update Contacts',
+    'update_contracts'             => 'Update Contracts',
+    'update_corp_history'          => 'Update Employment History',
+    'update_fittings'              => 'Update Fittings',
+    'update_industry'              => 'Update Industry Jobs',
+    'update_killmails'             => 'Update Killmails',
+    'update_mail'                  => 'Update Mail',
+    'update_market'                => 'Update Market',
+    'update_mining'                => 'Update Mining Ledger',
+    'update_notifications'         => 'Update Notifications',
+    'update_pi'                    => 'Update Planetary Interaction',
+    'update_research'              => 'Update Agents Research',
+    'update_skills'              => 'Update Skills',
+    'update_wallet'              => 'Update Wallet',
 
     // Character
     'joined_curr_corp'             => 'Joined Current Corporation',
@@ -384,6 +457,7 @@ return [
     'neutral_standings'            => 'Neutral Standings',
     'negative_standings'           => 'Negative Standings',
     'start'                        => 'Start',
+    'end'                          => 'End',
     'installer'                    => 'Installer',
     'system'                       => 'System',
     'activity'                     => 'Activity',
@@ -398,10 +472,13 @@ return [
     'amount'                       => 'Amount',
     'balance'                      => 'Balance',
     'corporation_name'             => 'Corporation Name',
+    'character_name'               => 'Character Name',
     'from'                         => 'From',
     'subject'                      => 'Subject',
     'to'                           => 'To',
-    'to_corp_alliance'             => 'To Corporation / Alliance',
+    'to_corp'                      => 'To Corporation',
+    'missing_body'                 => 'Message Body not yet downloaded',
+    'to_alliance'                  => 'To Alliance',
     'to_char'                      => 'To Characters',
     'total'                        => 'Total',
     'updated'                      => 'Updated At',
@@ -423,13 +500,20 @@ return [
     'logon_count'                  => 'Logon Count',
     'online_time'                  => 'Online Time',
     'jump_fatigue'                 => 'Jump Fatigue',
-    'jump_clones'                  => 'Jump Clones',
-    'jump_act_timer'               => 'Jump Activiation Timer',
+    'jump_clones'                  => 'Jump Clone|Jump Clones',
+    'jump_act_timer'               => 'Jump Activation Timer',
     'no_jump_clones'               => 'No Jump Clones',
-    'implants'                     => 'Implants',
+    'implants'                     => 'Implant|Implants',
     'no_implants'                  => 'No Implants',
     'employment_history'           => 'Employment History',
-    'corporation_titles'           => 'Corporation Titles',
+    'no_employment_information'    => 'No employment information',
+    'corporation_titles'           => 'Corporation Title|Corporation Titles',
+    'no_corporation_titles'        => 'No corporation titles',
+    'attribute'                    => 'Attribute|Attributes',
+    'value'                        => 'Value|Values',
+    'bonus_remaps'                 => 'Bonus Remaps',
+    'last_remap_date'              => 'Last Remap Date',
+    'accrued_remap_cooldown_date'  => 'Accured Remap Cooldown Date',
     'item_type'                    => 'Item Type',
     'client_name'                  => 'Client Name',
     'client'                       => 'Client',
@@ -443,6 +527,7 @@ return [
     'folder'                       => 'Folder',
     'skills_graph'                 => 'Skills Graph',
     'contract_items'               => 'Contract Items',
+    'progress'                     => 'Progress',
 
     // Character Intel
     'loading_journal'              => 'Loading Journal Entries ...',
@@ -467,6 +552,8 @@ return [
     'unknown_corporation'          => 'Unknown Corporation. Is the API Key on record and updated?',
     'created_by'                   => 'Created By',
     'starbase'                     => 'Starbase|Starbases',
+    'structure'                    => 'Structure|Structures',
+    'reinforce_week_hour'          => 'Reinf. Week/Hour',
     'state'                        => 'State',
     'fuel_level'                   => 'Fuel Level',
     'offline'                      => 'Offline Est.',
@@ -474,7 +561,7 @@ return [
     'onlined_at'                   => 'Onlined At',
     'moon'                         => 'Moon',
     'use_standings_from'           => 'Use Standings From',
-    'attack_on_agression'          => 'Attack On Agression',
+    'attack_on_agression'          => 'Attack On Aggression',
     'attack_on_war'                => 'Attack On War',
     'corp_member_access'           => 'Corp Member Access',
     'alliance_member_access'       => 'Alliance Member Access',
@@ -497,6 +584,14 @@ return [
     'standing_level'               => 'Standing Level',
     'tax_alliance_corp'            => 'Tax: Alliance/Corp',
     'tax_standings'                => 'Tax: Standings',
+    'no_storage'                   => 'There is no storage',
+    'member'                       => 'Member|Members',
+
+    // Mining Ledger
+    'mining'                       => 'Mining',
+    'mining_ledger'                => 'Ledger|Ledgers',
+    'available_ledger'             => 'Available Ledger|Available Ledgers',
+    'ore'                          => 'Ore',
 
     // Profile
     'user_profile'                 => 'User Profile',
@@ -504,7 +599,6 @@ return [
     'user_account'                 => 'User Account',
     'account_settings'             => 'Account Settings',
     'upgrade_sso'                  => 'Upgrade to EVE Online SSO Account',
-    'change_password'              => 'Change Password',
     'change_email'                 => 'Change Email',
     'superuser'                    => 'Superuser',
     'user_interface'               => 'User Interface',
@@ -515,21 +609,16 @@ return [
     'mail_as_threads'              => 'View Mail as Threads',
     'number_format'                => 'Number Format',
     'current_format'               => 'Current Format',
-    'thousands_seperator'          => 'Thousands Seperator',
-    'decimal_seperator'            => 'Decimal Seperator',
+    'thousands_seperator'          => 'Thousands Separator',
+    'decimal_seperator'            => 'Decimal Separator',
     'email_notifications'          => 'Email Notifications',
-    'require_mfa'                  => 'Require MFA',
     'setup_token_now'              => 'Setup Token Now',
     'owned_keys'                   => 'Owned Keys',
     'account_help'                 => 'For any account related enquiries, including permissions amendments, ' .
         'please contact the SeAT administrator.',
-    'current_password'             => 'Current Password',
-    'new_password'                 => 'New Password',
-    'confirm_new_password'         => 'Confirm New Password',
     'current_email'                => 'Current Email',
     'new_email'                    => 'New Email',
     'confirm_new_email'            => 'Confirm New Email',
-    'mfa_setup'                    => 'Multifactor Authentication Setup',
     'scan_qr'                      => 'Scan QR Code',
     'scan_qr_help1'                => 'Please scan the below QR code with your authenticator application.',
     'scan_qr_help2'                => 'Each time this page loads, a new token and qr code is generated.',
@@ -541,6 +630,11 @@ return [
         'by your authentication application.',
     'code'                         => 'Code',
     'confirm_setup'                => 'Confirm Setup',
+    'linked_characters'            => 'Linked Characters',
+    'link_another_character'       => 'Link another character',
+    'view_third_party_access'      => 'View Apps on Eveonline.com',
+    'third_party_access'           => 'Check the access third party applications (such as this one) have to ' .
+        'your EVE Online account regularly.',
 
     // Queue
     'queue_manage'                 => 'Queue Management',

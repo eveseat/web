@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,26 +27,6 @@ return [
         'icon'          => 'fa-home',
         'route_segment' => 'home',
         'route'         => 'home',
-    ],
-    'api-key'     => [
-        'name'          => 'api key management',
-        'label'         => 'web::seat.api_key_management',
-        'icon'          => 'fa-key',
-        'route_segment' => 'api-key',
-        'entries'       => [
-            [   // Add Api Key
-                'name'  => 'add api key',
-                'label' => 'web::seat.add_api_key',
-                'icon'  => 'fa-plus',
-                'route' => 'api.key',
-            ],
-            [
-                'name'  => 'list keys',
-                'label' => 'web::seat.list_keys',
-                'icon'  => 'fa-list',
-                'route' => 'api.key.list',
-            ],
-        ],
     ],
     'corporation' => [
         'name'          => 'corporation',
@@ -98,12 +78,6 @@ return [
                 'icon'  => 'fa-shield',
                 'route' => 'configuration.access.roles',
             ],
-            [   // Import
-                'name'  => 'import',
-                'label' => 'web::seat.import',
-                'icon'  => 'fa-upload',
-                'route' => 'configuration.import.list',
-            ],
             [   // Users
                 'name'   => 'user',
                 'plural' => true,
@@ -117,6 +91,12 @@ return [
                 'icon'  => 'fa-clock-o',
                 'route' => 'configuration.schedule',
             ],
+            [   // Sso
+                'name'  => 'sso',
+                'label' => 'web::seat.sso',
+                'icon'  => 'fa-user-circle',
+                'route' => 'configuration.sso',
+            ],
             [   // SeAT Setting
                 'name'  => 'settings',
                 'label' => 'web::seat.settings',
@@ -129,13 +109,6 @@ return [
                 'icon'  => 'fa-list',
                 'route' => 'configuration.security.logs',
             ],
-            [   // Workers
-                'name'   => 'workers',
-                'label'  => 'web::seat.worker_constraints',
-                'plural' => true,
-                'icon'   => 'fa-truck',
-                'route'  => 'workers.constraints.list',
-            ],
         ],
     ],
     'tools'       => [
@@ -144,12 +117,6 @@ return [
         'icon'          => 'fa-wrench',
         'route_segment' => 'tools',
         'entries'       => [
-            [
-                'name'  => 'people groups',
-                'label' => 'web::seat.people_groups',
-                'icon'  => 'fa-group',
-                'route' => 'people.list',
-            ],
             [
                 'name'  => 'standing profiles',
                 'label' => 'web::seat.standings_builder',

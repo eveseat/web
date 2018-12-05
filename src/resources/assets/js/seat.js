@@ -43,6 +43,9 @@ $(document).ready(function () {
 // Enable bootstrap popovers
 $("[data-toggle=popover]").popover();
 
+// Enable bootstrap tooltips
+$("[data-toggle=tooltip]").tooltip();
+
 // Initialize DataTables on <table> tags
 // with the 'datatable' class.
 //
@@ -58,7 +61,7 @@ $(document).ready(function () {
 $.extend(true, $.fn.dataTable.defaults, {
     responsive: true,
     autoWidth: false,
-    order: [[0, 'desc']],
+    order: [[0, 'desc']]
 });
 
 // Helper function to mimic the PHP human_readable method

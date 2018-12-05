@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,14 +25,14 @@ Route::get('/', [
     'uses' => 'UserController@getAll',
 ]);
 
-Route::post('/add', [
-    'as'   => 'configuration.access.users.add',
-    'uses' => 'UserController@addUser',
-]);
-
 Route::post('/update', [
     'as'   => 'configuration.access.users.update',
     'uses' => 'UserController@updateUser',
+]);
+
+Route::post('/reassign', [
+    'as'   => 'configuration.access.users.reassign',
+    'uses' => 'UserController@postReassignuser',
 ]);
 
 Route::get('/delete/{user_id}', [
