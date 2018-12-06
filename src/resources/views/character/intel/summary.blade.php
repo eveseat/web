@@ -77,29 +77,35 @@
 
 <script>
 
-  $(function () {
-    $('table#character-top-journal-interactions').DataTable({
+
+    var character_top_journal = $('table#character-top-journal-interactions').DataTable({
       processing      : true,
       serverSide      : true,
       searching       : false,
       ordering        : false,
-      ajax            : '{{ route('character.view.intel.summary.journal.data', ['character_id' => $request->character_id]) }}',
+      ajax            : {
+        url: '{{ route('character.view.intel.summary.journal.data', ['character_id' => $request->character_id]) }}'
+      },
       columns         : [
         {data: 'total', name: 'total', searchable: false},
         {data: 'ref_type', name: 'ref_type'},
         {data: 'character', name: 'first_party.name'},
         {data: 'corporation', name: 'corporation_id'},
-        {data: 'alliance', name: 'alliance_id'},
-        {data: 'button'}
+        {data: 'alliance', name: 'alliance_id'}
       ],
       drawCallback : function () {
 
         $('img').unveil(100);
         ids_to_names();
 
+      },
+      createdRow: function (row, data) {
+        if (data.is_in_group === '1') {
+          $(row).addClass('info')
+        }
       }
     });
-  });
+
 
   $(function () {
     $('table#character-top-transaction-interactions').DataTable({

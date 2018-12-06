@@ -33,6 +33,7 @@ use Seat\Services\Repositories\Character\Intel;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\NewIntelNote;
 use Seat\Web\Http\Validation\UpdateIntelNote;
+use Seat\Web\Models\User;
 use Yajra\DataTables\DataTables;
 
 /**
@@ -70,6 +71,12 @@ class IntelController extends Controller
     {
 
         $top = $this->characterTopWalletJournalInteractions($character_id);
+
+        $user_group = User::find($character_id)->group->users
+            ->filter(function ($user) {
+                return $user->name !== 'admin' && $user->id !== 1;
+            })
+            ->pluck('id');
 
         return DataTables::of($top)
             ->editColumn('ref_type', function ($row) {
@@ -142,8 +149,11 @@ class IntelController extends Controller
 
                 return view('web::partials.alliance', compact('alliance', 'character_id'));
             })
-            ->addColumn('button', function ($row){
+            /*TODO: ->addColumn('button', function ($row){
                 return view('web::character.intel.partials.topwalletjournalinteractionsbutton', compact('row'));
+            })*/
+            ->addColumn('is_in_group', function ($row) use ($user_group) {
+                return in_array($row->first_party_id, $user_group->toArray()) && in_array($row->second_party_id, $user_group->toArray());
             })
             ->rawColumns(['character', 'corporation', 'alliance', 'button'])
             ->make(true);
