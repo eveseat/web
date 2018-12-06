@@ -168,7 +168,6 @@ class WalletController extends Controller
         if (request('all_linked_characters') === 'true')
             $character_ids = $user_group;
 
-
         $transactions = $this->getCharacterWalletTransactions($character_ids);
 
         return DataTables::of($transactions)
