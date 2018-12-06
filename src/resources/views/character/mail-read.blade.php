@@ -11,10 +11,7 @@
   </li>
   <li>
     <b>From:</b>
-    <a href="{{ route('character.view.sheet', ['character_id' => $message->from]) }}">
-      {!! img('character', $message->from, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-      <span class="id-to-name" data-id="{{ $message->from }}">{{ trans('web::seat.unknown') }}</span>
-    </a>
+    @include('web::partials.character', ['character' => $from, 'character_id' => $message->character_id])
   </li>
 
   @if($message->recipients->where('recipient_type', 'alliance')->count() > 0)
@@ -30,10 +27,8 @@
   @if($message->recipients->where('recipient_type', 'corporation')->count() > 0)
     <li>
       <b>To Corporation:</b>
-      @foreach($message->recipients->where('recipient_type', 'corporation') as $corporation)
-        {!! img('corporation', $corporation->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-        <span class="id-to-name"
-              data-id="{{ $corporation->recipient_id }}">{{ trans('web::seat.unknown') }}</span>
+      @foreach($corporations as $corporation)
+        @include('web::partials.corporation', ['corporation' => $corporation, 'character_id' => $message->character_id])
       @endforeach
     </li>
   @endif
@@ -41,15 +36,9 @@
   @if($message->recipients->where('recipient_type', 'character')->count() > 0)
     <li>
       <b>To Characters:</b>
-
-      @foreach($message->recipients->where('recipient_type', 'character') as $character)
-        <a href="{{ route('character.view.sheet', ['character_id' => $character->recipient_id]) }}">
-          {!! img('character', $character->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-          <span class="id-to-name"
-                data-id="{{ $character->recipient_id }}">{{ trans('web::seat.unknown') }}</span>
-        </a>
+      @foreach($characters as $character)
+        @include('web::partials.character', ['character' => $character, 'character_id' => $message->character_id])
       @endforeach
-
     </li>
   @endif
 

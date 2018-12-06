@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Character\Mail;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\User;
@@ -114,7 +115,25 @@ class MailController extends Controller
 
         $message = $this->getCharacterMailMessage($character_id, $message_id);
 
-        return view('web::character.mail-read', compact('message'))
+        $from = CharacterInfo::find($message->from) ?: $message->from;
+
+        $characters = $message
+            ->recipients
+            ->where('recipient_type', 'character')
+            ->map(function ($recipient){
+
+                return CharacterInfo::find($recipient->recipient_id) ?: $recipient->recipient_id;
+            });
+
+        $corporations = $message
+            ->recipients
+            ->where('recipient_type', 'corporation')
+            ->map(function ($recipient){
+
+                return CorporationInfo::find($recipient->recipient_id) ?: $recipient->recipient_id;
+            });
+
+        return view('web::character.mail-read', compact('message', 'from', 'characters', 'corporations'))
             ->render();
 
     }
