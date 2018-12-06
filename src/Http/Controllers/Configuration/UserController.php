@@ -46,7 +46,7 @@ class UserController extends Controller
     public function getAll()
     {
 
-        if(! request()->ajax())
+        if (! request()->ajax())
             return view('web::configuration.users.list');
 
         $groups = $this->getAllFullUsers();
@@ -65,7 +65,7 @@ class UserController extends Controller
                 return human_diff($row->last_login);
             })
             ->editColumn('email', function ($row) {
-                if(empty($row->email))
+                if (empty($row->email))
                     return trans('web::seat.no_email');
 
                 return $row->email;
