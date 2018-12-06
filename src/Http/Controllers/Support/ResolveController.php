@@ -27,6 +27,7 @@ use Illuminate\Support\Collection;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Sde\ChrFaction;
+use Seat\Eveapi\Models\Universe\UniverseName;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\User;
 
@@ -106,6 +107,11 @@ class ResolveController extends Controller
             })
             ->pipe(function ($collection) {
                 return $collection->when($collection->isNotEmpty(), function ($ids) {
+                    return $this->resolveInternalUniverseIDs($ids);
+                });
+            })
+            ->pipe(function ($collection) {
+                return $collection->when($collection->isNotEmpty(), function ($ids) {
                     return $this->resolveInternalCharacterIDs($ids);
                 });
             })
@@ -128,7 +134,15 @@ class ResolveController extends Controller
         return response()->json($this->response);
     }
 
-    private function resolveFactionIDs($ids)
+    /**
+     * Resolve received sets of ids with the help of chrFactions table
+     * map the resolved names, cache the results and return unresolved ids.
+     *
+     * @param \Illuminate\Support\Collection $ids
+     *
+     * @return \Illuminate\Support\Collection collection of ids that were unable to be resolved within this function
+     */
+    private function resolveFactionIDs(Collection $ids)
     {
 
         // universe resolver is not working on factions at this time
@@ -140,13 +154,47 @@ class ResolveController extends Controller
                 return collect([
                     'id' => $faction->factionID,
                     'name' => $faction->factionName,
+                    'category' => 'faction',
                 ]);
             });
 
         return $this->cacheIDsAndReturnUnresolvedIDs($names, $ids);
     }
 
-    private function resolveInternalCharacterIDs($ids)
+    /**
+     * Resolve received sets of ids with the help of universe_names table
+     * map the resolved names, cache the results and return unresolved ids.
+     *
+     * @param \Illuminate\Support\Collection $ids
+     *
+     * @return \Illuminate\Support\Collection collection of ids that were unable to be resolved within this function
+     */
+    private function resolveInternalUniverseIDs(Collection $ids)
+    {
+        // resolve names that are already in SeAT
+        // no unnecessary api calls the request can be resolved internally.
+        $names = UniverseName::whereIn('entity_id', $ids->flatten()->toArray())
+            ->get()
+            ->map(function ($entity) {
+                return collect([
+                    'id' => $entity->entity_id,
+                    'name' => $entity->name,
+                    'category' =>$entity->category,
+                ]);
+            });
+
+        return $this->cacheIDsAndReturnUnresolvedIDs($names, $ids);
+    }
+
+    /**
+     * Resolve received sets of ids with the help of character_infos table
+     * map the resolved names, cache the results and return unresolved ids.
+     *
+     * @param \Illuminate\Support\Collection $ids
+     *
+     * @return \Illuminate\Support\Collection collection of ids that were unable to be resolved within this function
+     */
+    private function resolveInternalCharacterIDs(Collection $ids)
     {
 
         // resolve names that are already in SeAT
@@ -157,13 +205,22 @@ class ResolveController extends Controller
                 return collect([
                     'id' => $character->character_id,
                     'name' => $character->name,
+                    'category' => 'character',
                 ]);
             });
 
         return $this->cacheIDsAndReturnUnresolvedIDs($names, $ids);
     }
 
-    private function resolveInternalCorporationIDs($ids)
+    /**
+     * Resolve received sets of ids with the help of corporation_infos table
+     * map the resolved names, cache the results and return unresolved ids.
+     *
+     * @param \Illuminate\Support\Collection $ids
+     *
+     * @return \Illuminate\Support\Collection collection of ids that were unable to be resolved within this function
+     */
+    private function resolveInternalCorporationIDs(Collection $ids)
     {
 
         // resolve names that are already in SeAT
@@ -174,13 +231,23 @@ class ResolveController extends Controller
                 return collect([
                     'id' => $corporation->corporation_id,
                     'name' => $corporation->name,
+                    'category' => 'corporation',
                 ]);
             });
 
         return $this->cacheIDsAndReturnUnresolvedIDs($names, $ids);
     }
 
-    private function resolveIDsfromESI($ids, $eseye)
+    /**
+     * Resolve given set of ids with the help of eseye client and ESI
+     * using a boolean algorithm if one of the ids in the collection of ids
+     * is invalid.
+     * If name could be resolved, save the name to universe_names table.
+     *
+     * @param \Illuminate\Support\Collection $ids
+     * @param                                $eseye
+     */
+    private function resolveIDsfromESI(Collection $ids, $eseye)
     {
 
         // Finally, grab outstanding ids and resolve their names
@@ -196,6 +263,13 @@ class ResolveController extends Controller
                 // Cache the name resolution for this id for a long time.
                 cache([$this->prefix . $name->id => $name->name], carbon()->addCentury());
                 $this->response[$name->id] = $name->name;
+
+                UniverseName::firstOrCreate([
+                    'entity_id' => $name->id,
+                ], [
+                    'name'      => $name->name,
+                    'category'  => $name->category,
+                ]);
 
             });
 
@@ -222,10 +296,12 @@ class ResolveController extends Controller
     }
 
     /**
-     * @param \Illuminate\Support\Collection $names
+     * Cache and save resolved IDs. Return unresolved collection of ids.
+     *
+     * @param \Illuminate\Support\Collection $names resolved names
      * @param \Illuminate\Support\Collection $ids
      *
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Support\Collection unresolved collection of ids
      */
     private function cacheIDsAndReturnUnresolvedIDs(Collection $names, Collection $ids) : Collection
     {
@@ -234,6 +310,15 @@ class ResolveController extends Controller
             cache([$this->prefix . $name['id'] => $name['name']], carbon()->addCentury());
             $this->response[$name['id']] = $name['name'];
 
+            // Faction is not allowed in UniverseNames table
+            if($name['category'] !== 'faction') {
+                UniverseName::firstOrCreate([
+                    'entity_id' => $name['id'],
+                ], [
+                    'name'      => $name['name'],
+                    'category'  => $name['category'],
+                ]);
+            }
         });
 
         $ids = $ids->filter(function ($id) use ($names) {
