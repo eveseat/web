@@ -58,13 +58,13 @@ class ContractsController extends Controller
      */
     public function getContractsData(int $character_id)
     {
-        if(! request()->ajax())
+        if (! request()->ajax())
             return view('web::character.contacts');
 
-        if(! request()->has('all_linked_characters'))
+        if (! request()->has('all_linked_characters'))
             return response('required url parameter is missing!', 400);
 
-        if(request('all_linked_characters') === 'false')
+        if (request('all_linked_characters') === 'false')
             $character_ids = collect($character_id);
 
         $user_group = User::find($character_id)->group->users
@@ -74,7 +74,7 @@ class ContractsController extends Controller
             })
             ->pluck('id');
 
-        if(request('all_linked_characters') === 'true')
+        if (request('all_linked_characters') === 'true')
             $character_ids = $user_group;
 
         $contracts = $this->getCharacterContracts($character_ids);
@@ -84,7 +84,7 @@ class ContractsController extends Controller
 
                 $character_id = $row->character_id;
 
-                if($row->for_corporation){
+                if ($row->for_corporation){
 
                     $corporation = CorporationInfo::find($row->issuer_corporation_id) ?: $row->issuer_corporation_id;
                     $character = CharacterInfo::find($row->issuer_id) ?: $row->issuer_id;
@@ -100,18 +100,18 @@ class ContractsController extends Controller
             })
             ->editColumn('assignee_id', function ($row) {
 
-                if($row->assignee_id === 0)
+                if ($row->assignee_id === 0)
                     return  trans('web::seat.public');
 
                 $character_id = $row->character_id;
                 $character = CharacterInfo::find($row->assignee_id) ?: null;
 
-                if(! is_null($character))
+                if (! is_null($character))
                     return view('web::partials.character', compact('character', 'character_id'));
 
                 $corporation = CorporationInfo::find($row->assignee_id) ?: null;
 
-                if(! is_null($corporation))
+                if (! is_null($corporation))
                     return view('web::partials.corporation', compact('corporation', 'character_id'));
 
                 return view('web::partials.unknown', [
@@ -122,18 +122,18 @@ class ContractsController extends Controller
             })
             ->editColumn('acceptor_id', function ($row) {
 
-                if($row->acceptor_id === 0)
+                if ($row->acceptor_id === 0)
                     return '';
 
                 $character_id = $row->character_id;
                 $character = CharacterInfo::find($row->acceptor_id) ?: null;
 
-                if(! is_null($character))
+                if (! is_null($character))
                     return view('web::partials.character', compact('character', 'character_id'));
 
                 $corporation = CorporationInfo::find($row->acceptor_id) ?: null;
 
-                if(! is_null($corporation))
+                if (! is_null($corporation))
                     return view('web::partials.corporation', compact('corporation', 'character_id'));
 
                 return view('web::partials.unknown', [
@@ -175,20 +175,44 @@ class ContractsController extends Controller
                 return false;
             })
             ->filterColumn('issuer_id', function ($query, $keyword) {
-                $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($resolved_id) { return $resolved_id->id; });
-                $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($character_info) { return $character_info->character_id; });
+                $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')
+                    ->get()
+                    ->map(function ($resolved_id) {
+                        return $resolved_id->id;
+                    });
+                $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')
+                    ->get()
+                    ->map(function ($character_info) {
+                        return $character_info->character_id;
+                    });
 
                 $query->whereIn('a.assignee_id', array_merge($resolved_ids->toArray(), $character_info_ids->toArray()));
             })
             ->filterColumn('assignee_id', function ($query, $keyword) {
-                $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($resolved_id) { return $resolved_id->id; });
-                $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($character_info) { return $character_info->character_id; });
+                $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')
+                    ->get()
+                    ->map(function ($resolved_id) {
+                        return $resolved_id->id;
+                    });
+                $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')
+                    ->get()
+                    ->map(function ($character_info) {
+                        return $character_info->character_id;
+                    });
 
                 $query->whereIn('a.assignee_id', array_merge($resolved_ids->toArray(), $character_info_ids->toArray()));
             })
             ->filterColumn('acceptor_id', function ($query, $keyword) {
-                $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($resolved_id) { return $resolved_id->id; });
-                $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($character_info) { return $character_info->character_id; });
+                $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')
+                    ->get()
+                    ->map(function ($resolved_id) {
+                        return $resolved_id->id;
+                    });
+                $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')
+                    ->get()
+                    ->map(function ($character_info) {
+                        return $character_info->character_id;
+                    });
 
                 $query->whereIn('a.acceptor_id', array_merge($resolved_ids->toArray(), $character_info_ids->toArray()));
             })
