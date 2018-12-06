@@ -139,7 +139,6 @@ class ResolveController extends Controller
      * map the resolved names, cache the results and return unresolved ids.
      *
      * @param \Illuminate\Support\Collection $ids
-     *
      * @return \Illuminate\Support\Collection collection of ids that were unable to be resolved within this function
      */
     private function resolveFactionIDs(Collection $ids)
@@ -166,7 +165,6 @@ class ResolveController extends Controller
      * map the resolved names, cache the results and return unresolved ids.
      *
      * @param \Illuminate\Support\Collection $ids
-     *
      * @return \Illuminate\Support\Collection collection of ids that were unable to be resolved within this function
      */
     private function resolveInternalUniverseIDs(Collection $ids)
@@ -191,7 +189,6 @@ class ResolveController extends Controller
      * map the resolved names, cache the results and return unresolved ids.
      *
      * @param \Illuminate\Support\Collection $ids
-     *
      * @return \Illuminate\Support\Collection collection of ids that were unable to be resolved within this function
      */
     private function resolveInternalCharacterIDs(Collection $ids)
@@ -217,7 +214,6 @@ class ResolveController extends Controller
      * map the resolved names, cache the results and return unresolved ids.
      *
      * @param \Illuminate\Support\Collection $ids
-     *
      * @return \Illuminate\Support\Collection collection of ids that were unable to be resolved within this function
      */
     private function resolveInternalCorporationIDs(Collection $ids)
@@ -330,6 +326,10 @@ class ResolveController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function resolveMainCharacter(Request $request)
     {
 
