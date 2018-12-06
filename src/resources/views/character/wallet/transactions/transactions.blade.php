@@ -15,16 +15,16 @@
           <li class="active"><a href="#" data-toggle="tab" data-characters="single">{{ trans('web::seat.wallet_transactions') }}</a></li>
           <li><a href="#" data-toggle="tab" data-characters="all">{{ trans('web::seat.linked_characters') }} {{ trans('web::seat.wallet_transactions') }}</a></li>
           @if(auth()->user()->has('character.jobs'))
-            <span class="pull-right">
+            <li class="pull-right">
               <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.wallet']) }}"
                  style="color: #000000">
                 <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_wallet') }}"></i>
               </a>
-            </span>
+            </li>
           @endif
 
         </ul>
-        <div class="panel-body">
+        <div class="tab-content">
 
           <table class="table compact table-condensed table-hover table-responsive"
                  id="character-transactions">
@@ -50,28 +50,28 @@
 
 @push('javascript')
 
-<script type="text/javascript">
+  <script type="text/javascript">
 
-  $('a[data-toggle="tab"]').on('shown.bs.tab', function () {
-    character_transactions.draw();
-  });
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function () {
+      character_transactions.draw();
+    });
 
-  function allLinkedCharacters() {
-    var character_ids = $("div.nav-tabs-custom > ul > li.active > a").data('characters');
-    return character_ids !== 'single';
-  }
+    function allLinkedCharacters() {
+      var character_ids = $("div.nav-tabs-custom > ul > li.active > a").data('characters');
+      return character_ids !== 'single';
+    }
 
 
-  var character_transactions = $('table#character-transactions').DataTable({
-      processing      : true,
-      serverSide      : true,
-      ajax            : {
-        url: '{{ route('character.view.transactions.data', ['character_id' => $request->character_id]) }}',
-        data: function ( d ) {
+    var character_transactions = $('table#character-transactions').DataTable({
+      processing  : true,
+      serverSide  : true,
+      ajax        : {
+        url : '{{ route('character.view.transactions.data', ['character_id' => $request->character_id]) }}',
+        data: function (d) {
           d.all_linked_characters = allLinkedCharacters();
         }
       },
-      columns         : [
+      columns     : [
         {data: 'date', name: 'date', render: human_readable},
         {data: 'is_buy', name: 'type.typeName'},
         {data: 'quantity', name: 'quantity'},
@@ -87,7 +87,7 @@
     });
 
 
-</script>
+  </script>
 
 @include('web::includes.javascript.id-to-name')
 
