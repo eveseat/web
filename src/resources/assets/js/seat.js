@@ -95,3 +95,23 @@ function abbreviateNumber(number){
   // format number and add suffix
   return scaled.toFixed(1) + suffix;
 }
+
+// Helper function to wrap long strings in multiple lines separated
+// str:   The string to be wrapped.
+// width: The column width (a number, default: 75)
+// brk:   The character(s) to be inserted at every break. (default: ‘n’)
+// cut:   The cut: a Boolean value (false by default). See PHP docs for more info. (http://us3.php.net/manual/en/function.wordwrap.php)
+
+function wordwrap( str, width, brk, cut ) {
+
+  brk = brk || 'n';
+  width = width || 75;
+  cut = cut || false;
+
+  if (!str) { return str; }
+
+  var regex = '.{1,' +width+ '}(\s|$)' + (cut ? '|.{' +width+ '}|.+$' : '|\S+?(\s|$)');
+
+  return str.match( RegExp(regex, 'g') ).join( brk );
+
+}
