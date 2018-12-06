@@ -54,16 +54,16 @@ class AssetsController extends Controller
      */
     public function getCharacterAssets(int $character_id)
     {
-        if(! request()->has('all_linked_characters'))
+        if (! request()->has('all_linked_characters'))
             return abort(500);
 
-        if(request('all_linked_characters') === 'false')
+        if (request('all_linked_characters') === 'false')
             $character_ids = collect($character_id);
 
-        if(request('all_linked_characters') === 'true')
+        if (request('all_linked_characters') === 'true')
             $character_ids = User::find($character_id)->group->users
                 ->filter(function ($user) {
-                    if(! $user->name === 'admin' || $user->id === 1)
+                    if (! $user->name === 'admin' || $user->id === 1)
                         return false;
 
                     return true;
@@ -74,7 +74,7 @@ class AssetsController extends Controller
 
         return DataTables::of($assets)
             ->editColumn('quantity', function ($row) {
-                if($row->content->count() < 1)
+                if ($row->content->count() < 1)
                     return number($row->quantity, 0);
             })
             ->editColumn('item', function ($row) {
@@ -84,7 +84,7 @@ class AssetsController extends Controller
                 return number_metric($row->quantity * optional($row->type)->volume ?? 0) . 'm&sup3';
             })
             ->addColumn('group', function ($row) {
-                if($row->type)
+                if ($row->type)
                     return $row->type->group->groupName;
 
                 return 'Unknown';
