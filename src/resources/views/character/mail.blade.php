@@ -7,21 +7,20 @@
 
 @section('character_content')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">
-        {{ trans('web::seat.mail') }}
-        @if(auth()->user()->has('character.jobs'))
-          <span class="pull-right">
-            <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.mail']) }}"
-               style="color: #000000">
-              <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_mail') }}"></i>
-            </a>
-          </span>
-        @endif
-      </h3>
-    </div>
-    <div class="panel-body">
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#" data-toggle="tab" data-characters="single">{{ trans('web::seat.mail') }}</a></li>
+      <li><a href="#" data-toggle="tab" data-characters="all">{{ trans('web::seat.linked_characters') }} {{ trans('web::seat.mail') }}</a></li>
+      @if(auth()->user()->has('character.jobs'))
+        <li class="pull-right">
+          <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.mail']) }}"
+             style="color: #000000">
+            <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_mail') }}"></i>
+          </a>
+        </li>
+      @endif
+    </ul>
+    <div class="tab-content">
 
       <table class="table compact table-condensed table-hover table-responsive"
              id="character-mail" data-page-length=50>
@@ -59,29 +58,39 @@
 
   <script>
 
-    $(function () {
-      $('table#character-mail').DataTable({
-        processing      : true,
-        serverSide      : true,
-        ajax            : '{{ route('character.view.mail.data', ['character_id' => $request->character_id]) }}',
-        columns         : [
-          {data: 'timestamp', name: 'timestamp', render: human_readable},
-          {data: 'from', name: 'from', searchable: false},
-          {data: 'subject', name: 'subject'},
-          {data: 'body', name: 'body.body', visible: false},
-          {data: 'tocounts', name: 'tocounts', searchable: false},
-          {data: 'read', name: 'read', searchable: false}
-        ],
-        dom             : '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
-        'fnDrawCallback': function () {
-          $(document).ready(function () {
-            $('img').unveil(100);
-
-            ids_to_names();
-          });
-        }
-      });
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function () {
+      character_mail.draw();
     });
+
+    function allLinkedCharacters() {
+      var character_ids = $("div.nav-tabs-custom > ul > li.active > a").data('characters');
+      return character_ids !== 'single';
+    }
+
+    var character_mail = $('table#character-mail').DataTable({
+      processing  : true,
+      serverSide  : true,
+      ajax        : {
+        url : '{{ route('character.view.mail.data', ['character_id' => $request->character_id]) }}',
+        data: function (d) {
+          d.all_linked_characters = allLinkedCharacters();
+        }
+      },
+      columns     : [
+        {data: 'timestamp', name: 'timestamp', render: human_readable},
+        {data: 'from', name: 'sender.name'},
+        {data: 'subject', name: 'subject'},
+        {data: 'body', name: 'body.body', visible: false},
+        {data: 'tocounts', name: 'tocounts', orderable: false, searchable: false},
+        {data: 'read', name: 'read', orderable: false, searchable: false}
+      ],
+      drawCallback: function () {
+
+        $('img').unveil(100);
+        ids_to_names();
+      }
+    });
+
 
   </script>
 
