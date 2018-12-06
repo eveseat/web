@@ -120,7 +120,7 @@ class MailController extends Controller
         $characters = $message
             ->recipients
             ->where('recipient_type', 'character')
-            ->map(function ($recipient){
+            ->map(function ($recipient) {
 
                 return CharacterInfo::find($recipient->recipient_id) ?: $recipient->recipient_id;
             });
@@ -128,7 +128,7 @@ class MailController extends Controller
         $corporations = $message
             ->recipients
             ->where('recipient_type', 'corporation')
-            ->map(function ($recipient){
+            ->map(function ($recipient) {
 
                 return CorporationInfo::find($recipient->recipient_id) ?: $recipient->recipient_id;
             });
