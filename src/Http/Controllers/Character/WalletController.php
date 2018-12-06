@@ -56,7 +56,7 @@ class WalletController extends Controller
      */
     public function getJournalData(int $character_id)
     {
-        if(! request()->has('all_linked_characters'))
+        if (! request()->has('all_linked_characters'))
             return response('required url parameter is missing!', 400);
 
         if (request('all_linked_characters') === 'false')
@@ -68,7 +68,7 @@ class WalletController extends Controller
             })
             ->pluck('id');
 
-        if(request('all_linked_characters') === 'true')
+        if (request('all_linked_characters') === 'true')
             $character_ids = $user_group;
 
         $journal = $this->getCharacterWalletJournal($character_ids);
@@ -89,7 +89,7 @@ class WalletController extends Controller
                     return view('web::partials.character', compact('character', 'character_id'));
                 }
 
-                if($row->first_party->category === 'corporation'){
+                if ($row->first_party->category === 'corporation'){
 
                     $corporation = CorporationInfo::find($row->first_party_id) ?: $row->first_party_id;
 
