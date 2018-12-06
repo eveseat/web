@@ -52,6 +52,26 @@
     </div>
   </div>
 
+  <!-- Mail Content Modal -->
+  <div class="modal fade" id="mailContentModal" tabindex="-1" role="dialog"
+       aria-labelledby="mailContentModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="myModalLabel">{{ trans('web::seat.mail') }}</h4>
+        </div>
+        <div class="modal-body">
+
+          <span id="mail-content-result"></span>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
 @stop
 
 @push('javascript')
@@ -88,9 +108,23 @@
 
         $('img').unveil(100);
         ids_to_names();
+
+        // After loading the contracts data, bind a click event
+        // on items with the contract-item class.
+        $('a.mail-content').on('click', function () {
+
+          // Small hack to get an ajaxable url from Laravel
+          var url = $(this).attr('data-url');
+
+          // Perform an ajax request for the contract items
+          $.get(url, function (data) {
+            $('span#mail-content-result').html(data);
+            $('img').unveil(100);
+            ids_to_names();
+          });
+        });
       }
     });
-
 
   </script>
 

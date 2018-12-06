@@ -103,17 +103,19 @@ class MailController extends Controller
     }
 
     /**
-     * @param $character_id
-     * @param $message_id
+     * @param int $character_id
+     * @param int $message_id
      *
      * @return \Illuminate\View\View
+     * @throws \Throwable
      */
     public function getMailRead(int $character_id, int $message_id)
     {
 
         $message = $this->getCharacterMailMessage($character_id, $message_id);
 
-        return view('web::character.mail-read', compact('message'));
+        return view('web::character.mail-read', compact('message'))
+            ->render();
 
     }
 
