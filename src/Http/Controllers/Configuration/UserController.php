@@ -23,10 +23,14 @@
 namespace Seat\Web\Http\Controllers\Configuration;
 
 use Illuminate\Http\Request;
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\EditUser;
 use Seat\Web\Http\Validation\ReassignUser;
+use Seat\Web\Models\Group;
+use Seat\Web\Models\User;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class UserController.
@@ -42,9 +46,70 @@ class UserController extends Controller
     public function getAll()
     {
 
-        $groups = $this->getAllGroups();
+        if (! request()->ajax())
+            return view('web::configuration.users.list');
 
-        return view('web::configuration.users.list', compact('groups'));
+        $groups = $this->getAllFullUsers();
+
+        return DataTables::of($groups)
+            ->editColumn('refresh_token', function ($row) {
+                return view('web::configuration.users.partials.refresh-token', compact('row'));
+            })
+            ->editColumn('name', function ($row) {
+
+                $character = CharacterInfo::find($row->id) ?: $row->id;
+
+                return view('web::partials.character', compact('character'));
+            })
+            ->editColumn('last_login', function ($row) {
+                return human_diff($row->last_login);
+            })
+            ->editColumn('email', function ($row) {
+                if (empty($row->email))
+                    return trans('web::seat.no_email');
+
+                return $row->email;
+            })
+            ->addColumn('action_buttons', function ($row) {
+                return view('web::configuration.users.partials.action-buttons', compact('row'));
+            })
+            ->addColumn('roles', function (User $user) {
+                $roles = $user->group->roles->map(function ($role) {
+                    return $role->title;
+                })->implode(', ');
+
+                return ! empty($roles) ? $roles : trans('web::seat.no') . ' ' . trans_choice('web::seat.role', 2);
+            })
+            ->addColumn('main_character', function (User $user) {
+
+                    return optional($user->group->main_character)->name ?: '';
+                })
+                ->addColumn('main_character_blade', function (User $user) {
+
+                $main_character_id = optional($user->group->main_character)->character_id ?: null;
+
+                $character = CharacterInfo::find($main_character_id) ?: $main_character_id;
+
+                return view('web::partials.character', compact('character'));
+            })
+            ->filterColumn('main_character', function ($query, $keyword) {
+                $group_id = Group::all()->filter(function ($group) use ($keyword) {
+
+                    return false !== stristr(optional($group->main_character)->name, $keyword);
+                })->map(function ($group) { return $group->id; });
+
+                $query->whereIn('users.group_id', $group_id->toArray());
+            })
+            ->filterColumn('email', function ($query, $keyword) {
+                $user_id = User::all()->filter(function ($user) use ($keyword) {
+
+                    return false !== stristr($user->email, $keyword);
+                })->map(function ($user) { return $user->id; });
+
+                $query->whereIn('users.id', $user_id->toArray());
+            })
+            ->rawColumns(['refresh_token', 'name', 'action_buttons', 'main_character_blade'])
+            ->make(true);
     }
 
     /**
