@@ -7,20 +7,19 @@
 
 @section('character_content')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">
-        {{ trans('web::seat.contracts') }}
-        @if(auth()->user()->has('character.jobs'))
-          <span class="pull-right">
-            <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.contracts']) }}"
-               style="color: #000000">
-              <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_contracts') }}"></i>
-            </a>
-          </span>
-        @endif
-      </h3>
-    </div>
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#" data-toggle="tab" data-characters="single">{{ trans('web::seat.contracts') }}</a></li>
+      <li><a href="#" data-toggle="tab" data-characters="all">{{ trans('web::seat.linked_characters') }} {{ trans('web::seat.contracts') }} </a></li>
+      @if(auth()->user()->has('character.jobs'))
+        <li class="pull-right">
+          <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.contracts']) }}"
+             style="color: #000000">
+            <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_contracts') }}"></i>
+          </a>
+        </li>
+      @endif
+    </ul>
     <div class="panel-body">
 
       <table class="table compact table-condensed table-hover table-responsive"
@@ -30,6 +29,8 @@
           <th>{{ trans('web::seat.created') }}</th>
           <th>{{ trans('web::seat.issuer') }}</th>
           <th>{{ trans_choice('web::seat.type', 1) }}</th>
+          <th>{{ trans('web::seat.assignee') }}</th>
+          <th>{{ trans('web::seat.acceptor') }}</th>
           <th>{{ trans('web::seat.status') }}</th>
           <th>{{ trans_choice('web::seat.title', 1) }}</th>
           <th>{{ trans('web::seat.collateral') }}</th>
@@ -49,7 +50,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                aria-hidden="true">&times;</span></button>
+                    aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel">{{ trans('web::seat.contract_items') }}</h4>
         </div>
         <div class="modal-body">
@@ -66,59 +67,78 @@
 @push('javascript')
 
   <script>
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+      var target = $(e.target).data("characters"); // activated tab
+      contract_table.draw();
+    });
+    function allLinkedCharacters() {
+      var character_ids = $("div.nav-tabs-custom > ul > li.active > a").data('characters');
+      return character_ids !== 'single';
+    }
 
-    $(function () {
-      $('table#character-contracts').DataTable({
-        processing      : true,
-        serverSide      : true,
-        ajax            : '{{ route('character.view.contracts.data', ['character_id' => $request->character_id]) }}',
-        columns         : [
-          {data: 'date_issued', name: 'date_issued', render: human_readable},
-          {data: 'issuer_id', name: 'issuer_id'},
-          {data: 'type', name: 'type'},
-          {
-            data: 'status', name: 'status', render: function (data, type, row) {
-              var str = data.toLowerCase();
-              return str.replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g, function ($1) {
-                return $1.toUpperCase();
-              });
-            }
-          },
-          {data: 'title', name: 'title'},
-          {data: 'collateral', name: 'collateral'},
-          {data: 'price', name: 'price'},
-          {data: 'reward', name: 'reward'},
-          {data: 'contents', name: 'contents', searchable: false}
-        ],
-        dom             : '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
-        "fnDrawCallback": function () {
-          $(document).ready(function () {
 
-            // Load images when they are in the viewport
-            $("img").unveil(100);
+    var contract_table =   $('table#character-contracts').DataTable({
 
-            // Resolve EVE ids to names.
-            ids_to_names();
+      processing      : true,
+      serverSide      : true,
+      ajax            : {
+        url: '{{ route('character.view.contracts.data', ['character_id' => $request->character_id]) }}',
+        data: function ( d ) {
+          d.all_linked_characters = allLinkedCharacters();
+        }
+      },
+      columns         : [
+        {data: 'date_issued', name: 'date_issued', render: human_readable, responsivePriority: 1 },
+        {data: 'issuer_id', name: 'issuer_id', responsivePriority: 1 },
+        {data: 'type', name: 'type', responsivePriority: 1},
+        {data: 'assignee_id', name: 'assignee_id', responsivePriority: 1},
+        {data: 'acceptor_id', name: 'acceptor_id', responsivePriority: 1},
+        {
+          data: 'status', name: 'status', render: function (data, type, row) {
+            var str = data.toLowerCase();
+            return str.replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g, function ($1) {
+              return $1.toUpperCase();
+            });
+          }
+        },
+        {data: 'title', name: 'title', responsivePriority: 2},
+        {data: 'collateral', name: 'collateral', responsivePriority: 2},
+        {data: 'price', name: 'price', responsivePriority: 2},
+        {data: 'reward', name: 'reward', responsivePriority: 2},
+        {data: 'contents', name: 'contents', searchable: false, responsivePriority: 1 },
+      ],
+      drawCallback: function () {
+        $(document).ready(function () {
 
-            // After loading the contracts data, bind a click event
-            // on items with the contract-item class.
-            $('a.contract-item').on('click', function () {
+          // Load images when they are in the viewport
+          $("img").unveil(100);
 
-              // Small hack to get an ajaxable url from Laravel
-              var url = "{{ route('character.view.contracts.items', ['character_id' => $request->character_id, 'contract_id' => ':contractid']) }}";
-              var contract_id = $(this).attr('a-contract-id');
-              url = url.replace(':contractid', contract_id);
+          // Resolve EVE ids to names.
+          ids_to_names();
 
-              // Perform an ajax request for the contract items
-              $.get(url, function (data) {
-                $('span#contract-items-result').html(data);
-              });
+          // After loading the contracts data, bind a click event
+          // on items with the contract-item class.
+          $('a.contract-item').on('click', function () {
 
+            // Small hack to get an ajaxable url from Laravel
+            var url = "{{ route('character.view.contracts.items', ['character_id' => $request->character_id, 'contract_id' => ':contractid']) }}";
+            var contract_id = $(this).attr('a-contract-id');
+            url = url.replace(':contractid', contract_id);
+
+            // Perform an ajax request for the contract items
+            $.get(url, function (data) {
+              $('span#contract-items-result').html(data);
             });
 
           });
+
+        });
+      },
+      createdRow: function (row, data) {
+        if (data.is_in_group === true){
+          $(row).addClass('info')
         }
-      });
+      }
     });
 
   </script>
