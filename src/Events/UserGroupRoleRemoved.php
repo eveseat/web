@@ -20,45 +20,37 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\Controllers\Configuration;
+namespace Seat\Web\Events;
 
-use Seat\Services\Repositories\Configuration\SecurityRepository;
-use Seat\Web\Http\Controllers\Controller;
-use Yajra\DataTables\DataTables;
+use Illuminate\Queue\SerializesModels;
+use Seat\Web\Models\Acl\Role;
 
 /**
- * Class SecurityController.
- * @package Seat\Web\Http\Controllers\Configuration
+ * Class UserGroupRoleRemoved.
+ * @package Seat\Web\Events
  */
-class SecurityController extends Controller
+class UserGroupRoleRemoved
 {
-    use SecurityRepository;
+    use SerializesModels;
 
     /**
-     * @return \Illuminate\View\View
+     * @var int
      */
-    public function getLogs()
-    {
-
-        return view('web::configuration.security.logs');
-
-    }
+    public $group_id;
 
     /**
-     * @return mixed
-     * @throws \Exception
+     * @var Role
      */
-    public function getLogsData()
+    public $role;
+
+    /**
+     * UserGroupRoleRemoved constructor.
+     * @param int $group_id
+     * @param Role $role
+     */
+    public function __construct(int $group_id, Role $role)
     {
-
-        $logs = $this->getAllSecurityLogs();
-
-        return DataTables::of($logs)
-            ->editColumn('user', function ($row) {
-
-                if ($row->user)
-                    return $row->user->name;
-            })
-            ->make(true);
+        $this->group_id = $group_id;
+        $this->role = $role;
     }
 }

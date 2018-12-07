@@ -74,6 +74,9 @@ class WebServiceProvider extends ServiceProvider
         // Publish the JS & CSS, and Database migrations
         $this->add_publications();
 
+        // Inform Laravel how to load migrations
+        $this->add_migrations();
+
         // Add the views for the 'web' namespace
         $this->add_views();
 
@@ -118,7 +121,6 @@ class WebServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__ . '/resources/assets'                                        => public_path('web'),
-            __DIR__ . '/database/migrations/'                                    => database_path('migrations'),
 
             // Font Awesome Pulled from packagist
             base_path('vendor/components/font-awesome/css/font-awesome.min.css') => public_path('web/css/font-awesome.min.css'),
@@ -364,9 +366,9 @@ class WebServiceProvider extends ServiceProvider
 
         // Register the datatables package! Thanks
         //  https://laracasts.com/discuss/channels/laravel/register-service-provider-and-facade-within-service-provider
-        $this->app->register('Yajra\Datatables\DatatablesServiceProvider');
+        $this->app->register('Yajra\DataTables\DataTablesServiceProvider');
         $loader = AliasLoader::getInstance();
-        $loader->alias('Datatables', 'Yajra\Datatables\Facades\Datatables');
+        $loader->alias('DataTables', 'Yajra\DataTables\Facades\DataTables');
 
         // Register the Supervisor RPC helper into the IoC
         $this->app->singleton('supervisor', function () {
@@ -380,6 +382,16 @@ class WebServiceProvider extends ServiceProvider
             );
         });
 
+    }
+
+    /**
+     * Set the path for migrations which should
+     * be migrated by laravel. More informations:
+     * https://laravel.com/docs/5.5/packages#migrations.
+     */
+    private function add_migrations()
+    {
+        $this->loadMigrationsFrom(__DIR__ . '/database/migrations/');
     }
 
     /**

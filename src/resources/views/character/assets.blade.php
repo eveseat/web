@@ -7,23 +7,21 @@
 
 @section('character_content')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">
-        {{ trans('web::seat.assets') }}
-        @if(auth()->user()->has('character.jobs'))
-          <span class="pull-right">
-            <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.assets']) }}"
-               style="color: #000000">
-              <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_assets') }}"></i>
-            </a>
-          </span>
-        @endif
-      </h3>
-    </div>
-    <div class="panel-body">
-
-      <table class="table compact table-condensed table-hover table-responsive">
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#" data-toggle="tab" data-characters="single">{{trans_choice('web::seat.character',1)}} {{ trans('web::seat.assets') }}</a></li>
+      <li><a href="#" data-toggle="tab" data-characters="all">{{ trans('web::seat.linked_characters') }} {{ trans('web::seat.assets') }}</a></li>
+      @if(auth()->user()->has('character.jobs'))
+        <li class="pull-right">
+          <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.assets']) }}"
+             style="color: #000000">
+            <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_assets') }}"></i>
+          </a>
+        </li>
+      @endif
+    </ul>
+    <div class="tab-content">
+      <table id="characterTable" class="table compact table-hover table-condensed table-responsive location-table">
         <thead>
         <tr>
           <th></th>
@@ -33,129 +31,9 @@
           <th>{{ trans_choice('web::seat.group',1) }}</th>
         </tr>
         </thead>
-
-        <tbody>
-        @foreach($assets->whereIn('location_flag', ['Hangar', 'AssetSafety', 'Deliveries'])->sortBy('locationName')->groupBy('location_id') as $location)
-          <tr class="active">
-            <td colspan="5">
-              <b>
-                @if($location->first()->locationName == '')
-                  Unknown Structure ({{ $location->first()->location_id }})
-                @else
-                  {{ $location->first()->locationName }}
-                @endif
-              </b>
-              <span class="pull-right">
-                <i>{{ $assets->where('location_id', $location->first()->location_id)->count() }}
-                  {{ trans('web::seat.items_taking') }}
-                  {{
-                    number_metric($assets->where('location_id', $location->first()->location_id)->map(
-                      function($value){
-                        return $value->quantity * optional($value->type)->volume ?? 0;
-                      })->sum()
-                    )
-                  }}
-                  m&sup3;</i>
-              </span>
-            </td>
-          </tr>
-
-          @foreach($assets->where('location_id', $location->first()->location_id) as $container)
-
-            <tr>
-              <td>
-                @if($container->content->count() > 0)
-                  <button class="btn btn-xs btn-link viewcontent">
-                    <i class="fa fa-plus"></i>
-                  </button>
-                @endif
-              </td>
-              <td>
-                @if($container->content->count() < 1)
-                  {{ number($container->quantity, 0) }}
-                @endif
-              </td>
-              <td>
-                {!! img('type', $container->type_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-                @if($container->type)
-                  @if($container->name != $container->type->typeName)
-                    {{ $container->name }} ({{ $container->type->typeName }})
-                  @else
-                    {{ $container->type->typeName }}
-                  @endif
-                @else
-                  Unknown
-                @endif
-                @if(! $container->is_singleton)
-                  <span class="text-red">(packaged)</span>
-                @endif
-              </td>
-              <td>{{ number_metric($container->quantity * optional($container->type)->volume ?? 0) }}m&sup3;</td>
-              <td>
-                @if($container->type)
-                  {{ $container->type->group->groupName }}
-                @else
-                  Unknown
-                @endif
-              </td>
-            </tr>
-
-            @if($container->content->count() > 0)
-              <tr style="display: none;">
-                <td colspan="5">
-                  <table class="table compact table-condensed table-hover table-responsive">
-                    <tbody>
-                    @foreach($container->content as $content)
-                      <tr>
-                        <td>
-                          @if($content->content->count() > 0)
-                            <button class="btn btn-xs btn-link viewcontent">
-                              <i class="fa fa-plus"></i>
-                            </button>
-                          @endif
-                        </td>
-                        <td>
-                          @if($content->content->count() < 1)
-                            {{ number($content->quantity, 0) }}
-                          @endif
-                        </td>
-                        <td>{!! img('type', $content->type_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!} {{ $content->type->typeName }}</td>
-                        <td>{{ number_metric($content->quantity * $content->type->volume) }}m&sup3;</td>
-                        <td>{{ $content->type->group->groupName }}</td>
-                      </tr>
-                      @if($content->content->count() > 0)
-                        <tr style="display: none;">
-                          <td colspan="5">
-                            <table class="table compact table-condensed table-hover table-responsive">
-                              <tbody>
-                              @foreach($content->content as $cargo)
-                                <tr>
-                                  <td></td>
-                                  <td>{{ number($cargo->quantity, 0) }}</td>
-                                  <td>{!! img('type', $cargo->type_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!} {{ $cargo->type->typeName }}</td>
-                                  <td>{{ number_metric($cargo->quantity * $cargo->type->volume) }}m&sup3;</td>
-                                  <td>{{ $cargo->type->group->groupName }}</td>
-                                </tr>
-                              @endforeach
-                              </tbody>
-                            </table>
-                          </td>
-                        </tr>
-                      @endif
-                    @endforeach
-                    </tbody>
-                  </table>
-                </td>
-              </tr>
-            @endif
-
-          @endforeach
-
-        @endforeach
-        </tbody>
       </table>
-
-    </div><!-- /.box-body -->
+    </div>
+    <!-- /.tab-content -->
   </div>
 
 @stop
@@ -164,54 +42,133 @@
 
   <script type="text/javascript">
 
-    $(".viewcontent").on("click", function () {
+    var url = "{{route('character.view.assets.details', ['character_id' => request()->character_id])}}";
 
-      var attribute_box = $(this);
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 
-      var contents = $(this).closest('tr').next('tr');
+      var target = $(e.target).data("characters"); // activated tab
+      assetGroupTable.draw();
+    });
 
-      // Show or hide
-      contents.toggle();
+    function allLinkedCharacters() {
 
-      // Styling
-      if (contents.is(":visible")) {
+      var character_ids = $("div.nav-tabs-custom > ul > li.active > a").data('characters');
+      return character_ids !== 'single';
 
-        // Get the assets contents
+    }
 
-        if (attribute_box.attr('a-loaded') == 'false') {
-
-          // Small hack to get an ajaxable url from Laravel
-          var url = "{{ route('character.view.assets.contents', ['character_id' => $request->character_id, 'item_id' => ':item_id']) }}";
-          var item_id = attribute_box.attr('a-item-id');
-          url = url.replace(':item_id', item_id);
-
-          // Perform an ajax request for the asset items
-          $.get(url, function (data) {
-
-            // Populate the tbody
-            contents.html(data);
-
-            // Mark the contents as loaded
-            attribute_box.attr('a-loaded', 'true');
-
-            // Re-init the lazy image loader
-            $("img").unveil(100);
-          });
-
+    var assetGroupTable = $('.location-table').DataTable({
+      scrollY: '50vh',
+      processing: true,
+      serverSide: true,
+      pageLength: 50,
+      ajax: {
+        url: url,
+        data: function ( d ) {
+          d.all_linked_characters = allLinkedCharacters();
         }
+      },
+      columns   : [
+        {orderable: false, data: null, defaultContent: '', searchable: false},
+        {data: 'quantity', name: 'quantity', searchable: false},
+        {data: 'item', name: 'item', orderable: false, searchable: false},
+        {data: 'volume', name: 'volume', orderable: false, searchable: false},
+        {data: 'group', name: 'group', orderable: false, searchable: false},
+        {data: 'typeName', name: 'invTypes.typeName', visible: false },
+        {data: 'locationName', name: 'locationName', searchable: false, visible: false },
+        {data: 'name', name: 'name', visible: false },
+        {data: 'character_id', name: 'character_id', visible: false },
+      ],
+      rowGroup: {
 
-        // Apply some styling
-        $(this).find('i').removeClass("fa-plus").addClass("fa-minus");
-        $(this).closest("tr").css("background-color", "#D4D4D4"); // Heading Color
-        contents.css("background-color", "#E5E5E5");              // Table Contents Color
+        startRender: function(rows, group) {
 
+          var numberItems = rows.count();
+          var volume = rows.data().pluck('type').pluck('volume').reduce(function (a , b) {
+            return a + b*1;
+          },0);
+
+          return $('<tr/>')
+              .append( '<td colspan="5"><b>'+group+'</b><span class="pull-right">'+ numberItems +' {{ trans('web::seat.items_taking') }} '+ abbreviateNumber(volume) +' m&sup3</span></td>' )
+        },
+        dataSrc: 'locationName'
+      },
+      createdRow: function(row, data, dataIndex) {
+        if(data.quantity == null){
+          $(row).find("td:eq(0)")
+              .addClass('details-control')
+              .append('<button class="btn btn-xs btn-link"><i class="fa fa-plus"></i></button>');
+        }
+      },
+      drawCallback : function () {
+        $("img").unveil(100);
+      },
+    });
+
+    assetGroupTable.on('click', 'td.details-control', function () {
+
+      var td = $(this);
+      var table = $(td).closest('table');
+      var row = $(table).DataTable().row(td.closest('tr'));
+      var tr = $(this).closest('tr');
+      var symbol = tr.find('i');
+
+      if (row.child.isShown()) {
+        // This row is already open - close it
+        row.child.hide();
+        symbol.removeClass("fa-minus").addClass("fa-plus");
+
+        tr.removeClass('shown').css("background-color", "");
       } else {
+        // Open this row
+        symbol.removeClass("fa-plus").addClass("fa-minus");
 
-        $(this).find('i').removeClass("fa-minus").addClass("fa-plus");
-        $(this).closest("tr").css("background-color", "");
+        row.child(template(row.data())).show();
+        initTable(row.data());
 
+
+        tr.addClass('shown').css("background-color", "#D4D4D4"); // Heading Color;
+        tr.next('tr').css("background-color", "#E5E5E5");
       }
     });
+
+    function template ( d ) {
+      return d.content;
+    }
+    function initTable(data) {
+
+      $("table#assets-contents[data-item-id=" + data.item_id +"]").DataTable({
+        processing: true,
+        paging: false,
+        info: false,
+        searching: false,
+        columns: [
+          {orderable: false, data: null, defaultContent: '', searchable: false},
+          {data: 'quantity', name: 'quantity'},
+          {data: 'type', name: 'type', orderable: false, searchable: false},
+          {data: 'volume', name: 'volume', orderable: false, searchable: false},
+          {data: 'group', name: 'group', orderable: false, searchable: false},
+          {data: 'content', name: 'group', orderable: false, searchable: false, visible: false},
+        ],
+        createdRow: function(row, data, dataIndex) {
+
+          if(data.quantity === ""){
+
+            $(row).find("td:eq(0)")
+                .addClass('details-control')
+                .attr('data-location-id', data.item_id )
+                .attr('data-origin', data.location_id )
+                .append('<button class="btn btn-xs btn-link"><i class="fa fa-plus"></i></button>');
+          }
+        },
+        drawCallback : function () {
+
+          $("img").unveil(100);
+          // remove additonal created group-rows
+          $(".dtrg-group").remove();
+        },
+      });
+    }
 
   </script>
 

@@ -89,6 +89,13 @@ class Group extends Model
     protected $fillable = ['main_character_id'];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['main_character'];
+
+    /**
      * Make sure we cleanup on delete.
      *
      * @return bool|null

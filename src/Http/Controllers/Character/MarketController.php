@@ -25,7 +25,7 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Services\Repositories\Character\Market;
 use Seat\Services\Repositories\Eve\EveRepository;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class MarketController.
@@ -52,13 +52,14 @@ class MarketController extends Controller
      * @param int $character_id
      *
      * @return mixed
+     * @throws \Exception
      */
     public function getMarketData(int $character_id)
     {
 
         $orders = $this->getCharacterMarketOrders($character_id, false);
 
-        return Datatables::of($orders)
+        return DataTables::of($orders)
             ->addColumn('bs', function ($row) {
 
                 return view('web::partials.marketbuysell', compact('row'))
@@ -82,6 +83,7 @@ class MarketController extends Controller
                 return view('web::partials.markettype', compact('row'))
                     ->render();
             })
+            ->rawColumns(['bs', 'vol', 'typeName'])
             ->make(true);
 
     }
