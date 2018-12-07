@@ -23,7 +23,6 @@
 namespace Seat\Web\Http\Controllers\Auth;
 
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Seat\Services\Settings\Seat;
 use Seat\Web\Http\Controllers\Controller;
 
 /**
@@ -72,7 +71,6 @@ class LoginController extends Controller
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Seat\Services\Exceptions\SettingException
      */
     public function showLoginForm()
     {
