@@ -78,10 +78,7 @@ class MarketController extends Controller
         return DataTables::of($orders)
             ->addColumn('bs', function ($row) {
 
-                if ($row->is_buy_order)
-                    return '<span class="text-red">Buy</span>';
-
-                return '<span class="text-green">Sell</span>';
+                return view('web::partials.marketbuysell', compact('row'));
             })
             ->addColumn('vol', function ($row) {
 
