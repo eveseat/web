@@ -22,8 +22,11 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
+use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Character\Wallet;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Models\User;
 use Yajra\DataTables\DataTables;
 
 /**
@@ -53,24 +56,73 @@ class WalletController extends Controller
      */
     public function getJournalData(int $character_id)
     {
+        if (! request()->has('all_linked_characters'))
+            return response('required url parameter is missing!', 400);
 
-        $journal = $this->getCharacterWalletJournal($character_id, false);
+        if (request('all_linked_characters') === 'false')
+            $character_ids = collect($character_id);
+
+        $user_group = User::find($character_id)->group->users
+            ->filter(function ($user) {
+                return $user->name !== 'admin' && $user->id !== 1;
+            })
+            ->pluck('id');
+
+        if (request('all_linked_characters') === 'true')
+            $character_ids = $user_group;
+
+        $journal = $this->getCharacterWalletJournal($character_ids);
 
         return DataTables::of($journal)
             ->editColumn('ref_type', function ($row) {
 
-                return view('web::partials.journaltranstype', compact('row'))
-                    ->render();
+                return view('web::partials.journaltranstype', compact('row'));
             })
             ->editColumn('first_party_id', function ($row) {
 
-                return view('web::partials.journalfrom', compact('row'))
-                    ->render();
+                $character_id = $row->character_id;
+
+                if (optional($row->first_party)->category === 'character') {
+
+                    $character = CharacterInfo::find($row->first_party_id) ?: $row->first_party_id;
+
+                    return view('web::partials.character', compact('character', 'character_id'));
+                }
+
+                if (optional($row->first_party)->category === 'corporation'){
+
+                    $corporation = CorporationInfo::find($row->first_party_id) ?: $row->first_party_id;
+
+                    return view('web::partials.corporation', compact('corporation', 'character_id'));
+                }
+
+                return view('web::partials.unknown', [
+                    'unknown_id' => $row->first_party_id,
+                    'character_id' => $character_id,
+                ]);
             })
             ->editColumn('second_party_id', function ($row) {
 
-                return view('web::partials.journalto', compact('row'))
-                    ->render();
+                $character_id = $row->character_id;
+
+                if (optional($row->second_party)->category === 'character') {
+
+                    $character = CharacterInfo::find($row->second_party_id) ?: $row->second_party_id;
+
+                    return view('web::partials.character', compact('character', 'character_id'));
+                }
+
+                if (optional($row->second_party)->category === 'corporation') {
+
+                    $corporation = CorporationInfo::find($row->second_party_id) ?: $row->second_party_id;
+
+                    return view('web::partials.corporation', compact('corporation', 'character_id'));
+                }
+
+                return view('web::partials.unknown', [
+                    'unknown_id' => $row->second_party_id,
+                    'character_id' => $character_id,
+                ]);
             })
             ->editColumn('amount', function ($row) {
 
@@ -79,6 +131,10 @@ class WalletController extends Controller
             ->editColumn('balance', function ($row) {
 
                 return number($row->balance);
+            })
+            ->addColumn('is_in_group', function ($row) use ($user_group) {
+
+                return in_array($row->first_party_id, $user_group->toArray()) && in_array($row->second_party_id, $user_group->toArray());
             })
             ->rawColumns(['ref_type', 'first_party_id', 'second_party_id'])
             ->make(true);
@@ -93,7 +149,7 @@ class WalletController extends Controller
     public function getJournalGraphBalance(int $character_id)
     {
 
-        $data = $this->getCharacterWalletJournal($character_id, false)
+        $data = $this->getCharacterWalletJournal(collect($character_id))
             ->orderBy('date', 'desc')
             ->take(150)
             ->get();
