@@ -31,6 +31,7 @@
             <thead>
             <tr>
               <th>{{ trans('web::seat.date') }}</th>
+              <th></th>
               <th>{{ trans_choice('web::seat.type', 1) }}</th>
               <th>{{ trans('web::seat.qty') }}</th>
               <th>{{ trans('web::seat.price') }}</th>
@@ -73,7 +74,8 @@
       },
       columns     : [
         {data: 'date', name: 'date', render: human_readable},
-        {data: 'is_buy', name: 'type.typeName'},
+        {data: 'is_buy', searchable: false},
+        {data: 'item_view', name: 'type.typeName'},
         {data: 'quantity', name: 'quantity'},
         {data: 'unit_price', name: 'unit_price'},
         {data: 'total', name: 'unit_price'},
