@@ -10,27 +10,28 @@
   <div class="row">
     <div class="col-md-12">
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-            {{ trans('web::seat.wallet_transactions') }}
-            @if(auth()->user()->has('character.jobs'))
-              <span class="pull-right">
-                <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.wallet']) }}"
-                   style="color: #000000">
-                  <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_wallet') }}"></i>
-                </a>
-              </span>
-            @endif
-          </h3>
-        </div>
-        <div class="panel-body">
+      <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#" data-toggle="tab" data-characters="single">{{ trans('web::seat.wallet_transactions') }}</a></li>
+          <li><a href="#" data-toggle="tab" data-characters="all">{{ trans('web::seat.linked_characters') }} {{ trans('web::seat.wallet_transactions') }}</a></li>
+          @if(auth()->user()->has('character.jobs'))
+            <li class="pull-right">
+              <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.wallet']) }}"
+                 style="color: #000000">
+                <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_wallet') }}"></i>
+              </a>
+            </li>
+          @endif
+
+        </ul>
+        <div class="tab-content">
 
           <table class="table compact table-condensed table-hover table-responsive"
                  id="character-transactions">
             <thead>
             <tr>
               <th>{{ trans('web::seat.date') }}</th>
+              <th></th>
               <th>{{ trans_choice('web::seat.type', 1) }}</th>
               <th>{{ trans('web::seat.qty') }}</th>
               <th>{{ trans('web::seat.price') }}</th>
@@ -50,33 +51,45 @@
 
 @push('javascript')
 
-<script type="text/javascript">
+  <script type="text/javascript">
 
-  $(function () {
-    $('table#character-transactions').DataTable({
-      processing      : true,
-      serverSide      : true,
-      ajax            : '{{ route('character.view.transactions.data', ['character_id' => $request->character_id]) }}',
-      columns         : [
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function () {
+      character_transactions.draw();
+    });
+
+    function allLinkedCharacters() {
+      var character_ids = $("div.nav-tabs-custom > ul > li.active > a").data('characters');
+      return character_ids !== 'single';
+    }
+
+
+    var character_transactions = $('table#character-transactions').DataTable({
+      processing  : true,
+      serverSide  : true,
+      ajax        : {
+        url : '{{ route('character.view.transactions.data', ['character_id' => $request->character_id]) }}',
+        data: function (d) {
+          d.all_linked_characters = allLinkedCharacters();
+        }
+      },
+      columns     : [
         {data: 'date', name: 'date', render: human_readable},
-        {data: 'is_buy', name: 'is_buy'},
+        {data: 'is_buy', searchable: false},
+        {data: 'item_view', name: 'type.typeName'},
         {data: 'quantity', name: 'quantity'},
         {data: 'unit_price', name: 'unit_price'},
         {data: 'total', name: 'unit_price'},
-        {data: 'client_id', name: 'client_id'}
+        {data: 'client_view', name: 'client.name'}
       ],
-      dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
-      'fnDrawCallback': function () {
-        $(document).ready(function () {
-          $('img').unveil(100);
-
-          ids_to_names();
-        });
+      drawCallback: function () {
+        $('img').unveil(100);
+        ids_to_names();
+        $('[data-toggle="tooltip"]').tooltip();
       }
     });
-  });
 
-</script>
+
+  </script>
 
 @include('web::includes.javascript.id-to-name')
 
