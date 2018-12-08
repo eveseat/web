@@ -63,7 +63,7 @@
         {data: 'corporation_id', name: 'corporation_id'},
         {data: 'alliance_id', name: 'alliance_id'},
         {data: 'security_status', name: 'security_status'},
-        {data: 'actions', name: 'actions'}
+        {data: 'actions', name: 'actions', searchable: false, orderable: false}
       ],
       drawCallback: function () {
         $("img").unveil(100);
