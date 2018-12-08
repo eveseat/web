@@ -97,10 +97,7 @@ class MarketController extends Controller
             })
             ->editColumn('typeName', function ($row) {
 
-                $character_id = $row->character_id;
-
-                return view('web::partials.markettype', compact('row', 'character_id'))
-                    ->render();
+                return view('web::partials.markettype', compact('row'));
             })
             ->rawColumns(['bs', 'typeName'])
             ->make(true);
