@@ -82,14 +82,14 @@ class WalletController extends Controller
 
                 $character_id = $row->character_id;
 
-                if ($row->first_party->category === 'character') {
+                if (optional($row->first_party)->category === 'character') {
 
                     $character = CharacterInfo::find($row->first_party_id) ?: $row->first_party_id;
 
                     return view('web::partials.character', compact('character', 'character_id'));
                 }
 
-                if ($row->first_party->category === 'corporation'){
+                if (optional($row->first_party)->category === 'corporation'){
 
                     $corporation = CorporationInfo::find($row->first_party_id) ?: $row->first_party_id;
 
@@ -105,14 +105,14 @@ class WalletController extends Controller
 
                 $character_id = $row->character_id;
 
-                if ($row->second_party->category === 'character') {
+                if (optional($row->second_party)->category === 'character') {
 
                     $character = CharacterInfo::find($row->second_party_id) ?: $row->second_party_id;
 
                     return view('web::partials.character', compact('character', 'character_id'));
                 }
 
-                if ($row->second_party->category === 'corporation') {
+                if (optional($row->second_party)->category === 'corporation') {
 
                     $corporation = CorporationInfo::find($row->second_party_id) ?: $row->second_party_id;
 
