@@ -78,6 +78,9 @@ class KillmailController extends Controller
         return DataTables::of($killmails)
             ->addColumn('victim', function ($row) {
 
+                if (is_nan($row->killmail_victim))
+                    return '';
+
                 $character_id = $row->character_id;
 
                 $character = CharacterInfo::find($row->killmail_victim->character_id) ?: $row->killmail_victim->character_id;
@@ -97,12 +100,18 @@ class KillmailController extends Controller
             })
             ->addColumn('ship', function ($row) {
 
+                if (is_null($row->killmail_victim))
+                    return '';
+
                 $ship_type = $row->killmail_victim->ship_type;
 
                 return view('web::partials.killmailtype', compact('ship_type'))
                     ->render();
             })
             ->addColumn('place', function ($row) {
+
+                if (is_null($row->killmail_detail))
+                    return '';
 
                 $place = $row->killmail_detail->solar_system;
 
