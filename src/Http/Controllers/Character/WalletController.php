@@ -227,11 +227,14 @@ class WalletController extends Controller
         return DataTables::of($transactions)
             ->editColumn('is_buy', function ($row) {
 
-                return view('web::partials.transactiontype', compact('row'));
+                return view('web::partials.transactionbuysell', compact('row'));
             })
             ->editColumn('unit_price', function ($row) {
 
                 return number($row->unit_price);
+            })
+            ->addColumn('item_view', function ($row) {
+                return view('web::partials.transactiontype', compact('row'));
             })
             ->addColumn('total', function ($row) {
 
@@ -245,7 +248,7 @@ class WalletController extends Controller
 
                 return view('web::partials.character', compact('character', 'character_id'));
             })
-            ->rawColumns(['is_buy', 'client_view'])
+            ->rawColumns(['is_buy', 'client_view', 'item_view'])
             ->make(true);
 
     }
