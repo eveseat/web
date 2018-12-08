@@ -63,7 +63,7 @@ class CharacterController extends Controller
                 ->map(function ($user) {
                     return $user->character;
             }) :
-            $this->getAllCharactersWithAffiliations();
+            $this->getAllCharactersWithAffiliations(false);
 
         return DataTables::of($characters)
             ->addColumn('name_view', function ($row) {
