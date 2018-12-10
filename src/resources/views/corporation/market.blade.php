@@ -43,8 +43,8 @@
         ajax            : '{{ route('corporation.view.market.data', ['corporation_id' => $request->corporation_id]) }}',
         columns         : [
           {data: 'issued', name: 'issued', render: human_readable},
-          {data: 'bs', name: 'bid'},
-          {data: 'vol', name: 'volEntered'},
+          {data: 'bs', name: 'is_buy_order'},
+          {data: 'vol', name: 'volume_total'},
           {data: 'price', name: 'price'},
           {data: 'total', name: 'price'},
           {data: 'typeName', name: 'typeName'}

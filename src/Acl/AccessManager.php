@@ -22,6 +22,8 @@
 
 namespace Seat\Web\Acl;
 
+use Seat\Web\Events\UserGroupRoleAdded;
+use Seat\Web\Events\UserGroupRoleRemoved;
 use Seat\Web\Models\Acl\Affiliation as AffiliationModel;
 use Seat\Web\Models\Acl\Permission as PermissionModel;
 use Seat\Web\Models\Acl\Role as RoleModel;
@@ -193,9 +195,11 @@ trait AccessManager
         $group = Group::find($group_id);
         $role = RoleModel::firstOrNew(['id' => $role_id]);
 
-        // If the role does not already have the grup add it.
-        if (! $role->groups->contains($group_id))
+        // If the role does not already have the group add it.
+        if (! $role->groups->contains($group_id)) {
             $role->groups()->save($group);
+            event(new UserGroupRoleAdded($group_id, $role));
+        }
     }
 
     /**
@@ -208,7 +212,8 @@ trait AccessManager
     {
 
         $role = $this->getRole($role_id);
-        $role->groups()->detach($group_id);
+        if ($role->groups()->detach($group_id) > 0)
+            event(new UserGroupRoleRemoved($group_id, $role));
 
     }
 
