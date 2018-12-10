@@ -123,11 +123,23 @@ Route::group(['prefix' => 'view/intel'], function () {
         'uses'       => 'IntelController@getTopWalletJournalData',
     ]);
 
+    Route::get('summary/journal/details/{first_party_id}/{getJournalContent}', [
+        'as'         => 'character.view.intel.summary.journal.details',
+        'middleware' => 'characterbouncer:intel',
+        'uses'       => 'IntelController@getJournalContent',
+    ]);
+
     // Transactions
     Route::get('summary/transactions/data/{character_id}', [
         'as'         => 'character.view.intel.summary.transactions.data',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@getTopTransactionsData',
+    ]);
+
+    Route::get('summary/transactions/details/{character_id}/{client_id}', [
+        'as'         => 'character.view.intel.summary.transactions.details',
+        'middleware' => 'characterbouncer:intel',
+        'uses'       => 'IntelController@getTransactionContent',
     ]);
 
     // Mail

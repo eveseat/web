@@ -101,7 +101,8 @@ class IntelController extends Controller
             })
             ->addColumn('alliance', function ($row) {
 
-                return $this->getIntelView('alliance', $row->character_id, $row->first_party_id, $row->second_party_id);
+                return $this->getIntelView('alliance', $row->character_id, $row->first_party_id, $row->second_party_id)
+                    . view('web::character.intel.partials.journalcontents', compact('row'));
             })
             ->rawColumns(['character', 'corporation', 'alliance'])
             ->make(true);
@@ -143,7 +144,8 @@ class IntelController extends Controller
             })
             ->addColumn('alliance', function ($row) {
 
-                return $this->getIntelView('alliance', $row->character_id, $row->client_id);
+                return $this->getIntelView('alliance', $row->character_id, $row->client_id)
+                    . view('web::character.intel.partials.transactioncontents', compact('row'));
             })
             ->rawColumns(['character', 'corporation', 'alliance'])
             ->make(true);
@@ -333,6 +335,107 @@ class IntelController extends Controller
         return redirect()->back()
             ->with('success', 'Note updated!');
 
+    }
+
+    public function getJournalContent(int $first_party_id, int $second_party_id)
+    {
+
+        $journal = $this->characterWalletJournalInteractions($first_party_id, $second_party_id);
+
+        return DataTables::of($journal)
+            ->editColumn('ref_type', function ($row) {
+
+                return view('web::partials.journaltranstype', compact('row'));
+            })
+            ->editColumn('first_party_id', function ($row) {
+
+                $character_id = $row->character_id;
+
+                if (optional($row->first_party)->category === 'character') {
+
+                    $character = CharacterInfo::find($row->first_party_id) ?: $row->first_party_id;
+
+                    return view('web::partials.character', compact('character', 'character_id'));
+                }
+
+                if (optional($row->first_party)->category === 'corporation'){
+
+                    $corporation = CorporationInfo::find($row->first_party_id) ?: $row->first_party_id;
+
+                    return view('web::partials.corporation', compact('corporation', 'character_id'));
+                }
+
+                return view('web::partials.unknown', [
+                    'unknown_id' => $row->first_party_id,
+                    'character_id' => $character_id,
+                ]);
+            })
+            ->editColumn('second_party_id', function ($row) {
+
+                $character_id = $row->character_id;
+
+                if (optional($row->second_party)->category === 'character') {
+
+                    $character = CharacterInfo::find($row->second_party_id) ?: $row->second_party_id;
+
+                    return view('web::partials.character', compact('character', 'character_id'));
+                }
+
+                if (optional($row->second_party)->category === 'corporation') {
+
+                    $corporation = CorporationInfo::find($row->second_party_id) ?: $row->second_party_id;
+
+                    return view('web::partials.corporation', compact('corporation', 'character_id'));
+                }
+
+                return view('web::partials.unknown', [
+                    'unknown_id' => $row->second_party_id,
+                    'character_id' => $character_id,
+                ]);
+            })
+            ->editColumn('amount', function ($row) {
+
+                return number($row->amount);
+            })
+            ->editColumn('balance', function ($row) {
+
+                return number($row->balance);
+            })
+            ->rawColumns(['ref_type', 'first_party_id', 'second_party_id'])
+            ->make(true);
+    }
+
+    public function getTransactionContent (int $character_id, int $client_id)
+    {
+
+        $transactions = $this->characterWalletTransactionInteraction($character_id, $client_id);
+
+        return DataTables::of($transactions)
+            ->editColumn('is_buy', function ($row) {
+
+                return view('web::partials.transactionbuysell', compact('row'));
+            })
+            ->editColumn('unit_price', function ($row) {
+
+                return number($row->unit_price);
+            })
+            ->addColumn('item_view', function ($row) {
+                return view('web::partials.transactiontype', compact('row'));
+            })
+            ->addColumn('total', function ($row) {
+
+                return number($row->unit_price * $row->quantity);
+            })
+            ->addColumn('client_view', function ($row) {
+
+                $character_id = $row->character_id;
+
+                $character = CharacterInfo::find($row->client_id) ?: $row->client_id;
+
+                return view('web::partials.character', compact('character', 'character_id'));
+            })
+            ->rawColumns(['is_buy', 'client_view', 'item_view'])
+            ->make(true);
     }
 
     /**

@@ -29,6 +29,37 @@
         </thead>
       </table>
 
+      <!-- Journal Content Modal -->
+      <div class="modal fade" id="journalContentModal" tabindex="-1" role="dialog"
+           aria-labelledby="journalContentModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title" id="journalContentModalLabel">{{ trans('web::seat.wallet_journal') }}</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table compact table-condensed table-hover table-responsive"
+                     id="character-journal" data-page-length=100>
+                <thead>
+                <tr>
+                  <th>{{ trans('web::seat.date') }}</th>
+                  <th>{{ trans_choice('web::seat.type', 1) }}</th>
+                  <th>{{ trans('web::seat.owner_1') }}</th>
+                  <th>{{ trans('web::seat.owner_2') }}</th>
+                  <th>{{ trans('web::seat.amount') }}</th>
+                  <th>{{ trans('web::seat.balance') }}</th>
+                </tr>
+                </thead>
+              </table>
+
+            </div>
+            </div>
+          </div>
+        </div>
+
       <hr>
 
       <h3>Top Wallet Transaction Interactions</h3>
@@ -45,9 +76,44 @@
         </thead>
       </table>
 
+    <!-- Transaction Content Modal -->
+    <div class="modal fade" id="transactionContentModal" tabindex="-1" role="dialog"
+         aria-labelledby="transactionContentModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="transactionContentModalLabel">{{ trans('web::seat.wallet_transactions') }}</h4>
+          </div>
+          <div class="modal-body">
+
+            <table class="table compact table-condensed table-hover table-responsive"
+                   id="character-transactions">
+              <thead>
+              <tr>
+                <th>{{ trans('web::seat.date') }}</th>
+                <th></th>
+                <th>{{ trans_choice('web::seat.type', 1) }}</th>
+                <th>{{ trans('web::seat.qty') }}</th>
+                <th>{{ trans('web::seat.price') }}</th>
+                <th>{{ trans('web::seat.total') }}</th>
+                <th>{{ trans('web::seat.client') }}</th>
+              </tr>
+              </thead>
+            </table>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
       <hr>
 
-      <h3 class="panel-title">Top Mail Interactions</h3>
+      <h3>Top Mail Interactions</h3>
 
       <table class="table compact table-condensed table-hover table-responsive"
              id="character-top-mail-interactions" data-page-length=10>
@@ -105,6 +171,44 @@
       $('img').unveil(100);
       ids_to_names();
 
+      // After loading the journal data, bind a click event
+      // on items with the journal-contet class.
+      $('a.journal-content').on('click', function () {
+
+        var url = $(this).attr('data-url');
+
+        alert('journal');
+
+        var characterJournal = $('table#character-journal').DataTable({
+          processing: true,
+          serverSide: true,
+          ajax: {
+            url: url
+          },
+          columns: [
+            {data: 'date', name: 'date', render: human_readable, type: 'date'},
+            {data: 'ref_type', name: 'ref_type'},
+            {data: 'first_party_id', name: 'first_party.name'},
+            {data: 'second_party_id', name: 'second_party.name'},
+            {data: 'amount', name: 'amount'},
+            {data: 'balance', name: 'balance'},
+            {data: 'reason', name: 'reason', visible: false}
+          ],
+          drawCallback : function () {
+            $("[data-toggle=tooltip]").tooltip();
+            $('img').unveil(100);
+            ids_to_names();
+
+            $('#journalContentModal').on('hide.bs.modal', function () {
+              characterJournal.destroy();
+            });
+          }
+        });
+
+        characterJournal.draw();
+
+      });
+
     }
   });
 
@@ -129,6 +233,39 @@
 
       $('img').unveil(100);
       ids_to_names();
+
+      // After loading the journal data, bind a click event
+      // on items with the journal-contet class.
+      $('a.transaction-content').on('click', function () {
+
+        var url = $(this).attr('data-url');
+
+        var character_transactions = $('table#character-transactions').DataTable({
+          processing  : true,
+          serverSide  : true,
+          ajax        : {
+            url : url
+          },
+          columns     : [
+            {data: 'date', name: 'date', render: human_readable},
+            {data: 'is_buy', searchable: false},
+            {data: 'item_view', name: 'type.typeName'},
+            {data: 'quantity', name: 'quantity'},
+            {data: 'unit_price', name: 'unit_price'},
+            {data: 'total', name: 'unit_price'},
+            {data: 'client_view', name: 'client.name'}
+          ],
+          drawCallback: function () {
+            $('img').unveil(100);
+            ids_to_names();
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $('#transactionContentModal').on('hide.bs.modal', function () {
+              character_transactions.destroy();
+            });
+          }
+        });
+      });
     }
   });
 
