@@ -78,7 +78,7 @@ class KillmailController extends Controller
         return DataTables::of($killmails)
             ->addColumn('victim', function ($row) {
 
-                if (is_nan($row->killmail_victim))
+                if (is_null($row->killmail_victim))
                     return '';
 
                 $character_id = $row->character_id;
