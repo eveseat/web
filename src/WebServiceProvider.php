@@ -369,19 +369,6 @@ class WebServiceProvider extends ServiceProvider
         $this->app->register('Yajra\DataTables\DataTablesServiceProvider');
         $loader = AliasLoader::getInstance();
         $loader->alias('DataTables', 'Yajra\DataTables\Facades\DataTables');
-
-        // Register the Supervisor RPC helper into the IoC
-        $this->app->singleton('supervisor', function () {
-
-            return new Supervisor(
-                config('web.supervisor.name'),
-                config('web.supervisor.rpc.address'),
-                config('web.supervisor.rpc.username'),
-                config('web.supervisor.rpc.password'),
-                (int) config('web.supervisor.rpc.port')
-            );
-        });
-
     }
 
     /**
