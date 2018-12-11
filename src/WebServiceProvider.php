@@ -22,7 +22,6 @@
 
 namespace Seat\Web;
 
-use Exception;
 use Illuminate\Auth\Events\Attempting;
 use Illuminate\Auth\Events\Login as LoginEvent;
 use Illuminate\Auth\Events\Logout as LogoutEvent;
@@ -60,6 +59,16 @@ use Validator;
  */
 class WebServiceProvider extends ServiceProvider
 {
+    /**
+     * The environment variable name used to setup the queue daemon balancing mode.
+     */
+    const QUEUE_BALANCING_MODE = 'QUEUE_BALANCING_MODE';
+
+    /**
+     * The environment variable name used to setup the queue workers amount.
+     */
+    const QUEUE_BALANCING_WORKERS = 'QUEUE_WORKERS';
+
     /**
      * Bootstrap the application services.
      *
@@ -270,19 +279,11 @@ class WebServiceProvider extends ServiceProvider
             return $request->user()->has('queue_manager', false);
         });
 
-        // During autoload-dumping and other cases, it may happen
-        // that the MySQL database is not yet ready. In that case,
-        // we need to catch the exception the call to `setting()`
-        // will cause.
-
-        try {
-
-            $worker_count = setting('queue_workers', true);
-
-        } catch (Exception $e) {
-
-            $worker_count = 3;
-        }
+        // attempt to parse the QUEUE_BALANCING variable into a boolean
+        $balancing_mode = filter_var(env(self::QUEUE_BALANCING_MODE, false), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        // in case the variable cannot be parsed into a boolean, assign the environment value itself
+        if (is_null($balancing_mode))
+            $balancing_mode = env(self::QUEUE_BALANCING_MODE, false);
 
         // Configure the workers for SeAT.
         $horizon_environments = [
@@ -290,8 +291,8 @@ class WebServiceProvider extends ServiceProvider
                 'seat-workers' => [
                     'connection' => 'redis',
                     'queue'      => ['high', 'medium', 'low', 'default'],
-                    'balance'    => false,
-                    'processes'  => $worker_count,
+                    'balance'    => $balancing_mode,
+                    'processes'  => (int) env(self::QUEUE_BALANCING_WORKERS, 4),
                     'tries'      => 1,
                     'timeout'    => 900, // 15 minutes
                 ],
