@@ -280,19 +280,27 @@ class WebServiceProvider extends ServiceProvider
         });
 
         // attempt to parse the QUEUE_BALANCING variable into a boolean
-        $balancing_mode = filter_var(env(self::QUEUE_BALANCING_MODE, false), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        $balancing_mode = filter_var(env(self::QUEUE_BALANCING_MODE, true), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
         // in case the variable cannot be parsed into a boolean, assign the environment value itself
         if (is_null($balancing_mode))
-            $balancing_mode = env(self::QUEUE_BALANCING_MODE, false);
+            $balancing_mode = env(self::QUEUE_BALANCING_MODE, true);
 
         // Configure the workers for SeAT.
+        //
+        // Notice regarding queues purpose :
+        //  - Notifications is targeted by all jobs regarding notification (mail, slack message, discord message, etc...)
+        //  - High is targeted by all job with a critical importance (job queued during sign-in, connectors, etc...)
+        //  - Characters is targeted by all jobs regarding character itself (info, assets, wallet journal, markets, etc...)
+        //  - Corporations is targeted by all jobs regarding corporation (titles, tracking, assets, markets, etc...)
+        //  - Default is targeted by everything else
+        //
         $horizon_environments = [
             'local' => [
                 'seat-workers' => [
                     'connection' => 'redis',
-                    'queue'      => ['high', 'medium', 'low', 'default'],
+                    'queue'      => ['notifications', 'high', 'characters', 'corporations', 'default'],
                     'balance'    => $balancing_mode,
-                    'processes'  => (int) env(self::QUEUE_BALANCING_WORKERS, 4),
+                    'processes'  => (int) env(self::QUEUE_BALANCING_WORKERS, 5),
                     'tries'      => 1,
                     'timeout'    => 900, // 15 minutes
                 ],
