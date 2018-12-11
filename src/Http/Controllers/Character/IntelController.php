@@ -421,6 +421,10 @@ class IntelController extends Controller
 
                 return number($row->balance);
             })
+            ->addColumn('is_in_group', function ($row) {
+
+                return $row->character_id === $row->first_party_id || $row->character_id === $row->second_party_id;
+            })
             ->rawColumns(['ref_type', 'first_party_id', 'second_party_id'])
             ->make(true);
     }

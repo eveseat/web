@@ -237,6 +237,11 @@
         {data: 'corporation', name: 'corporation_id'},
         {data: 'alliance', name: 'alliance_id'}
       ],
+      createdRow: function (row, data) {
+        if (data.is_in_group === '1'){
+          $(row).addClass('info')
+        }
+      },
       drawCallback: function () {
 
         $('img').unveil(100);
