@@ -1,2 +1,2 @@
-{!! img('type', $row->ship_type_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-{{ $row->typeName }}
+{!! img('type', $ship_type->typeID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+{{ $ship_type->typeName }}

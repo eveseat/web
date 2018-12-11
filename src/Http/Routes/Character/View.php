@@ -25,7 +25,7 @@ Route::get('/list', [
     'uses' => 'CharacterController@getCharacters',
 ]);
 
-Route::post('/list/data', [
+Route::get('/list/data', [
     'as'   => 'character.list.data',
     'uses' => 'CharacterController@getCharactersData',
 ]);
@@ -39,13 +39,13 @@ Route::get('/delete/{character_id}', [
 Route::get('/view/assets/{character_id}', [
     'as'         => 'character.view.assets',
     'middleware' => 'characterbouncer:assets',
-    'uses'       => 'AssetsController@getAssets',
+    'uses'       => 'AssetsController@getAssetsView',
 ]);
 
-Route::get('/view/assets/contents/{character_id}/{item_id}', [
-    'as'         => 'character.view.assets.contents',
+Route::get('/view/assets/{character_id}/details', [
+    'as'         => 'character.view.assets.details',
     'middleware' => 'characterbouncer:assets',
-    'uses'       => 'AssetsController@getAssetsContents',
+    'uses'       => 'AssetsController@getCharacterAssets',
 ]);
 
 Route::get('/view/bookmarks/{character_id}', [
@@ -123,6 +123,12 @@ Route::group(['prefix' => 'view/intel'], function () {
         'uses'       => 'IntelController@getTopWalletJournalData',
     ]);
 
+    Route::get('summary/journal/details/{first_party_id}/{getJournalContent}', [
+        'as'         => 'character.view.intel.summary.journal.details',
+        'middleware' => 'characterbouncer:intel',
+        'uses'       => 'IntelController@getJournalContent',
+    ]);
+
     // Transactions
     Route::get('summary/transactions/data/{character_id}', [
         'as'         => 'character.view.intel.summary.transactions.data',
@@ -130,11 +136,23 @@ Route::group(['prefix' => 'view/intel'], function () {
         'uses'       => 'IntelController@getTopTransactionsData',
     ]);
 
+    Route::get('summary/transactions/details/{character_id}/{client_id}', [
+        'as'         => 'character.view.intel.summary.transactions.details',
+        'middleware' => 'characterbouncer:intel',
+        'uses'       => 'IntelController@getTransactionContent',
+    ]);
+
     // Mail
     Route::get('summary/mail/data/{character_id}', [
         'as'         => 'character.view.intel.summary.mail.data',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@getTopMailFromData',
+    ]);
+
+    Route::get('summary/mail/details/{character_id}/{from}', [
+        'as'         => 'character.view.intel.summary.mail.details',
+        'middleware' => 'characterbouncer:intel',
+        'uses'       => 'IntelController@getTopMailContent',
     ]);
 
     // Standings Comparison

@@ -138,11 +138,18 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     ];
 
     /**
-     * The attributes excluded from the model's JSON form.
+     * The accessors to append to the model's array form.
      *
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    /**
+     * The attributes included in model's JSON form.
+     *
+     * @var array
+     */
+    protected $appends = ['email'];
 
     /**
      * Make sure we cleanup on delete.

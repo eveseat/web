@@ -3,6 +3,9 @@
 @section('title', trans('web::seat.mail_timeline'))
 @section('page_header', trans('web::seat.mail_timeline'))
 
+@inject('CharacterInfo', 'Seat\Eveapi\Models\Character\CharacterInfo')
+@inject('CorporationInfo', 'Seat\Eveapi\Models\Corporation\CorporationInfo')
+
 @section('full')
 
   {!! $messages->render() !!}
@@ -31,12 +34,9 @@
             </span>
             <h2 class="timeline-header">
               <b>{{ trans('web::seat.from') }}: </b>
-              <a href="{{ route('character.view.sheet', ['character_id' => $message->from]) }}">
-                {!! img('character', $message->from, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-                <span class="id-to-name" data-id="{{ $message->from }}">{{ trans('web::seat.unknown') }}</span>
-              </a>
+              @include('web::partials.character', ['character' => $CharacterInfo::find($message->from) ?: $message->from, 'character_id' => $message->character_id])
 
-        @if($message->recipients->where('recipient_type', 'alliance')->count() > 0)
+        @if ($message->recipients->where('recipient_type', 'alliance')->count() > 0)
 
           <li>
             <b>{{ trans('web::seat.to_alliance') }}:</b>
@@ -51,15 +51,14 @@
           </li>
         @endif
 
-        @if($message->recipients->where('recipient_type', 'corporation')->count() > 0)
+        @if ($message->recipients->where('recipient_type', 'corporation')->count() > 0)
 
           <li>
             <b>{{ trans('web::seat.to_corp') }}:</b>
 
             @foreach($message->recipients->where('recipient_type', 'corporation') as $recipient)
 
-              {!! img('corporation', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-              <span class="id-to-name" data-id="{{ $recipient->recipient_id }}">{{ trans('web::seat.unknown') }}</span>
+              @include('web::partials.corporation', ['corporation' => $CorporationInfo::find($recipient->recipient_id) ?: $recipient->recipient_id, 'character_id' => $message->character_id])
 
             @endforeach
 
@@ -73,8 +72,7 @@
 
             @foreach($message->recipients->where('recipient_type', 'character') as $recipient)
 
-              {!! img('character', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-              <span class="id-to-name" data-id="{{ $recipient->recipient_id }}">{{ trans('web::seat.unknown') }}</span>
+              @include('web::partials.character', ['character' => $CharacterInfo::find($recipient->recipient_id) ?: $recipient->recipient_id, 'character_id' => $message->character_id])
 
             @endforeach
 

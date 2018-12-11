@@ -131,7 +131,7 @@
 
                   @foreach($jump_clones as $clone)
                     <li>
-                        @if(! is_null($clone->name))
+                        @if(! is_null($clone->name) && ! empty($clone->name))
                         ({{ $clone->name }})
                         @endif
 
@@ -248,22 +248,22 @@
 
             <div class="col-md-6">
               <ul class="list-unstyled">
-                <li>Charisma: {{ $attributes->charisma }}</li>
-                <li>Intelligence: {{ $attributes->intelligence }}</li>
-                <li>Memory: {{ $attributes->memory }}</li>
-                <li>Perception: {{ $attributes->perception }}</li>
-                <li>Willpower: {{ $attributes->willpower }}</li>
+                <li>Charisma: {{ is_null($attributes) ? 0 : $attributes->charisma }}</li>
+                <li>Intelligence: {{ is_null($attributes) ? 0 : $attributes->intelligence }}</li>
+                <li>Memory: {{ is_null($attributes) ? 0 : $attributes->memory }}</li>
+                <li>Perception: {{ is_null($attributes) ? 0 : $attributes->perception }}</li>
+                <li>Willpower: {{ is_null($attributes) ? 0 : $attributes->willpower }}</li>
               </ul>
             </div>
 
             <div class="col-md-6">
               <dl>
                 <dt>{{ trans('web::seat.bonus_remaps') }}</dt>
-                <dd>{{ $attributes->bonus_remaps }}</dd>
+                <dd>{{ is_null($attributes) ? 0 : $attributes->bonus_remaps }}</dd>
                 <dt>{{ trans('web::seat.last_remap_date') }}</dt>
-                <dd>{{ $attributes->last_remap_date }}</dd>
+                <dd>{{ is_null($attributes) ? carbon() : $attributes->last_remap_date }}</dd>
                 <dt>{{ trans('web::seat.accrued_remap_cooldown_date') }}</dt>
-                <dd>{{ $attributes->accrued_remap_cooldown_date }}</dd>
+                <dd>{{ is_null($attributes) ? carbon() : $attributes->accrued_remap_cooldown_date }}</dd>
               </dl>
             </div>
 
