@@ -350,6 +350,13 @@ class IntelController extends Controller
 
     }
 
+    /**
+     * @param int $first_party_id
+     * @param int $second_party_id
+     *
+     * @return mixed
+     * @throws \Exception
+     */
     public function getJournalContent(int $first_party_id, int $second_party_id)
     {
 
@@ -418,6 +425,13 @@ class IntelController extends Controller
             ->make(true);
     }
 
+    /**
+     * @param int $character_id
+     * @param int $client_id
+     *
+     * @return mixed
+     * @throws \Exception
+     */
     public function getTransactionContent (int $character_id, int $client_id)
     {
 
@@ -451,6 +465,13 @@ class IntelController extends Controller
             ->make(true);
     }
 
+    /**
+     * @param int $character_id
+     * @param int $from
+     *
+     * @return mixed
+     * @throws \Exception
+     */
     public function getTopMailContent(int $character_id, int $from)
     {
 
@@ -475,8 +496,7 @@ class IntelController extends Controller
             })
             ->addColumn('read', function ($row) {
 
-                return view('web::character.partials.mailread', compact('row'));
-
+                return view('web::character.partials.topmailread', compact('row'));
             })
             ->rawColumns(['from', 'subject', 'tocounts', 'read'])
             ->make(true);
