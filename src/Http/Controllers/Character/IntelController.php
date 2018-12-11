@@ -187,7 +187,8 @@ class IntelController extends Controller
             })
             ->editColumn('alliance_id', function ($row) {
 
-                return $this->getIntelView('alliance', $row->character_id, $row->from);
+                return $this->getIntelView('alliance', $row->character_id, $row->from)
+                    . view('web::character.intel.partials.mailcontentbutton', compact('row'));
             })
             ->rawColumns(['character_id', 'corporation_id', 'alliance_id'])
             ->make(true);
@@ -436,6 +437,38 @@ class IntelController extends Controller
             })
             ->rawColumns(['is_buy', 'client_view', 'item_view'])
             ->make(true);
+    }
+
+    public function getTopMailContent(int $character_id, int $from)
+    {
+
+        $mail = $this->getMailContent($character_id, $from);
+
+        return DataTables::of($mail)
+            ->editColumn('from', function ($row) {
+
+                $character_id = $row->character_id;
+
+                $character = CharacterInfo::find($row->from) ?: $row->from;
+
+                return view('web::partials.character', compact('character', 'character_id'));
+            })
+            ->editColumn('subject', function ($row) {
+
+                return view('web::character.partials.mailtitle', compact('row'));
+            })
+            ->editColumn('tocounts', function ($row) {
+
+                return view('web::character.partials.mailtocounts', compact('row'));
+            })
+            ->addColumn('read', function ($row) {
+
+                return view('web::character.partials.mailread', compact('row'));
+
+            })
+            ->rawColumns(['from', 'subject', 'tocounts', 'read'])
+            ->make(true);
+
     }
 
     /**

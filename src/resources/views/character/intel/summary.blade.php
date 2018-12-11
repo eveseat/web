@@ -103,12 +103,11 @@
               </tr>
               </thead>
             </table>
-
-            </div>
           </div>
-
         </div>
+
       </div>
+    </div>
 
 
       <hr>
@@ -126,6 +125,73 @@
         </tr>
         </thead>
       </table>
+
+      <!-- Top Mail Content Modal -->
+      <div class="modal fade" id="topMailContentModal" tabindex="-1" role="dialog"
+           aria-labelledby="topMailContentModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title" id="topMailContentModalLabel">{{ trans('web::seat.mail') }}</h4>
+            </div>
+            <div class="modal-body">
+
+              <table class="table compact table-condensed table-hover table-responsive"
+                     id="character-mail" data-page-length=50>
+                <thead>
+                <tr>
+                  <th>{{ trans('web::seat.date') }}</th>
+                  <th>{{ trans('web::seat.from') }}</th>
+                  <th>{{ trans_choice('web::seat.title', 1) }}</th>
+                  <th data-orderable="false">{{ trans('web::seat.to') }}</th>
+                  <th data-orderable="false"></th>
+                </tr>
+                </thead>
+              </table>
+              <div class="panel-footer clearfix">
+                <div class="col-md-2 col-md-offset-2">
+                  <span class="label label-warning">0</span> Corporation
+                </div>
+                <div class="col-md-2">
+                  <span class="label label-primary">0</span> Alliance
+                </div>
+                <div class="col-md-2">
+                  <span class="label label-info">0</span> Characters
+                </div>
+                <div class="col-md-2">
+                  <span class="label label-success">0</span> Mailing-Lists
+                </div>
+              </div>
+
+              <!-- Mail Content Modal -->
+              <div class="modal fade" id="mailContentModal" tabindex="-1" role="dialog"
+                   aria-labelledby="mailContentModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      <h4 class="modal-title" id="myModalLabel">{{ trans('web::seat.mail') }}</h4>
+                    </div>
+                    <div class="modal-body">
+
+                      <span id="mail-content-result"></span>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+
+        </div>
+      </div>
 
     </div>
   </div>
@@ -177,8 +243,6 @@
 
         var url = $(this).attr('data-url');
 
-        alert('journal');
-
         var characterJournal = $('table#character-journal').DataTable({
           processing: true,
           serverSide: true,
@@ -204,9 +268,6 @@
             });
           }
         });
-
-        characterJournal.draw();
-
       });
 
     }
@@ -234,8 +295,8 @@
       $('img').unveil(100);
       ids_to_names();
 
-      // After loading the journal data, bind a click event
-      // on items with the journal-contet class.
+      // After loading the transaction data, bind a click event
+      // on items with the transaction-contet class.
       $('a.transaction-content').on('click', function () {
 
         var url = $(this).attr('data-url');
@@ -269,7 +330,6 @@
     }
   });
 
-
   var characterTopMailTable = $('table#character-top-mail-interactions').DataTable({
     processing  : true,
     serverSide  : true,
@@ -290,6 +350,55 @@
     drawCallback: function () {
       $('img').unveil(100);
       ids_to_names();
+
+      // After loading the mail data, bind a click event
+      // on items with the top-mail-content class.
+      $('a.top-mail-content').on('click', function () {
+
+        var url = $(this).attr('data-url');
+
+        var characterTopMail = $('table#character-mail').DataTable({
+          processing  : true,
+          serverSide  : true,
+          ajax        : {
+            url : url
+          },
+          columns     : [
+            {data: 'timestamp', name: 'timestamp', render: human_readable},
+            {data: 'from', name: 'sender.name'},
+            {data: 'subject', name: 'subject'},
+            {data: 'body', name: 'body.body', visible: false},
+            {data: 'tocounts', name: 'tocounts', orderable: false, searchable: false},
+            {data: 'read', name: 'read', orderable: false, searchable: false}
+          ],
+          drawCallback: function () {
+            $('img').unveil(100);
+            ids_to_names();
+            $('[data-toggle="tooltip"]').tooltip();
+
+            // After loading the contracts data, bind a click event
+            // on items with the contract-item class.
+            $('a.mail-content').on('click', function () {
+
+              // Small hack to get an ajaxable url from Laravel
+              var url = $(this).attr('data-url');
+
+              // Perform an ajax request for the contract items
+              $.get(url, function (data) {
+                $('#mail-content-result').empty().append(data);
+                $('img').unveil(100);
+                ids_to_names();
+              });
+            });
+
+            /*$('#topMailContentModal').on('hide.bs.modal', function () {
+              characterTopMail.destroy();
+            });*/
+
+          }
+        });
+      });
+
     }
   });
 

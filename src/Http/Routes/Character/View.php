@@ -149,6 +149,12 @@ Route::group(['prefix' => 'view/intel'], function () {
         'uses'       => 'IntelController@getTopMailFromData',
     ]);
 
+    Route::get('summary/mail/details/{character_id}/{from}', [
+        'as'         => 'character.view.intel.summary.mail.details',
+        'middleware' => 'characterbouncer:intel',
+        'uses'       => 'IntelController@getTopMailContent',
+    ]);
+
     // Standings Comparison
     Route::get('comparison/{character_id}', [
         'as'         => 'character.view.intel.standingscomparison',
