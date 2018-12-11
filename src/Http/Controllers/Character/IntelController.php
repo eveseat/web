@@ -436,7 +436,7 @@ class IntelController extends Controller
      * @return mixed
      * @throws \Exception
      */
-    public function getTransactionContent (int $character_id, int $client_id)
+    public function getTransactionContent(int $character_id, int $client_id)
     {
 
         $transactions = $this->characterWalletTransactionInteraction($character_id, $client_id);
@@ -521,12 +521,12 @@ class IntelController extends Controller
             return collect([
                 'character_id' => $character_id,
                 'corporation_id' => CharacterInfo::find($character_id)->corporation_id,
-                'alliance_id' => CharacterInfo::find($character_id)->alliance_id
+                'alliance_id' => CharacterInfo::find($character_id)->alliance_id,
             ]);
 
         return collect([UniverseName::find($first_party_id), UniverseName::find($second_party_id)])
             ->filter()
-            ->filter(function ($universe_name) use ($character_id){
+            ->filter(function ($universe_name) use ($character_id) {
 
                 return $universe_name->entity_id !== $character_id;
             })
@@ -540,13 +540,13 @@ class IntelController extends Controller
                             return collect([
                                 'character_id' => $item->entity_id,
                                 'corporation_id' => optional(CharacterAffiliation::find($item->entity_id))->corporation_id,
-                                'alliance_id' => optional(CharacterAffiliation::find($item->entity_id))->alliance_id
+                                'alliance_id' => optional(CharacterAffiliation::find($item->entity_id))->alliance_id,
                             ])->filter();
 
                         if($item->category === 'corporation')
                             return collect([
                                 'corporation_id' => $item->entity_id,
-                                'alliance_id' => optional(CharacterAffiliation::where('corporation_id',$item->entity_id)->get()->first())->alliance_id
+                                'alliance_id' => optional(CharacterAffiliation::where('corporation_id', $item->entity_id)->get()->first())->alliance_id,
                             ])->filter();
 
                         if($item->category === 'alliance')
@@ -587,7 +587,6 @@ class IntelController extends Controller
 
         return '';
 
-
     }
 
     /**
@@ -602,7 +601,7 @@ class IntelController extends Controller
         if ($universe_name->has('unknown_id'))
             return $this->getUnknownIntelView($universe_name);
 
-        if (!$universe_name->has('character_id'))
+        if (! $universe_name->has('character_id'))
             return '';
 
         $character = CharacterInfo::find($universe_name['character_id']) ?: $universe_name['character_id'];
@@ -622,7 +621,7 @@ class IntelController extends Controller
         if ($universe_name->has('unknown_id'))
             return $this->getUnknownIntelView($universe_name);
 
-        if (!$universe_name->has('corporation_id'))
+        if (! $universe_name->has('corporation_id'))
             return '';
 
         $corporation = CorporationInfo::find($universe_name['corporation_id']) ?: $universe_name['corporation_id'];
@@ -642,7 +641,7 @@ class IntelController extends Controller
         if ($universe_name->has('unknown_id'))
             return $this->getUnknownIntelView($universe_name);
 
-        if (!$universe_name->has('alliance_id'))
+        if (! $universe_name->has('alliance_id'))
             return '';
 
         $alliance = $universe_name['alliance_id'];
