@@ -108,11 +108,8 @@ class IntelController extends Controller
             ->addColumn('alliance', function ($row) {
 
                 return $this->getIntelView('alliance', $row->character_id, $row->first_party_id, $row->second_party_id)
-                    . view('web::character.intel.partials.journalcontents', compact('row'));
+                    . view('web::character.intel.partials.journalcontentbutton', compact('row'));
             })
-            /*TODO: ->addColumn('button', function ($row){
-                return view('web::character.intel.partials.topwalletjournalinteractionsbutton', compact('row'));
-            })*/
             ->addColumn('is_in_group', function ($row) use ($user_group) {
                 return in_array($row->first_party_id, $user_group->toArray()) && in_array($row->second_party_id, $user_group->toArray());
             })
@@ -157,7 +154,7 @@ class IntelController extends Controller
             ->addColumn('alliance', function ($row) {
 
                 return $this->getIntelView('alliance', $row->character_id, $row->client_id)
-                    . view('web::character.intel.partials.transactioncontents', compact('row'));
+                    . view('web::character.intel.partials.transactioncontentbutton', compact('row'));
             })
             ->rawColumns(['character', 'corporation', 'alliance'])
             ->make(true);
