@@ -74,6 +74,10 @@ class UserController extends Controller
                 return view('web::configuration.users.partials.action-buttons', compact('row'));
             })
             ->addColumn('roles', function (User $user) {
+
+                if (! $user->group)
+                    return trans('web::seat.no') . ' ' . trans_choice('web::seat.role', 2);
+
                 $roles = $user->group->roles->map(function ($role) {
                     return $role->title;
                 })->implode(', ');
@@ -82,11 +86,17 @@ class UserController extends Controller
             })
             ->addColumn('main_character', function (User $user) {
 
-                    return optional($user->group->main_character)->name ?: '';
-                })
-                ->addColumn('main_character_blade', function (User $user) {
+                if (! $user->group)
+                    return '';
 
-                $main_character_id = optional($user->group->main_character)->character_id ?: null;
+                return optional($user->group->main_character)->name ?: '';
+            })
+            ->addColumn('main_character_blade', function (User $user) {
+
+                $main_character_id = null;
+
+                if ($user->group)
+                    $main_character_id = optional($user->group->main_character)->character_id ?: null;
 
                 $character = CharacterInfo::find($main_character_id) ?: $main_character_id;
 
