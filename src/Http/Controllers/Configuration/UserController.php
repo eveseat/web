@@ -184,7 +184,7 @@ class UserController extends Controller
         $user->save();
 
         // Ensure the old group is not an orphan now.
-        if ($current_group->users->isEmpty()) $current_group->delete();
+        if (! is_null($current_group) && $current_group->users->isEmpty()) $current_group->delete();
 
         return redirect()->back()
             ->with('success', trans('web::seat.user_updated'));
@@ -248,6 +248,19 @@ class UserController extends Controller
         event('security.log', [
             'Impersonating ' . $user->name, 'authentication',
         ]);
+
+        // ensure the user got a valid group - spawn it otherwise
+        if (is_null($user->group)) {
+            Group::forceCreate([
+                'id' => $user->group_id,
+            ]);
+
+            // force laravel to update model relationship information
+            $user->load('group');
+
+            // assign the main_character
+            setting(['main_character_id', $user->id, $user->group_id]);
+        }
 
         // Login as the new user.
         auth()->login($user);
