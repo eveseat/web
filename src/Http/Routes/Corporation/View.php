@@ -206,6 +206,12 @@ Route::get('/view/tracking/{corporation_id}', [
     'uses'       => 'TrackingController@getTracking',
 ]);
 
+Route::get('/view/tracking/{corporation_id}/membertracking', [
+    'as'         => 'corporation.view.tracking.data',
+    'middleware' => 'corporationbouncer:tracking',
+    'uses'       => 'TrackingController@getMemberTracking',
+]);
+
 Route::get('/view/journal/{corporation_id}', [
     'as'         => 'corporation.view.journal',
     'middleware' => 'corporationbouncer:journal',

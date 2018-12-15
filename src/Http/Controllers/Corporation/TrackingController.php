@@ -22,8 +22,10 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Services\Repositories\Corporation\Members;
 use Seat\Web\Http\Controllers\Controller;
+use Yajra\DataTables\DataTables;
 
 class TrackingController extends Controller
 {
@@ -37,8 +39,65 @@ class TrackingController extends Controller
     public function getTracking(int $corporation_id)
     {
 
+        return view('web::corporation.tracking');
+    }
+
+    /**
+     * @param int $corporation_id
+     *
+     * @return mixed
+     * @throws \Exception
+     */
+    public function getMemberTracking(int $corporation_id)
+    {
+
+        $selected_status = collect(explode(',', request('selected_refresh_token_status')));
+
         $tracking = $this->getCorporationMemberTracking($corporation_id);
 
-        return view('web::corporation.tracking', compact('tracking'));
+        if($selected_status->contains('valid_token') && !$selected_status->contains('invalid_token'))
+            $tracking->has('user.refresh_token');
+
+        if($selected_status->contains('invalid_token') && !$selected_status->contains('valid_token'))
+            $tracking->doesntHave('user')->orDoesntHave('user.refresh_token');
+
+        return DataTables::of($tracking)
+            ->editColumn('character_id', function ($row) {
+
+                $character_id = $row->character_id;
+
+                $character = CharacterInfo::find($row->character_id) ?: $row->character_id;
+
+                return view('web::partials.character', compact('character', 'character_id'));
+            })
+            ->addColumn('location', function ($row){
+                return view('web::corporation.partials.location', compact('row'));
+            })
+
+            ->addColumn('refresh_token', function ($row) {
+
+                $refresh_token = false;
+
+                if(! is_null(optional($row->user)->refresh_token))
+                    $refresh_token = true;
+
+                return view('web::corporation.partials.refresh-token', compact('refresh_token'));
+            })
+            ->addColumn('main_character', function ($row) {
+
+                $character_id = $row->character_id;
+
+                if(is_null($row->user))
+                    return '';
+
+                $main_character_id = $row->user->group->main_character->character_id;
+
+                $character = CharacterInfo::find($main_character_id) ?: $main_character_id;
+
+                return view('web::partials.character', compact('character', 'character_id'));
+            })
+            ->rawColumns(['character_id', 'main_character', 'refresh_token', 'location'])
+            ->make(true);
+
     }
 }
