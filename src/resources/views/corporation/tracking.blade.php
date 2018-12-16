@@ -13,12 +13,9 @@
     </div>
     <div class="box-body">
 
-      <label>{{ trans('web::seat.status') }}: </label>
-      <label id="refresh_token_status" class="checkbox-inline">
-        <input type="checkbox" value="valid_token" checked>{{ trans('web::seat.valid_token') }}
-      </label>
-      <label id="refresh_token_status" class="checkbox-inline">
-        <input type="checkbox" value="invalid_token" checked>{{ trans('web::seat.invalid_token') }}
+      <label>{{ trans('web::seat.status') }}:
+        <input onchange="filterme()" type="checkbox" name="token_status" value="valid_token" checked>{{ trans('web::seat.valid_token') }}
+        <input onchange="filterme()" type="checkbox" name="token_status" value="invalid_token" checked>{{ trans('web::seat.invalid_token') }}
       </label>
 
       <table id="corporation-member-tracking" class="table compact table-condensed table-hover table-responsive">
@@ -43,15 +40,15 @@
   <script>
 
     function refreshTokenCheckboxes() {
-      return $('#refresh_token_status > input[type="checkbox"]').map(function(){
-        if(this.checked)
-          return $(this).val()
-      }).get().join();
+      return $('input:checkbox[name="token_status"]:checked').map(function() {
+        return  this.value;
+      }).get();
     }
 
-    $( '#refresh_token_status > input[type="checkbox"]' ).click(function() {
-      corporation_member_tracking_table.draw();
-    });
+    function filterme() {
+
+      corporation_member_tracking_table.draw()
+    }
 
     var corporation_member_tracking_table = $('table#corporation-member-tracking').DataTable({
       processing      : true,

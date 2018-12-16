@@ -51,7 +51,7 @@ class TrackingController extends Controller
     public function getMemberTracking(int $corporation_id)
     {
 
-        $selected_status = collect(explode(',', request('selected_refresh_token_status')));
+        $selected_status = collect(request('selected_refresh_token_status'));
 
         $tracking = $this->getCorporationMemberTracking($corporation_id);
 
