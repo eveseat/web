@@ -55,10 +55,10 @@ class TrackingController extends Controller
 
         $tracking = $this->getCorporationMemberTracking($corporation_id);
 
-        if($selected_status->contains('valid_token') && !$selected_status->contains('invalid_token'))
+        if($selected_status->contains('valid_token') && ! $selected_status->contains('invalid_token'))
             $tracking->has('user.refresh_token');
 
-        if($selected_status->contains('invalid_token') && !$selected_status->contains('valid_token'))
+        if($selected_status->contains('invalid_token') && ! $selected_status->contains('valid_token'))
             $tracking->doesntHave('user')->orDoesntHave('user.refresh_token');
 
         return DataTables::of($tracking)
@@ -70,7 +70,7 @@ class TrackingController extends Controller
 
                 return view('web::partials.character', compact('character', 'character_id'));
             })
-            ->addColumn('location', function ($row){
+            ->addColumn('location', function ($row) {
                 return view('web::corporation.partials.location', compact('row'));
             })
 
