@@ -35,10 +35,11 @@
 
   <script type="text/javascript">
     $('#user-configuration-table').DataTable({
-      "processing": true,
-      "serverSide": true,
-      "pageLength": 50,
-      "ajax": {
+      processing: true,
+      serverSide: true,
+      searchDelay: 600,
+      pageLength: 50,
+      ajax: {
         url: "{{url()->current()}}"
       },
       columns: [
@@ -70,6 +71,11 @@
         $("img").unveil(100);
         ids_to_names();
       },
+      createdRow: function (row, data) {
+        if (data.active === false){
+          $(row).addClass('warning')
+        }
+      }
     });
 
   </script>
