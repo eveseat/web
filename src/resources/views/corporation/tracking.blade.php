@@ -13,10 +13,17 @@
     </div>
     <div class="box-body">
 
-      <label>{{ trans('web::seat.status') }}:
-        <input onchange="filterme()" type="checkbox" name="token_status" value="valid_token" checked>{{ trans('web::seat.valid_token') }}
-        <input onchange="filterme()" type="checkbox" name="token_status" value="invalid_token" checked>{{ trans('web::seat.invalid_token') }}
-      </label>
+      <div>
+        <b>{{ trans('web::seat.status') }}</b>
+        <div class="input-group">
+          <label class="checkbox-inline">
+            <input onchange="filterme()" type="checkbox" name="token_status" value="valid_token" checked>{{ trans('web::seat.valid_token') }}
+          </label>
+          <label class="checkbox-inline">
+            <input onchange="filterme()" type="checkbox" name="token_status" value="invalid_token" checked>{{ trans('web::seat.invalid_token') }}
+          </label>
+        </div>
+      </div>
 
       <table id="corporation-member-tracking" class="table compact table-condensed table-hover table-responsive">
         <thead>
