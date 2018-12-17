@@ -33,7 +33,7 @@
                 </a>
 
                 <p class="text-muted pull-right"><span class="id-to-name"
-                                                       data-id="{{ $character->character->corporation_id }}">{{ trans('web::seat.unknown') }}</span>
+                                                       data-id="{{ is_null($character->character) ? 0 : $character->character->corporation_id }}">{{ trans('web::seat.unknown') }}</span>
                 </p>
               </td>
             </tr>

@@ -22,6 +22,8 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
+use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Corporation\Wallet;
 use Seat\Web\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
@@ -65,13 +67,49 @@ class WalletController extends Controller
             })
             ->editColumn('first_party_id', function ($row) {
 
-                return view('web::partials.journalfrom', compact('row'))
-                    ->render();
+                $character_id = $row->character_id;
+
+                if (optional($row->first_party)->category === 'character') {
+
+                    $character = CharacterInfo::find($row->first_party_id) ?: $row->first_party_id;
+
+                    return view('web::partials.character', compact('character', 'character_id'));
+                }
+
+                if (optional($row->first_party)->category === 'corporation'){
+
+                    $corporation = CorporationInfo::find($row->first_party_id) ?: $row->first_party_id;
+
+                    return view('web::partials.corporation', compact('corporation', 'character_id'));
+                }
+
+                return view('web::partials.unknown', [
+                    'unknown_id' => $row->first_party_id,
+                    'character_id' => $character_id,
+                ]);
             })
             ->editColumn('second_party_id', function ($row) {
 
-                return view('web::partials.journalto', compact('row'))
-                    ->render();
+                $character_id = $row->character_id;
+
+                if (optional($row->second_party)->category === 'character') {
+
+                    $character = CharacterInfo::find($row->second_party_id) ?: $row->second_party_id;
+
+                    return view('web::partials.character', compact('character', 'character_id'));
+                }
+
+                if (optional($row->second_party)->category === 'corporation') {
+
+                    $corporation = CorporationInfo::find($row->second_party_id) ?: $row->second_party_id;
+
+                    return view('web::partials.corporation', compact('corporation', 'character_id'));
+                }
+
+                return view('web::partials.unknown', [
+                    'unknown_id' => $row->second_party_id,
+                    'character_id' => $character_id,
+                ]);
             })
             ->editColumn('amount', function ($row) {
 
