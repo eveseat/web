@@ -304,7 +304,7 @@ trait AccessChecker
             // mind here that affiliations can have inversions too.
             foreach ($role->affiliations as $affiliation) {
 
-                if ($affiliation->pivot->not && !in_array($affiliation->affiliation, $this->associatedCharacterIds()->toArray())) {
+                if ($affiliation->pivot->not && ! in_array($affiliation->affiliation, $this->associatedCharacterIds()->toArray())) {
 
                     array_push(
                         $map['inverted_affiliations'][$affiliation->type],
