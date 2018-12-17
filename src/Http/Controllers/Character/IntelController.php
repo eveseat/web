@@ -225,7 +225,7 @@ class IntelController extends Controller
                 return view('web::character.intel.partials.notesactions', compact('row'))
                     ->render();
             })
-            ->rawColumns(['actions'])
+            ->rawColumns(['actions', 'note'])
             ->make(true);
 
     }
