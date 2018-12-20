@@ -5,6 +5,7 @@
 
 @inject('CharacterInfo', 'Seat\Eveapi\Models\Character\CharacterInfo')
 @inject('CorporationInfo', 'Seat\Eveapi\Models\Corporation\CorporationInfo')
+@inject('MailMailingList', 'Seat\Eveapi\Models\Mail\MailMailingList')
 
 @section('full')
 
@@ -43,8 +44,7 @@
 
             @foreach($message->recipients->where('recipient_type', 'alliance') as $recipient)
 
-              {!! img('alliance', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-              <span class="id-to-name" data-id="{{ $recipient->recipient_id }}">{{ trans('web::seat.unknown') }}</span>
+              @include('web::partials.alliance', ['alliance' => $recipient->recipient_id, 'character_id' => $message->character_id])
 
             @endforeach
 
@@ -77,7 +77,26 @@
             @endforeach
 
           </li>
-          @endif
+
+        @endif
+
+        @if($message->recipients->where('recipient_type', 'mailing_list')->count() > 0)
+
+          <li>
+            <b>{{ trans('web::seat.to_mailing_list') }}:</b>
+
+            @foreach($message->recipients->where('recipient_type', 'mailing_list') as $recipient)
+
+              {{ isset($MailMailingList::where('mailing_list_id', $recipient->recipient_id)->first()->name) ? $MailMailingList::where('mailing_list_id', $recipient->recipient_id)->first()->name : trans('web::seat.unknown') }}
+
+            @endforeach
+
+          </li>
+
+        @endif
+
+        <b>{{ trans('web::seat.source') }}: </b>
+        @include('web::partials.character', ['character' => $CharacterInfo::find($message->character_id) ?: $message->character_id, 'character_id' => $message->character_id])
 
 
           </h2>
