@@ -161,8 +161,7 @@ class ContractsController extends Controller
             })
             ->addColumn('contents', function ($row) {
 
-                return view('web::partials.contractcontentsbutton', compact('row'))
-                    ->render();
+                return view('web::partials.contractcontentsbutton', compact('row'));
             })
             ->addColumn('is_in_group', function ($row) use ($user_group) {
 

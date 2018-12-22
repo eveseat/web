@@ -120,10 +120,7 @@
           // on items with the contract-item class.
           $('a.contract-item').on('click', function () {
 
-            // Small hack to get an ajaxable url from Laravel
-            var url = "{{ route('character.view.contracts.items', ['character_id' => $request->character_id, 'contract_id' => ':contractid']) }}";
-            var contract_id = $(this).attr('a-contract-id');
-            url = url.replace(':contractid', contract_id);
+            var url = $(this).attr('data-url');
 
             // Perform an ajax request for the contract items
             $.get(url, function (data) {
