@@ -37,6 +37,7 @@ use Seat\Web\Events\Logout;
 use Seat\Web\Events\SecLog;
 use Seat\Web\Events\Security;
 use Seat\Web\Extentions\EveOnlineProvider;
+use Seat\Web\Http\Composers\CharacterLayout;
 use Seat\Web\Http\Composers\CharacterMenu;
 use Seat\Web\Http\Composers\CharacterSummary;
 use Seat\Web\Http\Composers\CorporationMenu;
@@ -172,6 +173,11 @@ class WebServiceProvider extends ServiceProvider
         $this->app['view']->composer([
             'web::character.includes.menu',
         ], CharacterMenu::class);
+
+        // Character layout breadcrumb
+        $this->app['view']->composer([
+            'web::character.layouts.view',
+        ], CharacterLayout::class);
 
         // Corporation info composer
         $this->app['view']->composer([

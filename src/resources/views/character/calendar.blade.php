@@ -1,6 +1,5 @@
-@extends('web::character.layouts.view', ['viewname' => 'calendar'])
+@extends('web::character.layouts.view', ['viewname' => 'calendar', 'breadcrumb' => trans('web::seat.calendar')])
 
-@section('title', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.calendar'))
 @section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.calendar'))
 
 @inject('request', 'Illuminate\Http\Request')
