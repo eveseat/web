@@ -92,7 +92,7 @@ class TrackingController extends Controller
 
                 $main_character_id = $character_id;
 
-                if (! is_null(optional($row->user)->group) && ! is_null(optional($row->user->group)->main_character_id))
+                if (! is_null($row->user->group) && ! is_null(optional($row->user->group)->main_character_id))
                     $main_character_id = $row->user->group->main_character_id;
 
                 $character = CharacterInfo::find($main_character_id) ?: $main_character_id;
