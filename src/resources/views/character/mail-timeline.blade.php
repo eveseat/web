@@ -5,7 +5,6 @@
 
 @inject('CharacterInfo', 'Seat\Eveapi\Models\Character\CharacterInfo')
 @inject('CorporationInfo', 'Seat\Eveapi\Models\Corporation\CorporationInfo')
-@inject('MailMailingList', 'Seat\Eveapi\Models\Mail\MailMailingList')
 
 @section('full')
 
@@ -87,7 +86,11 @@
 
             @foreach($message->recipients->where('recipient_type', 'mailing_list') as $recipient)
 
-              {{ isset($MailMailingList::where('mailing_list_id', $recipient->recipient_id)->first()->name) ? $MailMailingList::where('mailing_list_id', $recipient->recipient_id)->first()->name : trans('web::seat.unknown') }}
+              @if (! is_null($recipient->mailing_list))
+                {{ $recipient->mailing_list->name }}
+              @else
+                {{ trans('web::seat.unknown') }}
+              @endif
 
             @endforeach
 
