@@ -253,7 +253,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function getEmailAttribute()
     {
 
-        return Profile::get('email_address', $this->group->id);
+        return Profile::get('email_address', $this->group_id) ?: '';
     }
 
     /**
