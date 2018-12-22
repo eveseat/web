@@ -372,9 +372,9 @@
               {data: 'timestamp', name: 'timestamp', render: human_readable},
               {data: 'from', name: 'sender.name'},
               {data: 'subject', name: 'subject'},
-              {data: 'body', name: 'body.body', visible: false},
               {data: 'tocounts', name: 'tocounts', orderable: false, searchable: false},
-              {data: 'read', name: 'read', orderable: false, searchable: false}
+              {data: 'read', name: 'read', orderable: false, searchable: false},
+              {data: 'body', name: 'body.body', visible: false}
             ],
             drawCallback: function () {
               $('img').unveil(100);
