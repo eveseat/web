@@ -24,9 +24,9 @@ namespace Seat\Web\Http\Composers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 
-class CharacterLayout
+class CorporationLayout
 {
 
     protected $request;
@@ -47,9 +47,9 @@ class CharacterLayout
      */
     public function compose(View $view)
     {
-        $character_info = CharacterInfo::find($this->request->character_id);
+        $corporation_info = CorporationInfo::find($this->request->corporation_id);
 
-        if (! is_null($character_info))
-            $view->with('character_name', $character_info->name);
+        if (! is_null($corporation_info))
+            $view->with('corporation_name', $corporation_info->name);
     }
 }

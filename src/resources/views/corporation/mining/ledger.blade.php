@@ -1,6 +1,5 @@
-@extends('web::corporation.mining.layouts.view', ['sub_viewname' => 'ledger'])
+@extends('web::corporation.mining.layouts.view', ['sub_viewname' => 'ledger', 'breadcrumb' => trans('web::seat.mining')])
 
-@section('title', trans_choice('web::seat.corporation', 1) . ' | ' . trans('web::seat.mining') . ' ' . trans_choice('web::seat.mining_ledger', 2))
 @section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.mining') . ' ' . trans_choice('web::seat.mining_ledger', 2))
 
 @section('mining_content')

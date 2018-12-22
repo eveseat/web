@@ -1,6 +1,5 @@
-@extends('web::corporation.layouts.view', ['viewname' => 'killmails'])
+@extends('web::corporation.layouts.view', ['viewname' => 'killmails', 'breadcrumb' => trans('web::seat.killmails')])
 
-@section('title', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.killmails'))
 @section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.killmails'))
 
 @inject('request', 'Illuminate\Http\Request')

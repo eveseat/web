@@ -40,6 +40,7 @@ use Seat\Web\Extentions\EveOnlineProvider;
 use Seat\Web\Http\Composers\CharacterLayout;
 use Seat\Web\Http\Composers\CharacterMenu;
 use Seat\Web\Http\Composers\CharacterSummary;
+use Seat\Web\Http\Composers\CorporationLayout;
 use Seat\Web\Http\Composers\CorporationMenu;
 use Seat\Web\Http\Composers\CorporationSummary;
 use Seat\Web\Http\Composers\Esi;
@@ -192,6 +193,11 @@ class WebServiceProvider extends ServiceProvider
         $this->app['view']->composer([
             'web::corporation.includes.menu',
         ], CorporationMenu::class);
+
+        // Corporation layout breadcrumb
+        $this->app['view']->composer([
+            'web::corporation.layouts.view',
+        ], CorporationLayout::class);
 
     }
 
