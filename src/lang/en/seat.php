@@ -23,6 +23,7 @@
 return [
 
     // General
+    'global'                => 'Global',
     'home'                  => 'Home',
     'character'             => 'Character|Characters',
     'corporation'           => 'Corporation|Corporations',

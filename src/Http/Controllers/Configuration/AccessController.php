@@ -108,6 +108,20 @@ class AccessController extends Controller
             ));
     }
 
+    public function renameRole($role_id)
+    {
+        $this->validate(request(), [
+            'title' => 'required|string|unique:roles,title',
+        ]);
+
+        $role = $this->getRole($role_id);
+
+        $role->title = request()->input('title');
+        $role->save();
+
+        return redirect()->back()->with('success', 'The role has been successfully renamed.');
+    }
+
     /**
      * @param \Seat\Web\Http\Validation\RolePermission $request
      *

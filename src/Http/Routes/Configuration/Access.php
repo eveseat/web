@@ -40,6 +40,11 @@ Route::get('/roles/edit/{id}', [
     'uses' => 'AccessController@editRole',
 ]);
 
+Route::post('/roles/edit/{id}', [
+    'as'   => 'configuration.access.roles.rename',
+    'uses' => 'AccessController@renameRole',
+]);
+
 Route::post('/roles/edit/permissions', [
     'as'   => 'configuration.access.roles.edit.permissions',
     'uses' => 'AccessController@grantPermissions',
