@@ -34,3 +34,8 @@ Route::get('/check/sde', [
     'as'   => 'check.sde',
     'uses' => 'SeatController@getApprovedSDE',
 ]);
+
+Route::post('/check/package', [
+    'as'   => 'check.package',
+    'uses' => 'SeatController@postCheckPackage',
+]);

@@ -115,6 +115,65 @@ class SeatController extends Controller
     }
 
     /**
+     * Determine if a package is or not outdated.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function postCheckPackage()
+    {
+        // ensure the request is containing required information (vendor, package, version) in order to build a query
+        $this->validate(request(), [
+            'vendor' => 'required|string',
+            'package' => 'required|string',
+            'version' => 'required|string',
+        ]);
+
+        // construct the packagist uri to its API
+        $packagist_url = sprintf('https://packagist.org/packages/%s/%s.json',
+            request()->input('vendor'), request()->input('package'));
+
+        // retrieve package meta-data
+        $response = (new Client())->request('GET', $packagist_url);
+
+        if ($response->getStatusCode() !== 200)
+            return response()->json([
+                'error' => 'An error occurred while attempting to retrieve the package version.',
+            ], 500);
+
+        // convert the body into an array
+        $json_array = json_decode($response->getBody(), true);
+
+        // in case we miss either versions or package attribute, return an error as those attribute should contains version information
+        if (! array_key_exists('package', $json_array) || ! array_key_exists('versions', $json_array['package']))
+            return response()->json([
+                'error' => 'The returned metadata are miss-structured or does not contains package.versions property',
+            ], 500);
+
+        // extract published versions from packagist response
+        $versions = $json_array['package']['versions'];
+
+        foreach ($versions as $available_version => $metadata) {
+            // ignore any untagged versions
+            if (strpos($available_version, 'dev') !== false)
+                continue;
+
+            // return outdated on the first package which is greater than installed version
+            if (version_compare(request()->input('version'), $metadata['version']) < 0)
+                return response()->json([
+                    'error' => '',
+                    'outdated' => true,
+                ]);
+        }
+
+        // return up-to-date only once we loop over each available versions
+        return response()->json([
+            'error' => '',
+            'outdated' => false,
+        ]);
+    }
+
+    /**
      * @return \stdClass
      */
     private function getPluginsMetadataList(): stdClass

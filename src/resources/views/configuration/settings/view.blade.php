@@ -157,14 +157,7 @@
         <dl class="">
 
           @foreach($packages->core as $package)
-            <dt>{{ call_user_func([$package, 'getName']) }}</dt>
-            <dd>
-              <ul>
-                <li>{{ trans('web::seat.installed') }}: <b>v{{ call_user_func([$package, 'getVersion']) }}</b></li>
-                <li>{{ trans('web::seat.current') }}: <img src="{{ call_user_func([$package, 'getVersionBadge']) }}" /></li>
-                <li>{{ trans('web::seat.url') }}: <a href="{{ call_user_func([$package, 'getPackageRepositoryUrl']) }}" target="_blank">{{ call_user_func([$package, 'getPackageRepositoryUrl']) }}</a> </li>
-              </ul>
-            </dd>
+            @include('web::configuration.settings.partials.package-version')
           @endforeach
 
         </dl>
@@ -173,14 +166,7 @@
         <dl class="">
 
           @foreach($packages->plugins as $package)
-            <dt>{{ call_user_func([$package, 'getName']) }}</dt>
-            <dd>
-              <ul>
-                <li>{{ trans('web::seat.installed') }}: <b>v{{ call_user_func([$package, 'getVersion']) }}</b></li>
-                <li>{{ trans('web::seat.current') }}: <img src="{{ call_user_func([$package, 'getVersionBadge']) }}" /></li>
-                <li>{{ trans('web::seat.url') }}: <a href="{{ call_user_func([$package, 'getPackageRepositoryUrl']) }}" target="_blank">{{ call_user_func([$package, 'getPackageRepositoryUrl']) }}</a> </li>
-              </ul>
-            </dd>
+            @include('web::configuration.settings.partials.package-version')
           @endforeach
 
         </dl>
@@ -223,6 +209,47 @@
       }
       $('#live-sde-version img').attr('src', 'https://img.shields.io/badge/version-' + live_sde + '-blue.svg?style=flat-square');
     });
+
+    $('.version-check').each(function(index, item) {
+      var toCheckPackage = $(item);
+
+      // send a request to check if or not a package is up-to-date
+      $.ajax({
+        url: '{{ route('check.package') }}',
+        method: 'POST',
+        data: {
+            'vendor': toCheckPackage.attr('data-vendor'),
+            'package': toCheckPackage.attr('data-name'),
+            'version': toCheckPackage.attr('data-version')
+        }
+      }).done(function (data) {
+        // SeAT report that the package was outdated.
+        if (data.outdated === true)
+          flagOutdatedPackage(toCheckPackage);
+
+        // SeAT report that the package was up-to-date.
+        if (data.outdated === false)
+          flagUpToDatePackage(toCheckPackage);
+      });
+    });
+
+    function flagUpToDatePackage(check) {
+      check.removeClass('fa-question-circle');
+      check.removeClass('text-orange');
+      check.addClass('fa-check-circle');
+      check.addClass('text-green');
+      check.attr('title', 'The package is up-to-date.');
+      check.attr('data-original-title', 'The package is up-to-date.');
+    }
+
+    function flagOutdatedPackage(check) {
+      check.removeClass('fa-question-circle');
+      check.removeClass('text-orange');
+      check.addClass('fa-times-circle');
+      check.addClass('text-red');
+      check.attr('title', 'At least one new version has been released !');
+      check.attr('data-original-title', 'At least one new version has been released !');
+    }
   });
 </script>
 @endpush
