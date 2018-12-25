@@ -176,6 +176,17 @@
 
         </dl>
       </div>
+      <div class="row text-center">
+        <div class="col-md-4">
+          <i class="fa fa-question-circle text-orange"></i> Checking packages (<span id="checking-packages">{{ $packages->core->count() + $packages->plugins->count() }}</span>)
+        </div>
+        <div class="col-md-4">
+          <i class="fa fa-check-circle text-green"></i> Updated packages (<span id="updated-packages">0</span>)
+        </div>
+        <div class="col-md-4">
+          <i class="fa fa-times-circle text-red"></i> Outdated packages (<span id="outdated-packages">0</span>)
+        </div>
+      </div>
     </div>
   </div>
 
@@ -296,6 +307,14 @@
         toCheckPackage.addClass(data.outdated ? 'text-red' : 'text-green');
         toCheckPackage.attr('title', data.outdated ? 'At least one new version has been released !' : 'The package is up-to-date.');
         toCheckPackage.attr('data-original-title', data.outdated ? 'At least one new version has been released !' : 'The package is up-to-date.');
+
+        // updating counters
+        $('#checking-packages').text(parseInt($('#checking-packages').text()) - 1);
+        if (data.outdated)
+          $('#outdated-packages').text(parseInt($('#outdated-packages').text()) + 1);
+        else
+          $('#updated-packages').text(parseInt($('#updated-packages').text()) + 1);
+
       });
     });
 
