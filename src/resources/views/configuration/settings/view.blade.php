@@ -139,77 +139,52 @@
 @stop
 
 @section('right')
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs pull-right">
+      <li>
+        <a href="#plugin-packages" data-toggle="tab" aria-expanded="false">Plugins</a>
+      </li>
+      <li class="active">
+        <a href="#core-packages" data-toggle="tab" aria-expanded="true">Core</a>
+      </li>
+      <li class="pull-left header">
+        <i class="fa fa-code-fork"></i>
+        {{ trans('web::seat.module_versions') }}
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div id="core-packages" class="tab-pane active">
+        <dl class="">
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::seat.module_versions') }}</h3>
-    </div>
-    <div class="panel-body">
+          @foreach($packages->core as $package)
+            <dt>{{ call_user_func([$package, 'getName']) }}</dt>
+            <dd>
+              <ul>
+                <li>{{ trans('web::seat.installed') }}: <b>v{{ call_user_func([$package, 'getVersion']) }}</b></li>
+                <li>{{ trans('web::seat.current') }}: <img src="{{ call_user_func([$package, 'getVersionBadge']) }}" /></li>
+                <li>{{ trans('web::seat.url') }}: <a href="{{ call_user_func([$package, 'getPackageRepositoryUrl']) }}" target="_blank">{{ call_user_func([$package, 'getPackageRepositoryUrl']) }}</a> </li>
+              </ul>
+            </dd>
+          @endforeach
 
-      <dl class="">
+        </dl>
+      </div>
+      <div id="plugin-packages" class="tab-pane">
+        <dl class="">
 
-        <dt>SeAT Api</dt>
-        <dd>
-          <ul>
-            <li>{{ trans('web::seat.installed') }}: <b>v{{ config('api.config.version') }}</b></li>
-            <li>{{ trans('web::seat.current') }}: <img src="https://img.shields.io/packagist/v/eveseat/api.svg?style=flat-square"></li>
-            <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/api" target="_blank">https://github.com/eveseat/api</a>
-            </li>
-          </ul>
-        </dd>
+          @foreach($packages->plugins as $package)
+            <dt>{{ call_user_func([$package, 'getName']) }}</dt>
+            <dd>
+              <ul>
+                <li>{{ trans('web::seat.installed') }}: <b>v{{ call_user_func([$package, 'getVersion']) }}</b></li>
+                <li>{{ trans('web::seat.current') }}: <img src="{{ call_user_func([$package, 'getVersionBadge']) }}" /></li>
+                <li>{{ trans('web::seat.url') }}: <a href="{{ call_user_func([$package, 'getPackageRepositoryUrl']) }}" target="_blank">{{ call_user_func([$package, 'getPackageRepositoryUrl']) }}</a> </li>
+              </ul>
+            </dd>
+          @endforeach
 
-        <dt>SeAT Console</dt>
-        <dd>
-          <ul>
-            <li>{{ trans('web::seat.installed') }}: <b>v{{ config('console.config.version') }}</b></li>
-            <li>{{ trans('web::seat.current') }}: <img src="https://img.shields.io/packagist/v/eveseat/console.svg?style=flat-square"></li>
-            <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/console" target="_blank">https://github.com/eveseat/console</a>
-            </li>
-          </ul>
-        </dd>
-
-        <dt>SeAT Eveapi</dt>
-        <dd>
-          <ul>
-            <li>{{ trans('web::seat.installed') }}: <b>v{{ config('eveapi.config.version') }}</b></li>
-            <li>{{ trans('web::seat.current') }}: <img src="https://img.shields.io/packagist/v/eveseat/eveapi.svg?style=flat-square"></li>
-            <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/eveapi" target="_blank">https://github.com/eveseat/eveapi</a>
-            </li>
-          </ul>
-        </dd>
-
-        <dt>SeAT Notifications</dt>
-        <dd>
-          <ul>
-            <li>{{ trans('web::seat.installed') }}: <b>v{{ config('notifications.config.version') }}</b></li>
-            <li>{{ trans('web::seat.current') }}: <img src="https://img.shields.io/packagist/v/eveseat/notifications.svg?style=flat-square"></li>
-            <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/notifications" target="_blank">https://github.com/eveseat/notifications</a>
-            </li>
-          </ul>
-        </dd>
-
-        <dt>SeAT Web</dt>
-        <dd>
-          <ul>
-            <li>{{ trans('web::seat.installed') }}: <b>v{{ config('web.config.version') }}</b></li>
-            <li>{{ trans('web::seat.current') }}: <img src="https://img.shields.io/packagist/v/eveseat/web.svg?style=flat-square"></li>
-            <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/web" target="_blank">https://github.com/eveseat/web</a>
-            </li>
-          </ul>
-        </dd>
-
-        <dt>SeAT Services</dt>
-        <dd>
-          <ul>
-            <li>{{ trans('web::seat.installed') }}: <b>v{{ config('services.config.version') }}</b></li>
-            <li>{{ trans('web::seat.current') }}: <img src="https://img.shields.io/packagist/v/eveseat/services.svg?style=flat-square"></li>
-            <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/services" target="_blank">https://github.com/eveseat/services</a>
-            </li>
-          </ul>
-        </dd>
-
-      </dl>
-
+        </dl>
+      </div>
     </div>
   </div>
 

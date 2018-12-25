@@ -25,8 +25,12 @@ namespace Seat\Web\Http\Controllers\Configuration;
 use Cache;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use ReflectionClass;
+use ReflectionException;
+use Seat\Services\AbstractSeatPlugin;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\SeatSettings;
+use stdClass;
 
 /**
  * Class SeatController.
@@ -40,6 +44,8 @@ class SeatController extends Controller
     public function getView()
     {
 
+        $packages = $this->getPluginsMetadataList();
+
         // Validate SSO Environment settings
         if (is_null(env('EVE_CLIENT_ID')) or
             is_null(env('EVE_CLIENT_SECRET')) or
@@ -49,7 +55,7 @@ class SeatController extends Controller
         else
             $warn_sso = false;
 
-        return view('web::configuration.settings.view', compact('warn_sso'));
+        return view('web::configuration.settings.view', compact('packages', 'warn_sso'));
     }
 
     /**
@@ -106,5 +112,33 @@ class SeatController extends Controller
         });
 
         return response()->json(['version' => $sde_version]);
+    }
+
+    /**
+     * @return \stdClass
+     */
+    private function getPluginsMetadataList(): stdClass
+    {
+        $classes = get_declared_classes();
+        $packages = collect();
+
+        try {
+            foreach ($classes as $class) {
+                $meta = new ReflectionClass($class);
+                if ($meta->isSubclassOf(AbstractSeatPlugin::class) && !$meta->isAbstract())
+                    $packages->push($class);
+            }
+        } catch (ReflectionException $e) {
+
+        }
+
+        return (object)[
+            'core' => $packages->filter(function ($class) {
+                return call_user_func([$class, 'getPackagistVendorName']) === 'eveseat';
+            }),
+            'plugins' => $packages->filter(function ($class) {
+                return call_user_func([$class, 'getPackagistVendorName']) !== 'eveseat';
+            }),
+        ];
     }
 }
