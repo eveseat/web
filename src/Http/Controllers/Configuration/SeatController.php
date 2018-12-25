@@ -184,14 +184,14 @@ class SeatController extends Controller
         try {
             foreach ($classes as $class) {
                 $meta = new ReflectionClass($class);
-                if ($meta->isSubclassOf(AbstractSeatPlugin::class) && !$meta->isAbstract())
+                if ($meta->isSubclassOf(AbstractSeatPlugin::class) && ! $meta->isAbstract())
                     $packages->push($class);
             }
         } catch (ReflectionException $e) {
 
         }
 
-        return (object)[
+        return (object) [
             'core' => $packages->filter(function ($class) {
                 return call_user_func([$class, 'getPackagistVendorName']) === 'eveseat';
             }),

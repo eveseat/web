@@ -142,6 +142,11 @@
   <div class="nav-tabs-custom">
     <ul class="nav nav-tabs pull-right">
       <li>
+        <a href="#" data-toggle="tooltip" title="Click to copy packages versions" id="copy-versions">
+          <i class="fa fa-copy"></i>
+        </a>
+      </li>
+      <li>
         <a href="#plugin-packages" data-toggle="tab" aria-expanded="false">Plugins</a>
       </li>
       <li class="active">
@@ -202,6 +207,14 @@
 @push('javascript')
 <script type="text/javascript">
   $(document).ready(function () {
+    var installedPackages = {
+      "vendor": ["Vendor"],
+      "name": ["Package Name"],
+      "version": ["Installed Version"]
+    };
+
+    var copyVersions = $('#copy-versions');
+
     jQuery.get("{{ route('check.sde') }}", function (data) {
       var live_sde = "error";
       if (data != null) {
@@ -210,8 +223,60 @@
       $('#live-sde-version img').attr('src', 'https://img.shields.io/badge/version-' + live_sde + '-blue.svg?style=flat-square');
     });
 
+    copyVersions.on('click', function() {
+      var buffer = "```\r\n";
+
+      var colVendorSize = getLongestString(installedPackages.vendor);
+      var colNameSize = getLongestString(installedPackages.name);
+      var colVersionSize = getLongestString(installedPackages.version);
+
+      // loop over the versions object and build a markdown formatted table
+      $.each(installedPackages.vendor, function(index) {
+        var row = formatTableRow({
+          "vendor": {
+            "value": installedPackages.vendor[index],
+            "size": colVendorSize
+          },
+          "name": {
+            "value": installedPackages.name[index],
+            "size": colNameSize
+          },
+          "version": {
+            "value": installedPackages.version[index],
+            "size": colVersionSize
+          }
+        });
+
+        // append the generated row to the buffer
+        buffer += row;
+
+        // in case the generated row is the header, append a dash line of the row length (minus carriage-return
+        if (index === 0)
+          buffer += '| ' + padString('', '-', colVendorSize) + ' | ' + padString('', '-', colNameSize) + ' | ' +
+              padString('', '-', colVersionSize) + " |\r\n";
+      });
+
+      buffer += "```";
+
+      // copy the formatted markdown list to the clipboard
+      $('body').append('<textarea id="copiedVersions"></textarea>');
+      $('#copiedVersions').val(buffer);
+      document.getElementById('copiedVersions').select();
+      document.execCommand('copy');
+      document.getElementById('copiedVersions').remove();
+
+      copyVersions.attr('data-original-title', 'Copied!').tooltip('show');
+    }).on('mouseleave', function(){
+      copyVersions.attr('data-original-title', 'Click to copy packages versions');
+    });
+
     $('.version-check').each(function(index, item) {
       var toCheckPackage = $(item);
+
+      // fill the packages global variable
+      installedPackages.vendor.push(toCheckPackage.attr('data-vendor'));
+      installedPackages.name.push(toCheckPackage.attr('data-name'));
+      installedPackages.version.push(toCheckPackage.attr('data-version'));
 
       // send a request to check if or not a package is up-to-date
       $.ajax({
@@ -223,32 +288,39 @@
             'version': toCheckPackage.attr('data-version')
         }
       }).done(function (data) {
-        // SeAT report that the package was outdated.
-        if (data.outdated === true)
-          flagOutdatedPackage(toCheckPackage);
-
-        // SeAT report that the package was up-to-date.
-        if (data.outdated === false)
-          flagUpToDatePackage(toCheckPackage);
+        // remove pending state from the package
+        toCheckPackage.removeClass('fa-question-circle');
+        toCheckPackage.removeClass('text-orange');
+        // update package state according to result
+        toCheckPackage.addClass(data.outdated ? 'fa-times-circle' : 'fa-check-circle');
+        toCheckPackage.addClass(data.outdated ? 'text-red' : 'text-green');
+        toCheckPackage.attr('title', data.outdated ? 'At least one new version has been released !' : 'The package is up-to-date.');
+        toCheckPackage.attr('data-original-title', data.outdated ? 'At least one new version has been released !' : 'The package is up-to-date.');
       });
     });
 
-    function flagUpToDatePackage(check) {
-      check.removeClass('fa-question-circle');
-      check.removeClass('text-orange');
-      check.addClass('fa-check-circle');
-      check.addClass('text-green');
-      check.attr('title', 'The package is up-to-date.');
-      check.attr('data-original-title', 'The package is up-to-date.');
+    function getLongestString(column) {
+        // clone the column in order to keep it unchanged
+        var buffer = JSON.parse(JSON.stringify(column));
+        // return the longest size
+        return buffer.sort(function (a, b) { return b.length - a.length; }).shift().length;
     }
 
-    function flagOutdatedPackage(check) {
-      check.removeClass('fa-question-circle');
-      check.removeClass('text-orange');
-      check.addClass('fa-times-circle');
-      check.addClass('text-red');
-      check.attr('title', 'At least one new version has been released !');
-      check.attr('data-original-title', 'At least one new version has been released !');
+    function padString(string, char, size) {
+      if (string.length >= size) return string;
+
+      var end = string.length;
+      for (i = 0; i < size - end; i++)
+          string += char;
+
+      return string;
+    }
+
+    function formatTableRow(row) {
+      return '| ' +
+        padString(row.vendor.value, ' ', row.vendor.size) + ' | ' +
+        padString(row.name.value, ' ', row.name.size) + ' | ' +
+        padString(row.version.value, ' ', row.version.size) + " |\r\n";
     }
   });
 </script>

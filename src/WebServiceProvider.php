@@ -413,7 +413,7 @@ class WebServiceProvider extends AbstractSeatPlugin
     }
 
     /**
-     * Return the plugin author EVE Character ID
+     * Return the plugin author EVE Character ID.
      *
      * @return int|null
      */
