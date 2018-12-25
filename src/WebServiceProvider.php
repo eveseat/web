@@ -28,6 +28,7 @@ use Illuminate\Auth\Events\Login as LoginEvent;
 use Illuminate\Auth\Events\Logout as LogoutEvent;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Horizon\Horizon;
 use Laravel\Socialite\SocialiteManager;
@@ -35,7 +36,6 @@ use Seat\Web\Events\Attempt;
 use Seat\Web\Events\Login;
 use Seat\Web\Events\Logout;
 use Seat\Web\Events\SecLog;
-use Seat\Web\Events\Security;
 use Seat\Web\Extentions\EveOnlineProvider;
 use Seat\Web\Http\Composers\CharacterMenu;
 use Seat\Web\Http\Composers\CharacterSummary;
@@ -52,11 +52,10 @@ use Seat\Web\Http\Middleware\Bouncer\KeyBouncer;
 use Seat\Web\Http\Middleware\Locale;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
 use Seat\Web\Http\Middleware\Requirements;
-use Validator;
 
 /**
- * Class EveapiServiceProvider.
- * @package Seat\Eveapi
+ * Class WebServiceProvider.
+ * @package Seat\Web
  */
 class WebServiceProvider extends ServiceProvider
 {
