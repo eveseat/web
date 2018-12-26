@@ -178,11 +178,13 @@ class SeatController extends Controller
      */
     private function getPluginsMetadataList(): stdClass
     {
-        $classes = get_declared_classes();
+        app()->loadDeferredProviders();
+        $providers = array_keys(app()->getLoadedProviders());
+
         $packages = collect();
 
         try {
-            foreach ($classes as $class) {
+            foreach ($providers as $class) {
                 $meta = new ReflectionClass($class);
                 if ($meta->isSubclassOf(AbstractSeatPlugin::class) && ! $meta->isAbstract())
                     $packages->push($class);
@@ -193,10 +195,12 @@ class SeatController extends Controller
 
         return (object) [
             'core' => $packages->filter(function ($class) {
-                return call_user_func([$class, 'getPackagistVendorName']) === 'eveseat';
+                return app()->getProvider($class)->getPackagistVendorName() === 'eveseat';
+                //return call_user_func([$class, 'getPackagistVendorName']) === 'eveseat';
             }),
             'plugins' => $packages->filter(function ($class) {
-                return call_user_func([$class, 'getPackagistVendorName']) !== 'eveseat';
+                return app()->getProvider($class)->getPackagistVendorName() !== 'eveseat';
+                //return call_user_func([$class, 'getPackagistVendorName']) !== 'eveseat';
             }),
         ];
     }

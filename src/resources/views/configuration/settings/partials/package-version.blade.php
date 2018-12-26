@@ -1,15 +1,15 @@
 <dt>
   <i class="fa fa-question-circle text-orange version-check"
-     data-vendor="{{ call_user_func([$package, 'getPackagistVendorName']) }}"
-     data-name="{{ call_user_func([$package, 'getPackagistPackageName']) }}"
-     data-version="{{ call_user_func([$package, 'getVersion']) }}"
+     data-vendor="{{ app()->getProvider($package)->getPackagistVendorName() }}"
+     data-name="{{ app()->getProvider($package)->getPackagistPackageName() }}"
+     data-version="{{ app()->getProvider($package)->getVersion() }}"
      data-toggle="tooltip"
-     title="Checking package status..."></i> {{ call_user_func([$package, 'getName']) }}
+     title="Checking package status..."></i> {{ app()->getProvider($package)->getName() }}
 </dt>
 <dd>
   <ul>
-    <li>{{ trans('web::seat.installed') }}: <b>v{{ call_user_func([$package, 'getVersion']) }}</b></li>
-    <li>{{ trans('web::seat.current') }}: <img src="{{ call_user_func([$package, 'getVersionBadge']) }}" /></li>
-    <li>{{ trans('web::seat.url') }}: <a href="{{ call_user_func([$package, 'getPackageRepositoryUrl']) }}" target="_blank">{{ call_user_func([$package, 'getPackageRepositoryUrl']) }}</a> </li>
+    <li>{{ trans('web::seat.installed') }}: <b>v{{ app()->getProvider($package)->getVersion() }}</b></li>
+    <li>{{ trans('web::seat.current') }}: <img src="{{ app()->getProvider($package)->getVersionBadge() }}" /></li>
+    <li>{{ trans('web::seat.url') }}: <a href="{{ app()->getProvider($package)->getPackageRepositoryUrl() }}" target="_blank">{{ app()->getProvider($package)->getPackageRepositoryUrl() }}</a> </li>
   </ul>
 </dd>
