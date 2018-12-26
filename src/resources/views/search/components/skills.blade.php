@@ -43,10 +43,10 @@
           ids_to_names();
         });
       },
-      'search'        : {
-        'search': '{{ $query }}'
+      'search' : {
+        'search': '{!! addslashes(htmlspecialchars($query, ENT_NOQUOTES)) !!}'
       },
-      order           : [[0, "asc"]]
+      order : [[0, "asc"]]
     });
   });
 

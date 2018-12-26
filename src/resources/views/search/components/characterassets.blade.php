@@ -44,10 +44,10 @@
           $('img').unveil(100);
         });
       },
-      'search'        : {
-        'search': '{{ $query }}'
+      'search' : {
+        'search': '{!! addslashes(htmlspecialchars($query, ENT_NOQUOTES)) !!}'
       },
-      order           : [[0, "asc"]]
+      order : [[0, "asc"]]
     });
   });
 
