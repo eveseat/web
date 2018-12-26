@@ -1,1 +1,1 @@
-{{number($row->volumes)}} m3
+{{number($row->volumes, 1)}} m3
