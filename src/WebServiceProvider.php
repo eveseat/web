@@ -452,6 +452,37 @@ class WebServiceProvider extends AbstractSeatPlugin
         return 'qu1ckkkk';
     }
 
+    public function getChangelogUri(): ?string
+    {
+        return 'https://api.github.com/repos/eveseat/web/releases';
+    }
+
+    /**
+     * In case the changelog is provided from an API, this will help to determine which attribute is containing the
+     * changelog body.
+     *
+     * @exemple body
+     *
+     * @return string|null
+     */
+    public function getChangelogBodyAttribute(): ?string
+    {
+        return 'body';
+    }
+
+    /**
+     * In case the changelog is provided from an API, this will help to determine which attribute is containing the
+     * version name.
+     *
+     * @example tag_name
+     *
+     * @return string|null
+     */
+    public function getChangelogTagAttribute(): ?string
+    {
+        return 'tag_name';
+    }
+
     /**
      * Return the plugin public name as it should be displayed into settings.
      *

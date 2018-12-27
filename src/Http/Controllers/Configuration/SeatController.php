@@ -23,8 +23,10 @@
 namespace Seat\Web\Http\Controllers\Configuration;
 
 use Cache;
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use Parsedown;
 use Seat\Services\AbstractSeatPlugin;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\SeatSettings;
@@ -118,7 +120,7 @@ class SeatController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function postCheckPackage()
+    public function postPackagesCheck()
     {
         // ensure the request is containing required information (vendor, package, version) in order to build a query
         $this->validate(request(), [
@@ -172,6 +174,32 @@ class SeatController extends Controller
     }
 
     /**
+     * Return the changelog based on provided parameters.
+     *
+     * @return mixed|string
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function postPackagesChangelog()
+    {
+        $this->validate(request(), [
+            'uri' => 'required:url',
+            'body' => 'string',
+            'tag'  => 'string',
+        ]);
+
+        $changelogUri = request()->input('uri');
+        $changelogBody = request()->input('body');
+        $changelogTag = request()->input('tag');
+
+        if (! is_null($changelogBody) && ! is_null($changelogTag))
+            return $this->getChangelogFromApi($changelogUri, $changelogBody, $changelogTag);
+
+        return $this->getChangelogFromFile($changelogUri);
+    }
+
+    /**
+     * Compute a list of provider class which are implementing SeAT package structure.
+     *
      * @return \stdClass
      */
     private function getPluginsMetadataList(): stdClass
@@ -201,5 +229,103 @@ class SeatController extends Controller
         }
 
         return $packages;
+    }
+
+    /**
+     * Return a rendered changelog based on the provided release API endpoint.
+     *
+     * @param string $uri
+     * @param string $body_attribute
+     * @param string $tag_attribute
+     * @return string
+     */
+    private function getChangelogFromApi(string $uri, string $body_attribute, string $tag_attribute): string
+    {
+        try {
+            return cache()->remember($this->getChangelogCacheKey($uri), 30, function () use ($uri, $body_attribute, $tag_attribute) {
+                $changelog = '';
+
+                // retrieve releases from provided API endpoint
+                $client = new Client();
+                $response = $client->request('GET', $uri);
+
+                // decode the response
+                $json_object = json_decode($response->getBody());
+
+                // spawn a new Markdown parser
+                $parser = new Parsedown();
+
+                // iterate over each release and build proper view
+                foreach ($json_object as $release) {
+                    $changelog .= view('web::configuration.settings.partials.packages.changelog.header', [
+                        'version' => $release->{$tag_attribute},
+                    ]);
+
+                    $changelog .= view('web::configuration.settings.partials.packages.changelog.body', [
+                        'body' => $parser->parse($release->{$body_attribute}),
+                    ]);
+                }
+
+                // return a rendered release list
+                return $changelog;
+            });
+        } catch (Exception $e) {
+            logger()->error('An error occurred while fetching changelog from API.', [
+                'code'       => $e->getCode(),
+                'error'      => $e->getMessage(),
+                'trace'      => $e->getTrace(),
+                'uri'        => $uri,
+                'attributes' => [
+                    'body' => $body_attribute,
+                    'tag'  => $tag_attribute,
+                ],
+            ]);
+        }
+
+        return '';
+    }
+
+    /**
+     * Return parsed markdown from the file located at the provided URI.
+     *
+     * @param string $uri
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    private function getChangelogFromFile(string $uri)
+    {
+        try {
+            return cache()->remember($this->getChangelogCacheKey($uri), 30, function () use ($uri) {
+                // retrieve changelog from provided uri
+                $client = new Client();
+                $response = $client->request('GET', $uri);
+
+                // spawn a new Markdown parser
+                $parser = new Parsedown();
+
+                // return the parsed changelog
+                return $parser->parse($response->getBody());
+            });
+        } catch (Exception $e) {
+            logger()->error('An error occurred while fetching changelog from file.', [
+                'code'       => $e->getCode(),
+                'error'      => $e->getMessage(),
+                'trace'      => $e->getTrace(),
+                'uri'        => $uri,
+            ]);
+        }
+
+        return '';
+    }
+
+    /**
+     * Determine a valid cache key for the provided URI.
+     *
+     * @param string $uri
+     * @return string
+     */
+    private function getChangelogCacheKey(string $uri)
+    {
+        return sprintf('changelog.%s', str_replace('=', '', base64_encode($uri)));
     }
 }

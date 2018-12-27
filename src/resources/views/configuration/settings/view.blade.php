@@ -159,19 +159,19 @@
     </ul>
     <div class="tab-content">
       <div id="core-packages" class="tab-pane active">
-        <dl class="">
+        <dl>
 
           @foreach($packages->core as $package)
-            @include('web::configuration.settings.partials.package-version')
+            @include('web::configuration.settings.partials.packages.version')
           @endforeach
 
         </dl>
       </div>
       <div id="plugin-packages" class="tab-pane">
-        <dl class="">
+        <dl>
 
           @foreach($packages->plugins as $package)
-            @include('web::configuration.settings.partials.package-version')
+            @include('web::configuration.settings.partials.packages.version')
           @endforeach
 
         </dl>
@@ -212,6 +212,7 @@
     </div>
 
   </div>
+  @include('web::configuration.settings.partials.packages.changelog.modal')
 
 @stop
 
@@ -291,7 +292,7 @@
 
       // send a request to check if or not a package is up-to-date
       $.ajax({
-        url: '{{ route('check.package') }}',
+        url: '{{ route('packages.check') }}',
         method: 'POST',
         data: {
             'vendor': toCheckPackage.attr('data-vendor'),
@@ -318,11 +319,34 @@
       });
     });
 
+    $('#changelogModal').on('show.bs.modal', function (e) {
+      var changelogMetadata = $(e.relatedTarget);
+      var changelogModal = $(this);
+      var changelogName = changelogMetadata.data('name');
+
+      changelogModal.find('.modal-title span').text(changelogName);
+      changelogModal.find('.modal-body').html('');
+
+      $.ajax({
+        url: '{{ route('packages.changelog') }}',
+        method: 'POST',
+        data: changelogMetadata.data()
+      }).done(function (data) {
+        var body = $(data);
+
+        // format tables
+        body.find('table').addClass('table');
+
+        // load modal content
+        changelogModal.find('.modal-body').html(body);
+      });
+    });
+
     function getLongestString(column) {
-        // clone the column in order to keep it unchanged
-        var buffer = JSON.parse(JSON.stringify(column));
-        // return the longest size
-        return buffer.sort(function (a, b) { return b.length - a.length; }).shift().length;
+      // clone the column in order to keep it unchanged
+      var buffer = JSON.parse(JSON.stringify(column));
+      // return the longest size
+      return buffer.sort(function (a, b) { return b.length - a.length; }).shift().length;
     }
 
     function padString(string, char, size) {
