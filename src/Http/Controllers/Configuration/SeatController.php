@@ -25,8 +25,6 @@ namespace Seat\Web\Http\Controllers\Configuration;
 use Cache;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
-use ReflectionClass;
-use ReflectionException;
 use Seat\Services\AbstractSeatPlugin;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\SeatSettings;
@@ -181,27 +179,27 @@ class SeatController extends Controller
         app()->loadDeferredProviders();
         $providers = array_keys(app()->getLoadedProviders());
 
-        $packages = collect();
+        $packages = (object) [
+            'core' => collect(),
+            'plugins' => collect(),
+        ];
 
-        try {
-            foreach ($providers as $class) {
-                $meta = new ReflectionClass($class);
-                if ($meta->isSubclassOf(AbstractSeatPlugin::class) && ! $meta->isAbstract())
-                    $packages->push($class);
-            }
-        } catch (ReflectionException $e) {
+        foreach ($providers as $class) {
+            // attempt to retrieve the class from booted app
+            $provider = app()->getProvider($class);
 
+            if (is_null($provider))
+                continue;
+
+            // ensure the provider is a valid SeAT package
+            if (! is_a($provider, AbstractSeatPlugin::class))
+                continue;
+
+            // seed proper collection according to package vendor
+            $provider->getPackagistVendorName() === 'eveseat' ?
+                $packages->core->push($provider) : $packages->plugins->push($provider);
         }
 
-        return (object) [
-            'core' => $packages->filter(function ($class) {
-                return app()->getProvider($class)->getPackagistVendorName() === 'eveseat';
-                //return call_user_func([$class, 'getPackagistVendorName']) === 'eveseat';
-            }),
-            'plugins' => $packages->filter(function ($class) {
-                return app()->getProvider($class)->getPackagistVendorName() !== 'eveseat';
-                //return call_user_func([$class, 'getPackagistVendorName']) !== 'eveseat';
-            }),
-        ];
+        return $packages;
     }
 }
