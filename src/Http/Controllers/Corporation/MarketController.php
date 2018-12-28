@@ -66,8 +66,10 @@ class MarketController extends Controller
             })
             ->addColumn('vol', function ($row) {
 
-                return view('web::partials.marketvolume', compact('row'))
-                    ->render();
+                if ($row->is_buy_order)
+                    return number($row->volume_total, 0);
+
+                return number($row->volume_remain, 0) . ' / ' . number($row->volume_total, 0);
             })
             ->editColumn('price', function ($row) {
 

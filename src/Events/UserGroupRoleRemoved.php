@@ -20,9 +20,37 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-return [
+namespace Seat\Web\Events;
 
-    'version'                  => '3.0.12',
-    'queue_status_update_time' => 10 * 1000, // milliseconds = seconds x 1,000
+use Illuminate\Queue\SerializesModels;
+use Seat\Web\Models\Acl\Role;
 
-];
+/**
+ * Class UserGroupRoleRemoved.
+ * @package Seat\Web\Events
+ */
+class UserGroupRoleRemoved
+{
+    use SerializesModels;
+
+    /**
+     * @var int
+     */
+    public $group_id;
+
+    /**
+     * @var Role
+     */
+    public $role;
+
+    /**
+     * UserGroupRoleRemoved constructor.
+     * @param int $group_id
+     * @param Role $role
+     */
+    public function __construct(int $group_id, Role $role)
+    {
+        $this->group_id = $group_id;
+        $this->role = $role;
+    }
+}

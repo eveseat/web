@@ -42,11 +42,13 @@
         serverSide      : true,
         ajax            : '{{ route('corporation.view.killmails.data', ['corporation_id' => $request->corporation_id]) }}',
         columns         : [
-          {data: 'killmail_time', name: 'killmail_time', render: human_readable},
-          {data: 'character_name', name: 'character_name'},
-          {data: 'type_name', name: 'type_name'},
-          {data: 'item_name', name: 'item_name'},
-          {data: 'zkb', name: 'zkb'}
+          {data: 'killmail_detail.killmail_time', name: 'killmail_detail.killmail_time', render: human_readable},
+          {data: 'victim', name: 'killmail_victim.victim_character.name'},
+          {data: 'ship', name: 'killmail_victim.ship_type.typeName'},
+          {data: 'place', name: 'killmail_detail.solar_system.itemName'},
+          {data: 'zkb', name: 'zkb', searchable: false},
+          {data: 'killmail_hash', name: 'killmail_victim.victim_corporation.name', visible: false},
+          {data: 'killmail_id', name: 'killmail_victim.victim_alliance.name', visible: false}
         ],
         dom             : '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
         "fnDrawCallback": function () {

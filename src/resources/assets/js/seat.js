@@ -73,3 +73,45 @@ function human_readable(data, type, row) {
 
     return data;
 }
+
+// Helper function to abbreviate numbers to their SI suffix
+var SI_SYMBOL = ["", "k", "M", "G", "T", "P", "E"];
+
+function abbreviateNumber(number){
+
+  // what tier? (determines SI symbol)
+  var tier = Math.log10(number) / 3 | 0;
+
+  // if zero, we don't need a suffix
+  if(tier == 0) return number.toFixed(1);
+
+  // get suffix and determine scale
+  var suffix = SI_SYMBOL[tier];
+  var scale = Math.pow(10, tier * 3);
+
+  // scale the number
+  var scaled = number / scale;
+
+  // format number and add suffix
+  return scaled.toFixed(1) + suffix;
+}
+
+// Helper function to wrap long strings in multiple lines separated
+// str:   The string to be wrapped.
+// width: The column width (a number, default: 75)
+// brk:   The character(s) to be inserted at every break. (default: ‘n’)
+// cut:   The cut: a Boolean value (false by default). See PHP docs for more info. (http://us3.php.net/manual/en/function.wordwrap.php)
+
+function wordwrap( str, width, brk, cut ) {
+
+  brk = brk || 'n';
+  width = width || 75;
+  cut = cut || false;
+
+  if (!str) { return str; }
+
+  var regex = '.{1,' +width+ '}(\s|$)' + (cut ? '|.{' +width+ '}|.+$' : '|\S+?(\s|$)');
+
+  return str.match( RegExp(regex, 'g') ).join( brk );
+
+}
