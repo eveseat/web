@@ -366,7 +366,7 @@ return [
     'wallet_division_name'         => 'Wallet Division Name',
     'wallet_summary'               => 'Wallet Summary|Wallet Summaries',
     'industryfacilitytaxbymonth'   => 'Industry Taxes By Month',
-    'industryfacilitytaxtotal  '   => 'Tax Total',
+    'industryfacilitytaxtotal'     => 'Tax Total',
     'jumpbridgebymonth'            => 'Jump Bridge Fees By Month',
     'jumpbridgetotal'              => 'Fee Total',
     'jumpclonebymonth'             => 'Jump Clone Fees By Month',
