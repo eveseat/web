@@ -14,7 +14,7 @@
       @foreach ($reprocessingfeedates->chunk(3) as $chunk)
         <div class="row">
 
-          @foreach ($chunk as fee)
+          @foreach ($chunk as $fee)
             <div class="col-xs-4">
               <span class="text-bold">
                 <a href="{{ route('corporation.view.ledger.reprocessingfeebymonth', ['corporation_id' => $corporation_id, 'year' => $fee->year, 'month' => $fee->month]) }}">
@@ -48,10 +48,10 @@
 
           @foreach ($reprocessingfeedates as $rfbm)
             <tr>
-              <td data-order="{{ $rfbm->ownerName2 }}">
-                <a href="{{ route('character.view.sheet', ['character_id' => $rfbm->ownerID2]) }}">
-                  {!! img('character', $rfbm->ownerID2, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                  {{ $rfbm->ownerName2 }}
+              <td data-order="{{ $rfbm->ownerName1 }}">
+                <a href="{{ route('character.view.sheet', ['character_id' => $rfbm->ownerID1]) }}">
+                  {!! img('character', $rfbm->ownerID1, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  {{ $rfbm->ownerName1 }}
                 </a>
               </td>
               <td data-order="{{ number($rfbm->total) }}">{{ number($rfbm->total) }}</td>

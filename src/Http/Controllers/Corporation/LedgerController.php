@@ -170,7 +170,7 @@ class LedgerController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getJumpCloneTotalsByMonth(int $corporation_id, $year = null, $month = null)
+    public function getJumpCloneByMonth(int $corporation_id, $year = null, $month = null)
     {
 
         ! is_null($year) ? $year : $year = date('Y');
@@ -192,15 +192,15 @@ class LedgerController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getJumpBridgeTotalsByMonth(int $corporation_id, $year = null, $month = null)
+    public function getJumpBridgeByMonth(int $corporation_id, $year = null, $month = null)
     {
 
         ! is_null($year) ? $year : $year = date('Y');
         ! is_null($month) ? $year : $month = date('m');
 
-        $jumpclonedates = $this->getCorporationLedgerJumpBrudgeDates($corporation_id);
+        $jumpbridgedates = $this->getCorporationLedgerJumpBridgeDates($corporation_id);
 
-        $jumpclonetotals = $this->getCorporationLedgerJumpBridgeByMonth(
+        $jumpbridgetotals = $this->getCorporationLedgerJumpBridgeByMonth(
             $corporation_id, $year, $month);
 
         return view('web::corporation.ledger.jumpbridgebymonth',

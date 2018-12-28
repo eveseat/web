@@ -46,15 +46,15 @@
           </thead>
           <tbody>
 
-          @foreach ($industryfacilitytaxdates as $bpbm)
+          @foreach ($jumpclonedates as $jcbm)
             <tr>
-              <td data-order="{{ $bpbm->ownerName2 }}">
-                <a href="{{ route('character.view.sheet', ['character_id' => $bpbm->ownerID2]) }}">
-                  {!! img('character', $bpbm->ownerID2, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                  {{ $bpbm->ownerName2 }}
+              <td data-order="{{ $jcbm->ownerName1 }}">
+                <a href="{{ route('character.view.sheet', ['character_id' => $jbpm->ownerID1]) }}">
+                  {!! img('character', $jcbm->ownerID1, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  {{ $jcbm->ownerName1 }}
                 </a>
               </td>
-              <td data-order="{{ number($bpbm->total) }}">{{ number($bpbm->total) }}</td>
+              <td data-order="{{ number($jcbm->total) }}">{{ number($jcbm->total) }}</td>
             </tr>
           @endforeach
 
@@ -63,7 +63,7 @@
       </div>
     </div>
     <div class="panel-footer">
-      <h3 class="panel-title">Total: {{ number($industryfacilitytaxdates->sum('total')) }}</h3>
+      <h3 class="panel-title">Total: {{ number($jumpclonedates->sum('total')) }}</h3>
     </div>
   </div>
 
