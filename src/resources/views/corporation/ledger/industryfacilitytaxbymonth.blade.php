@@ -11,14 +11,14 @@
     </div>
     <div class="panel-body">
 
-      @foreach ($bountyprizes->chunk(3) as $chunk)
+      @foreach ($industryfacilitytax->chunk(3) as $chunk)
         <div class="row">
 
-          @foreach ($chunk as $prize)
+          @foreach ($chunk as $tax)
             <div class="col-xs-4">
               <span class="text-bold">
-                <a href="{{ route('corporation.view.ledger.industryfacilitytaxbymonth', ['corporation_id' => $corporation_id, 'year' => $prize->year, 'month' => $prize->month]) }}">
-                  {{ date("M Y", strtotime($prize->year."-".$prize->month."-01")) }}
+                <a href="{{ route('corporation.view.ledger.industryfacilitytaxbymonth', ['corporation_id' => $corporation_id, 'year' => $tax->year, 'month' => $tax->month]) }}">
+                  {{ date("M Y", strtotime($tax->year."-".$tax->month."-01")) }}
                 </a>
               </span>
             </div>
@@ -41,20 +41,20 @@
           <thead>
           <tr>
             <th>{{ trans_choice('web::seat.name', 1) }}</th>
-            <th>{{ trans_choice('web::seat.industryfacilitytotal', 1) }}</th>
+            <th>{{ trans_choice('web::seat.industryfacilitytaxtotal', 1) }}</th>
           </tr>
           </thead>
           <tbody>
 
-          @foreach ($bountyprizedates as $bpbm)
+          @foreach ($industryfacilitytaxdates as $iftbm)
             <tr>
-              <td data-order="{{ $bpbm->ownerName1 }}">
-                <a href="{{ route('character.view.sheet', ['character_id' => $bpbm->ownerID1]) }}">
-                  {!! img('character', $bpbm->ownerID1, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                  {{ $bpbm->ownerName1 }}
+              <td data-order="{{ $iftbm->ownerName1 }}">
+                <a href="{{ route('character.view.sheet', ['character_id' => $iftbm->ownerID1]) }}">
+                  {!! img('character', $iftbm->ownerID1, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  {{ $iftbm->ownerName1 }}
                 </a>
               </td>
-              <td data-order="{{ number($bpbm->total) }}">{{ number($bpbm->total) }}</td>
+              <td data-order="{{ number($iftbm->total) }}">{{ number($iftbm->total) }}</td>
             </tr>
           @endforeach
 
@@ -63,7 +63,7 @@
       </div>
     </div>
     <div class="panel-footer">
-      <h3 class="panel-title">Total: {{ number($bountyprizedates->sum('total')) }}</h3>
+      <h3 class="panel-title">Total: {{ number($industryfacilitytaxdates->sum('total')) }}</h3>
     </div>
   </div>
 

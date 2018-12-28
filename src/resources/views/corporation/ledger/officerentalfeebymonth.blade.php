@@ -1,7 +1,7 @@
-@extends('web::corporation.ledger.layouts.view', ['sub_viewname' => 'bountyprizesbymonth'])
+@extends('web::corporation.ledger.layouts.view', ['sub_viewname' => 'officerentalfeebymonth'])
 
-@section('title', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.bountyprizesbymonth', 2))
-@section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.bountyprizesbymonth', 2))
+@section('title', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.officerentalfeebymonth', 2))
+@section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.officerentalfeebymonth', 2))
 
 @section('ledger_content')
 
@@ -11,14 +11,14 @@
     </div>
     <div class="panel-body">
 
-      @foreach ($bountyprizes->chunk(3) as $chunk)
+      @foreach ($officerentalfee->chunk(3) as $chunk)
         <div class="row">
 
-          @foreach ($chunk as $prize)
+          @foreach ($chunk as $fee)
             <div class="col-xs-4">
               <span class="text-bold">
-                <a href="{{ route('corporation.view.ledger.bountyprizesbymonth', ['corporation_id' => $corporation_id, 'year' => $prize->year, 'month' => $prize->month]) }}">
-                  {{ date("M Y", strtotime($prize->year."-".$prize->month."-01")) }}
+                <a href="{{ route('corporation.view.ledger.officerentalfeebymonth', ['corporation_id' => $corporation_id, 'year' => $fee->year, 'month' => $fee->month]) }}">
+                  {{ date("M Y", strtotime($fee->year."-".$fee->month."-01")) }}
                 </a>
               </span>
             </div>
@@ -31,7 +31,7 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{ trans_choice('web::seat.bountyprizesbymonth', 2) }}
+      <h3 class="panel-title">{{ trans_choice('web::seat.officerentalfeebymonth', 2) }}
         - {{ date("M Y", strtotime($year."-".$month."-01")) }}</h3>
     </div>
 
@@ -41,20 +41,20 @@
           <thead>
           <tr>
             <th>{{ trans_choice('web::seat.name', 1) }}</th>
-            <th>{{ trans_choice('web::seat.bountyprizetotal', 1) }}</th>
+            <th>{{ trans_choice('web::seat.officerentalfeetotal', 1) }}</th>
           </tr>
           </thead>
           <tbody>
 
-          @foreach ($bountyprizedates as $bpbm)
+          @foreach ($officerentalfeedates as $orfbm)
             <tr>
-              <td data-order="{{ $bpbm->ownerName2 }}">
-                <a href="{{ route('character.view.sheet', ['character_id' => $bpbm->ownerID2]) }}">
-                  {!! img('character', $bpbm->ownerID2, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                  {{ $bpbm->ownerName2 }}
+              <td data-order="{{ $orfbm->ownerName2 }}">
+                <a href="{{ route('character.view.sheet', ['character_id' => $orfbm->ownerID2]) }}">
+                  {!! img('character', $orfbm->ownerID2, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  {{ $orfbm->ownerName2 }}
                 </a>
               </td>
-              <td data-order="{{ number($bpbm->total) }}">{{ number($bpbm->total) }}</td>
+              <td data-order="{{ number($orfbm->total) }}">{{ number($orfbm->total) }}</td>
             </tr>
           @endforeach
 
@@ -63,7 +63,7 @@
       </div>
     </div>
     <div class="panel-footer">
-      <h3 class="panel-title">Total: {{ number($bountyprizedates->sum('total')) }}</h3>
+      <h3 class="panel-title">Total: {{ number($officerentalfeedates->sum('total')) }}</h3>
     </div>
   </div>
 
