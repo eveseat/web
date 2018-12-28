@@ -369,7 +369,7 @@ return [
     'industryfacilitytaxtotal  '   => 'Tax Total',
     'jumpbridgebymonth'            => 'Jump Bridge Fees By Month',
     'jumpbridgetotal'              => 'Fee Total',
-    'jumpclonebymonth'             => 'Jump Clone Install/Activation Fees By Month'
+    'jumpclonebymonth'             => 'Jump Clone Fees By Month',
     'jumpclonetotal'               => 'Fee Total',
     'officerentalfeebymonth'       => 'Office Rental Fees By Month',
     'officerentalfeetotal'         => 'Fee Total',
