@@ -365,6 +365,17 @@ return [
     'pitotals'                     => 'PI Total Taxes',
     'wallet_division_name'         => 'Wallet Division Name',
     'wallet_summary'               => 'Wallet Summary|Wallet Summaries',
+    'industryfacilitytaxbymonth'   => 'Industry Taxes By Month',
+    'industryfacilitytaxtotal  '   => 'Tax Total',
+    'jumpbridgebymonth'            => 'Jump Bridge Fees By Month',
+    'jumpbridgetotal'              => 'Fee Total',
+    'jumpclonebymonth'             => 'Jump Clone Install/Activation Fees By Month'
+    'jumpclonetotal'               => 'Fee Total',
+    'officerentalfeebymonth'       => 'Office Rental Fees By Month',
+    'officerentalfeetotal'         => 'Fee Total',
+    'reprocessingfeebymonth'       => 'Reprocessing Fees By Month',
+    'reprocessingfeetotal'         => 'Fee Total',
+
 
     // Users
     'user_management'              => 'User Management',
