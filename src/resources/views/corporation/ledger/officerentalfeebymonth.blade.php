@@ -49,7 +49,7 @@
           @foreach ($officerentalfeedates as $orfbm)
             <tr>
               <td data-order="{{ $orfbm->ownerName1 }}">
-                <a href="{{ route('character.view.sheet', ['character_id' => $jbpm->ownerID1]) }}">
+                <a href="{{ route('character.view.sheet', ['character_id' => $orfbm->ownerID1]) }}">
                   {!! img('character', $orfbm->ownerID1, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                   {{ $orfbm->ownerName1 }}
                 </a>
