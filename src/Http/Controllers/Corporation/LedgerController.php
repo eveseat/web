@@ -112,7 +112,7 @@ class LedgerController extends Controller
 
         $officerentalfeedates = $this->getCorporationLedgerOfficeRentalFeeDates($corporation_id);
 
-        $officerentalfeetotals = $this->getCorporationLedgerOfficeRentalFeeTotalsByMonth(
+        $officerentalfeetotals = $this->getCorporationLedgerOfficeRentalFeeByMonth(
             $corporation_id, $year, $month);
 
         return view('web::corporation.ledger.officerentalfeebymonth',
@@ -134,7 +134,7 @@ class LedgerController extends Controller
 
         $industryfacilitytaxdates = $this->getCorporationLedgerIndustryFacilityTaxDates($corporation_id);
 
-        $industryfacilitytaxtotals = $this->getCorporationLedgerIndustryFacilityTaxTotalsByMonth(
+        $industryfacilitytaxtotals = $this->getCorporationLedgerIndustryFacilityTaxByMonth(
             $corporation_id, $year, $month);
 
         return view('web::corporation.ledger.industryfacilitytaxbymonth',
@@ -156,7 +156,7 @@ class LedgerController extends Controller
 
         $reprocessingfeedates = $this->getCorporationLedgerReprocessingFeeDates($corporation_id);
 
-        $reprocessingfeetotals = $this->getCorporationLedgerReprocessingFeeTotalsByMonth(
+        $reprocessingfeetotals = $this->getCorporationLedgerReprocessingFeeByMonth(
             $corporation_id, $year, $month);
 
         return view('web::corporation.ledger.reprocessingfeebymonth',
@@ -178,7 +178,7 @@ class LedgerController extends Controller
 
         $jumpclonedates = $this->getCorporationLedgerJumpCloneDates($corporation_id);
 
-        $jumpclonetotals = $this->getCorporationLedgeJumpCloneTotalsTotalsByMonth(
+        $jumpclonetotals = $this->getCorporationLedgeJumpCloneByMonth(
             $corporation_id, $year, $month);
 
         return view('web::corporation.ledger.jumpclonebymonth',
@@ -200,7 +200,7 @@ class LedgerController extends Controller
 
         $jumpclonedates = $this->getCorporationLedgerJumpBrudgeDates($corporation_id);
 
-        $jumpclonetotals = $this->getCorporationLedgeJumpBridgeTotalsTotalsByMonth(
+        $jumpclonetotals = $this->getCorporationLedgeJumpBridgeByMonth(
             $corporation_id, $year, $month);
 
         return view('web::corporation.ledger.jumpbridgebymonth',
