@@ -168,6 +168,35 @@ Route::group(['prefix' => 'view/ledger'], function () {
         'uses'       => 'LedgerController@getPlanetaryInteractionByMonth',
     ]);
 
+    Route::get('industryfacilitytax/{corporation_id}/{year?}/{month?}', [
+        'as'         => 'corporation.view.ledger.industryfacilitytaxbymonth',
+        'middleware' => 'corporationbouncer:ledger',
+        'uses'       => 'LedgerController@getIndustryFacilityTaxByMonth',
+    ]);
+
+    Route::get('jumpbridge/{corporation_id}/{year?}/{month?}', [
+        'as'         => 'corporation.view.ledger.jumpbridgebymonth',
+        'middleware' => 'corporationbouncer:ledger',
+        'uses'       => 'LedgerController@getJumpBridgeByMonth',
+    ]);
+
+    Route::get('jumpclone/{corporation_id}/{year?}/{month?}', [
+        'as'         => 'corporation.view.ledger.jumpclonebymonth',
+        'middleware' => 'corporationbouncer:ledger',
+        'uses'       => 'LedgerController@getJumpCloneByMonth',
+    ]);
+
+    Route::get('officerental/{corporation_id}/{year?}/{month?}', [
+        'as'         => 'corporation.view.ledger.officerentalfeebymonth',
+        'middleware' => 'corporationbouncer:ledger',
+        'uses'       => 'LedgerController@getOfficeRentalFeeByMonth',
+    ]);
+
+    Route::get('reprocessingfee/{corporation_id}/{year?}/{month?}', [
+        'as'         => 'corporation.view.ledger.reprocessingfeebymonth',
+        'middleware' => 'corporationbouncer:ledger',
+        'uses'       => 'LedgerController@getReprocessingFeeByMonth',
+    ]);
 });
 
 Route::get('/view/summary/{corporation_id}', [
