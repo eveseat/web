@@ -115,7 +115,7 @@ class LedgerController extends Controller
         $officerentalfeetotals = $this->getCorporationLedgerOfficeRentalFeeTotalsByMonth(
             $corporation_id, $year, $month);
 
-        return view('web::corporation.ledger.officerentalfee',
+        return view('web::corporation.ledger.officerentalfeebymonth',
             compact('officerentalfeedates', 'officerentalfeetotals',
                 'corporation_id', 'month', 'year'));
     }
@@ -137,7 +137,7 @@ class LedgerController extends Controller
         $industryfacilitytaxtotals = $this->getCorporationLedgerIndustryFacilityTaxTotalsByMonth(
             $corporation_id, $year, $month);
 
-        return view('web::corporation.ledger.industryfacilitytax',
+        return view('web::corporation.ledger.industryfacilitytaxbymonth',
             compact('industryfacilitytaxdates', 'industryfacilitytaxtotals',
                 'corporation_id', 'month', 'year'));
     }
@@ -159,7 +159,7 @@ class LedgerController extends Controller
         $reprocessingfeetotals = $this->getCorporationLedgerReprocessingFeeTotalsByMonth(
             $corporation_id, $year, $month);
 
-        return view('web::corporation.ledger.reprocessingfee',
+        return view('web::corporation.ledger.reprocessingfeebymonth',
             compact('reprocessingfeedates', 'reprocessingfeetotals',
                 'corporation_id', 'month', 'year'));
     }
@@ -181,7 +181,7 @@ class LedgerController extends Controller
         $jumpclonetotals = $this->getCorporationLedgeJumpCloneTotalsTotalsByMonth(
             $corporation_id, $year, $month);
 
-        return view('web::corporation.ledger.jumpclone',
+        return view('web::corporation.ledger.jumpclonebymonth',
             compact('jumpclonedates', 'jumpclonetotals',
                 'corporation_id', 'month', 'year'));
     }
@@ -203,7 +203,7 @@ class LedgerController extends Controller
         $jumpclonetotals = $this->getCorporationLedgeJumpBridgeTotalsTotalsByMonth(
             $corporation_id, $year, $month);
 
-        return view('web::corporation.ledger.jumpbridge',
+        return view('web::corporation.ledger.jumpbridgebymonth',
             compact('jumpbridgedates', 'jumpbridgetotals',
                 'corporation_id', 'month', 'year'));
     }
