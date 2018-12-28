@@ -11,7 +11,7 @@
     </div>
     <div class="panel-body">
 
-      @foreach ($reprocessingfee->chunk(3) as $chunk)
+      @foreach ($reprocessingfeedates->chunk(3) as $chunk)
         <div class="row">
 
           @foreach ($chunk as fee)
@@ -41,7 +41,7 @@
           <thead>
           <tr>
             <th>{{ trans_choice('web::seat.name', 1) }}</th>
-            <th>{{ trans_choice('web::seat.reprocessingfeetotals', 1) }}</th>
+            <th>{{ trans_choice('web::seat.reprocessingfeetotal', 1) }}</th>
           </tr>
           </thead>
           <tbody>

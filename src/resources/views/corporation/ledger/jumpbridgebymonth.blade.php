@@ -11,7 +11,7 @@
     </div>
     <div class="panel-body">
 
-      @foreach ($jumpbridge->chunk(3) as $chunk)
+      @foreach ($jumpbridgedates->chunk(3) as $chunk)
         <div class="row">
 
           @foreach ($chunk as $fee)

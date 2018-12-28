@@ -11,7 +11,7 @@
     </div>
     <div class="panel-body">
 
-      @foreach ($industryfacilitytax->chunk(3) as $chunk)
+      @foreach ($industryfacilitytaxdates->chunk(3) as $chunk)
         <div class="row">
 
           @foreach ($chunk as $tax)

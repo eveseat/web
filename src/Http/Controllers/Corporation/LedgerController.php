@@ -178,7 +178,7 @@ class LedgerController extends Controller
 
         $jumpclonedates = $this->getCorporationLedgerJumpCloneDates($corporation_id);
 
-        $jumpclonetotals = $this->getCorporationLedgeJumpCloneByMonth(
+        $jumpclonetotals = $this->getCorporationLedgerJumpCloneByMonth(
             $corporation_id, $year, $month);
 
         return view('web::corporation.ledger.jumpclonebymonth',
@@ -200,7 +200,7 @@ class LedgerController extends Controller
 
         $jumpclonedates = $this->getCorporationLedgerJumpBrudgeDates($corporation_id);
 
-        $jumpclonetotals = $this->getCorporationLedgeJumpBridgeByMonth(
+        $jumpclonetotals = $this->getCorporationLedgerJumpBridgeByMonth(
             $corporation_id, $year, $month);
 
         return view('web::corporation.ledger.jumpbridgebymonth',

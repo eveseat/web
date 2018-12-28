@@ -11,7 +11,7 @@
     </div>
     <div class="panel-body">
 
-      @foreach ($jumpclone->chunk(3) as $chunk)
+      @foreach ($jumpclonedates->chunk(3) as $chunk)
         <div class="row">
 
           @foreach ($chunk as $prize)
