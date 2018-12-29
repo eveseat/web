@@ -126,6 +126,18 @@ Route::get('/view/pocos/{corporation_id}', [
     'uses'       => 'IndustryController@getPoco',
 ]);
 
+Route::get('/view/extractions/{corporation_id}', [
+    'as'         => 'corporation.view.extractions',
+    'middleware' => 'corporationbouncer:extractions',
+    'uses'       => 'ExtractionController@getExtractions',
+]);
+
+Route::post('/view/extractions/report', [
+    'as'         => 'corporation.view.extractions.probe-report',
+    'middleware' => 'corporationbouncer:extractions',
+    'uses'       => 'ExtractionController@postProbeReport',
+]);
+
 Route::group(['prefix' => 'view/security'], function () {
 
     Route::get('roles/{corporation_id}', [
