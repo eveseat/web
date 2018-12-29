@@ -82,8 +82,7 @@ class ContractsController extends Controller
             })
             ->addColumn('contents', function ($row) {
 
-                return view('web::partials.contractcontentsbutton', compact('row'))
-                    ->render();
+                return view('web::partials.contractcontentsbutton', compact('row'));
             })
             ->rawColumns(['issuer_id', 'type', 'contents'])
             ->make(true);
