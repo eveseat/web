@@ -44,7 +44,7 @@
             <td>
               <a href="#" class="fitting-item" data-toggle="modal" data-target="#fittingItemsModal"
                  a-fitting-id="{{ $fitting->fitting_id }}">
-                <i class="fas fa-expand"></i>
+                <i class="fas fa-cube"></i>
               </a>
             </td>
           </tr>
