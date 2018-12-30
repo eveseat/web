@@ -20,7 +20,7 @@
           @endif
         </p>
         <!-- Status -->
-        <a href="#"><i class="fa fa-circle text-success"></i> {{ trans('web::seat.online') }}</a>
+        <a href="#"><i class="fas fa-circle text-success"></i> {{ trans('web::seat.online') }}</a>
       </div>
     </div>
 
@@ -29,7 +29,7 @@
       <div class="input-group">
         <input type="text" name="q" class="form-control" placeholder="{{ trans('web::seat.search') }}...">
         <span class="input-group-btn">
-            <button type="submit" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+            <button type="submit" id="search-btn" class="btn btn-flat"><i class="fas fa-search"></i>
             </button>
           </span>
       </div>
@@ -59,12 +59,12 @@
                   @endif
                 </span>
                 <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
+                  <i class="fas fa-angle-left pull-right"></i>
                 </span>
 
               @else
 
-                <span>{{ $entry['name'] }}</span> <i class="fa fa-angle-left pull-right"></i>
+                <span>{{ $entry['name'] }}</span> <i class="fas fa-angle-left pull-right"></i>
 
               @endif
 
@@ -99,7 +99,7 @@
 
                         @if(array_key_exists('entries', $item))
                           <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
+                          <i class="fas fa-angle-left pull-right"></i>
                         </span>
                         @endif
 
@@ -153,7 +153,7 @@
 
                       @if(array_key_exists('entries', $item))
                         <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
+                          <i class="fas fa-angle-left pull-right"></i>
                       </span>
                       @endif
 

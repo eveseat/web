@@ -96,7 +96,7 @@
                 url: url,
                 beforeSend: function () {
                   //add spinner
-                  $('span#contract-items-result').html('<i class="fa fa-refresh fa-spin loader"></i>');
+                  $('span#contract-items-result').html('<i class="fas fa-sync fa-spin loader"></i>');
                 },
                 success: function (data) {
                   //replace spinner with content

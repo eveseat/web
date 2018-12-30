@@ -15,7 +15,7 @@
           <span class="pull-right">
             <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.pi']) }}"
                style="color: #000000">
-              <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_pi') }}"></i>
+              <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_pi') }}"></i>
             </a>
           </span>
         @endif

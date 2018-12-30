@@ -78,7 +78,7 @@
 
         // 'Loading' animation
         $("div#modules" + starbase_id)
-            .html('<i class="fa fa-cog fa fa-spin"></i> {{ trans('web::seat.loading_modules') }}</p>');
+            .html('<i class="fas fa-cog fa-spin"></i> {{ trans('web::seat.loading_modules') }}</p>');
 
         $.ajax({
           type   : 'POST',

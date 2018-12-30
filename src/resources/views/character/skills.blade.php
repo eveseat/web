@@ -36,7 +36,7 @@
           <span class="pull-right">
             <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.skills']) }}"
                style="color: #000000">
-              <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_skills') }}"></i>
+              <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_skills') }}"></i>
             </a>
           </span>
         @endif
@@ -51,7 +51,7 @@
           <div class="box box-solid">
             <div class="box-header with-border">
               <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                <i class="fa fa-minus"></i>
+                <i class="fas fa-minus"></i>
               </button>
               <h3 class="box-title">
                 {{ $skill_group->groupName }}
@@ -64,19 +64,19 @@
               <table class="table table-striped table-hover table-condensed table-responsive">
                 @foreach($skills->where('groupID', $skill_group->groupID) as $skill)
                   <tr>
-                    <td><i class="fa fa-book"></i> {{ $skill->typeName }}</td>
+                    <td><i class="fas fa-book"></i> {{ $skill->typeName }}</td>
                     <td class="text-right">
                       @if($skill->trained_skill_level == 0)
-                        <i class="fa fa-star-o"></i>
+                        <i class="fas fa-star-o"></i>
                       @elseif($skill->trained_skill_level == 5)
                         <span class="text-green">
                       @for($i = 1; $i <= 5; $i++)
-                            <i class="fa fa-star"></i>
+                            <i class="fas fa-star"></i>
                           @endfor
                     </span>
                       @else
                         @for($i = 1;  $i <= $skill->trained_skill_level; $i++)
-                          <i class="fa fa-star"></i>
+                          <i class="fas fa-star"></i>
                         @endfor
                       @endif
                       | {{ $skill->trained_skill_level }}

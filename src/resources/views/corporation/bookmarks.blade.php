@@ -59,7 +59,7 @@
               <td>{{ $bookmark->system->itemName }}</td>
               <td>{{ clean_ccp_html($bookmark->notes) }}</td>
               <td>
-                <i class="fa fa-info-circle" data-toggle="tooltip"
+                <i class="fas fa-info-circle" data-toggle="tooltip"
                    title="" data-original-title="{{ trans('web::seat.coordinates') }}:
                     {{ $bookmark->x }} {{ $bookmark->y }} {{ $bookmark->z }}">
                 </i>

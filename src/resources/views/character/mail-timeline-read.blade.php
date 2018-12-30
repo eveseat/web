@@ -8,11 +8,11 @@
   <ul class="timeline">
 
     <li>
-      <i class="fa fa-envelope bg-blue"></i>
+      <i class="fas fa-envelope bg-blue"></i>
       <div class="timeline-item">
 
         <span class="time">
-          <i class="fa fa-clock-o"></i>
+          <i class="far fa-clock"></i>
           {{ $message->timestamp }} ({{ human_diff($message->timestamp) }})
         </span>
 
@@ -85,7 +85,7 @@
       </div>
 
       <li>
-        <i class="fa fa-clock-o bg-gray"></i>
+        <i class="far fa-clock bg-gray"></i>
       </li>
   </ul>
 

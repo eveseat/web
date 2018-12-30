@@ -15,7 +15,7 @@
         <li class="pull-right">
           <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.contracts']) }}"
              style="color: #000000">
-            <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_contracts') }}"></i>
+            <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_contracts') }}"></i>
           </a>
         </li>
       @endif
@@ -128,7 +128,7 @@
               url: url,
               beforeSend: function () {
                 //add spinner
-                $('span#contract-items-result').html('<i class="fa fa-refresh fa-spin loader"></i>');
+                $('span#contract-items-result').html('<i class="fas fa-sync fa-spin loader"></i>');
               },
               success: function (data) {
                 //replace spinner with content

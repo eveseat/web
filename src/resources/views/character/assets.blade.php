@@ -15,7 +15,7 @@
         <li class="pull-right">
           <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.assets']) }}"
              style="color: #000000">
-            <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_assets') }}"></i>
+            <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_assets') }}"></i>
           </a>
         </li>
       @endif
@@ -97,7 +97,7 @@
         if(data.quantity == null){
           $(row).find("td:eq(0)")
               .addClass('details-control')
-              .append('<button class="btn btn-xs btn-link"><i class="fa fa-plus"></i></button>');
+              .append('<button class="btn btn-xs btn-link"><i class="fas fa-plus"></i></button>');
         }
       },
       drawCallback : function () {
@@ -158,7 +158,7 @@
                 .addClass('details-control')
                 .attr('data-location-id', data.item_id )
                 .attr('data-origin', data.location_id )
-                .append('<button class="btn btn-xs btn-link"><i class="fa fa-plus"></i></button>');
+                .append('<button class="btn btn-xs btn-link"><i class="fas fa-plus"></i></button>');
           }
         },
         drawCallback : function () {

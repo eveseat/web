@@ -15,7 +15,7 @@
           <span class="pull-right">
             <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.fittings']) }}"
                style="color: #000000">
-              <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_fittings') }}"></i>
+              <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_fittings') }}"></i>
             </a>
           </span>
         @endif
@@ -44,7 +44,7 @@
             <td>
               <a href="#" class="fitting-item" data-toggle="modal" data-target="#fittingItemsModal"
                  a-fitting-id="{{ $fitting->fitting_id }}">
-                <i class="fa fa-expand"></i>
+                <i class="fas fa-expand"></i>
               </a>
             </td>
           </tr>

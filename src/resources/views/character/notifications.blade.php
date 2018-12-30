@@ -15,7 +15,7 @@
           <span class="pull-right">
             <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.notifications']) }}"
                style="color: #000000">
-              <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_notifications') }}"></i>
+              <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_notifications') }}"></i>
             </a>
           </span>
         @endif
@@ -51,7 +51,7 @@
               @endif
             </td>
             <td>
-              <i class="fa fa-comment" data-toggle="popover" data-placement="top" title="" data-html="true"
+              <i class="fas fa-comment" data-toggle="popover" data-placement="top" title="" data-html="true"
                  data-trigger="hover" data-content="{{ clean_ccp_html($notification->text) }}"></i>
               {{ preg_replace('/([a-z0-9])([A-Z])/', '$1 $2', $notification->type) }}
             </td>

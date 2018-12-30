@@ -65,7 +65,7 @@
 
                 <!-- Button trigger modal -->
                 <a type="button" data-toggle="modal" data-target="#assetModal{{ $starbase_module->item_id }}">
-                  <i class="fa fa-cube"></i>
+                  <i class="fas fa-cube"></i>
                 </a>
 
                 <!-- Modal -->

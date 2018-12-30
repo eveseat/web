@@ -15,7 +15,7 @@
           <span class="pull-right">
             <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.calendar']) }}"
                style="color: #000000">
-              <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_calendar') }}"></i>
+              <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_calendar') }}"></i>
             </a>
           </span>
         @endif
@@ -47,7 +47,7 @@
               <span class="id-to-name" data-id="{{ $event->detail->owner_id }}">{{ trans('web::seat.unknown') }}</span>
             </td>
             <td>
-              <i class="fa fa-comment" data-toggle="popover" data-placement="top" title="" data-html="true"
+              <i class="fas fa-comment" data-toggle="popover" data-placement="top" title="" data-html="true"
                  data-trigger="hover" data-content="{{ clean_ccp_html($event->detail->text) }}"></i>
               {{ $event->title }}
             </td>

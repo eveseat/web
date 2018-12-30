@@ -56,7 +56,7 @@
   $(document.body).on("change", "select#standings-profile-id", function () {
 
     // Flip on the loading indicator
-    $("span#comparison-result").html('<i class="fa fa-cog fa fa-spin"></i>');
+    $("span#comparison-result").html('<i class="fas fa-cog fa-spin"></i>');
 
     // Shitty hack so we can replace the id. Muhaha.
     var url = "{{ route('character.view.intel.ajax.standingscomparison', ['character_id' => $request->character_id, 'profile_id' => ':id']) }}";

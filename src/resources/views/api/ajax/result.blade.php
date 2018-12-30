@@ -65,7 +65,7 @@
           </form>
 
           <div class="text-muted">
-            <i class="fa fa-info"></i>
+            <i class="fas fa-info"></i>
             <span class="text-bold">{{ trans('web::seat.note') }}:</span>
             {{ trans('web::seat.api_add_job') }}
           </div>

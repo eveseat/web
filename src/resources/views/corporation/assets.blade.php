@@ -62,7 +62,7 @@
               @if($asset->content->count() > 0)
 
                 <td>
-                  <i class="fa fa-plus viewcontent" style="cursor: pointer;"
+                  <i class="fas fa-plus viewcontent" style="cursor: pointer;"
                      a-item-id="{{ $asset->item_id }}" a-loaded="false">
                   </i>
                 </td>

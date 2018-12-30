@@ -7,7 +7,7 @@
   <div class="login-logo">
     S<b>e</b>AT <br>
     <hr>
-    <i class="fa fa-exclamation-triangle"></i>
+    <i class="fas fa-exclamation-triangle"></i>
     {{ trans('web::seat.unauthorized_request') }}
   </div>
 

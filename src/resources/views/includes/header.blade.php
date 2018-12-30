@@ -25,7 +25,7 @@
             <a href="{{ route('configuration.users.impersonate.stop') }}"
                class="dropdown-toggle" data-toggle="tooltip" data-placement="bottom"
                title="{{ trans('web::seat.stop_impersonation') }}">
-              <i class="fa fa-user-secret"></i>
+              <i class="fas fa-user-secret"></i>
             </a>
           </li>
 
@@ -36,7 +36,7 @@
           <a href="{{ auth()->user()->has('queue_manager', false) ? route('horizon.index') : '#queue_count' }}"
              class="dropdown-toggle" data-toggle="tooltip" data-placement="bottom"
              title="{{ trans('web::seat.queued') }}">
-            <i class="fa fa-truck"></i>
+            <i class="fas fa-truck"></i>
             <span class="label label-success" id="queue_count">0</span>
           </a>
         </li>
@@ -44,7 +44,7 @@
           <a href="{{ auth()->user()->has('queue_manager', false) ? route('horizon.index') : '#error_count' }}"
              class="dropdown-toggle" data-toggle="tooltip" data-placement="bottom"
              title="{{ trans('web::seat.error') }}">
-            <i class="fa fa-exclamation"></i>
+            <i class="fas fa-exclamation"></i>
             <span class="label label-danger" id="error_count">0</span>
           </a>
         </li>

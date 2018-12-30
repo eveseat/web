@@ -10,7 +10,7 @@
     <div class="col-md-12 col-sm-6 col-xs-12">
 
       <div class="info-box">
-        <span class="info-box-icon bg-aqua"><i class="fa fa-server"></i></span>
+        <span class="info-box-icon bg-aqua"><i class="fas fa-server"></i></span>
         <div class="info-box-content">
           <span class="info-box-text">{{ trans('web::seat.online_layers') }}</span>
           <span class="info-box-number">
@@ -23,7 +23,7 @@
       </div><!-- /.info-box -->
 
       <div class="info-box">
-        <span class="info-box-icon bg-green"><i class="fa fa-key"></i></span>
+        <span class="info-box-icon bg-green"><i class="fas fa-key"></i></span>
         <div class="info-box-content">
           <span class="info-box-text">{{ trans('web::seat.linked_characters') }}</span>
           <span class="info-box-number">
@@ -40,7 +40,7 @@
     <div class="col-md-12 col-sm-6 col-xs-12">
 
       <div class="info-box">
-        <span class="info-box-icon bg-blue"><i class="fa fa-money"></i></span>
+        <span class="info-box-icon bg-blue"><i class="far fa-money-bill-alt"></i></span>
         <div class="info-box-content">
           <span class="info-box-text">{{ trans('web::seat.total_character_isk') }}</span>
           <span class="info-box-number">
@@ -50,7 +50,7 @@
       </div><!-- /.info-box -->
 
       <div class="info-box">
-        <span class="info-box-icon bg-purple"><i class="fa fa-diamond"></i></span>
+        <span class="info-box-icon bg-purple"><i class="far fa-gem"></i></span>
         <div class="info-box-content">
           <span class="info-box-text">{{ trans('web::seat.total_character_mined_isk') }}</span>
           <span class="info-box-number">
@@ -60,7 +60,7 @@
       </div><!-- /.info-box -->
 
       <div class="info-box">
-        <span class="info-box-icon bg-black"><i class="fa fa-graduation-cap"></i></span>
+        <span class="info-box-icon bg-black"><i class="fas fa-graduation-cap"></i></span>
         <div class="info-box-content">
           <span class="info-box-text">{{ trans('web::seat.total_character_skillpoints') }}</span>
           <span class="info-box-number">
@@ -74,7 +74,7 @@
     <div class="col-md-12 col-sm-6 col-xs-12">
 
       <div class="info-box">
-        <span class="info-box-icon bg-red"><i class="fa fa-space-shuttle"></i></span>
+        <span class="info-box-icon bg-red"><i class="fas fa-space-shuttle"></i></span>
         <div class="info-box-content">
           <span class="info-box-text">{{ trans('web::seat.total_killmails') }}</span>
           <span class="info-box-number">

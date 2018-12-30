@@ -29,9 +29,9 @@
             <tr>
               <td data-order="{{ $character->key_ok }}">
                 @if($character->key_ok == 1)
-                  <i class="fa fa-check text-success"></i>
+                  <i class="fas fa-check text-success"></i>
                 @else
-                  <i class="fa fa-exclamation-triangle text-danger"></i>
+                  <i class="fas fa-exclamation-triangle text-danger"></i>
                 @endif
               </td>
               <td>

@@ -111,7 +111,7 @@
       $inputs.prop("disabled", true);
 
       // Show the results box and a loader
-      $("span#result").html("<i class='fa fa-cog fa-spin'></i> Loading...");
+      $("span#result").html("<i class='fas fa-cog fa-spin'></i> Loading...");
 
       // fire off the request to /form.php
       request = $.ajax({

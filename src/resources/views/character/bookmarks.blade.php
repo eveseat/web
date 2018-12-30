@@ -15,7 +15,7 @@
           <span class="pull-right">
             <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.bookmarks']) }}"
                style="color: #000000">
-              <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_bookmarks') }}"></i>
+              <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_bookmarks') }}"></i>
             </a>
           </span>
         @endif
@@ -62,7 +62,7 @@
               <td>{{ $bookmark->system->itemName }}</td>
               <td>{{ clean_ccp_html($bookmark->notes) }}</td>
               <td>
-                <i class="fa fa-info-circle" data-toggle="tooltip"
+                <i class="fas fa-info-circle" data-toggle="tooltip"
                    title="" data-original-title="{{ trans('web::seat.coordinates') }}:
                     {{ $bookmark->x }} {{ $bookmark->y }} {{ $bookmark->z }}">
                 </i>

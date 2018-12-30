@@ -14,7 +14,7 @@
           <span class="pull-right">
             <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.mining']) }}"
                style="color: #000000">
-              <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_mining') }}"></i>
+              <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_mining') }}"></i>
             </a>
           </span>
         @endif
@@ -42,7 +42,7 @@
             </td>
             <td data-order="{{ $entry->system->itemName }}">
               <a href="//evemaps.dotlan.net/system/{{ $entry->system->itemName }}" target="_blank">
-                <span class="fa fa-map-marker"></span>
+                <span class="fas fa-map-marker-alt"></span>
               </a>
               {{ $entry->system->itemName }}
             </td>
@@ -54,7 +54,7 @@
             <td class="text-right" data-order="{{ $entry->volumes }}">{{ number($entry->volumes) }} m3</td>
             <td class="text-right" data-order="{{ $entry->amounts }}">{{ number($entry->amounts) }} ISK
               <a href="#" class="btn btn-sm btn-link" data-toggle="modal" data-target="#detailed-ledger">
-                <i class="fa fa-cubes"></i>
+                <i class="fas fa-cubes"></i>
               </a>
             </td>
           </tr>

@@ -1,3 +1,3 @@
-<i class="fa @if($row->type == 'item_exchange') fa-exchange @else fa-truck @endif" data-toggle="tooltip" title="{{ ucwords(str_replace('_', ' ', $row->type)) }}"></i>
-<i class="fa fa-long-arrow-right"></i>
-<i class="fa fa-map-marker" data-toggle="tooltip" title="{{ $row->endlocation }}"></i>
+<i class="fas @if($row->type == 'item_exchange') fa-exchange-alt @else fa-truck @endif" data-toggle="tooltip" title="{{ ucwords(str_replace('_', ' ', $row->type)) }}"></i>
+<i class="fas fa-long-arrow-alt-right"></i>
+<i class="fas fa-map-marker-alt" data-toggle="tooltip" title="{{ $row->endlocation }}"></i>

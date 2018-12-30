@@ -1,5 +1,5 @@
 <h4>
-  <i class="fa fa-envelope-o"></i>
+  <i class="far fa-envelope"></i>
   {{ $message->subject }}
 </h4>
 

@@ -20,7 +20,7 @@
                 <span class="pull-right">
                   <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.skillqueue']) }}"
                      style="color: #000000">
-                  <i class="fa fa-refresh" data-toggle="tooltip"
+                  <i class="fas fa-sync" data-toggle="tooltip"
                      title="{{ trans('web::seat.update_skill_queue') }}"></i>
                   </a>
                 </span>
@@ -67,9 +67,9 @@
                         <span class="col-md-4">
                           @for($i = 1; $i <= $skill->finished_level; $i++)
                             @if($i == $skill->finished_level)
-                              <span class="fa fa-star text-green"></span>
+                              <span class="fas fa-star text-green"></span>
                             @else
-                              <span class="fa fa-star"></span>
+                              <span class="fas fa-star"></span>
                             @endif
                           @endfor
                         </span>
@@ -197,7 +197,7 @@
               <span class="pull-right">
                 <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.corphistory']) }}"
                    style="color: #000000">
-                  <i class="fa fa-refresh" data-toggle="tooltip"
+                  <i class="fas fa-sync" data-toggle="tooltip"
                      title="{{ trans('web::seat.update_corp_history') }}"></i>
                 </a>
               </span>

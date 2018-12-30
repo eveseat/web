@@ -213,7 +213,7 @@
 
               <!-- Button trigger modal -->
               <a type="button" data-toggle="modal" data-target="#emailModal">
-                <i class="fa fa-envelope"></i>
+                <i class="fas fa-envelope"></i>
                 {{ trans('web::seat.change_email') }}
               </a>
 
@@ -271,7 +271,7 @@
 
               <!-- Button trigger modal -->
               <a type="button" data-toggle="modal" data-target="#historyModal">
-                <i class="fa fa-lock"></i>
+                <i class="fas fa-lock"></i>
                 {{ trans('web::seat.login_history') }}
               </a>
 
@@ -328,7 +328,7 @@
 
               <!-- Button trigger modal -->
               <a type="button" data-toggle="modal" data-target="#scopesModal">
-                <i class="fa fa-shield"></i>
+                <i class="fas fa-shield-alt"></i>
                 {{ trans_choice('web::seat.scope', 2) }}
               </a>
 
@@ -378,7 +378,7 @@
             <li class="list-header">{{ trans_choice('web::seat.role', 2) }}</li>
             @foreach($user->group->roles as $role)
               <li>
-                <i class="fa fa-group"></i>
+                <i class="fas fa-users"></i>
                 <span @if($role->title == 'Superuser') class="text-danger" @endif>
                   {{ $role->title }}
                 </span>
@@ -437,12 +437,12 @@
 
                 @if ($character->refresh_token )
                   <button data-toggle="tooltip" title="" class="btn btn-xs btn-link" data-original-title="Valid Token">
-                    <i class="fa fa-check text-success"></i>
+                    <i class="fas fa-check text-success"></i>
                   </button>
                 @else
                   <button data-toggle="tooltip" title="" class="btn btn-xs btn-link" data-original-title="Invalid Token"
                           aria-describedby="tooltip257244">
-                    <i class="fa fa-exclamation-triangle text-danger"></i>
+                    <i class="fas fa-exclamation-triangle text-danger"></i>
                   </button>
                 @endif
 

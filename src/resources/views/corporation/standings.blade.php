@@ -16,7 +16,7 @@
         <div class="box box-solid">
           <div class="box-header with-border">
             <button type="button" class="btn btn-box-tool" data-widget="collapse">
-              <i class="fa fa-minus"></i>
+              <i class="fas fa-minus"></i>
             </button>
             @if($type == 'npc_corp')
               <h3 class="box-title">Corporation NPC</h3>
