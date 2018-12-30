@@ -123,8 +123,8 @@ class WebServiceProvider extends ServiceProvider
             __DIR__ . '/resources/assets'                                        => public_path('web'),
 
             // Font Awesome Pulled from packagist
-            base_path('vendor/components/font-awesome/css/font-awesome.min.css') => public_path('web/css/font-awesome.min.css'),
-            base_path('vendor/components/font-awesome/fonts')                    => public_path('web/fonts'),
+            base_path('vendor/components/font-awesome/css/fontawesome-all.min.css') => public_path('web/css/fontawesome-all.min.css'),
+            base_path('vendor/components/font-awesome/webfonts')                    => public_path('web/webfonts'),
         ]);
     }
 

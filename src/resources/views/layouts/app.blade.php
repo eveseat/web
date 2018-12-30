@@ -15,7 +15,7 @@
   <!-- Bootstrap 3.3.5 -->
   <link rel="stylesheet" href="{{ asset('web/css/bootstrap.min.css') }}">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{ asset('web/css/font-awesome.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('web/css/fontawesome-all.min.css') }}">
   <!-- Select2 -->
   <link rel="stylesheet" href="{{ asset('web/css/select2.min.css') }}">
   <!-- DataTables -->
