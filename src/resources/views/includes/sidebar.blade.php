@@ -47,7 +47,7 @@
 
           <li class="treeview {{ Request::segment(1) === $entry['route_segment'] ? 'active' : null }}">
             <a href="#">
-              <i class="fa {{ $entry['icon'] }}"></i>
+              <i class="{{ $entry['icon'] }}"></i>
 
               @if (array_key_exists('label', $entry))
 
@@ -84,7 +84,7 @@
 
                         @if (array_key_exists('label', $item))
 
-                          <i class="fa {{ $item['icon'] or 'fa-circle-o' }}"></i>
+                          <i class="{{ $item['icon'] or 'far fa-circle' }}"></i>
                           @if(array_key_exists('plural', $item))
                             {{ trans_choice($item['label'], 2) }}
                           @else
@@ -93,7 +93,7 @@
 
                         @else
 
-                          <i class="fa {{ $item['icon'] or 'fa-circle-o' }}"></i> {{ $item['name'] }}
+                          <i class="{{ $item['icon'] or 'far fa-circle' }}"></i> {{ $item['name'] }}
 
                         @endif
 
@@ -111,14 +111,14 @@
                             <li class="{{ isset($subitem['route']) ? (Request::url() === route($subitem['route']) ? 'active' : null) : null }}">
                               <a href="{{ isset($subitem['route']) ? route($subitem['route']) : '#' }}">
                                 @if (array_key_exists('label', $subitem))
-                                  <i class="fa {{ $subitem['icon'] or 'fa-circle-o' }}"></i>
+                                  <i class="{{ $subitem['icon'] or 'far fa-circle' }}"></i>
                                   @if(array_key_exists('plural', $subitem))
                                     {{ trans_choice($subitem['label'], 2) }}
                                   @else
                                     {{ trans($subitem['label']) }}
                                   @endif
                                 @else
-                                  <i class="fa {{ $subitem['icon'] or 'fa-circle-o' }}"></i> {{ $subitem['name'] }}
+                                  <i class="{{ $subitem['icon'] or 'far fa-circle' }}"></i> {{ $subitem['name'] }}
                                 @endif
                               </a>
                             </li>
@@ -137,7 +137,7 @@
                     <a href="{{ isset($item['route']) ? route($item['route']) : '#' }}">
                       @if (array_key_exists('label', $item))
 
-                        <i class="fa {{ $item['icon'] or 'fa-circle-o' }}"></i>
+                        <i class="{{ $item['icon'] or 'far fa-circle' }}"></i>
 
                         @if(array_key_exists('plural', $item))
                           {{ trans_choice($item['label'], 2) }}
@@ -147,7 +147,7 @@
 
                       @else
 
-                        <i class="fa {{ $item['icon'] or 'fa-circle-o' }}"></i> {{ $item['name'] }}
+                        <i class="{{ $item['icon'] or 'far fa-circle' }}"></i> {{ $item['name'] }}
 
                       @endif
 
@@ -165,14 +165,14 @@
                           <li class="{{ isset($subitem['route']) ? (Request::url() === route($subitem['route']) ? 'active' : null) : null }}">
                             <a href="{{ isset($subitem['route']) ? route($subitem['route']) : '#' }}">
                               @if (array_key_exists('label', $subitem))
-                                <i class="fa {{ $subitem['icon'] or 'fa-circle-o' }}"></i>
+                                <i class="{{ $subitem['icon'] or 'far fa-circle' }}"></i>
                                 @if(array_key_exists('plural', $subitem))
                                   {{ trans_choice($subitem['label'], 2) }}
                                 @else
                                   {{ trans($subitem['label']) }}
                                 @endif
                               @else
-                                <i class="fa {{ $subitem['icon'] or 'fa-circle-o' }}"></i> {{ $subitem['name'] }}
+                                <i class="{{ $subitem['icon'] or 'far fa-circle' }}"></i> {{ $subitem['name'] }}
                               @endif
                             </a>
                           </li>
@@ -195,9 +195,9 @@
             <a href="{{ isset($entry['route']) ? route($entry['route']) : '#' }}">
 
               @if (array_key_exists('label', $entry))
-                <i class="fa {{ $entry['icon'] }}"></i> <span>{{ trans($entry['label']) }}</span>
+                <i class="{{ $entry['icon'] }}"></i> <span>{{ trans($entry['label']) }}</span>
               @else
-                <i class="fa {{ $entry['icon'] }}"></i> <span>{{ $entry['name'] }}</span>
+                <i class="{{ $entry['icon'] }}"></i> <span>{{ $entry['name'] }}</span>
               @endif
 
             </a>

@@ -4,7 +4,7 @@
   <div class="pull-right hidden-xs">
     <i class="fas fa-server" data-toggle="tooltip" title="{{ gethostname() }}"></i>
 
-    <i class="fa @if(optional($esi_status)->status == "ok") fa-refresh fa-spin @else fa-exclamation-triangle @endif"
+    <i class="fas @if(optional($esi_status)->status == "ok") fa-sync fa-spin @else fa-exclamation-triangle @endif"
        data-toggle="tooltip"
        title="{{ ucfirst(optional($esi_status)->status) }}/{{ optional($esi_status)->request_time }}ms - {{ human_diff(optional($esi_status)->created_at) }}"></i>
     |
