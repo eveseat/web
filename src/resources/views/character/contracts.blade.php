@@ -123,8 +123,22 @@
             var url = $(this).attr('data-url');
 
             // Perform an ajax request for the contract items
-            $.get(url, function (data) {
-              $('span#contract-items-result').html(data);
+            $.ajax({
+              type: 'GET',
+              url: url,
+              beforeSend: function () {
+                //add spinner
+                $('span#contract-items-result').html('<i class="fa fa-refresh fa-spin loader"></i>');
+              },
+              success: function (data) {
+                //replace spinner with content
+                $('span#contract-items-result').html(data);
+              },
+              error: function(xhr) { // if error occured
+                alert("Error occured.please try again");
+                $(placeholder).append(xhr.statusText + xhr.responseText);
+                $(placeholder).removeClass('loading');
+              },
             });
 
           });
