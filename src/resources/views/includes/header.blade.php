@@ -11,6 +11,7 @@
 
     <!-- Sidebar toggle button-->
     <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+      <i class="fas fa-bars"></i>
       <span class="sr-only">{{ trans('web::seat.toggle_navigation') }}</span>
     </a>
 
