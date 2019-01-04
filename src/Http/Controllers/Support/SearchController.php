@@ -23,6 +23,8 @@
 namespace Seat\Web\Http\Controllers\Support;
 
 use Illuminate\Http\Request;
+use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Mail\MailHeader;
 use Seat\Services\Search\Search;
 use Seat\Web\Http\Controllers\Controller;
@@ -64,13 +66,15 @@ class SearchController extends Controller
         return DataTables::of($characters)
             ->editColumn('name', function ($row) {
 
-                return view('web::search.partials.charactername', compact('row'))
-                    ->render();
+                $character = CharacterInfo::find($row->character_id);
+
+                return view('web::partials.character', compact('character'));
             })
             ->editColumn('corporation_id', function ($row) {
 
-                return view('web::search.partials.corporationname', compact('row'))
-                    ->render();
+                $corporation = CorporationInfo::find($row->corporation_id);
+
+                return view('web::partials.corporation', compact('corporation'));
             })
             ->rawColumns(['name', 'corporation_id'])
             ->make(true);
