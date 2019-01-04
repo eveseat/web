@@ -27,7 +27,7 @@
       ajax        : '{{ route('support.search.characters.data') }}',
       columns     : [
         {data: 'name', name: 'name'},
-        {data: 'corporation_id', name: 'corporation_id'}
+        {data: 'corporation_id', name: 'corporation_id', searchable:false}
       ],
       drawCallback: function () {
         $('img').unveil(100);

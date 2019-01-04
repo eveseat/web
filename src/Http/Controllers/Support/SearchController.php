@@ -132,28 +132,25 @@ class SearchController extends Controller
         return DataTables::of($mail)
             ->editColumn('from', function ($row) {
 
-                return view('web::character.partials.mailsendername', compact('row'))
-                    ->render();
+                $character = CharacterInfo::find($row->from) ?: $row->from;
+
+                return view('web::partials.character', compact('character'));
             })
             ->editColumn('subject', function ($row) {
 
-                return view('web::character.partials.mailtitle', compact('row'))
-                    ->render();
+                return view('web::character.partials.mailtitle', compact('row'));
             })
-            ->addColumn('body', function (MailHeader $row) {
+            ->addColumn('body_clean', function (MailHeader $row) {
 
                 return str_limit(clean_ccp_html($row->body->body), 30, '...');
             })
             ->editColumn('tocounts', function ($row) {
 
-                return view('web::character.partials.mailtocounts', compact('row'))
-                    ->render();
+                return view('web::character.partials.mailtocounts', compact('row'));
             })
             ->addColumn('read', function ($row) {
 
-                return view('web::character.partials.mailread', compact('row'))
-                    ->render();
-
+                return view('web::character.partials.mailread', compact('row'));
             })
             ->rawColumns(['from', 'subject', 'tocounts', 'read'])
             ->make(true);

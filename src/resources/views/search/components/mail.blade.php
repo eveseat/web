@@ -22,35 +22,36 @@
 
 @push('javascript')
 
-<script type="text/javascript">
+  <script type="text/javascript">
 
-  $(function () {
-    $('table#mail').DataTable({
-      processing      : true,
-      serverSide      : true,
-      ajax            : '{{ route('support.search.mail.data') }}',
-      columns         : [
-        {data: 'timestamp', name: 'mail_headers.timestamp', render: human_readable},
-        {data: 'from',      name: 'mail_headers.from', searchable: false},
-        {data: 'subject',   name: 'mail_headers.subject'},
-        {data: 'body',      name: 'body.body'},
-        {data: 'tocounts',  name: 'tocounts', searchable: false},
-        {data: 'read',      name: 'read', searchable: false}
-      ],
-      dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
-      'fnDrawCallback': function () {
-        $(document).ready(function () {
+    $(function () {
+      $('table#mail').DataTable({
+        processing  : true,
+        serverSide  : true,
+        ordering    : false,
+        ajax        : '{{ route('support.search.mail.data') }}',
+        columns     : [
+          {data: 'timestamp', name: 'mail_headers.timestamp', render: human_readable},
+          {data: 'from', name: 'mail_headers.from'},
+          {data: 'subject', name: 'mail_headers.subject'},
+          {data: 'body_clean', name: 'body.body'},
+          {data: 'tocounts', name: 'tocounts', searchable: false},
+          {data: 'read', name: 'read', searchable: false}
+        ],
+        drawCallback: function () {
+
+          $('[data-toggle="tooltip"]').tooltip();
           $('img').unveil(100);
           ids_to_names();
-        });
-      },
-      'search' : {
-        'search': '{!! addslashes(htmlspecialchars($query, ENT_NOQUOTES)) !!}'
-      },
-      order : [[0, "asc"]]
-    });
-  });
 
-</script>
+        },
+        'search'    : {
+          'search': '{!! addslashes(htmlspecialchars($query, ENT_NOQUOTES)) !!}'
+        },
+        order       : [[0, "asc"]]
+      });
+    });
+
+  </script>
 
 @endpush
