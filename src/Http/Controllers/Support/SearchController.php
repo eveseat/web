@@ -197,18 +197,19 @@ class SearchController extends Controller
         return DataTables::of($skills)
             ->editColumn('character_name', function ($row) {
 
-                return view('web::search.partials.charactername', compact('row'))
-                    ->render();
+                $character = CharacterInfo::find($row->character_id) ?: $row->character_id;
+
+                return view('web::partials.character', compact('character'));
             })
             ->editColumn('corporation_id', function ($row) {
 
-                return view('web::search.partials.corporationname', compact('row'))
-                    ->render();
+                $corporation = CorporationInfo::find($row->corporation_id) ?: $row->corporation_id;
+
+                return view('web::partials.corporation', compact('corporation'));
             })
             ->editColumn('typeName', function ($row) {
 
-                return view('web::search.partials.typename', compact('row'))
-                    ->render();
+                return view('web::search.partials.typename', compact('row'));
             })
             ->rawColumns(['character_name', 'corporation_id', 'typeName'])
             ->make(true);
