@@ -170,13 +170,13 @@ class SearchController extends Controller
         return DataTables::of($assets)
             ->editColumn('characterName', function ($row) {
 
-                return view('web::search.partials.charactername', compact('row'))
-                    ->render();
+                $character = CharacterInfo::find($row->character_id) ?: $row->character_id;
+
+                return view('web::partials.character', compact('character'));
             })
             ->editColumn('typeName', function ($row) {
 
-                return view('web::search.partials.typename', compact('row'))
-                    ->render();
+                return view('web::search.partials.typename', compact('row'));
             })
             ->rawColumns(['characterName', 'typeName'])
             ->make(true);
