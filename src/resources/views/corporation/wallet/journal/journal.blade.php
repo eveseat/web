@@ -74,7 +74,7 @@
         {data: 'amount', name: 'amount'},
         {data: 'balance', name: 'balance'}
       ],
-      DrawCallback: function () {
+      drawCallback: function () {
         $("[data-toggle=tooltip]").tooltip();
         $("img").unveil(100);
         ids_to_names();
