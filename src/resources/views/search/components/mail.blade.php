@@ -20,6 +20,26 @@
   </div>
 </div>
 
+<!-- Mail Content Modal -->
+<div class="modal fade" id="mailContentModal" tabindex="-1" role="dialog"
+     aria-labelledby="mailContentModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">{{ trans('web::seat.mail') }}</h4>
+      </div>
+      <div class="modal-body">
+
+        <span id="mail-content-result"></span>
+
+      </div>
+    </div>
+  </div>
+</div>
+
 @push('javascript')
 
   <script type="text/javascript">
@@ -43,6 +63,34 @@
           $('[data-toggle="tooltip"]').tooltip();
           $('img').unveil(100);
           ids_to_names();
+          // After loading the mail data, bind a click event
+          // on items with the contract-item class.
+          $('a.mail-content').on('click', function () {
+
+            // Small hack to get an ajaxable url from Laravel
+            var url = $(this).attr('data-url');
+
+            // Perform an ajax request for the contract items
+            $.ajax({
+              type: 'GET',
+              url: url,
+              beforeSend: function () {
+                //add spinner
+                $('span#mail-content-result').html('<i class="fa fa-refresh fa-spin loader"></i>');
+              },
+              success: function (data) {
+                //replace spinner with content
+                $('span#mail-content-result').html(data);
+                $('img').unveil(100);
+                ids_to_names();
+              },
+              error: function(xhr) { // if error occured
+                alert("Error occured.please try again");
+                $(placeholder).append(xhr.statusText + xhr.responseText);
+                $(placeholder).removeClass('loading');
+              },
+            });
+          });
 
         },
         'search'    : {
