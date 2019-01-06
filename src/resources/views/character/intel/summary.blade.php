@@ -10,7 +10,7 @@
   <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
       <li class="active"><a href="#" data-toggle="tab"
-                            data-characters="single">{{trans_choice('web::seat.character',1)}}</a></li>
+                            data-characters="single">{{trans_choice('web::seat.character', 1)}}</a></li>
       <li><a href="#" data-toggle="tab" data-characters="all">{{ trans('web::seat.linked_characters') }}</a></li>
     </ul>
 

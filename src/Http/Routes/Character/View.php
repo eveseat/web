@@ -123,7 +123,7 @@ Route::group(['prefix' => 'view/intel'], function () {
         'uses'       => 'IntelController@getTopWalletJournalData',
     ]);
 
-    Route::get('summary/journal/details/{first_party_id}/{getJournalContent}', [
+    Route::get('summary/journal/details/{first_party_id}/{second_party_id}', [
         'as'         => 'character.view.intel.summary.journal.details',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@getJournalContent',
