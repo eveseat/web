@@ -51,6 +51,9 @@ class ExtractionController extends Controller
         return view('web::corporation.extraction.extraction', compact('extractions'));
     }
 
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function postProbeReport()
     {
         $this->validate(request(), [

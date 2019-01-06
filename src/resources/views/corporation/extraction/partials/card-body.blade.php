@@ -26,20 +26,20 @@
 </span>
 <hr/>
 <dl class="dl-horizontal">
-  <dt>Start at</dt>
+  <dt>{{ trans('web::seat.start_at') }}</dt>
   <dd>{{ $extraction->extraction_start_time }}</dd>
-  <dt>Chunk Arrival</dt>
+  <dt>{{ trans('web::seat.chunk_arrival') }}</dt>
   <dd>{{ $extraction->chunk_arrival_time }}</dd>
-  <dt>Self-Destruct</dt>
+  <dt>{{ trans('web::seat.self_destruct') }}</dt>
   <dd>{{ $extraction->natural_decay_time }}</dd>
 </dl>
 @if (! $extraction->moon->moon_contents->isEmpty())
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Type</th>
-      <th>Rate</th>
-      <th>Rarity</th>
+      <th>{{ trans_choice('web::seat.type', 1) }}</th>
+      <th>{{ trans('web::seat.rate') }}</th>
+      <th>{{ trans('web::seat.rarity') }}</th>
     </tr>
   </thead>
   <tbody>

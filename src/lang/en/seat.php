@@ -594,6 +594,12 @@ return [
     'no_storage'                   => 'There is no storage',
     'member'                       => 'Member|Members',
 
+    'start_at'                     => 'Start at',
+    'chunk_arrival'                => 'Chunk Arrival',
+    'self_destruct'                => 'Self-Destruct',
+    'rarity'                       => 'Rarity',
+    'rate'                         => 'Rate',
+
     // Mining Ledger
     'mining'                       => 'Mining',
     'mining_ledger'                => 'Ledger|Ledgers',
