@@ -56,7 +56,7 @@ class KillmailsController extends Controller
     public function getKillmailsData(int $corporation_id)
     {
 
-        $killmails = $this->getCorporationKillmails($corporation_id, false);
+        $killmails = $this->getCorporationKillmails($corporation_id);
 
         return DataTables::of($killmails)
             ->addColumn('victim', function ($row) {
@@ -88,8 +88,7 @@ class KillmailsController extends Controller
 
                 $ship_type = $row->killmail_victim->ship_type;
 
-                return view('web::partials.killmailtype', compact('ship_type'))
-                    ->render();
+                return view('web::partials.killmailtype', compact('ship_type'));
             })
             ->addColumn('place', function ($row) {
 
@@ -98,13 +97,11 @@ class KillmailsController extends Controller
 
                 $place = $row->killmail_detail->solar_system;
 
-                return view('web::partials.killmailsystem', compact('place'))
-                    ->render();
+                return view('web::partials.killmailsystem', compact('place'));
             })
             ->addColumn('zkb', function ($row) {
 
-                return view('web::partials.killmailzkb', compact('row'))
-                    ->render();
+                return view('web::partials.killmailzkb', compact('row'));
             })
             ->rawColumns(['victim', 'ship', 'place', 'zkb'])
             ->make(true);
