@@ -50,8 +50,8 @@
               {!! img('type', $entry->type->typeID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
               {{ $entry->type->typeName }}
             </td>
-            <td class="text-right" data-order="{{ $entry->quantity }}">{{ number($entry->quantity) }}</td>
-            <td class="text-right" data-order="{{ $entry->volumes }}">{{ number($entry->volumes) }} m3</td>
+            <td class="text-right" data-order="{{ $entry->quantity }}">{{ number($entry->quantity, 0) }}</td>
+            <td class="text-right" data-order="{{ $entry->volumes }}">{{ number($entry->volumes, 1) }} m3</td>
             <td class="text-right" data-order="{{ $entry->amounts }}">{{ number($entry->amounts) }} ISK
               <a href="#" class="btn btn-sm btn-link" data-toggle="modal" data-target="#detailed-ledger">
                 <i class="fa fa-cubes"></i>
@@ -111,7 +111,6 @@
                 {data: 'amounts'}
               ]
             });
-
 
           })
           .on('hidden.bs.modal', function (e) {
