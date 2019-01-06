@@ -147,7 +147,7 @@ class SeatController extends Controller
         // in case we miss either versions or package attribute, return an error as those attribute should contains version information
         if (! array_key_exists('package', $json_array) || ! array_key_exists('versions', $json_array['package']))
             return response()->json([
-                'error' => 'The returned metadata are miss-structured or does not contains package.versions property',
+                'error' => 'The returned metadata was not properly structured or does not contain the package.versions property',
             ], 500);
 
         // extract published versions from packagist response
@@ -187,14 +187,14 @@ class SeatController extends Controller
             'tag'  => 'string',
         ]);
 
-        $changelogUri = request()->input('uri');
-        $changelogBody = request()->input('body');
-        $changelogTag = request()->input('tag');
+        $changelog_uri = request()->input('uri');
+        $changelog_body = request()->input('body');
+        $changelog_tag = request()->input('tag');
 
-        if (! is_null($changelogBody) && ! is_null($changelogTag))
-            return $this->getChangelogFromApi($changelogUri, $changelogBody, $changelogTag);
+        if (! is_null($changelog_body) && ! is_null($changelog_tag))
+            return $this->getChangelogFromApi($changelog_uri, $changelog_body, $changelog_tag);
 
-        return $this->getChangelogFromFile($changelogUri);
+        return $this->getChangelogFromFile($changelog_uri);
     }
 
     /**
@@ -254,6 +254,7 @@ class SeatController extends Controller
 
                 // spawn a new Markdown parser
                 $parser = new Parsedown();
+                $parser->setSafeMode(true);
 
                 // iterate over each release and build proper view
                 foreach ($json_object as $release) {
@@ -302,6 +303,7 @@ class SeatController extends Controller
 
                 // spawn a new Markdown parser
                 $parser = new Parsedown();
+                $parser->setSafeMode(true);
 
                 // return the parsed changelog
                 return $parser->parse($response->getBody());

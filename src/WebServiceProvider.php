@@ -413,45 +413,10 @@ class WebServiceProvider extends AbstractSeatPlugin
     }
 
     /**
-     * Return the plugin author EVE Character ID.
-     *
-     * @return int|null
-     */
-    public function getAuthorEveCharacterID(): ?int
-    {
-        return 1477919642;
-    }
-
-    /**
-     * Return the plugin author name (or any public nickname).
-     *
-     * @return string
-     */
-    public function getAuthorName(): string
-    {
-        return 'qu1ckkkk';
-    }
-
-    /**
-     * Return the plugin author e-mail address.
+     * Return an URI to a CHANGELOG.md file or an API path which will be providing changelog history.
      *
      * @return string|null
      */
-    public function getAuthorMailAddress(): ?string
-    {
-        return 'theninjabag@gmail.com';
-    }
-
-    /**
-     * Return the plugin author slack nickname.
-     *
-     * @return string|null
-     */
-    public function getAuthorSlackNickname(): ?string
-    {
-        return 'qu1ckkkk';
-    }
-
     public function getChangelogUri(): ?string
     {
         return 'https://api.github.com/repos/eveseat/web/releases';
