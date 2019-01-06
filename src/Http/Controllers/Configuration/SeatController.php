@@ -66,13 +66,6 @@ class SeatController extends Controller
         setting(['allow_tracking', $request->allow_tracking], true);
         setting(['cleanup_data', $request->cleanup_data], true);
 
-        // If the queue workers number has changed, kick off the horizon
-        // temrinate command to restart the workers.
-        if (setting('queue_workers', true) !== $request->queue_workers)
-            session()->flash('info', trans('web::seat.horizon_restart'));
-
-        setting(['queue_workers', $request->queue_workers], true);
-
         return redirect()->back()
             ->with('success', 'SeAT settings updated!');
     }
