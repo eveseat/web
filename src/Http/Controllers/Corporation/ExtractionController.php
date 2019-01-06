@@ -26,6 +26,7 @@ use Illuminate\Database\QueryException;
 use Seat\Eveapi\Models\Industry\CorporationIndustryMiningExtraction;
 use Seat\Eveapi\Models\Universe\UniverseMoonContent;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\Validation\ProbeReport;
 
 /**
  * Class ExtractionController.
@@ -54,13 +55,9 @@ class ExtractionController extends Controller
     /**
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postProbeReport()
+    public function postProbeReport(ProbeReport $request)
     {
-        $this->validate(request(), [
-            'moon-report' => 'required',
-        ]);
-
-        $report = request()->input('moon-report');
+        $report = $request->input('moon-report');
 
         $processed_counter = 0;
 
