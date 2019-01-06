@@ -29,6 +29,8 @@ use GuzzleHttp\Exception\RequestException;
 use Parsedown;
 use Seat\Services\AbstractSeatPlugin;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\Validation\PackageChangelog;
+use Seat\Web\Http\Validation\PackageVersionCheck;
 use Seat\Web\Http\Validation\SeatSettings;
 use stdClass;
 
@@ -120,18 +122,11 @@ class SeatController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function postPackagesCheck()
+    public function postPackagesCheck(PackageVersionCheck $request)
     {
-        // ensure the request is containing required information (vendor, package, version) in order to build a query
-        $this->validate(request(), [
-            'vendor' => 'required|string',
-            'package' => 'required|string',
-            'version' => 'required|string',
-        ]);
-
         // construct the packagist uri to its API
         $packagist_url = sprintf('https://packagist.org/packages/%s/%s.json',
-            request()->input('vendor'), request()->input('package'));
+            $request->input('vendor'), $request->input('package'));
 
         // retrieve package meta-data
         $response = (new Client())->request('GET', $packagist_url);
@@ -159,7 +154,7 @@ class SeatController extends Controller
                 continue;
 
             // return outdated on the first package which is greater than installed version
-            if (version_compare(request()->input('version'), $metadata['version']) < 0)
+            if (version_compare($request->input('version'), $metadata['version']) < 0)
                 return response()->json([
                     'error' => '',
                     'outdated' => true,
@@ -179,17 +174,11 @@ class SeatController extends Controller
      * @return mixed|string
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function postPackagesChangelog()
+    public function postPackagesChangelog(PackageChangelog $request)
     {
-        $this->validate(request(), [
-            'uri' => 'required:url',
-            'body' => 'string',
-            'tag'  => 'string',
-        ]);
-
-        $changelog_uri = request()->input('uri');
-        $changelog_body = request()->input('body');
-        $changelog_tag = request()->input('tag');
+        $changelog_uri = $request->input('uri');
+        $changelog_body = $request->input('body');
+        $changelog_tag = $request->input('tag');
 
         if (! is_null($changelog_body) && ! is_null($changelog_tag))
             return $this->getChangelogFromApi($changelog_uri, $changelog_body, $changelog_tag);
