@@ -7,11 +7,11 @@
 
 @section('corporation_content')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::seat.market') }}</h3>
+  <div class="box box-default">
+    <div class="box-header with-border">
+      <h3 class="box-title">{{ trans('web::seat.market') }}</h3>
     </div>
-    <div class="panel-body">
+    <div class="box-body">
 
       <table class="table compact table-condensed table-hover table-responsive"
              id="corporation-market">
@@ -22,6 +22,7 @@
           <th>{{ trans('web::seat.volume') }}</th>
           <th>{{ trans('web::seat.price') }}</th>
           <th>{{ trans('web::seat.total') }}</th>
+          <th>{{ trans('web::seat.issuer') }}</th>
           <th>{{ trans_choice('web::seat.item', 1) }}</th>
         </tr>
         </thead>
@@ -36,26 +37,24 @@
 
   <script>
 
-    $(function () {
-      $('table#corporation-market').DataTable({
-        processing      : true,
-        serverSide      : true,
-        ajax            : '{{ route('corporation.view.market.data', ['corporation_id' => $request->corporation_id]) }}',
-        columns         : [
-          {data: 'issued', name: 'issued', render: human_readable},
-          {data: 'bs', name: 'is_buy_order'},
-          {data: 'vol', name: 'volume_total'},
-          {data: 'price', name: 'price'},
-          {data: 'total', name: 'price'},
-          {data: 'typeName', name: 'typeName'}
-        ],
-        dom             : '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
-        "fnDrawCallback": function () {
-          $(document).ready(function () {
-            $("img").unveil(100);
-          });
-        }
-      });
+    $('table#corporation-market').DataTable({
+      processing  : true,
+      serverSide  : true,
+      ajax        : '{{ route('corporation.view.market.data', ['corporation_id' => $request->corporation_id]) }}',
+      columns     : [
+        {data: 'issued', name: 'issued', render: human_readable},
+        {data: 'bs', name: 'is_buy_order'},
+        {data: 'vol', name: 'volume_total'},
+        {data: 'price', name: 'price'},
+        {data: 'price_total', name: 'price_total'},
+        {data: 'issued_by', name: 'issued_by'},
+        {data: 'typeName', name: 'typeName'}
+      ],
+      drawCallback: function () {
+        $("img").unveil(100);
+        $("[data-toggle=tooltip]").tooltip();
+        ids_to_names();
+      }
     });
 
   </script>
