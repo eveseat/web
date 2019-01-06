@@ -177,7 +177,7 @@ class ContractsController extends Controller
                 $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')
                     ->get()
                     ->map(function ($resolved_id) {
-                        return $resolved_id->id;
+                        return $resolved_id->entity_id;
                     });
                 $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')
                     ->get()
@@ -191,7 +191,7 @@ class ContractsController extends Controller
                 $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')
                     ->get()
                     ->map(function ($resolved_id) {
-                        return $resolved_id->id;
+                        return $resolved_id->entity_id;
                     });
                 $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')
                     ->get()
@@ -205,7 +205,7 @@ class ContractsController extends Controller
                 $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')
                     ->get()
                     ->map(function ($resolved_id) {
-                        return $resolved_id->id;
+                        return $resolved_id->entity_id;
                     });
                 $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')
                     ->get()
