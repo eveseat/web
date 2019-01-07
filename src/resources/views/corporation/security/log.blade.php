@@ -1,6 +1,5 @@
-@extends('web::corporation.security.layouts.view', ['sub_viewname' => 'log'])
+@extends('web::corporation.security.layouts.view', ['sub_viewname' => 'log', 'breadcrumb' => trans_choice('web::seat.log', 1)])
 
-@section('title', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.log', 1))
 @section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.log', 1))
 
 @section('security_content')

@@ -1,6 +1,5 @@
-@extends('web::character.intel.layouts.view', ['sub_viewname' => 'summary'])
+@extends('web::character.intel.layouts.view', ['sub_viewname' => 'summary', 'breadcrumb' => trans('web::seat.intel')])
 
-@section('title', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.intel'))
 @section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.intel'))
 
 @inject('request', 'Illuminate\Http\Request')

@@ -1,6 +1,5 @@
-@extends('web::character.layouts.view', ['viewname' => 'standings'])
+@extends('web::character.layouts.view', ['viewname' => 'standings', 'breadcrumb' => trans('web::seat.standings')])
 
-@section('title', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.standings'))
 @section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.standings'))
 
 @section('character_content')
