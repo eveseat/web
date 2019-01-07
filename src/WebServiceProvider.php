@@ -36,8 +36,10 @@ use Seat\Web\Events\Login;
 use Seat\Web\Events\Logout;
 use Seat\Web\Events\SecLog;
 use Seat\Web\Extentions\EveOnlineProvider;
+use Seat\Web\Http\Composers\CharacterLayout;
 use Seat\Web\Http\Composers\CharacterMenu;
 use Seat\Web\Http\Composers\CharacterSummary;
+use Seat\Web\Http\Composers\CorporationLayout;
 use Seat\Web\Http\Composers\CorporationMenu;
 use Seat\Web\Http\Composers\CorporationSummary;
 use Seat\Web\Http\Composers\Esi;
@@ -181,6 +183,11 @@ class WebServiceProvider extends AbstractSeatPlugin
             'web::character.includes.menu',
         ], CharacterMenu::class);
 
+        // Character layout breadcrumb
+        $this->app['view']->composer([
+            'web::character.layouts.view',
+        ], CharacterLayout::class);
+
         // Corporation info composer
         $this->app['view']->composer([
             'web::corporation.includes.summary',
@@ -194,6 +201,11 @@ class WebServiceProvider extends AbstractSeatPlugin
         $this->app['view']->composer([
             'web::corporation.includes.menu',
         ], CorporationMenu::class);
+
+        // Corporation layout breadcrumb
+        $this->app['view']->composer([
+            'web::corporation.layouts.view',
+        ], CorporationLayout::class);
 
     }
 

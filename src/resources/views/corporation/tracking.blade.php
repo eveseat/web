@@ -1,6 +1,5 @@
-@extends('web::corporation.layouts.view', ['viewname' => 'tracking'])
+@extends('web::corporation.layouts.view', ['viewname' => 'tracking', 'breadcrumb' => trans('web::seat.tracking')])
 
-@section('title', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.tracking'))
 @section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.tracking'))
 
 @inject('request', 'Illuminate\Http\Request')
