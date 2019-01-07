@@ -20,27 +20,34 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/view', [
-    'as'   => 'seat.settings.view',
-    'uses' => 'SeatController@getView',
-]);
+namespace Seat\Web\Http\Validation;
 
-Route::post('/update/settings', [
-    'as'   => 'seat.update.settings',
-    'uses' => 'SeatController@postUpdateSettings',
-]);
+use Illuminate\Foundation\Http\FormRequest;
 
-Route::get('/check/sde', [
-    'as'   => 'check.sde',
-    'uses' => 'SeatController@getApprovedSDE',
-]);
+class PackageChangelog extends FormRequest
+{
+    /**
+     * Authorize the request by default.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
 
-Route::post('/packages/check', [
-    'as'   => 'packages.check',
-    'uses' => 'SeatController@postPackagesCheck',
-]);
+        return true;
+    }
 
-Route::post('/packages/changelog', [
-    'as'   => 'packages.changelog',
-    'uses' => 'SeatController@postPackagesChangelog',
-]);
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'uri'  => 'required:url',
+            'body' => 'string',
+            'tag'  => 'string',
+        ];
+    }
+}

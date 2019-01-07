@@ -27,14 +27,14 @@ use Illuminate\Auth\Events\Login as LoginEvent;
 use Illuminate\Auth\Events\Logout as LogoutEvent;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Validator;
 use Laravel\Horizon\Horizon;
 use Laravel\Socialite\SocialiteManager;
+use Seat\Services\AbstractSeatPlugin;
 use Seat\Web\Events\Attempt;
 use Seat\Web\Events\Login;
 use Seat\Web\Events\Logout;
 use Seat\Web\Events\SecLog;
-use Seat\Web\Events\Security;
 use Seat\Web\Extentions\EveOnlineProvider;
 use Seat\Web\Http\Composers\CharacterMenu;
 use Seat\Web\Http\Composers\CharacterSummary;
@@ -51,13 +51,12 @@ use Seat\Web\Http\Middleware\Bouncer\KeyBouncer;
 use Seat\Web\Http\Middleware\Locale;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
 use Seat\Web\Http\Middleware\Requirements;
-use Validator;
 
 /**
- * Class EveapiServiceProvider.
- * @package Seat\Eveapi
+ * Class WebServiceProvider.
+ * @package Seat\Web
  */
-class WebServiceProvider extends ServiceProvider
+class WebServiceProvider extends AbstractSeatPlugin
 {
     /**
      * The environment variable name used to setup the queue daemon balancing mode.
@@ -399,5 +398,91 @@ class WebServiceProvider extends ServiceProvider
                 __DIR__ . '/Models',
             ])),
         ]);
+    }
+
+    /**
+     * Return an URI to a CHANGELOG.md file or an API path which will be providing changelog history.
+     *
+     * @return string|null
+     */
+    public function getChangelogUri(): ?string
+    {
+        return 'https://api.github.com/repos/eveseat/web/releases';
+    }
+
+    /**
+     * In case the changelog is provided from an API, this will help to determine which attribute is containing the
+     * changelog body.
+     *
+     * @exemple body
+     *
+     * @return string|null
+     */
+    public function getChangelogBodyAttribute(): ?string
+    {
+        return 'body';
+    }
+
+    /**
+     * In case the changelog is provided from an API, this will help to determine which attribute is containing the
+     * version name.
+     *
+     * @example tag_name
+     *
+     * @return string|null
+     */
+    public function getChangelogTagAttribute(): ?string
+    {
+        return 'tag_name';
+    }
+
+    /**
+     * Return the plugin public name as it should be displayed into settings.
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return 'SeAT Web';
+    }
+
+    /**
+     * Return the plugin repository address.
+     *
+     * @return string
+     */
+    public function getPackageRepositoryUrl(): string
+    {
+        return 'https://github.com/eveseat/web';
+    }
+
+    /**
+     * Return the plugin technical name as published on package manager.
+     *
+     * @return string
+     */
+    public function getPackagistPackageName(): string
+    {
+        return 'web';
+    }
+
+    /**
+     * Return the plugin vendor tag as published on package manager.
+     *
+     * @return string
+     */
+    public function getPackagistVendorName(): string
+    {
+        return 'eveseat';
+    }
+
+    /**
+     * Return the plugin installed version.
+     *
+     * @return string
+     */
+    public function getVersion(): string
+    {
+        return config('web.config.version');
     }
 }
