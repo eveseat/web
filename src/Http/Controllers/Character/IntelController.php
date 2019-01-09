@@ -22,11 +22,8 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
-use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Services\Repositories\Character\Intel;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Http\Validation\NewIntelNote;
-use Seat\Web\Http\Validation\UpdateIntelNote;
 use Yajra\DataTables\DataTables;
 
 /**

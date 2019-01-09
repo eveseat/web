@@ -233,7 +233,7 @@ class UserController extends Controller
         SecurityLog::create([
             'message'  => $note->implode('<br/><br/>'),
             'category' => $request->input('title'),
-            'user_id'  => $user_id
+            'user_id'  => $user_id,
         ]);
 
         $this->flipUserAccountStatus($user_id);
