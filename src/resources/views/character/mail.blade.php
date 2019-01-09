@@ -1,6 +1,5 @@
-@extends('web::character.layouts.view', ['viewname' => 'mail'])
+@extends('web::character.layouts.view', ['viewname' => 'mail', 'breadcrumb' => trans('web::seat.mail')])
 
-@section('title', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.mail'))
 @section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.mail'))
 
 @inject('request', 'Illuminate\Http\Request')

@@ -1,6 +1,5 @@
-@extends('web::corporation.ledger.layouts.view', ['sub_viewname' => 'bountyprizesbymonth'])
+@extends('web::corporation.ledger.layouts.view', ['sub_viewname' => 'bountyprizesbymonth', 'breadcrumb' => trans_choice('web::seat.bountyprizesbymonth', 2)])
 
-@section('title', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.bountyprizesbymonth', 2))
 @section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.bountyprizesbymonth', 2))
 
 @section('ledger_content')

@@ -1,6 +1,5 @@
-@extends('web::corporation.mining.layouts.view', ['sub_viewname' => 'ledger'])
+@extends('web::corporation.mining.layouts.view', ['sub_viewname' => 'ledger', 'breadcrumb' => trans('web::seat.mining')])
 
-@section('title', trans_choice('web::seat.corporation', 1) . ' | ' . trans('web::seat.mining') . ' ' . trans_choice('web::seat.mining_ledger', 2))
 @section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.mining') . ' ' . trans_choice('web::seat.mining_ledger', 2))
 
 @section('mining_content')
@@ -55,8 +54,8 @@
                             <span class="character-id-to-main-character"
                                   data-character-id="{{ $entry->character_id }}">Unknown</span>
                         </td>
-                        <td class="text-right" data-order="{{ $entry->quantity }}">{{ number($entry->quantity) }}</td>
-                        <td class="text-right" data-order="{{ $entry->volumes }}">{{ number($entry->volumes) }} m3</td>
+                        <td class="text-right" data-order="{{ $entry->quantity }}">{{ number($entry->quantity, 0) }}</td>
+                        <td class="text-right" data-order="{{ $entry->volumes }}">{{ number($entry->volumes, 1) }} m3</td>
                         <td class="text-right" data-order="{{ $entry->amounts }}">{{ number($entry->amounts) }} ISK</td>
                     </tr>
                     @endforeach

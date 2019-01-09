@@ -181,7 +181,6 @@ return [
     'security'              => 'Security',
     'sso'                   => 'Single Sign-on',
     'tracking'              => 'Tracking',
-    'worker_constraints'    => 'Worker Constraints',
 
     'assets'                      => 'Assets',
     'location_flag'               => 'Location Flag',
@@ -400,12 +399,6 @@ return [
     'tracking_id'                  => 'Unique Tracking ID',
     'tracking_help'                => 'Before disabling the usage tracking, please refer to the below' .
         ' document first.',
-    'worker'                       => 'Worker|Workers',
-    'queue_worker'                 => 'Queue Worker|Queue Workers',
-    'queue_worker_help'            => 'The number of workers to spawn for the background queue workers. ' .
-        'Note: Spawning too many workers may slow down the overall updating process due to load.',
-    'horizon_restart'              => 'Remember to terminate horizon for the new worker amount to take effect. ' .
-        ' It should start back up again automatically.',
 
     // SSO Settings
     'sso_scopes'                   => 'SSO Scopes',

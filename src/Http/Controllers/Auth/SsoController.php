@@ -84,6 +84,16 @@ class SsoController extends Controller
             return redirect()->route('auth.login')
                 ->with('error', 'Login failed. Please contact your administrator.');
 
+        // ensure the user got a valid group - spawn it otherwise
+        if (is_null($user->group)) {
+            Group::forceCreate([
+                'id' => $user->group_id,
+            ]);
+
+            // force laravel to update model relationship information
+            $user->load('group');
+        }
+
         // Set the main characterID based on the response.
         $this->updateMainCharacterId($user);
 

@@ -161,8 +161,7 @@ class ContractsController extends Controller
             })
             ->addColumn('contents', function ($row) {
 
-                return view('web::partials.contractcontentsbutton', compact('row'))
-                    ->render();
+                return view('web::partials.contractcontentsbutton', compact('row'));
             })
             ->addColumn('is_in_group', function ($row) use ($user_group) {
 
@@ -178,7 +177,7 @@ class ContractsController extends Controller
                 $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')
                     ->get()
                     ->map(function ($resolved_id) {
-                        return $resolved_id->id;
+                        return $resolved_id->entity_id;
                     });
                 $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')
                     ->get()
@@ -192,7 +191,7 @@ class ContractsController extends Controller
                 $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')
                     ->get()
                     ->map(function ($resolved_id) {
-                        return $resolved_id->id;
+                        return $resolved_id->entity_id;
                     });
                 $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')
                     ->get()
@@ -206,7 +205,7 @@ class ContractsController extends Controller
                 $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')
                     ->get()
                     ->map(function ($resolved_id) {
-                        return $resolved_id->id;
+                        return $resolved_id->entity_id;
                     });
                 $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')
                     ->get()
