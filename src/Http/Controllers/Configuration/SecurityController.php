@@ -59,6 +59,7 @@ class SecurityController extends Controller
                 if ($row->user)
                     return $row->user->name;
             })
+            ->rawColumns(['message'])
             ->make(true);
     }
 }

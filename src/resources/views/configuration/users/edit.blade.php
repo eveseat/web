@@ -326,23 +326,17 @@
 
       <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">{{ trans('web::seat.note') }}</h3>
-          <!-- Button trigger modal -->
-          <span class="pull-right">
-          <a type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#createModal">
-            {{ trans('web::seat.add') }} {{ trans('web::seat.note') }}
-          </a>
-        </span>
+          <h3 class="box-title">{{ trans('web::seat.security_logs') }}</h3>
         </div>
         <div class="box-body">
           <table class="table compact table-condensed table-hover table-responsive"
-                 id="character-notes">
+                 id="logs" data-page-length=100>
             <thead>
             <tr>
-              <th>{{ trans('web::seat.created') }}</th>
-              <th>{{ trans_choice('web::seat.title',1) }}</th>
-              <th>{{ trans('web::seat.note') }}</th>
-              <th></th>
+              <th>{{ trans('web::seat.date') }}</th>
+              <th>{{ trans_choice('web::seat.user', 1) }}</th>
+              <th>{{ trans('web::seat.category') }}</th>
+              <th>{{ trans('web::seat.message') }}</th>
             </tr>
             </thead>
           </table>
@@ -358,10 +352,6 @@
   @include('web::includes.modals.createnote',
     ['post_route' => route('character.view.intel.notes.new', ['character_id' => $request->user_id])])
 
-  {{-- include the note edit modal --}}
-  @include('web::includes.modals.editnote',
-    ['post_route' => route('character.view.intel.notes.update', ['character_id' => $request->user_id])])
-
 @stop
 
 @push('javascript')
@@ -373,20 +363,18 @@
       placeholder: "{{ trans('web::seat.select_group_to_assign') }}"
     });
 
-    $(function () {
-      $('table#character-notes').DataTable({
-        processing: true,
-        serverSide: true,
-        searching: false,
-        ajax      : '{{ route('character.view.intel.notes.data', ['character_id' => $request->user_id]) }}',
-        columns   : [
-          {data: 'created_at', name: 'created_at', render: human_readable},
-          {data: 'title', name: 'title'},
-          {data: 'note', name: 'note'},
-          {data: 'actions', name: 'actions', searchable: false}
-        ]
-      });
-    })
+    $('table#logs').DataTable({
+      processing: true,
+      serverSide: true,
+      ajax      : '{{ route('configuration.user.security.logs.data', ['user_id' => $request->user_id]) }}',
+      columns   : [
+        {data: 'created_at', name: 'created_at', render: human_readable},
+        {data: 'user', name: 'user', orderable: false, searchable: false},
+        {data: 'category', name: 'category'},
+        {data: 'message', name: 'message'}
+      ],
+      dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>'
+    });
   </script>
 
 

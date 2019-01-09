@@ -157,7 +157,7 @@ class SsoController extends Controller
 
             // Log the account creation attempt
             event('security.log', [
-                'Attempt of account creation for ' . $eve_user->name, ' blocked, as registration is turned off.',
+                'Account creation for ' . $eve_user->name, ' failed. Registration has been disabled.',
             ]);
 
             return redirect()->route('auth.login')

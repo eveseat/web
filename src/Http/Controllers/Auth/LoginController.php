@@ -23,7 +23,6 @@
 namespace Seat\Web\Http\Controllers\Auth;
 
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Seat\Services\Settings\Seat;
 use Seat\Web\Http\Controllers\Controller;
 
 /**
@@ -81,7 +80,7 @@ class LoginController extends Controller
         if (strlen(env('EVE_CLIENT_SECRET')) < 5 || strlen(env('EVE_CLIENT_ID')) < 5)
             session()->flash('warning', trans('web::seat.sso_config_warning'));
 
-        if (Seat::get('registration') === 'no')
+        if (setting('registration', true) === 'no')
             session()->flash('info', trans('web::seat.no_register'));
 
         return view('web::auth.login');

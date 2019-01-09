@@ -24,12 +24,14 @@ namespace Seat\Web\Http\Controllers\Configuration;
 
 use Illuminate\Http\Request;
 use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Services\Repositories\Configuration\SecurityRepository;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\EditUser;
 use Seat\Web\Http\Validation\NewIntelNote;
 use Seat\Web\Http\Validation\ReassignUser;
 use Seat\Web\Models\Group;
+use Seat\Web\Models\SecurityLog;
 use Seat\Web\Models\User;
 use Yajra\DataTables\DataTables;
 
@@ -39,7 +41,7 @@ use Yajra\DataTables\DataTables;
  */
 class UserController extends Controller
 {
-    use UserRespository;
+    use UserRespository, SecurityRepository;
 
     /**
      * @return \Illuminate\View\View
@@ -137,6 +139,21 @@ class UserController extends Controller
             compact('user', 'groups', 'login_history'));
     }
 
+    public function getUserSecurityLog($user_id)
+    {
+        $logs = $this->getAllSecurityLogs()
+            ->where('user_id', $user_id);
+
+        return DataTables::of($logs)
+            ->editColumn('user', function ($row) {
+
+                if ($row->user)
+                    return $row->user->name;
+            })
+            ->rawColumns(['message'])
+            ->make(true);
+    }
+
     /**
      * @param \Seat\Web\Http\Validation\EditUser $request
      *
@@ -213,8 +230,11 @@ class UserController extends Controller
 
         $note->push($request->input('note'));
 
-        CharacterInfo::addNote(
-            $user_id, $request->input('title'), $note->implode('<br/><br/>'));
+        SecurityLog::create([
+            'message'  => $note->implode('<br/><br/>'),
+            'category' => $request->input('title'),
+            'user_id'  => $user_id
+        ]);
 
         $this->flipUserAccountStatus($user_id);
 
