@@ -73,7 +73,7 @@ class ExtractionController extends Controller
                 ]);
 
                 return redirect()->back()
-                    ->with('error', 'There is a problem with your probe report structure - 7 fields were expected per line. The issue has been recorded.');
+                    ->with('error', trans('web::seat.wrong_probe_report_structure', ['fields_number' => 7]));
             }
 
             try {
@@ -87,11 +87,11 @@ class ExtractionController extends Controller
                 logger()->error($e->getMessage(), $e->getTrace());
 
                 return redirect()->back()
-                    ->with('error', 'An issue as been encountered while posting your report. Please contact your administrator.');
+                    ->with('error', trans('web::seat.insert_error_probe_report'));
             }
         }
 
         return redirect()->back()
-            ->with('success', sprintf('Your probe report has been successfully posted. %d Moon composition lines has been updated.', $processed_counter));
+            ->with('success', trans('web::seat.probe_report_posted', ['lines' => $processed_counter]));
     }
 }
