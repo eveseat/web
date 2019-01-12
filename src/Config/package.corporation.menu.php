@@ -51,6 +51,14 @@ return [
         'route'          => 'corporation.view.contracts',
     ],
     [
+        'name'           => 'extractions',
+        'label'          => 'web::seat.extraction',
+        'plural'         => true,
+        'permission'     => 'corporation.extractions',
+        'highlight_view' => 'extractions',
+        'route'          => 'corporation.view.extractions',
+    ],
+    [
         'name'           => 'industry',
         'label'          => 'web::seat.industry',
         'permission'     => 'corporation.industry',
