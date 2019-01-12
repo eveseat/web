@@ -26,6 +26,7 @@ use Illuminate\Http\Request;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Mail\MailHeader;
+use Seat\Eveapi\Models\Universe\UniverseName;
 use Seat\Services\Search\Search;
 use Seat\Web\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
@@ -152,7 +153,26 @@ class SearchController extends Controller
 
                 return view('web::character.partials.mailread', compact('row'));
             })
-            ->rawColumns(['from', 'subject', 'tocounts', 'read'])
+            ->addColumn('recipients', function ($row) {
+
+                $recipients = $row->recipients->map(function ($recipient) { return $recipient->recipient_id; });
+
+                return view('web::search.partials.mailrecipient', compact('recipients'));
+            })
+            ->filterColumn('from', function ($query, $keyword) {
+                $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($resolved_id) { return $resolved_id->id; });
+                $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($character_info) { return $character_info->character_id; });
+
+                $query->whereIn('from', array_merge($resolved_ids->toArray(), $character_info_ids->toArray()));
+            })
+            ->filterColumn('recipients', function ($query, $keyword) {
+                $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($resolved_id) { return $resolved_id->id; });
+                $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($character_info) { return $character_info->character_id; });
+                $corporation_info_ids = CorporationInfo::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($corporation_info) { return $corporation_info->corproation_id; });
+                $query->whereIn('from', array_merge($resolved_ids->toArray(), $character_info_ids->toArray(),  $corporation_info_ids->toArray()));
+            })
+            ->rawColumns(['from', 'subject', 'tocounts', 'read', 'recipients'])
+
             ->make(true);
     }
 
