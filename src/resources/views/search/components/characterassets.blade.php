@@ -41,7 +41,7 @@
         $('img').unveil(100);
       },
       'search'    : {
-        'search': '{!! addslashes(htmlspecialchars($query, ENT_NOQUOTES)) !!}'
+        'search': '{{ $query }}'
       },
       order       : [[0, "asc"]]
     });

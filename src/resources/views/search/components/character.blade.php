@@ -27,14 +27,14 @@
       ajax        : '{{ route('support.search.characters.data') }}',
       columns     : [
         {data: 'name', name: 'name'},
-        {data: 'corporation_id', name: 'corporation_id', searchable:false}
+        {data: 'corporation_id', name: 'corporation_id', searchable: false}
       ],
       drawCallback: function () {
         $('img').unveil(100);
         ids_to_names();
       },
       'search'    : {
-        'search': '{!! addslashes(htmlspecialchars($query, ENT_NOQUOTES)) !!}'
+        'search': '{{ $query }}'
       },
       order       : [[0, "asc"]]
     });
