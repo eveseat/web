@@ -28,9 +28,12 @@
         <li>
           <i class="fa fa-envelope bg-blue"></i>
           <div class="timeline-item">
-            <span class="time">
+            <span class="time" style="text-align: right">
               <i class="fa fa-clock-o"></i>
               {{ $message->timestamp }} ({{ human_diff($message->timestamp) }})
+              </br>
+              <b>{{ trans('web::seat.source') }}: </b>
+              @include('web::partials.character', ['character' => $CharacterInfo::find($message->character_id) ?: $message->character_id, 'character_id' => $message->character_id])
             </span>
             <h2 class="timeline-header">
               <b>{{ trans('web::seat.from') }}: </b>
@@ -97,9 +100,6 @@
           </li>
 
         @endif
-
-        <b>{{ trans('web::seat.source') }}: </b>
-        @include('web::partials.character', ['character' => $CharacterInfo::find($message->character_id) ?: $message->character_id, 'character_id' => $message->character_id])
 
 
           </h2>
