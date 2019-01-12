@@ -169,7 +169,7 @@ class SearchController extends Controller
                 $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($resolved_id) { return $resolved_id->id; });
                 $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($character_info) { return $character_info->character_id; });
                 $corporation_info_ids = CorporationInfo::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($corporation_info) { return $corporation_info->corproation_id; });
-                $query->whereIn('from', array_merge($resolved_ids->toArray(), $character_info_ids->toArray(),  $corporation_info_ids->toArray()));
+                $query->whereIn('from', array_merge($resolved_ids->toArray(), $character_info_ids->toArray(), $corporation_info_ids->toArray()));
             })
             ->rawColumns(['from', 'subject', 'tocounts', 'read', 'recipients'])
 
