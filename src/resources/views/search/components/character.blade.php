@@ -34,7 +34,7 @@
         ids_to_names();
       },
       'search'    : {
-        'search': '{!! addslashes(htmlspecialchars($query, ENT_NOQUOTES)) !!}'
+        'search': '{{ $query }}'
       },
       order       : [[0, "asc"]]
     });
