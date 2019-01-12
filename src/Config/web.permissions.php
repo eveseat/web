@@ -64,6 +64,7 @@ return [
         'bookmarks',
         'contacts',
         'contracts',
+        'extractions',
         'industry',
         'killmails',
         'ledger',
