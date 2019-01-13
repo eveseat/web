@@ -32,7 +32,7 @@
               <i class="fa fa-clock-o"></i>
               {{ $message->timestamp }} ({{ human_diff($message->timestamp) }})
               </br>
-              <b>{{ trans('web::seat.source') }}: </b>
+              <b>{{ trans_choice('web::seat.character', 1) }} {{ trans('web::seat.source') }}: </b>
               @include('web::partials.character', ['character' => $CharacterInfo::find($message->character_id) ?: $message->character_id, 'character_id' => $message->character_id])
             </span>
             <h2 class="timeline-header">
