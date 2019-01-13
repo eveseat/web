@@ -49,7 +49,16 @@ class UserController extends Controller
         if (! request()->ajax())
             return view('web::configuration.users.list');
 
+        if (! request()->has('filter'))
+            return abort(500);
+
         $groups = $this->getAllFullUsers();
+
+        if (request('filter') === 'valid')
+            $groups->has('refresh_token');
+
+        if (request('filter') === 'invalid')
+            $groups->doesntHave('refresh_token');
 
         return DataTables::of($groups)
             ->editColumn('refresh_token', function ($row) {
