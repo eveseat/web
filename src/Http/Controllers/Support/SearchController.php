@@ -143,7 +143,7 @@ class SearchController extends Controller
             })
             ->addColumn('body_clean', function (MailHeader $row) {
 
-                return str_limit(clean_ccp_html($row->body->body), 30, '...');
+                return strip_tags(str_limit(clean_ccp_html($row->body->body), 30, '...'));
             })
             ->editColumn('tocounts', function ($row) {
 
