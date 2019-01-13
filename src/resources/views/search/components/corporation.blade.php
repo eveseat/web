@@ -22,33 +22,28 @@
 
 @push('javascript')
 
-<script>
+  <script>
 
-  $(function () {
     $('table#corporations').DataTable({
-      processing      : true,
-      serverSide      : true,
-      ajax            : '{{ route('support.search.corporations.data') }}',
-      columns         : [
+      processing  : true,
+      serverSide  : true,
+      ajax        : '{{ route('support.search.corporations.data') }}',
+      columns     : [
         {data: 'name', name: 'name'},
-        {data: 'ceo_id', name: 'ceo_id'},
-        {data: 'alliance_id', name: 'alliance_id'},
-        {data: 'tax_rate', name: 'tax_rate'},
-        {data: 'member_count', name: 'member_count'}
+        {data: 'ceo_id', name: 'ceo_id', searchable: false},
+        {data: 'alliance_id', name: 'alliance_id', searchable: false},
+        {data: 'tax_rate', name: 'tax_rate', searchable: false},
+        {data: 'member_count', name: 'member_count', searchable: false}
       ],
-      dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
-      'fnDrawCallback': function () {
-        $(document).ready(function () {
-          $('img').unveil(100);
-          ids_to_names();
-        });
+      drawCallback: function () {
+        $('img').unveil(100);
+        ids_to_names();
       },
-      'search'        : {
+      'search'    : {
         'search': '{{ $query }}'
       }
     });
-  });
 
-</script>
+  </script>
 
 @endpush
