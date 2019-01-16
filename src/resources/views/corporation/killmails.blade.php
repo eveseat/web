@@ -18,8 +18,8 @@
         <tr>
           <th>{{ trans('web::seat.date') }}</th>
           <th>{{ trans('web::seat.victim') }}</th>
-          <th>{{ trans('web::seat.ship_type') }}</th>
           <th>{{ trans('web::seat.location') }}</th>
+          <th>{{ trans('web::seat.ship_type') }}</th>
           <th></th>
         </tr>
         </thead>
