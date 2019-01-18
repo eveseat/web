@@ -174,25 +174,29 @@ class ContractsController extends Controller
                 return false;
             })
             ->filterColumn('issuer_id', function ($query, $keyword) {
+
                 $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')
                     ->get()
                     ->map(function ($resolved_id) {
                         return $resolved_id->entity_id;
                     });
+
                 $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')
                     ->get()
                     ->map(function ($character_info) {
                         return $character_info->character_id;
                     });
 
-                $query->whereIn('a.assignee_id', array_merge($resolved_ids->toArray(), $character_info_ids->toArray()));
+                $query->whereIn('a.issuer_id', array_merge($resolved_ids->toArray(), $character_info_ids->toArray()));
             })
             ->filterColumn('assignee_id', function ($query, $keyword) {
+
                 $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')
                     ->get()
                     ->map(function ($resolved_id) {
                         return $resolved_id->entity_id;
                     });
+
                 $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')
                     ->get()
                     ->map(function ($character_info) {
@@ -202,11 +206,13 @@ class ContractsController extends Controller
                 $query->whereIn('a.assignee_id', array_merge($resolved_ids->toArray(), $character_info_ids->toArray()));
             })
             ->filterColumn('acceptor_id', function ($query, $keyword) {
+
                 $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')
                     ->get()
                     ->map(function ($resolved_id) {
                         return $resolved_id->entity_id;
                     });
+
                 $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')
                     ->get()
                     ->map(function ($character_info) {
