@@ -6,23 +6,14 @@
 
 @section('corporation_content')
 
-  <div class="box box-default">
-    <div class="box-header with-border">
-      <h3 class="box-title">{{ trans('web::seat.tracking') }}</h3>
-    </div>
-    <div class="box-body">
-
-      <div>
-        <b>{{ trans('web::seat.status') }}</b>
-        <div class="input-group">
-          <label class="checkbox-inline">
-            <input onchange="filterme()" type="checkbox" name="token_status" value="valid_token" checked>{{ trans('web::seat.valid_token') }}
-          </label>
-          <label class="checkbox-inline">
-            <input onchange="filterme()" type="checkbox" name="token_status" value="invalid_token" checked>{{ trans('web::seat.invalid_token') }}
-          </label>
-        </div>
-      </div>
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="" data-toggle="tab" data-filter="all">{{ trans('web::seat.all') }} {{ trans('web::seat.tracking') }}</a></li>
+      <li><a href="" data-toggle="tab" data-filter="valid_token">{{ trans('web::seat.valid_token') }}</a></li>
+      <li><a href="" data-toggle="tab" data-filter="invalid_token">{{ trans('web::seat.invalid_token') }}</a></li>
+      <li><a href="" data-toggle="tab" data-filter="unseated">{{ trans('web::seat.none') }} {{ trans('web::seat.seat_user') }}</a></li>
+    </ul>
+    <div class="tab-content">
 
       <table id="corporation-member-tracking" class="table compact table-condensed table-hover table-responsive">
         <thead>
@@ -45,15 +36,12 @@
 
   <script>
 
-    function refreshTokenCheckboxes() {
-      return $('input:checkbox[name="token_status"]:checked').map(function() {
-        return  this.value;
-      }).get();
-    }
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+      corporation_member_tracking_table.draw();
+    });
 
-    function filterme() {
-
-      corporation_member_tracking_table.draw()
+    function getSelectedFilter() {
+      return $("div.nav-tabs-custom > ul > li.active > a").data('filter');
     }
 
     var corporation_member_tracking_table = $('table#corporation-member-tracking').DataTable({
@@ -62,12 +50,12 @@
       ajax            : {
         url : '{{ route('corporation.view.tracking.data', ['corporation_id' => $request->corporation_id]) }}',
         data: function ( d ) {
-          d.selected_refresh_token_status = refreshTokenCheckboxes();
+          d.selected_refresh_token_status = getSelectedFilter();
         }
       },
       columns         : [
         {data: 'refresh_token', name: 'user.refresh_token', orderable: false, searchable: false},
-        {data: 'character_id', name: 'user.name'},
+        {data: 'character_id', name: 'name_filter'},
         {data: 'location', name: 'location', searchable: false},
         {data: 'start_date', name: 'start_date', render: human_readable, searchable: false},
         {data: 'logon_date', name: 'logon_date', render: human_readable, searchable: false}
