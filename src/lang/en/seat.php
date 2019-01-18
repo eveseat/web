@@ -522,7 +522,7 @@ return [
     'client'                       => 'Client',
     'qty'                          => '#',
     'unknown_character'            => 'Unknown Character. Is the API Key on record and updated?',
-    'deleted_refresh_token'        => 'Refresh token has been deleted :time, most information are out of date.',
+    'no_account_info'              => 'No Account Information Available',
     'channel_members'              => 'Channel Members',
     'motd'                         => 'MoTD',
     'bookmark'                     => 'Bookmark|Bookmarks',
