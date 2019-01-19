@@ -26,6 +26,7 @@ use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Universe\UniverseName;
 use Seat\Services\Repositories\Character\Contracts;
+use Seat\Services\Repositories\Seat\DataTablesFilter;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\User;
 use Yajra\DataTables\DataTables;
@@ -36,7 +37,7 @@ use Yajra\DataTables\DataTables;
  */
 class ContractsController extends Controller
 {
-    use Contracts;
+    use Contracts, DataTablesFilter;
 
     /**
      * @param $character_id
@@ -175,51 +176,21 @@ class ContractsController extends Controller
             })
             ->filterColumn('issuer_id', function ($query, $keyword) {
 
-                $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')
-                    ->get()
-                    ->map(function ($resolved_id) {
-                        return $resolved_id->entity_id;
-                    });
+                $resolved_ids = $this->getIdsForNames($keyword);
 
-                $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')
-                    ->get()
-                    ->map(function ($character_info) {
-                        return $character_info->character_id;
-                    });
-
-                $query->whereIn('a.issuer_id', array_merge($resolved_ids->toArray(), $character_info_ids->toArray()));
+                $query->whereIn('a.assignee_id', $resolved_ids->toArray());
             })
             ->filterColumn('assignee_id', function ($query, $keyword) {
 
-                $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')
-                    ->get()
-                    ->map(function ($resolved_id) {
-                        return $resolved_id->entity_id;
-                    });
+                $resolved_ids = $this->getIdsForNames($keyword);
 
-                $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')
-                    ->get()
-                    ->map(function ($character_info) {
-                        return $character_info->character_id;
-                    });
-
-                $query->whereIn('a.assignee_id', array_merge($resolved_ids->toArray(), $character_info_ids->toArray()));
+                $query->whereIn('a.assignee_id', $resolved_ids->toArray());
             })
             ->filterColumn('acceptor_id', function ($query, $keyword) {
 
-                $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')
-                    ->get()
-                    ->map(function ($resolved_id) {
-                        return $resolved_id->entity_id;
-                    });
+                $resolved_ids = $this->getIdsForNames($keyword);
 
-                $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')
-                    ->get()
-                    ->map(function ($character_info) {
-                        return $character_info->character_id;
-                    });
-
-                $query->whereIn('a.acceptor_id', array_merge($resolved_ids->toArray(), $character_info_ids->toArray()));
+                $query->whereIn('a.acceptor_id', $resolved_ids->toArray());
             })
             ->rawColumns(['issuer_id', 'type', 'contents', 'assignee_id', 'acceptor_id'])
             ->make(true);
