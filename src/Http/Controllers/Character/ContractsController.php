@@ -24,7 +24,6 @@ namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
-use Seat\Eveapi\Models\Universe\UniverseName;
 use Seat\Services\Repositories\Character\Contracts;
 use Seat\Services\Repositories\Seat\DataTablesFilter;
 use Seat\Web\Http\Controllers\Controller;
