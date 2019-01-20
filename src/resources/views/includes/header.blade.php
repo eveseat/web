@@ -50,7 +50,7 @@
         </li>
 
         <!-- User Account Menu -->
-        <li class="dropdown user user-menu">
+        <li class="dropdown user user-menu" id="user-dropdown">
           <!-- Menu Toggle Button -->
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <!-- The user image in the navbar-->
@@ -58,6 +58,7 @@
                  class="user-image" alt="User Image">
             <!-- hidden-xs hides the username on small devices so only the image appears. -->
             <span class="hidden-xs">{{ $user->name }}</span>
+            <i class="fa fa-caret-left"></i>
           </a>
 
           <ul class="dropdown-menu">

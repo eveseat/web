@@ -1,6 +1,5 @@
-@extends('web::corporation.wallet.layouts.view', ['sub_viewname' => 'journal'])
+@extends('web::corporation.wallet.layouts.view', ['sub_viewname' => 'journal', 'breadcrumb' => trans('web::seat.wallet_journal')])
 
-@section('title', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.wallet_journal'))
 @section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.wallet_journal'))
 
 @inject('request', 'Illuminate\Http\Request')
@@ -10,10 +9,16 @@
   <div class="row">
     <div class="col-md-12">
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">{{ trans('web::seat.wallet_journal') }}</h3>
-        </div>
+      <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+          @foreach($divisions as $division)
+            @if($loop->first) <li class="active"> @else <li> @endif
+              <a href="" data-toggle="tab" data-division="{{$division->division}}">
+                {{ $division->name }}
+              </a>
+            </li>
+          @endforeach
+        </ul>
         <div class="panel-body">
 
           <table class="table compact table-condensed table-hover table-responsive"
@@ -40,13 +45,26 @@
 
 @push('javascript')
 
-<script type="text/javascript">
+  <script type="text/javascript">
 
-  $(function () {
-    $('table#corporation-journal').DataTable({
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+      corporation_journal_table.draw();
+    });
+
+    function getSelectedDivision() {
+      return $("div.nav-tabs-custom > ul > li.active > a").data('division');
+    }
+
+
+    var corporation_journal_table = $('table#corporation-journal').DataTable({
       processing      : true,
       serverSide      : true,
-      ajax            : '{{ route('corporation.view.journal.data', ['corporation_id' => $request->corporation_id]) }}',
+      ajax            : {
+        url : '{{ route('corporation.view.journal.data', ['corporation_id' => $request->corporation_id]) }}',
+        data: function (d) {
+          d.division = getSelectedDivision();
+        }
+      },
       columns         : [
         {data: 'date', name: 'date', render: human_readable},
         {data: 'ref_type', name: 'ref_type'},
@@ -55,17 +73,14 @@
         {data: 'amount', name: 'amount'},
         {data: 'balance', name: 'balance'}
       ],
-      dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
-      "fnDrawCallback": function () {
-        $(document).ready(function () {
-          $("[data-toggle=tooltip]").tooltip();
-          $("img").unveil(100);
-          ids_to_names();
-        });
+      drawCallback: function () {
+        $("[data-toggle=tooltip]").tooltip();
+        $("img").unveil(100);
+        ids_to_names();
       }
     });
-  });
 
-</script>
+
+  </script>
 
 @endpush

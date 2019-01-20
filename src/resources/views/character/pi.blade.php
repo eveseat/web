@@ -1,6 +1,5 @@
-@extends('web::character.layouts.view', ['viewname' => 'pi'])
+@extends('web::character.layouts.view', ['viewname' => 'pi', 'breadcrumb' => trans('web::seat.pi')])
 
-@section('title', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.pi'))
 @section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.pi'))
 
 @inject('request', 'Illuminate\Http\Request')

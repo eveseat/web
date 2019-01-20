@@ -1,6 +1,5 @@
-@extends('web::corporation.layouts.view', ['viewname' => 'contracts'])
+@extends('web::corporation.layouts.view', ['viewname' => 'contracts', 'breadcrumb' => trans('web::seat.contracts')])
 
-@section('title', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.contracts'))
 @section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.contracts'))
 
 @inject('request', 'Illuminate\Http\Request')
@@ -88,16 +87,26 @@
             // on items with the contract-item class.
             $('a.contract-item').on('click', function () {
 
-              // Small hack to get an ajaxable url from Laravel
-              var url = "{{ route('corporation.view.contracts.items', ['corporation_id' => $request->corporation_id, 'contract_id' => ':contractid']) }}";
-              var contract_id = $(this).attr('a-contract-id');
-              url = url.replace(':contractid', contract_id);
+              var url = $(this).attr('data-url');
 
               // Perform an ajax request for the contract items
-              $.get(url, function (data) {
-                $('span#contract-items-result').html(data);
+              $.ajax({
+                type: 'GET',
+                url: url,
+                beforeSend: function () {
+                  //add spinner
+                  $('span#contract-items-result').html('<i class="fa fa-refresh fa-spin loader"></i>');
+                },
+                success: function (data) {
+                  //replace spinner with content
+                  $('span#contract-items-result').html(data);
+                },
+                error: function(xhr) { // if error occured
+                  alert("Error occured.please try again");
+                  $(placeholder).append(xhr.statusText + xhr.responseText);
+                  $(placeholder).removeClass('loading');
+                },
               });
-
             });
 
           });

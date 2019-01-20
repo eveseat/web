@@ -44,7 +44,9 @@ class WalletController extends Controller
     public function getJournal(int $corporation_id)
     {
 
-        return view('web::corporation.wallet.journal.journal');
+        $divisions = $this->getCorporationWalletDivisions($corporation_id);
+
+        return view('web::corporation.wallet.journal.journal', compact('divisions'));
 
     }
 
@@ -56,14 +58,15 @@ class WalletController extends Controller
      */
     public function getJournalData(int $corporation_id)
     {
+        if (! request()->has('division'))
+            return abort(500);
 
-        $journal = $this->getCorporationWalletJournal($corporation_id, false);
+        $journal = $this->getCorporationWalletJournal($corporation_id, (int) request('division'));
 
         return DataTables::of($journal)
             ->editColumn('ref_type', function ($row) {
 
-                return view('web::partials.journaltranstype', compact('row'))
-                    ->render();
+                return view('web::partials.journaltranstype', compact('row'));
             })
             ->editColumn('first_party_id', function ($row) {
 
