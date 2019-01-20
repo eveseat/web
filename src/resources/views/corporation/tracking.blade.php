@@ -9,9 +9,9 @@
   <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
       <li class="active"><a href="" data-toggle="tab" data-filter="all">{{ trans('web::seat.all') }} {{ trans('web::seat.tracking') }}</a></li>
-      <li><a href="" data-toggle="tab" data-filter="valid_token">{{ trans('web::seat.valid_token') }}</a></li>
-      <li><a href="" data-toggle="tab" data-filter="invalid_token">{{ trans('web::seat.invalid_token') }}</a></li>
-      <li><a href="" data-toggle="tab" data-filter="unseated">{{ trans('web::seat.none') }} {{ trans('web::seat.seat_user') }}</a></li>
+      <li><a href="" data-toggle="tab" data-filter="valid_token">{{ trans_choice('web::seat.valid_token', 2) }}</a></li>
+      <li><a href="" data-toggle="tab" data-filter="invalid_token">{{ trans_choice('web::seat.invalid_token', 2) }}</a></li>
+      <li><a href="" data-toggle="tab" data-filter="missing_users">{{ trans('web::seat.none') }} {{ trans('web::seat.seat_user') }}</a></li>
     </ul>
     <div class="tab-content">
 

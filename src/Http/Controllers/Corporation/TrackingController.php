@@ -62,7 +62,7 @@ class TrackingController extends Controller
         if($selected_status->contains('invalid_token'))
             $tracking->doesntHave('user.refresh_token');
 
-        if($selected_status->contains('unseated'))
+        if($selected_status->contains('missing_users'))
             $tracking->doesntHave('user');
 
         return DataTables::of($tracking)
