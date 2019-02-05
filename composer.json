@@ -1,11 +1,11 @@
 {
-  "name": "eveseat/web",
-  "description": "SeAT Web Interface",
+  "name": "marazmatik/web
+  "description": "SeAT Web Interface Mara",
   "license": "GPL-2.0",
   "authors": [
     {
       "name": "Leon Jacobs",
-      "email": "leonja511@gmail.com"
+      "email": "nsemennikov@gmail.com"
     }
   ],
   "autoload": {
