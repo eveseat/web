@@ -42,7 +42,7 @@ class ContractsController extends Controller
     public function getContracts(int $corporation_id)
     {
 
-        return view('web::corporation.contracts', compact('contracts'));
+        return view('web::corporation.contracts');
     }
 
     /**
