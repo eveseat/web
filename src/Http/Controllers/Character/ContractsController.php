@@ -185,7 +185,7 @@ class ContractsController extends Controller
                         return $character_info->character_id;
                     });
 
-                $query->whereIn('a.assignee_id', array_merge($resolved_ids->toArray(), $character_info_ids->toArray()));
+                $query->whereIn('a.issuer_id', array_merge($resolved_ids->toArray(), $character_info_ids->toArray()));
             })
             ->filterColumn('assignee_id', function ($query, $keyword) {
                 $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')
