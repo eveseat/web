@@ -328,8 +328,8 @@ return [
     'affiliation_removed'          => 'Affiliation has been removed from this role',
 
     // Tokens
-    'valid_token'                  => 'Valid Token',
-    'invalid_token'                => 'Invalid Token',
+    'valid_token'                  => 'Valid Token|Valid Tokens',
+    'invalid_token'                => 'Invalid Token|Invalid Tokens',
 
     // Import
     'api_import_title'             => 'Import Eve Online API Keys',
