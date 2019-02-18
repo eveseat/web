@@ -25,7 +25,7 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Character\Contracts;
-use Seat\Services\Repositories\Seat\NamedIdFilter;
+use Seat\Services\Repositories\Seat\Filters\NamedIdFilter;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\User;
 use Yajra\DataTables\DataTables;

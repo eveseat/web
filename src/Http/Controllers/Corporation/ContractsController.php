@@ -23,7 +23,7 @@
 namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Services\Repositories\Corporation\Contracts;
-use Seat\Services\Repositories\Seat\NamedIdFilter;
+use Seat\Services\Repositories\Seat\Filters\NamedIdFilter;
 use Seat\Web\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
 
