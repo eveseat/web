@@ -316,15 +316,23 @@
       $.ajax({
         url: '{{ route('packages.changelog') }}',
         method: 'POST',
-        data: changelogMetadata.data()
-      }).done(function (data) {
-        var body = $(data);
+        data: changelogMetadata.data(),
+        beforeSend: function () {
+          changelogModal.find('.modal-body').html('<i class="fa fa-refresh fa-spin loader"></i>');
+        },
+        success: function (data) {
+          var body = $(data);
 
-        // format tables
-        body.find('table').addClass('table');
+          // format tables
+          body.find('table').addClass('table');
 
-        // load modal content
-        changelogModal.find('.modal-body').html(body);
+          // load modal content
+          changelogModal.find('.modal-body').html(body);
+        },
+        error: function(xhr) { // if error occured
+          alert("Error occured. please try again");
+          changelogModal.find('.modal-body').html(xhr.statusText + xhr.responseText);
+        },
       });
     });
 
