@@ -26,7 +26,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
-use Seat\Eveapi\Models\Sde\ChrFaction;
 use Seat\Eveapi\Models\Universe\UniverseName;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\User;
@@ -146,14 +145,13 @@ class ResolveController extends Controller
 
         // universe resolver is not working on factions at this time
         // retrieve them from SDE and remove them from collection
-        // TODO CCP WIP : https://github.com/ccpgames/esi-issues/issues/736
-        $names = ChrFaction::whereIn('factionID', $ids->flatten()->toArray())
+        $names = UniverseName::whereIn('entity_id', $ids->flatten()->toArray())
             ->get()
-            ->map(function ($faction) {
+            ->map(function ($entity) {
                 return collect([
-                    'id' => $faction->factionID,
-                    'name' => $faction->factionName,
-                    'category' => 'faction',
+                    'id'       => $entity->entity_id,
+                    'name'     => $entity->name,
+                    'category' => $entity->category,
                 ]);
             });
 
@@ -250,7 +248,7 @@ class ResolveController extends Controller
         // using Esi.
 
         try {
-            $eseye->setVersion('v2');
+            $eseye->setVersion('v3');
             $eseye->setBody($ids->flatten()->toArray());
             $names = $eseye->invoke('post', '/universe/names/');
 
@@ -306,15 +304,12 @@ class ResolveController extends Controller
             cache([$this->prefix . $name['id'] => $name['name']], carbon()->addCentury());
             $this->response[$name['id']] = $name['name'];
 
-            // Faction is not allowed in UniverseNames table
-            if($name['category'] !== 'faction') {
-                UniverseName::firstOrCreate([
-                    'entity_id' => $name['id'],
-                ], [
-                    'name'      => $name['name'],
-                    'category'  => $name['category'],
-                ]);
-            }
+            UniverseName::firstOrCreate([
+                'entity_id' => $name['id'],
+            ], [
+                'name'      => $name['name'],
+                'category'  => $name['category'],
+            ]);
         });
 
         $ids = $ids->filter(function ($id) use ($names) {
