@@ -13,6 +13,11 @@
       "Seat\\Web\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Seat\\Web\\Test\\": "tests/"
+    }
+  },
   "minimum-stability": "alpha",
   "prefer-stable": true,
   "require": {
@@ -29,6 +34,10 @@
     "yajra/laravel-datatables-oracle": "~8",
     "components/font-awesome": "^4.7",
     "erusev/parsedown": "^1.7"
+  },
+  "require-dev": {
+    "orchestra/database": "~3.5",
+    "orchestra/testbench": "~3.5"
   },
   "extra": {
     "laravel": {
