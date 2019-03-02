@@ -78,7 +78,6 @@
 
       $('#detailed-ledger')
           .on('show.bs.modal', function (e) {
-            console.log($(e.relatedTarget).attr('data-url'));
             var imgType = $('#detailed-ledger').find('h4.modal-title img').first();
             var imgTypeRegex = /(\/\/image.eveonline.com\/Type\/)([0-9]+)(_32.png)/gi;
             var imgSrc = imgTypeRegex.exec(imgType.attr('src'));
