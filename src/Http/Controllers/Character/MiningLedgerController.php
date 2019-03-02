@@ -26,7 +26,9 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Seat\Services\Repositories\Character\MiningLedger;
+use Seat\Services\Repositories\Eve\EvePrices;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Models\User;
 use Yajra\DataTables\DataTables;
 
 /**
@@ -36,7 +38,7 @@ use Yajra\DataTables\DataTables;
  */
 class MiningLedgerController extends Controller
 {
-    use MiningLedger;
+    use MiningLedger, EvePrices;
 
     /**
      * @param int $character_id
@@ -46,12 +48,63 @@ class MiningLedgerController extends Controller
     public function getLedger(int $character_id): View
     {
 
-        $ledger = $this->getCharacterLedger($character_id, false)
+        /*$ledger = $this->getCharacterLedger($character_id, false)
             ->addSelect(DB::raw('SUM(quantity) as quantity'), DB::raw('SUM(quantity * volume) as volumes'), DB::raw('SUM(quantity * adjusted_price) as amounts'))
             ->groupBy('character_id', 'date', 'solar_system_id', 'type_id')
-            ->get();
+            ->get();*/
 
         return view('web::character.mining-ledger', compact('ledger'));
+    }
+
+    public function getMiningLedger(int $character_id) : JsonResponse
+    {
+        if (! request()->has('all_linked_characters'))
+            return abort(500);
+
+        $character_ids = collect($character_id);
+
+        $user_group = User::find($character_id)->group->users
+            ->filter(function ($user) {
+                return $user->name !== 'admin' && $user->id !== 1;
+            })
+            ->pluck('id');
+
+        if (request('all_linked_characters') === 'true')
+            $character_ids = $user_group;
+
+        $ledger = $this->getCharacterLedger($character_ids)
+            //->addSelect(DB::raw('SUM(quantity) as quantity'), /*DB::raw('SUM(quantity * type.volume) as volumes'),*/ DB::raw('SUM(quantity * adjusted_price) as amounts'))
+            // TODO: check with warlof what that SUM is doing.
+            ->groupBy('character_id', 'date', 'solar_system_id', 'type_id');
+
+        return DataTables::of($ledger)
+            ->addColumn('system', function ($row) {
+                return view('web::partials.miningsystem', compact('row'));
+            })
+            ->addColumn('type', function ($row) {
+
+                $character = User::find($row->character_id);
+
+                return view('web::partials.miningtype', compact('row', 'character'));
+            })
+            ->editColumn('quantity', function ($row) {
+                return number($row->quantity, 0);
+            })
+            ->addColumn('volume', function ($row) {
+                return view('web::partials.miningvolume', compact('row'));
+            })
+            ->addColumn('value', function ($row) {
+
+                $value = $row->adjusted_price * $row->quantity;
+
+                if(empty($value))
+                    // If historical price has not been set, get historical price.
+                    $value = $this->getHistoricalPrice($row->type_id, $row->date)->adjusted_price;
+
+                return view('web::partials.miningvalue', compact('value')) . view('web::character.partials.miningdetails-button', compact('row'));
+            })
+            ->rawColumns(['system', 'type', 'volume', 'value'])
+            ->make(true);
     }
 
     /**
@@ -65,9 +118,22 @@ class MiningLedgerController extends Controller
      */
     public function getDetailedLedger(int $character_id, $date, int $system_id, int $type_id): JsonResponse
     {
+        if (! request()->has('all_linked_characters'))
+            return abort(500);
 
-        $entries = $this->getCharacterLedger($character_id, false)
-            ->addSelect('time', 'quantity', DB::raw('(quantity * volume) as volumes'), DB::raw('(quantity * adjusted_price) as amounts'))
+        $character_ids = collect($character_id);
+
+        $user_group = User::find($character_id)->group->users
+            ->filter(function ($user) {
+                return $user->name !== 'admin' && $user->id !== 1;
+            })
+            ->pluck('id');
+
+        if (request('all_linked_characters') === 'true')
+            $character_ids = $user_group;
+
+        $entries = $this->getCharacterLedger($character_ids)
+            ->addSelect('time' /*DB::raw('(quantity * volume) as volumes')*/ /*DB::raw('(quantity * adjusted_price) as amounts')*/)
             ->where('character_minings.date', $date)
             ->where('solar_system_id', $system_id)
             ->where('character_minings.type_id', $type_id)
@@ -81,20 +147,23 @@ class MiningLedgerController extends Controller
             ->removeColumn('type')
             ->editColumn('quantity', function ($row) {
 
-                return view('web::partials.miningquantity', compact('row'))
-                    ->render();
+                return view('web::partials.miningquantity', compact('row'));
             })
-            ->editColumn('volumes', function ($row) {
+            ->editColumn('volume', function ($row) {
 
-                return view('web::partials.miningvolume', compact('row'))
-                    ->render();
+                return view('web::partials.miningvolume', compact('row'));
             })
-            ->editColumn('amounts', function ($row) {
+            ->addColumn('value', function ($row) {
 
-                return view('web::partials.miningvalue', compact('row'))
-                    ->render();
+                $value = $row->adjusted_price * $row->quantity;
+
+                if(empty($value))
+                    // If historical price has not been set, get historical price.
+                    $value = $this->getHistoricalPrice($row->type_id, $row->date)->adjusted_price;
+
+                return view('web::partials.miningvalue', compact('value'));
             })
-            ->rawColumns(['quantity', 'volumes', 'amounts'])
+            ->rawColumns(['value', 'volume'])
             ->make(true);
     }
 }

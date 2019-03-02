@@ -1,1 +1,1 @@
-{{number($row->amounts)}} ISK
+{{number($value)}} ISK
