@@ -115,7 +115,7 @@ class TrackingController extends Controller
 
                 $system_ids = collect();
 
-                if(strlen($keyword)>1)
+                if(strlen($keyword) > 1)
                     $system_ids = MapDenormalize::where('itemName', 'like', '%' . $keyword . '%')->select('itemID')->get()->map(function ($system) { return $system->itemID; });
 
                 $station_ids = StaStation::where('stationName', 'like', '%' . $keyword . '%')->get()->map(function ($station) { return $station->stationID; });
