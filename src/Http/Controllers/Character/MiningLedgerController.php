@@ -48,11 +48,6 @@ class MiningLedgerController extends Controller
     public function getLedger(int $character_id): View
     {
 
-        /*$ledger = $this->getCharacterLedger($character_id, false)
-            ->addSelect(DB::raw('SUM(quantity) as quantity'), DB::raw('SUM(quantity * volume) as volumes'), DB::raw('SUM(quantity * adjusted_price) as amounts'))
-            ->groupBy('character_id', 'date', 'solar_system_id', 'type_id')
-            ->get();*/
-
         return view('web::character.mining-ledger', compact('ledger'));
     }
 
@@ -73,8 +68,7 @@ class MiningLedgerController extends Controller
             $character_ids = $user_group;
 
         $ledger = $this->getCharacterLedger($character_ids)
-            //->addSelect(DB::raw('SUM(quantity) as quantity'), /*DB::raw('SUM(quantity * type.volume) as volumes'),*/ DB::raw('SUM(quantity * adjusted_price) as amounts'))
-            // TODO: check with warlof what that SUM is doing.
+            ->addSelect(DB::raw('SUM(quantity) as quantity'))
             ->groupBy('character_id', 'date', 'solar_system_id', 'type_id');
 
         return DataTables::of($ledger)
@@ -88,9 +82,11 @@ class MiningLedgerController extends Controller
                 return view('web::partials.miningtype', compact('row', 'character'));
             })
             ->editColumn('quantity', function ($row) {
-                return number($row->quantity, 0);
+
+                return view('web::partials.miningquantity', compact('row'));
             })
             ->addColumn('volume', function ($row) {
+
                 return view('web::partials.miningvolume', compact('row'));
             })
             ->addColumn('value', function ($row) {
@@ -123,17 +119,8 @@ class MiningLedgerController extends Controller
 
         $character_ids = collect($character_id);
 
-        $user_group = User::find($character_id)->group->users
-            ->filter(function ($user) {
-                return $user->name !== 'admin' && $user->id !== 1;
-            })
-            ->pluck('id');
-
-        if (request('all_linked_characters') === 'true')
-            $character_ids = $user_group;
-
         $entries = $this->getCharacterLedger($character_ids)
-            ->addSelect('time' /*DB::raw('(quantity * volume) as volumes')*/ /*DB::raw('(quantity * adjusted_price) as amounts')*/)
+            ->addSelect('time', 'quantity')
             ->where('character_minings.date', $date)
             ->where('solar_system_id', $system_id)
             ->where('character_minings.type_id', $type_id)
