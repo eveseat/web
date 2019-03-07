@@ -1,5 +1,7 @@
 @extends('web::layouts.grids.12')
 
+@section('title', trans_choice('web::seat.corporation', 1) . (isset($corporation_name) ? ' - ' . $corporation_name : '') . (isset($breadcrumb) ? ' > ' . $breadcrumb : ''))
+
 @section('full')
 
   <div class="row">

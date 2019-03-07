@@ -5,12 +5,13 @@
 
 @section('full')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">
-      </h3>
-    </div>
-    <div class="panel-body">
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="" data-toggle="tab" data-filter="all">{{ trans('web::seat.all') }} {{ trans_choice('web::seat.user',2) }}</a></li>
+      <li><a href="" data-toggle="tab" data-filter="valid">{{ trans_choice('web::seat.valid_token', 2) }}</a></li>
+      <li><a href="" data-toggle="tab" data-filter="invalid">{{ trans_choice('web::seat.invalid_token', 2) }}</a></li>
+    </ul>
+    <div class="tab-content">
 
       <table id="user-configuration-table" class="table compact table-condensed table-hover table-responsive">
         <thead>
@@ -34,13 +35,25 @@
   @include('web::includes.javascript.id-to-name')
 
   <script type="text/javascript">
-    $('#user-configuration-table').DataTable({
+
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+      users_list.draw();
+    });
+
+    function getSelectedFilter() {
+      return $("div.nav-tabs-custom > ul > li.active > a").data('filter');
+    }
+
+    var users_list = $('#user-configuration-table').DataTable({
       processing: true,
       serverSide: true,
       searchDelay: 600,
       pageLength: 50,
       ajax: {
-        url: "{{url()->current()}}"
+        url: '{{url()->current()}}',
+        data: function (d) {
+          d.filter = getSelectedFilter();
+        }
       },
       columns: [
         {data: 'refresh_token', name: 'refresh_token', searchable: false, orderable: false},

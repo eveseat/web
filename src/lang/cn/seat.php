@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -171,7 +171,6 @@ return [
     'security'              => '安全',
     'sso'                   => 'SSO',
     'tracking'              => '追踪',
-    'worker_constraints'    => '线程限制',
 
     'assets'                      => '资产',
     'location_flag'               => '位标',
@@ -380,12 +379,6 @@ return [
     'allow_tracking'               => '允许追踪',
     'tracking_id'                  => 'Unique Tracking ID',
     'tracking_help'                => '在禁用追踪之前请先看一下文档。',
-    'worker'                       => '工作线程|工作线程',
-    'queue_worker'                 => '队列工作线程|队列工作线程',
-    'queue_worker_help'            => '这是用来设置后台工作的线程数量的. ' .
-        '提醒: 设置太多的工作线程可能会导致负载过高而工作缓慢.',
-    'horizon_restart'              => '记的结束Horizon并重启以使设置生效. ' .
-        '如果设置正确应该会自动重启.',
 
     // SSO Settings
     'sso_scopes'                   => 'SSO 权限',

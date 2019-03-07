@@ -64,12 +64,14 @@
           <dt>Current User Group</dt>
           <dd>
             <ul class="list-unstyled">
-              @foreach($user->group->users as $group_user)
-                <li>
-                  {!! img('character', $group_user->id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                  {{ $group_user->name }}
-                </li>
-              @endforeach
+              @if($user->group)
+                @foreach($user->group->users as $group_user)
+                  <li>
+                    {!! img('character', $group_user->id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                    {{ $group_user->name }}
+                  </li>
+                @endforeach
+              @endif
             </ul>
           </dd>
         </dl>
@@ -131,44 +133,46 @@
               <th></th>
             </tr>
 
-            @foreach($user->group->roles as $role)
+            @if($user->group)
+              @foreach($user->group->roles as $role)
 
-              <tr>
-                <td>{{ $role->title }}</td>
-                <td>
-                  @foreach($role->permissions as $permission)
-                    <span
-                        class="label label-{{ $permission->title == 'superuser' ? 'danger' : 'info' }}">{{ studly_case($permission->title) }}</span>
-                  @endforeach
-                </td>
-                <td>
-                  @foreach($role->affiliations as $affiliation)
-                    <span class="label label-primary">{{ $affiliation->affiliation }} ({{ $affiliation->type }})</span>
-                  @endforeach
-                </td>
-                <td>
-                  @if(auth()->user()->id != $user->id)
-                    <a href="{{ route('configuration.access.roles.edit', ['id' => $role->id]) }}" type="button"
-                       class="btn btn-warning btn-xs">
-                      {{ trans('web::seat.edit') }}
-                    </a>
-                    <a href="{{ route('configuration.access.roles.edit.remove.group', ['role_id' => $role->id, 'user_id' => $user->group->id]) }}"
-                       type="button" class="btn btn-danger btn-xs">
-                      {{ trans('web::seat.remove') }}
-                    </a>
-                  @endif
-                </td>
+                <tr>
+                  <td>{{ $role->title }}</td>
+                  <td>
+                    @foreach($role->permissions as $permission)
+                      <span
+                          class="label label-{{ $permission->title == 'superuser' ? 'danger' : 'info' }}">{{ studly_case($permission->title) }}</span>
+                    @endforeach
+                  </td>
+                  <td>
+                    @foreach($role->affiliations as $affiliation)
+                      <span class="label label-primary">{{ $affiliation->affiliation }} ({{ $affiliation->type }})</span>
+                    @endforeach
+                  </td>
+                  <td>
+                    @if(auth()->user()->id != $user->id)
+                      <a href="{{ route('configuration.access.roles.edit', ['id' => $role->id]) }}" type="button"
+                         class="btn btn-warning btn-xs">
+                        {{ trans('web::seat.edit') }}
+                      </a>
+                      <a href="{{ route('configuration.access.roles.edit.remove.group', ['role_id' => $role->id, 'user_id' => $user->group->id]) }}"
+                         type="button" class="btn btn-danger btn-xs">
+                        {{ trans('web::seat.remove') }}
+                      </a>
+                    @endif
+                  </td>
 
-              </tr>
+                </tr>
 
-            @endforeach
+              @endforeach
+            @endif
 
             </tbody>
           </table>
 
         </div>
         <div class="panel-footer">
-          <b>{{ count($user->group->roles) }}</b> {{ trans_choice('web::seat.role', count($user->group->roles)) }}
+          <b>{{ count(optional($user->group)->roles) }}</b> {{ trans_choice('web::seat.role', count(optional($user->group)->roles)) }}
         </div>
       </div>
       @endif

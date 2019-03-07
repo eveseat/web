@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -253,7 +253,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function getEmailAttribute()
     {
 
-        return Profile::get('email_address', $this->group->id);
+        return Profile::get('email_address', $this->group_id) ?: '';
     }
 
     /**

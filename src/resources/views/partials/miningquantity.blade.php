@@ -1,1 +1,1 @@
-{{number($row->quantity)}}
+{{number($row->quantity, 0)}}

@@ -1,6 +1,5 @@
-@extends('web::character.layouts.view', ['viewname' => 'contacts'])
+@extends('web::character.layouts.view', ['viewname' => 'contacts', 'breadcrumb' => trans('web::seat.contacts')])
 
-@section('title', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.contacts'))
 @section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.contacts'))
 
 @inject('request', 'Illuminate\Http\Request')
