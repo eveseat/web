@@ -3,9 +3,6 @@
 @section('title', trans('web::seat.mail_timeline'))
 @section('page_header', trans('web::seat.mail_timeline'))
 
-@inject('CharacterInfo', 'Seat\Eveapi\Models\Character\CharacterInfo')
-@inject('CorporationInfo', 'Seat\Eveapi\Models\Corporation\CorporationInfo')
-
 @section('full')
 
   {!! $messages->render() !!}
@@ -33,11 +30,11 @@
               {{ $message->timestamp }} ({{ human_diff($message->timestamp) }})
               </br>
               <b>{{ trans_choice('web::seat.character', 1) }} {{ trans('web::seat.source') }}: </b>
-              @include('web::partials.character', ['character' => $CharacterInfo::find($message->character_id) ?: $message->character_id, 'character_id' => $message->character_id])
+              {!! $message->source_view() !!}
             </span>
             <h2 class="timeline-header">
               <b>{{ trans('web::seat.from') }}: </b>
-              @include('web::partials.character', ['character' => $CharacterInfo::find($message->from) ?: $message->from, 'character_id' => $message->character_id])
+              {!! $message->from_view() !!}
 
         @if ($message->recipients->where('recipient_type', 'alliance')->count() > 0)
 
@@ -60,7 +57,7 @@
 
             @foreach($message->recipients->where('recipient_type', 'corporation') as $recipient)
 
-              @include('web::partials.corporation', ['corporation' => $CorporationInfo::find($recipient->recipient_id) ?: $recipient->recipient_id, 'character_id' => $message->character_id])
+              {!! $recipient->corporation_view() !!}
 
             @endforeach
 
@@ -74,7 +71,7 @@
 
             @foreach($message->recipients->where('recipient_type', 'character') as $recipient)
 
-              @include('web::partials.character', ['character' => $CharacterInfo::find($recipient->recipient_id) ?: $recipient->recipient_id, 'character_id' => $message->character_id])
+              {!! $recipient->character_view() !!}
 
             @endforeach
 
