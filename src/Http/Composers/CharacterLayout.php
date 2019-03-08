@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ namespace Seat\Web\Http\Composers;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Web\Models\User;
 
 class CharacterLayout
 {
@@ -51,5 +52,13 @@ class CharacterLayout
 
         if (! is_null($character_info))
             $view->with('character_name', $character_info->name);
+
+        $user = User::find($this->request->character_id);
+
+        if (! isset($user->refresh_token)){
+            $deleted_at = $user->refresh_token()->withTrashed()->first()->deleted_at;
+            redirect()->back()->with('warning', trans('web::seat.deleted_refresh_token', ['time' => human_diff($deleted_at)]));
+        }
+
     }
 }

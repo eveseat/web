@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -185,7 +185,7 @@ class ContractsController extends Controller
                         return $character_info->character_id;
                     });
 
-                $query->whereIn('a.assignee_id', array_merge($resolved_ids->toArray(), $character_info_ids->toArray()));
+                $query->whereIn('a.issuer_id', array_merge($resolved_ids->toArray(), $character_info_ids->toArray()));
             })
             ->filterColumn('assignee_id', function ($query, $keyword) {
                 $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')

@@ -19,31 +19,26 @@
 
 @push('javascript')
 
-<script>
+  <script>
 
-  $(function () {
     $('table#characters').DataTable({
-      processing      : true,
-      serverSide      : true,
-      ajax            : '{{ route('support.search.characters.data') }}',
-      columns         : [
-        {data: 'name',              name: 'name'},
-        {data: 'corporation_id',    name: 'corporation_id'}
+      processing  : true,
+      serverSide  : true,
+      ajax        : '{{ route('support.search.characters.data') }}',
+      columns     : [
+        {data: 'name', name: 'name'},
+        {data: 'corporation_id', name: 'corporation_id', searchable: false}
       ],
-      dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
-      'fnDrawCallback': function () {
-        $(document).ready(function () {
-          $('img').unveil(100);
-          ids_to_names();
-        });
+      drawCallback: function () {
+        $('img').unveil(100);
+        ids_to_names();
       },
-      'search'        : {
+      'search'    : {
         'search': '{{ $query }}'
       },
-      order           : [[0, "asc"]]
+      order       : [[0, "asc"]]
     });
-  });
 
-</script>
+  </script>
 
 @endpush

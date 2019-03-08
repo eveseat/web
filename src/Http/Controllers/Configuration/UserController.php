@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,7 +52,16 @@ class UserController extends Controller
         if (! request()->ajax())
             return view('web::configuration.users.list');
 
+        if (! request()->has('filter'))
+            return abort(500);
+
         $groups = $this->getAllFullUsers();
+
+        if (request('filter') === 'valid')
+            $groups->has('refresh_token');
+
+        if (request('filter') === 'invalid')
+            $groups->doesntHave('refresh_token');
 
         return DataTables::of($groups)
             ->editColumn('refresh_token', function ($row) {
