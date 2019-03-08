@@ -55,15 +55,15 @@
                       <span aria-hidden="true">&times;</span>
                     </button>
                     <h4 class="modal-title" id="deactivateModalLabel">
-                      Deactivate a user
+                      {{ trans('web::seat.deactivate_modal_title') }}
                     </h4>
                   </div>
                   <div class="modal-body">
 
                     <div class="callout callout-info">
-                      <h4>Deactivate users with caution!</h4>
+                      <h4>{{ trans('web::seat.deactivate_callout_title') }}</h4>
 
-                      <p>Deactivating a user means moving the user to another user group. This method is generally used, when a user doesn't have access to the character anymore and is not able to recover a new refresh_token. This means explicitly: sold or bio massed characters.</p>
+                      <p>{{ trans('web::seat.deactivate_callout_description') }}</p>
                     </div>
 
                     <form id="deactivateUserForm" role="form" action="{{ route('configuration.users.edit.account_status', ['user_id' => $user->id]) }}" method="post">
@@ -72,23 +72,23 @@
                       <div class="box-body">
 
                         <div class="form-group">
-                          <label for="text">Title</label>
+                          <label for="text">{{ trans('web::seat.deactivate_reason') }}</label>
                           <select class="form-control" name="title" id="title">
-                            <option>Character has been sold</option>
-                            <option>Character has been bio massed</option>
+                            <option>{{ trans('web::seat.deactivate_reason_sold') }}</option>
+                            <option>{{ trans('web::seat.deactivate_reason_biomassed') }}</option>
                           </select>
                         </div>
 
                         <div class="form-group">
-                          <label>Note</label>
-                          <textarea class="form-control" rows="15" name="note" placeholder="Explain the nature of the request, include buyer character_id if character has been sold ..." required></textarea>
+                          <label>{{ trans('web::seat.note') }}</label>
+                          <textarea class="form-control" rows="15" name="note" placeholder="{{ trans('web::seat.deactivate_reason_placeholder') }}" required></textarea>
                         </div>
 
                       </div><!-- /.box-body -->
 
                       <div class="box-footer">
                         <button type="submit" form="deactivateUserForm" class="btn btn-primary pull-right">
-                          Add
+                          {{ trans('web::seat.add') }} {{ trans('web::seat.note') }}
                         </button>
                       </div>
                     </form>
@@ -107,33 +107,33 @@
                       <span aria-hidden="true">&times;</span>
                     </button>
                     <h4 class="modal-title" id="activateModalLabel">
-                      Reactivate a user
+                      {{ trans('web::seat.activate_modal_title') }}
                     </h4>
                   </div>
                   <div class="modal-body">
 
                     <div class="callout callout-warning">
-                      <h4>Activate users with caution!</h4>
+                      <h4>{{ trans('web::seat.activate_callout_title') }}</h4>
 
-                      <p>You'd better have a real good reason</p>
+                      <p>{{ trans('web::seat.activate_callout_description') }}</p>
                     </div>
 
                     <form id="activateUserForm" role="form" action="{{ route('configuration.users.edit.account_status', ['user_id' => $user->id]) }}" method="post">
                       {{ csrf_field() }}
-                      <input type="hidden" id="title" name="title" value="User reactivated">
+                      <input type="hidden" id="title" name="title" value="{{ trans('web::seat.activate_note') }}">
 
                       <div class="box-body">
 
                         <div class="form-group">
-                          <label>Note</label>
-                          <textarea class="form-control" rows="15" name="note" placeholder="Explain the reason of reactivation" required></textarea>
+                          <label>{{ trans('web::seat.note') }}</label>
+                          <textarea class="form-control" rows="15" name="note" placeholder="{{ trans('web::seat.activate_reason_placeholder') }}" required></textarea>
                         </div>
 
                       </div><!-- /.box-body -->
 
                       <div class="box-footer">
                         <button type="submit" form="activateUserForm" class="btn btn-primary pull-right">
-                          Add
+                          {{ trans('web::seat.add') }} {{ trans('web::seat.note') }}
                         </button>
                       </div>
                     </form>
