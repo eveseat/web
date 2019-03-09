@@ -74,7 +74,7 @@
         <dd>{{ $summary->ship->type->typeName }} called <i>{{ $summary->ship->ship_name }}</i></dd>
 
         <dt>{{ trans('web::seat.last_location') }}</dt>
-        <dd>{{ $summary->lastKnownLocation }}</dd>
+        <dd>@include('web::partials.location', ['location' => $summary->location])</dd>
 
         <dt>{{ trans('web::seat.security_status') }}</dt>
         <dd>

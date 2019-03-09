@@ -56,7 +56,7 @@
       columns         : [
         {data: 'refresh_token', name: 'user.refresh_token', orderable: false, searchable: false},
         {data: 'character_id', name: 'name_filter'},
-        {data: 'location', name: 'location', searchable: false},
+        {data: 'location', name: 'location_filter'},
         {data: 'start_date', name: 'start_date', render: human_readable, searchable: false},
         {data: 'logon_date', name: 'logon_date', render: human_readable, searchable: false}
       ],
