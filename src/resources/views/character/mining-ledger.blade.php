@@ -30,6 +30,7 @@
           <th>{{ trans_choice('web::seat.value',1) }}</th>
         </tr>
         </thead>
+        <tbody></tbody>
       </table>
     </div>
   </div>
