@@ -94,7 +94,6 @@ class LedgerController extends Controller
             $corporation_id, $year, $month);
 
         return view('web::corporation.ledger.planetaryinteraction',
-            compact('pidates', 'pitotals', 'piimport', 'piexport',
-                'corporation_id', 'month', 'year'));
+            compact('pidates', 'pitotals', 'corporation_id', 'month', 'year'));
     }
 }
