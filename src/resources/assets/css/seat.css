@@ -73,6 +73,13 @@ ul.dropdown-menu > li.user-character {
     background-color: #f39c12;
 }
 
+li.dropdown.user.user-menu > a.dropdown-toggle i.fa-caret-left {
+    transition: ease 0.2s;
+    -webkit-transition: ease 0.2s;
+    -moz-transition: ease 0.2s;
+    -o-transition: ease 0.2s;
+}
+
 ul.dropdown-menu > li.user-character a .media-left {
     vertical-align: middle;
 }

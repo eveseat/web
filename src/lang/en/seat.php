@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -181,30 +181,33 @@ return [
     'security'              => 'Security',
     'sso'                   => 'Single Sign-on',
     'tracking'              => 'Tracking',
-    'worker_constraints'    => 'Worker Constraints',
 
-    'assets'                      => 'Assets',
-    'location_flag'               => 'Location Flag',
-    'calendar'                    => 'Calendar',
-    'channels'                    => 'Channels',
-    'contacts'                    => 'Contacts',
-    'contracts'                   => 'Contracts',
-    'fittings'                    => 'Fittings',
-    'fitting_items'               => 'Fitting Items',
-    'industry'                    => 'Industry',
-    'intel'                       => 'Intel',
-    'killmails'                   => 'Killmails',
-    'mail'                        => 'Mail',
-    'market'                      => 'Market',
-    'notifications'               => 'Notifications',
-    'pi'                          => 'PI',
-    'research'                    => 'Research',
-    'sheet'                       => 'Sheet',
-    'skills'                      => 'Skills',
-    'standings'                   => 'Standings',
-    'wallet'                      => 'Wallet',
-    'wallet_journal'              => 'Wallet Journal',
-    'wallet_transactions'         => 'Wallet Transactions',
+    'assets'                       => 'Assets',
+    'location_flag'                => 'Location Flag',
+    'calendar'                     => 'Calendar',
+    'channels'                     => 'Channels',
+    'contacts'                     => 'Contacts',
+    'contracts'                    => 'Contracts',
+    'fittings'                     => 'Fittings',
+    'fitting_items'                => 'Fitting Items',
+    'extraction'                   => 'Extraction|Extractions',
+    'industry'                     => 'Industry',
+    'intel'                        => 'Intel',
+    'killmails'                    => 'Killmails',
+    'mail'                         => 'Mail',
+    'market'                       => 'Market',
+    'notifications'                => 'Notifications',
+    'pi'                           => 'PI',
+    'research'                     => 'Research',
+    'sheet'                        => 'Sheet',
+    'skills'                       => 'Skills',
+    'standings'                    => 'Standings',
+    'wallet'                       => 'Wallet',
+    'wallet_journal'               => 'Wallet Journal',
+    'wallet_transactions'          => 'Wallet Transactions',
+    'wrong_probe_report_structure' => 'There is a problem with your probe report structure - :fields_number fields were expected per line. The issue has been recorded.',
+    'insert_error_probe_report'    => 'An issue as been encountered while posting your report. Please contact your administrator.',
+    'probe_report_posted'          => 'Your probe report has been successfully posted. :lines Moon composition lines has been updated.',
 
     // Dashboard
     'home_page'                   => 'The Home Page',
@@ -326,8 +329,8 @@ return [
     'affiliation_removed'          => 'Affiliation has been removed from this role',
 
     // Tokens
-    'valid_token'                  => 'Valid Token',
-    'invalid_token'                => 'Invalid Token',
+    'valid_token'                  => 'Valid Token|Valid Tokens',
+    'invalid_token'                => 'Invalid Token|Invalid Tokens',
 
     // Import
     'api_import_title'             => 'Import Eve Online API Keys',
@@ -400,12 +403,6 @@ return [
     'tracking_id'                  => 'Unique Tracking ID',
     'tracking_help'                => 'Before disabling the usage tracking, please refer to the below' .
         ' document first.',
-    'worker'                       => 'Worker|Workers',
-    'queue_worker'                 => 'Queue Worker|Queue Workers',
-    'queue_worker_help'            => 'The number of workers to spawn for the background queue workers. ' .
-        'Note: Spawning too many workers may slow down the overall updating process due to load.',
-    'horizon_restart'              => 'Remember to terminate horizon for the new worker amount to take effect. ' .
-        ' It should start back up again automatically.',
 
     // SSO Settings
     'sso_scopes'                   => 'SSO Scopes',
@@ -465,6 +462,8 @@ return [
     'end'                          => 'End',
     'installer'                    => 'Installer',
     'system'                       => 'System',
+    'constellation'                => 'Constellation',
+    'region'                       => 'Region',
     'activity'                     => 'Activity',
     'run'                          => 'Run|Runs',
     'blueprint'                    => 'Blueprint',
@@ -524,7 +523,7 @@ return [
     'client'                       => 'Client',
     'qty'                          => '#',
     'unknown_character'            => 'Unknown Character. Is the API Key on record and updated?',
-    'no_account_info'              => 'No Account Information Available',
+    'deleted_refresh_token'        => 'A refresh token for this character was deleted about :time. As a result, information displayed may be out of date.',
     'channel_members'              => 'Channel Members',
     'motd'                         => 'MoTD',
     'bookmark'                     => 'Bookmark|Bookmarks',
@@ -591,6 +590,12 @@ return [
     'tax_standings'                => 'Tax: Standings',
     'no_storage'                   => 'There is no storage',
     'member'                       => 'Member|Members',
+
+    'start_at'                     => 'Start at',
+    'chunk_arrival'                => 'Chunk Arrival',
+    'self_destruct'                => 'Self-Destruct',
+    'rarity'                       => 'Rarity',
+    'rate'                         => 'Rate',
 
     // Mining Ledger
     'mining'                       => 'Mining',

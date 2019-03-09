@@ -53,20 +53,6 @@
             </div>
           </div>
 
-          <legend>{{ trans_choice('web::seat.queue_worker', 2) }}</legend>
-
-          <!-- Text input-->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="worker">{{ trans_choice('web::seat.worker', 2) }}</label>
-            <div class="col-md-6">
-              <input id="worker" name="queue_workers" type="text"
-                     class="form-control input-md" value="{{ setting('queue_workers', true) }}">
-              <span class="help-block">
-                {{ trans('web::seat.queue_worker_help') }}
-              </span>
-            </div>
-          </div>
-
           <legend>{{ trans('web::seat.registration') }}</legend>
 
           <!-- Select Basic -->
@@ -139,77 +125,54 @@
 @stop
 
 @section('right')
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs pull-right">
+      <li>
+        <a href="#" data-toggle="tooltip" title="Click to copy packages versions" id="copy-versions">
+          <i class="fa fa-copy"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#plugin-packages" data-toggle="tab" aria-expanded="false">Plugins</a>
+      </li>
+      <li class="active">
+        <a href="#core-packages" data-toggle="tab" aria-expanded="true">Core</a>
+      </li>
+      <li class="pull-left header">
+        <i class="fa fa-code-fork"></i>
+        {{ trans('web::seat.module_versions') }}
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div id="core-packages" class="tab-pane active">
+        <dl>
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::seat.module_versions') }}</h3>
-    </div>
-    <div class="panel-body">
+          @foreach($packages->core as $package)
+            @include('web::configuration.settings.partials.packages.version')
+          @endforeach
 
-      <dl class="">
+        </dl>
+      </div>
+      <div id="plugin-packages" class="tab-pane">
+        <dl>
 
-        <dt>SeAT Api</dt>
-        <dd>
-          <ul>
-            <li>{{ trans('web::seat.installed') }}: <b>v{{ config('api.config.version') }}</b></li>
-            <li>{{ trans('web::seat.current') }}: <img src="https://img.shields.io/packagist/v/eveseat/api.svg?style=flat-square"></li>
-            <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/api" target="_blank">https://github.com/eveseat/api</a>
-            </li>
-          </ul>
-        </dd>
+          @foreach($packages->plugins as $package)
+            @include('web::configuration.settings.partials.packages.version')
+          @endforeach
 
-        <dt>SeAT Console</dt>
-        <dd>
-          <ul>
-            <li>{{ trans('web::seat.installed') }}: <b>v{{ config('console.config.version') }}</b></li>
-            <li>{{ trans('web::seat.current') }}: <img src="https://img.shields.io/packagist/v/eveseat/console.svg?style=flat-square"></li>
-            <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/console" target="_blank">https://github.com/eveseat/console</a>
-            </li>
-          </ul>
-        </dd>
-
-        <dt>SeAT Eveapi</dt>
-        <dd>
-          <ul>
-            <li>{{ trans('web::seat.installed') }}: <b>v{{ config('eveapi.config.version') }}</b></li>
-            <li>{{ trans('web::seat.current') }}: <img src="https://img.shields.io/packagist/v/eveseat/eveapi.svg?style=flat-square"></li>
-            <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/eveapi" target="_blank">https://github.com/eveseat/eveapi</a>
-            </li>
-          </ul>
-        </dd>
-
-        <dt>SeAT Notifications</dt>
-        <dd>
-          <ul>
-            <li>{{ trans('web::seat.installed') }}: <b>v{{ config('notifications.config.version') }}</b></li>
-            <li>{{ trans('web::seat.current') }}: <img src="https://img.shields.io/packagist/v/eveseat/notifications.svg?style=flat-square"></li>
-            <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/notifications" target="_blank">https://github.com/eveseat/notifications</a>
-            </li>
-          </ul>
-        </dd>
-
-        <dt>SeAT Web</dt>
-        <dd>
-          <ul>
-            <li>{{ trans('web::seat.installed') }}: <b>v{{ config('web.config.version') }}</b></li>
-            <li>{{ trans('web::seat.current') }}: <img src="https://img.shields.io/packagist/v/eveseat/web.svg?style=flat-square"></li>
-            <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/web" target="_blank">https://github.com/eveseat/web</a>
-            </li>
-          </ul>
-        </dd>
-
-        <dt>SeAT Services</dt>
-        <dd>
-          <ul>
-            <li>{{ trans('web::seat.installed') }}: <b>v{{ config('services.config.version') }}</b></li>
-            <li>{{ trans('web::seat.current') }}: <img src="https://img.shields.io/packagist/v/eveseat/services.svg?style=flat-square"></li>
-            <li>{{ trans('web::seat.url') }}: <a href="https://github.com/eveseat/services" target="_blank">https://github.com/eveseat/services</a>
-            </li>
-          </ul>
-        </dd>
-
-      </dl>
-
+        </dl>
+      </div>
+      <div class="row text-center">
+        <div class="col-md-4">
+          <i class="fa fa-question-circle text-orange"></i> Checking packages (<span id="checking-packages">{{ $packages->core->count() + $packages->plugins->count() }}</span>)
+        </div>
+        <div class="col-md-4">
+          <i class="fa fa-check-circle text-green"></i> Updated packages (<span id="updated-packages">0</span>)
+        </div>
+        <div class="col-md-4">
+          <i class="fa fa-times-circle text-red"></i> Outdated packages (<span id="outdated-packages">0</span>)
+        </div>
+      </div>
     </div>
   </div>
 
@@ -235,12 +198,21 @@
     </div>
 
   </div>
+  @include('web::configuration.settings.partials.packages.changelog.modal')
 
 @stop
 
 @push('javascript')
 <script type="text/javascript">
   $(document).ready(function () {
+    var installedPackages = {
+      "vendor": ["Vendor"],
+      "name": ["Package Name"],
+      "version": ["Installed Version"]
+    };
+
+    var copyVersions = $('#copy-versions');
+
     jQuery.get("{{ route('check.sde') }}", function (data) {
       var live_sde = "error";
       if (data != null) {
@@ -248,6 +220,145 @@
       }
       $('#live-sde-version img').attr('src', 'https://img.shields.io/badge/version-' + live_sde + '-blue.svg?style=flat-square');
     });
+
+    copyVersions.on('click', function() {
+      var buffer = "```\r\n";
+
+      var colVendorSize = getLongestString(installedPackages.vendor);
+      var colNameSize = getLongestString(installedPackages.name);
+      var colVersionSize = getLongestString(installedPackages.version);
+
+      // loop over the versions object and build a markdown formatted table
+      $.each(installedPackages.vendor, function(index) {
+        var row = formatTableRow({
+          "vendor": {
+            "value": installedPackages.vendor[index],
+            "size": colVendorSize
+          },
+          "name": {
+            "value": installedPackages.name[index],
+            "size": colNameSize
+          },
+          "version": {
+            "value": installedPackages.version[index],
+            "size": colVersionSize
+          }
+        });
+
+        // append the generated row to the buffer
+        buffer += row;
+
+        // in case the generated row is the header, append a dash line of the row length (minus carriage-return
+        if (index === 0)
+          buffer += '| ' + padString('', '-', colVendorSize) + ' | ' + padString('', '-', colNameSize) + ' | ' +
+              padString('', '-', colVersionSize) + " |\r\n";
+      });
+
+      buffer += "```";
+
+      // copy the formatted markdown list to the clipboard
+      $('body').append('<textarea id="copiedVersions"></textarea>');
+      $('#copiedVersions').val(buffer);
+      document.getElementById('copiedVersions').select();
+      document.execCommand('copy');
+      document.getElementById('copiedVersions').remove();
+
+      copyVersions.attr('data-original-title', 'Copied!').tooltip('show');
+    }).on('mouseleave', function(){
+      copyVersions.attr('data-original-title', 'Click to copy packages versions');
+    });
+
+    $('.version-check').each(function(index, item) {
+      var toCheckPackage = $(item);
+
+      // fill the packages global variable
+      installedPackages.vendor.push(toCheckPackage.attr('data-vendor'));
+      installedPackages.name.push(toCheckPackage.attr('data-name'));
+      installedPackages.version.push(toCheckPackage.attr('data-version'));
+
+      // send a request to check if or not a package is up-to-date
+      $.ajax({
+        url: '{{ route('packages.check') }}',
+        method: 'POST',
+        data: {
+            'vendor': toCheckPackage.attr('data-vendor'),
+            'package': toCheckPackage.attr('data-name'),
+            'version': toCheckPackage.attr('data-version')
+        }
+      }).done(function (data) {
+        // remove pending state from the package
+        toCheckPackage.removeClass('fa-question-circle');
+        toCheckPackage.removeClass('text-orange');
+        // update package state according to result
+        toCheckPackage.addClass(data.outdated ? 'fa-times-circle' : 'fa-check-circle');
+        toCheckPackage.addClass(data.outdated ? 'text-red' : 'text-green');
+        toCheckPackage.attr('title', data.outdated ? 'At least one new version has been released !' : 'The package is up-to-date.');
+        toCheckPackage.attr('data-original-title', data.outdated ? 'At least one new version has been released !' : 'The package is up-to-date.');
+
+        // updating counters
+        $('#checking-packages').text(parseInt($('#checking-packages').text()) - 1);
+        if (data.outdated)
+          $('#outdated-packages').text(parseInt($('#outdated-packages').text()) + 1);
+        else
+          $('#updated-packages').text(parseInt($('#updated-packages').text()) + 1);
+
+      });
+    });
+
+    $('#changelogModal').on('show.bs.modal', function (e) {
+      var changelogMetadata = $(e.relatedTarget);
+      var changelogModal = $(this);
+      var changelogName = changelogMetadata.data('name');
+
+      changelogModal.find('.modal-title span').text(changelogName);
+      changelogModal.find('.modal-body').html('');
+
+      $.ajax({
+        url: '{{ route('packages.changelog') }}',
+        method: 'POST',
+        data: changelogMetadata.data(),
+        beforeSend: function () {
+          changelogModal.find('.modal-body').html('<i class="fa fa-refresh fa-spin loader"></i>');
+        },
+        success: function (data) {
+          var body = $(data);
+
+          // format tables
+          body.find('table').addClass('table');
+
+          // load modal content
+          changelogModal.find('.modal-body').html(body);
+        },
+        error: function(xhr) { // if error occured
+          alert("Error occured. please try again");
+          changelogModal.find('.modal-body').html(xhr.statusText + xhr.responseText);
+        },
+      });
+    });
+
+    function getLongestString(column) {
+      // clone the column in order to keep it unchanged
+      var buffer = JSON.parse(JSON.stringify(column));
+      // return the longest size
+      return buffer.sort(function (a, b) { return b.length - a.length; }).shift().length;
+    }
+
+    function padString(string, char, size) {
+      if (string.length >= size) return string;
+
+      var end = string.length;
+      for (i = 0; i < size - end; i++)
+          string += char;
+
+      return string;
+    }
+
+    function formatTableRow(row) {
+      return '| ' +
+        padString(row.vendor.value, ' ', row.vendor.size) + ' | ' +
+        padString(row.name.value, ' ', row.name.size) + ' | ' +
+        padString(row.version.value, ' ', row.version.size) + " |\r\n";
+    }
   });
 </script>
 @endpush

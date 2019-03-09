@@ -1,6 +1,5 @@
-@extends('web::character.layouts.view', ['viewname' => 'standings'])
+@extends('web::character.layouts.view', ['viewname' => 'standings', 'breadcrumb' => trans('web::seat.standings')])
 
-@section('title', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.standings'))
 @section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.standings'))
 
 @section('character_content')
@@ -31,11 +30,7 @@
             <tr>
               <td>
                 {!! img('auto', $standing->from_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                @if(is_null($standing->factionName))
-                  <span class="id-to-name" data-id="{{$standing->from_id }}">{{ trans('web::seat.unknown') }}</span>
-                @else
-                  {{ $standing->factionName }}
-                @endif
+                <span class="id-to-name" data-id="{{$standing->from_id }}">{{ trans('web::seat.unknown') }}</span>
               </td>
               <td>
                 @if($standing->standing > 5)

@@ -64,6 +64,15 @@ $.extend(true, $.fn.dataTable.defaults, {
     order: [[0, 'desc']]
 });
 
+// put some animation on the caret neat to the user dropdown
+$(document).ready(function () {
+    $('#user-dropdown').on('show.bs.dropdown', function () {
+        $('#user-dropdown').find('i.fa-caret-left').addClass('fa-rotate-270');
+    }).on('hide.bs.dropdown', function () {
+        $('#user-dropdown').find('i.fa-caret-left').removeClass('fa-rotate-270');
+    });
+});
+
 // Helper function to mimic the PHP human_readable method
 function human_readable(data, type, row) {
     if (type == 'display') {

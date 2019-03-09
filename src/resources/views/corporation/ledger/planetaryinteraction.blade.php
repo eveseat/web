@@ -1,7 +1,6 @@
-@extends('web::corporation.ledger.layouts.view', ['sub_viewname' => 'planetaryinteraction'])
+@extends('web::corporation.ledger.layouts.view', ['sub_viewname' => 'planetaryinteraction', 'breadcrumb' => trans_choice('web::seat.pi', 2)])
 
-@section('title', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.planetaryinteraction', 2))
-@section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.planetaryinteraction', 2))
+@section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.pi', 2))
 
 @section('ledger_content')
 
