@@ -1,6 +1,5 @@
-@extends('web::character.wallet.layouts.view', ['sub_viewname' => 'journal'])
+@extends('web::character.wallet.layouts.view', ['sub_viewname' => 'journal', 'breadcrumb' => trans('web::seat.wallet_journal')])
 
-@section('title', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.wallet_journal'))
 @section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.wallet_journal'))
 
 @inject('request', 'Illuminate\Http\Request')

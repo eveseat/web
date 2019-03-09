@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,10 @@
 namespace Seat\Web\Http\Controllers\Support;
 
 use Illuminate\Http\Request;
+use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Mail\MailHeader;
+use Seat\Eveapi\Models\Universe\UniverseName;
 use Seat\Services\Search\Search;
 use Seat\Web\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
@@ -64,13 +67,15 @@ class SearchController extends Controller
         return DataTables::of($characters)
             ->editColumn('name', function ($row) {
 
-                return view('web::search.partials.charactername', compact('row'))
-                    ->render();
+                $character = CharacterInfo::find($row->character_id);
+
+                return view('web::partials.character', compact('character'));
             })
             ->editColumn('corporation_id', function ($row) {
 
-                return view('web::search.partials.corporationname', compact('row'))
-                    ->render();
+                $corporation = CorporationInfo::find($row->corporation_id);
+
+                return view('web::partials.corporation', compact('corporation'));
             })
             ->rawColumns(['name', 'corporation_id'])
             ->make(true);
@@ -91,18 +96,24 @@ class SearchController extends Controller
         return DataTables::of($corporations)
             ->editColumn('name', function ($row) {
 
-                return view('web::search.partials.corporationname', compact('row'))
-                    ->render();
+                $corporation = CorporationInfo::find($row->corporation_id) ?: $row->corporation_id;
+
+                return view('web::partials.corporation', compact('corporation'));
             })
             ->editColumn('ceo_id', function ($row) {
 
-                return view('web::search.partials.ceoname', compact('row'))
-                    ->render();
+                $character = CharacterInfo::find($row->ceo_id) ?: $row->ceo_id;
+
+                return view('web::partials.character', compact('character'));
             })
             ->editColumn('alliance_id', function ($row) {
 
-                return view('web::search.partials.alliancename', compact('row'))
-                    ->render();
+                $alliance = $row->alliance_id;
+
+                if (empty($alliance))
+                    return '';
+
+                return view('web::partials.alliance', compact('alliance'));
             })
             ->rawColumns(['name', 'ceo_id', 'alliance_id'])
             ->make(true);
@@ -122,30 +133,46 @@ class SearchController extends Controller
         return DataTables::of($mail)
             ->editColumn('from', function ($row) {
 
-                return view('web::character.partials.mailsendername', compact('row'))
-                    ->render();
+                $character = CharacterInfo::find($row->from) ?: $row->from;
+
+                return view('web::partials.character', compact('character'));
             })
             ->editColumn('subject', function ($row) {
 
-                return view('web::character.partials.mailtitle', compact('row'))
-                    ->render();
+                return view('web::character.partials.mailtitle', compact('row'));
             })
-            ->addColumn('body', function (MailHeader $row) {
+            ->addColumn('body_clean', function (MailHeader $row) {
 
-                return str_limit(clean_ccp_html($row->body->body), 30, '...');
+                return strip_tags(str_limit(clean_ccp_html($row->body->body), 30, '...'));
             })
             ->editColumn('tocounts', function ($row) {
 
-                return view('web::character.partials.mailtocounts', compact('row'))
-                    ->render();
+                return view('web::character.partials.mailtocounts', compact('row'));
             })
             ->addColumn('read', function ($row) {
 
-                return view('web::character.partials.mailread', compact('row'))
-                    ->render();
-
+                return view('web::character.partials.mailread', compact('row'));
             })
-            ->rawColumns(['from', 'subject', 'tocounts', 'read'])
+            ->addColumn('recipients', function ($row) {
+
+                $recipients = $row->recipients->map(function ($recipient) { return $recipient->recipient_id; });
+
+                return view('web::search.partials.mailrecipient', compact('recipients'));
+            })
+            ->filterColumn('from', function ($query, $keyword) {
+                $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($resolved_id) { return $resolved_id->entity_id; });
+                $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($character_info) { return $character_info->character_id; });
+
+                $query->whereIn('from', array_merge($resolved_ids->toArray(), $character_info_ids->toArray()));
+            })
+            ->filterColumn('recipients', function ($query, $keyword) {
+                $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($resolved_id) { return $resolved_id->entity_id; });
+                $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($character_info) { return $character_info->character_id; });
+                $corporation_info_ids = CorporationInfo::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($corporation_info) { return $corporation_info->corproation_id; });
+                $query->whereIn('from', array_merge($resolved_ids->toArray(), $character_info_ids->toArray(), $corporation_info_ids->toArray()));
+            })
+            ->rawColumns(['from', 'subject', 'tocounts', 'read', 'recipients'])
+
             ->make(true);
     }
 
@@ -163,13 +190,13 @@ class SearchController extends Controller
         return DataTables::of($assets)
             ->editColumn('characterName', function ($row) {
 
-                return view('web::search.partials.charactername', compact('row'))
-                    ->render();
+                $character = CharacterInfo::find($row->character_id) ?: $row->character_id;
+
+                return view('web::partials.character', compact('character'));
             })
             ->editColumn('typeName', function ($row) {
 
-                return view('web::search.partials.typename', compact('row'))
-                    ->render();
+                return view('web::search.partials.typename', compact('row'));
             })
             ->rawColumns(['characterName', 'typeName'])
             ->make(true);
@@ -190,18 +217,19 @@ class SearchController extends Controller
         return DataTables::of($skills)
             ->editColumn('character_name', function ($row) {
 
-                return view('web::search.partials.charactername', compact('row'))
-                    ->render();
+                $character = CharacterInfo::find($row->character_id) ?: $row->character_id;
+
+                return view('web::partials.character', compact('character'));
             })
             ->editColumn('corporation_id', function ($row) {
 
-                return view('web::search.partials.corporationname', compact('row'))
-                    ->render();
+                $corporation = CorporationInfo::find($row->corporation_id) ?: $row->corporation_id;
+
+                return view('web::partials.corporation', compact('corporation'));
             })
             ->editColumn('typeName', function ($row) {
 
-                return view('web::search.partials.typename', compact('row'))
-                    ->render();
+                return view('web::search.partials.typename', compact('row'));
             })
             ->rawColumns(['character_name', 'corporation_id', 'typeName'])
             ->make(true);

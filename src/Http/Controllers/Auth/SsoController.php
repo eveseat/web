@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -79,6 +79,16 @@ class SsoController extends Controller
             return redirect()->route('auth.login')
                 ->with('error', 'Login failed. Please contact your administrator.');
 
+        // ensure the user got a valid group - spawn it otherwise
+        if (is_null($user->group)) {
+            Group::forceCreate([
+                'id' => $user->group_id,
+            ]);
+
+            // force laravel to update model relationship information
+            $user->load('group');
+        }
+
         // Set the main characterID based on the response.
         $this->updateMainCharacterId($user);
 
@@ -113,7 +123,7 @@ class SsoController extends Controller
                 // Update the group_id for this user based on the current
                 // session status. If there is a user already logged in,
                 // simply associate the user with a new group id. If not,
-                // a new grou is generated and given to this user.
+                // a new group is generated and given to this user.
                 $existing->group_id = auth()->check() ?
                     auth()->user()->group->id : Group::create()->id;
 

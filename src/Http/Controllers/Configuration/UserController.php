@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,7 +49,16 @@ class UserController extends Controller
         if (! request()->ajax())
             return view('web::configuration.users.list');
 
+        if (! request()->has('filter'))
+            return abort(500);
+
         $groups = $this->getAllFullUsers();
+
+        if (request('filter') === 'valid')
+            $groups->has('refresh_token');
+
+        if (request('filter') === 'invalid')
+            $groups->doesntHave('refresh_token');
 
         return DataTables::of($groups)
             ->editColumn('refresh_token', function ($row) {
@@ -74,6 +83,10 @@ class UserController extends Controller
                 return view('web::configuration.users.partials.action-buttons', compact('row'));
             })
             ->addColumn('roles', function (User $user) {
+
+                if (! $user->group)
+                    return trans('web::seat.no') . ' ' . trans_choice('web::seat.role', 2);
+
                 $roles = $user->group->roles->map(function ($role) {
                     return $role->title;
                 })->implode(', ');
@@ -82,11 +95,17 @@ class UserController extends Controller
             })
             ->addColumn('main_character', function (User $user) {
 
-                    return optional($user->group->main_character)->name ?: '';
-                })
-                ->addColumn('main_character_blade', function (User $user) {
+                if (! $user->group)
+                    return '';
 
-                $main_character_id = optional($user->group->main_character)->character_id ?: null;
+                return optional($user->group->main_character)->name ?: '';
+            })
+            ->addColumn('main_character_blade', function (User $user) {
+
+                $main_character_id = null;
+
+                if ($user->group)
+                    $main_character_id = optional($user->group->main_character)->character_id ?: null;
 
                 $character = CharacterInfo::find($main_character_id) ?: $main_character_id;
 
@@ -174,7 +193,7 @@ class UserController extends Controller
         $user->save();
 
         // Ensure the old group is not an orphan now.
-        if ($current_group->users->isEmpty()) $current_group->delete();
+        if (! is_null($current_group) && $current_group->users->isEmpty()) $current_group->delete();
 
         return redirect()->back()
             ->with('success', trans('web::seat.user_updated'));
@@ -238,6 +257,19 @@ class UserController extends Controller
         event('security.log', [
             'Impersonating ' . $user->name, 'authentication',
         ]);
+
+        // ensure the user got a valid group - spawn it otherwise
+        if (is_null($user->group)) {
+            Group::forceCreate([
+                'id' => $user->group_id,
+            ]);
+
+            // force laravel to update model relationship information
+            $user->load('group');
+
+            // assign the main_character
+            setting(['main_character_id', $user->id, $user->group_id]);
+        }
 
         // Login as the new user.
         auth()->login($user);

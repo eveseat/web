@@ -1,6 +1,5 @@
-@extends('web::corporation.layouts.view', ['viewname' => 'starbases'])
+@extends('web::corporation.layouts.view', ['viewname' => 'starbases', 'breadcrumb' => trans_choice('web::seat.starbase', 2)])
 
-@section('title', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.starbase', 2))
 @section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.starbase', 2))
 
 @inject('request', 'Illuminate\Http\Request')

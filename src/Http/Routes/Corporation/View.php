@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -126,6 +126,18 @@ Route::get('/view/pocos/{corporation_id}', [
     'uses'       => 'IndustryController@getPoco',
 ]);
 
+Route::get('/view/extractions/{corporation_id}', [
+    'as'         => 'corporation.view.extractions',
+    'middleware' => 'corporationbouncer:extractions',
+    'uses'       => 'ExtractionController@getExtractions',
+]);
+
+Route::post('/view/extractions/report', [
+    'as'         => 'corporation.view.extractions.probe-report',
+    'middleware' => 'corporationbouncer:extractions',
+    'uses'       => 'ExtractionController@postProbeReport',
+]);
+
 Route::group(['prefix' => 'view/security'], function () {
 
     Route::get('roles/{corporation_id}', [
@@ -204,6 +216,12 @@ Route::get('/view/tracking/{corporation_id}', [
     'as'         => 'corporation.view.tracking',
     'middleware' => 'corporationbouncer:tracking',
     'uses'       => 'TrackingController@getTracking',
+]);
+
+Route::get('/view/tracking/{corporation_id}/membertracking', [
+    'as'         => 'corporation.view.tracking.data',
+    'middleware' => 'corporationbouncer:tracking',
+    'uses'       => 'TrackingController@getMemberTracking',
 ]);
 
 Route::get('/view/journal/{corporation_id}', [
