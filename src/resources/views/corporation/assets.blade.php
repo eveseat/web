@@ -1,6 +1,5 @@
-@extends('web::corporation.layouts.view', ['viewname' => 'assets'])
+@extends('web::corporation.layouts.view', ['viewname' => 'assets', 'breadcrumb' => trans('web::seat.assets')])
 
-@section('title', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.assets'))
 @section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.assets'))
 
 @inject('request', 'Illuminate\Http\Request')

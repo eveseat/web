@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -176,7 +176,6 @@ return [
     'security'              => 'Безопасность',
     'sso'                   => 'Настройки SSO',
     'tracking'              => 'Отслеживание',
-    'worker_constraints'    => 'Ограничения',
     'assets'                      => 'Активы',
     'location_flag'               => 'Местонахождение',
     'calendar'                    => 'Календарь',
@@ -392,12 +391,6 @@ return [
     'tracking_id'                  => 'Уникальные ID отслеживания',
     'tracking_help'                => 'Прежде чем отключить отслеживание пользователя, пожалуй посмотрите' .
         ' документ ниже.',
-    'worker'                       => 'Рабочий процесс|Рабчие процессы',
-    'queue_worker'                 => 'Рабочий процесс в очереди|Рабочие процессы в очереди',
-    'queue_worker_help'            => 'Количество рабочих процессов для выполнения на фоне программы. ' .
-        'Внимание: Запуск большого количества рабочих процессов может снизить скорость общего процесса обновления.',
-    'horizon_restart'              => 'Не забудьте отключить предел для всех рабочих процессов' .
-        ' Он должен запуститься потом автоматически.',
 
     // SSO Settings
     'sso_scopes'                   => 'SSO возможности',

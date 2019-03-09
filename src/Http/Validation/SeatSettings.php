@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,7 +59,6 @@ class SeatSettings extends FormRequest
             'cleanup_data'   => 'required|in:' . $allowed_cleanup,
             'admin_contact'  => 'required|email',
             'allow_tracking' => 'required|in:' . $allowed_tracking,
-            'queue_workers'  => 'required|int',
         ];
     }
 }

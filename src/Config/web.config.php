@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,8 +21,6 @@
  */
 
 return [
-
-    'version'                  => '3.0.12',
+    'version'                  => '3.0.15',
     'queue_status_update_time' => 10 * 1000, // milliseconds = seconds x 1,000
-
 ];

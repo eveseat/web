@@ -1,6 +1,5 @@
-@extends('web::character.layouts.view', ['viewname' => 'notifications'])
+@extends('web::character.layouts.view', ['viewname' => 'notifications', 'breadcrumb' => trans('web::seat.notifications')])
 
-@section('title', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.notifications'))
 @section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.notifications'))
 
 @inject('request', 'Illuminate\Http\Request')

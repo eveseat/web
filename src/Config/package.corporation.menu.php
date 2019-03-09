@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,6 +49,14 @@ return [
         'permission'     => 'corporation.contracts',
         'highlight_view' => 'contracts',
         'route'          => 'corporation.view.contracts',
+    ],
+    [
+        'name'           => 'extractions',
+        'label'          => 'web::seat.extraction',
+        'plural'         => true,
+        'permission'     => 'corporation.extractions',
+        'highlight_view' => 'extractions',
+        'route'          => 'corporation.view.extractions',
     ],
     [
         'name'           => 'industry',
