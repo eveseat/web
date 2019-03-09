@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -328,8 +328,8 @@ return [
     'affiliation_removed'          => 'Affiliation has been removed from this role',
 
     // Tokens
-    'valid_token'                  => 'Valid Token',
-    'invalid_token'                => 'Invalid Token',
+    'valid_token'                  => 'Valid Token|Valid Tokens',
+    'invalid_token'                => 'Invalid Token|Invalid Tokens',
 
     // Import
     'api_import_title'             => 'Import Eve Online API Keys',
@@ -522,7 +522,7 @@ return [
     'client'                       => 'Client',
     'qty'                          => '#',
     'unknown_character'            => 'Unknown Character. Is the API Key on record and updated?',
-    'no_account_info'              => 'No Account Information Available',
+    'deleted_refresh_token'        => 'A refresh token for this character was deleted about :time. As a result, information displayed may be out of date.',
     'channel_members'              => 'Channel Members',
     'motd'                         => 'MoTD',
     'bookmark'                     => 'Bookmark|Bookmarks',

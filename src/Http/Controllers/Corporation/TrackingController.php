@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017, 2018  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,10 @@
 namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Sde\MapDenormalize;
+use Seat\Eveapi\Models\Sde\StaStation;
+use Seat\Eveapi\Models\Universe\UniverseName;
+use Seat\Eveapi\Models\Universe\UniverseStructure;
 use Seat\Services\Repositories\Corporation\Members;
 use Seat\Web\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
@@ -55,11 +59,14 @@ class TrackingController extends Controller
 
         $tracking = $this->getCorporationMemberTracking($corporation_id);
 
-        if($selected_status->contains('valid_token') && ! $selected_status->contains('invalid_token'))
+        if($selected_status->contains('valid_token'))
             $tracking->has('user.refresh_token');
 
-        if($selected_status->contains('invalid_token') && ! $selected_status->contains('valid_token'))
-            $tracking->doesntHave('user')->orDoesntHave('user.refresh_token');
+        if($selected_status->contains('invalid_token'))
+            $tracking->doesntHave('user.refresh_token');
+
+        if($selected_status->contains('missing_users'))
+            $tracking->doesntHave('user');
 
         return DataTables::of($tracking)
             ->editColumn('character_id', function ($row) {
@@ -98,6 +105,24 @@ class TrackingController extends Controller
                 $character = CharacterInfo::find($main_character_id) ?: $main_character_id;
 
                 return view('web::partials.character', compact('character', 'character_id'));
+            })
+            ->filterColumn('name_filter', function ($query, $keyword) {
+                $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($resolved_id) { return $resolved_id->entity_id; });
+                $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($character_info) { return $character_info->character_id; });
+                $query->whereIn('character_id', array_merge($resolved_ids->toArray(), $character_info_ids->toArray()));
+            })
+            ->filterColumn('location_filter', function ($query, $keyword) {
+
+                $system_ids = collect();
+
+                if(strlen($keyword) > 1)
+                    $system_ids = MapDenormalize::where('itemName', 'like', '%' . $keyword . '%')->select('itemID')->get()->map(function ($system) { return $system->itemID; });
+
+                $station_ids = StaStation::where('stationName', 'like', '%' . $keyword . '%')->get()->map(function ($station) { return $station->stationID; });
+                $structure_ids = UniverseStructure::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($structure) { return $structure->structure_id; });
+
+                $query->whereIn('location_id', array_merge($system_ids->toArray(), $station_ids->toArray(), $structure_ids->toArray()));
+
             })
             ->rawColumns(['character_id', 'main_character', 'refresh_token', 'location'])
             ->make(true);
