@@ -23,7 +23,10 @@
 namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Sde\MapDenormalize;
+use Seat\Eveapi\Models\Sde\StaStation;
 use Seat\Eveapi\Models\Universe\UniverseName;
+use Seat\Eveapi\Models\Universe\UniverseStructure;
 use Seat\Services\Repositories\Corporation\Members;
 use Seat\Web\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
@@ -107,6 +110,19 @@ class TrackingController extends Controller
                 $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($resolved_id) { return $resolved_id->entity_id; });
                 $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($character_info) { return $character_info->character_id; });
                 $query->whereIn('character_id', array_merge($resolved_ids->toArray(), $character_info_ids->toArray()));
+            })
+            ->filterColumn('location_filter', function ($query, $keyword) {
+
+                $system_ids = collect();
+
+                if(strlen($keyword) > 1)
+                    $system_ids = MapDenormalize::where('itemName', 'like', '%' . $keyword . '%')->select('itemID')->get()->map(function ($system) { return $system->itemID; });
+
+                $station_ids = StaStation::where('stationName', 'like', '%' . $keyword . '%')->get()->map(function ($station) { return $station->stationID; });
+                $structure_ids = UniverseStructure::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($structure) { return $structure->structure_id; });
+
+                $query->whereIn('location_id', array_merge($system_ids->toArray(), $station_ids->toArray(), $structure_ids->toArray()));
+
             })
             ->rawColumns(['character_id', 'main_character', 'refresh_token', 'location'])
             ->make(true);
