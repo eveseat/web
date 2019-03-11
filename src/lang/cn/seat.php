@@ -46,7 +46,7 @@ return [
     'never'                 => '永不',
     'detail'                => '细节|细节',
     'delete'                => '删除',
-    'kill'                  => 'Kill',
+    'kill'                  => '击杀',
     'verify'                => '验证',
     'reset'                 => '重置',
     'back'                  => '返回',
@@ -104,7 +104,7 @@ return [
 
     // Auth
     'failed'                => '此登录凭据和我们的记录不匹配。',
-    'throttle'              => 'Too many login attempts. Please try again in :seconds seconds.',
+    'throttle'              => '尝试过频，清等待 :seconds 秒.',
     'login_welcome'         => '欢迎，请以 EVE Online SSO 方式登入',
     'remember_me'           => '记住我',
     'password'              => '密码',
@@ -206,8 +206,8 @@ return [
     'main_char_skills'            => ':character_name 的技能',
     'main_char_skills_per_level'  => '每级的技能',
     'main_char_skills_coverage'   => '技能覆盖率 (百分比)',
-    'concurrent_player_count'     => '並發播放器計數',
-    'esi_response_time'           => 'ESI響應時間',
+    'concurrent_player_count'     => '同时在线人数',
+    'esi_response_time'           => 'ESI响应时间',
 
     // Api Keys
     'api_key_add'                 => '添加一个新的 API Key',
