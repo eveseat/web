@@ -283,6 +283,12 @@ Route::get('/view/mining-ledger/{character_id}', [
     'uses'       => 'MiningLedgerController@getLedger',
 ]);
 
+Route::get('/view/mining-ledger/{character_id}/data', [
+    'as'         => 'character.view.mining_ledger.data',
+    'middleware' => 'characterbouncer:mining',
+    'uses'       => 'MiningLedgerController@getMiningLedger',
+]);
+
 Route::get('/view/mining-ledger/{character_id}/{date}/{system_id}/{type_id}', [
     'as'         => 'character.view.detailed_mining_ledger',
     'middleware' => 'characterbouncer:mining',

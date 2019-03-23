@@ -1,1 +1,1 @@
-{{number($row->volumes, 1)}} m3
+{{number($row->type->volume * $row->quantity, 1)}} m<sup>3</sup>
