@@ -91,7 +91,7 @@ class MiningLedgerController extends Controller
             })
             ->addColumn('value', function ($row) {
 
-                $value = $row->quantity *$row->average_price;
+                $value = $row->quantity * $row->average_price;
 
                 if(empty($value))
                     // If historical price has not been set, get historical price.
