@@ -91,11 +91,11 @@ class MiningLedgerController extends Controller
             })
             ->addColumn('value', function ($row) {
 
-                $value = $row->average_price * $row->quantity;
+                $value = $row->quantity *$row->average_price;
 
                 if(empty($value))
                     // If historical price has not been set, get historical price.
-                    $value = $this->getHistoricalPrice($row->type_id, $row->date)->average_price;
+                    $value = $row->quantity * $this->getHistoricalPrice($row->type_id, $row->date)->average_price;
 
                 return view('web::partials.miningvalue', compact('value')) . view('web::character.partials.miningdetails-button', compact('row'));
             })
