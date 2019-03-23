@@ -59,6 +59,5 @@ class CharacterLayout
             $deleted_at = $user->refresh_token()->withTrashed()->first()->deleted_at;
             redirect()->back()->with('warning', trans('web::seat.deleted_refresh_token', ['time' => human_diff($deleted_at)]));
         }
-
     }
 }

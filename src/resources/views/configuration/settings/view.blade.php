@@ -332,7 +332,7 @@
         error: function(xhr) { // if error occured
           alert("Error occured. please try again");
           changelogModal.find('.modal-body').html(xhr.statusText + xhr.responseText);
-        },
+        }
       });
     });
 

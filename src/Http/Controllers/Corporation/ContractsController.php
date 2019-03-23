@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Services\Repositories\Corporation\Contracts;
+use Seat\Services\Repositories\Seat\Filters\NamedIdFilter;
 use Seat\Web\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
 
@@ -32,7 +33,7 @@ use Yajra\DataTables\DataTables;
  */
 class ContractsController extends Controller
 {
-    use Contracts;
+    use Contracts, NamedIdFilter;
 
     /**
      * @param $corporation_id
@@ -83,6 +84,18 @@ class ContractsController extends Controller
             ->addColumn('contents', function ($row) {
 
                 return view('web::partials.contractcontentsbutton', compact('row'));
+            })
+            ->filterColumn('issuer_id', function ($query, $keyword) {
+
+                $query->whereIn('a.issuer_id', $this->getIdsForNames($keyword)->toArray());
+            })
+            ->filterColumn('assignee_id', function ($query, $keyword) {
+
+                $query->whereIn('a.assignee_id', $this->getIdsForNames($keyword)->toArray());
+            })
+            ->filterColumn('acceptor_id', function ($query, $keyword) {
+
+                $query->whereIn('a.acceptor_id', $this->getIdsForNames($keyword)->toArray());
             })
             ->rawColumns(['issuer_id', 'type', 'contents'])
             ->make(true);
