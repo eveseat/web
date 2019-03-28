@@ -48,7 +48,7 @@ class MiningLedgerController extends Controller
     public function getLedger(int $character_id): View
     {
 
-        return view('web::character.mining-ledger', compact('ledger'));
+        return view('web::character.mining-ledger');
     }
 
     public function getMiningLedger(int $character_id) : JsonResponse
