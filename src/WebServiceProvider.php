@@ -287,6 +287,9 @@ class WebServiceProvider extends AbstractSeatPlugin
         // Require the queue_manager role to view the dashboard
         Horizon::auth(function ($request) {
 
+            if (is_null($request->user()))
+                return false;
+
             return $request->user()->has('queue_manager', false);
         });
 
