@@ -15,6 +15,16 @@
   },
   "minimum-stability": "alpha",
   "prefer-stable": true,
+  "repositories" : [
+    {
+      "type": "vcs",
+      "url": "https://github.com/herpaderpaldent/eveapi"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/herpaderpaldent/services"
+    }
+  ],
   "require": {
     "php": ">=7.1",
     "laravel/framework": "5.5.*",
@@ -22,8 +32,8 @@
     "laravel/tinker": "~1.0",
     "laravel/socialite": "^3.0",
     "eveseat/eseye": "~1",
-    "herpaderpaldent/eveapi": "dev-master",
-    "herpaderpaldent/services": "dev-master",
+    "eveseat/eveapi": "dev-master",
+    "eveseat/services": "dev-master",
     "league/csv": "^9.1",
     "guzzlehttp/guzzle": "^6.3",
     "yajra/laravel-datatables-oracle": "~8",
