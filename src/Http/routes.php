@@ -102,7 +102,7 @@ Route::group([
         // Corporation Routes
         Route::group([
             'namespace' => 'Corporation',
-            'prefix'    => 'corporation',
+            'prefix'    => 'corporations',
         ], function () {
 
             include __DIR__ . '/Routes/Corporation/View.php';
@@ -111,7 +111,7 @@ Route::group([
         // Character Routes
         Route::group([
             'namespace' => 'Character',
-            'prefix'    => 'character',
+            'prefix'    => 'characters',
         ], function () {
 
             include __DIR__ . '/Routes/Character/View.php';
