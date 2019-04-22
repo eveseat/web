@@ -33,7 +33,7 @@ Route::get('/list/data', [
 Route::get('/{corporation_id}', [
     'as'         => 'corporation.view.default',
     'uses'       => 'CorporationsController@getCorporation',
-]);
+])->where('corporation_id', '[0-9]+');
 
 Route::get('/delete/{corporation_id}', [
     'as'         => 'corporation.delete',
