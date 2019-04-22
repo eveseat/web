@@ -483,6 +483,7 @@ return [
     'missing_body'                 => 'Message Body not yet downloaded',
     'to_alliance'                  => 'To Alliance',
     'to_char'                      => 'To Characters',
+    'to_mailing_list'              => 'To Mailing List',
     'total'                        => 'Total',
     'updated'                      => 'Updated At',
     'planet'                       => 'Planet',
