@@ -4,6 +4,8 @@
 @section('page_header', trans('web::seat.edit_user'))
 @section('page_description', $user->name)
 
+@inject('request', 'Illuminate\Http\Request')
+
 @section('left')
 
   <div class="panel panel-default">
@@ -12,7 +14,7 @@
     </div>
     <div class="panel-body">
 
-      <form role="form" action="{{ route('configuration.access.users.update') }}" method="post">
+      <form id="set-email-form" role="form" action="{{ route('configuration.access.users.update') }}" method="post">
         {{ csrf_field() }}
         <input type="hidden" name="user_id" value="{{ $user->id }}">
 
@@ -29,25 +31,124 @@
           </div>
 
         </div><!-- /.box-body -->
+      </form>
 
         <div class="box-footer">
 
+
           @if(auth()->user()->id != $user->id)
-            <a href="{{ route('configuration.users.edit.account_status', ['user_id' => $user->id]) }}"
-               class="btn btn-{{ $user->active ? 'warning' : 'success' }} pull-left">
+            <a type="button" class="btn btn-{{ $user->active ? 'warning' : 'success' }} pull-left" data-toggle="modal" data-target="{{ $user->active ? '#deactivateModal' : '#activateModal' }}">
+
               @if($user->active)
                 {{ trans('web::seat.deactivate_user') }}
               @else
                 {{ trans('web::seat.activate_user') }}
               @endif
             </a>
+
+            <!-- Deactivate Modal -->
+            <div class="modal fade" id="deactivateModal" tabindex="-1" role="dialog" aria-labelledby="deactivateModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="deactivateModalLabel">
+                      {{ trans('web::seat.deactivate_modal_title') }}
+                    </h4>
+                  </div>
+                  <div class="modal-body">
+
+                    <div class="callout callout-info">
+                      <h4>{{ trans('web::seat.deactivate_callout_title') }}</h4>
+
+                      <p>{{ trans('web::seat.deactivate_callout_description') }}</p>
+                    </div>
+
+                    <form id="deactivateUserForm" role="form" action="{{ route('configuration.users.edit.account_status', ['user_id' => $user->id]) }}" method="post">
+                      {{ csrf_field() }}
+
+                      <div class="box-body">
+
+                        <div class="form-group">
+                          <label for="text">{{ trans('web::seat.deactivate_reason') }}</label>
+                          <select class="form-control" name="title" id="title">
+                            <option>{{ trans('web::seat.deactivate_reason_sold') }}</option>
+                            <option>{{ trans('web::seat.deactivate_reason_biomassed') }}</option>
+                          </select>
+                        </div>
+
+                        <div class="form-group">
+                          <label>{{ trans('web::seat.note') }}</label>
+                          <textarea class="form-control" rows="15" name="note" placeholder="{{ trans('web::seat.deactivate_reason_placeholder') }}" required></textarea>
+                        </div>
+
+                      </div><!-- /.box-body -->
+
+                      <div class="box-footer">
+                        <button type="submit" form="deactivateUserForm" class="btn btn-primary pull-right">
+                          {{ trans('web::seat.add') }} {{ trans('web::seat.note') }}
+                        </button>
+                      </div>
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Active Modal -->
+            <div class="modal fade" id="activateModal" tabindex="-1" role="dialog" aria-labelledby="activateModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="activateModalLabel">
+                      {{ trans('web::seat.activate_modal_title') }}
+                    </h4>
+                  </div>
+                  <div class="modal-body">
+
+                    <div class="callout callout-warning">
+                      <h4>{{ trans('web::seat.activate_callout_title') }}</h4>
+
+                      <p>{{ trans('web::seat.activate_callout_description') }}</p>
+                    </div>
+
+                    <form id="activateUserForm" role="form" action="{{ route('configuration.users.edit.account_status', ['user_id' => $user->id]) }}" method="post">
+                      {{ csrf_field() }}
+                      <input type="hidden" id="title" name="title" value="{{ trans('web::seat.activate_note') }}">
+
+                      <div class="box-body">
+
+                        <div class="form-group">
+                          <label>{{ trans('web::seat.note') }}</label>
+                          <textarea class="form-control" rows="15" name="note" placeholder="{{ trans('web::seat.activate_reason_placeholder') }}" required></textarea>
+                        </div>
+
+                      </div><!-- /.box-body -->
+
+                      <div class="box-footer">
+                        <button type="submit" form="activateUserForm" class="btn btn-primary pull-right">
+                          {{ trans('web::seat.add') }} {{ trans('web::seat.note') }}
+                        </button>
+                      </div>
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
           @endif
-          <button type="submit" class="btn btn-primary pull-right">
+          <button form="set-email-form" type="submit" class="btn btn-primary pull-right">
             {{ trans('web::seat.edit') }}
           </button>
         </div>
-      </form>
-
     </div>
   </div>
 
@@ -225,8 +326,35 @@
 
     </div><!-- ./col-md-12 -->
 
+    <div class="col-md-12">
+
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">{{ trans('web::seat.security_logs') }}</h3>
+        </div>
+        <div class="box-body">
+          <table class="table compact table-condensed table-hover table-responsive"
+                 id="logs" data-page-length=100>
+            <thead>
+            <tr>
+              <th>{{ trans('web::seat.date') }}</th>
+              <th>{{ trans_choice('web::seat.user', 1) }}</th>
+              <th>{{ trans('web::seat.category') }}</th>
+              <th>{{ trans('web::seat.message') }}</th>
+            </tr>
+            </thead>
+          </table>
+        </div>
+        <!-- /.box-body -->
+      </div>
+
+    </div>
+
   </div><!-- ./row -->
 
+  {{-- include the note creation modal --}}
+  @include('web::includes.modals.createnote',
+    ['post_route' => route('character.view.intel.notes.new', ['character_id' => $request->user_id])])
 
 @stop
 
@@ -238,6 +366,21 @@
     $("#available_users").select2({
       placeholder: "{{ trans('web::seat.select_group_to_assign') }}"
     });
+
+    $('table#logs').DataTable({
+      processing: true,
+      serverSide: true,
+      ajax      : '{{ route('configuration.user.security.logs.data', ['user_id' => $request->user_id]) }}',
+      columns   : [
+        {data: 'created_at', name: 'created_at', render: human_readable},
+        {data: 'user', name: 'user', orderable: false, searchable: false},
+        {data: 'category', name: 'category'},
+        {data: 'message', name: 'message'}
+      ],
+      dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>'
+    });
   </script>
+
+
 
 @endpush

@@ -122,6 +122,7 @@ return [
     'sign_in'               => 'Sign In',
     'email_verify'          => 'Email Verification',
     'email_verify_welcome'  => 'Please enter a valid email address for your account.',
+    'no_register'           => 'Registration has been disabled. Please contact your administrator.',
 
     // Registration
     'new_account'           => 'New Account',
@@ -370,7 +371,27 @@ return [
     'wallet_summary'               => 'Wallet Summary|Wallet Summaries',
 
     // Users
-    'user_management'              => 'User Management',
+    'user_management'                => 'User Management',
+
+    // Deactivate modal
+    'deactivate_modal_title'         => 'Deactivate a user',
+    'deactivate_callout_title'       => 'Deactivate users with caution!',
+    'deactivate_callout_description' => 'Deactivating a user means moving the user to another ' .
+        'user group. This method is generally used, when a user does not have access ' .
+        'to the character anymore and is not able to recover a new refresh_token. ' .
+        'This means explicitly: sold or biomassed characters.',
+    'deactivate_reason'              => 'Reason for deactivation',
+    'deactivate_reason_sold'         => 'Character has been sold',
+    'deactivate_reason_biomassed'    => 'Character has been bio massed',
+    'deactivate_reason_placeholder'  => 'Explain the nature of the request, include buyer character_id ' .
+        'if character has been sold ...',
+
+    // Activate modal
+    'activate_modal_title'           => 'Reactivate a user',
+    'activate_callout_title'         => 'Activate users with caution!',
+    'activate_callout_description'   => 'You should better have a real good reason',
+    'activate_note'                  => 'User reactivated',
+    'activate_reason_placeholder'    => 'Explain the reason of reactivation',
 
     // Settings
     'admin_email'                  => 'Administrator Email',
