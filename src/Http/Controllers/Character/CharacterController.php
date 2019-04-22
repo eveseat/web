@@ -37,6 +37,45 @@ class CharacterController extends Controller
     use Character;
 
     /**
+     * @return \Illuminate\Http\RedirectResponse|void
+     */
+    public function getCharacter()
+    {
+        // by default, redirect user to character sheet
+        if (auth()->user()->has('character.sheet'))
+            return redirect()->route('character.view.sheet', [
+                'character_id' => request()->character_id,
+            ]);
+
+        // collect all registered routes for character scope and sort them alphabetically
+        $configured_routes = array_values(array_sort(config('package.character.menu'), function ($menu) {
+            return $menu['name'];
+        }));
+
+        // for each route, check if the current user got a valid access and redirect him to the first valid entry
+        foreach ($configured_routes as $menu) {
+            $permissions = $menu['permission'];
+
+            if (! is_array($permissions))
+                $permissions = [$permissions];
+
+            foreach ($permissions as $permission) {
+                if (auth()->user()->has($permission))
+                    return redirect()->route($menu['route'], [
+                        'character_id' => request()->character_id,
+                    ]);
+            }
+        }
+
+        $message = sprintf('Request to %s was denied by the characterbouncer.', request()->path());
+
+        event('security.log', [$message, 'authorization']);
+
+        // Redirect away from the original request
+        return redirect()->route('auth.unauthorized');
+    }
+
+    /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getCharacters()

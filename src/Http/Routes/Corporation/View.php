@@ -30,6 +30,11 @@ Route::get('/list/data', [
     'uses' => 'CorporationsController@getCorporationsData',
 ]);
 
+Route::get('/{corporation_id}', [
+    'as'         => 'corporation.view.default',
+    'uses'       => 'CorporationsController@getCorporation',
+]);
+
 Route::get('/delete/{corporation_id}', [
     'as'         => 'corporation.delete',
     'middleware' => 'bouncer:superuser',

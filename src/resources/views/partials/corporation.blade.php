@@ -4,7 +4,7 @@
 
 @if (isset($corporation->name) )
 
-  <a href="{{ route('corporation.view.summary', ['corporation_id' => $corporation->corporation_id]) }}">
+  <a href="{{ route('corporation.view.default', ['corporation_id' => $corporation->corporation_id]) }}">
     {!! img('corporation', $corporation->corporation_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
     {{$corporation->name}}
   </a>
