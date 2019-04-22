@@ -45,9 +45,14 @@ Route::get('/edit/{user_id}', [
     'uses' => 'UserController@editUser',
 ]);
 
-Route::get('/edit/{user_id}/account_status', [
+Route::post('/edit/{user_id}/account_status', [
     'as'   => 'configuration.users.edit.account_status',
     'uses' => 'UserController@editUserAccountStatus',
+]);
+
+Route::get('/edit/{user_id}/security_logs', [
+    'as'   => 'configuration.user.security.logs.data',
+    'uses' => 'UserController@getUserSecurityLog',
 ]);
 
 Route::get('/impersonate/{user_id}', [

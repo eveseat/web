@@ -24,11 +24,14 @@ namespace Seat\Web\Http\Controllers\Configuration;
 
 use Illuminate\Http\Request;
 use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Services\Repositories\Configuration\SecurityRepository;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\EditUser;
+use Seat\Web\Http\Validation\NewIntelNote;
 use Seat\Web\Http\Validation\ReassignUser;
 use Seat\Web\Models\Group;
+use Seat\Web\Models\SecurityLog;
 use Seat\Web\Models\User;
 use Yajra\DataTables\DataTables;
 
@@ -38,7 +41,7 @@ use Yajra\DataTables\DataTables;
  */
 class UserController extends Controller
 {
-    use UserRespository;
+    use UserRespository, SecurityRepository;
 
     /**
      * @return \Illuminate\View\View
@@ -155,21 +158,33 @@ class UserController extends Controller
             compact('user', 'groups', 'login_history'));
     }
 
+    public function getUserSecurityLog($user_id)
+    {
+        $logs = $this->getAllSecurityLogs()
+            ->where('user_id', $user_id);
+
+        return DataTables::of($logs)
+            ->editColumn('user', function ($row) {
+
+                if ($row->user)
+                    return $row->user->name;
+            })
+            ->rawColumns(['message'])
+            ->make(true);
+    }
+
     /**
      * @param \Seat\Web\Http\Validation\EditUser $request
      *
      * @return mixed
+     * @throws \Seat\Services\Exceptions\SettingException
      */
     public function updateUser(EditUser $request)
     {
 
         $user = $this->getUser($request->input('user_id'));
 
-        $user->fill([
-            'email' => $request->input('email'),
-        ]);
-
-        $user->save();
+        setting(['email_address', $request->input('email'), $user->group->id]);
 
         return redirect()->back()
             ->with('success', trans('web::seat.user_updated'));
@@ -200,12 +215,45 @@ class UserController extends Controller
     }
 
     /**
-     * @param $user_id
+     * @param \Seat\Web\Http\Validation\NewIntelNote $request
+     * @param int                                    $user_id
      *
      * @return mixed
      */
-    public function editUserAccountStatus($user_id)
+    public function editUserAccountStatus(NewIntelNote $request, int $user_id)
     {
+
+        $user = $this->getUser($user_id);
+        $current_group = $user->group;
+
+        // Set default note
+        $note = collect(sprintf('This character has been reactivated by %s.',
+            auth()->user()->name));
+
+        if ($user->active){
+
+            // Initial setting of deactivation note
+            $note = collect(sprintf('This character has been deactivated by %s.', auth()->user()->name));
+
+            if ($current_group->users->count() > 1) {
+
+                // If deactivated user is part of a larger user group, use another note
+                $note = collect(sprintf('This character has been deactivated by %s and it formerly belonged to the following user group: %s.',
+                    auth()->user()->name, $current_group->users->map(function ($user) { return $user->name; })->implode(', ')));
+
+                $user->fill([
+                    'group_id' => Group::create()->id,
+                ])->save();
+            }
+        }
+
+        $note->push($request->input('note'));
+
+        SecurityLog::create([
+            'message'  => $note->implode('<br/><br/>'),
+            'category' => $request->input('title'),
+            'user_id'  => $user_id,
+        ]);
 
         $this->flipUserAccountStatus($user_id);
 

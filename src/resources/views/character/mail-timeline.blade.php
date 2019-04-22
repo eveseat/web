@@ -3,9 +3,6 @@
 @section('title', trans('web::seat.mail_timeline'))
 @section('page_header', trans('web::seat.mail_timeline'))
 
-@inject('CharacterInfo', 'Seat\Eveapi\Models\Character\CharacterInfo')
-@inject('CorporationInfo', 'Seat\Eveapi\Models\Corporation\CorporationInfo')
-
 @section('full')
 
   {!! $messages->render() !!}
@@ -28,13 +25,16 @@
         <li>
           <i class="fa fa-envelope bg-blue"></i>
           <div class="timeline-item">
-            <span class="time">
+            <span class="time" style="text-align: right">
               <i class="fa fa-clock-o"></i>
               {{ $message->timestamp }} ({{ human_diff($message->timestamp) }})
+              </br>
+              <b>{{ trans_choice('web::seat.character', 1) }} {{ trans('web::seat.source') }}: </b>
+              {!! $message->source_view() !!}
             </span>
             <h2 class="timeline-header">
               <b>{{ trans('web::seat.from') }}: </b>
-              @include('web::partials.character', ['character' => $CharacterInfo::find($message->from) ?: $message->from, 'character_id' => $message->character_id])
+              {!! $message->from_view() !!}
 
         @if ($message->recipients->where('recipient_type', 'alliance')->count() > 0)
 
@@ -43,8 +43,7 @@
 
             @foreach($message->recipients->where('recipient_type', 'alliance') as $recipient)
 
-              {!! img('alliance', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-              <span class="id-to-name" data-id="{{ $recipient->recipient_id }}">{{ trans('web::seat.unknown') }}</span>
+              @include('web::partials.alliance', ['alliance' => $recipient->recipient_id, 'character_id' => $message->character_id])
 
             @endforeach
 
@@ -58,7 +57,7 @@
 
             @foreach($message->recipients->where('recipient_type', 'corporation') as $recipient)
 
-              @include('web::partials.corporation', ['corporation' => $CorporationInfo::find($recipient->recipient_id) ?: $recipient->recipient_id, 'character_id' => $message->character_id])
+              {!! $recipient->corporation_view() !!}
 
             @endforeach
 
@@ -72,12 +71,32 @@
 
             @foreach($message->recipients->where('recipient_type', 'character') as $recipient)
 
-              @include('web::partials.character', ['character' => $CharacterInfo::find($recipient->recipient_id) ?: $recipient->recipient_id, 'character_id' => $message->character_id])
+              {!! $recipient->character_view() !!}
 
             @endforeach
 
           </li>
-          @endif
+
+        @endif
+
+        @if($message->recipients->where('recipient_type', 'mailing_list')->count() > 0)
+
+          <li>
+            <b>{{ trans('web::seat.to_mailing_list') }}:</b>
+
+            @foreach($message->recipients->where('recipient_type', 'mailing_list') as $recipient)
+
+              @if (! is_null($recipient->mailing_list))
+                {{ $recipient->mailing_list->name }}
+              @else
+                {{ trans('web::seat.unknown') }}
+              @endif
+
+            @endforeach
+
+          </li>
+
+        @endif
 
 
           </h2>
