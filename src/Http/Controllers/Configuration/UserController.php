@@ -22,8 +22,10 @@
 
 namespace Seat\Web\Http\Controllers\Configuration;
 
+use Exception;
 use Illuminate\Http\Request;
 use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Services\Models\UserSetting;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\EditUser;
@@ -163,13 +165,25 @@ class UserController extends Controller
     public function updateUser(EditUser $request)
     {
 
-        $user = $this->getUser($request->input('user_id'));
+        // retrieve the group to which the edited user is attached.
+        $group_id = User::find($request->input('user_id'))->group_id;
 
-        $user->fill([
-            'email' => $request->input('email'),
-        ]);
+        // determine if the new e-mail address is already in use.
+        $email_exists = UserSetting::where('name', 'email_address')
+            ->where('value', sprintf('"%s"', $request->input('email')))
+            ->where('group_id', '<>', $group_id)
+            ->count() > 0;
 
-        $user->save();
+        if ($email_exists)
+            return redirect()->back()
+                ->with('error', trans('email_in_use', ['mail' => $request->input('email')]));
+
+        try {
+            setting(['email_address', $request->input('email'), $group_id], false);
+        } catch (Exception $e) {
+            return redirect()->back()
+                ->with('error', $e->getMessage());
+        }
 
         return redirect()->back()
             ->with('success', trans('web::seat.user_updated'));
