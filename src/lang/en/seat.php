@@ -628,6 +628,7 @@ return [
     'current_email'                => 'Current Email',
     'new_email'                    => 'New Email',
     'confirm_new_email'            => 'Confirm New Email',
+    'email_in_use'                 => 'The e-mail address :mail is already in use.',
     'scan_qr'                      => 'Scan QR Code',
     'scan_qr_help1'                => 'Please scan the below QR code with your authenticator application.',
     'scan_qr_help2'                => 'Each time this page loads, a new token and qr code is generated.',

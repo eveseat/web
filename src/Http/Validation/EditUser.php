@@ -49,13 +49,8 @@ class EditUser extends FormRequest
     public function rules()
     {
 
-        // Get the id of the user that will be used to ignore
-        // the email constraint on.
-        $user_id = $this->request->get('user_id');
-
         return [
             'user_id' => 'required|exists:users,id',
-            'email'   => 'required|email|unique:users,email,' . $user_id,
         ];
     }
 }
