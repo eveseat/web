@@ -32,8 +32,8 @@
                   {{ $character->name }}
                 </a>
 
-                <p class="text-muted pull-right"><span class="id-to-name"
-                                                       data-id="{{ is_null($character->character) ? 0 : $character->character->corporation_id }}">{{ trans('web::seat.unknown') }}</span>
+                <p class="text-muted pull-right">
+                  <span class="id-to-name" data-id="{{ is_null($character->character) ? 0 : $character->character->corporation_id }}">{{ trans('web::seat.unknown') }}</span>
                 </p>
               </td>
             </tr>
@@ -62,19 +62,21 @@
         @endif
 
         @if(auth()->user()->has('character.journal') || auth()->user()->has('character.transactions'))
-          <dt>{{ trans('web::seat.account_balance') }}</dt>
-          <dd>
-            @if(!is_null($summary->balance))
-              {{ number($summary->balance->balance) }}
-            @endif
-          </dd>
+        @if(! is_null($summary->balance))
+        <dt>{{ trans('web::seat.account_balance') }}</dt>
+        <dd>{{ number($summary->balance->balance) }}</dd>
+        @endif
         @endif
 
-      <dt>{{ trans('web::seat.current_ship') }}</dt>
+        @if (! is_null($summary->ship) && ! is_null($summary->ship->type))
+        <dt>{{ trans('web::seat.current_ship') }}</dt>
         <dd>{{ $summary->ship->type->typeName }} called <i>{{ $summary->ship->ship_name }}</i></dd>
+        @endif
 
+        @if (! is_null($summary->location))
         <dt>{{ trans('web::seat.last_location') }}</dt>
         <dd>@include('web::partials.location', ['location' => $summary->location])</dd>
+        @endif
 
         <dt>{{ trans('web::seat.security_status') }}</dt>
         <dd>
@@ -87,14 +89,6 @@
               {{ number($summary->security_status, 12) }}
             </span>
           @endif
-        </dd>
-
-        <dt>{{ trans('web::seat.last_update') }}</dt>
-        <dd>
-          <span data-toggle="tooltip"
-                title="" data-original-title="{{ $summary->updated_at }}">
-            {{ human_diff($summary->updated_at) }}
-          </span>
         </dd>
 
       </dl>
