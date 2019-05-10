@@ -11,14 +11,14 @@
     </div>
     <div class="panel-body">
 
-      <form role="form" action="{{ route('configuration.access.roles.add') }}" method="post">
+      <form role="form" method="post" action="{{ route('configuration.access.roles.store') }}">
         {{ csrf_field() }}
 
         <div class="box-body">
 
           <div class="form-group">
-            <label for="exampleInputEmail1">{{ trans('web::seat.role_name') }}</label>
-            <input type="text" name="title" class="form-control" id="title" placeholder="Enter role name">
+            <label for="role-title">{{ trans('web::seat.role_name') }}</label>
+            <input type="text" name="title" class="form-control" id="role-title" placeholder="Enter role name">
           </div>
 
         </div><!-- /.box-body -->
@@ -59,14 +59,15 @@
             <td>{{ count($role->permissions) }}</td>
             <td>{{ count($role->affiliations) }}</td>
             <td>
-              <a href="{{ route('configuration.access.roles.edit', ['id' => $role->id]) }}" type="button"
-                 class="btn btn-primary btn-xs">
-                {{ trans('web::seat.edit') }}
-              </a>
-              <a href="{{ route('configuration.access.roles.delete', ['id' => $role->id]) }}" type="button"
-                 class="btn btn-danger btn-xs">
-                {{ trans('web::seat.delete') }}
-              </a>
+              <form method="post" action="{{ route('configuration.access.roles.delete', ['id' => $role->id]) }}">
+                {{ csrf_field() }}
+                {{ method_field('DELETE') }}
+                <a href="{{ route('configuration.access.roles.edit', ['id' => $role->id]) }}" type="button"
+                   class="btn btn-primary btn-xs">
+                  {{ trans('web::seat.edit') }}
+                </a>
+                <button type="submit" class="btn btn-xs btn-danger">{{ trans('web::seat.delete') }}</button>
+              </form>
             </td>
           </tr>
 

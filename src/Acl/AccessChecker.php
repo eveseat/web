@@ -23,9 +23,12 @@
 namespace Seat\Web\Acl;
 
 use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Character\Character;
 use Seat\Services\Repositories\Corporation\Corporation;
 use Seat\Web\Exceptions\BouncerException;
+use Seat\Web\Models\Acl\Permission;
+use stdClass;
 
 /**
  * Class AccessChecker.
@@ -76,20 +79,10 @@ trait AccessChecker
         if ($this->hasSuperUser())
             return true;
 
-        if (! $need_affiliation) {
+        if ($need_affiliation)
+            return $this->hasAffiliationAndPermission($permission);
 
-            if ($this->hasPermissions($permission))
-                return true;
-
-        } else {
-
-            if ($this->hasAffiliationAndPermission($permission))
-                return true;
-
-        }
-
-        return false;
-
+        return $this->hasPermissions($permission);
     }
 
     /**
@@ -99,12 +92,7 @@ trait AccessChecker
     public function hasSuperUser()
     {
 
-        $permissions = $this->getAllPermissions();
-
-        foreach ($permissions as $permission)
-            if ($permission === 'superuser') return true;
-
-        return false;
+        return in_array('superuser', $this->getAllPermissions());
     }
 
     /**
@@ -123,13 +111,13 @@ trait AccessChecker
         // Go through every role...
         foreach ($roles as $role) {
 
-            // ... in every defined permission
-            foreach ($role->permissions as $permission) {
+            $new_permissions = $role->permissions()
+                ->wherePivot('not', '=', false)
+                ->wherePivot('filters', '=', null)
+                ->pluck('title')
+                ->toArray();
 
-                // only add permissions if it is not an inverse
-                if (! $permission->pivot->not)
-                    array_push($permissions, $permission->title);
-            }
+            $permissions = array_merge($permissions, $new_permissions);
 
         }
 
@@ -157,64 +145,57 @@ trait AccessChecker
      * *and* has the requested permission on that
      * affiliation.
      *
-     * @param $permission
+     * @param $requested_permission
      *
      * @return bool
      * @throws \Seat\Web\Exceptions\BouncerException
      */
-    public function hasAffiliationAndPermission($permission)
+    public function hasAffiliationAndPermission($requested_permission)
     {
 
         // TODO: An annoying change in the 3x migration introduced
         // and array based permission, which is stupid. Remove that
         // or plan better for it in 3.1
 
-        $array_permission = $permission;
+        $array_permission = $requested_permission;
 
-        if (! is_array($permission))
-            $array_permission = (array) $permission;
+        if (! is_array($requested_permission))
+            $array_permission = (array) $requested_permission;
 
-        // Process entries for character
-        if (array_filter($array_permission, [$this, 'permissionCharacterLookup']))
-            return $this->hasCharacterPermission($array_permission);
+        // if the currently authenticated user is either ceo or owner of the requested entity, grant him access
+        if ($this->isCeo() || $this->isOwner())
+            return true;
 
-        // Process entries for corporations
-        if (array_filter($array_permission, [$this, 'permissionCorporationLookup']))
-            return $this->hasCorporationPermission($array_permission);
+        $character = is_null(request()->character_id) ? null : CharacterInfo::find(request()->character_id);
 
-        return false;
-    }
+        $corporation = is_null(request()->corporation_id) ? null : CorporationInfo::find(request()->corporation_id);
 
-    /**
-     * @param array $permission
-     *
-     * @return bool
-     * @throws \Seat\Web\Exceptions\BouncerException
-     */
-    private function hasCharacterPermission(array $permission)
-    {
+        // retrieve only roles which contain the requested permission
+        $roles = $this->group->roles()->whereHas('permissions', function ($query) use ($array_permission) {
+            $query->whereIn('title', $array_permission);
+        })->get();
 
-        $map = $this->getAffiliationMap();
+        if ($roles->isEmpty())
+            return false;
 
-        // Owning a character grants you '*' permissions to the owned object. In this
-        // context, '*' acts as a wildcard for *all* permissions
-        foreach ($map['char'] as $char => $permissions) {
+        // loop over each roles assigned to the currently authenticated user
+        foreach ($roles as $role) {
 
-            // in case the permissions array is not related to the character for which we're requesting access
-            // skip
-            if ($char != $this->getCharacterId())
-                continue;
+            // pull permissions which are matching to the requested permissions
+            $permissions = $role->permissions->whereIn('title', $array_permission)->filter(function ($permission) {
+                return ! $permission->isGlobalScope();
+            });
 
-            // in case a wildcard access has been assigned (user is owner), grant access
-            if (in_array('character.*', $permissions))
-                return true;
+            foreach ($permissions as $role_permission) {
 
-            // yeah, this is dumb. So if we have an array permission, we need to
-            // loop and check each in there.
-            foreach ($permission as $sub_permission) {
+                // in case the permission does not have any filters, grant access
+                if (is_null($role_permission->pivot->filters))
+                    return true;
 
-                // check only character wildcard and specific permission
-                if (in_array($sub_permission, $permissions))
+                // decode the filters into an object
+                $filters = json_decode($role_permission->pivot->filters);
+
+                if ($this->isGrantedByFilters($role_permission, $filters, $character ?: $corporation))
                     return true;
             }
         }
@@ -297,171 +278,108 @@ trait AccessChecker
 
                 // Add the permission to the existing array
                 array_push($role_permissions, $permission->title);
-            }
 
-            // Add the permissions to the affiliations
-            // map for each respective affiliation. We will also keep in
-            // mind here that affiliations can have inversions too.
-            foreach ($role->affiliations as $affiliation) {
+                // in case we have a filters, decode it and update the mapping
+                if (! is_null($permission->pivot->filters)) {
 
-                if ($affiliation->pivot->not && ! in_array($affiliation->affiliation, $user_character_ids)) {
+                    $filters = json_decode($permission->pivot->filters);
 
-                    array_push(
-                        $map['inverted_affiliations'][$affiliation->type],
-                        $affiliation->affiliation);
+                    foreach ($filters as $type => $entities) {
 
-                    continue;
-                }
-
-                // It is possible to 'wildcard' users and corporations. This
-                // is signified by the char / corp id of 0. If we encounter
-                // this id, then we need to all of the possible corp / char
-                // in the system to the affiliation map.
-                if ($affiliation->affiliation === 0) {
-
-                    if ($affiliation->type == 'char') {
-
-                        // Process all of the characters
-                        foreach ($this->getAllCharacters()->pluck('character_id') as $characterID) {
-
-                            if (isset($map['char'][$characterID]))
-                                $map['char'][$characterID] += $role_permissions;
-
-                            else
-                                $map['char'][$characterID] = $role_permissions;
-
+                        switch ($type) {
+                            case 'character':
+                                $map_type = 'char';
+                                break;
+                            case 'corporation':
+                                $map_type = 'corp';
+                                break;
+                            default:
+                                $map_type = $type;
                         }
-                    }
 
-                    if ($affiliation->type == 'corp') {
+                        foreach ($entities as $entity) {
 
-                        // Process all of the corporations
-                        foreach ($this->getAllCorporations()->pluck('corporation_id') as $corporationID) {
+                            $entities_id = collect([$entity->id]);
 
-                            if (isset($map['corp'][$corporationID]))
-                                $map['corp'][$corporationID] += $role_permissions;
+                            if ($map_type == 'alliance') {
 
-                            else
-                                $map['corp'][$corporationID] = $role_permissions;
+                                if ($permission->isCharacterScope()) {
+                                    $map_type = 'char';
+                                    $entities_id = $this->getAllCharacters()
+                                        ->where('alliance_id', $entity->id)
+                                        ->pluck('character_id');
+                                }
 
-                        }
-                    }
+                                if ($permission->isCorporationScope()) {
+                                    $map_type = 'corp';
+                                    $entities_id = $this->getAllCorporations()
+                                        ->where('alliance_id', $entity->id)
+                                        ->pluck('corporation_id');
+                                }
+                            }
 
-                } else {
+                            foreach ($entities_id as $entity_id) {
 
-                    // in case we have an affiliation of corp kind
-                    // check if it's containing any character permission and append all character from this corporation
-                    if ($affiliation->type == 'corp') {
+                                // in case the type does not exist yet in the mapping array, create an empty one
+                                if (!array_key_exists($map_type, $map))
+                                    $map[$map_type] = [];
 
-                        $characters = CharacterInfo::where('corporation_id', $affiliation->affiliation)->get();
+                                // in case the entry does not exist yet in the mapping array, create an empty one
+                                if (!array_key_exists($entity_id, $map[$map_type]))
+                                    $map[$map_type][$entity_id] = [];
 
-                        foreach ($role_permissions as $permission) {
-                            if (strpos($permission, 'character.') !== false) {
+                                // in case the map entry is already containing the permission, continue to the next entity
+                                if (in_array($permission->title, $map[$map_type][$entity_id]))
+                                    continue;
 
-                                $characters->each(function ($character) use (&$map, $permission) {
-
-                                    if (! isset($map['char'][$character->character_id]))
-                                        $map['char'][$character->character_id] = [];
-
-                                    array_push($map['char'][$character->character_id], $permission);
-
-                                });
-
+                                // push the permission into the entity map entry
+                                array_push($map[$map_type][$entity_id], $permission->title);
                             }
                         }
 
                     }
 
-                    // Add the single affiliation to the map. As we will run this operation
-                    // multiple times when multiple roles are involved, we need to check if
-                    // affiliations already exist. Not using a ternary of coalesce operator
-                    // here as it makes reading this really hard.
-                    if (isset($map[$affiliation->type][$affiliation->affiliation]))
-                        $map[$affiliation->type][$affiliation->affiliation] += $role_permissions;
+                } else {
 
-                    else
-                        $map[$affiliation->type][$affiliation->affiliation] = $role_permissions;
+                    $map_type    = '';
+                    $entities_id = collect();
+
+                    // in case the permission is character scope, get all characters and push them into the map with
+                    // the related permission
+                    if ($permission->isCharacterScope()) {
+                        $map_type    = 'char';
+                        $entities_id = $this->getAllCharacters()->pluck('character_id');
+                    }
+
+                    // in case the permission is corporation scope, get all corporations and push them into the map with
+                    // the related permission
+                    if ($permission->isCorporationScope()) {
+                        $map_type    = 'corp';
+                        $entities_id = $this->getAllCorporations()->pluck('corporation_id');
+                    }
+
+                    foreach ($entities_id as $entity_id) {
+
+                        if (! array_key_exists($entity_id, $map[$map_type]))
+                            $map[$map_type][$entity_id] = [];
+
+                        if (in_array($permission->title, $map[$map_type][$entity_id]))
+                            continue;
+
+                        array_push($map[$map_type][$entity_id], $permission->title);
+                    }
                 }
-
             }
-
         }
-
-        // Cleanup any inverted affiliations themselves for characters..
-        foreach ($map['inverted_affiliations']['char'] as $inverted_affiliation)
-            unset($map['char'][$inverted_affiliation]);
-
-        // And corporations
-        foreach ($map['inverted_affiliations']['corp'] as $inverted_affiliation)
-            unset($map['corp'][$inverted_affiliation]);
-
-        // Cleanup the inverted affiliations' permissions from
-        // each of the affiliations.
-        //
-        // We start by processing characters
-        foreach ($map['char'] as $char => $permissions)
-            $map['char'][$char] = array_diff($map['char'][$char], $map['inverted_permissions']);
-
-        // And corporations
-        foreach ($map['corp'] as $corp => $permissions)
-            $map['corp'][$corp] = array_diff($map['corp'][$corp], $map['inverted_permissions']);
 
         // ESI Related corporation role <-> SeAT role mapping.
         // This is to allow characters that have in game roles
         // such as director or other wallet related roles to view
         // corporation information.
         // TODO: This is going to need a major revamp in 3.1!
-        $esi_role_map = [
-            'Accountant'        => [
-                'corporation.summary',
-                'corporation.journal',
-                'corporation.transactions',
-            ],
-            'Auditor'           => [
-                'corporation.summary',
-            ],
-            'Contract_Manager'  => [
-                'corporation.summary',
-                'corporation.contracts',
-            ],
-            'Diplomat'          => [
-                'corporation.summary',
-                'corporation.tracking',
-            ],
-            'Director'          => ['corporation.*'],   // All roles for you!
-            'Junior_Accountant' => [
-                'corporation.summary',
-                'corporation.journal',
-                'corporation.transactions',
-            ],
-            'Security_Officer'  => [
-                'corporation.summary',
-                'corporation.security',
-            ],
-            'Trader'            => [
-                'corporation.summary',
-                'corporation.market',
-            ],
-        ];
 
         // Check if there are corporation roles we can add. If so, add 'em.
-        if ($current_corp_roles = optional($this->character)->corporation_roles) {
-
-            // Extract only the roles names and cast to an array for lookups.
-            $current_corp_roles = $current_corp_roles->pluck('role')->toArray();
-
-            foreach ($esi_role_map as $ingame_role => $seat_roles) {
-
-                if (in_array($ingame_role, $current_corp_roles)) {
-
-                    if (! isset($map['corp'][$this->character->corporation_id]))
-                        $map['corp'][$this->character->corporation_id] = [];
-
-                    foreach ($seat_roles as $seat_role)
-                        array_push($map['corp'][$this->character->corporation_id], $seat_role);
-                }
-            }
-        }
+        $map['corp'] += $this->getPermissionsFromCorporationRoles();
 
         // Finally, return the calculated map!
         return $map;
@@ -482,38 +400,6 @@ trait AccessChecker
                 __CLASS__ . ' was unable to determine a character_id');
 
         return request()->character_id;
-    }
-
-    /**
-     * @param array $permission
-     *
-     * @return bool
-     * @throws \Seat\Web\Exceptions\BouncerException
-     */
-    private function hasCorporationPermission(array $permission)
-    {
-
-        $map = $this->getAffiliationMap();
-
-        foreach ($map['corp'] as $corp => $permissions) {
-
-            // in case the permissions array is not related to the corporation for which we're checking access
-            // skip
-            if ($corp != $this->getCorporationId())
-                continue;
-
-            // in case a wildcard access is in the permissions array, grant access
-            if (in_array('corporation.*', $permissions))
-                return true;
-
-            foreach ($permission as $sub_permission) {
-
-                if (in_array($sub_permission, $permissions))
-                    return true;
-            }
-        }
-
-        return false;
     }
 
     /**
@@ -555,24 +441,99 @@ trait AccessChecker
     }
 
     /**
-     * @param string $permission
+     * Determine if the currently authenticated user is the character owner
      *
      * @return bool
      */
-    private function permissionCharacterLookup(string $permission)
+    private function isOwner(): bool
     {
+        if (! request()->character_id)
+            return false;
 
-        return strpos($permission, 'character.') !== false;
+        return in_array(request()->character_id, $this->associatedCharacterIds()->toArray());
     }
 
     /**
-     * @param string $permission
+     * Determine if the currently authenticated user is the corporation CEO
      *
      * @return bool
      */
-    private function permissionCorporationLookup(string $permission)
+    private function isCeo(): bool
     {
+        if (! request()->corporation_id)
+            return false;
 
-        return strpos($permission, 'corporation.') !== false;
+        $corporation = CorporationInfo::find(request()->corporation_id);
+
+        return in_array($corporation->ceo_id, $this->associatedCharacterIds()->toArray());
+    }
+
+    /**
+     * Determine if the requested entity is granted by a permission filter
+     *
+     * @param string $permission
+     * @param stdClass $filters
+     * @param $entity
+     * @return bool
+     */
+    private function isGrantedByFilters(Permission $permission, stdClass $filters, $entity): bool
+    {
+        // if the permission is using a character scope, check for character filters
+        if ($permission->isCharacterScope() && is_a($entity, CharacterInfo::class)) {
+
+            // determine if the requested character is include in the permission filters
+            if ($this->isGrantedByFilter($filters, 'character', $entity->character_id))
+                return true;
+        }
+
+        // determine if the requested entity is related to a corporation or alliance include in the permission filters
+        return $this->isGrantedByFilter($filters, 'corporation', $entity->corporation_id) ||
+            $this->isGrantedByFilter($filters, 'alliance', $entity->alliance_id);
+    }
+
+    /**
+     * Determine if the requested entity is granted by the specified permission filter
+     *
+     * @param stdClass $filters
+     * @param string $entity_type
+     * @param int $entity_id
+     * @return bool
+     */
+    private function isGrantedByFilter(stdClass $filters, string $entity_type, int $entity_id): bool
+    {
+        if (! property_exists($filters, $entity_type))
+            return false;
+
+        return collect($filters->$entity_type)->contains('id', $entity_id);
+    }
+
+    /**
+     * Return corporation permission map based on character roles
+     * according to esi map.
+     *
+     * @return array
+     */
+    private function getPermissionsFromCorporationRoles(): array
+    {
+        $permissions = [];
+        $esi_role_map = config('web.config.esi_roles_map');
+
+        if (is_null($this->character))
+            return $permissions;
+
+        // Extract only the roles names and cast to an array for lookups.
+        $current_corp_roles = $this->character->corporation_roles->pluck('role')->toArray();
+
+        foreach ($esi_role_map as $ingame_role => $seat_roles) {
+
+            if (in_array($ingame_role, $current_corp_roles)) {
+
+                $permissions = array_merge($permissions, $seat_roles);
+            }
+        }
+
+        return [
+            $this->character->corporation_id => $permissions,
+        ];
     }
 }
