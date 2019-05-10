@@ -13,6 +13,11 @@
       "Seat\\Web\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Seat\\Tests\\Web\\": "tests/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
@@ -28,12 +33,16 @@
     "guzzlehttp/guzzle": "^6.3",
     "yajra/laravel-datatables-oracle": "~9",
     "yajra/laravel-datatables-buttons": "^4.0",
+    "intervention/image": "^2.4",
     "components/font-awesome": "^5.9",
     "erusev/parsedown": "^1.7",
     "almasaeed2010/adminlte": "^3.0",
     "twbs/bootstrap": "^4.3",
     "datatables/datatables": "^1.10",
     "ext-json": "*"
+  },
+  "require-dev": {
+    "orchestra/testbench": "~3.5"
   },
   "extra": {
     "laravel": {

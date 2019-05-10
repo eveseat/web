@@ -20,28 +20,37 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/groups', [
-    'as'   => 'fastlookup.groups',
-    'uses' => 'FastLookupController@getGroups',
-]);
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-Route::get('/characters', [
-    'as'   => 'fastlookup.characters',
-    'uses' => 'FastLookupController@getCharacters',
-]);
+class AddPermissionRoleFilter extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
 
-Route::get('/corporations', [
-    'as'   => 'fastlookup.corporations',
-    'uses' => 'FastLookupController@getCorporations',
-]);
+        Schema::table('permission_role', function (Blueprint $table) {
 
-Route::get('/alliances', [
-    'as'   => 'fastlookup.alliances',
-    'uses' => 'FastLookupController@getAlliances',
-]);
+            $table->json('filters')->nullable();
+        });
+    }
 
-Route::get('/entities', [
-    'as'   => 'fastlookup.entities',
-    'uses' => 'FastLookupController@getEntities',
-    'middleware' => 'bouncer:superuser'
-]);
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+
+        Schema::table('permission_role', function (Blueprint $table) {
+
+            $table->dropColumn('filters');
+        });
+    }
+}

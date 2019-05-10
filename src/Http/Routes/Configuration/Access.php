@@ -20,52 +20,21 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/roles', [
-    'as'   => 'configuration.access.roles',
-    'uses' => 'AccessController@getAll',
+Route::resource('roles', 'AccessController', [
+    'names' => [
+        'index' => 'configuration.access.roles',
+        'create' => 'configuration.access.roles.add',
+        'store' => 'configuration.access.roles.store',
+        'edit' => 'configuration.access.roles.edit',
+        'update' => 'configuration.access.roles.update',
+        'destroy' => 'configuration.access.roles.delete',
+    ],
+    'except' => [
+        'show',
+    ],
 ]);
 
-Route::post('/roles', [
-    'as'   => 'configuration.access.roles.add',
-    'uses' => 'AccessController@newRole',
-]);
-
-Route::get('/roles/delete/{id}', [
-    'as'   => 'configuration.access.roles.delete',
-    'uses' => 'AccessController@deleteRole',
-]);
-
-Route::get('/roles/edit/{id}', [
-    'as'   => 'configuration.access.roles.edit',
-    'uses' => 'AccessController@editRole',
-]);
-
-Route::post('/roles/edit/permissions', [
-    'as'   => 'configuration.access.roles.edit.permissions',
-    'uses' => 'AccessController@grantPermissions',
-]);
-
-Route::get('/roles/edit/{role_id}/delete/permission/{permission_id}', [
-    'as'   => 'configuration.access.roles.edit.remove.permission',
-    'uses' => 'AccessController@removePermissions',
-]);
-
-Route::post('/roles/edit/groups', [
-    'as'   => 'configuration.access.roles.edit.groups',
-    'uses' => 'AccessController@addGroups',
-]);
-
-Route::get('/roles/edit/{role_id}/delete/group/{group_id}', [
+Route::delete('/roles/{role_id}/members/{group_id}', [
     'as'   => 'configuration.access.roles.edit.remove.group',
     'uses' => 'AccessController@removeGroup',
-]);
-
-Route::post('/roles/edit/affiliations', [
-    'as'   => 'configuration.access.roles.edit.affiliations',
-    'uses' => 'AccessController@addAffiliations',
-]);
-
-Route::get('/roles/edit/{role_id}/delete/affiliation/{affiliation_id}', [
-    'as'   => 'configuration.access.roles.edit.remove.affiliation',
-    'uses' => 'AccessController@removeAffiliation',
 ]);

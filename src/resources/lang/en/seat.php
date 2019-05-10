@@ -320,6 +320,7 @@ return [
     'unauthorized_request_logged' => 'This attempt has been logged.',
 
     'role_added'                   => 'Role has been added',
+    'role_updated'                 => 'Role has been updated - :added new permissions, :removed removed permissions, :filtered filtered permissions',
     'role_removed'                 => 'Role has been removed',
     'permissions_granted'          => 'Permissions have been granted',
     'permission_revoked'           => 'Permission has been revoked',

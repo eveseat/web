@@ -45,15 +45,35 @@ class FastLookupController extends Controller
 
         $groups = Group::whereHas('users', function ($query) use ($request) {
             $query->where('name', 'like', '%' . $request->query('q', '') . '%');
-        })->get()->map(function ($group, $key) {
-            return [
-                'id' => $group->id,
-                'text' => $group->users->map(function ($user) { return $user->name; })->implode(', '),
-            ];
-        });
+        })->get();
 
         return response()->json([
-            'results' => $groups,
+            'results' => $groups->map(function ($group) {
+                $main_character = $group->main_character;
+
+                if (is_null($main_character))
+                    $main_character = $group->users->first();
+
+                $characters = $group->users->reject(function ($user) use ($main_character) {
+                    return $user->id === $main_character->character_id;
+                });
+
+                $characters->prepend($main_character);
+
+                return [
+                    'id'           => $group->id,
+                    'text'         => $characters->pluck('name'),
+                    'type'         => 'character',
+                    'character_id' => $characters->map(function ($character) {
+                        return property_exists($character, 'id') ? $character->id : $character->character_id;
+                    }),
+                    'img'          => $characters->map(function ($character) {
+                        $entity_id = property_exists($character, 'id') ? $character->id : $character->character_id;
+
+                        return img('character', $entity_id, 64, ['class' => 'img-circle eve-icon small-icon'], false);
+                    }),
+                ];
+            }),
         ]);
 
     }
@@ -117,5 +137,67 @@ class FastLookupController extends Controller
             'results' => $alliance,
         ]);
 
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getEntities(Request $request)
+    {
+
+        $this->validate($request, [
+            'type' => 'in:characters,corporations,alliances',
+            'q'    => 'required'
+        ]);
+
+        $characters_query = null;
+        $corporations_query = null;
+        $alliances_query = null;
+
+        if (in_array($request->query('type', ''), ['', 'characters']))
+            $characters_query = CharacterInfo::select('name')
+                ->selectRaw('character_id as entity_id')
+                ->selectRaw('"character" as entity_type')
+                ->where('name', 'like', '%' . $request->query('q', '') . '%')
+                ->getQuery();
+
+        if (in_array($request->query('type', ''), ['', 'corporations']))
+            $corporations_query = CorporationInfo::select('name')
+                ->selectRaw('corporation_id as entity_id')
+                ->selectRaw('"corporation" as entity_type')
+                ->where('name', 'like', '%' . $request->query('q', '') . '%')
+                ->getQuery();
+
+        if (in_array($request->query('type', ''), ['', 'alliances']))
+            $alliances_query = Alliance::select('name')
+                ->selectRaw('alliance_id as entity_id')
+                ->selectRaw('"alliance" as entity_type')
+                ->where('name', 'like', '%' . $request->query('q', '') . '%')
+                ->getQuery();
+
+        if (! is_null($characters_query))
+            $union = $characters_query;
+
+        if (! is_null($corporations_query))
+            $union->union($corporations_query);
+        else
+            $union = $corporations_query;
+
+        if (! is_null($alliances_query))
+            $union->union($alliances_query);
+        else
+            $union = $alliances_query;
+
+        return response()->json([
+            'results' => $union->get()->map(function ($entity, $key) {
+                return [
+                    'id'   => $entity->entity_id,
+                    'text' => $entity->name,
+                    'type' => $entity->entity_type,
+                    'img'  => img($entity->entity_type, $entity->entity_id, 64, ['class' => 'img-circle eve-icon small-icon'], false),
+                ];
+            }),
+        ]);
     }
 }

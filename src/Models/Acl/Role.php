@@ -23,6 +23,7 @@
 namespace Seat\Web\Models\Acl;
 
 use Illuminate\Database\Eloquent\Model;
+use Intervention\Image\Facades\Image;
 use Seat\Web\Models\Group;
 
 /**
@@ -75,7 +76,7 @@ class Role extends Model
     {
 
         return $this->belongsToMany(Permission::class)
-            ->withPivot('not');
+            ->withPivot(['not', 'filters']);
     }
 
     /**
@@ -89,5 +90,64 @@ class Role extends Model
 
         return $this->belongsToMany(Affiliation::class)
             ->withPivot('not');
+    }
+
+    /**
+     * Return the logo url-encoded
+     *
+     * @param $value
+     * @return string
+     */
+    public function getLogoAttribute($value): string
+    {
+
+        if (is_null($value) || empty($value))
+            $picture = $this->generateEmptyImage();
+        else
+            $picture = Image::make($value);
+
+        return (string) $picture->encode('data-url');
+    }
+
+    /**
+     * Store the file into blob attribute using url-encoding
+     *
+     * @param $value
+     */
+    public function setLogoAttribute($value)
+    {
+        if (! is_null($value) && ! empty($value)) {
+            $picture = Image::make($value)->encode('data-url');
+
+            $this->attributes['logo'] = $picture;
+        }
+    }
+
+    /**
+     * Generating an empty image canvas
+     *
+     * @return Image
+     */
+    private function generateEmptyImage()
+    {
+
+        $picture = Image::canvas(128, 128, '#eee');
+
+        $picture->line(1, 1, 128, 128, function ($draw) {
+            $draw->color('#e7e7e7');
+        });
+
+        $picture->line(1, 128, 128, 1, function ($draw) {
+            $draw->color('#e7e7e7');
+        });
+
+        $picture->text('128 x 128', 64, 64, function ($font) {
+            $font->file(3);
+            $font->color('#bbb');
+            $font->align('center');
+            $font->valign('middle');
+        });
+
+        return $picture;
     }
 }

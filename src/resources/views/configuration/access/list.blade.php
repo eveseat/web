@@ -11,15 +11,15 @@
     </div>
     <div class="card-body">
 
-      <form role="form" action="{{ route('configuration.access.roles.add') }}" method="post">
+      <form role="form" method="post" action="{{ route('configuration.access.roles.store') }}">
         {{ csrf_field() }}
 
         <div class="box-body">
 
           <div class="form-group row">
-            <label for="exampleInputEmail1" class="col-form-label col-md-4">{{ trans('web::seat.role_name') }}</label>
+            <label for="role-title" class="col-form-label col-md-4">{{ trans('web::seat.role_name') }}</label>
             <div class="col-md-8">
-              <input type="text" name="title" class="form-control" id="title" placeholder="Enter role name">
+              <input type="text" name="title" class="form-control" id="role-title" placeholder="Enter role name">
             </div>
           </div>
 
@@ -66,18 +66,21 @@
               <td>{{ count($role->permissions) }}</td>
               <td>{{ count($role->affiliations) }}</td>
               <td>
-                <div class="btn-group btn-group-sm float-right">
-                  <a href="{{ route('configuration.access.roles.edit', ['id' => $role->id]) }}" type="button"
-                     class="btn btn-warning">
-                    <i class="fas fa-pencil-alt"></i>
-                    {{ trans('web::seat.edit') }}
-                  </a>
-                  <a href="{{ route('configuration.access.roles.delete', ['id' => $role->id]) }}" type="button"
-                     class="btn btn-danger">
-                    <i class="fas fa-trash-alt"></i>
-                    {{ trans('web::seat.delete') }}
-                  </a>
-                </div>
+                <form method="post" action="{{ route('configuration.access.roles.delete', ['id' => $role->id]) }}">
+                  {{ csrf_field() }}
+                  {{ method_field('DELETE') }}
+                  <div class="btn-group btn-group-sm float-right">
+                    <a href="{{ route('configuration.access.roles.edit', ['id' => $role->id]) }}" type="button"
+                       class="btn btn-warning">
+                      <i class="fas fa-pencil-alt"></i>
+                      {{ trans('web::seat.edit') }}
+                    </a>
+                    <button type="submit" class="btn btn-danger">
+                      <i class="fas fa-trash-alt"></i>
+                      {{ trans('web::seat.delete') }}
+                    </button>
+                  </div>
+                </form>
               </td>
             </tr>
 
