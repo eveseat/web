@@ -23,24 +23,12 @@
           <div class="form-group">
             <label for="characterstanding">Characters</label>
             <select id="characterstanding" name="character" style="width: 100%">
-              <option></option>
-              @foreach($characters as $character)
-
-                <option value="{{ $character->character_id }}">{{ $character->name }}</option>
-
-              @endforeach
             </select>
           </div>
 
           <div class="form-group">
             <label for="corporationstanding">Corporations</label>
             <select id="corporationstanding" name="corporation" style="width: 100%">
-              <option></option>
-              @foreach($corporations as $corporation)
-
-                <option value="{{ $corporation->corporation_id }}">{{ $corporation->name }}</option>
-
-              @endforeach
             </select>
           </div>
 
@@ -177,9 +165,27 @@
     }
   });
 
-  $("select#element-type," + "select#element-standing," +
-      "select#characterstanding," +
-      "select#corporationstanding").select2();
+  $("select#element-type," + "select#element-standing").select2();
+
+  $("select#characterstanding").select2({
+    placeholder: "{{ trans('web::seat.select_item_add') }}",
+    ajax: {
+      url: "{{ route('fastlookup.characters') }}",
+      dataType: 'json',
+      cache: true,
+    },
+    minimumInputLength: 3
+  })
+
+  $("select#corporationstanding").select2({
+    placeholder: "{{ trans('web::seat.select_item_add') }}",
+    ajax: {
+      url: "{{ route('fastlookup.corporations') }}",
+      dataType: 'json',
+      cache: true,
+    },
+    minimumInputLength: 3
+  })
 
 </script>
 
