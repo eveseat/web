@@ -234,7 +234,7 @@ class StandingsController extends Controller
 
         // Character Contacts
         if ($request->filled('character')) {
-            foreach ($this->getCharacterContacts($request->input('character')) as $contact) {
+            foreach ($this->getCharacterContacts(collect($request->input('character')))->get() as $contact) {
 
                 // Prepare the standings entry.
                 $standing = StandingsProfileStanding::firstOrNew([
