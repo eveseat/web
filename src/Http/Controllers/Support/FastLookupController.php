@@ -23,12 +23,11 @@
 namespace Seat\Web\Http\Controllers\Support;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Models\Group;
+use Seat\Eveapi\Models\Alliances\Alliance;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
-use Seat\Eveapi\Models\Alliances\Alliance;
+use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Models\Group;
 
 /**
  * Class FastLookupController.
@@ -36,7 +35,6 @@ use Seat\Eveapi\Models\Alliances\Alliance;
  */
 class FastLookupController extends Controller
 {
-
     /**
      * @param \Illuminate\Http\Request $request
      *
@@ -50,7 +48,7 @@ class FastLookupController extends Controller
         })->get()->map(function ($group, $key) {
             return [
                 'id' => $group->id,
-                'text' => $group->users->map(function($user) { return $user->name; })->implode(', ')
+                'text' => $group->users->map(function ($user) { return $user->name; })->implode(', '),
             ];
         });
 
@@ -70,7 +68,7 @@ class FastLookupController extends Controller
         $characters = CharacterInfo::where('name', 'like', '%' . $request->query('q', '') . '%')->get()->map(function ($char, $key) {
             return [
                 'id' => $char->character_id,
-                'text' => $char->name
+                'text' => $char->name,
             ];
         });
 
@@ -90,7 +88,7 @@ class FastLookupController extends Controller
         $corporations = CorporationInfo::where('name', 'like', '%' . $request->query('q', '') . '%')->get()->map(function ($corp, $key) {
             return [
                 'id' => $corp->corporation_id,
-                'text' => $corp->name
+                'text' => $corp->name,
             ];
         });
 
@@ -111,7 +109,7 @@ class FastLookupController extends Controller
         $alliance = Alliance::where('name', 'like', '%' . $request->query('q', '') . '%')->get()->map(function ($alli, $key) {
             return [
                 'id' => $alli->alliance_id,
-                'text' => $alli->name
+                'text' => $alli->name,
             ];
         });
 

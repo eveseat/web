@@ -186,7 +186,7 @@ Route::group([
         });
 
     });
-    
+
     Route::group([
         'namespace'  => 'Support',
         'middleware' => ['auth'],
