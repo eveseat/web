@@ -186,5 +186,16 @@ Route::group([
         });
 
     });
+    
+    Route::group([
+        'namespace'  => 'Support',
+        'middleware' => ['auth'],
+    ], function () {
+
+        Route::group(['prefix' => 'lookup'], function () {
+
+            include __DIR__ . '/Routes/Support/FastLookup.php';
+        });
+    });
 
 });

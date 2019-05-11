@@ -130,11 +130,6 @@
           <select name="corporations[]" id="available_corporations" style="width: 100%" multiple>
 
             <option value="0">All Corporations</option>
-            @foreach($all_corporations as $corporation)
-              <option value="{{ $corporation->corporation_id }}">
-                {{ $corporation->name }}
-              </option>
-            @endforeach
 
           </select>
         </div>
@@ -144,11 +139,6 @@
           <select name="characters[]" id="available_characters" style="width: 100%" multiple>
 
             <option value="0">All Characters</option>
-            @foreach($all_characters as $character)
-              <option value="{{ $character->character_id }}">
-                {{ $character->name }}
-              </option>
-            @endforeach
 
           </select>
 
@@ -238,17 +228,6 @@
         <div class="form-group">
           <label for="groups">{{ trans_choice('web::seat.available_groups',2) }}</label>
           <select name="groups[]" id="available_users" style="width: 100%" multiple>
-
-            @foreach($all_groups as $group)
-
-              @if(!in_array($group->id, $role_groups))
-                <option value="{{ $group->id }}">
-                  {{ $group->users->map(function($user) { return $user->name; })->implode(', ') }}
-                </option>
-              @endif
-
-            @endforeach
-
           </select>
         </div>
 
@@ -298,12 +277,57 @@
   @include('web::includes.javascript.id-to-name')
 
   <script>
-    $("#available_permissions," +
-        "#available_users," +
-        "#available_characters," +
-        "#available_corporations").select2({
+    $("#available_permissions").select2({
       placeholder: "{{ trans('web::seat.select_item_add') }}"
     });
+
+    $("#available_characters").select2({
+      placeholder: "{{ trans('web::seat.select_item_add') }}",
+        ajax: {
+          url: "{{ route('fastlookup.characters') }}",
+          dataType: 'json',
+          cache: true,
+          processResults: function (data, params) {
+            data.results.unshift({
+              id: 0,
+              text: 'All Characters'
+            })
+            return {
+              results: data.results
+            };
+          },
+        },
+        minimumInputLength: 3
+    })
+
+    $("#available_corporations").select2({
+      placeholder: "{{ trans('web::seat.select_item_add') }}",
+        ajax: {
+          url: "{{ route('fastlookup.corporations') }}",
+          dataType: 'json',
+          cache: true,
+          processResults: function (data, params) {
+            data.results.unshift({
+              id: 0,
+              text: 'All Corporations'
+            })
+            return {
+              results: data.results
+            };
+          },
+        },
+        minimumInputLength: 3
+    })
+
+    $("#available_users").select2({
+      placeholder: "{{ trans('web::seat.select_item_add') }}",
+        ajax: {
+          url: "{{ route('fastlookup.groups') }}",
+          dataType: 'json',
+          cache: true
+        },
+        minimumInputLength: 3
+    })
   </script>
 
 @endpush
