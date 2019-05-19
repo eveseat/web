@@ -70,7 +70,7 @@
       <dl>
         <dt>{{ trans('web::seat.client_id_status') }}</dt>
         <dd>
-          @if(strlen(env('EVE_CLIENT_ID')) > 5)
+          @if(strlen(config('eveapi.config.eseye_client_id')) > 5)
             <p class="text-green">{{ trans('web::seat.client_id_ok') }}</p>
           @else
             <p class="text-red">{{ trans('web::seat.client_id_not_ok') }}</p>
@@ -79,7 +79,7 @@
 
         <dt>{{ trans('web::seat.client_secret_status') }}</dt>
         <dd>
-          @if(strlen(env('EVE_CLIENT_SECRET')) > 5)
+          @if(strlen(config('eveapi.config.eseye_client_secret')) > 5)
             <p class="text-green">{{ trans('web::seat.client_secret_ok') }}</p>
           @else
             <p class="text-red">{{ trans('web::seat.client_secret_not_ok') }}</p>
@@ -88,11 +88,11 @@
 
         <dt>{{ trans('web::seat.callback_url_status') }}</dt>
         <dd>
-          @if(env('EVE_CALLBACK_URL') == route('auth.eve.callback'))
-            <p class="text-green">{{ trans('web::seat.callback_url_ok', ['url' => env('EVE_CALLBACK_URL')]) }}</p>
-          @elseif(strlen(env('EVE_CALLBACK_URL')) > 5)
+          @if(config('eveapi.config.eseye_client_callback') == route('auth.eve.callback'))
+            <p class="text-green">{{ trans('web::seat.callback_url_ok', ['url' => config('eveapi.config.eseye_client_callback')]) }}</p>
+          @elseif(strlen(config('eveapi.config.eseye_client_callback')) > 5)
             <p class="text-yellow">
-              {{ trans('web::seat.callback_maybe_wrong', ['current' => env('EVE_CALLBACK_URL'), 'suggested' => route('auth.eve.callback')]) }}
+              {{ trans('web::seat.callback_maybe_wrong', ['current' => config('eveapi.config.eseye_client_callback'), 'suggested' => route('auth.eve.callback')]) }}
             </p>
           @else
             <p class="text-red">{{ trans('web::seat.client_callback_not_ok', ['url' => route('auth.eve.callback')]) }}</p>
