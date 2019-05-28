@@ -106,12 +106,12 @@ class TrackingController extends Controller
 
                 return view('web::partials.character', compact('character', 'character_id'));
             })
-            ->filterColumn('name_filter', function ($query, $keyword) {
+            ->filterColumn('character_id', function ($query, $keyword) {
                 $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($resolved_id) { return $resolved_id->entity_id; });
                 $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($character_info) { return $character_info->character_id; });
                 $query->whereIn('character_id', array_merge($resolved_ids->toArray(), $character_info_ids->toArray()));
             })
-            ->filterColumn('location_filter', function ($query, $keyword) {
+            ->filterColumn('location', function ($query, $keyword) {
 
                 $system_ids = collect();
 
