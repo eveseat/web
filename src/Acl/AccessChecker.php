@@ -321,11 +321,11 @@ trait AccessChecker
                             foreach ($entities_id as $entity_id) {
 
                                 // in case the type does not exist yet in the mapping array, create an empty one
-                                if (!array_key_exists($map_type, $map))
+                                if (! array_key_exists($map_type, $map))
                                     $map[$map_type] = [];
 
                                 // in case the entry does not exist yet in the mapping array, create an empty one
-                                if (!array_key_exists($entity_id, $map[$map_type]))
+                                if (! array_key_exists($entity_id, $map[$map_type]))
                                     $map[$map_type][$entity_id] = [];
 
                                 // in case the map entry is already containing the permission, continue to the next entity
@@ -341,20 +341,20 @@ trait AccessChecker
 
                 } else {
 
-                    $map_type    = '';
+                    $map_type = '';
                     $entities_id = collect();
 
                     // in case the permission is character scope, get all characters and push them into the map with
                     // the related permission
                     if ($permission->isCharacterScope()) {
-                        $map_type    = 'char';
+                        $map_type = 'char';
                         $entities_id = $this->getAllCharacters()->pluck('character_id');
                     }
 
                     // in case the permission is corporation scope, get all corporations and push them into the map with
                     // the related permission
                     if ($permission->isCorporationScope()) {
-                        $map_type    = 'corp';
+                        $map_type = 'corp';
                         $entities_id = $this->getAllCorporations()->pluck('corporation_id');
                     }
 
@@ -441,7 +441,7 @@ trait AccessChecker
     }
 
     /**
-     * Determine if the currently authenticated user is the character owner
+     * Determine if the currently authenticated user is the character owner.
      *
      * @return bool
      */
@@ -454,7 +454,7 @@ trait AccessChecker
     }
 
     /**
-     * Determine if the currently authenticated user is the corporation CEO
+     * Determine if the currently authenticated user is the corporation CEO.
      *
      * @return bool
      */
@@ -469,7 +469,7 @@ trait AccessChecker
     }
 
     /**
-     * Determine if the requested entity is granted by a permission filter
+     * Determine if the requested entity is granted by a permission filter.
      *
      * @param string $permission
      * @param stdClass $filters
@@ -492,7 +492,7 @@ trait AccessChecker
     }
 
     /**
-     * Determine if the requested entity is granted by the specified permission filter
+     * Determine if the requested entity is granted by the specified permission filter.
      *
      * @param stdClass $filters
      * @param string $entity_type

@@ -51,7 +51,7 @@ class Permission extends Model
     }
 
     /**
-     * Determine if the permission is in global scope
+     * Determine if the permission is in global scope.
      *
      * @return bool
      */
@@ -62,7 +62,7 @@ class Permission extends Model
     }
 
     /**
-     * Determine if the permission is in the character scope
+     * Determine if the permission is in the character scope.
      *
      * @return bool
      */
@@ -73,7 +73,7 @@ class Permission extends Model
     }
 
     /**
-     * Determine if the permission is in the corporation scope
+     * Determine if the permission is in the corporation scope.
      *
      * @return bool
      */
