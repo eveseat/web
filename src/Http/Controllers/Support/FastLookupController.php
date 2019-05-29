@@ -148,7 +148,7 @@ class FastLookupController extends Controller
 
         $this->validate($request, [
             'type' => 'in:characters,corporations,alliances',
-            'q'    => 'required'
+            'q'    => 'required',
         ]);
 
         $characters_query = null;

@@ -93,7 +93,7 @@ class Role extends Model
     }
 
     /**
-     * Return the logo url-encoded
+     * Return the logo url-encoded.
      *
      * @param $value
      * @return string
@@ -110,7 +110,7 @@ class Role extends Model
     }
 
     /**
-     * Store the file into blob attribute using url-encoding
+     * Store the file into blob attribute using url-encoding.
      *
      * @param $value
      */
@@ -124,7 +124,7 @@ class Role extends Model
     }
 
     /**
-     * Generating an empty image canvas
+     * Generating an empty image canvas.
      *
      * @return Image
      */

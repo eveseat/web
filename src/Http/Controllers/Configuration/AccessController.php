@@ -29,7 +29,6 @@ use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Services\Repositories\Corporation\Corporation;
 use Seat\Web\Acl\AccessManager;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Http\Validation\RoleGroup;
 use Seat\Web\Models\Acl\Permission;
 use Seat\Web\Models\Acl\Role;
 
@@ -109,9 +108,9 @@ class AccessController extends Controller
         //
 
         try {
-            $role->title       = $request->input('title');
+            $role->title = $request->input('title');
             $role->description = $request->input('description');
-            $role->logo        = $request->file('logo');
+            $role->logo = $request->file('logo');
         } catch (NotReadableException $e) {
             return redirect()->route('configuration.access.roles.edit', ['id' => $role->id])
                 ->with('error', $e->getMessage());
@@ -128,11 +127,11 @@ class AccessController extends Controller
         //
 
         $new_permissions = $request->input('permissions', []);
-        $new_filters     = $request->input('filters', []);
+        $new_filters = $request->input('filters', []);
 
-        $added_counter   = 0;
+        $added_counter = 0;
         $removed_counter = 0;
-        $filter_counter  = 0;
+        $filter_counter = 0;
 
         foreach (config('web.permissions') as $scope => $permissions) {
 
