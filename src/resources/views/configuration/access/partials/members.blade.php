@@ -8,7 +8,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach($role->groups->where('id', '<>', 1) as $member)
+    @foreach($role->groups->filter(function ($group) { return $group->users->first()->name != 'admin'; }) as $member)
       <tr>
         <td>
           @if(! is_null($member->main_character))
