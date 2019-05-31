@@ -40,7 +40,7 @@
     <tfoot>
       <tr>
         <td colspan="3">
-          <input type="hidden" name="members" form="role-form" />
+          <input type="hidden" name="members" form="role-form" value="[]" />
           <button type="button" data-toggle="modal" data-target="#member-modal" class="btn btn-xs btn-success pull-right">Add</button>
         </td>
       </tr>
