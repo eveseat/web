@@ -251,6 +251,22 @@ trait AccessChecker
             $map['char'][$user_character_id] = ['character.*'];
         }
 
+        // retrieve all corporations for which the current user is CEO
+        $corporations = CharacterInfo::whereIn('ceo_id', $user_character_ids)->get();
+
+        foreach ($corporations as $corporation) {
+
+            // for each of them, grant access to all corporation members
+            $characters = CharacterInfo::where('corporation_id', $corporation->id)->get();
+
+            foreach ($characters as $character) {
+
+                $map['char'][$character->character_id] = ['character.*'];
+
+            }
+
+        }
+
         // Next we move through the roles the user has
         // and populate the permissions that the affiliations
         // offer us.
@@ -460,10 +476,18 @@ trait AccessChecker
      */
     private function isCeo(): bool
     {
-        if (! request()->corporation_id)
+        if (request()->corporation_id)
+            $corporation_id = request()->corporation_id;
+
+        if (request()->character_id) {
+            $character = CharacterInfo::find(request()->character_id);
+            $corporation_id = $character->corporation_id;
+        }
+
+        if (is_null($corporation_id))
             return false;
 
-        $corporation = CorporationInfo::find(request()->corporation_id);
+        $corporation = CorporationInfo::find($corporation_id);
 
         return in_array($corporation->ceo_id, $this->associatedCharacterIds()->toArray());
     }
