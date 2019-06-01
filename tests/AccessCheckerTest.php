@@ -21,6 +21,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 namespace Seat\Tests\Web;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
 use Orchestra\Testbench\TestCase;
 use Seat\Eveapi\Models\Character\CharacterInfo;
@@ -36,6 +37,7 @@ use Seat\Web\Models\User;
 class AccessCheckerTest extends TestCase
 {
     use AccessChecker;
+    use RefreshDatabase;
 
     protected $character;
 
@@ -54,6 +56,11 @@ class AccessCheckerTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
+
+        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+        $this->withFactories(__DIR__ . '/database/factories');
+
+        $this->databaseSeed();
 
         // init a character model which will mock the requested page
         $this->request_character = new CharacterInfo([
@@ -89,6 +96,21 @@ class AccessCheckerTest extends TestCase
         $web_config = include  __DIR__ . '/../src/Config/web.config.php';
 
         $app['config']->set('web.config.esi_roles_map', $web_config['esi_roles_map']);
+
+        // Setup database
+        $app['config']->set('database.default', 'testing');
+        $app['config']->set('database.connections.testing', [
+            'driver'   => 'sqlite',
+            'database' => ':memory:',
+            'prefix'   => '',
+        ]);
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            \Orchestra\Database\ConsoleServiceProvider::class,
+        ];
     }
 
     public function testIsGlobalScope()
@@ -561,5 +583,12 @@ class AccessCheckerTest extends TestCase
         return collect([
             90795931,
         ]);
+    }
+
+    private function databaseSeed()
+    {
+        $users = factory(User::class, 20)->create();
+        $characters = factory(CharacterInfo::class, 20)->create();
+        $corporations = factory(CorporationInfo::class, 3)->create();
     }
 }
