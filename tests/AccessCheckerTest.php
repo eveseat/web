@@ -291,6 +291,27 @@ class AccessCheckerTest extends TestCase
         $this->assertFalse($this->isOwner());
     }
 
+    public function testIsCeo()
+    {
+        $this->assertFalse($this->isOwner());
+
+        $corporation = factory(CorporationInfo::class)->create([
+            'ceo_id' => 90795931,
+        ]);
+
+        request()->corporation_id = $corporation->corporation_id;
+
+        $this->assertTrue($this->isCeo());
+
+        $character = factory(CharacterInfo::class)->create([
+            'corporation_id' => $corporation->corporation_id,
+        ]);
+
+        request()->character_id = $character->character_id;
+
+        $this->assertTrue($this->isCeo());
+    }
+
     public function testHas()
     {
         $this->assertFalse($this->has('character.sheet', false));
