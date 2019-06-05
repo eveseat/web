@@ -180,6 +180,7 @@ return [
     'security'              => 'Security',
     'sso'                   => 'Single Sign-on',
     'tracking'              => 'Tracking',
+    'about'                 => 'About',
 
     'assets'                       => 'Assets',
     'location_flag'                => 'Location Flag',

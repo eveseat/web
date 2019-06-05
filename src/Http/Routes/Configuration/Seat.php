@@ -25,6 +25,11 @@ Route::get('/view', [
     'uses' => 'SeatController@getView',
 ]);
 
+Route::get('/about', [
+    'as'   => 'seat.settings.about',
+    'uses' => 'SeatController@getAbout',
+]);
+
 Route::post('/update/settings', [
     'as'   => 'seat.update.settings',
     'uses' => 'SeatController@postUpdateSettings',

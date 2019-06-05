@@ -61,6 +61,14 @@ class SeatController extends Controller
     }
 
     /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getAbout()
+    {
+        return view('web::about');
+    }
+
+    /**
      * @param \Seat\Web\Http\Validation\SeatSettings $request
      *
      * @return \Illuminate\Http\RedirectResponse

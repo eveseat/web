@@ -109,6 +109,13 @@ return [
                 'icon'  => 'fa-list',
                 'route' => 'configuration.security.logs',
             ],
+            [
+                // About
+                'name'  => 'about',
+                'label' => 'web::seat.about',
+                'icon'  => 'fa-info',
+                'route' => 'seat.settings.about',
+            ],
         ],
     ],
     'tools'       => [
