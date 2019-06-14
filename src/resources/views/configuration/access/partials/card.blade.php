@@ -1,6 +1,6 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h4 class="panel-title">General</h4>
+    <h4 class="panel-title">{{ trans('web::seat.general') }}</h4>
   </div>
   <div class="panel-body">
     <form id="role-form" enctype="multipart/form-data" method="post" action="{{ route('configuration.access.roles.update', ['id' => $role->id]) }}">
@@ -11,7 +11,7 @@
         <input type="text" class="form-control" name="title" id="role-title" value="{{ $role->title }}" />
       </div>
       <div class="form-group">
-        <label for="role-description">Description</label>
+        <label for="role-description">{{ trans('web::seat.description') }}</label>
         <textarea class="form-control" rows="3" name="description" id="role-description">{{ $role->description }}</textarea>
       </div>
       <div class="form-group">

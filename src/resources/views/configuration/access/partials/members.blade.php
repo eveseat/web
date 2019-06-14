@@ -2,8 +2,8 @@
   <table class="table table-striped table-hover">
     <thead>
     <tr>
-      <th>Main character</th>
-      <th>Related characters</th>
+      <th>{{ trans('web::seat.main_character') }}</th>
+      <th>{{ trans('web::seat.related_characters') }}</th>
       <th></th>
     </tr>
     </thead>
@@ -41,7 +41,7 @@
       <tr>
         <td colspan="3">
           <input type="hidden" name="members" form="role-form" value="[]" />
-          <button type="button" data-toggle="modal" data-target="#member-modal" class="btn btn-xs btn-success pull-right">Add</button>
+          <button type="button" data-toggle="modal" data-target="#member-modal" class="btn btn-xs btn-success pull-right">{{ trans('web::seat.add') }}</button>
         </td>
       </tr>
     </tfoot>
