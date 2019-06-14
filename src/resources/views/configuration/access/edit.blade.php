@@ -13,12 +13,12 @@
     <ul class="nav nav-tabs">
       <li class="active" id="nav-permissions">
         <a href="#tab-permissions" data-toggle="tab">
-          <span class="badge">{{ count($role_permissions) }}</span> Permissions
+          <span class="badge">{{ count($role_permissions) }}</span> {{ trans_choice('web::seat.permission', 0) }}
         </a>
       </li>
       <li id="nav-members">
         <a href="#tab-members" data-toggle="tab">
-          <span class="badge">{{ $role->groups->where('id', '<>', 1)->count() }}</span> Members
+          <span class="badge">{{ $role->groups->where('id', '<>', 1)->count() }}</span> {{ trans_choice('web::seat.member', 0) }}
         </a>
       </li>
     </ul>

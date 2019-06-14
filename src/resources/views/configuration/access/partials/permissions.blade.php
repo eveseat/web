@@ -18,7 +18,7 @@
               <span class="active-permissions-counter">(<b>0</b>/{{ count($permissions) }})</span>
             </a>
             <span class="pull-right">
-                  <button type="button" class="btn btn-default btn-xs check-all-permissions">Check all permissions</button>
+                  <button type="button" class="btn btn-default btn-xs check-all-permissions">{{ trans('web::permissions.permissions_check_all') }}</button>
                 </span>
           </h4>
         </div>
@@ -33,9 +33,9 @@
                   <label>
                     @if(is_array($permission) && array_key_exists('label', $permission))
                       @if(in_array(sprintf('%s.%s', $scope, $ability), $role_permissions))
-                        <input type="checkbox" name="permissions[{{ $scope }}.{{ $ability }}]" form="role-form" checked="checked" /> {{ ucfirst($permission['label']) }}
+                        <input type="checkbox" name="permissions[{{ $scope }}.{{ $ability }}]" form="role-form" checked="checked" /> {{ trans($permission['label']) }}
                       @else
-                        <input type="checkbox" name="permissions[{{ $scope }}.{{ $ability }}]" form="role-form" /> {{ ucfirst($permission['label']) }}
+                        <input type="checkbox" name="permissions[{{ $scope }}.{{ $ability }}]" form="role-form" /> {{ trans($permission['label']) }}
                       @endif
                       @if(in_array($scope, ['character', 'corporation']))
                         @if(is_null($role->permissions->where('title', sprintf('%s.%s', $scope, $ability))->first()))
@@ -70,16 +70,16 @@
                   @if(in_array($scope, ['character', 'corporation']))
                     @if(is_null($role->permissions->where('title', sprintf('%s.%s', $scope, $ability))->first()) || is_null($role->permissions->where('title', sprintf('%s.%s', $scope, $ability))->first()->pivot->filters))
                       @if(in_array(sprintf('%s.%s', $scope, $ability), $role_permissions))
-                        <button type="button" data-roleid="{{ $role->id }}" data-permission="{{ $scope }}.{{ $ability }}" data-toggle="modal" data-target="#permission-modal" class="btn btn-xs btn-default">limits</button>
+                        <button type="button" data-roleid="{{ $role->id }}" data-permission="{{ $scope }}.{{ $ability }}" data-toggle="modal" data-target="#permission-modal" class="btn btn-xs btn-default">{{ trans('web::permissions.limits') }}</button>
                       @else
-                        <button type="button" data-roleid="{{ $role->id }}" data-permission="{{ $scope }}.{{ $ability }}" data-toggle="modal" data-target="#permission-modal" class="btn btn-xs btn-default" disabled="disabled">limits</button>
+                        <button type="button" data-roleid="{{ $role->id }}" data-permission="{{ $scope }}.{{ $ability }}" data-toggle="modal" data-target="#permission-modal" class="btn btn-xs btn-default" disabled="disabled">{{ trans('web::permissions.limits') }}</button>
                       @endif
                     @else
-                      <button type="button" data-roleid="{{ $role->id }}" data-permission="{{ $scope }}.{{ $ability }}" data-toggle="modal" data-target="#permission-modal" class="btn btn-xs btn-warning">limits</button>
+                      <button type="button" data-roleid="{{ $role->id }}" data-permission="{{ $scope }}.{{ $ability }}" data-toggle="modal" data-target="#permission-modal" class="btn btn-xs btn-warning">{{ trans('web::permissions.limits') }}</button>
                     @endif
                   @endif
                   @if(is_array($permission) && array_key_exists('description', $permission))
-                    <p class="help-block">{{ $permission['description'] }}</p>
+                    <p class="help-block">{{ trans($permission['description']) }}</p>
                   @endif
                 </div>
               @endforeach
