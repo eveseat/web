@@ -252,7 +252,7 @@ trait AccessChecker
         }
 
         // retrieve all corporations for which the current user is CEO
-        $corporations = CharacterInfo::whereIn('ceo_id', $user_character_ids)->get();
+        $corporations = CorporationInfo::whereIn('ceo_id', $user_character_ids)->get();
 
         foreach ($corporations as $corporation) {
 
