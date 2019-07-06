@@ -295,6 +295,8 @@ class AccessCheckerTest extends TestCase
             'ceo_id' => 90795931,
         ]);
 
+        $this->assertFalse($this->isCeo());
+
         request()->corporation_id = $corporation->corporation_id;
 
         $this->assertTrue($this->isCeo());
