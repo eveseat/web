@@ -540,7 +540,6 @@ trait AccessChecker
     private function getPermissionsFromCorporationRoles(): array
     {
         $permissions = [];
-        $esi_role_map = config('web.config.esi_roles_map');
 
         if (is_null($this->character))
             return $permissions;
@@ -548,11 +547,11 @@ trait AccessChecker
         // Extract only the roles names and cast to an array for lookups.
         $current_corp_roles = $this->character->corporation_roles->pluck('role')->toArray();
 
-        foreach ($esi_role_map as $ingame_role => $seat_roles) {
+        foreach ($current_corp_roles as $role_name) {
+            $element = EsiRolesMap::map()->get($role_name);
 
-            if (in_array($ingame_role, $current_corp_roles)) {
-
-                $permissions = array_merge($permissions, $seat_roles);
+            if (! is_null($element)) {
+                $permissions = array_merge($permissions, $element->permissions());
             }
         }
 

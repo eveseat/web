@@ -93,10 +93,6 @@ class AccessCheckerTest extends TestCase
     {
         parent::getEnvironmentSetUp($app);
 
-        $web_config = include  __DIR__ . '/../src/Config/web.config.php';
-
-        $app['config']->set('web.config.esi_roles_map', $web_config['esi_roles_map']);
-
         // Setup database
         $app['config']->set('database.default', 'testing');
         $app['config']->set('database.connections.testing', [

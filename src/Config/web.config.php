@@ -23,38 +23,4 @@
 return [
     'version'                  => '3.0.20',
     'queue_status_update_time' => 10 * 1000, // milliseconds = seconds x 1,000
-    'esi_roles_map'             => [
-        'Accountant'        => [
-            'corporation.summary',
-            'corporation.journal',
-            'corporation.transactions',
-        ],
-        'Auditor'           => [
-            'corporation.summary',
-        ],
-        'Contract_Manager'  => [
-            'corporation.summary',
-            'corporation.contracts',
-        ],
-        'Diplomat'          => [
-            'corporation.summary',
-            'corporation.tracking',
-        ],
-        'Director'          => [
-            'corporation.*', // All roles for you!
-        ],
-        'Junior_Accountant' => [
-            'corporation.summary',
-            'corporation.journal',
-            'corporation.transactions',
-        ],
-        'Security_Officer'  => [
-            'corporation.summary',
-            'corporation.security',
-        ],
-        'Trader'            => [
-            'corporation.summary',
-            'corporation.market',
-        ],
-    ],
 ];
