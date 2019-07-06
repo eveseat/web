@@ -476,6 +476,8 @@ trait AccessChecker
      */
     private function isCeo(): bool
     {
+        $corporation_id = null;
+
         if (request()->corporation_id)
             $corporation_id = request()->corporation_id;
 
