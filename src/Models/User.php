@@ -101,10 +101,18 @@ use Seat\Web\Models\Acl\Affiliation;
  * )
  *
  * @SWG\Property(
- *     type="array",
+ *     type="integer",
  *     description="Array of attached character ID",
  *     property="associated_character_ids",
  *     @SWG\Items(type="integer", format="int64", minimum=90000000)
+ * )
+ *
+ * @SWG\Property(
+ *     type="integer",
+ *     format="int64",
+ *     minimum=90000000,
+ *     description="The the main character ID of this group",
+ *     property="main_character_id"
  * )
  *
  * @SWG\Property(
