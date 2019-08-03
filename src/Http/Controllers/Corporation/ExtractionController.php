@@ -53,6 +53,8 @@ class ExtractionController extends Controller
      */
     public function postProbeReport(ProbeReport $request)
     {
+        $moons = [];
+
         $report = $request->input('moon-report');
 
         $processed_counter = 0;
@@ -67,8 +69,8 @@ class ExtractionController extends Controller
 
             if (count($fields) !== 7) {
                 logger()->debug('Inconsistent probe report has been posted.', [
-                    'report' => $report,
-                    'line' => $line,
+                    'report'      => $report,
+                    'line'        => $line,
                     'parsed_line' => $fields,
                 ]);
 
@@ -77,10 +79,21 @@ class ExtractionController extends Controller
             }
 
             try {
-                UniverseMoonContent::updateOrCreate(
-                    ['moon_id' => $fields[6], 'type_id' => $fields[3]],
-                    ['rate' => $fields[2]]
-                );
+                // if the moon related to the current line has not been processed yet
+                // delete any existing records regarding it
+                if (! in_array($fields[6], $moons)) {
+                    UniverseMoonContent::where('moon_id', (int) $fields[6])
+                        ->delete();
+
+                    array_push($moons, intval($fields[6]));
+                }
+
+                // create new moon content
+                UniverseMoonContent::create([
+                    'moon_id' => (int) $fields[6],
+                    'type_id' => (int) $fields[3],
+                    'rate'    => (float) $fields[2],
+                ]);
 
                 $processed_counter++;
             } catch (QueryException $e) {
