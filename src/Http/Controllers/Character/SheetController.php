@@ -25,7 +25,6 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Eveapi\Models\Character\CharacterCorporationHistory;
 use Seat\Eveapi\Models\Character\CharacterFatigue;
 use Seat\Eveapi\Models\Character\CharacterInfo;
-use Seat\Eveapi\Models\Character\CharacterTitle;
 use Seat\Eveapi\Models\Clones\CharacterClone;
 use Seat\Eveapi\Models\Clones\CharacterImplant;
 use Seat\Eveapi\Models\Clones\CharacterJumpClone;
@@ -71,7 +70,7 @@ class SheetController extends Controller
         $last_jump = CharacterClone::find($character_id);
         $jump_clones = CharacterJumpClone::where('character_id', $character_id)->get();
         $skill_queue = CharacterSkillQueue::where('character_id', $character_id)->orderBy('queue_position')->get();
-        $titles = CharacterTitle::where('character_id', $character_id)->get();
+        $titles = CharacterInfo::with('titles')->find($character_id)->titles;
 
         return view('web::character.sheet',
             compact('attributes', 'fatigue', 'character_info', 'employment',
