@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of SeAT
  *
@@ -20,30 +19,32 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\Controllers\Character;
+namespace Seat\Web\Http\DataTables\Scopes;
 
-use Seat\Eveapi\Models\Contacts\CharacterContact;
-use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Http\DataTables\Character\Intel\ContactDataTable;
-use Seat\Web\Http\DataTables\Scopes\CharacterScope;
+use Yajra\DataTables\Contracts\DataTableScope;
 
 /**
- * Class ContactsController
+ * Class CharacterScope
  *
- * @package Seat\Web\Http\Controllers\Character
+ * @package Seat\Web\Http\DataTables\Scopes
  */
-class ContactsController extends Controller
+class CharacterScope implements DataTableScope
 {
+    private $character_ids = [];
+
+    public function __construct(array $character_ids)
+    {
+        $this->character_ids = $character_ids;
+    }
+
     /**
-     * @param \Seat\Web\Http\DataTables\Character\Intel\ContactDataTable $table
+     * Apply a query scope.
+     *
+     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
      * @return mixed
      */
-    public function index(int $character_id, ContactDataTable $dataTable)
+    public function apply($query)
     {
-
-        $view = $dataTable->addScope(new CharacterScope([$character_id]))
-            ->render('web::character.contacts');
-
-        return $view;
+        return $query->whereIn('character_id', $this->character_ids);
     }
 }

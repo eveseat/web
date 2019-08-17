@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of SeAT
  *
@@ -20,30 +19,23 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\Controllers\Character;
+namespace Seat\Web\Http\DataTables\Character\Intel;
 
 use Seat\Eveapi\Models\Contacts\CharacterContact;
-use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Http\DataTables\Character\Intel\ContactDataTable;
-use Seat\Web\Http\DataTables\Scopes\CharacterScope;
+use Seat\Web\Http\DataTables\Common\Intel\AbstractContactDataTable;
 
 /**
- * Class ContactsController
+ * Class ContactDataTable
  *
- * @package Seat\Web\Http\Controllers\Character
+ * @package Seat\Web\Http\DataTables\Character\Intel
  */
-class ContactsController extends Controller
+class ContactDataTable extends AbstractContactDataTable
 {
     /**
-     * @param \Seat\Web\Http\DataTables\Character\Intel\ContactDataTable $table
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function index(int $character_id, ContactDataTable $dataTable)
+    public function query()
     {
-
-        $view = $dataTable->addScope(new CharacterScope([$character_id]))
-            ->render('web::character.contacts');
-
-        return $view;
+        return CharacterContact::with('labels', 'entity');
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of SeAT
  *
@@ -20,30 +19,23 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\Controllers\Character;
+namespace Seat\Web\Http\DataTables\Character\Military;
 
-use Seat\Eveapi\Models\Contacts\CharacterContact;
-use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Http\DataTables\Character\Intel\ContactDataTable;
-use Seat\Web\Http\DataTables\Scopes\CharacterScope;
+use Seat\Eveapi\Models\Contacts\CharacterFitting;
+use Seat\Web\Http\DataTables\Common\Military\AbstractFittingDataTable;
 
 /**
- * Class ContactsController
+ * Class FittingDataTable
  *
- * @package Seat\Web\Http\Controllers\Character
+ * @package Seat\Web\Http\DataTables\Character\Military
  */
-class ContactsController extends Controller
+class FittingDataTable extends AbstractFittingDataTable
 {
     /**
-     * @param \Seat\Web\Http\DataTables\Character\Intel\ContactDataTable $table
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function index(int $character_id, ContactDataTable $dataTable)
+    public function query()
     {
-
-        $view = $dataTable->addScope(new CharacterScope([$character_id]))
-            ->render('web::character.contacts');
-
-        return $view;
+        return CharacterFitting::query();
     }
 }
