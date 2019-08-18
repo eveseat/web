@@ -22,24 +22,28 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
-use Seat\Services\Repositories\Corporation\Contacts;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Corporation\Intel\ContactDataTable;
+use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 
+/**
+ * Class ContactsController
+ *
+ * @package Seat\Web\Http\Controllers\Corporation
+ */
 class ContactsController extends Controller
 {
-    use Contacts;
-
     /**
-     * @param $corporation_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param int $corporation_id
+     * @param \Seat\Web\Http\DataTables\Corporation\Intel\ContactDataTable $dataTable
+     * @return mixed
      */
-    public function getContacts(int $corporation_id)
+    public function index(int $corporation_id, ContactDataTable $dataTable)
     {
 
-        $contacts = $this->getCorporationContacts($corporation_id);
-        $labels = $this->getCorporationContactLabels($corporation_id);
+        $view = $dataTable->addScope(new CorporationScope([$corporation_id]))
+            ->render('web::corporation.contacts');
 
-        return view('web::corporation.contacts', compact('contacts', 'labels'));
+        return $view;
     }
 }

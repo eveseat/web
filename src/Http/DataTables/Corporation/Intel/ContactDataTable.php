@@ -19,40 +19,23 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\DataTables\Scopes;
+namespace Seat\Web\Http\DataTables\Corporation\Intel;
 
-use Yajra\DataTables\Contracts\DataTableScope;
+use Seat\Eveapi\Models\Contacts\CorporationContact;
+use Seat\Web\Http\DataTables\Common\Intel\AbstractContactDataTable;
 
 /**
- * Class CharacterScope
+ * Class ContactDataTable
  *
- * @package Seat\Web\Http\DataTables\Scopes
+ * @package Seat\Web\Http\DataTables\Corporation\Intel
  */
-class CharacterScope implements DataTableScope
+class ContactDataTable extends AbstractContactDataTable
 {
     /**
-     * @var array
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    private $character_ids = [];
-
-    /**
-     * CharacterScope constructor.
-     *
-     * @param array $character_ids
-     */
-    public function __construct(array $character_ids)
+    public function query()
     {
-        $this->character_ids = $character_ids;
-    }
-
-    /**
-     * Apply a query scope.
-     *
-     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
-     * @return mixed
-     */
-    public function apply($query)
-    {
-        return $query->whereIn('character_id', $this->character_ids);
+        return CorporationContact::with('labels', 'entity');
     }
 }

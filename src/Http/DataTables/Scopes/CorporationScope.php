@@ -24,25 +24,25 @@ namespace Seat\Web\Http\DataTables\Scopes;
 use Yajra\DataTables\Contracts\DataTableScope;
 
 /**
- * Class CharacterScope
+ * Class CorporationScope
  *
  * @package Seat\Web\Http\DataTables\Scopes
  */
-class CharacterScope implements DataTableScope
+class CorporationScope implements DataTableScope
 {
     /**
      * @var array
      */
-    private $character_ids = [];
+    private $corporation_ids = [];
 
     /**
-     * CharacterScope constructor.
+     * CorporationScope constructor.
      *
-     * @param array $character_ids
+     * @param array $corporation_ids
      */
-    public function __construct(array $character_ids)
+    public function __construct(array $corporation_ids)
     {
-        $this->character_ids = $character_ids;
+        $this->corporation_ids = $corporation_ids;
     }
 
     /**
@@ -53,6 +53,6 @@ class CharacterScope implements DataTableScope
      */
     public function apply($query)
     {
-        return $query->whereIn('character_id', $this->character_ids);
+        return $query->whereIn('corporation_id', $this->corporation_ids);
     }
 }

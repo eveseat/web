@@ -54,10 +54,10 @@ Route::get('/view/bookmarks/{corporation_id}', [
     'uses'       => 'BookmarksController@getBookmarks',
 ]);
 
-Route::get('/view/contacts/{corporation_id}', [
+Route::get('/{corporation_id}/contacts', [
     'as'         => 'corporation.view.contacts',
     'middleware' => 'corporationbouncer:contacts',
-    'uses'       => 'ContactsController@getContacts',
+    'uses'       => 'ContactsController@index',
 ]);
 
 Route::get('/view/contracts/{corporation_id}', [

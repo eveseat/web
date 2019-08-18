@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of SeAT
  *
@@ -20,95 +19,221 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\Controllers\Character;
+namespace Seat\Web\Http\Controllers;
 
-use Seat\Eveapi\Models\Character\CharacterInfo;
-use Seat\Services\Repositories\Character\Character;
-use Seat\Web\Http\Controllers\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Yajra\DataTables\DataTables;
+use Seat\Web\Http\DataTables\Character\Financial\ContractDataTable;
+use Seat\Web\Http\DataTables\Character\Financial\MarketDataTable;
+use Seat\Web\Http\DataTables\Character\Financial\WalletJournalDataTable;
+use Seat\Web\Http\DataTables\Character\Financial\WalletTransactionDataTable;
+use Seat\Web\Http\DataTables\Character\Industrial\IndustryDataTable;
+use Seat\Web\Http\DataTables\Character\Industrial\MiningDataTable;
+use Seat\Web\Http\DataTables\Character\Industrial\PlanetaryInteractionDataTable;
+use Seat\Web\Http\DataTables\Character\Industrial\ResearchDataTable;
+use Seat\Web\Http\DataTables\Character\Intel\AssetDataTable;
+use Seat\Web\Http\DataTables\Character\Intel\BookmarkDataTable;
+use Seat\Web\Http\DataTables\Character\Intel\CalendarDataTable;
+use Seat\Web\Http\DataTables\Character\Intel\MailDataTable;
+use Seat\Web\Http\DataTables\Character\Intel\NotificationDataTable;
+use Seat\Web\Http\DataTables\Character\Military\FittingDataTable;
+use Seat\Web\Http\DataTables\Character\Military\KillMailDataTable;
+use Seat\Web\Http\DataTables\Character\Military\StandingDataTable;
+use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 
 /**
- * Class CharacterController.
- * @package Seat\Web\Http\Controllers\Character
+ * Class CharacterController
+ *
+ * @package Seat\Web\Http\Controllers
  */
 class CharacterController extends Controller
 {
-    use Character;
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getCharacters()
+    public function show(int $character_id)
     {
-
-        return view('web::character.list');
 
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
+     * @param \Seat\Web\Http\DataTables\Character\Intel\AssetDataTable $dataTable
      * @return mixed
-     * @throws \Exception
      */
-    public function getCharactersData(Request $request)
+    public function assets(AssetDataTable $dataTable)
+    {
+        return $dataTable
+            ->addScope(new CharacterScope())
+            ->render('web::character.assets');
+    }
+
+    /**
+     * @param \Seat\Web\Http\DataTables\Character\Intel\BookmarkDataTable $dataTable
+     * @return mixed
+     */
+    public function bookmarks(BookmarkDataTable $dataTable)
+    {
+        return $dataTable
+            ->addScope(new CharacterScope())
+            ->render('web::character.bookmarks');
+    }
+
+    /**
+     * @param \Seat\Web\Http\DataTables\Character\Intel\CalendarDataTable $dataTable
+     * @return mixed
+     */
+    public function calendars(CalendarDataTable $dataTable)
+    {
+        return $dataTable
+            ->addScope(new CharacterScope())
+            ->render('web::character.calendar');
+    }
+
+    /**
+     * @param \Seat\Web\Http\DataTables\Character\Financial\ContractDataTable $dataTable
+     * @return mixed
+     */
+    public function contracts(ContractDataTable $dataTable)
+    {
+        return $dataTable
+            ->addScope(new CharacterScope())
+            ->render('web::character.contracts');
+    }
+
+    /**
+     * @param \Seat\Web\Http\DataTables\Character\Military\FittingDataTable $dataTable
+     * @return mixed
+     */
+    public function fittings(FittingDataTable $dataTable)
+    {
+        return $dataTable
+            ->addScope(new CharacterScope())
+            ->render('web::character.fittings');
+    }
+
+    /**
+     * @param \Seat\Web\Http\DataTables\Character\Industrial\IndustryDataTable $dataTable
+     * @return mixed
+     */
+    public function industries(IndustryDataTable $dataTable)
+    {
+        return $dataTable
+            ->addScope(new CharacterScope())
+            ->render('web::character.industry');
+    }
+
+    /**
+     * @param \Seat\Web\Http\DataTables\Character\Military\KillMailDataTable $dataTable
+     * @return mixed
+     */
+    public function kill_mails(KillmailDataTable $dataTable)
+    {
+        return $dataTable
+            ->addScope(new CharacterScope())
+            ->render('web::character.killmails');
+    }
+
+    /**
+     * @param \Seat\Web\Http\DataTables\Character\Intel\MailDataTable $dataTable
+     * @return mixed
+     */
+    public function mails(MailDataTable $dataTable)
+    {
+        return $dataTable
+            ->addScope(new CharacterScope())
+            ->render('web::character.mail');
+    }
+
+    /**
+     * @param \Seat\Web\Http\DataTables\Character\Financial\MarketDataTable $dataTable
+     * @return mixed
+     */
+    public function markets(MarketDataTable $dataTable)
+    {
+        return $dataTable
+            ->addScope(new CharacterScope())
+            ->render('web::character.market');
+    }
+
+    /**
+     * @param \Seat\Web\Http\DataTables\Character\Industrial\MiningDataTable $dataTable
+     * @return mixed
+     */
+    public function mining(MiningDataTable $dataTable)
+    {
+        return $dataTable
+            ->addScope(new CharacterScope())
+            ->render('web::character.mining-ledger');
+    }
+
+    /**
+     * @param \Seat\Web\Http\DataTables\Character\Intel\NotificationDataTable $dataTable
+     * @return mixed
+     */
+    public function notifications(NotificationDataTable $dataTable)
+    {
+        return $dataTable
+            ->addScope(new CharacterScope())
+            ->render('web::character.notifications');
+    }
+
+    /**
+     * @param \Seat\Web\Http\DataTables\Character\Industrial\PlanetaryInteractionDataTable $dataTable
+     * @return mixed
+     */
+    public function planetary_interactions(PlanetaryInteractionDataTable $dataTable)
+    {
+        return $dataTable
+            ->addScope(new CharacterScope())
+            ->render('web::character.pi');
+    }
+
+    /**
+     * @param \Seat\Web\Http\DataTables\Character\Industrial\ResearchDataTable $dataTable
+     * @return mixed
+     */
+    public function researches(ResearchDataTable $dataTable)
+    {
+        return $dataTable
+            ->addScope(new CharacterScope())
+            ->render('web::character.research');
+    }
+
+    public function sheet(int $character_id)
     {
 
-        $characters = ($request->filtered === 'true') ?
-            auth()->user()->group->users
-                ->filter(function ($user) {
-                    return $user->name !== 'admin' && $user->id !== 1;
-                })
-                ->map(function ($user) {
-                    return $user->character;
-            }) :
-            $this->getAllCharactersWithAffiliations(false);
+    }
 
-        return DataTables::of($characters)
-            ->addColumn('name_view', function ($row) {
-
-                $character = $row;
-
-                return view('web::partials.character', compact('character'));
-            })
-            ->editColumn('corporation_id', function ($row) {
-
-                $corporation = $row->corporation_id;
-
-                return view('web::partials.corporation', compact('corporation'));
-            })
-            ->editColumn('alliance_id', function ($row) {
-
-                $alliance = $row->alliance_id;
-
-                if (empty($alliance))
-                    return '';
-
-                return view('web::partials.alliance', compact('alliance'));
-            })
-            ->editColumn('actions', function ($row) {
-
-                return view('web::character.partials.delete', compact('row'))
-                    ->render();
-            })
-            ->rawColumns(['name_view', 'corporation_id', 'alliance_id', 'actions'])
-            ->make(true);
+    public function skills(int $skills)
+    {
 
     }
 
     /**
-     * @param int $character_id
-     *
-     * @return \Illuminate\Http\RedirectResponse
+     * @param \Seat\Web\Http\DataTables\Character\Military\StandingDataTable $dataTable
+     * @return mixed
      */
-    public function deleteCharacter(int $character_id)
+    public function standings(StandingDataTable $dataTable)
     {
+        return $dataTable
+            ->addScope(new CharacterScope())
+            ->render('web::character.standings');
+    }
 
-        CharacterInfo::find($character_id)->delete();
+    /**
+     * @param \Seat\Web\Http\DataTables\Character\Financial\WalletJournalDataTable $dataTable
+     * @return mixed
+     */
+    public function wallet_journals(WalletJournalDataTable $dataTable)
+    {
+        return $dataTable
+            ->addScope(new CharacterScope())
+            ->render('web::character.wallet.journal.journal');
+    }
 
-        return redirect()->back()->with(
-            'success', 'Character deleted!'
-        );
+    /**
+     * @param \Seat\Web\Http\DataTables\Character\Financial\WalletTransactionDataTable $dataTable
+     * @return mixed
+     */
+    public function wallet_transactions(WalletTransactionDataTable $dataTable)
+    {
+        return $dataTable
+            ->addScope(new CharacterScope())
+            ->render('web::character.wallet.transactions.transactions');
     }
 }

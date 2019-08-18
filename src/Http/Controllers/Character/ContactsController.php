@@ -22,7 +22,6 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
-use Seat\Eveapi\Models\Contacts\CharacterContact;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Intel\ContactDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
