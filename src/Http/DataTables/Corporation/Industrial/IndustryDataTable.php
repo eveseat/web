@@ -19,15 +19,15 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\DataTables\Character\Industrial;
+namespace Seat\Web\Http\DataTables\Corporation\Industrial;
 
-use Seat\Eveapi\Models\Industry\CharacterIndustryJob;
+use Seat\Eveapi\Models\Industry\CorporationIndustryJob;
 use Seat\Web\Http\DataTables\Common\Industrial\AbstractIndustryDataTable;
 
 /**
  * Class IndustryDataTable
  *
- * @package Seat\Web\Http\DataTables\Character\Industrial
+ * @package Seat\Web\Http\DataTables\Corporation\Industrial
  */
 class IndustryDataTable extends AbstractIndustryDataTable
 {
@@ -36,6 +36,6 @@ class IndustryDataTable extends AbstractIndustryDataTable
      */
     public function query()
     {
-        return CharacterIndustryJob::with('location', 'blueprint', 'product');
+        return CorporationIndustryJob::with('location', 'blueprint', 'product');
     }
 }

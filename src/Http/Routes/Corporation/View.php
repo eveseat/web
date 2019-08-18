@@ -78,10 +78,10 @@ Route::get('/view/contracts/items/{corporation_id}/{contract_id}', [
     'uses'       => 'ContractsController@getContractsItemsData',
 ]);
 
-Route::get('/view/industry/{corporation_id}', [
+Route::get('/{corporation_id}/industry', [
     'as'         => 'corporation.view.industry',
     'middleware' => 'corporationbouncer:industry',
-    'uses'       => 'IndustryController@getIndustry',
+    'uses'       => 'IndustryController@index',
 ]);
 
 Route::get('/view/industry/data/{corporation_id}', [

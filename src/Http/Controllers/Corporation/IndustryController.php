@@ -22,9 +22,9 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
-use Seat\Services\Repositories\Corporation\Industry;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\DataTables\DataTables;
+use Seat\Web\Http\DataTables\Corporation\Industrial\IndustryDataTable;
+use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 
 /**
  * Class IndustryController.
@@ -32,66 +32,15 @@ use Yajra\DataTables\DataTables;
  */
 class IndustryController extends Controller
 {
-    use Industry;
-
-    /**
-     * @param $corporation_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getIndustry(int $corporation_id)
-    {
-
-        return view('web::corporation.industry');
-    }
-
     /**
      * @param int $corporation_id
-     *
+     * @param \Seat\Web\Http\DataTables\Corporation\Industrial\IndustryDataTable $dataTable
      * @return mixed
-     * @throws \Exception
      */
-    public function getIndustryData(int $corporation_id)
+    public function index(int $corporation_id, IndustryDataTable $dataTable)
     {
 
-        $jobs = $this->getCorporationIndustry($corporation_id, false);
-
-        return Datatables::of($jobs)
-            ->editColumn('installer_id', function ($row) {
-
-                return view('web::partials.industryinstaller', compact('row'))
-                    ->render();
-            })
-            ->editColumn('facilityName', function ($row) {
-
-                return view('web::partials.industrysystem', compact('row'))
-                    ->render();
-            })
-            ->editColumn('blueprintTypeName', function ($row) {
-
-                return view('web::partials.industryblueprint', compact('row'))
-                    ->render();
-            })
-            ->editColumn('productTypeName', function ($row) {
-
-                return view('web::partials.industryproduct', compact('row'))
-                    ->render();
-            })
-            ->rawColumns(['installer_id', 'facilityName', 'blueprintTypeName', 'productTypeName'])
-            ->make(true);
-
-    }
-
-    /**
-     * @param $corporation_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getPoco(int $corporation_id)
-    {
-
-        $pocos = $this->getCorporationCustomsOffices($corporation_id);
-
-        return view('web::corporation.pocos', compact('pocos'));
+        return $dataTable->addScope(new CorporationScope([$corporation_id]))
+            ->render('web::corporation.industry');
     }
 }

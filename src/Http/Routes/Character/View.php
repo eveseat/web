@@ -96,10 +96,10 @@ Route::get('/view/fittings/items/{character_id}/{fitting_id}', [
     'uses'       => 'FittingController@getFittingItems',
 ]);
 
-Route::get('/view/industry/{character_id}', [
+Route::get('/{character_id}/industry', [
     'as'         => 'character.view.industry',
     'middleware' => 'characterbouncer:industry',
-    'uses'       => 'IndustryController@getIndustry',
+    'uses'       => 'IndustryController@index',
 ]);
 
 Route::get('/view/industry/data/{character_id}', [

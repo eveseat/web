@@ -39,6 +39,48 @@ abstract class AbstractIndustryDataTable extends DataTable
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
+            ->editColumn('start_date', function ($row) {
+                return view('web::partials.date', ['datetime' => $row->start_date]);
+            })
+            ->editColumn('end_date', function ($row) {
+                return view('web::partials.date', ['datetime' => $row->end_date]);
+            })
+            ->editColumn('runs', function ($row) {
+                return number($row->runs, 0);
+            })
+            ->addColumn('location', function ($row) {
+                return $row->location->name;
+            })
+            ->addColumn('activity', function ($row) {
+                return $row->activity->activityName;
+            })
+            ->addColumn('blueprint', function ($row) {
+                return view('web::partials.type', ['type_id' => $row->blueprint->typeID, 'type_name' => $row->blueprint->typeName]);
+            })
+            ->addColumn('product', function ($row) {
+                return view('web::partials.type', ['type_id' => $row->product->typeID, 'type_name' => $row->product->typeName]);
+            })
+            ->filterColumn('location', function ($query, $keyword) {
+                return $query->whereHas('location', function ($sub_query) use ($keyword) {
+                    return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
+                });
+            })
+            ->filterColumn('activity', function ($query, $keyword) {
+                return $query->whereHas('activity', function ($sub_query) use ($keyword) {
+                    return $sub_query->whereRaw('activityName LIKE ?', ["%$keyword%"]);
+                });
+            })
+            ->filterColumn('blueprint', function ($query, $keyword) {
+                return $query->whereHas('blueprint', function ($sub_query) use ($keyword) {
+                    return $sub_query->whereRaw('typeName LIKE ?', ["%$keyword%"]);
+                });
+            })
+            ->filterColumn('product', function ($query, $keyword) {
+                return $query->whereHas('product', function ($sub_query) use ($keyword) {
+                    return $sub_query->whereRaw('typeName LIKE ?', ["%$keyword%"]);
+                });
+            })
+            ->rawColumns(['start_date', 'end_date', 'blueprint', 'product'])
             ->make(true);
     }
 
@@ -48,7 +90,11 @@ abstract class AbstractIndustryDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->columns($this->getColumns());
+            ->postAjax()
+            ->columns($this->getColumns())
+            ->parameters([
+                'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); }',
+            ]);
     }
 
     /**
@@ -62,7 +108,13 @@ abstract class AbstractIndustryDataTable extends DataTable
     public function getColumns()
     {
         return [
-
+            ['data' => 'start_date', 'title' => trans('web::industry.start')],
+            ['data' => 'end_date', 'title' => trans('web::industry.end')],
+            ['data' => 'location', 'title' => trans('web::industry.location')],
+            ['data' => 'activity', 'title' => trans('web::industry.activity')],
+            ['data' => 'runs', 'title' => trans('web::industry.runs')],
+            ['data' => 'blueprint', 'title' => trans('web::industry.blueprint')],
+            ['data' => 'product', 'title' => trans('web::industry.product')],
         ];
     }
 }
