@@ -301,10 +301,10 @@ Route::get('/view/pi/{character_id}', [
     'uses'       => 'PiController@getPi',
 ]);
 
-Route::get('/view/research/{character_id}', [
+Route::get('/{character_id}/research', [
     'as'         => 'character.view.research',
     'middleware' => 'characterbouncer:research',
-    'uses'       => 'ResearchController@getResearch',
+    'uses'       => 'ResearchController@index',
 ]);
 
 Route::get('/view/sheet/{character_id}', [

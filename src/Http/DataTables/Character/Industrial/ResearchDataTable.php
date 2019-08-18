@@ -39,6 +39,26 @@ class ResearchDataTable extends DataTable
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
+            ->editColumn('started_at', function ($row) {
+                return view('web::partials.date', ['datetime' => $row->started_at]);
+            })
+            ->addColumn('agent', function ($row) {
+                return view('web::partials.character', ['character' => $row->agent_id]);
+            })
+            ->addColumn('skill', function ($row) {
+                return view('web::partials.type', ['type_id' => $row->skill->typeID, 'type_name' => $row->skill->typeName]);
+            })
+            ->filterColumn('agent', function ($query, $keyword) {
+                return $query->whereHas('agent', function ($sub_query) use ($keyword) {
+                    return $sub_query->whereRaw('itemName LIKE ?', ["%$keyword%"]);
+                });
+            })
+            ->filterColumn('skill', function ($query, $keyword) {
+                return $query->whereHas('skill', function ($sub_query) use ($keyword) {
+                    return $sub_query->whereRaw('typeName LIKE ?', ["%$keyword%"]);
+                });
+            })
+            ->rawColumns(['started_at', 'agent', 'skill'])
             ->make(true);
     }
 
@@ -48,7 +68,11 @@ class ResearchDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->columns($this->getColumns());
+            ->postAjax()
+            ->columns($this->getColumns())
+            ->parameters([
+                'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); }',
+            ]);
     }
 
     /**
@@ -56,7 +80,7 @@ class ResearchDataTable extends DataTable
      */
     public function query()
     {
-        return CharacterAgentResearch::query();
+        return CharacterAgentResearch::with('agent', 'skill');
     }
 
     /**
@@ -65,7 +89,11 @@ class ResearchDataTable extends DataTable
     public function getColumns()
     {
         return [
-
+            ['data' => 'started_at', 'title' => trans('web::research.start')],
+            ['data' => 'agent', 'title' => trans('web::research.agent')],
+            ['data' => 'skill', 'title' => trans('web::research.skill')],
+            ['data' => 'points_per_day', 'title' => trans_choice('web::research.point_per_day', 0)],
+            ['data' => 'remainder_points', 'title' => trans('web::research.remainder')],
         ];
     }
 }

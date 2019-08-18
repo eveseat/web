@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of SeAT
  *
@@ -20,28 +19,10 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\Controllers\Character;
-
-use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Http\DataTables\Character\Industrial\ResearchDataTable;
-use Seat\Web\Http\DataTables\Scopes\CharacterScope;
-
-/**
- * Class ResearchController
- *
- * @package Seat\Web\Http\Controllers\Character
- */
-class ResearchController extends Controller
-{
-    /**
-     * @param int $character_id
-     * @param \Seat\Web\Http\DataTables\Character\Industrial\ResearchDataTable $dataTable
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index(int $character_id, ResearchDataTable $dataTable)
-    {
-
-        return $dataTable->addScope(new CharacterScope([$character_id]))
-            ->render('web::character.research');
-    }
-}
+return [
+    'start'         => 'Start',
+    'agent'         => 'Agent',
+    'skill'         => 'Skill',
+    'point_per_day' => 'Point per day|Points per day',
+    'remainder'     => 'Remainder'
+];
