@@ -102,16 +102,10 @@ Route::get('/view/killmails/data/{corporation_id}', [
     'uses'       => 'KillmailsController@getKillmailsData',
 ]);
 
-Route::get('/view/market/{corporation_id}', [
+Route::get('/{corporation_id}/markets', [
     'as'         => 'corporation.view.market',
     'middleware' => 'corporationbouncer:market',
-    'uses'       => 'MarketController@getMarket',
-]);
-
-Route::get('/view/market/data/{corporation_id}', [
-    'as'         => 'corporation.view.market.data',
-    'middleware' => 'corporationbouncer:market',
-    'uses'       => 'MarketController@getMarketData',
+    'uses'       => 'MarketController@index',
 ]);
 
 Route::get('/view/mining-ledger/{corporation_id}/{year?}/{month?}', [

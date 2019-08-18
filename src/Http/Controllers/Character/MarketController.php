@@ -25,6 +25,8 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Services\Repositories\Character\Market;
 use Seat\Services\Repositories\Eve\EveRepository;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Character\Financial\MarketDataTable;
+use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 use Seat\Web\Models\User;
 use Yajra\DataTables\DataTables;
 
@@ -34,73 +36,15 @@ use Yajra\DataTables\DataTables;
  */
 class MarketController extends Controller
 {
-    use Market;
-    use EveRepository;
-
-    /**
-     * @param $character_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getMarket(int $character_id)
-    {
-
-        return view('web::character.market');
-
-    }
-
     /**
      * @param int $character_id
-     *
+     * @param \Seat\Web\Http\DataTables\Character\Financial\MarketDataTable $dataTable
      * @return mixed
-     * @throws \Exception
      */
-    public function getMarketData(int $character_id)
+    public function index(int $character_id, MarketDataTable $dataTable)
     {
 
-        if (! request()->has('all_linked_characters'))
-            return abort(500);
-
-        if (request('all_linked_characters') === 'false')
-            $character_ids = collect($character_id);
-
-        $user_group = User::find($character_id)->group->users
-            ->filter(function ($user) {
-                return $user->name !== 'admin' && $user->id !== 1;
-            })
-            ->pluck('id');
-
-        if (request('all_linked_characters') === 'true')
-            $character_ids = $user_group;
-
-        $orders = $this->getCharacterMarketOrders($character_ids);
-
-        return DataTables::of($orders)
-            ->addColumn('bs', function ($row) {
-
-                return view('web::partials.marketbuysell', compact('row'));
-            })
-            ->addColumn('vol', function ($row) {
-
-                if ($row->is_buy_order)
-                    return number($row->volume_total, 0);
-
-                return number($row->volume_remain, 0) . ' / ' . number($row->volume_total, 0);
-            })
-            ->editColumn('price', function ($row) {
-
-                return number($row->price);
-            })
-            ->addColumn('total', function ($row) {
-
-                return number($row->price * $row->volume_total);
-            })
-            ->editColumn('typeName', function ($row) {
-
-                return view('web::partials.markettype', compact('row'));
-            })
-            ->rawColumns(['bs', 'typeName'])
-            ->make(true);
-
+        return $dataTable->addScope(new CharacterScope([$character_id]))
+            ->render('web::character.market');
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of SeAT
  *
@@ -20,27 +19,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\Controllers\Character;
-
-use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Http\DataTables\Character\Intel\ContactDataTable;
-use Seat\Web\Http\DataTables\Scopes\CharacterScope;
-
-/**
- * Class ContactsController
- *
- * @package Seat\Web\Http\Controllers\Character
- */
-class ContactsController extends Controller
-{
-    /**
-     * @param \Seat\Web\Http\DataTables\Character\Intel\ContactDataTable $table
-     * @return mixed
-     */
-    public function index(int $character_id, ContactDataTable $dataTable)
-    {
-
-        return $dataTable->addScope(new CharacterScope([$character_id]))
-            ->render('web::character.contacts');
-    }
-}
+return [
+    'issued' => 'Issued',
+    'buy'    => 'Buy',
+    'sell'   => 'Sell',
+    'order'  => 'Order',
+    'range'  => 'Range',
+    'volume' => 'Volume',
+    'price'  => 'Price',
+    'total'  => 'Total',
+    'type'   => 'Type',
+];

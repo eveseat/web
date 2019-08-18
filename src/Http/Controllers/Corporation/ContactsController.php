@@ -41,9 +41,7 @@ class ContactsController extends Controller
     public function index(int $corporation_id, ContactDataTable $dataTable)
     {
 
-        $view = $dataTable->addScope(new CorporationScope([$corporation_id]))
+        return $dataTable->addScope(new CorporationScope([$corporation_id]))
             ->render('web::corporation.contacts');
-
-        return $view;
     }
 }

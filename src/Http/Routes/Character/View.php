@@ -265,16 +265,10 @@ Route::get('/view/mail/{character_id}/read/{message_id}', [
     'uses'       => 'MailController@getMailRead',
 ]);
 
-Route::get('/view/market/{character_id}', [
+Route::get('/{character_id}/markets', [
     'as'         => 'character.view.market',
     'middleware' => 'characterbouncer:market',
-    'uses'       => 'MarketController@getMarket',
-]);
-
-Route::get('/view/market/data/{character_id}', [
-    'as'         => 'character.view.market.data',
-    'middleware' => 'characterbouncer:market',
-    'uses'       => 'MarketController@getMarketData',
+    'uses'       => 'MarketController@index',
 ]);
 
 Route::get('/view/mining-ledger/{character_id}', [

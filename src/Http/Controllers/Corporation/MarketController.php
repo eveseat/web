@@ -27,6 +27,8 @@ use Seat\Eveapi\Models\Universe\UniverseName;
 use Seat\Services\Repositories\Corporation\Market;
 use Seat\Services\Repositories\Eve\EveRepository;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Corporation\Financial\MarketDataTable;
+use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 use Yajra\DataTables\DataTables;
 
 /**
@@ -35,79 +37,15 @@ use Yajra\DataTables\DataTables;
  */
 class MarketController extends Controller
 {
-    use EveRepository;
-    use Market;
-
-    /**
-     * @param $corporation_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getMarket(int $corporation_id)
-    {
-
-        return view('web::corporation.market');
-    }
-
     /**
      * @param int $corporation_id
-     *
+     * @param \Seat\Web\Http\DataTables\Corporation\Financial\MarketDataTable $dataTable
      * @return mixed
-     * @throws \Exception
      */
-    public function getMarketData(int $corporation_id)
+    public function index(int $corporation_id, MarketDataTable $dataTable)
     {
 
-        $orders = $this->getCorporationMarketOrders($corporation_id, false);
-
-        return DataTables::of($orders)
-            ->addColumn('bs', function ($row) {
-
-                return view('web::partials.marketbuysell', compact('row'));
-            })
-            ->addColumn('vol', function ($row) {
-
-                if ($row->is_buy_order)
-                    return number($row->volume_total, 0);
-
-                return number($row->volume_remain, 0) . ' / ' . number($row->volume_total, 0);
-            })
-            ->editColumn('price', function ($row) {
-
-                return number($row->price);
-            })
-            ->addColumn('price_total', function ($row) {
-
-                return number($row->price_total);
-            })
-            ->editColumn('typeName', function ($row) {
-
-                return view('web::partials.markettype', compact('row'));
-            })
-            ->editColumn('issued_by', function ($row) {
-
-                $character = CharacterInfo::find($row->issued_by) ?: $row->issued_by;
-
-                return view('web::partials.character', compact('character', 'character_id'));
-            })
-            ->filterColumn('issued_by', function ($query, $keyword) {
-
-                $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')
-                    ->get()
-                    ->map(function ($resolved_id) {
-                        return $resolved_id->entity_id;
-                    });
-
-                $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')
-                    ->get()
-                    ->map(function ($character_info) {
-                        return $character_info->character_id;
-                    });
-
-                $query->whereIn('a.issued_by', array_merge($resolved_ids->toArray(), $character_info_ids->toArray()));
-            })
-            ->rawColumns(['bs', 'vol', 'typeName', 'issued_by'])
-            ->make(true);
-
+        return $dataTable->addScope(new CorporationScope([$corporation_id]))
+            ->render('web::corporation.market');
     }
 }
