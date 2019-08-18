@@ -39,6 +39,64 @@ abstract class AbstractWalletTransactionDataTable extends DataTable
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
+            ->editColumn('date', function ($row) {
+                return view('web::partials.date', ['datetime' => $row->date]);
+            })
+            ->editColumn('is_buy', function ($row) {
+                return view('web::partials.marketbuysell', ['is_buy' => $row->is_buy]);
+            })
+            ->editColumn('quantity', function ($row) {
+                return number($row->quantity, 0);
+            })
+            ->editColumn('unit_price', function ($row) {
+                return number($row->unit_price);
+            })
+            ->addColumn('total', function ($row) {
+                return number($row->quantity * $row->unit_price);
+            })
+            ->addColumn('type', function ($row) {
+                return view('web::partials.type', ['type_id' => $row->type->typeID, 'type_name' => $row->type->typeName]);
+            })
+            ->addColumn('location', function ($row) {
+                return $row->location->name;
+            })
+            ->addColumn('party', function ($row) {
+                switch ($row->party->category) {
+                    case 'alliance':
+                        return view('web::partials.alliance', ['alliance' => $row->party->entity_id]);
+                    case 'corporation':
+                        return view('web::partials.corporation', ['corporation' => $row->party->entity_id]);
+                    case 'character':
+                        return view('web::partials.character', ['character' => $row->party->entity_id]);
+                    default:
+                        return '';
+                }
+            })
+            ->filterColumn('is_buy', function ($query, $keyword) {
+                if (strpos('SELL', strtoupper($keyword)) !== false)
+                    return $query->where('is_buy', false)
+                        ->orWhereNull('is_buy');
+
+                if (strpos('BUY', strtoupper($keyword)) !== false)
+                    return $query->where('is_buy', true);
+
+                return $query;
+            })
+            ->filterColumn('type', function ($query, $keyword) {
+                return $query->whereHas('type', function ($sub_query) use ($keyword) {
+                    return $sub_query->whereRaw('typeName LIKE ?', ["%$keyword%"]);
+                });
+            })
+            ->filterColumn('total', function ($query, $keyword) {
+                return $query->whereRaw('(unit_price * quantity) LIKE ?', ["%$keyword%"]);
+            })
+            ->filterColumn('party', function ($query, $keyword) {
+                return $query->whereHas('party', function ($sub_query) use ($keyword) {
+                    return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
+                });
+            })
+            ->orderColumn('total', "(unit_price * quantity) $1")
+            ->rawColumns(['date', 'is_buy', 'type', 'party'])
             ->make(true);
     }
 
@@ -48,7 +106,11 @@ abstract class AbstractWalletTransactionDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->columns($this->getColumns());
+            ->columns($this->getColumns())
+            ->postAjax()
+            ->parameters([
+                'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); }',
+            ]);
     }
 
     /**
@@ -62,7 +124,14 @@ abstract class AbstractWalletTransactionDataTable extends DataTable
     public function getColumns()
     {
         return [
-
+            ['data' => 'date', 'title' => trans('web::wallet.date')],
+            ['data' => 'is_buy', 'title' => trans('web::wallet.order')],
+            ['data' => 'type', 'title' => trans('web::wallet.type')],
+            ['data' => 'location', 'title' => trans('web::wallet.location')],
+            ['data' => 'unit_price', 'title' => trans('web::wallet.price')],
+            ['data' => 'quantity', 'title' => trans('web::wallet.quantity')],
+            ['data' => 'total', 'title' => trans('web::wallet.total')],
+            ['data' => 'party', 'title' => trans('web::wallet.party')],
         ];
     }
 }

@@ -21,7 +21,7 @@
 
 namespace Seat\Web\Http\DataTables\Common\Financial;
 
-use Seat\Eveapi\Models\Wallet\CharacterWalletJournal;
+use Illuminate\Support\Facades\Lang;
 use Yajra\DataTables\Services\DataTable;
 
 /**
@@ -39,6 +39,64 @@ abstract class AbstractWalletJournalDataTable extends DataTable
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
+            ->editColumn('date', function ($row) {
+                return view('web::partials.date', ['datetime' => $row->date]);
+            })
+            ->editColumn('ref_type', function ($row) {
+                return trans(sprintf('web::wallet.%s', $row->ref_type));
+            })
+            ->editColumn('amount', function ($row) {
+                return number($row->amount);
+            })
+            ->editColumn('balance', function ($row) {
+                return number($row->balance);
+            })
+            ->addColumn('from_party', function ($row) {
+                switch ($row->first_party->category) {
+                    case 'alliance':
+                        return view('web::partials.alliance', ['alliance' => $row->first_party->entity_id]);
+                    case 'corporation':
+                        return view('web::partials.corporation', ['corporation' => $row->first_party->entity_id]);
+                    case 'character':
+                        return view('web::partials.character', ['character' => $row->first_party->entity_id]);
+                    default:
+                        return '';
+                }
+            })
+            ->addColumn('to_party', function ($row) {
+                switch ($row->second_party->category) {
+                    case 'alliance':
+                        return view('web::partials.alliance', ['alliance' => $row->second_party->entity_id]);
+                    case 'corporation':
+                        return view('web::partials.corporation', ['corporation' => $row->second_party->entity_id]);
+                    case 'character':
+                        return view('web::partials.character', ['character' => $row->second_party->entity_id]);
+                    default:
+                        return '';
+                }
+            })
+            ->filterColumn('ref_type', function ($query, $keyword) {
+                $captions = Lang::get('web::wallet');
+                $ref_types = array_keys(
+                    array_filter($captions, function ($value) use ($keyword) {
+                        return strpos(strtoupper($value), strtoupper($keyword)) !== false;
+                    }));
+
+                foreach ($ref_types as $type) {
+                    $query->orWhereRaw('ref_type LIKE ?', ["%$type%"]);
+                }
+            })
+            ->filterColumn('from_party', function ($query, $keyword) {
+                return $query->whereHas('first_party', function ($sub_query) use ($keyword) {
+                    return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
+                });
+            })
+            ->filterColumn('to_party', function ($query, $keyword) {
+                return $query->whereHas('second_party', function ($sub_query) use ($keyword) {
+                    return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
+                });
+            })
+            ->rawColumns(['date', 'from_party', 'to_party'])
             ->make(true);
     }
 
@@ -48,7 +106,11 @@ abstract class AbstractWalletJournalDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->columns($this->getColumns());
+            ->columns($this->getColumns())
+            ->postAjax()
+            ->parameters([
+                'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); }',
+            ]);
     }
 
     /**
@@ -62,7 +124,12 @@ abstract class AbstractWalletJournalDataTable extends DataTable
     public function getColumns()
     {
         return [
-
+            ['data' => 'date', 'title' => trans('web::wallet.date')],
+            ['data' => 'ref_type', 'title' => trans('web::wallet.ref_type')],
+            ['data' => 'from_party', 'title' => trans('web::wallet.from_party')],
+            ['data' => 'to_party', 'title' => trans('web::wallet.to_party')],
+            ['data' => 'amount', 'title' => trans('web::wallet.amount')],
+            ['data' => 'balance', 'title' => trans('web::wallet.balance')],
         ];
     }
 }

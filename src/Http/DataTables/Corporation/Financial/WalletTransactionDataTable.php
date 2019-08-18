@@ -19,15 +19,15 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\DataTables\Character\Financial;
+namespace Seat\Web\Http\DataTables\Corporation\Financial;
 
-use Seat\Eveapi\Models\Wallet\CharacterWalletTransaction;
+use Seat\Eveapi\Models\Wallet\CorporationWalletTransaction;
 use Seat\Web\Http\DataTables\Common\Financial\AbstractWalletTransactionDataTable;
 
 /**
  * Class WalletTransactionDataTable
  *
- * @package Seat\Web\Http\DataTables\Character\Financial
+ * @package Seat\Web\Http\DataTables\Corporation\Financial
  */
 class WalletTransactionDataTable extends AbstractWalletTransactionDataTable
 {
@@ -36,6 +36,6 @@ class WalletTransactionDataTable extends AbstractWalletTransactionDataTable
      */
     public function query()
     {
-        return CharacterWalletTransaction::with('type', 'party');
+        return CorporationWalletTransaction::with('type', 'party');
     }
 }

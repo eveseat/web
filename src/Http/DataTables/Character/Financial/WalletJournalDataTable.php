@@ -36,6 +36,6 @@ class WalletJournalDataTable extends AbstractWalletJournalDataTable
      */
     public function query()
     {
-        return CharacterWalletJournal::query();
+        return CharacterWalletJournal::with('first_party', 'second_party');
     }
 }

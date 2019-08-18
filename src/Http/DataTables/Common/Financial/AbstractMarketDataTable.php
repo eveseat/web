@@ -42,7 +42,7 @@ abstract class AbstractMarketDataTable extends DataTable
                 return view('web::partials.date', ['datetime' => $row->issued]);
             })
             ->editColumn('is_buy_order', function ($row) {
-                return view('web::partials.marketbuysell', compact('row'));
+                return view('web::partials.marketbuysell', ['is_buy' => $row->is_buy_order]);
             })
             ->editColumn('price', function ($row) {
                 return number($row->price);
@@ -57,12 +57,12 @@ abstract class AbstractMarketDataTable extends DataTable
                 return view('web::partials.type', ['type_id' => $row->type->typeID, 'type_name' => $row->type->typeName]);
             })
             ->filterColumn('is_buy_order', function ($query, $keyword) {
-                if (strpos(strtoupper($keyword), 'SELL') !== false)
-                    return $query->where('is_buy_order', true)
+                if (strpos('SELL', strtoupper($keyword)) !== false)
+                    return $query->where('is_buy_order', false)
                         ->orWhereNull('is_buy_order');
 
-                if (strpos(strtoupper($keyword), 'BUY') !== false)
-                    return $query->where('is_buy_order', false);
+                if (strpos('BUY', strtoupper($keyword)) !== false)
+                    return $query->where('is_buy_order', true);
 
                 return $query;
             })

@@ -207,10 +207,10 @@ Route::group(['prefix' => 'view/intel'], function () {
 
 });
 
-Route::get('/view/journal/{character_id}', [
+Route::get('/{character_id}/journal', [
     'as'         => 'character.view.journal',
     'middleware' => 'characterbouncer:journal',
-    'uses'       => 'WalletController@getJournal',
+    'uses'       => 'WalletController@journal',
 ]);
 
 Route::get('/view/journal/data/{character_id}', [
@@ -337,10 +337,10 @@ Route::get('/view/standings/{character_id}', [
     'uses'       => 'StandingsController@getStandings',
 ]);
 
-Route::get('/view/transactions/{character_id}', [
+Route::get('/{character_id}/transactions', [
     'as'         => 'character.view.transactions',
     'middleware' => 'characterbouncer:transactions',
-    'uses'       => 'WalletController@getTransactions',
+    'uses'       => 'WalletController@transactions',
 ]);
 
 Route::get('/view/transactions/data/{character_id}', [

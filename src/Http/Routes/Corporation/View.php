@@ -218,10 +218,10 @@ Route::get('/view/tracking/{corporation_id}/membertracking', [
     'uses'       => 'TrackingController@getMemberTracking',
 ]);
 
-Route::get('/view/journal/{corporation_id}', [
+Route::get('/{corporation_id}/journal', [
     'as'         => 'corporation.view.journal',
     'middleware' => 'corporationbouncer:journal',
-    'uses'       => 'WalletController@getJournal',
+    'uses'       => 'WalletController@journal',
 ]);
 
 Route::get('/view/journal/data/{corporation_id}', [
@@ -230,10 +230,10 @@ Route::get('/view/journal/data/{corporation_id}', [
     'uses'       => 'WalletController@getJournalData',
 ]);
 
-Route::get('/view/transactions/{corporation_id}', [
+Route::get('/{corporation_id}/transactions', [
     'as'         => 'corporation.view.transactions',
     'middleware' => 'corporationbouncer:transactions',
-    'uses'       => 'WalletController@getTransactions',
+    'uses'       => 'WalletController@transactions',
 ]);
 
 Route::get('/view/transactions/data/{corporation_id}', [
