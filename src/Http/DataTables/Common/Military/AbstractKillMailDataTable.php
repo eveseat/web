@@ -21,7 +21,6 @@
 
 namespace Seat\Web\Http\DataTables\Common\Military;
 
-use Seat\Eveapi\Models\Killmails\CharacterKillmail;
 use Yajra\DataTables\Services\DataTable;
 
 /**
