@@ -58,12 +58,12 @@ abstract class AbstractKillMailDataTable extends DataTable
                 ]);
             })
             ->addColumn('victim', function ($row) {
-                return view('web::partials.character', ['character' => $row->detail->victim->character->entity_id]) . '<br/>' .
-                    view('web::partials.corporation', ['corporation' => $row->detail->victim->corporation->entity_id]) .
-                    view('web::partials.alliance', ['alliance' => $row->detail->victim->alliance->entity_id]);
+                return view('web::partials.character', ['character' => $row->victim->character->entity_id]) . '<br/>' .
+                    view('web::partials.corporation', ['corporation' => $row->victim->corporation->entity_id]) .
+                    view('web::partials.alliance', ['alliance' => $row->victim->alliance->entity_id]);
             })
             ->addColumn('killer', function ($row) {
-                $killer = $row->detail->attackers->where('final_blow', true)->first();
+                $killer = $row->attackers->where('final_blow', true)->first();
 
                 if (is_null($killer))
                     return '';
@@ -73,7 +73,7 @@ abstract class AbstractKillMailDataTable extends DataTable
                     view('web::partials.alliance', ['alliance' => $killer->alliance->entity_id]);
             })
             ->filterColumn('ship', function ($query, $keyword) {
-                return $query->whereHas('detail.victim.ship', function ($sub_query) use ($keyword) {
+                return $query->whereHas('victim.ship', function ($sub_query) use ($keyword) {
                     return $sub_query->whereRaw('typeName LIKE ?', ["%$keyword%"]);
                 });
             })
@@ -83,18 +83,18 @@ abstract class AbstractKillMailDataTable extends DataTable
                 });
             })
             ->filterColumn('victim', function ($query, $keyword) {
-                $query->whereHas('detail.victim.character', function ($sub_query) use ($keyword) {
+                $query->whereHas('victim.character', function ($sub_query) use ($keyword) {
                     return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
                 });
-                $query->orWhereHas('detail.victim.corporation', function ($sub_query) use ($keyword) {
+                $query->orWhereHas('victim.corporation', function ($sub_query) use ($keyword) {
                     return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
                 });
-                $query->orWhereHas('detail.victim.alliance', function ($sub_query) use ($keyword) {
+                $query->orWhereHas('victim.alliance', function ($sub_query) use ($keyword) {
                     return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
                 });
             })
             ->filterColumn('killer', function ($query, $keyword) {
-                $query->whereHas('detail.attackers', function ($sub_query) use ($keyword) {
+                $query->whereHas('attackers', function ($sub_query) use ($keyword) {
                     $sub_query->whereHas('character', function ($children_query) use ($keyword) {
                         return $children_query->whereRaw('name LIKE ?', ["%$keyword%"]);
                     });
