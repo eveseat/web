@@ -19,23 +19,10 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\DataTables\Character\Military;
-
-use Seat\Eveapi\Models\Killmails\CharacterKillmail;
-use Seat\Web\Http\DataTables\Common\Military\AbstractKillMailDataTable;
-
-/**
- * Class KillMailDataTable
- *
- * @package Seat\Web\Http\DataTables\Character\Military
- */
-class KillMailDataTable extends AbstractKillMailDataTable
-{
-    /**
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function query()
-    {
-        return CharacterKillmail::orderByDesc('killmail_id');
-    }
-}
+return [
+    'date'         => 'Date',
+    'ship'         => 'Ship',
+    'solar_system' => 'Solar System',
+    'victim'       => 'Victim',
+    'killer'       => 'Killer',
+];

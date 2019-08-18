@@ -39,6 +39,74 @@ abstract class AbstractKillMailDataTable extends DataTable
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
+            ->editColumn('action', function ($row) {
+                return view('web::partials.killmailzkb', compact('row'));
+            })
+            ->addColumn('date', function ($row) {
+                return view('web::partials.date', ['datetime' => $row->detail->killmail_time]);
+            })
+            ->addColumn('ship', function ($row) {
+                return view('web::partials.type', [
+                    'type_id' => $row->victim->ship->typeID,
+                    'type_name' => $row->victim->ship->typeName
+                ]);
+            })
+            ->addColumn('system', function ($row) {
+                return view('web::partials.system', [
+                    'system' => $row->detail->system->itemName,
+                    'security' => $row->detail->system->security
+                ]);
+            })
+            ->addColumn('victim', function ($row) {
+                return view('web::partials.character', ['character' => $row->detail->victim->character->entity_id]) . '<br/>' .
+                    view('web::partials.corporation', ['corporation' => $row->detail->victim->corporation->entity_id]) .
+                    view('web::partials.alliance', ['alliance' => $row->detail->victim->alliance->entity_id]);
+            })
+            ->addColumn('killer', function ($row) {
+                $killer = $row->detail->attackers->where('final_blow', true)->first();
+
+                if (is_null($killer))
+                    return '';
+
+                return view('web::partials.character', ['character' => $killer->character->entity_id]) . '<br/>' .
+                    view('web::partials.corporation', ['corporation' => $killer->corporation->entity_id]) . ' ' .
+                    view('web::partials.alliance', ['alliance' => $killer->alliance->entity_id]);
+            })
+            ->filterColumn('ship', function ($query, $keyword) {
+                return $query->whereHas('detail.victim.ship', function ($sub_query) use ($keyword) {
+                    return $sub_query->whereRaw('typeName LIKE ?', ["%$keyword%"]);
+                });
+            })
+            ->filterColumn('system', function ($query, $keyword) {
+                return $query->whereHas('detail.system', function ($sub_query) use ($keyword) {
+                    return $sub_query->whereRaw('itemName LIKE ?', ["%$keyword%"]);
+                });
+            })
+            ->filterColumn('victim', function ($query, $keyword) {
+                $query->whereHas('detail.victim.character', function ($sub_query) use ($keyword) {
+                    return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
+                });
+                $query->orWhereHas('detail.victim.corporation', function ($sub_query) use ($keyword) {
+                    return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
+                });
+                $query->orWhereHas('detail.victim.alliance', function ($sub_query) use ($keyword) {
+                    return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
+                });
+            })
+            ->filterColumn('killer', function ($query, $keyword) {
+                $query->whereHas('detail.attackers', function ($sub_query) use ($keyword) {
+                    $sub_query->whereHas('character', function ($children_query) use ($keyword) {
+                        return $children_query->whereRaw('name LIKE ?', ["%$keyword%"]);
+                    });
+                    $sub_query->orWhereHas('corporation', function ($children_query) use ($keyword) {
+                        return $children_query->whereRaw('name LIKE ?', ["%$keyword%"]);
+                    });
+                    $sub_query->orWhereHas('alliance', function ($children_query) use ($keyword) {
+                        return $children_query->whereRaw('name LIKE ?', ["%$keyword%"]);
+                    });
+                });
+            })
+            ->rawColumns(['date', 'ship', 'system', 'victim', 'killer', 'action'])
             ->make(true);
     }
 
@@ -48,7 +116,12 @@ abstract class AbstractKillMailDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->columns($this->getColumns());
+            ->postAjax()
+            ->columns($this->getColumns())
+            ->addAction()
+            ->parameters([
+                'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); }',
+            ]);
     }
 
     /**
@@ -62,7 +135,11 @@ abstract class AbstractKillMailDataTable extends DataTable
     public function getColumns()
     {
         return [
-
+            ['data' => 'date', 'title' => trans('web::kills.date'), 'orderable' => false],
+            ['data' => 'ship', 'title' => trans('web::kills.ship'), 'orderable' => false],
+            ['data' => 'system', 'title' => trans('web::kills.solar_system'), 'orderable' => false],
+            ['data' => 'victim', 'title' => trans('web::kills.victim'), 'orderable' => false],
+            ['data' => 'killer', 'title' => trans('web::kills.killer'), 'orderable' => false],
         ];
     }
 }

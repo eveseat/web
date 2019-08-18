@@ -90,10 +90,10 @@ Route::get('/view/industry/data/{corporation_id}', [
     'uses'       => 'IndustryController@getIndustryData',
 ]);
 
-Route::get('/view/killmails/{corporation_id}', [
+Route::get('/{corporation_id}/killmails', [
     'as'         => 'corporation.view.killmails',
     'middleware' => 'corporationbouncer:killmails',
-    'uses'       => 'KillmailsController@getKillmails',
+    'uses'       => 'KillmailsController@index',
 ]);
 
 Route::get('/view/killmails/data/{corporation_id}', [

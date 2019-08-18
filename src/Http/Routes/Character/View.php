@@ -225,10 +225,10 @@ Route::get('/view/journal/graph/balance/{character_id}', [
     'uses'       => 'WalletController@getJournalGraphBalance',
 ]);
 
-Route::get('/view/killmails/{character_id}', [
+Route::get('/{character_id}/killmails', [
     'as'         => 'character.view.killmails',
     'middleware' => 'characterbouncer:killmails',
-    'uses'       => 'KillmailController@getKillmails',
+    'uses'       => 'KillmailController@index',
 ]);
 
 Route::get('/view/killmails/data/{character_id}', [

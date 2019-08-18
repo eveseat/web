@@ -26,6 +26,8 @@ use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Corporation\Killmails;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Corporation\Military\KillMailDataTable;
+use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 use Yajra\DataTables\DataTables;
 
 /**
@@ -41,10 +43,11 @@ class KillmailsController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getKillmails(int $corporation_id)
+    public function index(int $corporation_id, KillMailDataTable $dataTable)
     {
 
-        return view('web::corporation.killmails');
+        return $dataTable->addScope(new CorporationScope([$corporation_id]))
+            ->render('web::corporation.killmails');
     }
 
     /**
