@@ -108,6 +108,14 @@ use Seat\Web\Models\Acl\Affiliation;
  * )
  *
  * @SWG\Property(
+ *     type="integer",
+ *     format="int64",
+ *     minimum=90000000,
+ *     description="The main character ID of this group",
+ *     property="main_character_id"
+ * )
+ *
+ * @SWG\Property(
  *     property="token",
  *     ref="#/definitions/RefreshToken"
  * )
