@@ -66,10 +66,10 @@ Route::get('/{character_id}/contacts', [
     'uses'       => 'ContactsController@index',
 ]);
 
-Route::get('/view/contracts/{character_id}', [
+Route::get('/{character_id}/contracts', [
     'as'         => 'character.view.contracts',
     'middleware' => 'characterbouncer:contracts',
-    'uses'       => 'ContractsController@getContracts',
+    'uses'       => 'ContractsController@index',
 ]);
 
 Route::get('/view/contracts/data/{character_id}', [

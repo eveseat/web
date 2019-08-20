@@ -21,7 +21,7 @@
 
 namespace Seat\Web\Http\DataTables\Common\Financial;
 
-use Seat\Eveapi\Models\Contracts\CharacterContract;
+use Illuminate\Support\Facades\Lang;
 use Yajra\DataTables\Services\DataTable;
 
 /**
@@ -39,6 +39,106 @@ abstract class AbstractContractDataTable extends DataTable
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
+            ->addColumn('action', function ($row) {
+                return view('web::common.contracts.content_button', compact('row'));
+            })
+            ->addColumn('created', function ($row) {
+                return view('web::partials.date', ['datetime' => $row->detail->date_issued]);
+            })
+            ->addColumn('type', function ($row) {
+                return trans(sprintf('web::contract.%s', $row->detail->type));
+            })
+            ->addColumn('issuer', function ($row) {
+                switch ($row->detail->issuer->category) {
+                    case 'alliance':
+                        return view('web::partials.alliance', ['alliance' => $row->detail->issuer->entity_id]);
+                    case 'corporation':
+                        return view('web::partials.corporation', ['corporation' => $row->detail->issuer->entity_id]);
+                    case 'character':
+                        return view('web::partials.character', ['character' => $row->detail->issuer->entity_id]);
+                    default:
+                        return '';
+                }
+            })
+            ->addColumn('assignee', function ($row) {
+                switch ($row->detail->assignee->category) {
+                    case 'alliance':
+                        return view('web::partials.alliance', ['alliance' => $row->detail->assignee->entity_id]);
+                    case 'corporation':
+                        return view('web::partials.corporation', ['corporation' => $row->detail->assignee->entity_id]);
+                    case 'character':
+                        return view('web::partials.character', ['character' => $row->detail->assignee->entity_id]);
+                    default:
+                        return '';
+                }
+            })
+            ->addColumn('acceptor', function ($row) {
+                switch ($row->detail->acceptor->category) {
+                    case 'alliance':
+                        return view('web::partials.alliance', ['alliance' => $row->detail->acceptor->entity_id]);
+                    case 'corporation':
+                        return view('web::partials.corporation', ['corporation' => $row->detail->acceptor->entity_id]);
+                    case 'character':
+                        return view('web::partials.character', ['character' => $row->detail->acceptor->entity_id]);
+                    default:
+                        return '';
+                }
+            })
+            ->addColumn('status', function ($row) {
+                return trans(sprintf('web::contract.%s', $row->detail->status));
+            })
+            ->addColumn('price', function ($row) {
+                return number($row->detail->price);
+            })
+            ->addColumn('reward', function ($row) {
+                return number($row->detail->reward);
+            })
+            ->filterColumn('type', function ($query, $keyword) {
+                $query->whereHas('detail', function ($sub_query) use ($keyword) {
+                    $captions = Lang::get('web::contract');
+                    $status = array_keys(array_filter($captions, function ($value) use ($keyword) {
+                        return strpos(strtoupper($value), strtoupper($keyword)) !== false;
+                    }));
+
+                    $sub_query->whereIn('type', $status);
+                });
+            })
+            ->filterColumn('issuer', function ($query, $keyword) {
+                return $query->whereHas('detail.issuer', function ($sub_query) use ($keyword) {
+                    return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
+                });
+            })
+            ->filterColumn('assignee', function ($query, $keyword) {
+                return $query->whereHas('detail.assignee', function ($sub_query) use ($keyword) {
+                    return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
+                });
+            })
+            ->filterColumn('acceptor', function ($query, $keyword) {
+                return $query->whereHas('detail.acceptor', function ($sub_query) use ($keyword) {
+                    return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
+                });
+            })
+            ->filterColumn('status', function ($query, $keyword) {
+                $query->whereHas('detail', function ($sub_query) use ($keyword) {
+                    $captions = Lang::get('web::contract');
+                    $status = array_keys(array_filter($captions, function ($value) use ($keyword) {
+                        return strpos(strtoupper($value), strtoupper($keyword)) !== false;
+                    }));
+
+                    $sub_query->whereIn('status', $status);
+                });
+            })
+            ->filterColumn('price', function ($query, $keyword) {
+                return $query->whereHas('detail', function ($sub_query) use ($keyword) {
+                    $sub_query->whereRaw('(price) LIKE ?', ["%$keyword%"]);
+                });
+            })
+            ->filterColumn('reward', function ($query, $keyword) {
+                return $query->whereHas('detail', function ($sub_query) use ($keyword) {
+                    $sub_query->whereRaw('(reward) LIKE ?', ["%$keyword%"]);
+                });
+            })
+            ->rawColumns(['created', 'issuer', 'assignee', 'acceptor', 'action'])
             ->make(true);
     }
 
@@ -48,7 +148,12 @@ abstract class AbstractContractDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->columns($this->getColumns());
+            ->postAjax()
+            ->columns($this->getColumns())
+            ->addAction()
+            ->parameters([
+                'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); ids_to_names(); }',
+            ]);
     }
 
     /**
@@ -62,7 +167,14 @@ abstract class AbstractContractDataTable extends DataTable
     public function getColumns()
     {
         return [
-
+            ['data' => 'created', 'title' => trans('web::contract.created'), 'orderable' => false],
+            ['data' => 'type', 'title' => trans('web::contract.type'), 'orderable' => false],
+            ['data' => 'issuer', 'title' => trans('web::contract.issuer'), 'orderable' => false],
+            ['data' => 'assignee', 'title' => trans('web::contract.assignee'), 'orderable' => false],
+            ['data' => 'acceptor', 'title' => trans('web::contract.acceptor'), 'orderable' => false],
+            ['data' => 'status', 'title' => trans('web::contract.status'), 'orderable' => false],
+            ['data' => 'price', 'title' => trans('web::contract.price'), 'orderable' => false],
+            ['data' => 'reward', 'title' => trans('web::contract.reward'), 'orderable' => false],
         ];
     }
 }

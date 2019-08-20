@@ -23,10 +23,13 @@
 namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Contracts\ContractDetail;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Character\Contracts;
 use Seat\Services\Repositories\Seat\Filters\NamedIdFilter;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Character\Financial\ContractDataTable;
+use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 use Seat\Web\Models\User;
 use Yajra\DataTables\DataTables;
 
@@ -43,11 +46,18 @@ class ContractsController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getContracts(int $character_id)
+    public function index(int $character_id, ContractDataTable $dataTable)
     {
 
-        return view('web::character.contracts');
+        return $dataTable->addScope(new CharacterScope([$character_id]))
+            ->render('web::character.contracts');
+    }
 
+    public function show(int $character_id, int $contract_id)
+    {
+        $contract = ContractDetail::with('items')->find($contract_id);
+
+        return view('web::common.contracts.content', compact('contract'));
     }
 
     /**

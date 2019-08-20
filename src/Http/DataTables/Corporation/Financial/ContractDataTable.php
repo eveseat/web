@@ -19,15 +19,15 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\DataTables\Character\Financial;
+namespace Seat\Web\Http\DataTables\Corporation\Financial;
 
-use Seat\Eveapi\Models\Contracts\CharacterContract;
+use Seat\Eveapi\Models\Contracts\CorporationContract;
 use Seat\Web\Http\DataTables\Common\Financial\AbstractContractDataTable;
 
 /**
  * Class ContractDataTable
  *
- * @package Seat\Web\Http\DataTables\Character\Financial
+ * @package Seat\Web\Http\DataTables\Corporation\Financial
  */
 class ContractDataTable extends AbstractContractDataTable
 {
@@ -36,6 +36,6 @@ class ContractDataTable extends AbstractContractDataTable
      */
     public function query()
     {
-        return CharacterContract::orderByDesc('contract_id');
+        return CorporationContract::orderByDesc('contract_id');
     }
 }

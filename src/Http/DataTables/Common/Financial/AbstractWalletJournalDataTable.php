@@ -82,9 +82,7 @@ abstract class AbstractWalletJournalDataTable extends DataTable
                         return strpos(strtoupper($value), strtoupper($keyword)) !== false;
                     }));
 
-                foreach ($ref_types as $type) {
-                    $query->orWhereRaw('ref_type LIKE ?', ["%$type%"]);
-                }
+                $query->whereIn('ref_type', $ref_types);
             })
             ->filterColumn('from_party', function ($query, $keyword) {
                 return $query->whereHas('first_party', function ($sub_query) use ($keyword) {

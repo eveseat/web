@@ -22,9 +22,13 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
+use Seat\Eveapi\Models\Contracts\ContractDetail;
+use Seat\Eveapi\Models\Contracts\ContractItem;
 use Seat\Services\Repositories\Corporation\Contracts;
 use Seat\Services\Repositories\Seat\Filters\NamedIdFilter;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Corporation\Financial\ContractDataTable;
+use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 use Yajra\DataTables\DataTables;
 
 /**
@@ -40,10 +44,31 @@ class ContractsController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getContracts(int $corporation_id)
+    public function index(int $corporation_id, ContractDataTable $dataTable)
     {
 
-        return view('web::corporation.contracts');
+        return $dataTable->addScope(new CorporationScope([$corporation_id]))
+            ->render('web::corporation.contracts');
+    }
+
+    public function show(int $corporation_id, int $contract_id)
+    {
+        $contract = ContractDetail::with(
+            'acceptor',
+            'assignee',
+            'issuer',
+            'lines',
+            'lines.type',
+            'lines.type.group',
+            'start_location',
+            'start_location.system',
+            'start_location.system.region',
+            'end_location',
+            'end_location.system',
+            'end_location.system.region'
+        )->find($contract_id);
+
+        return view('web::common.contracts.content', compact('contract'));
     }
 
     /**
