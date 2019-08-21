@@ -23,13 +23,9 @@
 namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Eveapi\Models\Contracts\ContractDetail;
-use Seat\Eveapi\Models\Contracts\ContractItem;
-use Seat\Services\Repositories\Corporation\Contracts;
-use Seat\Services\Repositories\Seat\Filters\NamedIdFilter;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Financial\ContractDataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationScope;
-use Yajra\DataTables\DataTables;
 
 /**
  * Class ContractsController.
@@ -37,8 +33,6 @@ use Yajra\DataTables\DataTables;
  */
 class ContractsController extends Controller
 {
-    use Contracts, NamedIdFilter;
-
     /**
      * @param $corporation_id
      *
@@ -51,6 +45,11 @@ class ContractsController extends Controller
             ->render('web::corporation.contracts');
     }
 
+    /**
+     * @param int $corporation_id
+     * @param int $contract_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show(int $corporation_id, int $contract_id)
     {
         $contract = ContractDetail::with(
@@ -69,74 +68,5 @@ class ContractsController extends Controller
         )->find($contract_id);
 
         return view('web::common.contracts.content', compact('contract'));
-    }
-
-    /**
-     * @param int $corporation_id
-     *
-     * @return mixed
-     * @throws \Exception
-     */
-    public function getContractsData(int $corporation_id)
-    {
-
-        $contracts = $this->getCorporationContracts($corporation_id, false);
-
-        return DataTables::of($contracts)
-            ->editColumn('issuer_id', function ($row) {
-
-                return view('web::partials.contractissuer', compact('row'))
-                    ->render();
-            })
-            ->editColumn('type', function ($row) {
-
-                return view('web::partials.contracttype', compact('row'))
-                    ->render();
-            })
-            ->editColumn('status', function ($row) {
-
-                return ucfirst($row->status);
-
-            })
-            ->editColumn('price', function ($row) {
-
-                return number($row->price);
-            })
-            ->editColumn('reward', function ($row) {
-
-                return number($row->reward);
-            })
-            ->addColumn('contents', function ($row) {
-
-                return view('web::partials.contractcontentsbutton', compact('row'));
-            })
-            ->filterColumn('issuer_id', function ($query, $keyword) {
-
-                $query->whereIn('a.issuer_id', $this->getIdsForNames($keyword)->toArray());
-            })
-            ->filterColumn('assignee_id', function ($query, $keyword) {
-
-                $query->whereIn('a.assignee_id', $this->getIdsForNames($keyword)->toArray());
-            })
-            ->filterColumn('acceptor_id', function ($query, $keyword) {
-
-                $query->whereIn('a.acceptor_id', $this->getIdsForNames($keyword)->toArray());
-            })
-            ->rawColumns(['issuer_id', 'type', 'contents'])
-            ->make(true);
-    }
-
-    /**
-     * @param int $corporation_id
-     * @param int $contract_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getContractsItemsData(int $corporation_id, int $contract_id)
-    {
-
-        $assets = $this->getCorporationContractsItems($corporation_id, $contract_id);
-
-        return view('web::corporation.contractitems', compact('assets'));
     }
 }
