@@ -37,6 +37,7 @@
             .done(function (data) {
                 body.html(data);
                 ids_to_names();
+                $("[data-toggle=tooltip]").tooltip();
             });
     });
   </script>

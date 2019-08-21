@@ -1,51 +1,84 @@
-<h4>Parties</h4>
-<table class="table no-border">
+<h4 class="page-header">Parties</h4>
+<table class="table table-condensed no-border">
   <thead>
     <tr>
-      <th>Issuer</th>
-      <th>Assignee</th>
-      <th>Acceptor</th>
+      <th class="col-md-4 text-center">Issuer</th>
+      <th class="col-md-4 text-center">Assignee</th>
+      <th class="col-md-4 text-center">Acceptor</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>
+      <td class="text-center">
         @include('web::partials.character', ['character' => $contract->issuer->entity_id])
       </td>
-      <td>
+      <td class="text-center">
         @include('web::partials.character', ['character' => $contract->assignee->entity_id])
       </td>
-      <td>
+      <td class="text-center">
         @include('web::partials.character', ['character' => $contract->acceptor->entity_id])
       </td>
     </tr>
   </tbody>
 </table>
 
-<h4>Area</h4>
-<table class="table no-border">
+<h4 class="page-header">Area</h4>
+<table class="table table-condensed no-border">
   <tbody>
     <tr>
-      <th>From Location</th>
-      <td>{{ $contract->start_location->name }} - {{ $contract->start_location->system->itemName }} - {{ $contract->start_location->system->region->itemName }}</td>
+      <th>Start Location</th>
+      <td>{{ $contract->start_location->name }} - {{ $contract->start_location->system->constellation->itemName }} - {{ $contract->start_location->system->region->itemName }}</td>
     </tr>
     <tr>
       <th>End Location</th>
-      <td>{{ $contract->end_location->name }} - {{ $contract->end_location->system->itemName }} - {{ $contract->end_location->system->region->itemName }}</td>
+      <td>{{ $contract->end_location->name }} - {{ $contract->end_location->system->constellation->itemName }} - {{ $contract->end_location->system->region->itemName }}</td>
     </tr>
   </tbody>
 </table>
 
-<h4>Specifications</h4>
-<table class="table no-border">
+<h4 class="page-header">Specifications</h4>
+<table class="table table-condensed no-border">
   <tbody>
     <tr>
       <th>Type</th>
-      <td></td>
+      <td>
+        @switch($contract->type)
+          @case('item_exchange')
+          <span class="fa fa-exchange"></span>
+          @break
+          @case('auction')
+          <span class="fa fa-gavel"></span>
+          @break
+          @case('courier')
+          <span class="fa fa-truck"></span>
+          @break
+          @case('loan')
+          <span class="fa fa-handshake-o"></span>
+          @break
+        @endswitch
+        {{ trans(sprintf('web::contract.%s', $contract->type)) }}
+      </td>
     </tr>
     <tr>
       <th>Status</th>
-      <td></td>
+      <td>
+        @switch($contract->status)
+          @case('cancelled')
+          <span class="text-orange"><i class="fa fa-ban"></i> {{ trans(sprintf('web::contract.%s', $contract->status)) }}</span>
+          @break
+          @case('deleted')
+          <span><i class="fa fa-trash"></i> {{ trans(sprintf('web::contract.%s', $contract->status)) }}</span>
+          @break
+          @case('failed')
+          <span class="text-danger"><i class="fa fa-bomb"></i> {{ trans(sprintf('web::contract.%s', $contract->status)) }}</span>
+          @break
+          @case('finished')
+          <span class="text-green"><i class="fa fa-check"></i> {{ trans(sprintf('web::contract.%s', $contract->status)) }}</span>
+          @break
+          @default
+          {{ trans(sprintf('web::contract.%s', $contract->status)) }}
+        @endswitch
+      </td>
     </tr>
     <tr>
       <th>Title</th>
@@ -54,46 +87,62 @@
   </tbody>
 </table>
 
-<h4>Delays</h4>
+<h4 class="page-header">Delays</h4>
 <div class="row">
   <div class="col-md-6">
-    <div class="row">
-      <div class="col-md-6">
-        <strong>Issued</strong>
-      </div>
-      <div class="col-md-6"></div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <strong>Expires</strong>
-      </div>
-      <div class="col-md-6"></div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <strong>Accepted</strong>
-      </div>
-      <div class="col-md-6"></div>
-    </div>
+    <table class="table table-condensed no-border">
+      <tbody>
+        <tr>
+          <th>Issued</th>
+          <td>
+            @include('web::partials.date', ['datetime' => $contract->date_issued])
+          </td>
+        </tr>
+        <tr>
+          <th>Expires</th>
+          <td>
+            @include('web::partials.date', ['datetime' => $contract->date_expired])
+          </td>
+        </tr>
+        <tr>
+          <th>Accepted</th>
+          <td>
+            @if(is_null($contract->date_accepted))
+              {{ trans('web::contract.not_accepted') }}
+            @else
+              @include('web::partials.date', ['datetime' => $contract->date_accepted])
+            @endif
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
   <div class="col-md-6">
-    <div class="row">
-      <div class="col-md-6">
-        <strong>Days to Complete</strong>
-      </div>
-      <div class="col-md-6"></div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <strong>Days Completed</strong>
-      </div>
-      <div class="col-md-6"></div>
-    </div>
+    <table class="table table-condensed no-border">
+      <tbody>
+      <tr>
+        <th>Days to Complete</th>
+        <td>
+          @if($contract->type == 'courier')
+            {{ $contract->days_to_complete ?: 0 }}
+          @endif
+        </td>
+      </tr>
+      <tr>
+        <th>Days Completed</th>
+        <td>
+          @if(! is_null($contract->days_completed) && $contract->type == 'courier')
+            @include('web::partials.date', ['datetime' => $contract->days_completed])
+          @endif
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 
-<h4>Financial</h4>
-<table class="table no-border">
+<h4 class="page-header">Financial</h4>
+<table class="table table-condensed no-border">
   <thead>
     <tr>
       @if($contract->type == 'item_exchange')
@@ -112,66 +161,23 @@
   <tbody>
   <tr>
     @if($contract->type == 'item_exchange')
-    <td>{{ number($contract->price) }}</td>
+    <td>{{ number($contract->price) }} ISK</td>
     @endif
-    <td>{{ number($contract->reward) }}</td>
+    <td>{{ number($contract->reward) }} ISK</td>
     @if($contract->type == 'courier')
-    <td>{{ number($contract->collateral) }}</td>
+    <td>{{ number($contract->collateral) }} ISK</td>
     @endif
     @if($contract->type == 'auction')
-    <td>{{ number($contract->buyout) }}</td>
+    <td>{{ number($contract->buyout) }} ISK</td>
     @endif
-    <td>{{ number($contract->volume) }}</td>
+    <td>{{ number_metric($contract->volume) }} m3</td>
   </tr>
   </tbody>
 </table>
 
-<div class="row">
-  <div class="col-md-6">
-    {{-- Parties --}}
-    {{-- Issuer : Character + Corporation + Alliance - Row --}}
-    {{-- Assignee : Character + Corporation + Alliance - Row --}}
-    {{-- Acceptor : Character + Corporation + Alliance - Row --}}
-
-    {{-- Area --}}
-    {{-- From : Structure + System + Constellation + Region - Row --}}
-    {{-- To : Structure + System + Constellation + Region - Row --}}
-
-    {{-- Metadata --}}
-    {{-- Type + Icon --}}
-    {{-- Status + Color --}}
-    {{-- Title --}}
-
-    {{-- Delay --}}
-    {{-- Issued --}}
-    {{-- Expired --}}
-    {{-- Accepted --}}
-    {{-- Days To Complete --}}
-    {{-- Days Completed --}}
-
-    {{-- Financial --}}
-    {{-- Price --}}
-    {{-- Reward --}}
-    {{-- Collateral --}}
-    {{-- Buyout --}}
-    {{-- Volume --}}
-  </div>
-  <div class="col-md-6">
-
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-6">
-
-  </div>
-  <div class="col-md-6">
-
-  </div>
-</div>
-
 @if($contract->lines->isNotEmpty())
-<h4>Content</h4>
-<table class="table">
+<h4 class="page-header">Content</h4>
+<table class="table table-striped table-condensed">
   <thead>
     <tr>
       <th>Group</th>
