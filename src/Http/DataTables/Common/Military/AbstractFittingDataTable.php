@@ -21,7 +21,6 @@
 
 namespace Seat\Web\Http\DataTables\Common\Military;
 
-use Seat\Eveapi\Models\Contacts\CharacterFitting;
 use Yajra\DataTables\Services\DataTable;
 
 /**
@@ -39,6 +38,22 @@ abstract class AbstractFittingDataTable extends DataTable
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
+            ->addColumn('type', function ($row) {
+                return view('web::partials.type', ['type_id' => $row->ship->typeID, 'type_name' => $row->ship->typeName]);
+            })
+            ->addColumn('items', function ($row) {
+                return $row->items->count();
+            })
+            ->addColumn('hull_estimated_value', function ($row) {
+                return number($row->ship->price->adjusted_price);
+            })
+            ->addColumn('fitting_estimated_value', function ($row) {
+                return number($row->estimated_price);
+            })
+            ->editColumn('action', function ($row) {
+                return view('web::common.fittings.buttons.insurance', ['type_id' => $row->ship->typeID]);
+            })
+            ->rawColumns(['type', 'action'])
             ->make(true);
     }
 
@@ -48,7 +63,9 @@ abstract class AbstractFittingDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->columns($this->getColumns());
+            ->postAjax()
+            ->columns($this->getColumns())
+            ->addAction();
     }
 
     /**
@@ -62,7 +79,11 @@ abstract class AbstractFittingDataTable extends DataTable
     public function getColumns()
     {
         return [
-
+            ['data' => 'name', 'title' => trans('web::fitting.name')],
+            ['data' => 'type', 'title' => trans('web::fitting.type')],
+            ['data' => 'items', 'title' => trans('web::fitting.items')],
+            ['data' => 'hull_estimated_value', 'title' => trans('web::fitting.hull_estimated_value')],
+            ['data' => 'fitting_estimated_value', 'title' => trans('web::fitting.fitting_estimated_value')],
         ];
     }
 }

@@ -22,36 +22,7 @@
     </div>
     <div class="panel-body">
 
-      <table class="table datatable compact table-condensed table-hover table-responsive">
-        <thead>
-        <th>{{ trans_choice('web::seat.type', 1) }}</th>
-        <th>{{ trans_choice('web::seat.name', 2) }}</th>
-        <th>{{ trans_choice('web::seat.item', 2) }}</th>
-        <th data-orderable="false"></th>
-        </thead>
-        <tbody>
-
-        @foreach($fittings as $fitting)
-
-          <tr>
-            <td>{{ $fitting->name }}</td>
-            <td>
-              {!! img('type', $fitting->ship_type_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-              {{ $fitting->shiptype->typeName }}
-            </td>
-            <td>{{ count($fitting->items) }}</td>
-            <td>
-              <a href="#" class="fitting-item" data-toggle="modal" data-target="#fittingItemsModal"
-                 a-fitting-id="{{ $fitting->fitting_id }}">
-                <i class="fa fa-expand"></i>
-              </a>
-            </td>
-          </tr>
-
-        @endforeach
-
-        </tbody>
-      </table>
+      {{ $dataTable->table() }}
 
     </div>
   </div>
@@ -75,35 +46,24 @@
     </div>
   </div>
 
+  @include('web::common.fittings.modals.insurances.insurances')
+
 @stop
 
 @push('javascript')
 
+  {{ $dataTable->scripts() }}
+
   <script>
+      $('#insurances-detail').on('show.bs.modal', function (e) {
+          var body = $(e.target).find('.modal-body');
+          body.html('Loading...');
 
-    $(document).ready(function () {
-
-      // Load images when they are in the viewport
-      $("img").unveil(100);
-
-      // After loading the contracts data, bind a click event
-      // on items with the contract-item class.
-      $('a.fitting-item').on('click', function () {
-
-        // Small hack to get an ajaxable url from Laravel
-        var url = "{{ route('character.view.fittings.items', ['character_id' => $request->character_id, 'fitting_id' => ':fittingid']) }}";
-        var fitting_id = $(this).attr('a-fitting-id');
-        url = url.replace(':fittingid', fitting_id);
-
-        // Perform an ajax request for the contract items
-        $.get(url, function (data) {
-          $('span#fittings-items-result').html(data);
-        });
-
+          $.ajax($(e.relatedTarget).data('url'))
+              .done(function (data) {
+                  body.html(data);
+              });
       });
-
-    });
-
   </script>
 
 @endpush

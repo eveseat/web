@@ -22,8 +22,11 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
+use Seat\Eveapi\Models\Fittings\CharacterFitting;
 use Seat\Services\Repositories\Character\Fittings;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Character\Military\FittingDataTable;
+use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 
 /**
  * Class FittingController.
@@ -36,15 +39,25 @@ class FittingController extends Controller
 
     /**
      * @param int $character_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param \Seat\Web\Http\DataTables\Character\Military\FittingDataTable $dataTable
+     * @return mixed
      */
-    public function getFittings(int $character_id)
+    public function index(int $character_id, FittingDataTable $dataTable)
     {
+        return $dataTable->addScope(new CharacterScope([$character_id]))
+            ->render('web::character.fittings', compact('fittings'));
+    }
 
-        $fittings = $this->getCharacterFullFittings($character_id);
-
-        return view('web::character.fittings', compact('fittings'));
+    /**
+     * @param int $character_id
+     * @param int $fitting_id
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|object|\Seat\Eveapi\Models\Fittings\CharacterFitting|null
+     */
+    public function show(int $character_id, int $fitting_id)
+    {
+        $fitting = CharacterFitting::with('ship', 'items')->where('character_id', $character_id)
+            ->where('fitting_id', $fitting_id)
+            ->first();
     }
 
     /**

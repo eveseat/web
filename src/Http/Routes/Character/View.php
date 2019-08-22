@@ -78,16 +78,16 @@ Route::get('/{character_id}/contracts/{contract_id}', [
     'uses'       => 'ContractsController@show',
 ]);
 
-Route::get('/view/fittings/{character_id}', [
+Route::get('/{character_id}/fittings', [
     'as'         => 'character.view.fittings',
     'middleware' => 'characterbouncer:fittings',
-    'uses'       => 'FittingController@getFittings',
+    'uses'       => 'FittingController@index',
 ]);
 
-Route::get('/view/fittings/items/{character_id}/{fitting_id}', [
+Route::get('/{character_id}/fittings/{fitting_id}', [
     'as'         => 'character.view.fittings.items',
     'middleware' => 'characterbouncer:fittings',
-    'uses'       => 'FittingController@getFittingItems',
+    'uses'       => 'FittingController@show',
 ]);
 
 Route::get('/{character_id}/industry', [

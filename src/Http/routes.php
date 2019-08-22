@@ -74,6 +74,7 @@ Route::group([
             include __DIR__ . '/Routes/Support/List.php';
             include __DIR__ . '/Routes/Support/Resolve.php';
             include __DIR__ . '/Routes/Support/Search.php';
+            include __DIR__ . '/Routes/Support/Insurance.php';
         });
 
         // User Profile Routes

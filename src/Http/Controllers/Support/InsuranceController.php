@@ -19,29 +19,25 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\DataTables\Character\Military;
+namespace Seat\Web\Http\Controllers\Support;
 
-use Seat\Eveapi\Models\Fittings\CharacterFitting;
-use Seat\Web\Http\DataTables\Common\Military\AbstractFittingDataTable;
+use Seat\Eveapi\Models\Sde\InvType;
+use Seat\Web\Http\Controllers\Controller;
 
 /**
- * Class FittingDataTable
+ * Class CommonController
  *
- * @package Seat\Web\Http\DataTables\Character\Military
+ * @package Seat\Web\Http\Controllers\Support
  */
-class FittingDataTable extends AbstractFittingDataTable
+class InsuranceController extends Controller
 {
     /**
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param int $type_id
      */
-    public function query()
+    public function show(int $type_id)
     {
-        return CharacterFitting::with(
-            'ship',
-            'ship.price',
-            'items',
-            'items.type',
-            'items.type.price'
-            );
+        $ship = InvType::find($type_id);
+
+        return view('web::common.fittings.modals.insurances.content', compact('ship'));
     }
 }

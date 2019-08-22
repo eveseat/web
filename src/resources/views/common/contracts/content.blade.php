@@ -75,6 +75,9 @@
           @case('finished')
           <span class="text-green"><i class="fa fa-check"></i> {{ trans(sprintf('web::contract.%s', $contract->status)) }}</span>
           @break
+          @case('outstanding')
+          <span><i class="fa fa-clock-o"></i> {{ trans(sprintf('web::contract.%s', $contract->status)) }}</span>
+          @break
           @default
           {{ trans(sprintf('web::contract.%s', $contract->status)) }}
         @endswitch
