@@ -58,6 +58,8 @@ class FittingController extends Controller
         $fitting = CharacterFitting::with('ship', 'items')->where('character_id', $character_id)
             ->where('fitting_id', $fitting_id)
             ->first();
+
+        return view('web::common.fittings.modals.fitting.content', compact('fitting'));
     }
 
     /**

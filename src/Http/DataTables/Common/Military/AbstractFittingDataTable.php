@@ -48,10 +48,25 @@ abstract class AbstractFittingDataTable extends DataTable
                 return number($row->ship->price->adjusted_price);
             })
             ->addColumn('fitting_estimated_value', function ($row) {
+                return number($row->fitting_estimated_price);
+            })
+            ->addColumn('full_estimated_value', function ($row) {
                 return number($row->estimated_price);
             })
             ->editColumn('action', function ($row) {
-                return view('web::common.fittings.buttons.insurance', ['type_id' => $row->ship->typeID]);
+                $detail_parameters = [
+                    'fitting_id' => $row->fitting_id,
+                ];
+
+                if (isset($row->corporation_id))
+                    $detail_parameters['corporation_id'] = $row->corporation_id;
+
+                if (isset($row->character_id))
+                    $detail_parameters['character_id'] = $row->character_id;
+
+                return
+                    view('web::common.fittings.buttons.insurance', ['type_id' => $row->ship->typeID]) . ' ' .
+                    view('web::common.fittings.buttons.detail', $detail_parameters);
             })
             ->rawColumns(['type', 'action'])
             ->make(true);
@@ -84,6 +99,7 @@ abstract class AbstractFittingDataTable extends DataTable
             ['data' => 'items', 'title' => trans('web::fitting.items')],
             ['data' => 'hull_estimated_value', 'title' => trans('web::fitting.hull_estimated_value')],
             ['data' => 'fitting_estimated_value', 'title' => trans('web::fitting.fitting_estimated_value')],
+            ['data' => 'full_estimated_value', 'title' => trans('web::fitting.full_estimated_value')],
         ];
     }
 }

@@ -46,6 +46,7 @@
     </div>
   </div>
 
+  @include('web::common.fittings.modals.fitting.fitting')
   @include('web::common.fittings.modals.insurances.insurances')
 
 @stop
@@ -55,6 +56,16 @@
   {{ $dataTable->scripts() }}
 
   <script>
+      $('#fitting-detail').on('show.bs.modal', function (e) {
+          var body = $(e.target).find('.modal-body');
+          body.html('Loading...');
+
+          $.ajax($(e.relatedTarget).data('url'))
+              .done(function (data) {
+                  body.html(data);
+              });
+      });
+
       $('#insurances-detail').on('show.bs.modal', function (e) {
           var body = $(e.target).find('.modal-body');
           body.html('Loading...');

@@ -25,4 +25,5 @@ return [
     'items'           => 'Items',
     'hull_estimated_value' => 'Hull Estimated Value',
     'fitting_estimated_value' => 'Fitting Estimated Value',
+    'full_estimated_value' => 'Full Estimated Value',
 ];
