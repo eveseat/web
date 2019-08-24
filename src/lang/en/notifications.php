@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of SeAT
  *
@@ -20,28 +19,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\Controllers\Character;
-
-use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Http\DataTables\Character\Intel\NotificationDataTable;
-use Seat\Web\Http\DataTables\Scopes\CharacterScope;
-
-/**
- * Class NotificationsController
- *
- * @package Seat\Web\Http\Controllers\Character
- */
-class NotificationsController extends Controller
-{
-    /**
-     * @param int $character_id
-     * @param \Seat\Web\Http\DataTables\Character\Intel\NotificationDataTable $dataTable
-     * @return mixed
-     */
-    public function index(int $character_id, NotificationDataTable $dataTable)
-    {
-        return $dataTable
-            ->addScope(new CharacterScope([$character_id]))
-            ->render('web::character.notifications', compact('notifications'));
-    }
-}
+return [
+    'date'   => 'Date',
+    'type'   => 'Type',
+    'sender' => 'Sender',
+];

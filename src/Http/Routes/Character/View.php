@@ -271,10 +271,10 @@ Route::get('/{character_id}/mining-ledger', [
     'uses'       => 'MiningLedgerController@show',
 ]);
 
-Route::get('/view/notifications/{character_id}', [
+Route::get('/{character_id}/notifications', [
     'as'         => 'character.view.notifications',
     'middleware' => 'characterbouncer:notifications',
-    'uses'       => 'NotificationsController@getNotifications',
+    'uses'       => 'NotificationsController@index',
 ]);
 
 Route::get('/view/pi/{character_id}', [

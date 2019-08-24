@@ -39,6 +39,25 @@ class NotificationDataTable extends DataTable
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
+            ->editColumn('timestamp', function ($row) {
+                return view('web::partials.date', ['datetime' => $row->timestamp]);
+            })
+            ->editColumn('type', function ($row) {
+                return view('web::character.notification', compact('row'));
+            })
+            ->addColumn('sender', function ($row) {
+                switch ($row->sender->category) {
+                    case 'alliance':
+                        return view('web::partials.alliance', ['alliance' => $row->sender->entity_id]);
+                    case 'corporation':
+                        return view('web::partials.corporation', ['corporation' => $row->sender->entity_id]);
+                    case 'character':
+                        return view('web::partials.character', ['character' => $row->sender->entity_id]);
+                }
+
+                return $row->sender->name;
+            })
+            ->rawColumns(['timestamp', 'sender', 'type'])
             ->make(true);
     }
 
@@ -48,7 +67,11 @@ class NotificationDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->columns($this->getColumns());
+            ->postAjax()
+            ->columns($this->getColumns())
+            ->parameters([
+                'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); $("[data-toggle=popover]").popover(); ids_to_names(); }',
+            ]);
     }
 
     /**
@@ -56,7 +79,7 @@ class NotificationDataTable extends DataTable
      */
     public function query()
     {
-        return CharacterNotification::query();
+        return CharacterNotification::with('sender');
     }
 
     /**
@@ -65,7 +88,9 @@ class NotificationDataTable extends DataTable
     public function getColumns()
     {
         return [
-
+            ['data' => 'timestamp', 'title' => trans('web::notifications.date')],
+            ['data' => 'sender', 'title' => trans('web::notifications.sender')],
+            ['data' => 'type', 'title' => trans('web::notifications.type')],
         ];
     }
 }
