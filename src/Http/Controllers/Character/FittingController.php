@@ -55,7 +55,8 @@ class FittingController extends Controller
      */
     public function show(int $character_id, int $fitting_id)
     {
-        $fitting = CharacterFitting::with('ship', 'items')->where('character_id', $character_id)
+        $fitting = CharacterFitting::with('ship', 'items', 'ship.price', 'items.type', 'items.type.price')
+            ->where('character_id', $character_id)
             ->where('fitting_id', $fitting_id)
             ->first();
 

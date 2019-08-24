@@ -29,40 +29,40 @@
 
 @include('web::common.fittings.modals.fitting.slots', [
   'title' => 'Sub-Systems Slots',
-  'rows' => $fitting->items->filter(function ($value) { return strpos($value->flag, 'SubSystemSlot') !== false; })
+  'rows' => $fitting->sub_systems,
 ])
 
 @include('web::common.fittings.modals.fitting.slots', [
   'title' => 'High Slots',
-  'rows' => $fitting->items->filter(function ($value) { return strpos($value->flag, 'HiSlot') !== false; })
+  'rows' => $fitting->high_slots,
 ])
 
 @include('web::common.fittings.modals.fitting.slots', [
   'title' => 'Medium Slots',
-  'rows' => $fitting->items->filter(function ($value) { return strpos($value->flag, 'MedSlot') !== false; })
+  'rows' => $fitting->medium_slots,
 ])
 
 @include('web::common.fittings.modals.fitting.slots', [
   'title' => 'Low Slots',
-  'rows' => $fitting->items->filter(function ($value) { return strpos($value->flag, 'LoSlot') !== false; })
+  'rows' => $fitting->low_slots,
 ])
 
 @include('web::common.fittings.modals.fitting.slots', [
   'title' => 'Rigs Slots',
-  'rows' => $fitting->items->filter(function ($value) { return strpos($value->flag, 'RigSlot') !== false; })
+  'rows' => $fitting->rig_slots,
 ])
 
 @include('web::common.fittings.modals.fitting.slots', [
-  'title' => 'Fighters Bays',
-  'rows' => $fitting->items->where('flag', 'FighterBay')
+  'title' => 'Fighters Bay',
+  'rows' => $fitting->fighters_bay,
 ])
 
 @include('web::common.fittings.modals.fitting.slots', [
-  'title' => 'Drones Bays',
-  'rows' => $fitting->items->where('flag', 'DroneBay')
+  'title' => 'Drones Bay',
+  'rows' => $fitting->drones_bay,
 ])
 
 @include('web::common.fittings.modals.fitting.slots', [
   'title' => 'Cargo',
-  'rows' => $fitting->items->where('flag', 'Cargo')
+  'rows' => $fitting->cargo,
 ])

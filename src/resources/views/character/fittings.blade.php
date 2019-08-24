@@ -75,6 +75,21 @@
                   body.html(data);
               });
       });
+
+      $(document).on('click', '.copy-fitting', function (e) {
+          var buffer = $(this).data('export');
+
+          $('body').append('<textarea id="copied-fitting"></textarea>');
+          $('#copied-fitting').val(buffer);
+          document.getElementById('copied-fitting').select();
+          document.execCommand('copy');
+          document.getElementById('copied-fitting').remove();
+
+          $(this).attr('data-original-title', 'Copied !')
+              .tooltip('show');
+
+          $(this).attr('data-original-title', 'Copy to clipboard');
+      });
   </script>
 
 @endpush

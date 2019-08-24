@@ -66,7 +66,8 @@ abstract class AbstractFittingDataTable extends DataTable
 
                 return
                     view('web::common.fittings.buttons.insurance', ['type_id' => $row->ship->typeID]) . ' ' .
-                    view('web::common.fittings.buttons.detail', $detail_parameters);
+                    view('web::common.fittings.buttons.detail', $detail_parameters) . ' ' .
+                    view('web::common.fittings.buttons.export', ['data_export' => $row->toEve()]);
             })
             ->filterColumn('type', function ($query, $keyword) {
                 $query->whereHas('ship', function ($sub_query) use ($keyword) {
@@ -92,7 +93,10 @@ abstract class AbstractFittingDataTable extends DataTable
         return $this->builder()
             ->postAjax()
             ->columns($this->getColumns())
-            ->addAction();
+            ->addAction()
+            ->parameters([
+                'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); }',
+            ]);
     }
 
     /**
