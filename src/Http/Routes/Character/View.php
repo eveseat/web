@@ -51,7 +51,7 @@ Route::get('/view/assets/{character_id}/details', [
 Route::get('/view/bookmarks/{character_id}', [
     'as'         => 'character.view.bookmarks',
     'middleware' => 'characterbouncer:bookmarks',
-    'uses'       => 'BookmarksController@getBookmarks',
+    'uses'       => 'BookmarksController@index',
 ]);
 
 Route::get('/{character_id}/calendar', [

@@ -19,23 +19,10 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\DataTables\Character\Intel;
-
-use Seat\Eveapi\Models\Bookmarks\CharacterBookmark;
-use Seat\Web\Http\DataTables\Common\Intel\AbstractBookmarkDataTable;
-
-/**
- * Class BookmarkDataTable
- *
- * @package Seat\Web\Http\DataTables\Character\Intel
- */
-class BookmarkDataTable extends AbstractBookmarkDataTable
-{
-    /**
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function query()
-    {
-        return CharacterBookmark::with('folder');
-    }
-}
+return [
+    'created'     => 'Created',
+    'label'       => 'Label',
+    'location'    => 'Location',
+    'notes'       => 'Notes',
+    'coordinates' => 'Coordinates',
+];

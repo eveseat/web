@@ -22,23 +22,22 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
-use Seat\Services\Repositories\Corporation\Bookmarks;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Corporation\Intel\BookmarkDataTable;
+use Seat\Web\Http\DataTables\Scopes\BookmarkCorporationScope;
 
 class BookmarksController extends Controller
 {
-    use Bookmarks;
 
     /**
-     * @param $corporation_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param int $corporation_id
+     * @param \Seat\Web\Http\DataTables\Corporation\Intel\BookmarkDataTable $dataTable
+     * @return mixed
      */
-    public function getBookmarks(int $corporation_id)
+    public function index(int $corporation_id, BookmarkDataTable $dataTable)
     {
-
-        $bookmarks = $this->getCorporationBookmarks($corporation_id);
-
-        return view('web::corporation.bookmarks', compact('bookmarks'));
+        return $dataTable
+            ->addScope(new BookmarkCorporationScope([$corporation_id]))
+            ->render('web::corporation.bookmarks');
     }
 }

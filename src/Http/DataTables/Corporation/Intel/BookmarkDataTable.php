@@ -19,15 +19,15 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\DataTables\Character\Intel;
+namespace Seat\Web\Http\DataTables\Corporation\Intel;
 
-use Seat\Eveapi\Models\Bookmarks\CharacterBookmark;
+use Seat\Eveapi\Models\Bookmarks\CorporationBookmark;
 use Seat\Web\Http\DataTables\Common\Intel\AbstractBookmarkDataTable;
 
 /**
- * Class BookmarkDataTable
+ * Class ContactDataTable
  *
- * @package Seat\Web\Http\DataTables\Character\Intel
+ * @package Seat\Web\Http\DataTables\Corporation\Intel
  */
 class BookmarkDataTable extends AbstractBookmarkDataTable
 {
@@ -36,6 +36,6 @@ class BookmarkDataTable extends AbstractBookmarkDataTable
      */
     public function query()
     {
-        return CharacterBookmark::with('folder');
+        return CorporationBookmark::with('folder');
     }
 }

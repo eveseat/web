@@ -19,23 +19,40 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\DataTables\Character\Intel;
+namespace Seat\Web\Http\DataTables\Scopes;
 
-use Seat\Eveapi\Models\Bookmarks\CharacterBookmark;
-use Seat\Web\Http\DataTables\Common\Intel\AbstractBookmarkDataTable;
+use Yajra\DataTables\Contracts\DataTableScope;
 
 /**
- * Class BookmarkDataTable
+ * Class BookmarkCharacterScope
  *
- * @package Seat\Web\Http\DataTables\Character\Intel
+ * @package Seat\Web\Http\DataTables\Scopes
  */
-class BookmarkDataTable extends AbstractBookmarkDataTable
+class BookmarkCharacterScope implements DataTableScope
 {
     /**
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @var array
      */
-    public function query()
+    private $character_ids = [];
+
+    /**
+     * CharacterScope constructor.
+     *
+     * @param array $character_ids
+     */
+    public function __construct(array $character_ids)
     {
-        return CharacterBookmark::with('folder');
+        $this->character_ids = $character_ids;
+    }
+
+    /**
+     * Apply a query scope.
+     *
+     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
+     * @return mixed
+     */
+    public function apply($query)
+    {
+        return $query->whereIn('character_bookmarks.character_id', $this->character_ids);
     }
 }
