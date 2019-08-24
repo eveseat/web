@@ -18,5 +18,7 @@
 @stop
 
 @push('javascript')
+
   {!! $dataTable->scripts() !!}
+
 @endpush

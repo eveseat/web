@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of SeAT
  *
@@ -20,29 +19,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\Controllers\Character;
+return [
+    'date'          => 'Date',
+    'owner'         => 'Owner',
+    'description'   => 'Description',
+    'status'        => 'Status',
 
-use Seat\Services\Repositories\Character\Calendar;
-use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Http\DataTables\Character\Intel\CalendarDataTable;
-use Seat\Web\Http\DataTables\Scopes\CharacterScope;
-
-/**
- * Class CalendarController
- *
- * @package Seat\Web\Http\Controllers\Character
- */
-class CalendarController extends Controller
-{
-    /**
-     * @param int $character_id
-     * @param \Seat\Web\Http\DataTables\Character\Intel\CalendarDataTable $dataTable
-     * @return mixed
-     */
-    public function index(int $character_id, CalendarDataTable $dataTable)
-    {
-        return $dataTable
-            ->addScope(new CharacterScope([$character_id]))
-            ->render('web::character.calendar');
-    }
-}
+    'not_responded' => 'Not responded',
+    'accepted'      => 'Accepted',
+    'tentative'     => 'Tentative',
+    'declined'      => 'Declined',
+];

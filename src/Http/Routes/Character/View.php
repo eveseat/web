@@ -54,10 +54,10 @@ Route::get('/view/bookmarks/{character_id}', [
     'uses'       => 'BookmarksController@getBookmarks',
 ]);
 
-Route::get('/view/calendar/{character_id}', [
+Route::get('/{character_id}/calendar', [
     'as'         => 'character.view.calendar',
     'middleware' => 'characterbouncer:calendar',
-    'uses'       => 'CalendarController@getCalendar',
+    'uses'       => 'CalendarController@index',
 ]);
 
 Route::get('/{character_id}/contacts', [
