@@ -20,9 +20,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/list', [
+Route::get('/', [
     'as'   => 'character.list',
-    'uses' => 'CharacterController@getCharacters',
+    'uses' => 'CharacterController@index',
 ]);
 
 Route::get('/list/data', [

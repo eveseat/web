@@ -51,8 +51,8 @@
 
         <dt>{{ trans('web::seat.joined_curr_corp') }}</dt>
         <dd>
-            @if(!is_null($summary->corporation()))
-              {{ human_diff($summary->corporation()->start_date) }}
+            @if(!is_null($summary->current_corporation))
+              {{ human_diff($summary->current_corporation->start_date) }}
             @endif
         </dd>
 

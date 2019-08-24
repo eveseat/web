@@ -19,221 +19,38 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\Controllers;
+namespace Seat\Web\Http\Controllers\Character;
 
-use Seat\Web\Http\DataTables\Character\Financial\ContractDataTable;
-use Seat\Web\Http\DataTables\Character\Financial\MarketDataTable;
-use Seat\Web\Http\DataTables\Character\Financial\WalletJournalDataTable;
-use Seat\Web\Http\DataTables\Character\Financial\WalletTransactionDataTable;
-use Seat\Web\Http\DataTables\Character\Industrial\IndustryDataTable;
-use Seat\Web\Http\DataTables\Character\Industrial\MiningDataTable;
-use Seat\Web\Http\DataTables\Character\Industrial\PlanetaryInteractionDataTable;
-use Seat\Web\Http\DataTables\Character\Industrial\ResearchDataTable;
-use Seat\Web\Http\DataTables\Character\Intel\AssetDataTable;
-use Seat\Web\Http\DataTables\Character\Intel\BookmarkDataTable;
-use Seat\Web\Http\DataTables\Character\Intel\CalendarDataTable;
-use Seat\Web\Http\DataTables\Character\Intel\MailDataTable;
-use Seat\Web\Http\DataTables\Character\Intel\NotificationDataTable;
-use Seat\Web\Http\DataTables\Character\Military\FittingDataTable;
-use Seat\Web\Http\DataTables\Character\Military\KillMailDataTable;
-use Seat\Web\Http\DataTables\Character\Military\StandingDataTable;
+use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Character\CharacterDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 
 /**
  * Class CharacterController
  *
- * @package Seat\Web\Http\Controllers
+ * @package Seat\Web\Http\Controllers\Character
  */
 class CharacterController extends Controller
 {
+    /**
+     * @param \Seat\Web\Http\DataTables\Character\CharacterDataTable $dataTable
+     * @return mixed
+     */
+    public function index(CharacterDataTable $dataTable)
+    {
+        $owned_character_ids = auth()->user()->associatedCharacterIds();
+        $allowed_character_ids = array_get(auth()->user()->getAffiliationMap(), 'char');
+
+        if (auth()->user()->hasSuperUser())
+            return $dataTable->render('web::character.list');
+
+        return $dataTable
+            ->addScope(new CharacterScope(array_merge($owned_character_ids, $allowed_character_ids)))
+            ->render('web::character.list');
+    }
+
     public function show(int $character_id)
     {
 
-    }
-
-    /**
-     * @param \Seat\Web\Http\DataTables\Character\Intel\AssetDataTable $dataTable
-     * @return mixed
-     */
-    public function assets(AssetDataTable $dataTable)
-    {
-        return $dataTable
-            ->addScope(new CharacterScope())
-            ->render('web::character.assets');
-    }
-
-    /**
-     * @param \Seat\Web\Http\DataTables\Character\Intel\BookmarkDataTable $dataTable
-     * @return mixed
-     */
-    public function bookmarks(BookmarkDataTable $dataTable)
-    {
-        return $dataTable
-            ->addScope(new CharacterScope())
-            ->render('web::character.bookmarks');
-    }
-
-    /**
-     * @param \Seat\Web\Http\DataTables\Character\Intel\CalendarDataTable $dataTable
-     * @return mixed
-     */
-    public function calendars(CalendarDataTable $dataTable)
-    {
-        return $dataTable
-            ->addScope(new CharacterScope())
-            ->render('web::character.calendar');
-    }
-
-    /**
-     * @param \Seat\Web\Http\DataTables\Character\Financial\ContractDataTable $dataTable
-     * @return mixed
-     */
-    public function contracts(ContractDataTable $dataTable)
-    {
-        return $dataTable
-            ->addScope(new CharacterScope())
-            ->render('web::character.contracts');
-    }
-
-    /**
-     * @param \Seat\Web\Http\DataTables\Character\Military\FittingDataTable $dataTable
-     * @return mixed
-     */
-    public function fittings(FittingDataTable $dataTable)
-    {
-        return $dataTable
-            ->addScope(new CharacterScope())
-            ->render('web::character.fittings');
-    }
-
-    /**
-     * @param \Seat\Web\Http\DataTables\Character\Industrial\IndustryDataTable $dataTable
-     * @return mixed
-     */
-    public function industries(IndustryDataTable $dataTable)
-    {
-        return $dataTable
-            ->addScope(new CharacterScope())
-            ->render('web::character.industry');
-    }
-
-    /**
-     * @param \Seat\Web\Http\DataTables\Character\Military\KillMailDataTable $dataTable
-     * @return mixed
-     */
-    public function kill_mails(KillmailDataTable $dataTable)
-    {
-        return $dataTable
-            ->addScope(new CharacterScope())
-            ->render('web::character.killmails');
-    }
-
-    /**
-     * @param \Seat\Web\Http\DataTables\Character\Intel\MailDataTable $dataTable
-     * @return mixed
-     */
-    public function mails(MailDataTable $dataTable)
-    {
-        return $dataTable
-            ->addScope(new CharacterScope())
-            ->render('web::character.mail');
-    }
-
-    /**
-     * @param \Seat\Web\Http\DataTables\Character\Financial\MarketDataTable $dataTable
-     * @return mixed
-     */
-    public function markets(MarketDataTable $dataTable)
-    {
-        return $dataTable
-            ->addScope(new CharacterScope())
-            ->render('web::character.market');
-    }
-
-    /**
-     * @param \Seat\Web\Http\DataTables\Character\Industrial\MiningDataTable $dataTable
-     * @return mixed
-     */
-    public function mining(MiningDataTable $dataTable)
-    {
-        return $dataTable
-            ->addScope(new CharacterScope())
-            ->render('web::character.mining-ledger');
-    }
-
-    /**
-     * @param \Seat\Web\Http\DataTables\Character\Intel\NotificationDataTable $dataTable
-     * @return mixed
-     */
-    public function notifications(NotificationDataTable $dataTable)
-    {
-        return $dataTable
-            ->addScope(new CharacterScope())
-            ->render('web::character.notifications');
-    }
-
-    /**
-     * @param \Seat\Web\Http\DataTables\Character\Industrial\PlanetaryInteractionDataTable $dataTable
-     * @return mixed
-     */
-    public function planetary_interactions(PlanetaryInteractionDataTable $dataTable)
-    {
-        return $dataTable
-            ->addScope(new CharacterScope())
-            ->render('web::character.pi');
-    }
-
-    /**
-     * @param \Seat\Web\Http\DataTables\Character\Industrial\ResearchDataTable $dataTable
-     * @return mixed
-     */
-    public function researches(ResearchDataTable $dataTable)
-    {
-        return $dataTable
-            ->addScope(new CharacterScope())
-            ->render('web::character.research');
-    }
-
-    public function sheet(int $character_id)
-    {
-
-    }
-
-    public function skills(int $skills)
-    {
-
-    }
-
-    /**
-     * @param \Seat\Web\Http\DataTables\Character\Military\StandingDataTable $dataTable
-     * @return mixed
-     */
-    public function standings(StandingDataTable $dataTable)
-    {
-        return $dataTable
-            ->addScope(new CharacterScope())
-            ->render('web::character.standings');
-    }
-
-    /**
-     * @param \Seat\Web\Http\DataTables\Character\Financial\WalletJournalDataTable $dataTable
-     * @return mixed
-     */
-    public function wallet_journals(WalletJournalDataTable $dataTable)
-    {
-        return $dataTable
-            ->addScope(new CharacterScope())
-            ->render('web::character.wallet.journal.journal');
-    }
-
-    /**
-     * @param \Seat\Web\Http\DataTables\Character\Financial\WalletTransactionDataTable $dataTable
-     * @return mixed
-     */
-    public function wallet_transactions(WalletTransactionDataTable $dataTable)
-    {
-        return $dataTable
-            ->addScope(new CharacterScope())
-            ->render('web::character.wallet.transactions.transactions');
     }
 }
