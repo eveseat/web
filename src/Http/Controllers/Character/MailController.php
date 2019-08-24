@@ -24,8 +24,11 @@ namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
+use Seat\Eveapi\Models\Mail\MailHeader;
 use Seat\Services\Repositories\Character\Mail;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Character\Intel\MailDataTable;
+use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 use Seat\Web\Models\User;
 use Yajra\DataTables\DataTables;
 
@@ -38,15 +41,31 @@ class MailController extends Controller
     use Mail;
 
     /**
-     * @param $character_id
-     *
-     * @return \Illuminate\View\View
+     * @param int $character_id
+     * @param \Seat\Web\Http\DataTables\Character\Intel\MailDataTable $dataTable
+     * @return mixed
      */
-    public function getMail(int $character_id)
+    public function index(int $character_id, MailDataTable $dataTable)
     {
 
-        return view('web::character.mail');
+        return $dataTable
+            ->addScope(new CharacterScope([$character_id]))
+            ->render('web::character.mail');
 
+    }
+
+    /**
+     * @param int $character_id
+     * @param int $mail_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show(int $character_id, int $mail_id)
+    {
+        $mail = MailHeader::with('body', 'sender', 'recipients', 'recipients.entity')
+            ->where('mail_id', $mail_id)
+            ->first();
+
+        return view('web::common.mails.modals.read.content', compact('mail'));
     }
 
     /**

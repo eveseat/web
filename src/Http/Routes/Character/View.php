@@ -241,22 +241,22 @@ Route::get('/view/mail/timeline/read/{message_id}', [
     'uses' => 'MailController@getMailTimelineRead',
 ]);
 
-Route::get('/view/mail/{character_id}', [
+Route::get('/{character_id}/mail', [
     'as'         => 'character.view.mail',
     'middleware' => 'characterbouncer:mail',
-    'uses'       => 'MailController@getMail',
+    'uses'       => 'MailController@index',
+]);
+
+Route::get('/{character_id}/mail/{message_id}', [
+    'as'         => 'character.view.mail.read',
+    'middleware' => 'characterbouncer:mail',
+    'uses'       => 'MailController@show',
 ]);
 
 Route::get('/view/mail/data/{character_id}', [
     'as'         => 'character.view.mail.data',
     'middleware' => 'characterbouncer:mail',
     'uses'       => 'MailController@getMailData',
-]);
-
-Route::get('/view/mail/{character_id}/read/{message_id}', [
-    'as'         => 'character.view.mail.read',
-    'middleware' => 'characterbouncer:mail',
-    'uses'       => 'MailController@getMailRead',
 ]);
 
 Route::get('/{character_id}/markets', [

@@ -39,6 +39,40 @@ class MailDataTable extends DataTable
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
+            ->editColumn('timestamp', function ($row) {
+                return view('web::partials.date', ['datetime' => $row->timestamp]);
+            })
+            ->editColumn('action', function ($row) {
+                return view('web::common.mails.buttons.read', ['character_id' => $row->character_id, 'mail_id' => $row->mail_id]);
+            })
+            ->addColumn('sender', function ($row) {
+                switch ($row->sender->category) {
+                    case 'character':
+                        return view('web::partials.character', ['character' => $row->sender->entity_id]);
+                    case 'corporation':
+                        return view('web::partials.corporation', ['corporation' => $row->sender->entity_id]);
+                    case 'alliance':
+                        return view('web::partials.alliance', ['alliance' => $row->sender->entity_id]);
+                }
+
+                return '';
+            })
+            ->addColumn('recipients', function ($row) {
+                return view('web::common.mails.modals.read.tags', compact('row'));
+            })
+            ->filterColumn('sender', function ($query, $keyword) {
+                return $query->whereHas('sender', function ($sub_query) use ($keyword) {
+                    return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
+                });
+            })
+            ->filterColumn('recipients', function ($query, $keyword) {
+                return $query->whereHas('recipients.entity', function ($sub_query) use ($keyword) {
+                    return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
+                })->orWhereHas('recipients.mailing_list', function ($sub_query) use ($keyword) {
+                    return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
+                });
+            })
+            ->rawColumns(['timestamp', 'sender', 'subject', 'recipients', 'action'])
             ->make(true);
     }
 
@@ -48,7 +82,9 @@ class MailDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->columns($this->getColumns());
+            ->postAjax()
+            ->columns($this->getColumns())
+            ->addAction();
     }
 
     /**
@@ -56,7 +92,7 @@ class MailDataTable extends DataTable
      */
     public function query()
     {
-        return MailHeader::query();
+        return MailHeader::with('sender', 'body', 'recipients', 'recipients.entity', 'recipients.mailing_list');
     }
 
     /**
@@ -65,7 +101,11 @@ class MailDataTable extends DataTable
     public function getColumns()
     {
         return [
-
+            ['data' => 'timestamp', 'title' => trans('web::mail.date')],
+            ['data' => 'sender', 'title' => trans('web::mail.sender'), 'orderable' => false],
+            ['data' => 'subject', 'title' => trans('web::mail.subject')],
+            ['data' => 'recipients', 'title' => trans('web::mail.recipients')],
+            ['data' => 'body.body', 'visible' => false],
         ];
     }
 }
