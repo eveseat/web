@@ -25,6 +25,8 @@ namespace Seat\Web\Http\Controllers\Corporation;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Corporation\Corporation;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Corporation\CorporationDataTable;
+use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 use Yajra\DataTables\DataTables;
 
 /**
@@ -33,69 +35,23 @@ use Yajra\DataTables\DataTables;
  */
 class CorporationsController extends Controller
 {
-    use Corporation;
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getCorporations()
+    public function index(CorporationDataTable $dataTable)
     {
+        if (auth()->user()->hasSuperUser())
+            return $dataTable->render('web::corporation.list');
 
-        return view('web::corporation.list');
+        $allowed_corporation_ids = array_get(auth()->user()->getAffiliationMap(), 'corp');
 
-    }
-
-    /**
-     * @return mixed
-     * @throws \Exception
-     */
-    public function getCorporationsData()
-    {
-
-        $corporations = $this->getAllCorporationsWithAffiliationsAndFilters();
-
-        return DataTables::of($corporations)
-            // Edit some columns to include links and icons
-            ->editColumn('name', function ($row) {
-
-                return view('web::corporation.partials.corporationname', compact('row'))
-                    ->render();
-            })
-            ->editColumn('ceo_id', function ($row) {
-
-                return view('web::corporation.partials.ceoname', compact('row'))
-                    ->render();
-            })
-            ->editColumn('alliance_id', function ($row) {
-
-                return view('web::corporation.partials.alliancename', compact('row'))
-                    ->render();
-            })
-            ->editColumn('tax_rate', function ($row) {
-
-                return sprintf('%d%%', $row->tax_rate * 100);
-            })
-            ->editColumn('actions', function ($row) {
-
-                return view('web::corporation.partials.delete', compact('row'))
-                    ->render();
-            })
-            ->rawColumns(['name', 'ceo_id', 'alliance_id', 'actions'])
-            ->make(true);
+        return $dataTable
+            ->addScope(new CorporationScope($allowed_corporation_ids))
+            ->render('web::corporation.list');
     }
 
     /**
      * @param int $corporation_id
-     *
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function deleteCorporation(int $corporation_id)
+    public function show(int $corporation_id)
     {
 
-        CorporationInfo::find($corporation_id)->delete();
-
-        return redirect()->back()->with(
-            'success', 'Corporation deleted!'
-        );
     }
 }

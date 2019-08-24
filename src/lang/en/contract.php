@@ -45,4 +45,6 @@ return [
     'failed'              => 'Failed',
     'deleted'             => 'Deleted',
     'reversed'            => 'Reversed',
+
+    'not_accepted'        => 'Not Accepted',
 ];

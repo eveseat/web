@@ -38,11 +38,11 @@ class CharacterController extends Controller
      */
     public function index(CharacterDataTable $dataTable)
     {
-        $owned_character_ids = auth()->user()->associatedCharacterIds();
-        $allowed_character_ids = array_get(auth()->user()->getAffiliationMap(), 'char');
-
         if (auth()->user()->hasSuperUser())
             return $dataTable->render('web::character.list');
+
+        $owned_character_ids = auth()->user()->associatedCharacterIds();
+        $allowed_character_ids = array_get(auth()->user()->getAffiliationMap(), 'char');
 
         return $dataTable
             ->addScope(new CharacterScope(array_merge($owned_character_ids, $allowed_character_ids)))

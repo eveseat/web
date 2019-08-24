@@ -19,17 +19,17 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\DataTables\Character;
+namespace Seat\Web\Http\DataTables\Corporation;
 
-use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Yajra\DataTables\Services\DataTable;
 
 /**
- * Class CharacterDataTable
+ * Class CorporationDataTable
  *
- * @package Seat\Web\Http\DataTables\Character
+ * @package Seat\Web\Http\DataTables\Corporation
  */
-class CharacterDataTable extends DataTable
+class CorporationDataTable extends DataTable
 {
     /**
      * @return \Illuminate\Http\JsonResponse
@@ -40,19 +40,32 @@ class CharacterDataTable extends DataTable
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('name', function ($row) {
-                return view('web::partials.character', ['character' => $row]);
+                return view('web::partials.corporation', ['corporation' => $row]);
             })
-            ->addColumn('corporation', function ($row) {
-                return view('web::partials.corporation', ['corporation' => $row->corporation->entity_id]);
+            ->editColumn('tax_rate', function ($row) {
+                return number($row->tax_rate * 100) . '%';
+            })
+            ->editColumn('member_count', function ($row) {
+                if ($row->member_limit->limit < 1)
+                    return sprintf('%d/%d (100.00%%)', $row->member_count, $row->member_count);
+
+                return sprintf('%d/%d (%s%%)',
+                    $row->member_count, $row->member_limit->limit, number($row->member_count / $row->member_limit->limit * 100));
+            })
+            ->addColumn('ceo', function ($row) {
+                return view('web::partials.character', ['character' => $row->ceo_id]);
             })
             ->addColumn('alliance', function ($row) {
                 if (! is_null($row->alliance_id))
-                    return view('web::partials.alliance', ['alliance' => $row->alliance->entity_id]);
+                    return view('web::partials.alliance', ['alliance' => $row->alliance_id]);
 
                 return '';
             })
-            ->filterColumn('corporation', function ($query, $keyword) {
-                return $query->whereHas('corporation', function ($sub_query) use ($keyword) {
+            ->addColumn('member_limit', function ($row) {
+                return $row->member_limit->limit;
+            })
+            ->filterColumn('ceo', function ($query, $keyword) {
+                return $query->whereHas('ceo', function ($sub_query) use ($keyword) {
                     return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
                 });
             })
@@ -61,7 +74,7 @@ class CharacterDataTable extends DataTable
                     return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
                 });
             })
-            ->rawColumns(['name', 'corporation', 'alliance'])
+            ->rawColumns(['name', 'ceo', 'alliance'])
             ->make(true);
     }
 
@@ -71,19 +84,19 @@ class CharacterDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->postAjax()
             ->columns($this->getColumns())
+            ->postAjax()
             ->parameters([
                 'drawCallback' => "function() { ids_to_names(); }",
             ]);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return \Illuminate\Database\Eloquent\Builder|\Seat\Eveapi\Models\Corporation\CorporationInfo
      */
     public function query()
     {
-        return CharacterInfo::with('corporation', 'alliance');
+        return CorporationInfo::with('member_limit');
     }
 
     /**
@@ -93,9 +106,11 @@ class CharacterDataTable extends DataTable
     {
         return [
             ['data' => 'name', 'title' => trans_choice('web::seat.name', 1)],
-            ['data' => 'corporation', 'title' => trans_choice('web::seat.corporation', 1), 'orderable' => false],
+            ['data' => 'ticker', 'title' => trans('web::seat.ticker')],
+            ['data' => 'ceo', 'title' => trans('web::seat.ceo'), 'orderable' => false],
             ['data' => 'alliance', 'title' => trans('web::seat.alliance'), 'orderable' => false],
-            ['data' => 'security_status', 'title' => trans('web::seat.security_status')],
+            ['data' => 'tax_rate', 'title' => trans('web::seat.tax_rate')],
+            ['data' => 'member_count', 'title' => trans('web::seat.member_count')],
         ];
     }
 }

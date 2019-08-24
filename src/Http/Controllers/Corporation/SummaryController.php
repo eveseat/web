@@ -38,7 +38,7 @@ class SummaryController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getSummary(int $corporation_id)
+    public function show(int $corporation_id)
     {
 
         $sheet = $this->getCorporationSheet($corporation_id);

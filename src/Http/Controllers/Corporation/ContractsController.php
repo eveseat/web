@@ -67,6 +67,6 @@ class ContractsController extends Controller
             'end_location.system.region'
         )->find($contract_id);
 
-        return view('web::common.contracts.content', compact('contract'));
+        return view('web::common.contracts.modals.details.content', compact('contract'));
     }
 }

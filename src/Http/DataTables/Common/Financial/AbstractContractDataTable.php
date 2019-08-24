@@ -40,7 +40,7 @@ abstract class AbstractContractDataTable extends DataTable
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->addColumn('action', function ($row) {
-                return view('web::common.contracts.content_button', compact('row'));
+                return view('web::common.contracts.buttons.details', compact('row'));
             })
             ->addColumn('created', function ($row) {
                 return view('web::partials.date', ['datetime' => $row->detail->date_issued]);

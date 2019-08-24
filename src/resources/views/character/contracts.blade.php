@@ -18,7 +18,7 @@
 
   </div>
 
-  @include('web::common.contracts.content_modal')
+  @include('web::common.contracts.modals.details.details')
 
 @stop
 

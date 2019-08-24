@@ -20,20 +20,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/list', [
+Route::get('/', [
     'as'   => 'corporation.list',
-    'uses' => 'CorporationsController@getCorporations',
-]);
-
-Route::get('/list/data', [
-    'as'   => 'corporation.list.data',
-    'uses' => 'CorporationsController@getCorporationsData',
-]);
-
-Route::get('/delete/{corporation_id}', [
-    'as'         => 'corporation.delete',
-    'middleware' => 'bouncer:superuser',
-    'uses'       => 'CorporationsController@deleteCorporation',
+    'uses' => 'CorporationsController@index',
 ]);
 
 Route::get('/view/assets/{corporation_id}', [
@@ -170,10 +159,10 @@ Route::group(['prefix' => 'view/ledger'], function () {
 
 });
 
-Route::get('/view/summary/{corporation_id}', [
+Route::get('/{corporation_id}/summary', [
     'as'         => 'corporation.view.summary',
     'middleware' => 'corporationbouncer:summary',
-    'uses'       => 'SummaryController@getSummary',
+    'uses'       => 'SummaryController@show',
 ]);
 
 Route::get('/view/standings/{corporation_id}', [

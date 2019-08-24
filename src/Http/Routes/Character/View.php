@@ -301,10 +301,10 @@ Route::get('/{character_id}/research', [
     'uses'       => 'ResearchController@index',
 ]);
 
-Route::get('/view/sheet/{character_id}', [
+Route::get('/{character_id}/sheet', [
     'as'         => 'character.view.sheet',
     'middleware' => 'characterbouncer:sheet',
-    'uses'       => 'SheetController@getSheet',
+    'uses'       => 'SheetController@show',
 ]);
 
 Route::get('/view/skills/{character_id}', [
