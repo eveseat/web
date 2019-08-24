@@ -68,6 +68,18 @@ abstract class AbstractFittingDataTable extends DataTable
                     view('web::common.fittings.buttons.insurance', ['type_id' => $row->ship->typeID]) . ' ' .
                     view('web::common.fittings.buttons.detail', $detail_parameters);
             })
+            ->filterColumn('type', function ($query, $keyword) {
+                $query->whereHas('ship', function ($sub_query) use ($keyword) {
+                    $sub_query->whereRaw('typeName LIKE ?', ["%$keyword%"]);
+                });
+            })
+            ->filterColumn('items', function ($query, $keyword) {
+                $query->whereHas('items', function ($sub_query) use ($keyword) {
+                    $sub_query->whereHas('type', function ($type_query) use ($keyword) {
+                        $type_query->whereRaw('typeName LIKE ?', ["%$keyword%"]);
+                    });
+                });
+            })
             ->rawColumns(['type', 'action'])
             ->make(true);
     }
@@ -95,11 +107,11 @@ abstract class AbstractFittingDataTable extends DataTable
     {
         return [
             ['data' => 'name', 'title' => trans('web::fitting.name')],
-            ['data' => 'type', 'title' => trans('web::fitting.type')],
-            ['data' => 'items', 'title' => trans('web::fitting.items')],
-            ['data' => 'hull_estimated_value', 'title' => trans('web::fitting.hull_estimated_value')],
-            ['data' => 'fitting_estimated_value', 'title' => trans('web::fitting.fitting_estimated_value')],
-            ['data' => 'full_estimated_value', 'title' => trans('web::fitting.full_estimated_value')],
+            ['data' => 'type', 'title' => trans('web::fitting.type'), 'orderable' => false],
+            ['data' => 'items', 'title' => trans('web::fitting.items'), 'orderable' => false],
+            ['data' => 'hull_estimated_value', 'title' => trans('web::fitting.hull_estimated_value'), 'searchable' => false, 'orderable' => false],
+            ['data' => 'fitting_estimated_value', 'title' => trans('web::fitting.fitting_estimated_value'), 'searchable' => false, 'orderable' => false],
+            ['data' => 'full_estimated_value', 'title' => trans('web::fitting.full_estimated_value'), 'searchable' => false, 'orderable' => false],
         ];
     }
 }
