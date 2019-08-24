@@ -39,6 +39,45 @@ abstract class AbstractMiningDataTable extends DataTable
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
+            ->editColumn('date', function ($row) {
+                return view('web::partials.date', ['datetime' => $row->date]);
+            })
+            ->editColumn('quantity', function ($row) {
+                return number($row->quantity);
+            })
+            ->addColumn('system', function ($row) {
+                return view('web::partials.system', ['system' => $row->system->itemName, 'security' => $row->system->security]);
+            })
+            ->addColumn('ore', function ($row) {
+                return view('web::partials.type', ['type_id' => $row->type->typeID, 'type_name' => $row->type->typeName]);
+            })
+            ->addColumn('volume', function ($row) {
+                return number($row->type->volume * $row->quantity);
+            })
+            ->addColumn('estimated_value', function ($row) {
+                return number($row->type->price->adjusted_price * $row->quantity);
+            })
+            ->filterColumn('system', function ($query, $keyword) {
+                return $query->whereHas('system', function ($sub_query) use ($keyword) {
+                    return $sub_query->whereRaw('itemName LIKE ?', ["%$keyword%"]);
+                });
+            })
+            ->filterColumn('ore', function ($query, $keyword) {
+                return $query->whereHas('type', function ($sub_query) use ($keyword) {
+                    return $sub_query->whereRaw('typeName LIKE ?', ["%$keyword%"]);
+                });
+            })
+            ->filterColumn('volume', function ($query, $keyword) {
+                return $query->whereHas('type', function ($sub_query) use ($keyword) {
+                    return $sub_query->whereRaw('(volume * quantity) LIKE ?', ["%$keyword%"]);
+                });
+            })
+            ->filterColumn('estimated_value', function ($query, $keyword) {
+                return $query->whereHas('type.price', function ($sub_query) use ($keyword) {
+                    return $sub_query->whereRaw('(adjusted_price * quantity) LIKE ?', ["%$keyword%"]);
+                });
+            })
+            ->rawColumns(['date', 'system', 'ore'])
             ->make(true);
     }
 
@@ -48,7 +87,11 @@ abstract class AbstractMiningDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->columns($this->getColumns());
+            ->postAjax()
+            ->columns($this->getColumns())
+            ->parameters([
+                'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); }',
+            ]);
     }
 
     /**
@@ -62,7 +105,12 @@ abstract class AbstractMiningDataTable extends DataTable
     public function getColumns()
     {
         return [
-
+            ['data' => 'date', 'title' => trans('web::mining.date')],
+            ['data' => 'system', 'title' => trans('web::mining.system')],
+            ['data' => 'ore', 'title' => trans('web::mining.ore'), 'orderable' => false],
+            ['data' => 'quantity', 'title' => trans('web::mining.quantity')],
+            ['data' => 'volume', 'title' => trans('web::mining.volume'), 'orderable' => false],
+            ['data' => 'estimated_value', 'title' => trans('web::mining.estimated_value'), 'orderable' => false],
         ];
     }
 }

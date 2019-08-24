@@ -1,3 +1,7 @@
+<a href="//evemaps.dotlan.net/system/{{ $system }}" target="_blank">
+  <i class="fa fa-map-marker"></i>
+</a>
+
 {{ $system }}
 
 <span class="

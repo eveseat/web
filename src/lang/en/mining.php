@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of SeAT
  *
@@ -20,29 +19,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\Controllers\Character;
-
-use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Http\DataTables\Character\Industrial\MiningDataTable;
-use Seat\Web\Http\DataTables\Scopes\CharacterScope;
-
-/**
- * Class MiningLedgerController.
- *
- * @package Seat\Web\Http\Controllers\Character
- */
-class MiningLedgerController extends Controller
-{
-    /**
-     * @param int $character_id
-     * @param \Seat\Web\Http\DataTables\Character\Industrial\MiningDataTable $dataTable
-     * @return mixed
-     */
-    public function show(int $character_id, MiningDataTable $dataTable)
-    {
-
-        return $dataTable
-            ->addScope(new CharacterScope([$character_id]))
-            ->render('web::character.mining-ledger');
-    }
-}
+return [
+    'date'            => 'Date',
+    'system'          => 'System',
+    'ore'             => 'ORE',
+    'quantity'        => 'Quantity',
+    'volume'          => 'Volume',
+    'estimated_value' => 'Estimated Value',
+];

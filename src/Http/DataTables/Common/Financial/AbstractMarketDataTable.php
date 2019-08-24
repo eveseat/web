@@ -92,8 +92,8 @@ abstract class AbstractMarketDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->columns($this->getColumns())
             ->postAjax()
+            ->columns($this->getColumns())
             ->parameters([
                 'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); }',
             ]);

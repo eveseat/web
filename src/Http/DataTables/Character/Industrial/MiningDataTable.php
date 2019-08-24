@@ -36,6 +36,6 @@ class MiningDataTable extends AbstractMiningDataTable
      */
     public function query()
     {
-        return CharacterMining::query();
+        return CharacterMining::with('system', 'type', 'type.price');
     }
 }
