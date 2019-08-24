@@ -109,7 +109,7 @@ abstract class AbstractWalletTransactionDataTable extends DataTable
             ->columns($this->getColumns())
             ->postAjax()
             ->parameters([
-                'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); }',
+                'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); ids_to_names(); }',
             ]);
     }
 

@@ -119,7 +119,7 @@ abstract class AbstractKillMailDataTable extends DataTable
             ->columns($this->getColumns())
             ->addAction()
             ->parameters([
-                'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); }',
+                'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); ids_to_names(); }',
             ]);
     }
 
