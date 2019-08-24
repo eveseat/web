@@ -32,10 +32,9 @@ use Yajra\DataTables\Services\DataTable;
 abstract class AbstractMiningDataTable extends DataTable
 {
     /**
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
+     * @return \Yajra\DataTables\DataTableAbstract|\Yajra\DataTables\EloquentDataTable
      */
-    public function ajax()
+    public function data()
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -77,8 +76,7 @@ abstract class AbstractMiningDataTable extends DataTable
                     return $sub_query->whereRaw('(adjusted_price * quantity) LIKE ?', ["%$keyword%"]);
                 });
             })
-            ->rawColumns(['date', 'system', 'ore'])
-            ->make(true);
+            ->rawColumns(['date', 'system', 'ore']);
     }
 
     /**
@@ -106,7 +104,7 @@ abstract class AbstractMiningDataTable extends DataTable
     {
         return [
             ['data' => 'date', 'title' => trans('web::mining.date')],
-            ['data' => 'system', 'title' => trans('web::mining.system')],
+            ['data' => 'system', 'title' => trans('web::mining.system'), 'orderable' => false],
             ['data' => 'ore', 'title' => trans('web::mining.ore'), 'orderable' => false],
             ['data' => 'quantity', 'title' => trans('web::mining.quantity')],
             ['data' => 'volume', 'title' => trans('web::mining.volume'), 'orderable' => false],

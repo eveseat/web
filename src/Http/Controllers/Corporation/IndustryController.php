@@ -23,7 +23,7 @@
 namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Http\DataTables\Corporation\Industrial\IndustryDataTable;
+use Seat\Web\Http\DataTables\Corporation\Industrial\MiningDataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 
 /**
@@ -34,10 +34,10 @@ class IndustryController extends Controller
 {
     /**
      * @param int $corporation_id
-     * @param \Seat\Web\Http\DataTables\Corporation\Industrial\IndustryDataTable $dataTable
+     * @param \Seat\Web\Http\DataTables\Corporation\Industrial\MiningDataTable $dataTable
      * @return mixed
      */
-    public function index(int $corporation_id, IndustryDataTable $dataTable)
+    public function index(int $corporation_id, MiningDataTable $dataTable)
     {
 
         return $dataTable->addScope(new CorporationScope([$corporation_id]))
