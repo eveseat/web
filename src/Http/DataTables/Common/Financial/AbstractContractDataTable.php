@@ -51,11 +51,11 @@ abstract class AbstractContractDataTable extends DataTable
             ->addColumn('issuer', function ($row) {
                 switch ($row->detail->issuer->category) {
                     case 'alliance':
-                        return view('web::partials.alliance', ['alliance' => $row->detail->issuer->entity_id]);
+                        return view('web::partials.alliance', ['alliance' => $row->detail->issuer_id]);
                     case 'corporation':
-                        return view('web::partials.corporation', ['corporation' => $row->detail->issuer->entity_id]);
+                        return view('web::partials.corporation', ['corporation' => $row->detail->issuer_id]);
                     case 'character':
-                        return view('web::partials.character', ['character' => $row->detail->issuer->entity_id]);
+                        return view('web::partials.character', ['character' => $row->detail->issuer_id]);
                     default:
                         return '';
                 }
@@ -63,11 +63,11 @@ abstract class AbstractContractDataTable extends DataTable
             ->addColumn('assignee', function ($row) {
                 switch ($row->detail->assignee->category) {
                     case 'alliance':
-                        return view('web::partials.alliance', ['alliance' => $row->detail->assignee->entity_id]);
+                        return view('web::partials.alliance', ['alliance' => $row->detail->assignee_id]);
                     case 'corporation':
-                        return view('web::partials.corporation', ['corporation' => $row->detail->assignee->entity_id]);
+                        return view('web::partials.corporation', ['corporation' => $row->detail->assignee_id]);
                     case 'character':
-                        return view('web::partials.character', ['character' => $row->detail->assignee->entity_id]);
+                        return view('web::partials.character', ['character' => $row->detail->assignee_id]);
                     default:
                         return '';
                 }
@@ -75,11 +75,11 @@ abstract class AbstractContractDataTable extends DataTable
             ->addColumn('acceptor', function ($row) {
                 switch ($row->detail->acceptor->category) {
                     case 'alliance':
-                        return view('web::partials.alliance', ['alliance' => $row->detail->acceptor->entity_id]);
+                        return view('web::partials.alliance', ['alliance' => $row->detail->acceptor_id]);
                     case 'corporation':
-                        return view('web::partials.corporation', ['corporation' => $row->detail->acceptor->entity_id]);
+                        return view('web::partials.corporation', ['corporation' => $row->detail->acceptor_id]);
                     case 'character':
-                        return view('web::partials.character', ['character' => $row->detail->acceptor->entity_id]);
+                        return view('web::partials.character', ['character' => $row->detail->acceptor_id]);
                     default:
                         return '';
                 }

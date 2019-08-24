@@ -52,11 +52,11 @@ class CalendarDataTable extends DataTable
             ->addColumn('owner', function ($row) {
                 switch ($row->detail->owner->category) {
                     case 'alliance':
-                        return view('web::partials.alliance', ['alliance' => $row->detail->owner->entity_id]);
+                        return view('web::partials.alliance', ['alliance' => $row->detail->owner_id]);
                     case 'corporation':
-                        return view('web::partials.corporation', ['corporation' => $row->detail->owner->entity_id]);
+                        return view('web::partials.corporation', ['corporation' => $row->detail->owner_id]);
                     case 'character':
-                        return view('web::partials.character', ['character' => $row->detail->owner->entity_id]);
+                        return view('web::partials.character', ['character' => $row->detail->owner_id]);
                 }
 
                 return $row->detail->owner->name;

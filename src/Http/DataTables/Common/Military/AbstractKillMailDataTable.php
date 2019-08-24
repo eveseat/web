@@ -67,9 +67,9 @@ abstract class AbstractKillMailDataTable extends DataTable
                 if (is_null($killer))
                     return '';
 
-                return view('web::partials.character', ['character' => $killer->character->entity_id]) . '<br/>' .
-                    view('web::partials.corporation', ['corporation' => $killer->corporation->entity_id]) . ' ' .
-                    view('web::partials.alliance', ['alliance' => $killer->alliance->entity_id]);
+                return view('web::partials.character', ['character' => $killer->character_id]) . '<br/>' .
+                    view('web::partials.corporation', ['corporation' => $killer->corporation_id]) . ' ' .
+                    view('web::partials.alliance', ['alliance' => $killer->alliance_id]);
             })
             ->filterColumn('ship', function ($query, $keyword) {
                 return $query->whereHas('victim.ship', function ($sub_query) use ($keyword) {
