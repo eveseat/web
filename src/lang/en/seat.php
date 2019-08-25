@@ -201,7 +201,7 @@ return [
     'research'                     => 'Research',
     'sheet'                        => 'Sheet',
     'skills'                       => 'Skills',
-    'standings'                    => 'Standings',
+    'standings'                    => 'Standing|Standings',
     'wallet'                       => 'Wallet',
     'wallet_journal'               => 'Wallet Journal',
     'wallet_transactions'          => 'Wallet Transactions',

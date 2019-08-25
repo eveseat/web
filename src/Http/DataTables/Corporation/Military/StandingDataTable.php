@@ -19,49 +19,23 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\DataTables\Common\Intel;
+namespace Seat\Web\Http\DataTables\Corporation\Military;
 
-use Yajra\DataTables\Services\DataTable;
+use Seat\Eveapi\Models\Corporation\CorporationStanding;
+use Seat\Web\Http\DataTables\Common\Military\AbstractStandingDataTable;
 
 /**
- * Class AbstractAssetDataTable
+ * Class StandingDataTable
  *
- * @package Seat\Web\Http\DataTables\Common\Intel
+ * @package Seat\Web\Http\DataTables\Corporation\Military
  */
-abstract class AbstractAssetDataTable extends DataTable
+class StandingDataTable extends AbstractStandingDataTable
 {
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
-     */
-    public function ajax()
-    {
-        return datatables()
-            ->eloquent($this->applyScopes($this->query()))
-            ->make(true);
-    }
-
-    /**
-     * @return \Yajra\DataTables\Html\Builder
-     */
-    public function html()
-    {
-        return $this->builder()
-            ->columns($this->getColumns());
-    }
-
     /**
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public abstract function query();
-
-    /**
-     * @return array
-     */
-    public function getColumns()
+    public function query()
     {
-        return [
-
-        ];
+        return CorporationStanding::with('from');
     }
 }

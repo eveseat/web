@@ -21,7 +21,6 @@
 
 namespace Seat\Web\Http\DataTables\Common\Industrial;
 
-use Seat\Eveapi\Models\Industry\CharacterIndustryJob;
 use Yajra\DataTables\Services\DataTable;
 
 /**

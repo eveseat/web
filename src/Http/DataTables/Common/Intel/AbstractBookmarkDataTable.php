@@ -21,7 +21,6 @@
 
 namespace Seat\Web\Http\DataTables\Common\Intel;
 
-use Seat\Eveapi\Models\Bookmarks\CharacterBookmark;
 use Yajra\DataTables\Services\DataTable;
 
 /**

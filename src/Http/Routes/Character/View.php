@@ -313,10 +313,10 @@ Route::get('/view/skills/graph/coverage/{character_id}', [
     'uses'       => 'SkillsController@getCharacterSkillsCoverageChartData',
 ]);
 
-Route::get('/view/standings/{character_id}', [
+Route::get('/{character_id}/standings', [
     'as'         => 'character.view.standings',
     'middleware' => 'characterbouncer:standings',
-    'uses'       => 'StandingsController@getStandings',
+    'uses'       => 'StandingsController@index',
 ]);
 
 Route::get('/{character_id}/transactions', [

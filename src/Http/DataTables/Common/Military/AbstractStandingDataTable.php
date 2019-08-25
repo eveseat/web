@@ -21,7 +21,6 @@
 
 namespace Seat\Web\Http\DataTables\Common\Military;
 
-use Seat\Eveapi\Models\Character\CharacterStanding;
 use Yajra\DataTables\Services\DataTable;
 
 /**
@@ -39,6 +38,37 @@ abstract class AbstractStandingDataTable extends DataTable
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
+            ->editColumn('from_type', function ($row) {
+                if ($row->from_type == 'npc_corp')
+                    return trans_choice('web::seat.corporation', 0);
+
+                return ucfirst($row->from_type);
+            })
+            ->editColumn('from.name', function ($row) {
+                switch ($row->from_type) {
+                    case 'agent':
+                        return view('web::partials.character', ['character' => $row->from_id])->render();
+                    case 'npc_corp':
+                        return view('web::partials.corporation', ['corporation' => $row->from_id])->render();
+                    case 'faction':
+                        return view('web::partials.faction', ['faction' => $row->from_id])->render();
+                }
+
+                return $row->from->name;
+            })
+            ->editColumn('standing', function ($row) {
+                if($row->standing > 5)
+                    return '<span class="label label-primary">' . $row->standing . '</span>';
+                elseif($row->standing >= 1)
+                    return '<span class="label label-info">'. $row->standing . '</span>';
+                elseif($row->standing > -1)
+                    return '<span class="label label-default">' . $row->standing . '</span>';
+                elseif($row->standing >= -5)
+                    return '<span class="label label-warning">' . $row->standing . '</span>';
+                else
+                    return '<span class="label label-danger">' . $row->standing . '</span>';
+            })
+            ->rawColumns(['from.name', 'standing'])
             ->make(true);
     }
 
@@ -48,7 +78,11 @@ abstract class AbstractStandingDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->columns($this->getColumns());
+            ->postAjax()
+            ->columns($this->getColumns())
+            ->parameters([
+                'drawCallback' => "function (settings) { var api = this.api(); var rows = api.rows({page:'current'}).nodes(); var last=null; api.column(0, {page:'current'}).data().each(function (group, i) { if ( last !== group ) { $(rows).eq(i).before('<tr class=\"bg-gray\"><th colspan=\"5\">' + group + '</th></tr>'); last = group; }}); ids_to_names(); }",
+            ]);
     }
 
     /**
@@ -62,7 +96,9 @@ abstract class AbstractStandingDataTable extends DataTable
     public function getColumns()
     {
         return [
-
+            ['data' => 'from_type', 'visible' => false],
+            ['data' => 'from.name', 'title' => trans('web::seat.from')],
+            ['data' => 'standing', 'title' => trans_choice('web::seat.standings', 1)],
         ];
     }
 }

@@ -36,6 +36,6 @@ class StandingDataTable extends AbstractStandingDataTable
      */
     public function query()
     {
-        return CharacterStanding::query();
+        return CharacterStanding::with('from');
     }
 }

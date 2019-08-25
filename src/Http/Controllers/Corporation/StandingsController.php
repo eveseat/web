@@ -22,23 +22,28 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
-use Seat\Services\Repositories\Corporation\Standings;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Corporation\Military\StandingDataTable;
+use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 
+/**
+ * Class StandingsController
+ *
+ * @package Seat\Web\Http\Controllers\Corporation
+ */
 class StandingsController extends Controller
 {
-    use Standings;
 
     /**
-     * @param $corporation_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param int $corporation_id
+     * @param \Seat\Web\Http\DataTables\Corporation\Military\StandingDataTable $dataTable
+     * @return mixed
      */
-    public function getStandings(int $corporation_id)
+    public function index(int $corporation_id, StandingDataTable $dataTable)
     {
 
-        $standings = $this->getCorporationStandings($corporation_id, 50);
-
-        return view('web::corporation.standings', compact('standings'));
+        return $dataTable
+            ->addScope(new CorporationScope([$corporation_id]))
+            ->render('web::corporation.standings');
     }
 }

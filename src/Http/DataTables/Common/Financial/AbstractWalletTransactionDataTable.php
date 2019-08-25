@@ -21,7 +21,6 @@
 
 namespace Seat\Web\Http\DataTables\Common\Financial;
 
-use Seat\Eveapi\Models\Wallet\CharacterWalletTransaction;
 use Yajra\DataTables\Services\DataTable;
 
 /**

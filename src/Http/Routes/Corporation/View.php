@@ -165,10 +165,10 @@ Route::get('/{corporation_id}/summary', [
     'uses'       => 'SummaryController@show',
 ]);
 
-Route::get('/view/standings/{corporation_id}', [
+Route::get('/{corporation_id}/standings', [
     'as'         => 'corporation.view.standings',
     'middleware' => 'corporationbouncer:standings',
-    'uses'       => 'StandingsController@getStandings',
+    'uses'       => 'StandingsController@index',
 ]);
 
 Route::get('/view/starbases/{corporation_id}', [
