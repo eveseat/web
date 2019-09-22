@@ -22,12 +22,9 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
-use Seat\Eveapi\Models\Corporation\CorporationInfo;
-use Seat\Services\Repositories\Corporation\Corporation;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\CorporationDataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationScope;
-use Yajra\DataTables\DataTables;
 
 /**
  * Class CorporationsController.

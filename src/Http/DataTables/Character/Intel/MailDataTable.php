@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -25,7 +26,7 @@ use Seat\Eveapi\Models\Mail\MailHeader;
 use Yajra\DataTables\Services\DataTable;
 
 /**
- * Class MailDataTable
+ * Class MailDataTable.
  *
  * @package Seat\Web\Http\DataTables\Character\Intel
  */
@@ -86,7 +87,7 @@ class MailDataTable extends DataTable
             ->columns($this->getColumns())
             ->addAction()
             ->parameters([
-                'drawCallback' => 'function () { $("img").unveil(100); ids_to_names(); }'
+                'drawCallback' => 'function () { $("img").unveil(100); ids_to_names(); }',
             ]);
     }
 

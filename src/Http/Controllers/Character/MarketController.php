@@ -22,13 +22,10 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
-use Seat\Services\Repositories\Character\Market;
-use Seat\Services\Repositories\Eve\EveRepository;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Financial\MarketDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 use Seat\Web\Models\User;
-use Yajra\DataTables\DataTables;
 
 /**
  * Class MarketController.

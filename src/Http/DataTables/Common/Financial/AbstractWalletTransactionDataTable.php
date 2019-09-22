@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -24,7 +25,7 @@ namespace Seat\Web\Http\DataTables\Common\Financial;
 use Yajra\DataTables\Services\DataTable;
 
 /**
- * Class AbstractWalletTransactionDataTable
+ * Class AbstractWalletTransactionDataTable.
  *
  * @package Seat\Web\Http\DataTables\Common\Financial
  */

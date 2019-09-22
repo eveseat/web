@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -25,7 +26,7 @@ use Seat\Eveapi\Models\Industry\CharacterMining;
 use Seat\Web\Http\DataTables\Common\Industrial\AbstractMiningDataTable;
 
 /**
- * Class IndustryDataTable
+ * Class IndustryDataTable.
  *
  * @package Seat\Web\Http\DataTables\Corporation\Industrial
  */

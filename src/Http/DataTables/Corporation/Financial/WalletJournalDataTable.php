@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -25,7 +26,7 @@ use Seat\Eveapi\Models\Wallet\CorporationWalletJournal;
 use Seat\Web\Http\DataTables\Common\Financial\AbstractWalletJournalDataTable;
 
 /**
- * Class WalletJournalDataTable
+ * Class WalletJournalDataTable.
  *
  * @package Seat\Web\Http\DataTables\Corporation\Financial
  */

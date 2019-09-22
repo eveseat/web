@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -25,7 +26,7 @@ use Seat\Eveapi\Models\Character\CharacterInfo;
 use Yajra\DataTables\Services\DataTable;
 
 /**
- * Class CharacterDataTable
+ * Class CharacterDataTable.
  *
  * @package Seat\Web\Http\DataTables\Character
  */
@@ -74,7 +75,7 @@ class CharacterDataTable extends DataTable
             ->postAjax()
             ->columns($this->getColumns())
             ->parameters([
-                'drawCallback' => "function() { ids_to_names(); }",
+                'drawCallback' => 'function() { ids_to_names(); }',
             ]);
     }
 

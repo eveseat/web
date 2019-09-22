@@ -22,8 +22,6 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
-use Seat\Eveapi\Models\Character\CharacterInfo;
-use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Corporation\Wallet;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Financial\WalletJournalDataTable;

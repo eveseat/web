@@ -28,13 +28,12 @@ use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 use Seat\Web\Models\User;
 
 /**
- * Class StandingsController
+ * Class StandingsController.
  *
  * @package Seat\Web\Http\Controllers\Character
  */
 class StandingsController extends Controller
 {
-
     /**
      * @param int $character_id
      * @param \Seat\Web\Http\DataTables\Character\Military\StandingDataTable $dataTable

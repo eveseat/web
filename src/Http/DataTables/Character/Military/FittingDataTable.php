@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -25,7 +26,7 @@ use Seat\Eveapi\Models\Fittings\CharacterFitting;
 use Seat\Web\Http\DataTables\Common\Military\AbstractFittingDataTable;
 
 /**
- * Class FittingDataTable
+ * Class FittingDataTable.
  *
  * @package Seat\Web\Http\DataTables\Character\Military
  */

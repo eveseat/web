@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -26,7 +27,7 @@ use Seat\Eveapi\Models\Calendar\CharacterCalendarEvent;
 use Yajra\DataTables\Services\DataTable;
 
 /**
- * Class CalendarDataTable
+ * Class CalendarDataTable.
  *
  * @package Seat\Web\Http\DataTables\Character\Intel
  */

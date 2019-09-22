@@ -34,7 +34,6 @@ use Seat\Web\Models\User;
  */
 class FittingController extends Controller
 {
-
     /**
      * @param int $character_id
      * @param \Seat\Web\Http\DataTables\Character\Military\FittingDataTable $dataTable

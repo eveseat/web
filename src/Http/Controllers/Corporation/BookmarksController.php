@@ -26,9 +26,13 @@ use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Intel\BookmarkDataTable;
 use Seat\Web\Http\DataTables\Scopes\BookmarkCorporationScope;
 
+/**
+ * Class BookmarksController.
+ *
+ * @package Seat\Web\Http\Controllers\Corporation
+ */
 class BookmarksController extends Controller
 {
-
     /**
      * @param int $corporation_id
      * @param \Seat\Web\Http\DataTables\Corporation\Intel\BookmarkDataTable $dataTable

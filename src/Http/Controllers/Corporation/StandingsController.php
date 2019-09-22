@@ -27,13 +27,12 @@ use Seat\Web\Http\DataTables\Corporation\Military\StandingDataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 
 /**
- * Class StandingsController
+ * Class StandingsController.
  *
  * @package Seat\Web\Http\Controllers\Corporation
  */
 class StandingsController extends Controller
 {
-
     /**
      * @param int $corporation_id
      * @param \Seat\Web\Http\DataTables\Corporation\Military\StandingDataTable $dataTable

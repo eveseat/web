@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -25,7 +26,7 @@ use Seat\Eveapi\Models\Contacts\CorporationContact;
 use Seat\Web\Http\DataTables\Common\Intel\AbstractContactDataTable;
 
 /**
- * Class ContactDataTable
+ * Class ContactDataTable.
  *
  * @package Seat\Web\Http\DataTables\Corporation\Intel
  */

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -25,7 +26,7 @@ use Illuminate\Support\Facades\Lang;
 use Yajra\DataTables\Services\DataTable;
 
 /**
- * Class AbstractContractDataTable
+ * Class AbstractContractDataTable.
  *
  * @package Seat\Web\Http\DataTables\Common\Financial
  */

@@ -28,7 +28,7 @@ use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 use Seat\Web\Models\User;
 
 /**
- * Class ResearchController
+ * Class ResearchController.
  *
  * @package Seat\Web\Http\Controllers\Character
  */

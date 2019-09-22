@@ -28,7 +28,7 @@ use Seat\Web\Http\DataTables\Scopes\BookmarkCharacterScope;
 use Seat\Web\Models\User;
 
 /**
- * Class BookmarksController
+ * Class BookmarksController.
  *
  * @package Seat\Web\Http\Controllers\Character
  */

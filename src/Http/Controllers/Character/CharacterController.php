@@ -24,10 +24,9 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\CharacterDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
-use Seat\Web\Models\User;
 
 /**
- * Class CharacterController
+ * Class CharacterController.
  *
  * @package Seat\Web\Http\Controllers\Character
  */

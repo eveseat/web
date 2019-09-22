@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -25,13 +26,12 @@ use Seat\Eveapi\Models\Market\CharacterOrder;
 use Seat\Web\Http\DataTables\Common\Financial\AbstractMarketDataTable;
 
 /**
- * Class MarketDataTable
+ * Class MarketDataTable.
  *
  * @package Seat\Web\Http\DataTables\Character\Financial
  */
 class MarketDataTable extends AbstractMarketDataTable
 {
-
     /**
      * @return \Illuminate\Database\Eloquent\Builder
      */

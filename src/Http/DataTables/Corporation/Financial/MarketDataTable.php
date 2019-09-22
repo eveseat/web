@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -25,7 +26,7 @@ use Seat\Eveapi\Models\Market\CorporationOrder;
 use Seat\Web\Http\DataTables\Common\Financial\AbstractMarketDataTable;
 
 /**
- * Class MarketDataTable
+ * Class MarketDataTable.
  *
  * @package Seat\Web\Http\DataTables\Corporation\Financial
  */

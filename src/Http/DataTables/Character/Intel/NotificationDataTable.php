@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -25,7 +26,7 @@ use Seat\Eveapi\Models\Character\CharacterNotification;
 use Yajra\DataTables\Services\DataTable;
 
 /**
- * Class NotificationDataTable
+ * Class NotificationDataTable.
  *
  * @package Seat\Web\Http\DataTables\Character\Intel
  */

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -25,7 +26,7 @@ use Seat\Eveapi\Models\Character\CharacterAgentResearch;
 use Yajra\DataTables\Services\DataTable;
 
 /**
- * Class ResearchDataTable
+ * Class ResearchDataTable.
  *
  * @package Seat\Web\Http\DataTables\Character\Industrial
  */

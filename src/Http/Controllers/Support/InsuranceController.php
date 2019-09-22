@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -25,7 +26,7 @@ use Seat\Eveapi\Models\Sde\InvType;
 use Seat\Web\Http\Controllers\Controller;
 
 /**
- * Class CommonController
+ * Class CommonController.
  *
  * @package Seat\Web\Http\Controllers\Support
  */

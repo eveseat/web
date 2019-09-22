@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -25,7 +26,7 @@ use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Yajra\DataTables\Services\DataTable;
 
 /**
- * Class CorporationDataTable
+ * Class CorporationDataTable.
  *
  * @package Seat\Web\Http\DataTables\Corporation
  */

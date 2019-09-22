@@ -27,7 +27,7 @@ use Seat\Web\Http\DataTables\Corporation\Intel\ContactDataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 
 /**
- * Class ContactsController
+ * Class ContactsController.
  *
  * @package Seat\Web\Http\Controllers\Corporation
  */

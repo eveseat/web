@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -25,7 +26,7 @@ use Seat\Eveapi\Models\Contracts\CharacterContract;
 use Seat\Web\Http\DataTables\Common\Financial\AbstractContractDataTable;
 
 /**
- * Class ContractDataTable
+ * Class ContractDataTable.
  *
  * @package Seat\Web\Http\DataTables\Character\Financial
  */

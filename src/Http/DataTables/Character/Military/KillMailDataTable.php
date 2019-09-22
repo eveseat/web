@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -25,7 +26,7 @@ use Seat\Eveapi\Models\Killmails\CharacterKillmail;
 use Seat\Web\Http\DataTables\Common\Military\AbstractKillMailDataTable;
 
 /**
- * Class KillMailDataTable
+ * Class KillMailDataTable.
  *
  * @package Seat\Web\Http\DataTables\Character\Military
  */

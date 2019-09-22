@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -25,7 +26,7 @@ use Seat\Eveapi\Models\Corporation\CorporationStanding;
 use Seat\Web\Http\DataTables\Common\Military\AbstractStandingDataTable;
 
 /**
- * Class StandingDataTable
+ * Class StandingDataTable.
  *
  * @package Seat\Web\Http\DataTables\Corporation\Military
  */

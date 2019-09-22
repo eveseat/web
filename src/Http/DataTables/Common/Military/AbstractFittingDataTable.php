@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -24,7 +25,7 @@ namespace Seat\Web\Http\DataTables\Common\Military;
 use Yajra\DataTables\Services\DataTable;
 
 /**
- * Class AbstractFittingDataTable
+ * Class AbstractFittingDataTable.
  *
  * @package Seat\Web\Http\DataTables\Common\Military
  */
