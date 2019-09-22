@@ -25,7 +25,7 @@ namespace Seat\Web\Http\Controllers\Corporation;
 use Seat\Services\Repositories\Corporation\MiningLedger;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Industrial\MiningDataTable;
-use Seat\Web\Http\DataTables\Scopes\MiningCoporationScope;
+use Seat\Web\Http\DataTables\Scopes\MiningCorporationScope;
 
 /**
  * Class MiningLedgerController.
@@ -50,7 +50,7 @@ class MiningLedgerController extends Controller
         $ledgers = $this->getCorporationLedgers($corporation_id);
 
         return $dataTable
-            ->addScope(new MiningCoporationScope([$corporation_id], $year, $month))
+            ->addScope(new MiningCorporationScope([$corporation_id], $year, $month))
             ->render('web::corporation.mining.ledger', compact('ledgers'));
     }
 }

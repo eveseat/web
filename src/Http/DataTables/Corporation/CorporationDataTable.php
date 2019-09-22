@@ -88,7 +88,7 @@ class CorporationDataTable extends DataTable
             ->columns($this->getColumns())
             ->postAjax()
             ->parameters([
-                'drawCallback' => "function() { ids_to_names(); }",
+                'drawCallback' => 'function() { ids_to_names(); }',
             ]);
     }
 

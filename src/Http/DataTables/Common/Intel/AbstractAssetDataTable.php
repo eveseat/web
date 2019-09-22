@@ -54,7 +54,7 @@ abstract class AbstractAssetDataTable extends DataTable
     /**
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public abstract function query();
+    abstract public function query();
 
     /**
      * @return array

@@ -48,13 +48,13 @@ abstract class AbstractKillMailDataTable extends DataTable
             ->addColumn('ship', function ($row) {
                 return view('web::partials.type', [
                     'type_id' => $row->victim->ship->typeID,
-                    'type_name' => $row->victim->ship->typeName
+                    'type_name' => $row->victim->ship->typeName,
                 ]);
             })
             ->addColumn('system', function ($row) {
                 return view('web::partials.system', [
                     'system' => $row->detail->system->itemName,
-                    'security' => $row->detail->system->security
+                    'security' => $row->detail->system->security,
                 ]);
             })
             ->addColumn('victim', function ($row) {
@@ -127,7 +127,7 @@ abstract class AbstractKillMailDataTable extends DataTable
     /**
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public abstract function query();
+    abstract public function query();
 
     /**
      * @return array

@@ -61,7 +61,7 @@ abstract class AbstractStandingDataTable extends DataTable
                 if($row->standing > 5)
                     return '<span class="label label-primary">' . $row->standing . '</span>';
                 elseif($row->standing >= 1)
-                    return '<span class="label label-info">'. $row->standing . '</span>';
+                    return '<span class="label label-info">' . $row->standing . '</span>';
                 elseif($row->standing > -1)
                     return '<span class="label label-default">' . $row->standing . '</span>';
                 elseif($row->standing >= -5)
@@ -89,7 +89,7 @@ abstract class AbstractStandingDataTable extends DataTable
     /**
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public abstract function query();
+    abstract public function query();
 
     /**
      * @return array

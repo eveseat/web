@@ -32,7 +32,6 @@ use Seat\Web\Http\DataTables\Common\Financial\AbstractMarketDataTable;
  */
 class MarketDataTable extends AbstractMarketDataTable
 {
-
     /**
      * @return \Illuminate\Database\Eloquent\Builder
      */

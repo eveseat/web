@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -25,7 +26,7 @@ use Illuminate\Support\Arr;
 use Yajra\DataTables\Contracts\DataTableScope;
 
 /**
- * Class CharacterScope
+ * Class CharacterScope.
  *
  * @package Seat\Web\Http\DataTables\Scopes
  */

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -24,5 +25,5 @@ return [
     'agent'         => 'Agent',
     'skill'         => 'Skill',
     'point_per_day' => 'Point per day|Points per day',
-    'remainder'     => 'Remainder'
+    'remainder'     => 'Remainder',
 ];

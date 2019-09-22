@@ -96,14 +96,14 @@ abstract class AbstractContactDataTable extends DataTable
             ->columns($this->getColumns())
             ->addAction()
             ->parameters([
-                'drawCallback' => 'function () { $("img").unveil(100); ids_to_names(); }'
+                'drawCallback' => 'function () { $("img").unveil(100); ids_to_names(); }',
             ]);
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public abstract function query();
+    abstract public function query();
 
     /**
      * @return array

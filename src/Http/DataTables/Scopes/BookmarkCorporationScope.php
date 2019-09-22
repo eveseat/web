@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -24,7 +25,7 @@ namespace Seat\Web\Http\DataTables\Scopes;
 use Yajra\DataTables\Contracts\DataTableScope;
 
 /**
- * Class BookmarkCorporationScope
+ * Class BookmarkCorporationScope.
  *
  * @package Seat\Web\Http\DataTables\Scopes
  */

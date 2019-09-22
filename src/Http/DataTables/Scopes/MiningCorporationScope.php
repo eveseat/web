@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -24,11 +25,11 @@ namespace Seat\Web\Http\DataTables\Scopes;
 use Yajra\DataTables\Contracts\DataTableScope;
 
 /**
- * Class MiningCoporationScope
+ * Class MiningCorporationScope.
  *
  * @package Seat\Web\Http\DataTables\Scopes
  */
-class MiningCoporationScope implements DataTableScope
+class MiningCorporationScope implements DataTableScope
 {
 
     /**
@@ -53,8 +54,8 @@ class MiningCoporationScope implements DataTableScope
      */
     public function __construct(array $corporation_ids, int $year, int $month)
     {
-        $this->year            = $year;
-        $this->month           = $month;
+        $this->year = $year;
+        $this->month = $month;
         $this->corporation_ids = $corporation_ids;
     }
 

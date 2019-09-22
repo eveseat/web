@@ -95,7 +95,7 @@ abstract class AbstractWalletTransactionDataTable extends DataTable
                     return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
                 });
             })
-            ->orderColumn('total', "(unit_price * quantity) $1")
+            ->orderColumn('total', '(unit_price * quantity) $1')
             ->rawColumns(['date', 'is_buy', 'type', 'party'])
             ->make(true);
     }
@@ -116,7 +116,7 @@ abstract class AbstractWalletTransactionDataTable extends DataTable
     /**
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public abstract function query();
+    abstract public function query();
 
     /**
      * @return array

@@ -81,7 +81,7 @@ abstract class AbstractMarketDataTable extends DataTable
                     $sub_query->whereRaw('typeName LIKE ?', ["%$keyword%"]);
                 });
             })
-            ->orderColumn('total', "(price * volume_total) $1")
+            ->orderColumn('total', '(price * volume_total) $1')
             ->orderColumn('volume', '(volume_total - volume_remain) $1')
             ->rawColumns(['issued', 'is_buy_order', 'type'])
             ->make(true);
@@ -103,7 +103,7 @@ abstract class AbstractMarketDataTable extends DataTable
     /**
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public abstract function query();
+    abstract public function query();
 
     /**
      * @return array
