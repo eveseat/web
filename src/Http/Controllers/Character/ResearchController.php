@@ -25,6 +25,7 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Industrial\ResearchDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
+use Seat\Web\Models\User;
 
 /**
  * Class ResearchController
@@ -40,8 +41,10 @@ class ResearchController extends Controller
      */
     public function index(int $character_id, ResearchDataTable $dataTable)
     {
+        $characters = (User::find($character_id))->group->users;
 
-        return $dataTable->addScope(new CharacterScope([$character_id]))
-            ->render('web::character.research');
+        return $dataTable
+            ->addScope(new CharacterScope('character.research', $character_id, request()->input('characters', [])))
+            ->render('web::character.research', compact('characters'));
     }
 }

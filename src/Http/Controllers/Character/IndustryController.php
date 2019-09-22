@@ -25,6 +25,7 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Industrial\IndustryDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
+use Seat\Web\Models\User;
 
 /**
  * Class IndustryController.
@@ -39,8 +40,10 @@ class IndustryController extends Controller
      */
     public function index(int $character_id, IndustryDataTable $dataTable)
     {
+        $characters = (User::find($character_id))->group->users;
 
-        return $dataTable->addScope(new CharacterScope([$character_id]))
-            ->render('web::character.industry');
+        return $dataTable
+            ->addScope(new CharacterScope('character.industry', $character_id, request()->input('characters', [])))
+            ->render('web::character.industry', compact('characters'));
     }
 }

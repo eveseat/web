@@ -25,6 +25,7 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Industrial\MiningDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
+use Seat\Web\Models\User;
 
 /**
  * Class MiningLedgerController.
@@ -40,9 +41,10 @@ class MiningLedgerController extends Controller
      */
     public function show(int $character_id, MiningDataTable $dataTable)
     {
+        $characters = (User::find($character_id))->group->users;
 
         return $dataTable
-            ->addScope(new CharacterScope([$character_id]))
-            ->render('web::character.mining-ledger');
+            ->addScope(new CharacterScope('character.mining', $character_id, request()->input('characters', [])))
+            ->render('web::character.mining-ledger', compact('characters'));
     }
 }

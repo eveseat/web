@@ -47,10 +47,11 @@ class MailController extends Controller
      */
     public function index(int $character_id, MailDataTable $dataTable)
     {
+        $characters = (User::find($character_id))->group->users;
 
         return $dataTable
-            ->addScope(new CharacterScope([$character_id]))
-            ->render('web::character.mail');
+            ->addScope(new CharacterScope('character.mail', $character_id, request()->input('characters', [])))
+            ->render('web::character.mail', compact('characters'));
 
     }
 

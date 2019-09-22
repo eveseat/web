@@ -24,6 +24,7 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\CharacterDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
+use Seat\Web\Models\User;
 
 /**
  * Class CharacterController
@@ -41,11 +42,11 @@ class CharacterController extends Controller
         if (auth()->user()->hasSuperUser())
             return $dataTable->render('web::character.list');
 
-        $owned_character_ids = auth()->user()->associatedCharacterIds();
+        $owned_character_ids = auth()->user()->associatedCharacterIds()->toArray();
         $allowed_character_ids = array_get(auth()->user()->getAffiliationMap(), 'char');
 
         return $dataTable
-            ->addScope(new CharacterScope(array_merge($owned_character_ids, $allowed_character_ids)))
+            ->addScope(new CharacterScope('character.sheet', auth()->user()->id, array_merge($owned_character_ids, $allowed_character_ids)))
             ->render('web::character.list');
     }
 

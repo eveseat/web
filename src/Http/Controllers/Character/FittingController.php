@@ -23,10 +23,10 @@
 namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Eveapi\Models\Fittings\CharacterFitting;
-use Seat\Services\Repositories\Character\Fittings;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Military\FittingDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
+use Seat\Web\Models\User;
 
 /**
  * Class FittingController.
@@ -35,8 +35,6 @@ use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 class FittingController extends Controller
 {
 
-    use Fittings;
-
     /**
      * @param int $character_id
      * @param \Seat\Web\Http\DataTables\Character\Military\FittingDataTable $dataTable
@@ -44,8 +42,11 @@ class FittingController extends Controller
      */
     public function index(int $character_id, FittingDataTable $dataTable)
     {
-        return $dataTable->addScope(new CharacterScope([$character_id]))
-            ->render('web::character.fittings', compact('fittings'));
+        $characters = (User::find($character_id))->group->users;
+
+        return $dataTable
+            ->addScope(new CharacterScope('character.fitting', $character_id, request()->input('characters')))
+            ->render('web::character.fittings', compact('characters'));
     }
 
     /**
@@ -61,20 +62,5 @@ class FittingController extends Controller
             ->first();
 
         return view('web::common.fittings.modals.fitting.content', compact('fitting'));
-    }
-
-    /**
-     * @param int $character_id
-     * @param int $fitting_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getFittingItems(int $character_id, int $fitting_id)
-    {
-
-        $fitting = $this->getCharacterFitting($character_id, $fitting_id);
-        $items = $this->getCharacterFittingItems($fitting_id);
-
-        return view('web::character.fittingitems', compact('fitting', 'items'));
     }
 }

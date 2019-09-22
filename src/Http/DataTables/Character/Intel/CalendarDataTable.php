@@ -86,6 +86,9 @@ class CalendarDataTable extends DataTable
         return $this->builder()
             ->postAjax()
             ->columns($this->getColumns())
+            ->ajax([
+                'data' => 'function(d) { d.characters = $("#dt-character-selector").val(); }',
+            ])
             ->parameters([
                 'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); $("[data-toggle=popover]").popover(); ids_to_names(); }',
             ]);

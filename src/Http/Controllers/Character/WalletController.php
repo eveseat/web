@@ -47,9 +47,11 @@ class WalletController extends Controller
      */
     public function journal(int $character_id, WalletJournalDataTable $dataTable)
     {
+        $characters = (User::find($character_id))->group->users;
 
-        return $dataTable->addScope(new CharacterScope([$character_id]))
-            ->render('web::character.wallet.journal.journal');
+        return $dataTable
+            ->addScope(new CharacterScope('character.journal', $character_id, request()->input('characters', [])))
+            ->render('web::character.wallet.journal.journal', compact('characters'));
     }
 
     /**
@@ -59,8 +61,11 @@ class WalletController extends Controller
      */
     public function transactions(int $character_id, WalletTransactionDataTable $dataTable)
     {
-        return $dataTable->addScope(new CharacterScope([$character_id]))
-            ->render('web::character.wallet.transactions.transactions');
+        $characters = (User::find($character_id))->group->users;
+
+        return $dataTable
+            ->addScope(new CharacterScope('character.transaction', $character_id, request()->input('characters')))
+            ->render('web::character.wallet.transactions.transactions', compact('characters'));
     }
 
     /**

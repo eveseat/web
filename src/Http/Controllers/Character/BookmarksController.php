@@ -25,6 +25,7 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Intel\BookmarkDataTable;
 use Seat\Web\Http\DataTables\Scopes\BookmarkCharacterScope;
+use Seat\Web\Models\User;
 
 /**
  * Class BookmarksController
@@ -40,9 +41,10 @@ class BookmarksController extends Controller
      */
     public function index(int $character_id, BookmarkDataTable $dataTable)
     {
+        $characters = (User::find($character_id))->group->users;
 
         return $dataTable
-            ->addScope(new BookmarkCharacterScope([$character_id]))
-            ->render('web::character.bookmarks');
+            ->addScope(new BookmarkCharacterScope('character.bookmark', $character_id, request()->input('characters')))
+            ->render('web::character.bookmarks', compact('characters'));
     }
 }

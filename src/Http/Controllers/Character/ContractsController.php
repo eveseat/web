@@ -26,6 +26,7 @@ use Seat\Eveapi\Models\Contracts\ContractDetail;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Financial\ContractDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
+use Seat\Web\Models\User;
 
 /**
  * Class ContractsController.
@@ -40,9 +41,11 @@ class ContractsController extends Controller
      */
     public function index(int $character_id, ContractDataTable $dataTable)
     {
+        $characters = (User::find($character_id))->group->users;
 
-        return $dataTable->addScope(new CharacterScope([$character_id]))
-            ->render('web::character.contracts');
+        return $dataTable
+            ->addScope(new CharacterScope('character.contract', $character_id, request()->input('characters')))
+            ->render('web::character.contracts', compact('characters'));
     }
 
     /**

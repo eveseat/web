@@ -21,6 +21,7 @@
 
 namespace Seat\Web\Http\DataTables\Scopes;
 
+use Illuminate\Support\Arr;
 use Yajra\DataTables\Contracts\DataTableScope;
 
 /**
@@ -31,6 +32,11 @@ use Yajra\DataTables\Contracts\DataTableScope;
 class CharacterScope implements DataTableScope
 {
     /**
+     * @var string
+     */
+    private $permission;
+
+    /**
      * @var array
      */
     private $character_ids = [];
@@ -40,9 +46,14 @@ class CharacterScope implements DataTableScope
      *
      * @param array $character_ids
      */
-    public function __construct(array $character_ids)
+    public function __construct(string $permission, int $character_id, ?array $character_ids)
     {
-        $this->character_ids = $character_ids;
+        $this->permission = $permission;
+
+        if (is_null($character_ids))
+            $character_ids = [];
+
+        $this->character_ids = array_merge([$character_id], $character_ids);
     }
 
     /**
@@ -53,6 +64,23 @@ class CharacterScope implements DataTableScope
      */
     public function apply($query)
     {
-        return $query->whereIn('character_id', $this->character_ids);
+        $character_ids = [];
+        $map = Arr::get(auth()->user()->getAffiliationMap(), 'char');
+
+        // in case user is super, apply filter over all requested characters
+        if (auth()->user()->hasSuperUser()) {
+            $character_ids = $this->character_ids;
+        }
+
+        // otherwise, determine to which character the user has access and include them in applied filters
+        // reject each other
+        if (empty($character_ids)) {
+            foreach ($this->character_ids as $character_id) {
+                if (in_array(Arr::has($map, (int) $character_id), ['character.*', $this->permission]))
+                    $character_ids[] = (int) $character_id;
+            }
+        }
+
+        return $query->whereIn('character_id', $character_ids);
     }
 }

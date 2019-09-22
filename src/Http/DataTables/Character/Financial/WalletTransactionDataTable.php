@@ -38,4 +38,15 @@ class WalletTransactionDataTable extends AbstractWalletTransactionDataTable
     {
         return CharacterWalletTransaction::with('type', 'party');
     }
+
+    /**
+     * @return \Yajra\DataTables\Html\Builder
+     */
+    public function html()
+    {
+        return parent::html()
+            ->ajax([
+                'data' => 'function(d) { d.characters = $("#dt-character-selector").val(); }',
+            ]);
+    }
 }

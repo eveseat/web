@@ -25,6 +25,7 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Military\StandingDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
+use Seat\Web\Models\User;
 
 /**
  * Class StandingsController
@@ -41,9 +42,10 @@ class StandingsController extends Controller
      */
     public function index(int $character_id, StandingDataTable $dataTable)
     {
+        $characters = (User::find($character_id))->group->users;
 
         return $dataTable
-            ->addScope(new CharacterScope([$character_id]))
-            ->render('web::character.standings');
+            ->addScope(new CharacterScope('character.standing', $character_id, request()->input('characters', [])))
+            ->render('web::character.standings', compact('characters'));
     }
 }

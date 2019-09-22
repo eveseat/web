@@ -31,6 +31,18 @@
           <h3 class="panel-title">{{ trans('web::seat.wallet_journal') }}</h3>
         </div>
         <div class="panel-body">
+          <div class="margin-bottom">
+            <select multiple="multiple" id="dt-character-selector" class="form-control">
+              @foreach($characters as $character)
+                @if($character->id == $request->character_id)
+                  <option selected="selected" value="{{ $character->id }}">{{ $character->name }}</option>
+                @else
+                  <option value="{{ $character->id }}">{{ $character->name }}</option>
+                @endif
+              @endforeach
+            </select>
+          </div>
+
           {{ $dataTable->table() }}
         </div>
       </div>
@@ -41,8 +53,17 @@
 @stop
 
 @push('javascript')
-
   {!! $dataTable->scripts() !!}
+
+  <script>
+      $(document).ready(function() {
+          $('#dt-character-selector')
+              .select2()
+              .on('change', function () {
+                  window.LaravelDataTables['dataTableBuilder'].ajax.reload();
+              });
+      });
+  </script>
 
   <script type="text/javascript">
     // ChartJS Spending Graph

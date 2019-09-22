@@ -25,6 +25,7 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Intel\ContactDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
+use Seat\Web\Models\User;
 
 /**
  * Class ContactsController
@@ -39,8 +40,10 @@ class ContactsController extends Controller
      */
     public function index(int $character_id, ContactDataTable $dataTable)
     {
+        $characters = (User::find($character_id))->group->users;
 
-        return $dataTable->addScope(new CharacterScope([$character_id]))
-            ->render('web::character.contacts');
+        return $dataTable
+            ->addScope(new CharacterScope('character.contact', $character_id, request()->input('characters', [])))
+            ->render('web::character.contacts', compact('characters'));
     }
 }

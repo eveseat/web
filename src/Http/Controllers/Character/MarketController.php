@@ -43,8 +43,10 @@ class MarketController extends Controller
      */
     public function index(int $character_id, MarketDataTable $dataTable)
     {
+        $characters = (User::find($character_id))->group->users;
 
-        return $dataTable->addScope(new CharacterScope([$character_id]))
-            ->render('web::character.market');
+        return $dataTable
+            ->addScope(new CharacterScope('character.market', $character_id, request()->input('characters', [])))
+            ->render('web::character.market', compact('characters'));
     }
 }

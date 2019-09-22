@@ -38,4 +38,15 @@ class ContractDataTable extends AbstractContractDataTable
     {
         return CharacterContract::orderByDesc('contract_id');
     }
+
+    /**
+     * @return \Yajra\DataTables\Html\Builder
+     */
+    public function html()
+    {
+        return parent::html()
+            ->ajax([
+                'data' => 'function(d) { d.characters = $("#dt-character-selector").val(); }',
+            ]);
+    }
 }

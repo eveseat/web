@@ -84,7 +84,10 @@ class MailDataTable extends DataTable
         return $this->builder()
             ->postAjax()
             ->columns($this->getColumns())
-            ->addAction();
+            ->addAction()
+            ->parameters([
+                'drawCallback' => 'function () { $("img").unveil(100); ids_to_names(); }'
+            ]);
     }
 
     /**

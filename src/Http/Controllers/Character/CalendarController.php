@@ -26,6 +26,7 @@ use Seat\Services\Repositories\Character\Calendar;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Intel\CalendarDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
+use Seat\Web\Models\User;
 
 /**
  * Class CalendarController
@@ -41,8 +42,10 @@ class CalendarController extends Controller
      */
     public function index(int $character_id, CalendarDataTable $dataTable)
     {
+        $characters = (User::find($character_id))->group->users;
+
         return $dataTable
-            ->addScope(new CharacterScope([$character_id]))
-            ->render('web::character.calendar');
+            ->addScope(new CharacterScope('character.calendar', $character_id, request()->input('characters')))
+            ->render('web::character.calendar', compact('characters'));
     }
 }

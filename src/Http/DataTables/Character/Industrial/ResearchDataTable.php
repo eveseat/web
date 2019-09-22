@@ -72,6 +72,9 @@ class ResearchDataTable extends DataTable
             ->columns($this->getColumns())
             ->parameters([
                 'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); }',
+            ])
+            ->ajax([
+                'data' => 'function(d) { d.characters = $("#dt-character-selector").val(); }',
             ]);
     }
 

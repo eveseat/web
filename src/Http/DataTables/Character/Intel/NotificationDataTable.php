@@ -71,6 +71,9 @@ class NotificationDataTable extends DataTable
             ->columns($this->getColumns())
             ->parameters([
                 'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); $("[data-toggle=popover]").popover(); ids_to_names(); }',
+            ])
+            ->ajax([
+                'data' => 'function(d) { d.characters = $("#dt-character-selector").val(); }',
             ]);
     }
 
