@@ -13,21 +13,21 @@
       <table class="table table-condensed table-hover table-responsive">
         <tbody>
 
-        @foreach($titles->groupBy('name') as $title_name => $members)
+        @foreach($titles as $title)
 
           <tr class="active">
             <td colspan="4">
               <b>
-                {{ strip_tags($title_name) }}
+                {{ strip_tags($title->name) }}
               </b>
               <span class="pull-right">
-                {{ count($members) }}
-                {{ trans_choice('web::seat.character', count($members)) }}
+                {{ $title->characters->count() }}
+                {{ trans_choice('web::seat.character', $title->characters->count()) }}
               </span>
             </td>
           </tr>
 
-          @foreach($members as $member)
+          @foreach($title->characters as $member)
 
             <tr>
               <td>
