@@ -129,13 +129,13 @@ Route::group(['prefix' => 'view/security'], function () {
         'uses'       => 'SecurityController@getTitles',
     ]);
 
-    Route::get('log/{corporation_id}', [
-        'as'         => 'corporation.view.security.log',
-        'middleware' => 'corporationbouncer:security',
-        'uses'       => 'SecurityController@getLog',
-    ]);
-
 });
+
+Route::get('/{corporation_id}/security/logs', [
+    'as' => 'corporation.view.security.log',
+    'middleware' => 'corporationbouncer:security',
+    'uses'       => 'SecurityController@getLogs',
+]);
 
 Route::group(['prefix' => 'view/ledger'], function () {
 
