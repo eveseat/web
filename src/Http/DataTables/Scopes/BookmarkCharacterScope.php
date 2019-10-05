@@ -28,6 +28,8 @@ use Yajra\DataTables\Contracts\DataTableScope;
 /**
  * Class BookmarkCharacterScope.
  *
+ * This is a specific scope for bookmark in order to avoid collision on character_id field.
+ *
  * @package Seat\Web\Http\DataTables\Scopes
  */
 class BookmarkCharacterScope implements DataTableScope

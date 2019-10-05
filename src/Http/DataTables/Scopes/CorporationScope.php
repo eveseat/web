@@ -26,6 +26,9 @@ use Yajra\DataTables\Contracts\DataTableScope;
 
 /**
  * Class CorporationScope.
+ * 
+ * This is a generic scope for corporation tables.
+ * It will restrict returned data based on both requested corporation ID.
  *
  * @package Seat\Web\Http\DataTables\Scopes
  */

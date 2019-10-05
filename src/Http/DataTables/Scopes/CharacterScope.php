@@ -28,6 +28,9 @@ use Yajra\DataTables\Contracts\DataTableScope;
 /**
  * Class CharacterScope.
  *
+ * This is a generic scope for character tables.
+ * It will restrict returned data based on both requested character ID and granted access.
+ *
  * @package Seat\Web\Http\DataTables\Scopes
  */
 class CharacterScope implements DataTableScope

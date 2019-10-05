@@ -27,6 +27,8 @@ use Yajra\DataTables\Contracts\DataTableScope;
 /**
  * Class BookmarkCorporationScope.
  *
+ * This is a specific scope for bookmark in order to avoid collision on corporation_id field.
+ *
  * @package Seat\Web\Http\DataTables\Scopes
  */
 class BookmarkCorporationScope implements DataTableScope

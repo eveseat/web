@@ -48,7 +48,7 @@ class MiningCorporationScope implements DataTableScope
     private $month;
 
     /**
-     * MiningCoporationScope constructor.
+     * MiningCorporationScope constructor.
      *
      * @param array $corporation_ids
      */
