@@ -144,6 +144,7 @@ return [
     [
         'name'           => 'standings',
         'label'          => 'web::seat.standings',
+        'plural'         => true,
         'permission'     => 'character.standings',
         'highlight_view' => 'standings',
         'route'          => 'character.view.standings',

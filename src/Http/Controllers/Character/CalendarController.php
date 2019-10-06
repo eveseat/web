@@ -22,23 +22,29 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
-use Seat\Services\Repositories\Character\Calendar;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Character\Intel\CalendarDataTable;
+use Seat\Web\Http\DataTables\Scopes\CharacterScope;
+use Seat\Web\Models\User;
 
+/**
+ * Class CalendarController.
+ *
+ * @package Seat\Web\Http\Controllers\Character
+ */
 class CalendarController extends Controller
 {
-    use Calendar;
-
     /**
-     * @param $character_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param int $character_id
+     * @param \Seat\Web\Http\DataTables\Character\Intel\CalendarDataTable $dataTable
+     * @return mixed
      */
-    public function getCalendar(int $character_id)
+    public function index(int $character_id, CalendarDataTable $dataTable)
     {
+        $characters = (User::find($character_id))->group->users;
 
-        $events = $this->getCharacterUpcomingCalendarEvents($character_id);
-
-        return view('web::character.calendar', compact('events'));
+        return $dataTable
+            ->addScope(new CharacterScope('character.calendar', $character_id, request()->input('characters')))
+            ->render('web::character.calendar', compact('characters'));
     }
 }

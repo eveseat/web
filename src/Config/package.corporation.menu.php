@@ -126,6 +126,7 @@ return [
     [
         'name'           => 'standings',
         'label'          => 'web::seat.standings',
+        'plural'         => true,
         'permission'     => 'corporation.standings',
         'highlight_view' => 'standings',
         'route'          => 'corporation.view.standings',

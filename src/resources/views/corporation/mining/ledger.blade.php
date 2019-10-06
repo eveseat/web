@@ -31,51 +31,15 @@
             <h3 class="panel-title">{{ trans_choice('web::seat.mining_ledger', 1) }}</h3>
         </div>
         <div class="panel-body">
-            <table class="table compact table-condensed table-hover table-responsive" id="corporation-mining-ledger">
-                <thead>
-                    <tr>
-                        <th>{{ trans_choice('web::seat.name', 1) }}</th>
-                        <th>{{trans('web::seat.group_main') }}</th>
-                        <th>{{ trans('web::seat.quantity') }}</th>
-                        <th>{{ trans('web::seat.volume') }}</th>
-                        <th>{{ trans_choice('web::seat.value',1) }}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($entries as $entry)
-                    <tr>
-                        <td data-order="{{ $entry->character_id }}">
-                            {!! img('character', $entry->character_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-                            <a href="{{ route('character.view.sheet', ['character_id' => $entry->character_id]) }}">
-                              <span class="id-to-name" data-id="{{ $entry->character_id }}">{{ trans('web::seat.unknown') }}</span>
-                            </a>
-                        </td>
-                        <td>
-                            <span class="character-id-to-main-character"
-                                  data-character-id="{{ $entry->character_id }}">Unknown</span>
-                        </td>
-                        <td class="text-right" data-order="{{ $entry->quantity }}">{{ number($entry->quantity, 0) }}</td>
-                        <td class="text-right" data-order="{{ $entry->volumes }}">{{ number($entry->volumes, 1) }} m3</td>
-                        <td class="text-right" data-order="{{ $entry->amounts }}">{{ number($entry->amounts) }} ISK</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            {{ $dataTable->table() }}
         </div>
-        <div class="panel-footer">Total : {{ number($entries->sum('amounts')) }} ISK</div>
     </div>
 @stop
 
 @push('javascript')
-<script type="text/javascript">
-    $(function(){
-        $('#corporation-mining-ledger').dataTable({
-            'order': [
-                [3, 'desc']
-            ],
-            'paging': false
-        });
-    });
-</script>
-@include('web::includes.javascript.character-id-to-main-character')
+
+    {!! $dataTable->scripts() !!}
+
+    @include('web::includes.javascript.character-id-to-main-character')
+
 @endpush

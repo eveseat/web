@@ -25,6 +25,8 @@ namespace Seat\Web\Http\Controllers\Corporation;
 use Seat\Services\Repositories\Corporation\Corporation;
 use Seat\Services\Repositories\Corporation\Security;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Corporation\Intel\LogDataTable;
+use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 
 /**
  * Class ViewController.
@@ -66,11 +68,10 @@ class SecurityController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getLog(int $corporation_id)
+    public function getLogs(int $corporation_id, LogDataTable $dataTable)
     {
 
-        $logs = $this->getCorporationMemberSecurityLogs($corporation_id);
-
-        return view('web::corporation.security.log', compact('logs'));
+        return $dataTable->addScope(new CorporationScope([$corporation_id]))
+            ->render('web::corporation.security.logs');
     }
 }

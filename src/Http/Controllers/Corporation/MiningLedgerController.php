@@ -22,10 +22,10 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
-use Illuminate\View\View;
-use Seat\Eveapi\Models\Corporation\CorporationMemberTracking;
 use Seat\Services\Repositories\Corporation\MiningLedger;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Corporation\Industrial\MiningDataTable;
+use Seat\Web\Http\DataTables\Scopes\MiningCorporationScope;
 
 /**
  * Class MiningLedgerController.
@@ -37,38 +37,20 @@ class MiningLedgerController extends Controller
     use MiningLedger;
 
     /**
-     * @param int      $corporation_id
-     * @param int|null $year
-     * @param int|null $month
-     *
-     * @return \Illuminate\View\View
+     * @param int $corporation_id
+     * @param \Seat\Web\Http\DataTables\Corporation\Industrial\MiningDataTable $dataTable
+     * @return mixed
      */
-    public function getLedger(int $corporation_id, int $year = null, int $month = null): View
+    public function show(int $corporation_id, MiningDataTable $dataTable, int $year = null, int $month = null)
     {
+        if (is_null($year)) $year = carbon()->year;
 
-        if (is_null($year))
-            $year = date('Y');
-
-        if (is_null($month))
-            $month = date('m');
+        if (is_null($month)) $month = carbon()->month;
 
         $ledgers = $this->getCorporationLedgers($corporation_id);
 
-        $entries = $this->getCorporationLedger($corporation_id, $year, $month);
-
-        return view('web::corporation.mining.ledger', compact('ledgers', 'entries'));
-    }
-
-    /**
-     * @param int $corporation_id
-     *
-     * @return \Illuminate\View\View
-     */
-    public function getTracking(int $corporation_id): View
-    {
-
-        $members = CorporationMemberTracking::where('corporation_id', $corporation_id)->get();
-
-        return view('mining-ledger::corporation.views.tracking', compact('members'));
+        return $dataTable
+            ->addScope(new MiningCorporationScope([$corporation_id], $year, $month))
+            ->render('web::corporation.mining.ledger', compact('ledgers'));
     }
 }

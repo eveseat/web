@@ -74,6 +74,7 @@ Route::group([
             include __DIR__ . '/Routes/Support/List.php';
             include __DIR__ . '/Routes/Support/Resolve.php';
             include __DIR__ . '/Routes/Support/Search.php';
+            include __DIR__ . '/Routes/Support/Insurance.php';
         });
 
         // User Profile Routes
@@ -102,7 +103,7 @@ Route::group([
         // Corporation Routes
         Route::group([
             'namespace' => 'Corporation',
-            'prefix'    => 'corporation',
+            'prefix'    => 'corporations',
         ], function () {
 
             include __DIR__ . '/Routes/Corporation/View.php';
@@ -111,7 +112,7 @@ Route::group([
         // Character Routes
         Route::group([
             'namespace' => 'Character',
-            'prefix'    => 'character',
+            'prefix'    => 'characters',
         ], function () {
 
             include __DIR__ . '/Routes/Character/View.php';

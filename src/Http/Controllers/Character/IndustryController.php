@@ -22,9 +22,10 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
-use Seat\Services\Repositories\Character\Industry;
 use Seat\Web\Http\Controllers\Controller;
-use Yajra\DataTables\DataTables;
+use Seat\Web\Http\DataTables\Character\Industrial\IndustryDataTable;
+use Seat\Web\Http\DataTables\Scopes\CharacterScope;
+use Seat\Web\Models\User;
 
 /**
  * Class IndustryController.
@@ -32,52 +33,17 @@ use Yajra\DataTables\DataTables;
  */
 class IndustryController extends Controller
 {
-    use Industry;
-
-    /**
-     * @param $character_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getIndustry(int $character_id)
-    {
-
-        return view('web::character.industry');
-    }
-
     /**
      * @param int $character_id
-     *
+     * @param \Seat\Web\Http\DataTables\Character\Industrial\IndustryDataTable $dataTable
      * @return mixed
      */
-    public function getIndustryData(int $character_id)
+    public function index(int $character_id, IndustryDataTable $dataTable)
     {
+        $characters = (User::find($character_id))->group->users;
 
-        $jobs = $this->getCharacterIndustry($character_id, false);
-
-        return DataTables::of($jobs)
-            ->editColumn('installerName', function ($row) {
-
-                return view('web::partials.industryinstaller', compact('row'))
-                    ->render();
-            })
-            ->editColumn('facilityName', function ($row) {
-
-                return view('web::partials.industrysystem', compact('row'))
-                    ->render();
-            })
-            ->editColumn('blueprintTypeName', function ($row) {
-
-                return view('web::partials.industryblueprint', compact('row'))
-                    ->render();
-            })
-            ->editColumn('productTypeName', function ($row) {
-
-                return view('web::partials.industryproduct', compact('row'))
-                    ->render();
-            })
-            ->rawColumns(['installerName', 'facilityName', 'blueprintTypeName', 'productTypeName'])
-            ->make(true);
-
+        return $dataTable
+            ->addScope(new CharacterScope('character.industry', $character_id, request()->input('characters', [])))
+            ->render('web::character.industry', compact('characters'));
     }
 }

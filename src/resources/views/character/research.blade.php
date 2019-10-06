@@ -21,46 +21,34 @@
       </h3>
     </div>
     <div class="panel-body">
+      <div class="margin-bottom">
+        <select multiple="multiple" id="dt-character-selector" class="form-control">
+          @foreach($characters as $character)
+            @if($character->id == $request->character_id)
+              <option selected="selected" value="{{ $character->id }}">{{ $character->name }}</option>
+            @else
+              <option value="{{ $character->id }}">{{ $character->name }}</option>
+            @endif
+          @endforeach
+        </select>
+      </div>
 
-      <table class="table datatable compact table-condensed table-hover table-responsive">
-        <thead>
-        <tr>
-          <th>{{ trans('web::seat.start') }}</th>
-          <th>{{ trans('web::seat.agent') }}</th>
-          <th>{{ trans_choice('web::seat.skill', 1) }}</th>
-          <th>{{ trans('web::seat.points_p_day') }}</th>
-          <th>{{ trans('web::seat.remainder') }}</th>
-        </tr>
-        </thead>
-        <tbody>
-
-        @foreach($agents as $agent)
-
-          <tr>
-            <td data-order="{{ $agent->started_at }}">
-              <span data-toggle="tooltip"
-                    title="" data-original-title="{{ $agent->started_at }}">
-                {{ human_diff($agent->started_at) }}
-              </span>
-            </td>
-            <td>
-              {!! img('character', $agent->itemID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-              {{ $agent->itemName }}
-            </td>
-            <td>
-              {!! img('type', $agent->typeID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-              {{ $agent->typeName }}
-            </td>
-            <td>{{ $agent->points_per_day }}</td>
-            <td>{{ $agent->remainder_points }}</td>
-          </tr>
-
-        @endforeach
-
-        </tbody>
-      </table>
-
+      {!! $dataTable->table() !!}
     </div>
   </div>
 
 @stop
+
+@push('javascript')
+  {!! $dataTable->scripts() !!}
+
+  <script>
+      $(document).ready(function() {
+          $('#dt-character-selector')
+              .select2()
+              .on('change', function () {
+                  window.LaravelDataTables['dataTableBuilder'].ajax.reload();
+              });
+      });
+  </script>
+@endpush

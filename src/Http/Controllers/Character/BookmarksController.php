@@ -22,23 +22,29 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
-use Seat\Services\Repositories\Character\Bookmarks;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Character\Intel\BookmarkDataTable;
+use Seat\Web\Http\DataTables\Scopes\BookmarkCharacterScope;
+use Seat\Web\Models\User;
 
+/**
+ * Class BookmarksController.
+ *
+ * @package Seat\Web\Http\Controllers\Character
+ */
 class BookmarksController extends Controller
 {
-    use Bookmarks;
-
     /**
-     * @param $character_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param int $character_id
+     * @param \Seat\Web\Http\DataTables\Character\Intel\BookmarkDataTable $dataTable
+     * @return mixed
      */
-    public function getBookmarks(int $character_id)
+    public function index(int $character_id, BookmarkDataTable $dataTable)
     {
+        $characters = (User::find($character_id))->group->users;
 
-        $bookmarks = $this->getCharacterBookmarks($character_id);
-
-        return view('web::character.bookmarks', compact('bookmarks'));
+        return $dataTable
+            ->addScope(new BookmarkCharacterScope('character.bookmark', $character_id, request()->input('characters')))
+            ->render('web::character.bookmarks', compact('characters'));
     }
 }
