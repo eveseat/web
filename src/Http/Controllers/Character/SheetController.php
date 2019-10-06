@@ -50,7 +50,7 @@ class SheetController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function getSheet(int $character_id)
+    public function show(int $character_id)
     {
 
         // TODO: Revert to repository pattern.

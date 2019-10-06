@@ -23,9 +23,11 @@
 namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Eveapi\Models\Character\CharacterInfo;
-use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Character\Wallet;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Character\Financial\WalletJournalDataTable;
+use Seat\Web\Http\DataTables\Character\Financial\WalletTransactionDataTable;
+use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 use Seat\Web\Models\User;
 use Yajra\DataTables\DataTables;
 
@@ -39,106 +41,30 @@ class WalletController extends Controller
 
     /**
      * @param int $character_id
-     *
-     * @return \Illuminate\View\View
+     * @param \Seat\Web\Http\DataTables\Character\Financial\WalletJournalDataTable $dataTable
+     * @return mixed
      */
-    public function getJournal(int $character_id)
+    public function journal(int $character_id, WalletJournalDataTable $dataTable)
     {
+        $characters = (User::find($character_id))->group->users;
 
-        return view('web::character.wallet.journal.journal');
+        return $dataTable
+            ->addScope(new CharacterScope('character.journal', $character_id, request()->input('characters', [])))
+            ->render('web::character.wallet.journal.journal', compact('characters'));
     }
 
     /**
      * @param int $character_id
-     *
+     * @param \Seat\Web\Http\DataTables\Character\Financial\WalletTransactionDataTable $dataTable
      * @return mixed
-     * @throws \Exception
      */
-    public function getJournalData(int $character_id)
+    public function transactions(int $character_id, WalletTransactionDataTable $dataTable)
     {
-        if (! request()->has('all_linked_characters'))
-            return response('required url parameter is missing!', 400);
+        $characters = (User::find($character_id))->group->users;
 
-        if (request('all_linked_characters') === 'false')
-            $character_ids = collect($character_id);
-
-        $user_group = User::find($character_id)->group->users
-            ->filter(function ($user) {
-                return $user->name !== 'admin' && $user->id !== 1;
-            })
-            ->pluck('id');
-
-        if (request('all_linked_characters') === 'true')
-            $character_ids = $user_group;
-
-        $journal = $this->getCharacterWalletJournal($character_ids);
-
-        return DataTables::of($journal)
-            ->editColumn('ref_type', function ($row) {
-
-                return view('web::partials.journaltranstype', compact('row'));
-            })
-            ->editColumn('first_party_id', function ($row) {
-
-                $character_id = $row->character_id;
-
-                if (optional($row->first_party)->category === 'character') {
-
-                    $character = CharacterInfo::find($row->first_party_id) ?: $row->first_party_id;
-
-                    return view('web::partials.character', compact('character', 'character_id'));
-                }
-
-                if (optional($row->first_party)->category === 'corporation'){
-
-                    $corporation = CorporationInfo::find($row->first_party_id) ?: $row->first_party_id;
-
-                    return view('web::partials.corporation', compact('corporation', 'character_id'));
-                }
-
-                return view('web::partials.unknown', [
-                    'unknown_id' => $row->first_party_id,
-                    'character_id' => $character_id,
-                ]);
-            })
-            ->editColumn('second_party_id', function ($row) {
-
-                $character_id = $row->character_id;
-
-                if (optional($row->second_party)->category === 'character') {
-
-                    $character = CharacterInfo::find($row->second_party_id) ?: $row->second_party_id;
-
-                    return view('web::partials.character', compact('character', 'character_id'));
-                }
-
-                if (optional($row->second_party)->category === 'corporation') {
-
-                    $corporation = CorporationInfo::find($row->second_party_id) ?: $row->second_party_id;
-
-                    return view('web::partials.corporation', compact('corporation', 'character_id'));
-                }
-
-                return view('web::partials.unknown', [
-                    'unknown_id' => $row->second_party_id,
-                    'character_id' => $character_id,
-                ]);
-            })
-            ->editColumn('amount', function ($row) {
-
-                return number($row->amount);
-            })
-            ->editColumn('balance', function ($row) {
-
-                return number($row->balance);
-            })
-            ->addColumn('is_in_group', function ($row) use ($user_group) {
-
-                return in_array($row->first_party_id, $user_group->toArray()) && in_array($row->second_party_id, $user_group->toArray());
-            })
-            ->rawColumns(['ref_type', 'first_party_id', 'second_party_id'])
-            ->make(true);
-
+        return $dataTable
+            ->addScope(new CharacterScope('character.transaction', $character_id, request()->input('characters')))
+            ->render('web::character.wallet.transactions.transactions', compact('characters'));
     }
 
     /**
@@ -184,17 +110,6 @@ class WalletController extends Controller
                 ],
             ],
         ]);
-    }
-
-    /**
-     * @param int $character_id
-     *
-     * @return \Illuminate\View\View
-     */
-    public function getTransactions(int $character_id)
-    {
-
-        return view('web::character.wallet.transactions.transactions');
     }
 
     /**

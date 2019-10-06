@@ -22,23 +22,29 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
-use Seat\Services\Repositories\Character\Notifications;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Character\Intel\NotificationDataTable;
+use Seat\Web\Http\DataTables\Scopes\CharacterScope;
+use Seat\Web\Models\User;
 
+/**
+ * Class NotificationsController.
+ *
+ * @package Seat\Web\Http\Controllers\Character
+ */
 class NotificationsController extends Controller
 {
-    use Notifications;
-
     /**
-     * @param $character_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param int $character_id
+     * @param \Seat\Web\Http\DataTables\Character\Intel\NotificationDataTable $dataTable
+     * @return mixed
      */
-    public function getNotifications(int $character_id)
+    public function index(int $character_id, NotificationDataTable $dataTable)
     {
+        $characters = (User::find($character_id))->group->users;
 
-        $notifications = $this->getCharacterNotifications($character_id);
-
-        return view('web::character.notifications', compact('notifications'));
+        return $dataTable
+            ->addScope(new CharacterScope('character.notification', $character_id, request()->input('characters', [])))
+            ->render('web::character.notifications', compact('characters'));
     }
 }
