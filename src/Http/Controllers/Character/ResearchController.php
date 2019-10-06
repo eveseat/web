@@ -22,24 +22,29 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
-use Seat\Services\Repositories\Character\Research;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Character\Industrial\ResearchDataTable;
+use Seat\Web\Http\DataTables\Scopes\CharacterScope;
+use Seat\Web\Models\User;
 
+/**
+ * Class ResearchController.
+ *
+ * @package Seat\Web\Http\Controllers\Character
+ */
 class ResearchController extends Controller
 {
-    use Research;
-
     /**
-     * @param $character_id
-     *
+     * @param int $character_id
+     * @param \Seat\Web\Http\DataTables\Character\Industrial\ResearchDataTable $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getResearch(int $character_id)
+    public function index(int $character_id, ResearchDataTable $dataTable)
     {
+        $characters = (User::find($character_id))->group->users;
 
-        $agents = $this->getCharacterResearchAgents($character_id);
-
-        return view('web::character.research', compact('agents'));
-
+        return $dataTable
+            ->addScope(new CharacterScope('character.research', $character_id, request()->input('characters', [])))
+            ->render('web::character.research', compact('characters'));
     }
 }

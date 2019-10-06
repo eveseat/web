@@ -22,93 +22,36 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
-use Seat\Eveapi\Models\Character\CharacterInfo;
-use Seat\Services\Repositories\Character\Character;
 use Seat\Web\Http\Controllers\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Yajra\DataTables\DataTables;
+use Seat\Web\Http\DataTables\Character\CharacterDataTable;
+use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 
 /**
  * Class CharacterController.
+ *
  * @package Seat\Web\Http\Controllers\Character
  */
 class CharacterController extends Controller
 {
-    use Character;
-
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getCharacters()
-    {
-
-        return view('web::character.list');
-
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
+     * @param \Seat\Web\Http\DataTables\Character\CharacterDataTable $dataTable
      * @return mixed
-     * @throws \Exception
      */
-    public function getCharactersData(Request $request)
+    public function index(CharacterDataTable $dataTable)
     {
+        if (auth()->user()->hasSuperUser())
+            return $dataTable->render('web::character.list');
 
-        $characters = ($request->filtered === 'true') ?
-            auth()->user()->group->users
-                ->filter(function ($user) {
-                    return $user->name !== 'admin' && $user->id !== 1;
-                })
-                ->map(function ($user) {
-                    return $user->character;
-            }) :
-            $this->getAllCharactersWithAffiliations(false);
+        $owned_character_ids = auth()->user()->associatedCharacterIds()->toArray();
+        $allowed_character_ids = array_get(auth()->user()->getAffiliationMap(), 'char');
 
-        return DataTables::of($characters)
-            ->addColumn('name_view', function ($row) {
-
-                $character = $row;
-
-                return view('web::partials.character', compact('character'));
-            })
-            ->editColumn('corporation_id', function ($row) {
-
-                $corporation = $row->corporation_id;
-
-                return view('web::partials.corporation', compact('corporation'));
-            })
-            ->editColumn('alliance_id', function ($row) {
-
-                $alliance = $row->alliance_id;
-
-                if (empty($alliance))
-                    return '';
-
-                return view('web::partials.alliance', compact('alliance'));
-            })
-            ->editColumn('actions', function ($row) {
-
-                return view('web::character.partials.delete', compact('row'))
-                    ->render();
-            })
-            ->rawColumns(['name_view', 'corporation_id', 'alliance_id', 'actions'])
-            ->make(true);
-
+        return $dataTable
+            ->addScope(new CharacterScope('character.sheet', auth()->user()->id, array_merge($owned_character_ids, $allowed_character_ids)))
+            ->render('web::character.list');
     }
 
-    /**
-     * @param int $character_id
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function deleteCharacter(int $character_id)
+    public function show(int $character_id)
     {
 
-        CharacterInfo::find($character_id)->delete();
-
-        return redirect()->back()->with(
-            'success', 'Character deleted!'
-        );
     }
 }

@@ -22,10 +22,11 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
-use Seat\Eveapi\Models\Character\CharacterInfo;
-use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Corporation\Wallet;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Corporation\Financial\WalletJournalDataTable;
+use Seat\Web\Http\DataTables\Corporation\Financial\WalletTransactionDataTable;
+use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 use Yajra\DataTables\DataTables;
 
 /**
@@ -38,104 +39,26 @@ class WalletController extends Controller
 
     /**
      * @param int $corporation_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getJournal(int $corporation_id)
-    {
-
-        $divisions = $this->getCorporationWalletDivisions($corporation_id);
-
-        return view('web::corporation.wallet.journal.journal', compact('divisions'));
-
-    }
-
-    /**
-     * @param int $corporation_id
-     *
+     * @param \Seat\Web\Http\DataTables\Corporation\Financial\WalletJournalDataTable $dataTable
      * @return mixed
-     * @throws \Exception
      */
-    public function getJournalData(int $corporation_id)
+    public function journal(int $corporation_id, WalletJournalDataTable $dataTable)
     {
-        if (! request()->has('division'))
-            return abort(500);
 
-        $journal = $this->getCorporationWalletJournal($corporation_id, (int) request('division'));
-
-        return DataTables::of($journal)
-            ->editColumn('ref_type', function ($row) {
-
-                return view('web::partials.journaltranstype', compact('row'));
-            })
-            ->editColumn('first_party_id', function ($row) {
-
-                $character_id = $row->character_id;
-
-                if (optional($row->first_party)->category === 'character') {
-
-                    $character = CharacterInfo::find($row->first_party_id) ?: $row->first_party_id;
-
-                    return view('web::partials.character', compact('character', 'character_id'));
-                }
-
-                if (optional($row->first_party)->category === 'corporation'){
-
-                    $corporation = CorporationInfo::find($row->first_party_id) ?: $row->first_party_id;
-
-                    return view('web::partials.corporation', compact('corporation', 'character_id'));
-                }
-
-                return view('web::partials.unknown', [
-                    'unknown_id' => $row->first_party_id,
-                    'character_id' => $character_id,
-                ]);
-            })
-            ->editColumn('second_party_id', function ($row) {
-
-                $character_id = $row->character_id;
-
-                if (optional($row->second_party)->category === 'character') {
-
-                    $character = CharacterInfo::find($row->second_party_id) ?: $row->second_party_id;
-
-                    return view('web::partials.character', compact('character', 'character_id'));
-                }
-
-                if (optional($row->second_party)->category === 'corporation') {
-
-                    $corporation = CorporationInfo::find($row->second_party_id) ?: $row->second_party_id;
-
-                    return view('web::partials.corporation', compact('corporation', 'character_id'));
-                }
-
-                return view('web::partials.unknown', [
-                    'unknown_id' => $row->second_party_id,
-                    'character_id' => $character_id,
-                ]);
-            })
-            ->editColumn('amount', function ($row) {
-
-                return number($row->amount);
-            })
-            ->editColumn('balance', function ($row) {
-
-                return number($row->balance);
-            })
-            ->rawColumns(['ref_type', 'first_party_id', 'second_party_id'])
-            ->make(true);
-
+        return $dataTable->addScope(new CorporationScope([$corporation_id]))
+            ->render('web::corporation.wallet.journal.journal');
     }
 
     /**
      * @param int $corporation_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param \Seat\Web\Http\DataTables\Corporation\Financial\WalletTransactionDataTable $dataTable
+     * @return mixed
      */
-    public function getTransactions(int $corporation_id)
+    public function transactions(int $corporation_id, WalletTransactionDataTable $dataTable)
     {
 
-        return view('web::corporation.wallet.transactions.transactions');
+        return $dataTable->addScope(new CorporationScope([$corporation_id]))
+            ->render('web::corporation.wallet.transactions.transactions');
     }
 
     /**

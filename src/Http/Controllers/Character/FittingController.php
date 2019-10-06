@@ -22,8 +22,11 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
-use Seat\Services\Repositories\Character\Fittings;
+use Seat\Eveapi\Models\Fittings\CharacterFitting;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Character\Military\FittingDataTable;
+use Seat\Web\Http\DataTables\Scopes\CharacterScope;
+use Seat\Web\Models\User;
 
 /**
  * Class FittingController.
@@ -31,34 +34,32 @@ use Seat\Web\Http\Controllers\Controller;
  */
 class FittingController extends Controller
 {
-
-    use Fittings;
-
     /**
      * @param int $character_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param \Seat\Web\Http\DataTables\Character\Military\FittingDataTable $dataTable
+     * @return mixed
      */
-    public function getFittings(int $character_id)
+    public function index(int $character_id, FittingDataTable $dataTable)
     {
+        $characters = (User::find($character_id))->group->users;
 
-        $fittings = $this->getCharacterFullFittings($character_id);
-
-        return view('web::character.fittings', compact('fittings'));
+        return $dataTable
+            ->addScope(new CharacterScope('character.fitting', $character_id, request()->input('characters')))
+            ->render('web::character.fittings', compact('characters'));
     }
 
     /**
      * @param int $character_id
      * @param int $fitting_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|object|\Seat\Eveapi\Models\Fittings\CharacterFitting|null
      */
-    public function getFittingItems(int $character_id, int $fitting_id)
+    public function show(int $character_id, int $fitting_id)
     {
+        $fitting = CharacterFitting::with('ship', 'items', 'ship.price', 'items.type', 'items.type.price')
+            ->where('character_id', $character_id)
+            ->where('fitting_id', $fitting_id)
+            ->first();
 
-        $fitting = $this->getCharacterFitting($character_id, $fitting_id);
-        $items = $this->getCharacterFittingItems($fitting_id);
-
-        return view('web::character.fittingitems', compact('fitting', 'items'));
+        return view('web::common.fittings.modals.fitting.content', compact('fitting'));
     }
 }
