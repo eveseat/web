@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Extentions;
 
+use Illuminate\Support\Arr;
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\InvalidStateException;
 use Laravel\Socialite\Two\ProviderInterface;
@@ -137,7 +138,7 @@ class EveOnlineProvider extends AbstractProvider implements ProviderInterface
     protected function getTokenFields($code)
     {
 
-        return array_add(
+        return Arr::add(
             parent::getTokenFields($code), 'grant_type', 'authorization_code');
     }
 

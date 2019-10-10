@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\Composers;
 
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Arr;
 
 /**
  * Class CharacterMenu.
@@ -79,7 +80,7 @@ class CharacterMenu extends AbstractMenu
         }
 
         // Sort the menu alphabetically.
-        $menu = array_values(array_sort($menu, function ($value) {
+        $menu = array_values(Arr::sort($menu, function ($value) {
 
             return $value['name'];
 
