@@ -37,7 +37,7 @@ class CorporationsController extends Controller
         if (auth()->user()->hasSuperUser())
             return $dataTable->render('web::corporation.list');
 
-        $allowed_corporation_ids = array_get(auth()->user()->getAffiliationMap(), 'corp');
+        $allowed_corporation_ids = array_keys(array_get(auth()->user()->getAffiliationMap(), 'corp'));
 
         return $dataTable
             ->addScope(new CorporationScope($allowed_corporation_ids))
