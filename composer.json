@@ -27,6 +27,7 @@
     "league/csv": "^9.1",
     "guzzlehttp/guzzle": "^6.3",
     "yajra/laravel-datatables-oracle": "~8",
+    "yajra/laravel-datatables-buttons": "^4.0",
     "components/font-awesome": "^4.7",
     "erusev/parsedown": "^1.7"
   },
