@@ -46,7 +46,7 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-<body class="hold-transition {{ setting('skin') }} sidebar-mini {{ setting('sidebar') }}">
+<body class="hold-transition text-sm sidebar-mini {{ setting('sidebar') }}">
 
 <div class="wrapper">
 

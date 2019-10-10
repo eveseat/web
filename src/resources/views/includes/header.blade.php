@@ -1,5 +1,5 @@
 <!-- Header Navbar -->
-<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+<nav class="main-header navbar navbar-expand navbar-dark navbar-gray">
 
   <!-- Sidebar toggle button-->
   <ul class="navbar-nav">
@@ -58,63 +58,33 @@
     </li>
 
     <!-- User Account Menu -->
-    <li class="dropdown user user-menu" id="user-dropdown">
-      <!-- Menu Toggle Button -->
-      <a href="#" class="dropdown-toggle" data-widget="dropdown">
-        <!-- The user image in the navbar-->
-        <img src="//image.eveonline.com/Character/{{ $user->character_id }}_128.jpg"
-             class="user-image" alt="User Image">
-        <!-- hidden-xs hides the username on small devices so only the image appears. -->
-        <span class="hidden-xs">{{ $user->name }}</span>
-        <i class="fa fa-caret-left"></i>
+    <li class="nav-item dropdown">
+      <a class="nav-link" data-toggle="dropdown" href="#">
+        <i class="fas fa-cogs"></i>
       </a>
-
-      <ul class="dropdown-menu">
-        <!-- The user image in the menu -->
-        <li class="user-header">
-          <img src="//image.eveonline.com/Character/{{ $user->id }}_256.jpg"
-               class="img-circle" alt="User Image">
-          <p>
-            {{ $user->name }}
-            <small>{{ trans('web::seat.joined') }}: {{ human_diff($user->created_at) }}</small>
-            @if(auth()->user()->name != 'admin')
-            <small>{{ count(auth()->user()->associatedCharacterIds()) }}
-              {{ trans_choice('web::seat.characters_in_group', count(auth()->user()->associatedCharacterIds())) }}</small>
-            @endif
-          </p>
-        </li>
-
+      <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
         @if(auth()->user()->name != 'admin')
-        <li class="user-body">
-          <div class="row">
-            <div class="col-xs-6 text-center">
-              <a class="btn btn-default btn-flat" type="button" data-widget="modal" data-target="#characterSwitchModal">
-                {{ trans('web::seat.switch_character') }}</a>
-            </div>
-            <div class="col-xs-6 text-center">
-              <a class="btn btn-default btn-flat" href="{{ route('auth.eve') }}">{{ trans('web::seat.link_character') }}</a>
-            </div>
-          </div>
-        </li>
+          <a href="{{ route('profile.view') }}" class="dropdown-item">
+            <i class="fas fa-id-card"></i> {{ trans('web::seat.profile') }}
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item" data-toggle="modal" data-target="#characterSwitchModal">
+            <i class="fas fa-exchange-alt"></i> {{ trans('web::seat.switch_character') }}
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="{{ route('auth.eve') }}" class="dropdown-item">
+            <i class="fas fa-link"></i> {{ trans('web::seat.link_character') }}
+          </a>
+          <div class="dropdown-divider"></div>
         @endif
-
-        <!-- Menu Footer-->
-        <li class="user-footer">
-          <div class="pull-left">
-            <a href="{{ route('profile.view') }}"
-               class="btn btn-default btn-flat">{{ trans('web::seat.profile') }}</a>
-          </div>
-          <div class="pull-right">
-            <form action="{{ route('auth.logout') }}" method="post">
-              {{ csrf_field() }}
-              <button type="submit" class="btn btn-default btn-flat">
-                {{ trans('web::seat.sign_out') }}
-              </button>
-            </form>
-          </div>
-        </li>
-      </ul>
-
+        <form action="{{ route('auth.logout') }}" method="post">
+          {{ csrf_field() }}
+          <button type="submit" class="btn btn-link dropdown-item">
+            <i class="fas fa-sign-out-alt"></i>
+            {{ trans('web::seat.sign_out') }}
+          </button>
+        </form>
+      </div>
     </li>
 
   </ul>
