@@ -43,7 +43,7 @@ class CharacterController extends Controller
             return $dataTable->render('web::character.list');
 
         $owned_character_ids = auth()->user()->associatedCharacterIds()->toArray();
-        $allowed_character_ids = array_get(auth()->user()->getAffiliationMap(), 'char');
+        $allowed_character_ids = array_keys(array_get(auth()->user()->getAffiliationMap(), 'char'));
 
         return $dataTable
             ->addScope(new CharacterScope('character.sheet', auth()->user()->id, array_merge($owned_character_ids, $allowed_character_ids)))
