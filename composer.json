@@ -13,7 +13,7 @@
       "Seat\\Web\\": "src/"
     }
   },
-  "minimum-stability": "dev",
+  "minimum-stability": "alpha",
   "prefer-stable": true,
   "require": {
     "php": "^7.2",
@@ -21,19 +21,13 @@
     "laravel/horizon": "^3.4",
     "laravel/tinker": "~1.0",
     "laravel/socialite": "^4.2",
-    "socialiteproviders/manager": "^3.0",
     "eveseat/eseye": "~1",
-    "eveseat/eveapi": "4.0.x-dev",
-    "eveseat/services": "4.0.x-dev",
+    "eveseat/eveapi": "dev-4.0.x",
+    "eveseat/services": "dev-4.0.x",
     "guzzlehttp/guzzle": "^6.3",
     "yajra/laravel-datatables-oracle": "~9",
-    "yajra/laravel-datatables-buttons": "^4.0",
     "components/font-awesome": "^5.9",
-    "erusev/parsedown": "^1.7",
-    "almasaeed2010/adminlte": "^3.0",
-    "twbs/bootstrap": "^4.3",
-    "datatables/datatables": "^1.10",
-    "ext-json": "*"
+    "erusev/parsedown": "^1.7"
   },
   "extra": {
     "laravel": {
