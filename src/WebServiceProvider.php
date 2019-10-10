@@ -118,17 +118,21 @@ class WebServiceProvider extends AbstractSeatPlugin
     {
 
         $this->publishes([
-            __DIR__ . '/resources/css'                                          => public_path('web/css'),
-            __DIR__ . '/resources/fonts'                                        => public_path('web/fonts'),
-            __DIR__ . '/resources/img'                                          => public_path('web/img'),
-            __DIR__ . '/resources/js'                                           => public_path('web/js'),
+            __DIR__ . '/resources/css'                                           => public_path('web/css'),
+            __DIR__ . '/resources/fonts'                                         => public_path('web/fonts'),
+            __DIR__ . '/resources/img'                                           => public_path('web/img'),
+            __DIR__ . '/resources/js'                                            => public_path('web/js'),
 
-            // Font Awesome Pulled from packagist
-            base_path('vendor/components/font-awesome/css/fontawesome.min.css') => public_path('web/css/fontawesome.min.css'),
-            base_path('vendor/components/font-awesome/css/brands.min.css')      => public_path('web/css/brands.min.css'),
-            base_path('vendor/components/font-awesome/css/regular.min.css')     => public_path('web/css/regular.min.css'),
-            base_path('vendor/components/font-awesome/css/solid.min.css')       => public_path('web/css/solid.min.css'),
-            base_path('vendor/components/font-awesome/webfonts')                => public_path('web/webfonts'),
+            // Bootstrap pulled from packagist
+            base_path('vendor/almasaeed2010/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') => public_path('web/js/bootstrap.bundle.min.js'),
+
+            // AdminLTE pulled from packagist
+            base_path('vendor/almasaeed2010/adminlte/dist/css/adminlte.min.css') => public_path('web/css/adminlte.min.css'),
+            base_path('vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js')   => public_path('web/js/adminlte.min.js'),
+
+            // Font Awesome pulled from packagist
+            base_path('vendor/components/font-awesome/css/all.min.css')          => public_path('web/css/all.min.css'),
+            base_path('vendor/components/font-awesome/webfonts')                 => public_path('web/webfonts'),
         ]);
     }
 

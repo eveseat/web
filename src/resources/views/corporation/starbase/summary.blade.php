@@ -24,22 +24,22 @@
 
         <tr>
           <td data-order="{{ $starbase->updated_at }}">
-              <span data-toggle="tooltip"
+              <span data-widget="tooltip"
                     title="" data-original-title="Last Update: {{ $starbase->updated_at }}">
-                <span class="label
-                      @if($starbase->state == 'online')
-                        label-success
-                      @elseif($starbase->state == 'unanchored' || $starbase->state == 'offline')
-                        label-danger
-                      @else
-                        label-warning
-                      @endif">
+                <span class="badge
+                  @if($starbase->state == 'online')
+                  badge-success
+                  @elseif($starbase->state == 'unanchored' || $starbase->state == 'offline')
+                  badge-danger
+                  @else
+                  badge-warning
+                  @endif">
                   {{ ucfirst($starbase->state) }}
                 </span>
               </span>
           </td>
           <td data-order="{{ $starbase->type->typeName }}">
-              <span data-toggle="tooltip"
+              <span data-widget="tooltip"
                     title="" data-original-title="{{ $starbase->type->typeName }}">
                 {!! img('type', $starbase->type_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                 {{ $starbase->type->typeName }}

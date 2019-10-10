@@ -11,7 +11,7 @@
       <div class="modal-footer bg-blue">
         <div class="text-left">
           Those information are indicative only. They are pulled regularly from EVE Server.<br>
-          Remaining amount is the difference between <span class="label label-default">hull estimated price</span> and <span class="label label-default">refunded amount</span>.
+          Remaining amount is the difference between <span class="badge badge-default">hull estimated price</span> and <span class="badge badge-default">refunded amount</span>.
         </div>
       </div>
     </div>

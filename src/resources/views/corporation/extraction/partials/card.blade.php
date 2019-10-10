@@ -31,7 +31,7 @@
       @include('web::corporation.extraction.partials.card-body')
     </div>
     <div class="box-footer">
-      <button type="button" data-toggle="modal" data-target="#moon-modal" class="btn btn-xs btn-link pull-right" aria-label="Settings">
+      <button type="button" data-widget="modal" data-target="#moon-modal" class="btn btn-xs btn-link pull-right" aria-label="Settings">
         <i class="fa fa-cogs"></i> Settings
       </button>
     </div>

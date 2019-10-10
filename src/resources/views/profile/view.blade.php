@@ -212,7 +212,7 @@
             <li>
 
               <!-- Button trigger modal -->
-              <a type="button" data-toggle="modal" data-target="#emailModal">
+              <a type="button" data-widget="modal" data-target="#emailModal">
                 <i class="fa fa-envelope"></i>
                 {{ trans('web::seat.change_email') }}
               </a>
@@ -270,7 +270,7 @@
             <li>
 
               <!-- Button trigger modal -->
-              <a type="button" data-toggle="modal" data-target="#historyModal">
+              <a type="button" data-widget="modal" data-target="#historyModal">
                 <i class="fa fa-lock"></i>
                 {{ trans('web::seat.login_history') }}
               </a>
@@ -300,7 +300,7 @@
 
                           <tr>
                             <td>
-                              <span data-toggle="tooltip"
+                              <span data-widget="tooltip"
                                     title="" data-original-title="{{ $entry->created_at }}">
                                 {{ human_diff($entry->created_at) }}
                               </span>
@@ -327,7 +327,7 @@
             <li>
 
               <!-- Button trigger modal -->
-              <a type="button" data-toggle="modal" data-target="#scopesModal">
+              <a type="button" data-widget="modal" data-target="#scopesModal">
                 <i class="fa fa-shield"></i>
                 {{ trans_choice('web::seat.scope', 2) }}
               </a>
@@ -436,11 +436,11 @@
                 </a>
 
                 @if ($character->refresh_token )
-                  <button data-toggle="tooltip" title="" class="btn btn-xs btn-link" data-original-title="Valid Token">
+                  <button data-widget="tooltip" title="" class="btn btn-xs btn-link" data-original-title="Valid Token">
                     <i class="fa fa-check text-success"></i>
                   </button>
                 @else
-                  <button data-toggle="tooltip" title="" class="btn btn-xs btn-link" data-original-title="Invalid Token"
+                  <button data-widget="tooltip" title="" class="btn btn-xs btn-link" data-original-title="Invalid Token"
                           aria-describedby="tooltip257244">
                     <i class="fa fa-exclamation-triangle text-danger"></i>
                   </button>

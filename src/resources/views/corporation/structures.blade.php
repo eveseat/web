@@ -42,12 +42,12 @@
                   {{ ucfirst(str_replace('_', ' ', $structure->state)) }}
                 </td>
                 <td data-sort="{{ $structure->fuel_expires }}">
-                    <span data-toggle="tooltip" title="" data-original-title="{{ $structure->fuel_expires }}">
+                    <span data-widget="tooltip" title="" data-original-title="{{ $structure->fuel_expires }}">
                       {{ human_diff($structure->fuel_expires) }}
                     </span>
                 </td>
                 <td>
-            <span data-toggle="tooltip" title=""
+            <span data-widget="tooltip" title=""
                   data-original-title="Weekday: {{ $structure->reinforce_weekday }} | Hour: {{ $structure->reinforce_hour }}">
               {{ $structure->reinforce_weekday }}/{{ $structure->reinforce_hour }}
             </span>

@@ -7,14 +7,14 @@
 
         <dt>{{ trans('web::seat.state') }}:</dt>
         <dd>
-          <span class="label
-                @if($starbase->state == 'online')
-                  label-success
-                @elseif($starbase->state == 'unanchored' || $starbase->state == 'offline')
-                  label-danger
-                @else
-                  label-warning
-                @endif">
+          <span class="badge
+            @if($starbase->state == 'online')
+            badge-success
+            @elseif($starbase->state == 'unanchored' || $starbase->state == 'offline')
+            badge-danger
+            @else
+            badge-warning
+            @endif">
             {{ ucfirst($starbase->state) }}
           </span>
         </dd>

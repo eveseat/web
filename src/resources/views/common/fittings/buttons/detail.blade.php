@@ -1,4 +1,4 @@
-<a href="#" data-toggle="modal" data-target="#fitting-detail"
+<a href="#" data-widget="modal" data-target="#fitting-detail"
    @if(isset($character_id))
    data-url="{{ route('character.view.fittings.items', ['character_id' => $character_id, 'fitting_id' => $fitting_id]) }}"
    @else

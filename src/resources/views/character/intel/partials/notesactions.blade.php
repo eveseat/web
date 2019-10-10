@@ -1,5 +1,5 @@
 <div class="btn-group pull-right">
-  <a class="btn btn-primary btn-xs editnote col-xs-6" type="button" data-toggle="modal" data-target="#editModal"
+  <a class="btn btn-primary btn-xs editnote col-xs-6" type="button" data-widget="modal" data-target="#editModal"
      a-note-id="{{ $row->id }}" a-object-id="{{ $row->object_id }}">
     {{ trans('web::seat.edit') }}
   </a>
