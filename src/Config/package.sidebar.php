@@ -38,7 +38,7 @@ return [
             [
                 'name'  => 'all corporations',
                 'label' => 'web::seat.all_corp',
-                'icon'  => 'fa-group',
+                'icon'  => 'fa-users',
                 'route' => 'corporation.list',
             ],
         ],
@@ -53,7 +53,7 @@ return [
             [
                 'name'  => 'all characters',
                 'label' => 'web::seat.all_char',
-                'icon'  => 'fa-group',
+                'icon'  => 'fa-users',
                 'route' => 'character.list',
             ],
             [
@@ -127,7 +127,7 @@ return [
             [
                 'name'  => 'standing profiles',
                 'label' => 'web::seat.standings_builder',
-                'icon'  => 'fa-dot-circle-o',
+                'icon'  => 'fa-address-book',
                 'route' => 'tools.standings',
             ],
         ],

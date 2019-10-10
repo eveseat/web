@@ -8,7 +8,7 @@
 
         <div class="panel-heading" role="tab" id="heading-{{ $message->mail_id }}-{{ $thread_id }}">
           <h4 class="panel-title">
-            <a role="button" data-toggle="collapse" data-parent="#accordion"
+            <a role="button" data-widget="collapse" data-parent="#accordion"
                href="#collapse-{{ $message->mail_id }}-{{ $thread_id }}"
                aria-expanded="true" aria-controls="collapse-{{ $message->mail_id }}-{{ $thread_id }}">
 
@@ -26,7 +26,7 @@
 
         <div class="panel-heading" role="tab" id="heading-{{ $message->mail_id }}-0">
           <h4 class="panel-title">
-            <a role="button" data-toggle="collapse" data-parent="#accordion"
+            <a role="button" data-widget="collapse" data-parent="#accordion"
                href="#collapse-{{ $message->mail_id }}-0"
                aria-expanded="true" aria-controls="collapse-{{ $message->mail_id }}-0">
 

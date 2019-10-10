@@ -34,7 +34,7 @@
             </span>
             @if (auth()->user()->has('apikey.toggle_status', false))
               <span class="pull-right">
-              <a href="{{ route('api.key.disable', ['key_id' => $key->key_id]) }}" class="label label-warning">
+              <a href="{{ route('api.key.disable', ['key_id' => $key->key_id]) }}" class="badge badge-warning">
                 {{ trans('web::seat.disable') }}
               </a>
             </span>
@@ -44,7 +44,7 @@
               {{ ucfirst(trans('web::seat.disabled')) }}
             </span>
             <span class="pull-right">
-              <a href="{{ route('api.key.enable', ['key_id' => $key->key_id]) }}" class="label label-primary">
+              <a href="{{ route('api.key.enable', ['key_id' => $key->key_id]) }}" class="badge badge-primary">
                 {{ trans('web::seat.re_enable') }}
               </a>
             </span>
@@ -53,7 +53,7 @@
         <dt>{{ trans('web::seat.paid_until') }}</dt>
         <dd>
           @if ($key->status != null)
-            <span data-toggle="tooltip" title="{{ $key->status->paidUntil }}">
+            <span data-widget="tooltip" title="{{ $key->status->paidUntil }}">
             {{ human_diff($key->status->paidUntil) }}
           </span>
           @else
@@ -64,7 +64,7 @@
         <dd>
 
           <!-- Button trigger modal -->
-          <a type="button" data-toggle="modal" data-target="#vcodeModal">
+          <a type="button" data-widget="modal" data-target="#vcodeModal">
             {{ trans_choice('web::seat.reveal', 1) }}
           </a>
 
@@ -233,11 +233,11 @@
           <dt>{{ trans('web::seat.account_status') }}</dt>
           <dd>
             @if($key->owner->active)
-              <span class="label label-success">
+              <span class="badge badge-success">
                 {{ ucfirst(trans('web::seat.enabled')) }}
               </span>
             @else
-              <span class="label label-danger">
+              <span class="badge badge-danger">
                 {{ ucfirst(trans('web::seat.disabled')) }}
               </span>
             @endif
@@ -251,7 +251,7 @@
       <div class="panel-footer">
 
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#ownerModal">
+        <button type="button" class="btn btn-primary btn-xs" data-widget="modal" data-target="#ownerModal">
           {{ trans('web::seat.transfer_ownership') }}
         </button>
 
@@ -322,11 +322,11 @@
               <td>{{ $bitmask }}</td>
               <td>
                 @if($key->info->accessMask & $bitmask)
-                  <span class="label label-success">
+                  <span class="badge badge-success">
                     {{ trans('web::seat.granted') }}
                   </span>
                 @else
-                  <span class="label label-danger">
+                  <span class="badge badge-danger">
                     {{ trans('web::seat.denied') }}
                   </span>
                 @endif
@@ -377,7 +377,7 @@
 
           <tr>
             <td>
-              <span data-toggle="tooltip" title="" data-original-title="{{ $job->created_at }}">
+              <span data-widget="tooltip" title="" data-original-title="{{ $job->created_at }}">
                 {{ human_diff($job->created_at) }}
               </span>
             </td>

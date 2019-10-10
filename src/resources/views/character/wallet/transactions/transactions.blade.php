@@ -14,7 +14,7 @@
           <h3 class="panel-title">
             {{ trans('web::seat.wallet_transactions') }}
             <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.wallet']) }}" class="pull-right">
-              <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_wallet') }}"></i>
+              <i class="fa fa-refresh" data-widget="tooltip" title="{{ trans('web::seat.update_wallet') }}"></i>
             </a>
           </h3>
         </div>

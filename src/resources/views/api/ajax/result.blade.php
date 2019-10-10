@@ -91,11 +91,11 @@
               <td>{{ $bitmask }}</td>
               <td>
                 @if($access_mask & $bitmask)
-                  <span class="label label-success">
+                  <span class="badge badge-success">
                       {{ trans('web::seat.granted') }}
                     </span>
                 @else
-                  <span class="label label-danger">
+                  <span class="badge badge-danger">
                     {{ trans('web::seat.denied') }}
                     </span>
                 @endif

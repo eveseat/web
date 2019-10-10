@@ -11,7 +11,7 @@
       <h3 class="panel-title">
         {{ trans('web::seat.killmails') }}
         <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.killmails']) }}" class="pull-right">
-          <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_killmails') }}"></i>
+          <i class="fa fa-refresh" data-widget="tooltip" title="{{ trans('web::seat.update_killmails') }}"></i>
         </a>
       </h3>
     </div>

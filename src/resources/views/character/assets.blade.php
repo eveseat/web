@@ -8,13 +8,13 @@
 
   <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#" data-toggle="tab" data-characters="single">{{trans_choice('web::seat.character',1)}} {{ trans('web::seat.assets') }}</a></li>
-      <li><a href="#" data-toggle="tab" data-characters="all">{{ trans('web::seat.linked_characters') }} {{ trans('web::seat.assets') }}</a></li>
+      <li class="active"><a href="#" data-widget="tab" data-characters="single">{{trans_choice('web::seat.character',1)}} {{ trans('web::seat.assets') }}</a></li>
+      <li><a href="#" data-widget="tab" data-characters="all">{{ trans('web::seat.linked_characters') }} {{ trans('web::seat.assets') }}</a></li>
       @if(auth()->user()->has('character.jobs'))
         <li class="pull-right">
           <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.assets']) }}"
              style="color: #000000">
-            <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_assets') }}"></i>
+            <i class="fa fa-refresh" data-widget="tooltip" title="{{ trans('web::seat.update_assets') }}"></i>
           </a>
         </li>
       @endif

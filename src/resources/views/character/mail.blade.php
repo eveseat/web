@@ -12,7 +12,7 @@
         {{ trans('web::seat.mail') }}
 
         <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.mail']) }}" class="pull-right">
-          <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_mail') }}"></i>
+          <i class="fa fa-refresh" data-widget="tooltip" title="{{ trans('web::seat.update_mail') }}"></i>
         </a>
       </h3>
     </div>
@@ -33,16 +33,16 @@
     </div>
     <div class="panel-footer clearfix">
       <div class="col-md-2 col-md-offset-2">
-        <span class="label label-warning">0</span> Corporation
+        <span class="badge badge-warning">0</span> Corporation
       </div>
       <div class="col-md-2">
-        <span class="label label-primary">0</span> Alliance
+        <span class="badge badge-primary">0</span> Alliance
       </div>
       <div class="col-md-2">
-        <span class="label label-info">0</span> Characters
+        <span class="badge badge-info">0</span> Characters
       </div>
       <div class="col-md-2">
-        <span class="label label-success">0</span> Mailing-Lists
+        <span class="badge badge-success">0</span> Mailing-Lists
       </div>
     </div>
   </div>

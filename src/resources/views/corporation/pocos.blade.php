@@ -31,7 +31,7 @@
                 {!! img('type', 0, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                 {{ $poco->system->itemName }}
               @else
-                <span data-toggle="tooltip" title="{{ $poco->planet->type->typeName }}">
+                <span data-widget="tooltip" title="{{ $poco->planet->type->typeName }}">
                   {!! img('type', $poco->planet->typeID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                 </span>
                 {{ $poco->planet->itemName }}
@@ -54,15 +54,15 @@
             </td>
             <td>
               @if($poco->standing_level == 'terrible')
-                <span class="label label-danger">Terrible</span>
+                <span class="badge badge-danger">Terrible</span>
               @elseif($poco->standing_level == 'bad')
-                <span class="label label-warning">Bad</span>
+                <span class="badge badge-warning">Bad</span>
               @elseif($poco->standing_level == 'neutral')
-                <span class="label label-default">Neutral</span>
+                <span class="badge badge-default">Neutral</span>
               @elseif($poco->standing_level == 'good')
-                <span class="label label-info">Good</span>
+                <span class="badge badge-info">Good</span>
               @elseif($poco->standing_level == 'excellent')
-                <span class="label label-primary">Excellent</span>
+                <span class="badge badge-primary">Excellent</span>
               @endif
             </td>
             <td>{{ round((float)$poco->alliance_tax_rate * 100) }}%</td>

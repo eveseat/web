@@ -29,7 +29,7 @@
               </td>
               <td>
                 @foreach($starbase_module->content as $content)
-                <span data-toggle="tooltip"
+                <span data-widget="tooltip"
                       title="" data-original-title="{{ $content->type->typeName }}">
                   {!! img('type', $content->type_id, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
                 </span>
@@ -64,7 +64,7 @@
                 @if($starbase_module->content->count() > 0)
 
                 <!-- Button trigger modal -->
-                <a type="button" data-toggle="modal" data-target="#assetModal{{ $starbase_module->item_id }}">
+                <a type="button" data-widget="modal" data-target="#assetModal{{ $starbase_module->item_id }}">
                   <i class="fa fa-cube"></i>
                 </a>
 
