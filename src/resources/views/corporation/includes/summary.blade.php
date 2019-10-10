@@ -59,7 +59,7 @@
 
         <dt>{{ trans('web::seat.last_update') }}</dt>
         <dd>
-          <span data-toggle="tooltip"
+          <span data-widget="tooltip"
                 title="" data-original-title="{{ $sheet->updated_at }}">
             {{ human_diff($sheet->updated_at) }}
           </span>

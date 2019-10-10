@@ -32,12 +32,12 @@
               <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
                   <a href="#status{{ $starbase->starbase_id }}" aria-controls="status{{ $starbase->starbase_id }}"
-                     role="tab" data-toggle="tab">Status</a>
+                     role="tab" data-widget="tab">Status</a>
                 </li>
                 <li role="presentation">
                   <a href="#modules{{ $starbase->starbase_id }}" aria-controls="modules{{ $starbase->starbase_id }}"
                      id="modules-tab" a-starbase-id="{{ $starbase->starbase_id }}"
-                     role="tab" data-toggle="tab">{{ trans_choice('web::seat.module', 2) }}</a>
+                     role="tab" data-widget="tab">{{ trans_choice('web::seat.module', 2) }}</a>
                 </li>
               </ul>
 

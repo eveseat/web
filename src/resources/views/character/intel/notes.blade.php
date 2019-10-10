@@ -12,7 +12,7 @@
         Notes
         <!-- Button trigger modal -->
         <span class="pull-right">
-          <a type="button" data-toggle="modal" data-target="#createModal">
+          <a type="button" data-widget="modal" data-target="#createModal">
             Add Note
           </a>
         </span>

@@ -14,7 +14,7 @@
         <div class="info-box-content">
           <span class="info-box-text">{{ trans('web::seat.online_layers') }}</span>
           <span class="info-box-number">
-            {{ $server_status['players'] or trans('web::seat.unknown') }}
+            {{ $server_status['players'] ?? trans('web::seat.unknown') }}
           </span>
           <span class="text-muted">
             {{ trans('web::seat.last_update') }}: {{ human_diff($server_status['created_at']) }}
@@ -40,7 +40,7 @@
     <div class="col-md-12 col-sm-6 col-xs-12">
 
       <div class="info-box">
-        <span class="info-box-icon bg-blue"><i class="fa fa-money"></i></span>
+        <span class="info-box-icon bg-blue"><i class="far fa-money-bill-alt"></i></span>
         <div class="info-box-content">
           <span class="info-box-text">{{ trans('web::seat.total_character_isk') }}</span>
           <span class="info-box-number">
@@ -50,7 +50,7 @@
       </div><!-- /.info-box -->
 
       <div class="info-box">
-        <span class="info-box-icon bg-purple"><i class="fa fa-diamond"></i></span>
+        <span class="info-box-icon bg-purple"><i class="far fa-gem"></i></span>
         <div class="info-box-content">
           <span class="info-box-text">{{ trans('web::seat.total_character_mined_isk') }}</span>
           <span class="info-box-number">

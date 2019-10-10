@@ -14,7 +14,7 @@
           <span class="pull-right">
             <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.pi']) }}"
                style="color: #000000">
-              <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_pi') }}"></i>
+              <i class="fa fa-refresh" data-widget="tooltip" title="{{ trans('web::seat.update_pi') }}"></i>
             </a>
           </span>
         @endif
@@ -38,7 +38,7 @@
 
           <tr>
             <td data-order="{{ $colony->last_update }}">
-              <span data-toggle="tooltip"
+              <span data-widget="tooltip"
                     title="" data-original-title="{{ $colony->last_update }}">
                 {{ human_diff($colony->last_update) }}
               </span>

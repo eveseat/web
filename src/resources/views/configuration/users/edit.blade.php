@@ -141,12 +141,12 @@
                   <td>
                     @foreach($role->permissions as $permission)
                       <span
-                          class="label label-{{ $permission->title == 'superuser' ? 'danger' : 'info' }}">{{ studly_case($permission->title) }}</span>
+                          class="badge badge-{{ $permission->title == 'superuser' ? 'danger' : 'info' }}">{{ studly_case($permission->title) }}</span>
                     @endforeach
                   </td>
                   <td>
                     @foreach($role->affiliations as $affiliation)
-                      <span class="label label-primary">{{ $affiliation->affiliation }} ({{ $affiliation->type }})</span>
+                      <span class="badge badge-primary">{{ $affiliation->affiliation }} ({{ $affiliation->type }})</span>
                     @endforeach
                   </td>
                   <td>
@@ -202,13 +202,13 @@
 
               <tr>
                 <td>
-                  <span data-toggle="tooltip" title="" data-original-title="{{ $history->created_at }}">
+                  <span data-widget="tooltip" title="" data-original-title="{{ $history->created_at }}">
                     {{ human_diff($history->created_at) }}
                   </span>
                 </td>
                 <td>{{ $history->source }}</td>
                 <td>
-                  <span data-toggle="tooltip" title="" data-original-title="{{ $history->user_agent }}">
+                  <span data-widget="tooltip" title="" data-original-title="{{ $history->user_agent }}">
                     {{ Str::limit($history->user_agent, 60, '...') }}
                   </span>
                 </td>

@@ -14,7 +14,7 @@
   <!-- Bootstrap 3.3.5 -->
   <link rel="stylesheet" href="{{ asset('web/css/bootstrap.min.css') }}">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{ asset('web/css/font-awesome.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('web/css/fontawesome.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('web/css/adminlte.min.css') }}">
   <!-- Google Font -->
