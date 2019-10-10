@@ -1,8 +1,8 @@
-<aside class="main-sidebar sidebar-dark-primary">
+<aside class="main-sidebar elevation-4 sidebar-dark-primary">
 
   <!-- Logo -->
   <a href="{{ route('home') }}" class="brand-link">
-    <span class="brand-text font-weight-light"><b>S</b>T</span>
+    <img class="brand-image img-circle elevation-3" src="{{ asset('web/img/logo.png') }}" alt="SeAT" />
     <span class="brand-text font-weight-light">S<b>e</b>AT</span>
   </a>
 
@@ -27,28 +27,30 @@
 
     <!-- Sidebar Menu -->
     <nav class="mt-2">
-      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
-        <li class="nav-header">{{ trans('web::seat.main_menu') }}</li>
+      <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu">
 
         @foreach($menu as $entry)
 
           {{-- determine if we should pop a treeview --}}
           @if(isset($entry['entries']))
 
-            <li class="nav-item has-treeview {{ Request::segment(1) === $entry['route_segment'] ? 'active' : null }}">
-              <a href="#" class="nav-link">
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link {{ Request::segment(1) === $entry['route_segment'] ? 'active' : null }}">
                 <i class="nav-icon fas {{ $entry['icon'] }}"></i>
 
                 @if (array_key_exists('label', $entry))
 
-                  <p>
-                    @if(array_key_exists('plural', $entry))
+                  @if(array_key_exists('plural', $entry))
+                    <p>
                       {{ trans_choice($entry['label'], 2) }}
-                    @else
+                      <i class="right fas fa-angle-left"></i>
+                    </p>
+                  @else
+                    <p>
                       {{ trans($entry['label']) }}
-                    @endif
-                    <i class="right fas fa-angle-left"></i>
-                  </p>
+                      <i class="right fas fa-angle-left"></i>
+                    </p>
+                  @endif
 
                 @else
 
@@ -70,16 +72,16 @@
                     {{-- permision is required. check it --}}
                     @if(auth()->user()->has($item['permission'], false))
 
-                      <li class="nav-item {{ isset($item['route']) ? (Request::url() === route($item['route']) ? 'active' : null) : null }}">
-                        <a href="{{ isset($item['route']) ? route($item['route']) : '#' }}" class="nav-link">
+                      <li class="nav-item">
+                        <a href="{{ isset($item['route']) ? route($item['route']) : '#' }}" class="nav-link {{ isset($item['route']) ? (Request::url() === route($item['route']) ? 'active' : null) : null }}">
 
                           @if (array_key_exists('label', $item))
 
                             <i class="nav-icon fas {{ $item['icon'] ?? 'fa-circle-o' }}"></i>
                             @if(array_key_exists('plural', $item))
-                              {{ trans_choice($item['label'], 2) }}
+                              <p>{{ trans_choice($item['label'], 2) }}</p>
                             @else
-                              {{ trans($item['label']) }}
+                              <p>{{ trans($item['label']) }}</p>
                             @endif
 
                           @else
@@ -93,17 +95,18 @@
                         @if(array_key_exists('entries', $item))
                           <ul class="nav nav-treeview">
                             @foreach($item['entries'] as $subitem)
-                              <li class="nav-item {{ isset($subitem['route']) ? (Request::url() === route($subitem['route']) ? 'active' : null) : null }}">
-                                <a href="{{ isset($subitem['route']) ? route($subitem['route']) : '#' }}" class="nav-link">
+                              <li class="nav-item">
+                                <a href="{{ isset($subitem['route']) ? route($subitem['route']) : '#' }}" class="nav-link {{ isset($subitem['route']) ? (Request::url() === route($subitem['route']) ? 'active' : null) : null }}">
                                   @if (array_key_exists('label', $subitem))
                                     <i class="nav-icon fas {{ $subitem['icon'] ?? 'fa-circle-o' }}"></i>
                                     @if(array_key_exists('plural', $subitem))
-                                      {{ trans_choice($subitem['label'], 2) }}
+                                      <p>{{ trans_choice($subitem['label'], 2) }}</p>
                                     @else
-                                      {{ trans($subitem['label']) }}
+                                      <p>{{ trans($subitem['label']) }}</p>
                                     @endif
                                   @else
-                                    <i class="nav-icon fas {{ $subitem['icon'] ?? 'fa-circle-o' }}"></i> {{ $subitem['name'] }}
+                                    <i class="nav-icon fas {{ $subitem['icon'] ?? 'fa-circle-o' }}"></i>
+                                    <p>{{ $subitem['name'] }}</p>
                                   @endif
                                 </a>
                               </li>
@@ -118,21 +121,22 @@
                     {{-- TODO: Get rid of this copy pasta by using a partial or something. --}}
                   @else
 
-                    <li class="nav-item {{ isset($item['route']) ? (Request::url() === route($item['route']) ? 'active' : null) : null }}">
-                      <a href="{{ isset($item['route']) ? route($item['route']) : '#' }}" class="nav-link">
+                    <li class="nav-item">
+                      <a href="{{ isset($item['route']) ? route($item['route']) : '#' }}" class="nav-link {{ isset($item['route']) ? (Request::url() === route($item['route']) ? 'active' : null) : null }}">
                         @if (array_key_exists('label', $item))
 
                           <i class="nav-icon fas {{ $item['icon'] ?? 'fa-circle-o' }}"></i>
 
                           @if(array_key_exists('plural', $item))
-                            {{ trans_choice($item['label'], 2) }}
+                            <p>{{ trans_choice($item['label'], 2) }}</p>
                           @else
-                            {{ trans($item['label']) }}
+                            <p>{{ trans($item['label']) }}</p>
                           @endif
 
                         @else
 
-                          <i class="nav-icon fas {{ $item['icon'] ?? 'fa-circle-o' }}"></i> {{ $item['name'] }}
+                          <i class="nav-icon fas {{ $item['icon'] ?? 'fa-circle-o' }}"></i>
+                          <p>{{ $item['name'] }}</p>
 
                         @endif
 
@@ -141,17 +145,18 @@
                       @if(array_key_exists('entries', $item))
                         <ul class="nav nav-treeview">
                           @foreach($item['entries'] as $subitem)
-                            <li class="nav-item {{ isset($subitem['route']) ? (Request::url() === route($subitem['route']) ? 'active' : null) : null }}">
-                              <a href="{{ isset($subitem['route']) ? route($subitem['route']) : '#' }}" class="nav-link">
+                            <li class="nav-item">
+                              <a href="{{ isset($subitem['route']) ? route($subitem['route']) : '#' }}" class="nav-link {{ isset($subitem['route']) ? (Request::url() === route($subitem['route']) ? 'active' : null) : null }}">
                                 @if (array_key_exists('label', $subitem))
                                   <i class="nav-icon fas {{ $subitem['icon'] ?? 'fa-circle-o' }}"></i>
                                   @if(array_key_exists('plural', $subitem))
-                                    {{ trans_choice($subitem['label'], 2) }}
+                                    <p>{{ trans_choice($subitem['label'], 2) }}</p>
                                   @else
-                                    {{ trans($subitem['label']) }}
+                                    <p>{{ trans($subitem['label']) }}</p>
                                   @endif
                                 @else
-                                  <i class="nav-icon fas {{ $subitem['icon'] ?? 'fa-circle-o' }}"></i> {{ $subitem['name'] }}
+                                  <i class="nav-icon fas {{ $subitem['icon'] ?? 'fa-circle-o' }}"></i>
+                                  <p>{{ $subitem['name'] }}</p>
                                 @endif
                               </a>
                             </li>
@@ -170,13 +175,15 @@
             {{-- no entries, so this looks like a single menu --}}
           @else
 
-            <li class="nav-item {{ Request::segment(1) === $entry['route_segment'] ? 'active' : null }}">
-              <a href="{{ isset($entry['route']) ? route($entry['route']) : '#' }}" class="nav-link">
+            <li class="nav-item">
+              <a href="{{ isset($entry['route']) ? route($entry['route']) : '#' }}" class="nav-link {{ Request::segment(1) === $entry['route_segment'] ? 'active' : null }}">
 
                 @if (array_key_exists('label', $entry))
-                  <i class="nav-icon fas {{ $entry['icon'] }}"></i> <span>{{ trans($entry['label']) }}</span>
+                  <i class="nav-icon fas {{ $entry['icon'] }}"></i>
+                  <p>{{ trans($entry['label']) }}</p>
                 @else
-                  <i class="nav-icon fas {{ $entry['icon'] }}"></i> <span>{{ $entry['name'] }}</span>
+                  <i class="nav-icon fas {{ $entry['icon'] }}"></i>
+                  <p>{{ $entry['name'] }}</p>
                 @endif
 
               </a>
