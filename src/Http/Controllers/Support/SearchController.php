@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\Controllers\Support;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Mail\MailHeader;
@@ -143,7 +144,7 @@ class SearchController extends Controller
             })
             ->addColumn('body_clean', function (MailHeader $row) {
 
-                return strip_tags(str_limit(clean_ccp_html($row->body->body), 30, '...'));
+                return strip_tags(Str::limit(clean_ccp_html($row->body->body), 30, '...'));
             })
             ->editColumn('tocounts', function ($row) {
 

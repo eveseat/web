@@ -209,7 +209,7 @@
                 <td>{{ $history->source }}</td>
                 <td>
                   <span data-toggle="tooltip" title="" data-original-title="{{ $history->user_agent }}">
-                    {{ str_limit($history->user_agent, 60, '...') }}
+                    {{ Str::limit($history->user_agent, 60, '...') }}
                   </span>
                 </td>
                 <td>{{ ucfirst($history->action) }}</td>
