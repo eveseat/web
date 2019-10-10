@@ -130,7 +130,10 @@ class WebServiceProvider extends AbstractSeatPlugin
     {
 
         $this->publishes([
-            __DIR__ . '/resources/assets'                                       => public_path('web'),
+            __DIR__ . '/resources/css'                                          => public_path('web/css'),
+            __DIR__ . '/resources/fonts'                                        => public_path('web/fonts'),
+            __DIR__ . '/resources/img'                                          => public_path('web/img'),
+            __DIR__ . '/resources/js'                                           => public_path('web/js'),
 
             // Font Awesome Pulled from packagist
             base_path('vendor/components/font-awesome/css/fontawesome.min.css') => public_path('web/css/fontawesome.min.css'),
@@ -218,7 +221,7 @@ class WebServiceProvider extends AbstractSeatPlugin
     public function add_translations()
     {
 
-        $this->loadTranslationsFrom(__DIR__ . '/lang', 'web');
+        $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'web');
     }
 
     /**
