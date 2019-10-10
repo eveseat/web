@@ -29,13 +29,11 @@ use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Horizon\Horizon;
-use Laravel\Socialite\SocialiteManager;
 use Seat\Services\AbstractSeatPlugin;
 use Seat\Web\Events\Attempt;
 use Seat\Web\Events\Login;
 use Seat\Web\Events\Logout;
 use Seat\Web\Events\SecLog;
-use Seat\Web\Extentions\EveOnlineProvider;
 use Seat\Web\Http\Composers\CharacterLayout;
 use Seat\Web\Http\Composers\CharacterMenu;
 use Seat\Web\Http\Composers\CharacterSummary;
@@ -366,25 +364,6 @@ class WebServiceProvider extends AbstractSeatPlugin
      */
     public function register_services()
     {
-
-        // Register the Socialite Factory.
-        // From: Laravel\Socialite\SocialiteServiceProvider
-        $this->app->singleton('Laravel\Socialite\Contracts\Factory', function ($app) {
-
-            return new SocialiteManager($app);
-        });
-
-        // Slap in the Eveonline Socialite Provider
-        $eveonline = $this->app->make('Laravel\Socialite\Contracts\Factory');
-        $eveonline->extend('eveonline',
-            function ($app) use ($eveonline) {
-
-                $config = $app['config']['services.eveonline'];
-
-                return $eveonline->buildProvider(EveOnlineProvider::class, $config);
-            }
-        );
-
         // Register the datatables package! Thanks
         //  https://laracasts.com/discuss/channels/laravel/register-service-provider-and-facade-within-service-provider
         $this->app->register('Yajra\DataTables\DataTablesServiceProvider');
