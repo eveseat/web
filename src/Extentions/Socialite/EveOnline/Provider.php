@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of SeAT
  *
@@ -20,28 +19,20 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Extentions;
+namespace Seat\Web\Extentions\Socialite\EveOnline;
 
 use Illuminate\Support\Arr;
-use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\InvalidStateException;
-use Laravel\Socialite\Two\ProviderInterface;
-use Laravel\Socialite\Two\User;
+use SocialiteProviders\Manager\OAuth2\AbstractProvider;
+use SocialiteProviders\Manager\OAuth2\User;
 
 /**
- * Class EveOnlineProvider.
- * @package Seat\Web\Extentions
+ * Class Provider
+ *
+ * @package Seat\Web\Extentions\Socialite\EveOnline
  */
-class EveOnlineProvider extends AbstractProvider implements ProviderInterface
+class Provider extends AbstractProvider
 {
-
-    /**
-     * Base URL to the Eve Online Image Server.
-     *
-     * @var string
-     */
-    protected $imageUrl = 'https://image.eveonline.com/Character/';
-
     /**
      * The separating character for the requested scopes.
      *
@@ -56,7 +47,6 @@ class EveOnlineProvider extends AbstractProvider implements ProviderInterface
      */
     public function user()
     {
-
         if ($this->hasInvalidState())
             throw new InvalidStateException;
 
@@ -74,36 +64,34 @@ class EveOnlineProvider extends AbstractProvider implements ProviderInterface
     }
 
     /**
-     * Map the raw user array to a Socialite User instance.
+     * Get the authentication URL for the provider.
      *
-     * @param  array $user
-     *
-     * @return \Laravel\Socialite\Two\User
+     * @param string $state
+     * @return string
      */
-    protected function mapUserToObject(array $user): User
+    protected function getAuthUrl($state)
     {
+        return $this->buildAuthUrlFromBase('https://login.eveonline.com/oauth/authorize', $state);
+    }
 
-        return (new User)->setRaw($user)->map([
-            'character_id'         => $user['CharacterID'],
-            'name'                 => $user['CharacterName'],
-            'character_owner_hash' => $user['CharacterOwnerHash'],
-            'scopes'               => $user['Scopes'],
-            'refresh_token'        => $user['RefreshToken'],
-            'expires_on'           => Carbon($user['ExpiresOn']),
-            'avatar'               => $this->imageUrl . $user['CharacterID'] . '_128.jpg',
-        ]);
+    /**
+     * Get the token URL for the provider.
+     *
+     * @return string
+     */
+    protected function getTokenUrl()
+    {
+        return 'https://login.eveonline.com/oauth/token';
     }
 
     /**
      * Get the raw user for the given access token.
      *
-     * @param  string $token
-     *
+     * @param string $token
      * @return array
      */
     protected function getUserByToken($token)
     {
-
         $response = $this->getHttpClient()
             ->get('https://login.eveonline.com/oauth/verify', [
                 'headers' => [
@@ -115,17 +103,22 @@ class EveOnlineProvider extends AbstractProvider implements ProviderInterface
     }
 
     /**
-     * Get the authentication URL for the provider.
+     * Map the raw user array to a Socialite User instance.
      *
-     * @param  string $state
-     *
-     * @return string
+     * @param array $user
+     * @return \Laravel\Socialite\Two\User
      */
-    protected function getAuthUrl($state)
+    protected function mapUserToObject(array $user)
     {
-
-        return $this->buildAuthUrlFromBase(
-            'https://login.eveonline.com/oauth/authorize', $state);
+        return (new User)->setRaw($user)->map([
+            'character_id'         => $user['CharacterID'],
+            'name'                 => $user['CharacterName'],
+            'character_owner_hash' => $user['CharacterOwnerHash'],
+            'scopes'               => $user['Scopes'],
+            'refresh_token'        => $user['RefreshToken'],
+            'expires_on'           => Carbon($user['ExpiresOn']),
+            'avatar'               => sprintf('https://image.eveonline.com/Character/%d_128.jpg', $user['CharacterID']),
+        ]);
     }
 
     /**
@@ -137,37 +130,6 @@ class EveOnlineProvider extends AbstractProvider implements ProviderInterface
      */
     protected function getTokenFields($code)
     {
-
-        return Arr::add(
-            parent::getTokenFields($code), 'grant_type', 'authorization_code');
-    }
-
-    /**
-     * Get the token URL for the provider.
-     *
-     * @return string
-     */
-    protected function getTokenUrl()
-    {
-
-        return 'https://login.eveonline.com/oauth/token';
-    }
-
-    /**
-     * Get the access tokens from the token response body.
-     *
-     * @param  string $body
-     *
-     * @return array
-     */
-    protected function parseAccessToken($body): array
-    {
-
-        $jsonResponse = json_decode($body, true);
-
-        return [
-            'access_token'  => $jsonResponse['access_token'],
-            'refresh_token' => $jsonResponse['refresh_token'],
-        ];
+        return Arr::add(parent::getTokenFields($code), 'grant_type', 'authorization_code');
     }
 }
