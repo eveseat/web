@@ -86,9 +86,9 @@
               <td>{{ number_metric($asset->quantity * $asset->type->volume) }} m&sup3;</td>
               <td>{{ $asset->type->group->groupName }}</td>
               <td>
-                @if(str_contains($asset->location_flag, 'CorpSAG'))
+                @if(Str::contains($asset->location_flag, 'CorpSAG'))
                   {{
-                    $divisions->where('division', str_after($asset->location_flag, 'CorpSAG'))->pluck('name')->first()
+                    $divisions->where('division', Str::after($asset->location_flag, 'CorpSAG'))->pluck('name')->first()
                   }}
                 @else
                   {{ $asset->location_flag }}

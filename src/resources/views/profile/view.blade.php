@@ -307,7 +307,7 @@
                             </td>
                             <td>{{ ucfirst($entry->action) }}</td>
                             <td>{{ $entry->source }}</td>
-                            <td>{{ str_limit($entry->user_agent) }}</td>
+                            <td>{{ Str::limit($entry->user_agent) }}</td>
                           </tr>
 
                         @endforeach
