@@ -1,29 +1,32 @@
-@extends('web::layouts.grids.6-6')
+@extends('web::layouts.grids.12')
 
 @section('title', trans('web::seat.home'))
 @section('page_header', trans('web::seat.home'))
 @section('page_description', trans('web::seat.dashboard'))
 
-@section('left')
+@section('full')
 
   <div class="row">
-    <div class="col-md-12 col-sm-6 col-xs-12">
+    <div class="col-md-6 col-sm-3 col-xs-6">
 
+      <!-- Online Badge -->
       <div class="info-box">
-        <span class="info-box-icon bg-aqua"><i class="fa fa-server"></i></span>
+        <span class="info-box-icon bg-aqua elevation-1"><i class="fa fa-server"></i></span>
         <div class="info-box-content">
           <span class="info-box-text">{{ trans('web::seat.online_layers') }}</span>
           <span class="info-box-number">
             {{ $server_status['players'] ?? trans('web::seat.unknown') }}
           </span>
-          <span class="text-muted">
-            {{ trans('web::seat.last_update') }}: {{ human_diff($server_status['created_at']) }}
-          </span>
         </div><!-- /.info-box-content -->
       </div><!-- /.info-box -->
 
+    </div>
+
+    <div class="col-md-6 col-sm-3 col-xs-6">
+
+      <!-- Characters Badge -->
       <div class="info-box">
-        <span class="info-box-icon bg-green"><i class="fa fa-key"></i></span>
+        <span class="info-box-icon bg-green elevation-1"><i class="fa fa-key"></i></span>
         <div class="info-box-content">
           <span class="info-box-text">{{ trans('web::seat.linked_characters') }}</span>
           <span class="info-box-number">
@@ -32,15 +35,15 @@
         </div><!-- /.info-box-content -->
       </div><!-- /.info-box -->
 
-    </div><!-- /.col -->
+    </div>
   </div>
 
   <div class="row">
+    <div class="col-md-6 col-sm-3 col-xs-6">
 
-    <div class="col-md-12 col-sm-6 col-xs-12">
-
+      <!-- Wallet Badge -->
       <div class="info-box">
-        <span class="info-box-icon bg-blue"><i class="far fa-money-bill-alt"></i></span>
+        <span class="info-box-icon bg-blue elevation-1"><i class="far fa-money-bill-alt"></i></span>
         <div class="info-box-content">
           <span class="info-box-text">{{ trans('web::seat.total_character_isk') }}</span>
           <span class="info-box-number">
@@ -49,8 +52,13 @@
         </div><!-- /.info-box-content -->
       </div><!-- /.info-box -->
 
+    </div>
+
+    <div class="col-md-6 col-sm-3 col-xs-6">
+
+      <!-- Ore Badge -->
       <div class="info-box">
-        <span class="info-box-icon bg-purple"><i class="far fa-gem"></i></span>
+        <span class="info-box-icon bg-purple elevation-1"><i class="far fa-gem"></i></span>
         <div class="info-box-content">
           <span class="info-box-text">{{ trans('web::seat.total_character_mined_isk') }}</span>
           <span class="info-box-number">
@@ -59,8 +67,15 @@
         </div><!-- /.info-box-content -->
       </div><!-- /.info-box -->
 
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 col-sm-3 col-xs-6">
+
+      <!-- Skills Badge -->
       <div class="info-box">
-        <span class="info-box-icon bg-black"><i class="fa fa-graduation-cap"></i></span>
+        <span class="info-box-icon bg-black elevation-1"><i class="fa fa-graduation-cap"></i></span>
         <div class="info-box-content">
           <span class="info-box-text">{{ trans('web::seat.total_character_skillpoints') }}</span>
           <span class="info-box-number">
@@ -69,12 +84,13 @@
         </div><!-- /.info-box-content -->
       </div><!-- /.info-box -->
 
-    </div><!-- /.col -->
+    </div>
 
-    <div class="col-md-12 col-sm-6 col-xs-12">
+    <div class="col-md-6 col-sm-3 col-xs-6">
 
+      <!-- Kills Badge -->
       <div class="info-box">
-        <span class="info-box-icon bg-red"><i class="fa fa-space-shuttle"></i></span>
+        <span class="info-box-icon bg-red elevation-1"><i class="fa fa-space-shuttle"></i></span>
         <div class="info-box-content">
           <span class="info-box-text">{{ trans('web::seat.total_killmails') }}</span>
           <span class="info-box-number">
@@ -83,20 +99,40 @@
         </div><!-- /.info-box-content -->
       </div><!-- /.info-box -->
 
-    </div><!-- /.col -->
+    </div>
+  </div>
 
+  <div class="row">
     <!-- player count -->
-    <div class="col-md-12 col-sm-6 col-xs-12">
+    <div class="col-md-6 col-sm-3 col-xs-6">
 
-      <div class="box box-info">
-        <div class="box-header with-border">
-          <h3 class="box-title">{{ trans('web::seat.concurrent_player_count') }}</h3>
+      <div class="card">
+        <div class="card-header border-0">
+          <div class="d-flex justify-content-between">
+            <h3 class="card-title">{{ trans('web::seat.concurrent_player_count') }}</h3>
+          </div>
         </div>
-        <div class="box-body">
-          <div class="chart">
-
+        <div class="card-body">
+          <div class="position-relative mb-4">
             <canvas id="serverstatus" height="150" width="1110"></canvas>
+          </div>
+        </div>
+        <!-- /.box-body -->
+      </div>
+    </div>
 
+    <!-- response times -->
+    <div class="col-md-6 col-sm-3 col-xs-6">
+
+      <div class="card">
+        <div class="card-header border-0">
+          <div class="d-flex justify-content-between">
+            <h3 class="card-title">{{ trans('web::seat.esi_response_time') }}</h3>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="position-relative mb-4">
+            <canvas id="serverresponse" height="150" width="1110"></canvas>
           </div>
         </div>
         <!-- /.box-body -->
@@ -105,50 +141,44 @@
 
   </div>
 
-@stop
-
-@section('right')
-
   <div class="row">
-
-    <!-- response times -->
-    <div class="col-md-12 col-sm-6 col-xs-12">
-
-      <div class="box box-info">
-        <div class="box-header with-border">
-          <h3 class="box-title">{{ trans('web::seat.esi_response_time') }}</h3>
-        </div>
-        <div class="box-body">
-          <div class="chart">
-
-            <canvas id="serverresponse" height="150" width="1110"></canvas>
-
-          </div>
-        </div>
-        <!-- /.box-body -->
-      </div>
-    </div>
 
     <!-- skills graphs -->
     @if(auth()->user()->name != 'admin')
-      <div class="col-md-12 col-sm-6 col-xs-12">
+      <div class="col-md-6 col-sm-3 col-xs-6">
 
-        <div class="box">
-          <div class="box-header with-border">
-            <h3 class="box-title">
-              {!! img('character', auth()->user()->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-              {{ trans('web::seat.main_char_skills', ['character_name' => auth()->user()->name]) }}
-            </h3>
-          </div>
-          <div class="box-body">
-
-            <h4 class="box-title">{{ trans('web::seat.main_char_skills_per_level') }}</h4>
-            <div class="chart">
-              <canvas id="skills-level" height="230" width="1110"></canvas>
+        <div class="card">
+          <div class="card-header border-0">
+            <div class="d-flex justify-content-between">
+              <h3 class="card-title">
+                {!! img('character', auth()->user()->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                {{ trans('web::seat.main_char_skills', ['character_name' => auth()->user()->name]) }}
+              </h3>
+              <span class="text-bold text-lg">{{ trans('web::seat.main_char_skills_per_level') }}</span>
             </div>
+          </div>
+          <div class="card-body">
+            <div class="position-relative mb-4">
+              <canvas id="skills-level" height="600" width="1110"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
 
-            <h4 class="box-title">{{ trans('web::seat.main_char_skills_coverage') }}</h4>
-            <div class="chart">
+      <div class="col-md-6 col-sm-3 col-xs-6">
+
+        <div class="card">
+          <div class="card-header border-0">
+            <div class="d-flex justify-content-between">
+              <h3 class="card-title">
+                {!! img('character', auth()->user()->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                {{ trans('web::seat.main_char_skills', ['character_name' => auth()->user()->name]) }}
+              </h3>
+              <span class="text-bold text-lg">{{ trans('web::seat.main_char_skills_coverage') }}</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="position-relative mb-4">
               <canvas id="skills-coverage" height="600" width="1110"></canvas>
             </div>
           </div>
