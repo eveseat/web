@@ -119,12 +119,17 @@ class WebServiceProvider extends AbstractSeatPlugin
 
         $this->publishes([
             __DIR__ . '/resources/css'                                           => public_path('web/css'),
-            __DIR__ . '/resources/fonts'                                         => public_path('web/fonts'),
             __DIR__ . '/resources/img'                                           => public_path('web/img'),
             __DIR__ . '/resources/js'                                            => public_path('web/js'),
 
             // Bootstrap pulled from packagist
             base_path('vendor/almasaeed2010/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') => public_path('web/js/bootstrap.bundle.min.js'),
+
+            // Datatables pulled from packagist
+            base_path('vendor/datatables/datatables/media/css/dataTables.bootstrap4.min.css') => public_path('web/css/dataTables.bootstrap4.min.css'),
+            base_path('vendor/datatables/datatables/media/js/jquery.dataTables.min.js')       => public_path('web/js/jquery.dataTables.min.js'),
+            base_path('vendor/datatables/datatables/media/js/dataTables.dataTables.min.js')   => public_path('web/js/dataTables.dataTables.min.js'),
+            base_path('vendor/datatables/datatables/media/js/dataTables.bootstrap4.min.js')   => public_path('web/js/dataTables.bootstrap4.min.js'),
 
             // AdminLTE pulled from packagist
             base_path('vendor/almasaeed2010/adminlte/dist/css/adminlte.min.css') => public_path('web/css/adminlte.min.css'),
