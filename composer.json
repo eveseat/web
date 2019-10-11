@@ -32,6 +32,7 @@
     "erusev/parsedown": "^1.7",
     "almasaeed2010/adminlte": "^3.0",
     "twbs/bootstrap": "^4.3",
+    "datatables/datatables": "^1.10",
     "ext-json": "*"
   },
   "extra": {

@@ -19,7 +19,7 @@
   <!-- Select2 -->
   <link rel="stylesheet" href="{{ asset('web/css/select2.min.css') }}">
   <!-- DataTables -->
-  <link rel="stylesheet" href="{{ asset('web/css/datatables.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('web/css/dataTables.bootstrap4.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('web/css/adminlte.min.css') }}">
   <!-- Skin -->
@@ -112,7 +112,9 @@
 <!-- jQuery Unveil -->
 <script src="{{ asset('web/js/jquery.unveil.js') }}"></script>
 <!-- DataTables -->
-<script src="{{ asset('web/js/datatables.min.js') }}"></script>
+<script src="{{ asset('web/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('web/js/dataTables.dataTables.min.js') }}"></script>
+<script src="{{ asset('web/js/dataTables.bootstrap4.min.js') }}"></script>
 <!-- MomentJS -->
 <script src="{{ asset('web/js/moment-with-locales.min.js') }}"></script>
 <!-- ChartJS -->
