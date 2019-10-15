@@ -85,7 +85,7 @@
     </tr>
     <tr>
       <th>Title</th>
-      <td>Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</td>
+      <td>{{ $contract->title }}</td>
     </tr>
   </tbody>
 </table>
