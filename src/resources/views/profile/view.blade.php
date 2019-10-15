@@ -300,7 +300,7 @@
 
                           <tr>
                             <td>
-                              <span data-widget="tooltip"
+                              <span data-toggle="tooltip"
                                     title="" data-original-title="{{ $entry->created_at }}">
                                 {{ human_diff($entry->created_at) }}
                               </span>
@@ -436,11 +436,11 @@
                 </a>
 
                 @if ($character->refresh_token )
-                  <button data-widget="tooltip" title="" class="btn btn-xs btn-link" data-original-title="Valid Token">
+                  <button data-toggle="tooltip" title="" class="btn btn-xs btn-link" data-original-title="Valid Token">
                     <i class="fa fa-check text-success"></i>
                   </button>
                 @else
-                  <button data-widget="tooltip" title="" class="btn btn-xs btn-link" data-original-title="Invalid Token"
+                  <button data-toggle="tooltip" title="" class="btn btn-xs btn-link" data-original-title="Invalid Token"
                           aria-describedby="tooltip257244">
                     <i class="fa fa-exclamation-triangle text-danger"></i>
                   </button>

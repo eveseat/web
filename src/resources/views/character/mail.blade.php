@@ -13,7 +13,7 @@
       </h3>
       <div class="card-tools">
         <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.mail']) }}" class="pull-right">
-          <i class="fas fa-sync" data-widget="tooltip" title="{{ trans('web::seat.update_mail') }}"></i>
+          <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_mail') }}"></i>
         </a>
       </div>
     </div>

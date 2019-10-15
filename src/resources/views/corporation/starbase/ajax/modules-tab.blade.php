@@ -29,7 +29,7 @@
               </td>
               <td>
                 @foreach($starbase_module->content as $content)
-                <span data-widget="tooltip"
+                <span data-toggle="tooltip"
                       title="" data-original-title="{{ $content->type->typeName }}">
                   {!! img('type', $content->type_id, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
                 </span>

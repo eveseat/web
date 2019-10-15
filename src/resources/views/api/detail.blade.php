@@ -53,7 +53,7 @@
         <dt>{{ trans('web::seat.paid_until') }}</dt>
         <dd>
           @if ($key->status != null)
-            <span data-widget="tooltip" title="{{ $key->status->paidUntil }}">
+            <span data-toggle="tooltip" title="{{ $key->status->paidUntil }}">
             {{ human_diff($key->status->paidUntil) }}
           </span>
           @else
@@ -377,7 +377,7 @@
 
           <tr>
             <td>
-              <span data-widget="tooltip" title="" data-original-title="{{ $job->created_at }}">
+              <span data-toggle="tooltip" title="" data-original-title="{{ $job->created_at }}">
                 {{ human_diff($job->created_at) }}
               </span>
             </td>

@@ -24,7 +24,7 @@
 
         <tr>
           <td data-order="{{ $starbase->updated_at }}">
-              <span data-widget="tooltip"
+              <span data-toggle="tooltip"
                     title="" data-original-title="Last Update: {{ $starbase->updated_at }}">
                 <span class="badge
                   @if($starbase->state == 'online')
@@ -39,7 +39,7 @@
               </span>
           </td>
           <td data-order="{{ $starbase->type->typeName }}">
-              <span data-widget="tooltip"
+              <span data-toggle="tooltip"
                     title="" data-original-title="{{ $starbase->type->typeName }}">
                 {!! img('type', $starbase->type_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                 {{ $starbase->type->typeName }}

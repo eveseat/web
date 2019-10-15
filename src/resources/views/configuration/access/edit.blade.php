@@ -99,7 +99,7 @@
         {{-- ensure the role is not inversed --}}
         @if($role->permissions->where('title', 'superuser')->first()->pivot->not == 0)
 
-          <span class="badge badge-danger pull-right" data-widget="tooltip"
+          <span class="badge badge-danger pull-right" data-toggle="tooltip"
                 title="{{ trans('web::seat.permission_inherit') }}">
           {{ trans('web::seat.has_superuser') }}
           </span>
