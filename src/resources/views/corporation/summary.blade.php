@@ -8,28 +8,28 @@
 
     <div class="col-md-6">
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">{{ trans('web::seat.summary') }}</h3>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">{{ trans('web::seat.summary') }}</h3>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
 
           <dl>
-            <dt><i class="fa fa-handshake-o"></i> {{ trans('web::seat.shares') }}</dt>
+            <dt><i class="far fa-handshake"></i> {{ trans('web::seat.shares') }}</dt>
             <dd>{{ $sheet->shares }}</dd>
 
-            <dt><i class="fa fa-users"></i> {{ trans('web::seat.member_capacity') }}</dt>
+            <dt><i class="fas fa-users"></i> {{ trans('web::seat.member_capacity') }}</dt>
             <dd>{{ $sheet->member_count }} {{ trans_choice('web::seat.member', $sheet->member_count) }}</dd>
           </dl>
 
         </div>
       </div>
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">{{ trans('web::seat.description') }}</h3>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">{{ trans('web::seat.description') }}</h3>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
 
           {!! clean_ccp_html($sheet->description) !!}
 
@@ -38,14 +38,14 @@
     </div>
     <div class="col-md-6">
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">{{ trans('web::seat.divisional_information') }}</h3>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">{{ trans('web::seat.divisional_information') }}</h3>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
 
           <dl>
-            <dt><i class="fa fa-cubes"></i> {{ trans('web::seat.corporation_divisions') }}</dt>
+            <dt><i class="fas fa-cubes"></i> {{ trans('web::seat.corporation_divisions') }}</dt>
             <dd>
               <ol>
                 @foreach($divisions as $division)
@@ -56,7 +56,7 @@
           </dl>
 
           <dl>
-            <dt><i class="fa fa-money"></i> {{ trans('web::seat.wallet_divisions') }}</dt>
+            <dt><i class="far fa-money-bill-alt"></i> {{ trans('web::seat.wallet_divisions') }}</dt>
             <dd>
               <ol>
                 @foreach($wallet_divisions as $wallet_division)
