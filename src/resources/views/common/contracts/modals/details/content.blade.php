@@ -1,5 +1,6 @@
-<h4 class="page-header">Parties</h4>
-<table class="table table-condensed no-border">
+<h4>Parties</h4>
+
+<table class="table table-sm table-condensed no-border">
   <thead>
     <tr>
       <th class="col-md-4 text-center">Issuer</th>
@@ -22,8 +23,9 @@
   </tbody>
 </table>
 
-<h4 class="page-header">Area</h4>
-<table class="table table-condensed no-border">
+<h4>Area</h4>
+
+<table class="table table-sm table-condensed no-border">
   <tbody>
     <tr>
       <th>Start Location</th>
@@ -36,8 +38,9 @@
   </tbody>
 </table>
 
-<h4 class="page-header">Specifications</h4>
-<table class="table table-condensed no-border">
+<h4>Specifications</h4>
+
+<table class="table table-sm table-condensed no-border">
   <tbody>
     <tr>
       <th>Type</th>
@@ -90,10 +93,11 @@
   </tbody>
 </table>
 
-<h4 class="page-header">Delays</h4>
+<h4>Delays</h4>
+
 <div class="row">
   <div class="col-md-6">
-    <table class="table table-condensed no-border">
+    <table class="table table-sm table-condensed no-border">
       <tbody>
         <tr>
           <th>Issued</th>
@@ -144,8 +148,9 @@
   </div>
 </div>
 
-<h4 class="page-header">Financial</h4>
-<table class="table table-condensed no-border">
+<h4>Financial</h4>
+
+<table class="table table-sm table-condensed no-border">
   <thead>
     <tr>
       @if($contract->type == 'item_exchange')
@@ -179,8 +184,9 @@
 </table>
 
 @if($contract->lines->isNotEmpty())
-<h4 class="page-header">Content</h4>
-<table class="table table-striped table-condensed">
+<h4>Content</h4>
+
+<table class="table table-sm table-striped table-condensed">
   <thead>
     <tr>
       <th>Group</th>
