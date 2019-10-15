@@ -6,18 +6,19 @@
 
 @section('character_content')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">
         {{ trans('web::seat.mail') }}
-
-        <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.mail']) }}" class="pull-right">
-          <i class="fa fa-refresh" data-widget="tooltip" title="{{ trans('web::seat.update_mail') }}"></i>
-        </a>
       </h3>
+      <div class="card-tools">
+        <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.mail']) }}" class="pull-right">
+          <i class="fas fa-sync" data-widget="tooltip" title="{{ trans('web::seat.update_mail') }}"></i>
+        </a>
+      </div>
     </div>
-    <div class="panel-body">
-      <div class="margin-bottom">
+    <div class="card-body">
+      <div class="mb-3">
         <select multiple="multiple" id="dt-character-selector" class="form-control">
           @foreach($characters as $character)
             @if($character->id == $request->character_id)
@@ -31,19 +32,21 @@
 
       {{ $dataTable->table() }}
     </div>
-    <div class="panel-footer clearfix">
-      <div class="col-md-2 col-md-offset-2">
-        <span class="badge badge-warning">0</span> Corporation
-      </div>
-      <div class="col-md-2">
-        <span class="badge badge-primary">0</span> Alliance
-      </div>
-      <div class="col-md-2">
-        <span class="badge badge-info">0</span> Characters
-      </div>
-      <div class="col-md-2">
-        <span class="badge badge-success">0</span> Mailing-Lists
-      </div>
+    <div class="card-footer">
+      <ul class="list-inline">
+        <li class="list-inline-item col-md-3">
+          <span class="badge badge-warning">0</span> Corporation
+        </li>
+        <li class="list-inline-item col-md-3">
+          <span class="badge badge-primary">0</span> Alliance
+        </li>
+        <li class="list-inline-item col-md-3">
+          <span class="badge badge-info">0</span> Characters
+        </li>
+        <li class="list-inline-item">
+          <span class="badge badge-success">0</span> Mailing-Lists
+        </li>
+      </ul>
     </div>
   </div>
 
