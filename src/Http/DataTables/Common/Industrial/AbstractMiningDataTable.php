@@ -89,7 +89,8 @@ abstract class AbstractMiningDataTable extends DataTable
             ->columns($this->getColumns())
             ->parameters([
                 'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); }',
-            ]);
+            ])
+            ->orderBy(0, 'desc');
     }
 
     /**
