@@ -1,1 +1,1 @@
-<i class="fa fa-info-circle" data-widget="tooltip" title="Coordinates: x={{ $row->x }} y={{ $row->y }} z={{ $row->z }}"></i>
+<i class="fa fa-info-circle" data-toggle="tooltip" title="Coordinates: x={{ $row->x }} y={{ $row->y }} z={{ $row->z }}"></i>

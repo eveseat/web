@@ -20,8 +20,7 @@
               <div class="card-tools">
                 <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.skillqueue']) }}"
                    class="float-left" style="color: #000000">
-                  <i class="fas fa-sync" data-widget="tooltip"
-                     title="{{ trans('web::seat.update_skill_queue') }}"></i>
+                  <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_skill_queue') }}"></i>
                 </a>
               </div>
             @endif
@@ -59,7 +58,7 @@
                     @foreach($skill_queue->where('finish_date', '>', carbon())->slice(1)->all() as $skill)
 
                       <li>
-                        <span class="col-md-8" data-widget="tooltip" title=""
+                        <span class="col-md-8" data-toggle="tooltip" title=""
                               @if($skill->finish_date != '0000-00-00 00:00:00')
                               data-original-title="Ends {{ human_diff(carbon($skill->finish_date)->toDateString()) }} on {{ carbon($skill->finish_date)->toDateString() }} at {{ carbon($skill->finish_date)->toTimeString() }}"
                             @endif>{{ $skill->type->typeName }}</span>
@@ -104,8 +103,7 @@
             <div class="card-tools">
               <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.corphistory']) }}"
                  class="float-right" style="color: #000000">
-                <i class="fas fa-sync" data-widget="tooltip"
-                   title="{{ trans('web::seat.update_corp_history') }}"></i>
+                <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_corp_history') }}"></i>
               </a>
             </div>
           @endif

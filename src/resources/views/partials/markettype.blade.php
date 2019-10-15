@@ -1,4 +1,4 @@
-<span data-widget="tooltip"
+<span data-toggle="tooltip"
       title="" data-original-title="{{ $row->stationName }}">
   <i class="fa fa-map-marker"></i>
 </span>

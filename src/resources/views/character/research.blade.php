@@ -15,7 +15,7 @@
         <div class="card-tools">
           <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.research']) }}"
              class="pull-right" style="color: #000000">
-            <i class="fas fa-sync" data-widget="tooltip" title="{{ trans('web::seat.update_research') }}"></i>
+            <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_research') }}"></i>
           </a>
         </div>
       @endif
