@@ -97,10 +97,10 @@ Route::get('/{corporation_id}/mining-ledger/{year?}/{month?}', [
     'uses'       => 'MiningLedgerController@show',
 ]);
 
-Route::get('/view/pocos/{corporation_id}', [
+Route::get('/{corporation_id}/customs-offices', [
     'as'         => 'corporation.view.pocos',
     'middleware' => 'corporationbouncer:pocos',
-    'uses'       => 'IndustryController@getPoco',
+    'uses'       => 'CustomOfficeController@index',
 ]);
 
 Route::get('/view/extractions/{corporation_id}', [
