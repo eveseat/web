@@ -2,15 +2,15 @@
 
   <!-- To the right -->
   <div class="float-right d-none d-sm d-sm-inline">
-    <i class="fa fa-server" data-widget="tooltip" title="{{ gethostname() }}"></i>
+    <i class="fa fa-server" data-toggle="tooltip" title="{{ gethostname() }}"></i>
 
     <i class="fa @if(optional($esi_status)->status == "ok") fa-refresh fa-spin @else fa-exclamation-triangle @endif"
-       data-widget="tooltip"
+       data-toggle="tooltip"
        title="{{ ucfirst(optional($esi_status)->status) }}/{{ optional($esi_status)->request_time }}ms - {{ human_diff(optional($esi_status)->created_at) }}"></i>
     |
 
     @if($is_rate_limited)
-      <i class="fa fa-exclamation" data-widget="tooltip"
+      <i class="fa fa-exclamation" data-toggle="tooltip"
          title="Exception threshold reached. TTL: {{ $rate_limit_ttl }}s"></i> |
     @endif
 

@@ -15,7 +15,7 @@
         <div class="card-tools">
           <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.bookmarks']) }}"
              class="float-right" style="color: #000000">
-            <i class="fa fa-refresh" data-widget="tooltip" title="{{ trans('web::seat.update_bookmarks') }}"></i>
+            <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_bookmarks') }}"></i>
           </a>
         </div>
       @endif

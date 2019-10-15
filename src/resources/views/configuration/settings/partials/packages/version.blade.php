@@ -3,7 +3,7 @@
      data-vendor="{{ app()->getProvider($package)->getPackagistVendorName() }}"
      data-name="{{ app()->getProvider($package)->getPackagistPackageName() }}"
      data-version="{{ app()->getProvider($package)->getVersion() }}"
-     data-widget="tooltip"
+     data-toggle="tooltip"
      title="Checking package status..."></i> {{ app()->getProvider($package)->getName() }}
     @if (! is_null(app()->getProvider($package)->getChangelogUri()))
     <a href="#" data-widget="modal" data-target="#changelogModal"
@@ -13,7 +13,7 @@
        data-tag="{{ app()->getProvider($package)->getChangelogTagAttribute() }}"
        data-body="{{ app()->getProvider($package)->getChangelogBodyAttribute() }}"
         @endif>
-      <span data-widget="tooltip" title="Show the changelog">
+      <span data-toggle="tooltip" title="Show the changelog">
         <i class="fa fa-history"></i>
       </span>
     </a>

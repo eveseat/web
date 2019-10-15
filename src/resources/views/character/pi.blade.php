@@ -15,7 +15,7 @@
         <div class="card-tools">
           <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.pi']) }}"
              class="float-right" style="color: #000000">
-            <i class="fas fa-sync" data-widget="tooltip" title="{{ trans('web::seat.update_pi') }}"></i>
+            <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_pi') }}"></i>
           </a>
         </div>
       @endif
@@ -38,8 +38,7 @@
 
             <tr>
               <td data-order="{{ $colony->last_update }}">
-                <span data-widget="tooltip"
-                      title="" data-original-title="{{ $colony->last_update }}">
+                <span data-toggle="tooltip" title="" data-original-title="{{ $colony->last_update }}">
                   {{ human_diff($colony->last_update) }}
                 </span>
               </td>

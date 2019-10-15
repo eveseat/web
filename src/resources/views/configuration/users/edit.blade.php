@@ -202,13 +202,13 @@
 
               <tr>
                 <td>
-                  <span data-widget="tooltip" title="" data-original-title="{{ $history->created_at }}">
+                  <span data-toggle="tooltip" title="" data-original-title="{{ $history->created_at }}">
                     {{ human_diff($history->created_at) }}
                   </span>
                 </td>
                 <td>{{ $history->source }}</td>
                 <td>
-                  <span data-widget="tooltip" title="" data-original-title="{{ $history->user_agent }}">
+                  <span data-toggle="tooltip" title="" data-original-title="{{ $history->user_agent }}">
                     {{ Str::limit($history->user_agent, 60, '...') }}
                   </span>
                 </td>

@@ -128,7 +128,7 @@
   <div class="nav-tabs-custom">
     <ul class="nav nav-tabs pull-right">
       <li>
-        <a href="#" data-widget="tooltip" title="Click to copy packages versions" id="copy-versions">
+        <a href="#" data-toggle="tooltip" title="Click to copy packages versions" id="copy-versions">
           <i class="fa fa-copy"></i>
         </a>
       </li>
