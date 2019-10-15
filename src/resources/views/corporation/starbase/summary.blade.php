@@ -1,10 +1,10 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">{{ trans_choice('web::seat.starbase', 2) }}</h3>
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">{{ trans_choice('web::seat.starbase', 2) }}</h3>
   </div>
-  <div class="panel-body">
+  <div class="card-body">
 
-    <table class="table datatable compact table-condensed table-hover table-responsive">
+    <table class="table datatable compact table-condensed table-hover">
       <thead>
       <tr>
         <th>{{ trans_choice('web::seat.state', 1) }}</th>
