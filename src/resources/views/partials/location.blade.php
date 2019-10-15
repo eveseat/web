@@ -3,7 +3,7 @@
 @else
   @if(! is_null($location->solar_system))
   <a href="//evemaps.dotlan.net/system/{{ $location->solar_system->itemName }}" target="_blank">
-    <span class="fa fa-map-marker"></span>
+    <span class="fas fa-map-marker-alt"></span>
   </a>
   @endif
   @if(!is_null($location->structure))

@@ -1,4 +1,4 @@
 <a href="//evemaps.dotlan.net/system/{{ $row->system->itemName }}" target="_blank">
-  <span class="fa fa-map-marker"></span>
+  <span class="fas fa-map-marker-alt"></span>
 </a>
 {{ $row->system->itemName }}
