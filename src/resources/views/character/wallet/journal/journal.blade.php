@@ -9,11 +9,11 @@
   <div class="row">
     <div class="col-md-12">
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Spending Graph</h3>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Spending Graph</h3>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
 
           <canvas id="balance-over-time" style="height: 249px; width: 555px;" height="200" width="1110"></canvas>
 
@@ -26,12 +26,12 @@
   <div class="row">
     <div class="col-md-12">
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">{{ trans('web::seat.wallet_journal') }}</h3>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">{{ trans('web::seat.wallet_journal') }}</h3>
         </div>
-        <div class="panel-body">
-          <div class="margin-bottom">
+        <div class="card-body">
+          <div class="mb-3">
             <select multiple="multiple" id="dt-character-selector" class="form-control">
               @foreach($characters as $character)
                 @if($character->id == $request->character_id)
