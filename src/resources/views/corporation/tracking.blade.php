@@ -6,27 +6,41 @@
 
 @section('corporation_content')
 
-  <div class="nav-tabs-custom">
-    <ul class="nav nav-tabs">
-      <li class="active"><a href="" data-widget="tab" data-filter="all">{{ trans('web::seat.all') }} {{ trans('web::seat.tracking') }}</a></li>
-      <li><a href="" data-widget="tab" data-filter="valid_token">{{ trans_choice('web::seat.valid_token', 2) }}</a></li>
-      <li><a href="" data-widget="tab" data-filter="invalid_token">{{ trans_choice('web::seat.invalid_token', 2) }}</a></li>
-      <li><a href="" data-widget="tab" data-filter="missing_users">{{ trans('web::seat.none') }} {{ trans('web::seat.seat_user') }}</a></li>
-    </ul>
-    <div class="tab-content">
+  <div class="card card-gray card-outline card-outline-tabs">
+    <div class="card-header p-0 border-bottom-0">
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+          <a href="#" class="nav-link active" data-toggle="pill" data-filter="all">{{ trans('web::seat.all') }} {{ trans('web::seat.tracking') }}</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" data-toggle="pill" data-filter="valid_token">{{ trans_choice('web::seat.valid_token', 2) }}</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" data-toggle="pill" data-filter="invalid_token">{{ trans_choice('web::seat.invalid_token', 2) }}</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" data-toggle="pill" data-filter="missing_users">{{ trans('web::seat.none') }} {{ trans('web::seat.seat_user') }}</a>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <div class="tab-content">
 
-      <table id="corporation-member-tracking" class="table compact table-condensed table-hover table-responsive">
-        <thead>
-          <tr>
-            <th data-orderable="false">{{ trans('web::seat.token') }}</th>
-            <th>{{ trans_choice('web::seat.name', 1) }}</th>
-            <th>{{ trans('web::seat.last_location') }}</th>
-            <th>{{ trans('web::seat.joined') }}</th>
-            <th>{{ trans('web::seat.last_login') }}</th>
-          </tr>
-        </thead>
-      </table>
+        <div class="tab-pane fade show active" role="tabpanel">
+          <table id="corporation-member-tracking" class="table compact table-condensed table-hover">
+            <thead>
+              <tr>
+                <th data-orderable="false">{{ trans('web::seat.token') }}</th>
+                <th>{{ trans_choice('web::seat.name', 1) }}</th>
+                <th>{{ trans('web::seat.last_location') }}</th>
+                <th>{{ trans('web::seat.joined') }}</th>
+                <th>{{ trans('web::seat.last_login') }}</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
 
+      </div>
     </div>
   </div>
 
@@ -36,12 +50,12 @@
 
   <script>
 
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+    $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
       corporation_member_tracking_table.draw();
     });
 
     function getSelectedFilter() {
-      return $("div.nav-tabs-custom > ul > li.active > a").data('filter');
+      return $("div.card-header > ul.nav-tabs > li.nav-item > a.active").data('filter');
     }
 
     var corporation_member_tracking_table = $('table#corporation-member-tracking').DataTable({
@@ -73,7 +87,7 @@
         $("img").unveil(100);
         ids_to_names();
         $('[data-toggle="tooltip"]').tooltip();
-      },
+      }
     });
 
   </script>
