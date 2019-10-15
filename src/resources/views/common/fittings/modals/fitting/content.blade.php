@@ -1,16 +1,15 @@
-<h4 class="page-header">About</h4>
+<h4 class="display-4">About</h4>
+
 <div class="media">
-  <div class="media-left">
-    {!! img('type', $fitting->ship->typeID, 64, ['class' => 'media-object', 'alt' => $fitting->ship->typeName], false) !!}
-  </div>
+  {!! img('type', $fitting->ship->typeID, 64, ['class' => 'align-self-center mr-3', 'alt' => $fitting->ship->typeName], false) !!}
   <div class="media-body">
-    <h4 class="media-heading">{{ $fitting->ship->typeName }}</h4>
+    <h4 class="mt-0">{{ $fitting->ship->typeName }}</h4>
     <p>{{ $fitting->ship->description }}</p>
   </div>
 </div>
 
 <h4 class="page-header">Financial</h4>
-<table class="table table-condensed no-border">
+<table class="table table-sm no-border">
   <thead>
     <tr>
       <th>Hull Estimated Price</th>
