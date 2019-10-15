@@ -46,7 +46,10 @@ class MiningDataTable extends AbstractMiningDataTable
      */
     public function query()
     {
-        return CharacterMining::with('system', 'type', 'type.price');
+        return CharacterMining::with('system', 'type', 'type.price')
+            ->select('date', 'character_id', 'solar_system_id', 'type_id')
+            ->selectRaw('SUM(quantity) as quantity')
+            ->groupBy('date', 'solar_system_id', 'type_id', 'character_id');
     }
 
     /**
