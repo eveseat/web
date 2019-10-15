@@ -24,7 +24,7 @@ namespace Seat\Web\Extentions\Socialite\EveOnline;
 use SocialiteProviders\Manager\SocialiteWasCalled;
 
 /**
- * Class EveOnlineExtendSocialite
+ * Class EveOnlineExtendSocialite.
  *
  * @package Seat\Web\Extentions\Socialite\EveOnline
  */
