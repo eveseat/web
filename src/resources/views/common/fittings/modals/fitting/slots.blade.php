@@ -1,5 +1,6 @@
 @if($rows->isNotEmpty())
-<h4 class="page-header">{{ $title }}</h4>
+<h4>{{ $title }}</h4>
+
 <table class="table table-sm table-striped">
   <thead>
   <tr>
