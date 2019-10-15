@@ -27,7 +27,7 @@ use SocialiteProviders\Manager\OAuth2\AbstractProvider;
 use SocialiteProviders\Manager\OAuth2\User;
 
 /**
- * Class Provider
+ * Class Provider.
  *
  * @package Seat\Web\Extentions\Socialite\EveOnline
  */
