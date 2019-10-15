@@ -11,22 +11,22 @@
     <div class="col-md-6">
 
       @if(auth()->user()->has('character.skills'))
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">
               {{ trans('web::seat.skills_summary') }}
-              @if(auth()->user()->has('character.jobs'))
-                <span class="pull-right">
-                  <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.skillqueue']) }}"
-                     style="color: #000000">
-                  <i class="fa fa-refresh" data-widget="tooltip"
-                     title="{{ trans('web::seat.update_skill_queue') }}"></i>
-                  </a>
-                </span>
-              @endif
             </h3>
+            @if(auth()->user()->has('character.jobs'))
+              <div class="card-tools">
+                <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.skillqueue']) }}"
+                   class="float-left" style="color: #000000">
+                  <i class="fas fa-sync" data-widget="tooltip"
+                     title="{{ trans('web::seat.update_skill_queue') }}"></i>
+                </a>
+              </div>
+            @endif
           </div>
-          <div class="panel-body">
+          <div class="card-body">
 
             <dl>
 
@@ -85,125 +85,32 @@
             </dl>
 
           </div>
-          <div class="panel-footer">
+          <div class="card-footer">
             {{ count($skill_queue) }} {{ trans_choice('web::seat.skill', count($skill_queue)) }}
           </div>
         </div>
       @endif
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">{{ trans('web::seat.jump_fatigue') }}
-            &amp; {{ trans_choice('web::seat.jump_clones', 0) }}</h3>
-        </div>
-        <div class="panel-body">
-
-          <dl>
-            <dt>{{ trans('web::seat.jump_fatigue') }}</dt>
-            <dd>
-
-              @if(!is_null($fatigue) && carbon($fatigue->jump_fatigue_expire_date)->gt(carbon(null)))
-                {{ $fatigue->jump_fatigue_expire_date }}
-                <span class="pull-right">Ends approx {{ human_diff($fatigue->jump_fatigue_expire_date) }}</span>
-              @else
-                None
-              @endif
-
-            </dd>
-
-            <dt>{{ trans('web::seat.jump_act_timer') }}</dt>
-            <dd>
-              @if(!is_null($last_jump) && carbon($last_jump->last_clone_jump_date)->gt(carbon(null)))
-                {{ $last_jump->last_clone_jump_date }}
-                <span class="pull-right">Ends approx {{ human_diff($last_jump->last_clone_jump_date) }}</span>
-              @else
-                {{ trans('web::seat.none') }}
-              @endif
-            </dd>
-
-            <dt>{{ trans_choice('web::seat.jump_clones', 0) }}</dt>
-            <dd>
-
-              @if(count($jump_clones) > 0)
-
-                <ul>
-
-                  @foreach($jump_clones as $clone)
-                    <li>
-                        @if(! is_null($clone->name) && ! empty($clone->name))
-                        ({{ $clone->name }})
-                        @endif
-
-                        @if(! is_null($clone->location))
-                        Located at <b>{{ $clone->location->name }}</b>
-                        @else
-                        Location is unknown
-                        @endif
-                    </li>
-                  @endforeach
-
-                </ul>
-
-              @else
-                {{ trans('web::seat.no_jump_clones') }}
-              @endif
-
-            </dd>
-
-          </dl>
-
-        </div>
-        <div class="panel-footer">
-          {{ count($jump_clones) }} {{ trans_choice('web::seat.jump_clones', count($jump_clones)) }}
-        </div>
-      </div>
-
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">{{ trans_choice('web::seat.implants', 0) }}</h3>
-        </div>
-        <div class="panel-body">
-
-          @if(count($implants) > 0)
-
-            <ul>
-
-              @foreach($implants as $implant)
-                <li>{{ $implant->type->typeName }}</li>
-              @endforeach
-
-            </ul>
-
-          @else
-            {{ trans('web::seat.no_implants') }}
-          @endif
-
-        </div>
-        <div class="panel-footer">
-          {{ count($implants) }} {{ trans_choice('web::seat.implants', count($implants)) }}
-        </div>
-      </div>
-
     </div>
 
     <div class="col-md-6">
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">
             {{ trans('web::seat.employment_history') }}
-            @if(auth()->user()->has('character.jobs'))
-              <span class="pull-right">
-                <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.corphistory']) }}"
-                   style="color: #000000">
-                  <i class="fa fa-refresh" data-widget="tooltip"
-                     title="{{ trans('web::seat.update_corp_history') }}"></i>
-                </a>
-              </span>
-            @endif
           </h3>
+          @if(auth()->user()->has('character.jobs'))
+            <div class="card-tools">
+              <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.corphistory']) }}"
+                 class="float-right" style="color: #000000">
+                <i class="fas fa-sync" data-widget="tooltip"
+                   title="{{ trans('web::seat.update_corp_history') }}"></i>
+              </a>
+            </div>
+          @endif
         </div>
-        <div class="panel-body">
+        <div class="card-body">
 
           @if(count($employment) > 0)
             <ul class="list-unstyled">
@@ -228,20 +135,120 @@
           @endif
 
         </div>
-        <div class="panel-footer">
+        <div class="card-footer">
           {{ count($employment) }} {{ trans_choice('web::seat.corporation', count($employment)) }}
         </div>
       </div>
 
     </div>
 
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">{{ trans('web::seat.jump_fatigue') }}
+          &amp; {{ trans_choice('web::seat.jump_clones', 0) }}</h3>
+      </div>
+      <div class="card-body">
+
+        <dl>
+          <dt>{{ trans('web::seat.jump_fatigue') }}</dt>
+          <dd>
+
+            @if(!is_null($fatigue) && carbon($fatigue->jump_fatigue_expire_date)->gt(carbon(null)))
+              {{ $fatigue->jump_fatigue_expire_date }}
+              <span class="pull-right">Ends approx {{ human_diff($fatigue->jump_fatigue_expire_date) }}</span>
+            @else
+              None
+            @endif
+
+          </dd>
+
+          <dt>{{ trans('web::seat.jump_act_timer') }}</dt>
+          <dd>
+            @if(!is_null($last_jump) && carbon($last_jump->last_clone_jump_date)->gt(carbon(null)))
+              {{ $last_jump->last_clone_jump_date }}
+              <span class="pull-right">Ends approx {{ human_diff($last_jump->last_clone_jump_date) }}</span>
+            @else
+              {{ trans('web::seat.none') }}
+            @endif
+          </dd>
+
+          <dt>{{ trans_choice('web::seat.jump_clones', 0) }}</dt>
+          <dd>
+
+            @if(count($jump_clones) > 0)
+
+              <ul>
+
+                @foreach($jump_clones as $clone)
+                  <li>
+                    @if(! is_null($clone->name) && ! empty($clone->name))
+                      ({{ $clone->name }})
+                    @endif
+
+                    @if(! is_null($clone->location))
+                      Located at <b>{{ $clone->location->name }}</b>
+                    @else
+                      Location is unknown
+                    @endif
+                  </li>
+                @endforeach
+
+              </ul>
+
+            @else
+              {{ trans('web::seat.no_jump_clones') }}
+            @endif
+
+          </dd>
+
+        </dl>
+
+      </div>
+      <div class="card-footer">
+        {{ count($jump_clones) }} {{ trans_choice('web::seat.jump_clones', count($jump_clones)) }}
+      </div>
+    </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">{{ trans_choice('web::seat.implants', 0) }}</h3>
+      </div>
+      <div class="card-body">
+
+        @if(count($implants) > 0)
+
+          <ul>
+
+            @foreach($implants as $implant)
+              <li>{{ $implant->type->typeName }}</li>
+            @endforeach
+
+          </ul>
+
+        @else
+          {{ trans('web::seat.no_implants') }}
+        @endif
+
+      </div>
+      <div class="card-footer">
+        {{ count($implants) }} {{ trans_choice('web::seat.implants', count($implants)) }}
+      </div>
+    </div>
+    </div>
+  </div>
+  <div class="row">
+
     <!-- character attributes -->
     <div class="col-md-6">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">{{ trans_choice('web::seat.attribute', 2) }}</h3>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">{{ trans_choice('web::seat.attribute', 2) }}</h3>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
 
           <div class="row">
 
@@ -273,11 +280,11 @@
     </div>
 
     <div class="col-md-6">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">{{ trans_choice('web::seat.corporation_titles', 0) }}</h3>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">{{ trans_choice('web::seat.corporation_titles', 0) }}</h3>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
           @if(count($titles) > 0)
             <ul class="list-unstyled">
               @foreach($titles as $title)
@@ -288,7 +295,7 @@
             {{ trans('web::seat.no_corporation_titles') }}
           @endif
         </div>
-        <div class="panel-footer">
+        <div class="card-footer">
           {{ count($titles) }} {{ trans_choice('web::seat.corporation_titles', count($titles)) }}
         </div>
       </div>
