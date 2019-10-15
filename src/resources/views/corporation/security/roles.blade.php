@@ -15,7 +15,7 @@
 
           @foreach($security as $entry)
 
-            <tr class="active">
+            <tr class="bg-light">
               <td>
                 <b>
                   @include('web::partials.character', ['character' => $entry->character])
