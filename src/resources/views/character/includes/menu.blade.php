@@ -4,9 +4,9 @@
 
     @foreach($menu as $menu_entry)
 
-      <li role="presentation" class="@if ($viewname == $menu_entry['highlight_view']) active @endif">
+      <li role="presentation" class="nav-item">
 
-        <a href="{{ route($menu_entry['route'], $summary->character_id) }}">
+        <a href="{{ route($menu_entry['route'], $summary->character_id) }}" class="nav-link @if ($viewname == $menu_entry['highlight_view']) active @endif">
           @if (array_key_exists('label', $menu_entry))
             @if(array_key_exists('plural', $menu_entry))
               {{ trans_choice($menu_entry['label'], 2) }}
