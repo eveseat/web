@@ -4,23 +4,23 @@
 
 @section('security_content')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{ trans_choice('web::seat.title', 2) }}</h3>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">{{ trans_choice('web::seat.title', 2) }}</h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body p-0">
 
-      <table class="table table-condensed table-hover table-responsive">
+      <table class="table table-condensed table-hover">
         <tbody>
 
         @foreach($titles as $title)
 
-          <tr class="active">
-            <td colspan="4">
+          <tr class="bg-light">
+            <td>
               <b>
                 {{ strip_tags($title->name) }}
               </b>
-              <span class="pull-right">
+              <span class="float-right">
                 {{ $title->characters->count() }}
                 {{ trans_choice('web::seat.character', $title->characters->count()) }}
               </span>
