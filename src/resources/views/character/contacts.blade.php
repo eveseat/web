@@ -6,12 +6,12 @@
 
 @section('character_content')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::seat.contacts') }}</h3>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">{{ trans('web::seat.contacts') }}</h3>
     </div>
-    <div class="panel-body">
-      <div class="margin-bottom">
+    <div class="card-body">
+      <div class="mb-3">
         <select multiple="multiple" id="dt-character-selector" class="form-control">
           @foreach($characters as $character)
             @if($character->id == $request->character_id)
