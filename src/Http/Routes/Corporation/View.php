@@ -94,7 +94,7 @@ Route::get('/{corporation_id}/markets', [
 Route::get('/{corporation_id}/mining-ledger/{year?}/{month?}', [
     'as'         => 'corporation.view.mining_ledger',
     'middleware' => 'corporationbouncer:mining',
-    'uses'       => 'MiningLedgerController@show',
+    'uses'       => 'MiningLedgerController@index',
 ]);
 
 Route::get('/{corporation_id}/customs-offices', [

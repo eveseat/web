@@ -26,7 +26,7 @@
     </div>
   </div>
 
-  @include('web::character.includes.mining-ledger-modal')
+  @include('web::common.minings.modals.details.details')
 @stop
 
 @push('javascript')
@@ -39,6 +39,17 @@
               .on('change', function () {
                   window.LaravelDataTables['dataTableBuilder'].ajax.reload();
               });
+
+          $('#mining-detail').on('show.bs.modal', function (e) {
+              var body = $(e.target).find('.modal-body');
+              body.html('Loading...');
+
+              $.ajax($(e.relatedTarget).data('url'))
+                  .done(function (data) {
+                      body.html(data);
+                      $("[data-toggle=tooltip]").tooltip();
+                  });
+          });
       });
   </script>
 @endpush
