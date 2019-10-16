@@ -1,4 +1,4 @@
-<div style="padding-bottom: 15px;">
+<div class="pb-3">
 
   <ul class="nav nav-pills">
     @if(auth()->user()->has('corporation.journal'))
