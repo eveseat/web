@@ -13,7 +13,7 @@
           <div class="form-group">
             <label for="moon-report" class="control-label">Report</label>
             <textarea class="form-control" name="moon-report" id="moon-report"></textarea>
-            <p class="help-block">
+            <p class="form-text text-muted mb-0">
               Use the <code>Copy to Clipboard</code> button from your <code>Moon Probe and Analysis</code> window in order to copy your moon-mining report.
               Then, paste into the textarea in order to retrieve information.
             </p>

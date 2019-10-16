@@ -140,9 +140,9 @@
                   @endforeach
                 </select>
               </div>
-              <span class="help-block">
+              <p class="form-text text-muted mb-0">
                 {{ trans('web::seat.current_format') }}: {{ number(10000000.00) }}
-              </span>
+              </p>
             </div>
           </div>
 

@@ -52,10 +52,10 @@
               @endforeach
 
             </select>
-            <span class="help-block">
+            <p class="form-text text-muted mb-0">
               <span id="expression"></span><br>
               {{ trans('web::seat.choose_prepop') }}
-            </span>
+            </p>
           </div>
 
         </div>
