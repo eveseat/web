@@ -47,17 +47,17 @@
             @if($starbase->system->sovereignty->alliance_id == $sheet->alliance_id || $starbase->system->sovereignty->corporation_id == $starbase->corporation_id)
 
               @if(carbon('now')->diffInHours(carbon('now')->addHours(optional($starbase->fuelBays->whereIn('type_id', [4051, 4246, 4247, 4312, 36945]))->first()->quantity ?? 0/ ceil($starbase->baseFuelUsage * 0.75))) < 24)
-                <span class="text-red pull-right"><i>{{ trans('web::seat.low_fuel') }} !</i></span>
+                <span class="text-red float-right"><i>{{ trans('web::seat.low_fuel') }} !</i></span>
               @elseif(carbon('now')->diffInHours(carbon('now')->addHours(optional($starbase->fuelBays->whereIn('type_id', [4051, 4246, 4247, 4312, 36945]))->first()->quantity ?? 0 / ceil($starbase->baseFuelUsage * 0.75))) < 72)
-                <span class="text-yellow pull-right"><i>{{ trans('web::seat.low_fuel') }}</i></span>
+                <span class="text-yellow float-right"><i>{{ trans('web::seat.low_fuel') }}</i></span>
               @endif
 
             @else
 
               @if(carbon('now')->diffInHours(carbon('now')->addHours(optional($starbase->fuelBays->whereIn('type_id', [4051, 4246, 4247, 4312, 36945]))->first()->quantity ?? 0 / $starbase->baseFuelUsage)) < 24)
-                <span class="text-red pull-right"><i>{{ trans('web::seat.low_fuel') }} !</i></span>
+                <span class="text-red float-right"><i>{{ trans('web::seat.low_fuel') }} !</i></span>
               @elseif(carbon('now')->diffInHours(carbon('now')->addHours(optional($starbase->fuelBays->whereIn('type_id', [4051, 4246, 4247, 4312, 36945]))->first()->quantity ?? 0 / $starbase->baseFuelUsage)) < 72)
-                <span class="text-yellow pull-right"><i>{{ trans('web::seat.low_fuel') }}</i></span>
+                <span class="text-yellow float-right"><i>{{ trans('web::seat.low_fuel') }}</i></span>
               @endif
 
             @endif

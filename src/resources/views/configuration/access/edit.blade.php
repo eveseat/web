@@ -78,7 +78,7 @@
             </td>
             <td>
               <a href="{{ route('configuration.access.roles.edit.remove.permission', ['role_id' => $role->id, 'permission_id' => $permission->id]) }}"
-                 type="button" class="btn btn-danger btn-xs pull-right">
+                 type="button" class="btn btn-danger btn-xs float-right">
                 {{ trans('web::seat.remove') }}
               </a>
             </td>
@@ -99,7 +99,7 @@
         {{-- ensure the role is not inversed --}}
         @if($role->permissions->where('title', 'superuser')->first()->pivot->not == 0)
 
-          <span class="badge badge-danger pull-right" data-toggle="tooltip"
+          <span class="badge badge-danger float-right" data-toggle="tooltip"
                 title="{{ trans('web::seat.permission_inherit') }}">
           {{ trans('web::seat.has_superuser') }}
           </span>
@@ -194,7 +194,7 @@
             </td>
             <td>
               <a href="{{ route('configuration.access.roles.edit.remove.affiliation', ['role_id' => $role->id, 'user_id' => $affiliation->id]) }}"
-                 type="button" class="btn btn-danger btn-xs pull-right">
+                 type="button" class="btn btn-danger btn-xs float-right">
                 {{ trans('web::seat.remove') }}
               </a>
             </td>
@@ -252,7 +252,7 @@
             </td>
             <td>
               <a href="{{ route('configuration.access.roles.edit.remove.group', ['role_id' => $role->id, 'user_id' => $group->id]) }}"
-                 type="button" class="btn btn-danger btn-xs pull-right">
+                 type="button" class="btn btn-danger btn-xs float-right">
                 {{ trans('web::seat.remove') }}
               </a>
             </td>
