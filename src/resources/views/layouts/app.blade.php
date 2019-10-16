@@ -60,7 +60,7 @@
   <div class="content-wrapper">
 
     <!-- Content Header (Page header) -->
-    <div class="content-header">
+    <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
@@ -71,7 +71,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
     <!-- Main content -->
     <section class="content">
@@ -116,7 +116,7 @@
 <script src="{{ asset('web/js/dataTables.dataTables.min.js') }}"></script>
 <script src="{{ asset('web/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('web/js/dataTables.rowGroup.js') }}"></script>
-<script src="{{ asset('web/js/rowGroup.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('web/js/rowGroup.bootstrap4.js') }}"></script>
 <!-- MomentJS -->
 <script src="{{ asset('web/js/moment-with-locales.min.js') }}"></script>
 <!-- ChartJS -->

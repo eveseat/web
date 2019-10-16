@@ -14,11 +14,11 @@
   <form action="{{ route('support.search') }}" method="get" class="form-inline ml-3">
     <div class="input-group input-group-sm">
       <input type="text" name="q" class="form-control form-control-navbar" placeholder="{{ trans('web::seat.search') }}...">
-      <span class="input-group-append">
+      <div class="input-group-append">
         <button type="submit" id="search-btn" class="btn btn-navbar">
           <i class="fas fa-search"></i>
         </button>
-      </span>
+      </div>
     </div>
   </form>
   <!-- /.search form -->
