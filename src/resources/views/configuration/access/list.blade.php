@@ -5,11 +5,11 @@
 
 @section('left')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::seat.quick_add_role') }}</h3>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">{{ trans('web::seat.quick_add_role') }}</h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
 
       <form role="form" action="{{ route('configuration.access.roles.add') }}" method="post">
         {{ csrf_field() }}
@@ -24,7 +24,10 @@
         </div><!-- /.box-body -->
 
         <div class="box-footer">
-          <button type="submit" class="btn btn-primary float-right">{{ trans('web::seat.add_new_role') }}</button>
+          <button type="submit" class="btn btn-success float-right">
+            <i class="fas fa-plus-square"></i>
+            {{ trans('web::seat.add_new_role') }}
+          </button>
         </div>
       </form>
 
@@ -35,49 +38,55 @@
 
 @section('right')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::seat.available_roles') }}</h3>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">{{ trans('web::seat.available_roles') }}</h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
 
-      <table class="table table-hover table-condensed">
-        <tbody>
-        <tr>
-          <th>{{ trans_choice('web::seat.name', 2) }}</th>
-          <th>{{ trans_choice('web::seat.group', 2) }}</th>
-          <th>{{ trans_choice('web::seat.permission', 2) }}</th>
-          <th>{{ trans_choice('web::seat.affiliation', 2) }}</th>
-          <th></th>
-        </tr>
-
-        @foreach($roles as $role)
-
+      <table class="table table-hover table-striped table-condensed">
+        <thead>
           <tr>
-            <td>{{ $role->title }}</td>
-            <td>{{ count($role->groups) }}</td>
-            <td>{{ count($role->permissions) }}</td>
-            <td>{{ count($role->affiliations) }}</td>
-            <td>
-              <a href="{{ route('configuration.access.roles.edit', ['id' => $role->id]) }}" type="button"
-                 class="btn btn-primary btn-xs">
-                {{ trans('web::seat.edit') }}
-              </a>
-              <a href="{{ route('configuration.access.roles.delete', ['id' => $role->id]) }}" type="button"
-                 class="btn btn-danger btn-xs">
-                {{ trans('web::seat.delete') }}
-              </a>
-            </td>
+            <th>{{ trans_choice('web::seat.name', 2) }}</th>
+            <th>{{ trans_choice('web::seat.group', 2) }}</th>
+            <th>{{ trans_choice('web::seat.permission', 2) }}</th>
+            <th>{{ trans_choice('web::seat.affiliation', 2) }}</th>
+            <th></th>
           </tr>
+        </thead>
+        <tbody>
 
-        @endforeach
+          @foreach($roles as $role)
+
+            <tr>
+              <td>{{ $role->title }}</td>
+              <td>{{ count($role->groups) }}</td>
+              <td>{{ count($role->permissions) }}</td>
+              <td>{{ count($role->affiliations) }}</td>
+              <td>
+                <div class="btn-group btn-group-sm float-right">
+                  <a href="{{ route('configuration.access.roles.edit', ['id' => $role->id]) }}" type="button"
+                     class="btn btn-warning">
+                    <i class="fas fa-pencil-alt"></i>
+                    {{ trans('web::seat.edit') }}
+                  </a>
+                  <a href="{{ route('configuration.access.roles.delete', ['id' => $role->id]) }}" type="button"
+                     class="btn btn-danger">
+                    <i class="fas fa-trash-alt"></i>
+                    {{ trans('web::seat.delete') }}
+                  </a>
+                </div>
+              </td>
+            </tr>
+
+          @endforeach
 
         </tbody>
       </table>
 
     </div>
-    <div class="panel-footer">
-      <b>{{ count($roles) }}</b> {{ trans_choice('web::seat.role', count($roles)) }}
+    <div class="card-footer">
+      <i class="float-right text-muted">{{ count($roles) }} {{ trans_choice('web::seat.role', count($roles)) }}</i>
     </div>
   </div>
 
