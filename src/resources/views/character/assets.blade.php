@@ -106,7 +106,7 @@
         if(data.quantity == null){
           $(row).find("td:eq(0)")
               .addClass('details-control')
-              .append('<button class="btn btn-xs btn-link"><i class="fas fa-plus-square"></i></button>');
+              .append('<button class="btn btn-sm btn-link"><i class="fas fa-plus-square"></i></button>');
         }
       },
       drawCallback : function () {
@@ -167,7 +167,7 @@
                 .addClass('details-control')
                 .attr('data-location-id', data.item_id )
                 .attr('data-origin', data.location_id )
-                .append('<button class="btn btn-xs btn-link"><i class="fas fa-plus-square"></i></button>');
+                .append('<button class="btn btn-sm btn-link"><i class="fas fa-plus-square"></i></button>');
           }
         },
         drawCallback : function () {

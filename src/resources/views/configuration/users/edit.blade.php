@@ -152,11 +152,11 @@
                   <td>
                     @if(auth()->user()->id != $user->id)
                       <a href="{{ route('configuration.access.roles.edit', ['id' => $role->id]) }}" type="button"
-                         class="btn btn-warning btn-xs">
+                         class="btn btn-warning btn-sm">
                         {{ trans('web::seat.edit') }}
                       </a>
                       <a href="{{ route('configuration.access.roles.edit.remove.group', ['role_id' => $role->id, 'user_id' => $user->group->id]) }}"
-                         type="button" class="btn btn-danger btn-xs">
+                         type="button" class="btn btn-danger btn-sm">
                         {{ trans('web::seat.remove') }}
                       </a>
                     @endif
