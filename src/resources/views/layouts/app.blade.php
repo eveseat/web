@@ -115,6 +115,8 @@
 <script src="{{ asset('web/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('web/js/dataTables.dataTables.min.js') }}"></script>
 <script src="{{ asset('web/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('web/js/dataTables.rowGroup.js') }}"></script>
+<script src="{{ asset('web/js/rowGroup.bootstrap4.min.js') }}"></script>
 <!-- MomentJS -->
 <script src="{{ asset('web/js/moment-with-locales.min.js') }}"></script>
 <!-- ChartJS -->
