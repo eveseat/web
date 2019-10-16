@@ -10,11 +10,11 @@
       <h3 class="panel-title">{{ trans('web::seat.api_all') }}
         <span class="float-right">
           @if (auth()->user()->has('apikey.toggle_status', false))
-            <a href="{{ route('api.key.disable.all') }}" class="btn btn-xs btn-warning">
+            <a href="{{ route('api.key.disable.all') }}" class="btn btn-sm btn-warning">
             {{ trans('web::seat.disable_all_enabled') }}
           </a>
           @endif
-          <a href="{{ route('api.key.enable.all') }}" class="btn btn-xs btn-primary">
+          <a href="{{ route('api.key.enable.all') }}" class="btn btn-sm btn-primary">
             {{ trans('web::seat.reenable_all_disabled') }}
           </a>
         </span>

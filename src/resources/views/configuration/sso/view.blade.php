@@ -12,10 +12,10 @@
         {{ trans('web::seat.sso_scopes') }}
 
         <span class="float-right">
-          <a href="{{ route('configuration.sso.remove_all') }}" class="btn btn-xs btn-danger">
+          <a href="{{ route('configuration.sso.remove_all') }}" class="btn btn-sm btn-danger">
             {{ trans('web::seat.remove_all') }}
           </a>
-          <a href="{{ route('configuration.sso.enable_all') }}" class="btn btn-xs btn-primary">
+          <a href="{{ route('configuration.sso.enable_all') }}" class="btn btn-sm btn-primary">
             {{ trans('web::seat.enable_all') }}
           </a>
         </span>

@@ -251,7 +251,7 @@
       <div class="panel-footer">
 
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary btn-xs" data-widget="modal" data-target="#ownerModal">
+        <button type="button" class="btn btn-primary btn-sm" data-widget="modal" data-target="#ownerModal">
           {{ trans('web::seat.transfer_ownership') }}
         </button>
 
