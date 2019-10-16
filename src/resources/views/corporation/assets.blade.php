@@ -6,13 +6,13 @@
 
 @section('corporation_content')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::seat.assets') }}</h3>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">{{ trans('web::seat.assets') }}</h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
 
-      <table class="table table-condensed table-hover table-responsive">
+      <table class="table table-condensed table-hover">
         <thead>
         <tr>
           <th>{{ trans('web::seat.quantity') }}</th>
@@ -27,74 +27,74 @@
 
         @foreach($assets->unique('location_id')->groupBy('location_id') as $location)
 
-          <tbody style="border-top: 0px;">
+          <tbody class="border-top-0">
 
-          <tr class="active">
-            <td colspan="5">
-              <b>
-                @if($location->first()->location_name == '')
-                  Unknown Structure ({{ $location->first()->location_id }})
-                @else
-                  {{ $location->first()->location_name }}
-                @endif
-              </b>
-              <span class="pull-right">
-                    <i>
-                      {{ count($assets->where('location_id', $location->first()->location_id)) }}
-                      {{ trans('web::seat.items_taking') }}
-                      {{ number_metric($assets
-                          ->where('location_id', $location->first()->location_id)->map(function($item) {
-                            return $item->quantity * $item->type->volume;
-                      })->sum()) }} m&sup3;
-                    </i>
-                  </span>
-            </td>
-          </tr>
+            <tr class="bg-light">
+              <td colspan="5">
+                <b>
+                  @if($location->first()->location_name == '')
+                    Unknown Structure ({{ $location->first()->location_id }})
+                  @else
+                    {{ $location->first()->location_name }}
+                  @endif
+                </b>
+                <span class="float-right">
+                      <i>
+                        {{ count($assets->where('location_id', $location->first()->location_id)) }}
+                        {{ trans('web::seat.items_taking') }}
+                        {{ number_metric($assets
+                            ->where('location_id', $location->first()->location_id)->map(function($item) {
+                              return $item->quantity * $item->type->volume;
+                        })->sum()) }} m&sup3;
+                      </i>
+                    </span>
+              </td>
+            </tr>
 
           </tbody>
 
           @foreach($assets->where('location_id', $location->first()->location_id) as $asset)
 
-            <tbody style="border-top: 0px;">
+            <tbody class="border-top-0">
 
-            <tr>
-              @if($asset->content->count() > 0)
+              <tr>
+                @if($asset->content->count() > 0)
+
+                  <td>
+                    <i class="fas fa-plus-square viewcontent" style="cursor: pointer;"
+                       a-item-id="{{ $asset->item_id }}" a-loaded="false">
+                    </i>
+                  </td>
+
+                @else
+
+                  <td>{{ $asset->quantity }}</td>
+
+                @endif
 
                 <td>
-                  <i class="fa fa-plus viewcontent" style="cursor: pointer;"
-                     a-item-id="{{ $asset->item_id }}" a-loaded="false">
-                  </i>
+                  {!! img('type', $asset->type_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  @if($asset->name != $asset->type->typeName)
+                    {{ $asset->name }} ({{ $asset->type->typeName }})
+                  @else
+                    {{ $asset->type->typeName }}
+                  @endif
+                  @if(! $asset->is_singleton)
+                    <span class="text-red">(packaged)</span>
+                  @endif
                 </td>
-
-              @else
-
-                <td>{{ $asset->quantity }}</td>
-
-              @endif
-
-              <td>
-                {!! img('type', $asset->type_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-                @if($asset->name != $asset->type->typeName)
-                  {{ $asset->name }} ({{ $asset->type->typeName }})
-                @else
-                  {{ $asset->type->typeName }}
-                @endif
-                @if(! $asset->is_singleton)
-                  <span class="text-red">(packaged)</span>
-                @endif
-              </td>
-              <td>{{ number_metric($asset->quantity * $asset->type->volume) }} m&sup3;</td>
-              <td>{{ $asset->type->group->groupName }}</td>
-              <td>
-                @if(Str::contains($asset->location_flag, 'CorpSAG'))
-                  {{
-                    $divisions->where('division', Str::after($asset->location_flag, 'CorpSAG'))->pluck('name')->first()
-                  }}
-                @else
-                  {{ $asset->location_flag }}
-                @endif
-              </td>
-            </tr>
+                <td>{{ number_metric($asset->quantity * $asset->type->volume) }} m&sup3;</td>
+                <td>{{ $asset->type->group->groupName }}</td>
+                <td>
+                  @if(Str::contains($asset->location_flag, 'CorpSAG'))
+                    {{
+                      $divisions->where('division', Str::after($asset->location_flag, 'CorpSAG'))->pluck('name')->first()
+                    }}
+                  @else
+                    {{ $asset->location_flag }}
+                  @endif
+                </td>
+              </tr>
 
             </tbody>
 
@@ -150,13 +150,13 @@
         }
 
         // Apply some styling
-        $(this).removeClass("fa-plus").addClass("fa-minus");
+        $(this).removeClass("fa-plus-square").addClass("fa-minus-square");
         $(this).closest("tr").css("background-color", "#D4D4D4"); // Heading Color
         contents.css("background-color", "#E5E5E5");              // Table Contents Color
 
       } else {
 
-        $(this).removeClass("fa-minus").addClass("fa-plus");
+        $(this).removeClass("fa-minus-square").addClass("fa-plus-square");
         $(this).closest("tr").css("background-color", "");
       }
     });
