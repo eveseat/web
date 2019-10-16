@@ -108,3 +108,30 @@ ul.dropdown-menu li.user-character.new-character a h3 {
 .bg-none {
     background: none;
 }
+
+/**
+ * Datatables
+ */
+table.dataTable tr.dtrg-group td {
+    background-color: #f8f9fa;
+}
+
+table.dataTable tr.dtrg-group.dtrg-level-0 td {
+    font-weight: bold;
+}
+
+table.dataTable tr.dtrg-group.dtrg-level-1 td {
+    background-color: #6c757d;
+}
+
+table.dataTable tr.dtrg-group.dtrg-level-2 td {
+    background-color: #6c757d;
+}
+
+table.dataTable tr.dtrg-group.dtrg-level-1 td,
+table.dataTable tr.dtrg-group.dtrg-level-2 td {
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+    padding-left: 2em;
+    font-size: 0.9em;
+}
