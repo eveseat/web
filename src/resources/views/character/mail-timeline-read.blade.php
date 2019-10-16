@@ -5,89 +5,89 @@
 
 @section('full')
 
-  <ul class="timeline">
+  <div class="timeline">
 
-    <li>
-      <i class="fa fa-envelope bg-blue"></i>
+    <div>
+      <i class="fas fa-envelope bg-blue"></i>
+
       <div class="timeline-item">
-
         <span class="time">
-          <i class="fa fa-clock-o"></i>
+          <i class="fas fa-clock"></i>
           {{ $message->timestamp }} ({{ human_diff($message->timestamp) }})
         </span>
+        <h3 class="timeline-header">
+          <ul class="list-unstyled">
+            <li>
+              <b>{{ trans('web::seat.from') }}: </b>
+              <a href="{{ route('character.view.sheet', ['character_id' => $message->from]) }}">
+                {!! img('character', $message->from, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                <span class="id-to-name" data-id="{{ $message->from }}">{{ trans('web::seat.unknown') }}</span>
+              </a>
+            </li>
 
-        <h2 class="timeline-header">
-          <b>{{ trans('web::seat.from') }}: </b>
-          <a href="{{ route('character.view.sheet', ['character_id' => $message->from]) }}">
-            {!! img('character', $message->from, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-            <span class="id-to-name" data-id="{{ $message->from }}">{{ trans('web::seat.unknown') }}</span>
-          </a>
+            @if($message->recipients->where('recipient_type', 'alliance')->count() > 0)
+              <li>
+                <b>{{ trans('web::seat.to_alliance') }}:</b>
 
-    @if($message->recipients->where('recipient_type', 'alliance')->count() > 0)
+                @foreach($message->recipients->where('recipient_type', 'alliance') as $recipient)
 
-      <li>
-        <b>{{ trans('web::seat.to_alliance') }}:</b>
+                  {!! img('alliance', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  <span class="id-to-name" data-id="{{ $recipient->recipient_id }}">{{ trans('web::seat.unknown') }}</span>
 
-        @foreach($message->recipients->where('recipient_type', 'alliance') as $recipient)
+                @endforeach
 
-          {!! img('alliance', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-          <span class="id-to-name" data-id="{{ $recipient->recipient_id }}">{{ trans('web::seat.unknown') }}</span>
+              </li>
+            @endif
 
-        @endforeach
+            @if($message->recipients->where('recipient_type', 'corporation')->count() > 0)
+              <li>
+                <b>{{ trans('web::seat.to_corp') }}:</b>
 
-      </li>
-    @endif
+                @foreach($message->recipients->where('recipient_type', 'corporation') as $recipient)
 
-    @if($message->recipients->where('recipient_type', 'corporation')->count() > 0)
+                  {!! img('corporation', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  <span class="id-to-name" data-id="{{ $recipient->recipient_id }}">{{ trans('web::seat.unknown') }}</span>
 
-      <li>
-        <b>{{ trans('web::seat.to_corp') }}:</b>
+                @endforeach
+              </li>
+            @endif
 
-        @foreach($message->recipients->where('recipient_type', 'corporation') as $recipient)
+            @if($message->recipients->where('recipient_type', 'character')->count() > 0)
+              <li>
+                <b>{{ trans('web::seat.to_char') }}:</b>
 
-          {!! img('corporation', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-          <span class="id-to-name" data-id="{{ $recipient->recipient_id }}">{{ trans('web::seat.unknown') }}</span>
+                @foreach($message->recipients->where('recipient_type', 'character') as $recipient)
 
-        @endforeach
+                  {!! img('character', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  <span class="id-to-name" data-id="{{ $recipient->recipient_id }}">{{ trans('web::seat.unknown') }}</span>
 
-      </li>
-    @endif
+                @endforeach
 
-    @if($message->recipients->where('recipient_type', 'character')->count() > 0)
+              </li>
+            @endif
 
-      <li>
-        <b>{{ trans('web::seat.to_char') }}:</b>
+          </ul>
+        </h3>
+        <div class="timeline-body">
 
-        @foreach($message->recipients->where('recipient_type', 'character') as $recipient)
+          @if(setting('mail_threads') == "yes")
 
-          {!! img('character', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-          <span class="id-to-name" data-id="{{ $recipient->recipient_id }}">{{ trans('web::seat.unknown') }}</span>
+            @include('web::character.partials.messagethread')
 
-        @endforeach
+          @else
 
-      </li>
-      @endif
+            {!! clean_ccp_html($message->body) !!}
 
-      </h2>
+          @endif
 
-      <div class="timeline-body">
-
-        @if(setting('mail_threads') == "yes")
-
-          @include('web::character.partials.messagethread')
-
-        @else
-
-          {!! clean_ccp_html($message->body) !!}
-
-        @endif
-
+        </div>
       </div>
+    </div>
 
-      <li>
-        <i class="fa fa-clock-o bg-gray"></i>
-      </li>
-  </ul>
+    <div>
+      <i class="fas fa-clock bg-gray"></i>
+    </div>
+  </div>
 
 @stop
 

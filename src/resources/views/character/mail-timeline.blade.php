@@ -10,77 +10,79 @@
 
   {!! $messages->render() !!}
 
-  <ul class="timeline">
+  <div class="timeline">
 
     @foreach(
       $messages->groupBy(function($message) {
         return carbon($message->timestamp)->format('l jS \\of F Y');
       }) as $day => $digest
     )
-      <li class="time-label">
+      <div class="time-label">
         <span class="bg-blue">
           {{ $day }}
         </span>
-      </li>
+      </div>
 
       @foreach($digest as $message)
 
-        <li>
-          <i class="fa fa-envelope bg-blue"></i>
+        <div>
+          <i class="fas fa-envelope bg-blue"></i>
           <div class="timeline-item">
             <span class="time">
-              <i class="fa fa-clock-o"></i>
+              <i class="fas fa-clock"></i>
               {{ $message->timestamp }} ({{ human_diff($message->timestamp) }})
             </span>
-            <h2 class="timeline-header">
-              <b>{{ trans('web::seat.from') }}: </b>
-              @include('web::partials.character', ['character' => $CharacterInfo::find($message->from) ?: $message->from, 'character_id' => $message->character_id])
+            <h3 class="timeline-header">
+              <ul class="list-unstyled">
+                <li>
+                  <b>{{ trans('web::seat.from') }}: </b>
+                  @include('web::partials.character', ['character' => $CharacterInfo::find($message->from) ?: $message->from, 'character_id' => $message->character_id])
+                </li>
 
-        @if ($message->recipients->where('recipient_type', 'alliance')->count() > 0)
+                @if ($message->recipients->where('recipient_type', 'alliance')->count() > 0)
 
-          <li>
-            <b>{{ trans('web::seat.to_alliance') }}:</b>
+                  <li>
+                    <b>{{ trans('web::seat.to_alliance') }}:</b>
 
-            @foreach($message->recipients->where('recipient_type', 'alliance') as $recipient)
+                    @foreach($message->recipients->where('recipient_type', 'alliance') as $recipient)
 
-              {!! img('alliance', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-              <span class="id-to-name" data-id="{{ $recipient->recipient_id }}">{{ trans('web::seat.unknown') }}</span>
+                      {!! img('alliance', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
+                      <span class="id-to-name" data-id="{{ $recipient->recipient_id }}">{{ trans('web::seat.unknown') }}</span>
 
-            @endforeach
+                    @endforeach
 
-          </li>
-        @endif
+                  </li>
+                @endif
 
-        @if ($message->recipients->where('recipient_type', 'corporation')->count() > 0)
+                @if ($message->recipients->where('recipient_type', 'corporation')->count() > 0)
 
-          <li>
-            <b>{{ trans('web::seat.to_corp') }}:</b>
+                  <li>
+                    <b>{{ trans('web::seat.to_corp') }}:</b>
 
-            @foreach($message->recipients->where('recipient_type', 'corporation') as $recipient)
+                    @foreach($message->recipients->where('recipient_type', 'corporation') as $recipient)
 
-              @include('web::partials.corporation', ['corporation' => $CorporationInfo::find($recipient->recipient_id) ?: $recipient->recipient_id, 'character_id' => $message->character_id])
+                      @include('web::partials.corporation', ['corporation' => $CorporationInfo::find($recipient->recipient_id) ?: $recipient->recipient_id, 'character_id' => $message->character_id])
 
-            @endforeach
+                    @endforeach
 
-          </li>
-        @endif
+                  </li>
+                @endif
 
-        @if($message->recipients->where('recipient_type', 'character')->count() > 0)
+                @if($message->recipients->where('recipient_type', 'character')->count() > 0)
 
-          <li>
-            <b>{{ trans('web::seat.to_char') }}:</b>
+                  <li>
+                    <b>{{ trans('web::seat.to_char') }}:</b>
 
-            @foreach($message->recipients->where('recipient_type', 'character') as $recipient)
+                    @foreach($message->recipients->where('recipient_type', 'character') as $recipient)
 
-              @include('web::partials.character', ['character' => $CharacterInfo::find($recipient->recipient_id) ?: $recipient->recipient_id, 'character_id' => $message->character_id])
+                      @include('web::partials.character', ['character' => $CharacterInfo::find($recipient->recipient_id) ?: $recipient->recipient_id, 'character_id' => $message->character_id])
 
-            @endforeach
+                    @endforeach
 
-          </li>
-          @endif
-
-
-          </h2>
+                  </li>
+                @endif
+              </ul>
+          </h3>
           <div class="timeline-body">
 
             @if($message->body)
@@ -110,16 +112,16 @@
             </a>
           </div>
           </div>
-          </li>
+          </div>
 
           @endforeach
 
           @endforeach
 
-          <li>
-            <i class="fa fa-clock-o bg-gray"></i>
-          </li>
-  </ul>
+          <div>
+            <i class="fas fa-clock bg-gray"></i>
+          </div>
+  </div>
 
   {!! $messages->render() !!}
 
