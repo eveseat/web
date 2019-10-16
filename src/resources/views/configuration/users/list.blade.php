@@ -5,26 +5,36 @@
 
 @section('full')
 
-  <div class="nav-tabs-custom">
-    <ul class="nav nav-tabs">
-      <li class="active"><a href="" data-widget="tab" data-filter="all">{{ trans('web::seat.all') }} {{ trans_choice('web::seat.user',2) }}</a></li>
-      <li><a href="" data-widget="tab" data-filter="valid">{{ trans_choice('web::seat.valid_token', 2) }}</a></li>
-      <li><a href="" data-widget="tab" data-filter="invalid">{{ trans_choice('web::seat.invalid_token', 2) }}</a></li>
-    </ul>
-    <div class="tab-content">
-
-      <table id="user-configuration-table" class="table compact table-condensed table-hover table-responsive">
-        <thead>
-        <tr>
-          <th>{{ trans('web::seat.token') }}</th>
-          <th>{{ trans_choice('web::seat.character', 2) }}</th>
-          <th>{{ trans('web::seat.last_login') }}</th>
-          <th>{{ trans('web::seat.from') }}</th>
-          <th></th>
-        </tr>
-        </thead>
-      </table>
-
+  <div class="card card-gray card-outline card-outline-tabs">
+    <div class="card-header p-0 border-bottom-0">
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+          <a href="" data-toggle="pill" data-filter="all" class="nav-link active">{{ trans('web::seat.all') }} {{ trans_choice('web::seat.user',2) }}</a>
+        </li>
+        <li class="nav-item">
+          <a href="" data-toggle="pill" data-filter="valid" class="nav-link">{{ trans_choice('web::seat.valid_token', 2) }}</a>
+        </li>
+        <li class="nav-item">
+          <a href="" data-toggle="pill" data-filter="invalid" class="nav-link">{{ trans_choice('web::seat.invalid_token', 2) }}</a>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <div class="tab-content">
+        <div class="tab-pane fade active show">
+          <table id="user-configuration-table" class="table compact table-condensed table-hover">
+            <thead>
+              <tr>
+                <th>{{ trans('web::seat.token') }}</th>
+                <th>{{ trans_choice('web::seat.character', 2) }}</th>
+                <th>{{ trans('web::seat.last_login') }}</th>
+                <th>{{ trans('web::seat.from') }}</th>
+                <th></th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -36,12 +46,12 @@
 
   <script type="text/javascript">
 
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+    $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
       users_list.draw();
     });
 
     function getSelectedFilter() {
-      return $("div.nav-tabs-custom > ul > li.active > a").data('filter');
+      return $("div.card-header > ul.nav-tabs > li.nav-item > a.active").data('filter');
     }
 
     var users_list = $('#user-configuration-table').DataTable({
