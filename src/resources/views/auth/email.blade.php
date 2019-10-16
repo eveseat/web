@@ -17,14 +17,11 @@
     </p>
 
     <p>
-    <form role="form" action="{{ route('auth.logout') }}" method="post" class="form-inline">
-      {{ csrf_field() }}
-      <button type="submit" class="btn btn-default">
-        {{ trans('web::seat.sign_out') }}
-      </button>
-
-      <a href="{{ route('home') }}" class="btn btn-primary pull-right">Home</a>
-    </form>
+      <form role="form" action="{{ route('auth.logout') }}" method="post" class="form-inline">
+        {{ csrf_field() }}
+        <button type="submit" class="btn btn-default">{{ trans('web::seat.sign_out') }}</button>
+        <a href="{{ route('home') }}" class="btn btn-primary float-right">Home</a>
+      </form>
     </p>
   </div>
 

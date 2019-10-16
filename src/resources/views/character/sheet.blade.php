@@ -120,7 +120,7 @@
                   <b><span class="id-to-name"
                            data-id="{{ $history->corporation_id }}">{{ trans('web::seat.unknown') }}</span></b>
                   on {{ carbon($history->start_date)->toDateString() }}
-                  <span class="pull-right">
+                  <span class="float-right">
                  {{ human_diff($history->start_date) }}
                 </span>
                 </li>
@@ -156,7 +156,7 @@
 
             @if(!is_null($fatigue) && carbon($fatigue->jump_fatigue_expire_date)->gt(carbon(null)))
               {{ $fatigue->jump_fatigue_expire_date }}
-              <span class="pull-right">Ends approx {{ human_diff($fatigue->jump_fatigue_expire_date) }}</span>
+              <span class="float-right">Ends approx {{ human_diff($fatigue->jump_fatigue_expire_date) }}</span>
             @else
               None
             @endif
@@ -167,7 +167,7 @@
           <dd>
             @if(!is_null($last_jump) && carbon($last_jump->last_clone_jump_date)->gt(carbon(null)))
               {{ $last_jump->last_clone_jump_date }}
-              <span class="pull-right">Ends approx {{ human_diff($last_jump->last_clone_jump_date) }}</span>
+              <span class="float-right">Ends approx {{ human_diff($last_jump->last_clone_jump_date) }}</span>
             @else
               {{ trans('web::seat.none') }}
             @endif

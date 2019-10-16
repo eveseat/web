@@ -16,7 +16,7 @@
           <a href="#" class="nav-link" role="tab" data-toggle="pill" data-characters="all">{{ trans('web::seat.linked_characters') }} {{ trans('web::seat.assets') }}</a>
         </li>
         @if(auth()->user()->has('character.jobs'))
-          <li class="pull-right">
+          <li class="float-right">
             <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.assets']) }}"
                style="color: #000000">
               <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_assets') }}"></i>

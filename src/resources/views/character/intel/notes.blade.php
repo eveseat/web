@@ -11,7 +11,7 @@
       <h3 class="panel-title">
         Notes
         <!-- Button trigger modal -->
-        <span class="pull-right">
+        <span class="float-right">
           <a type="button" data-widget="modal" data-target="#createModal">
             Add Note
           </a>

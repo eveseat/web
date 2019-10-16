@@ -43,10 +43,10 @@
       <!-- /.box-body -->
 
       <div class="box-footer">
-        <div class="pull-left">
+        <div class="float-left">
           <a href="{{ route('auth.login') }}" class="text-center">{{ trans('web::seat.remember') }}</a>
         </div>
-        <button type="submit" class="btn btn-warning pull-right">{{ trans('web::seat.reset_topic') }}</button>
+        <button type="submit" class="btn btn-warning float-right">{{ trans('web::seat.reset_topic') }}</button>
       </div>
       <!-- /.box-footer -->
 

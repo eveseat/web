@@ -189,7 +189,7 @@
 
             </div>
             <div class="modal-footer">
-              <a href="#" class="btn btn-default pull-left" data-bm-open="#topMailContentModal"
+              <a href="#" class="btn btn-default float-left" data-bm-open="#topMailContentModal"
                  data-bm-close="#mailContentModal">{{ trans('web::seat.back') }}</a>
             </div>
           </div>

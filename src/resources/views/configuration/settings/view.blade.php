@@ -126,7 +126,7 @@
 
 @section('right')
   <div class="nav-tabs-custom">
-    <ul class="nav nav-tabs pull-right">
+    <ul class="nav nav-tabs float-right">
       <li>
         <a href="#" data-toggle="tooltip" title="Click to copy packages versions" id="copy-versions">
           <i class="fa fa-copy"></i>
@@ -138,7 +138,7 @@
       <li class="active">
         <a href="#core-packages" data-widget="tab" aria-expanded="true">Core</a>
       </li>
-      <li class="pull-left header">
+      <li class="float-left header">
         <i class="fa fa-code-fork"></i>
         {{ trans('web::seat.module_versions') }}
       </li>

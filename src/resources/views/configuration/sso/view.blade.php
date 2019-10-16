@@ -11,7 +11,7 @@
       <h3 class="panel-title">
         {{ trans('web::seat.sso_scopes') }}
 
-        <span class="pull-right">
+        <span class="float-right">
           <a href="{{ route('configuration.sso.remove_all') }}" class="btn btn-xs btn-danger">
             {{ trans('web::seat.remove_all') }}
           </a>

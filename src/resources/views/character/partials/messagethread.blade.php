@@ -17,7 +17,7 @@
               to {{ $thread_message['to'] }}
               sent {{ $thread_message['sent']->diffForHumans() }}
 
-              <span class="pull-right">#{{ $thread_id }}</span>
+              <span class="float-right">#{{ $thread_id }}</span>
             </a>
           </h4>
         </div>
@@ -33,7 +33,7 @@
               "{{ $message->subject }}"
               sent {{ human_diff($message->timestamp) }}
 
-              <span class="pull-right">#0</span>
+              <span class="float-right">#0</span>
             </a>
           </h4>
         </div>

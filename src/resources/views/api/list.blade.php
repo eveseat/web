@@ -8,7 +8,7 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">{{ trans('web::seat.api_all') }}
-        <span class="pull-right">
+        <span class="float-right">
           @if (auth()->user()->has('apikey.toggle_status', false))
             <a href="{{ route('api.key.disable.all') }}" class="btn btn-xs btn-warning">
             {{ trans('web::seat.disable_all_enabled') }}

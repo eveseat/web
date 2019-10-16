@@ -33,7 +33,7 @@
               {{ ucfirst(trans('web::seat.enabled')) }}
             </span>
             @if (auth()->user()->has('apikey.toggle_status', false))
-              <span class="pull-right">
+              <span class="float-right">
               <a href="{{ route('api.key.disable', ['key_id' => $key->key_id]) }}" class="badge badge-warning">
                 {{ trans('web::seat.disable') }}
               </a>
@@ -43,7 +43,7 @@
             <span class="text-danger">
               {{ ucfirst(trans('web::seat.disabled')) }}
             </span>
-            <span class="pull-right">
+            <span class="float-right">
               <a href="{{ route('api.key.enable', ['key_id' => $key->key_id]) }}" class="badge badge-primary">
                 {{ trans('web::seat.re_enable') }}
               </a>
@@ -282,10 +282,10 @@
                   <!-- /.box-body -->
 
                   <div class="box-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">
+                    <button type="button" class="btn btn-default float-left" data-dismiss="modal">
                       {{ trans('web::seat.close') }}
                     </button>
-                    <button type="submit" class="btn btn-primary pull-right">
+                    <button type="submit" class="btn btn-primary float-right">
                       {{ trans('web::seat.transfer') }}
                     </button>
                   </div>

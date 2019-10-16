@@ -76,7 +76,7 @@
 
           return '{{trans('web::seat.main_character')}}: ' + character_group
               + '{{ trans('web::seat.email') }}: ' + email
-              + '<span class="pull-right"> {{ trans_choice('web::seat.role', 2) }}: ' + wraped_role_titles + '</span>';
+              + '<span class="float-right"> {{ trans_choice('web::seat.role', 2) }}: ' + wraped_role_titles + '</span>';
         },
         dataSrc: 'main_character'
       },

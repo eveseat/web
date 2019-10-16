@@ -1,4 +1,4 @@
-<span class="pull-right">
+<span class="float-right">
   @if(auth()->user()->id != $row->id)
     <a href="{{ route('configuration.users.impersonate', ['user_id' => $row->id]) }}"
        title="{{ trans('web::seat.impersonate') }}" class="btn btn-sm btn-default">

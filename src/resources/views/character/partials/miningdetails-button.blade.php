@@ -1,4 +1,4 @@
-<a href="#" class="btn btn-sm btn-link pull-right"
+<a href="#" class="btn btn-sm btn-link float-right"
    data-type-id="{{$row->type_id}}"
    data-date="{{ $row->date }}"
    data-system-name="{{ $row->system->itemName }}"

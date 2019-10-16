@@ -12,7 +12,7 @@
       <h3 class="panel-title">{{ trans('web::seat.api_all') }}
 
         @if(!config('eveapi.config.enable_joblog'))
-          <span class="pull-right text-danger">
+          <span class="float-right text-danger">
             The job log is currently disabled.
           </span>
         @endif

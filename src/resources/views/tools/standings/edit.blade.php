@@ -35,7 +35,7 @@
         </div><!-- /.box-body -->
 
         <div class="box-footer">
-          <button type="submit" class="btn btn-primary pull-right">
+          <button type="submit" class="btn btn-primary float-right">
             Add
           </button>
         </div>
@@ -84,7 +84,7 @@
         </div><!-- /.box-body -->
 
         <div class="box-footer">
-          <button type="submit" class="btn btn-primary pull-right">
+          <button type="submit" class="btn btn-primary float-right">
             Add
           </button>
         </div>

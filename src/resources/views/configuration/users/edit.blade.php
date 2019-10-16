@@ -34,7 +34,7 @@
 
           @if(auth()->user()->id != $user->id)
             <a href="{{ route('configuration.users.edit.account_status', ['user_id' => $user->id]) }}"
-               class="btn btn-{{ $user->active ? 'warning' : 'success' }} pull-left">
+               class="btn btn-{{ $user->active ? 'warning' : 'success' }} float-left">
               @if($user->active)
                 {{ trans('web::seat.deactivate_user') }}
               @else
@@ -42,7 +42,7 @@
               @endif
             </a>
           @endif
-          <button type="submit" class="btn btn-primary pull-right">
+          <button type="submit" class="btn btn-primary float-right">
             {{ trans('web::seat.edit') }}
           </button>
         </div>
@@ -98,7 +98,7 @@
 
         <div class="box-footer">
 
-          <button type="submit" class="btn btn-primary pull-right">
+          <button type="submit" class="btn btn-primary float-right">
             {{ trans('web::seat.reassign') }}
           </button>
 

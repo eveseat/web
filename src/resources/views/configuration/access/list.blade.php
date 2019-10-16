@@ -24,7 +24,7 @@
         </div><!-- /.box-body -->
 
         <div class="box-footer">
-          <button type="submit" class="btn btn-primary pull-right">{{ trans('web::seat.add_new_role') }}</button>
+          <button type="submit" class="btn btn-primary float-right">{{ trans('web::seat.add_new_role') }}</button>
         </div>
       </form>
 
