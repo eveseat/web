@@ -153,7 +153,7 @@
                 </thead>
               </table>
               <div class="panel-footer clearfix">
-                <div class="col-md-2 col-md-offset-2">
+                <div class="col-md-2 offset-md-2">
                   <span class="badge badge-warning">0</span> Corporation
                 </div>
                 <div class="col-md-2">
