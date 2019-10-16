@@ -1,4 +1,4 @@
-<h4>
+<h5>
   <i class="fa fa-map"></i>
   @if (! is_null($extraction->moon) && ! is_null($extraction->moon->region))
     {{ $extraction->moon->region->name }}
@@ -15,7 +15,7 @@
   @else
     {{ sprintf('%s %s', trans('web::seat.unknown'), trans('web::seat.region')) }}
   @endif
-</h4>
+</h5>
 <span class="text-muted">
   <i class="fa fa-globe"></i>
   @if (! is_null($extraction->moon))
