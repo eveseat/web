@@ -398,7 +398,7 @@
         {{ trans('web::seat.third_party_access') }}
       </p>
       <a href="https://community.eveonline.com/support/third-party-applications/" target="_blank"
-         class="btn btn-success btn-xs float-right">
+         class="btn btn-success btn-sm float-right">
         {{ trans('web::seat.view_third_party_access') }}
       </a>
     </div>
@@ -413,7 +413,7 @@
 
         <span class="float-right">
 
-          <a href="{{ route('auth.eve') }}" class="btn btn-primary btn-xs">
+          <a href="{{ route('auth.eve') }}" class="btn btn-primary btn-sm">
             {{ trans('web::seat.link_another_character') }}
           </a>
         </span>
@@ -436,11 +436,11 @@
                 </a>
 
                 @if ($character->refresh_token )
-                  <button data-toggle="tooltip" title="" class="btn btn-xs btn-link" data-original-title="Valid Token">
+                  <button data-toggle="tooltip" title="" class="btn btn-sm btn-link" data-original-title="Valid Token">
                     <i class="fa fa-check text-success"></i>
                   </button>
                 @else
-                  <button data-toggle="tooltip" title="" class="btn btn-xs btn-link" data-original-title="Invalid Token"
+                  <button data-toggle="tooltip" title="" class="btn btn-sm btn-link" data-original-title="Invalid Token"
                           aria-describedby="tooltip257244">
                     <i class="fa fa-exclamation-triangle text-danger"></i>
                   </button>

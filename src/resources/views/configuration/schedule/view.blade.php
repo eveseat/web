@@ -100,7 +100,7 @@
             <td>{{ $job->allow_maintenance }}</td>
             <td>
               <a href="{{ route('configuration.schedule.delete', ['schedule_id' => $job->id]) }}" type="button"
-                 class="btn btn-danger btn-xs confirmlink">
+                 class="btn btn-danger btn-sm confirmlink">
                 {{ trans('web::seat.delete') }}
               </a>
             </td>

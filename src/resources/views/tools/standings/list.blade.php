@@ -60,11 +60,11 @@
             <td>{{ $standing->standings->count() }}</td>
             <td>
               <a href="{{ route('tools.standings.edit', ['id' => $standing->id]) }}" type="button"
-                 class="btn btn-primary btn-xs">
+                 class="btn btn-primary btn-sm">
                 {{ trans('web::seat.edit') }}
               </a>
               <a href="{{ route('tools.standings.delete', ['profile_id' => $standing->id]) }}" type="button"
-                 class="btn btn-danger btn-xs">
+                 class="btn btn-danger btn-sm">
                 {{ trans('web::seat.delete') }}
               </a>
             </td>

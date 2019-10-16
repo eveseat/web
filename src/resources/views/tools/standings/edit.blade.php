@@ -128,7 +128,7 @@
             <td>{{ $standing->standing }}</td>
             <td>
               <a href="{{ route('tools.standings.edit.remove', ['element_id' => $standing->id, 'profile_id' => $request->id]) }}"
-                 type="button" class="btn btn-danger btn-xs">
+                 type="button" class="btn btn-danger btn-sm">
                 {{ trans('web::seat.delete') }}
               </a>
             </td>
