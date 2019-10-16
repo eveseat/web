@@ -4,13 +4,13 @@
 
 @section('ledger_content')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{ trans_choice('web::seat.wallet_divisions', 2) }}</h3>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">{{ trans_choice('web::seat.wallet_divisions', 2) }}</h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
       <div>
-        <table class="table datatable table-condensed table-hover table-responsive">
+        <table class="table table-sm datatable table-condensed table-striped table-hover">
           <thead>
             <tr>
               <th>{{ trans_choice('web::seat.wallet_division_name', 2) }}</th>
@@ -31,8 +31,8 @@
         </table>
       </div>
     </div>
-    <div class="panel-footer">
-      <h3 class="panel-title">Total: {{ number($divisions->sum('balance')) }}</h3>
+    <div class="card-footer">
+      <i>Total: {{ number($divisions->sum('balance')) }}</i>
     </div>
   </div>
 
