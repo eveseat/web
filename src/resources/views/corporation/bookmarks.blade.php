@@ -4,11 +4,11 @@
 
 @section('corporation_content')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{ trans_choice('web::seat.bookmark', 2) }}</h3>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">{{ trans_choice('web::seat.bookmark', 2) }}</h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
 
       {{ $dataTable->table() }}
 
