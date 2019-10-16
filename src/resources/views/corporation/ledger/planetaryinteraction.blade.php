@@ -4,56 +4,51 @@
 
 @section('ledger_content')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">Available Ledgers</h3>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">Available Ledgers</h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
 
-      @foreach ($pidates->chunk(3) as $chunk)
-        <div class="row">
+      @foreach ($ledgers->chunk(12) as $chunk)
+        <ul class="nav justify-content-between">
 
           @foreach ($chunk as $prize)
-            <div class="col-xs-4">
-              <span class="text-bold">
-                <a href="{{ route('corporation.view.ledger.planetaryinteraction', ['corporation_id' => $corporation_id, 'year' => $prize->year, 'month' => $prize->month]) }}">
-                  {{ date("M Y", strtotime($prize->year."-".$prize->month."-01")) }}
-                </a>
-              </span>
-            </div>
+            <li class="nav-item">
+              <a href="{{ route('corporation.view.ledger.planetaryinteraction', ['corporation_id' => $corporation_id, 'year' => $prize->year, 'month' => $prize->month]) }}" class="nav-link">
+                {{ date("M Y", strtotime($prize->year."-".$prize->month."-01")) }}
+              </a>
+            </li>
           @endforeach
 
-        </div>
+        </ul>
       @endforeach
 
     </div>
   </div>
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{ trans_choice('web::seat.pi', 2) }}
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">{{ trans_choice('web::seat.pi', 2) }}
         - {{ date("M Y", strtotime($year."-".$month."-01")) }}</h3>
     </div>
-    <div class="panel-body">
-      <table class="table datatable table-condensed table-hover table-responsive">
+    <div class="card-body">
+      <table class="table datatable table-sm table-condensed table-hover table-striped">
         <thead>
-        <tr>
-          <th>{{ trans_choice('web::seat.name', 1) }}</th>
-          <th>{{ trans_choice('web::seat.pitotals', 1) }}</th>
-        </tr>
+          <tr>
+            <th>{{ trans_choice('web::seat.name', 1) }}</th>
+            <th>{{ trans_choice('web::seat.pitotals', 1) }}</th>
+          </tr>
         </thead>
         <tbody>
 
-        @foreach ($pitotals as $pit)
+        @foreach ($pi_taxes as $tax)
 
           <tr>
-            <td data-order="{{ $pit->first_party_id }}">
-              <a href="{{ route('character.view.sheet', ['character_id' => $pit->first_party_id]) }}">
-                {!! img('character', $pit->first_party_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                <span class="id-to-name" data-id="{{ $pit->first_party_id }}">{{ trans('web::seat.unknown') }}</span>
-              </a>
+            <td data-order="{{ $tax->first_party_id }}">
+              @include('web::partials.character', ['character' => $tax->first_party])
             </td>
-            <td data-order="{{ number($pit->total) }}">{{ number($pit->total) }}</td>
+            <td data-order="{{ number($tax->total) }}">{{ number($tax->total) }}</td>
           </tr>
 
         @endforeach
@@ -61,8 +56,8 @@
         </tbody>
       </table>
     </div>
-    <div class="panel-footer">
-      <h3 class="panel-title">Total: {{ number($pitotals->sum('total')) }}</h3>
+    <div class="card-footer">
+      <i>Total: {{ number($pi_taxes->sum('total')) }}</i>
     </div>
   </div>
 
