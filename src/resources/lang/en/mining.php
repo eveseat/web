@@ -22,9 +22,15 @@
 
 return [
     'date'            => 'Date',
+    'time'            => 'Time',
     'system'          => 'System',
     'ore'             => 'ORE',
+    'type'            => 'Type',
     'quantity'        => 'Quantity',
     'volume'          => 'Volume',
     'estimated_value' => 'Estimated Value',
+    'details'         => 'Details',
+    'metadata'        => 'Metadata',
+    'compounds'       => 'Compounds',
+    'history'         => 'History',
 ];

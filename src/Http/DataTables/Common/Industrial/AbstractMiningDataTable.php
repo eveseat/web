@@ -44,6 +44,9 @@ abstract class AbstractMiningDataTable extends DataTable
             ->editColumn('quantity', function ($row) {
                 return number($row->quantity);
             })
+            ->editColumn('action', function ($row) {
+                return view('web::common.minings.buttons.details', compact('row'));
+            })
             ->addColumn('system', function ($row) {
                 return view('web::partials.system', ['system' => $row->system->itemName, 'security' => $row->system->security]);
             })
@@ -87,6 +90,7 @@ abstract class AbstractMiningDataTable extends DataTable
         return $this->builder()
             ->postAjax()
             ->columns($this->getColumns())
+            ->addAction()
             ->parameters([
                 'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); }',
             ])
