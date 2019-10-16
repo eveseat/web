@@ -32,6 +32,8 @@
             {{ $dataTable->table() }}
         </div>
     </div>
+
+    @include('web::common.minings.modals.details.details')
 @stop
 
 @push('javascript')
@@ -39,5 +41,20 @@
     {!! $dataTable->scripts() !!}
 
     @include('web::includes.javascript.character-id-to-main-character')
+
+    <script>
+        $(document).ready(function() {
+            $('#mining-detail').on('show.bs.modal', function (e) {
+                var body = $(e.target).find('.modal-body');
+                body.html('Loading...');
+
+                $.ajax($(e.relatedTarget).data('url'))
+                    .done(function (data) {
+                        body.html(data);
+                        $("[data-toggle=tooltip]").tooltip();
+                    });
+            });
+        });
+    </script>
 
 @endpush
