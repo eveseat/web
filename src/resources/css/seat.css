@@ -109,7 +109,7 @@ ul.dropdown-menu li.user-character.new-character a h3 {
     background: none;
 }
 
-/**
+/*
  * Datatables
  */
 table.dataTable tr.dtrg-group td {
@@ -134,4 +134,12 @@ table.dataTable tr.dtrg-group.dtrg-level-2 td {
     padding-bottom: 0.25em;
     padding-left: 2em;
     font-size: 0.9em;
+}
+
+/*
+ * Select2
+ */
+
+.select2-selection.select2-selection--multiple {
+    height: 100%;
 }
