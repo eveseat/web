@@ -6,47 +6,56 @@
 @section('left')
 
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">
+  <div class="card card-default">
+    <div class="card-header">
+      <h3 class="card-title">
         {{ trans('web::seat.sso_scopes') }}
-
-        <span class="float-right">
+      </h3>
+      <div class="card-tools">
+        <div class="float-right">
           <a href="{{ route('configuration.sso.remove_all') }}" class="btn btn-sm btn-danger">
             {{ trans('web::seat.remove_all') }}
           </a>
           <a href="{{ route('configuration.sso.enable_all') }}" class="btn btn-sm btn-primary">
             {{ trans('web::seat.enable_all') }}
           </a>
-        </span>
-
-      </h3>
+        </div>
+      </div>
     </div>
 
-    <div class="panel-body">
+    <div class="card-body">
 
       <form role="form" action="{{ route('configuration.sso.update_scopes') }}" method="post">
         {{ csrf_field() }}
 
-        <div class="form-group">
-          <label for="scopes">{{ trans('web::seat.available_scopes') }}</label>
-          <select name="scopes[]" id="available_scopes" style="width: 100%" multiple>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label for="available_scopes">{{ trans('web::seat.available_scopes') }}</label>
+              <select name="scopes[]" id="available_scopes" class="form-control select2 w-100"
+                      multiple="multiple" data-placeholder="{{ trans('web::seat.select_item_add') }}">
 
-            @foreach(config('eveapi.scopes') as $scope)
+                @foreach(config('eveapi.scopes') as $scope)
 
-              <option value="{{ $scope }}" @if (! is_null(setting('sso_scopes', true)) && in_array($scope, setting('sso_scopes', true))) selected @endif>
-                {{ $scope }}
-              </option>
+                  <option value="{{ $scope }}" @if (! is_null(setting('sso_scopes', true)) && in_array($scope, setting('sso_scopes', true))) selected @endif>
+                    {{ $scope }}
+                  </option>
 
-            @endforeach
+                @endforeach
 
-          </select>
+              </select>
 
+            </div>
+          </div>
         </div>
 
-        <button type="submit" class="btn btn-success btn-block">
-          {{ trans('web::seat.update_sso_scopes') }}
-        </button>
+        <div class="row">
+          <div class="col-12">
+            <button type="submit" class="btn btn-success btn-block">
+              {{ trans('web::seat.update_sso_scopes') }}
+            </button>
+          </div>
+        </div>
 
       </form>
 
@@ -57,15 +66,14 @@
 
 @section('right')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">
         {{ trans('web::seat.current_configuration_status') }}
-
       </h3>
     </div>
 
-    <div class="panel-body">
+    <div class="card-body">
 
       <dl>
         <dt>{{ trans('web::seat.client_id_status') }}</dt>
@@ -111,9 +119,7 @@
   @include('web::includes.javascript.id-to-name')
 
   <script>
-    $("#available_scopes").select2({
-      placeholder: "{{ trans('web::seat.select_item_add') }}"
-    });
+    $("#available_scopes").select2();
   </script>
 
 @endpush
