@@ -5,21 +5,20 @@
 
 @section('full')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::seat.security_logs') }}</h3>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">{{ trans('web::seat.security_logs') }}</h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
 
-      <table class="table compact table-condensed table-hover table-responsive"
-             id="logs" data-page-length=100>
+      <table class="table compact table-condensed table-hover" id="logs" data-page-length=100>
         <thead>
-        <tr>
-          <th>{{ trans('web::seat.date') }}</th>
-          <th>{{ trans_choice('web::seat.user', 1) }}</th>
-          <th>{{ trans('web::seat.category') }}</th>
-          <th>{{ trans('web::seat.message') }}</th>
-        </tr>
+          <tr>
+            <th>{{ trans('web::seat.date') }}</th>
+            <th>{{ trans_choice('web::seat.user', 1) }}</th>
+            <th>{{ trans('web::seat.category') }}</th>
+            <th>{{ trans('web::seat.message') }}</th>
+          </tr>
         </thead>
       </table>
 
