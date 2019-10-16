@@ -1,11 +1,11 @@
 <div class="modal fade" tabindex="-1" role="dialog" id="moon-modal">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
+        <h3 class="modal-title">Moon probe and analysis report</h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h3 class="modal-title">Moon probe and analysis report</h3>
       </div>
       <div class="modal-body">
         <form method="post" action="{{ route('corporation.view.extractions.probe-report') }}" id="moon-report-form">

@@ -1,7 +1,7 @@
 <div class="col-md-4">
-  <div class="info-box @if($extraction->isReady()) bg-green @else bg-blue-gradient @endif">
+  <div class="info-box @if($extraction->isReady()) bg-gradient-success @else bg-gradient-info @endif">
     <span class="info-box-icon">
-      <i class="fa @if($extraction->isReady()) fa-recycle @else fa-diamond @endif"></i>
+      <i class="@if($extraction->isReady()) fas fa-recycle @else far fa-gem @endif"></i>
     </span>
     <div class="info-box-content">
       <span class="info-box-text">
@@ -26,13 +26,13 @@
       <span class="progress-description">Chunk age: {{number(carbon($extraction->chunk_arrival_time)->diffInDays($extraction->extraction_start_time), 0)}} days</span>
     </div>
   </div>
-  <div class="box no-border">
-    <div class="box-body">
+  <div class="card">
+    <div class="card-body">
       @include('web::corporation.extraction.partials.card-body')
     </div>
-    <div class="box-footer">
-      <button type="button" data-widget="modal" data-target="#moon-modal" class="btn btn-xs btn-link pull-right" aria-label="Settings">
-        <i class="fa fa-cogs"></i> Settings
+    <div class="card-footer">
+      <button type="button" data-toggle="modal" data-target="#moon-modal" class="btn btn-xs btn-link float-right" aria-label="Settings">
+        <i class="fas fa-cogs"></i> Settings
       </button>
     </div>
   </div>
