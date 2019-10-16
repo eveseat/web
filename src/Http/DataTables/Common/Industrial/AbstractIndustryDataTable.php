@@ -92,6 +92,7 @@ abstract class AbstractIndustryDataTable extends DataTable
         return $this->builder()
             ->postAjax()
             ->columns($this->getColumns())
+            ->addTableClass('table-striped table-hover')
             ->parameters([
                 'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); }',
             ]);
