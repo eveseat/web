@@ -64,15 +64,14 @@ class LedgerController extends Controller
         ! is_null($year) ? $year : $year = date('Y');
         ! is_null($month) ? $year : $month = date('m');
 
-        $bountyprizes = $this->getCorporationLedgerBountyPrizeDates(
+        $ledgers = $this->getCorporationLedgerBountyPrizeDates(
             $corporation_id);
 
-        $bountyprizedates = $this->getCorporationLedgerBountyPrizeByMonth(
+        $bounty_prizes = $this->getCorporationLedgerBountyPrizeByMonth(
             $corporation_id, $year, $month);
 
         return view('web::corporation.ledger.bountyprizesbymonth',
-            compact('bountyprizes', 'bountyprizedates',
-                'corporation_id', 'month', 'year'));
+            compact('ledgers', 'bounty_prizes', 'corporation_id', 'month', 'year'));
     }
 
     /**
