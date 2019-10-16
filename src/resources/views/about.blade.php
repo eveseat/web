@@ -7,13 +7,15 @@
   <div class="row">
     <div class="col-md-12">
 
-      <div class="box box-solid">
+      <div class="card">
 
-        <div class="box-header with-border">
-          <i class="fa fa-file-text"></i>
-          <h3 class="box-title">Licenses</h3>
+        <div class="card-header with-border">
+          <h3 class="card-title">
+            <i class="fas fa-file-alt"></i>
+            Licenses
+          </h3>
         </div>
-        <div class="box-body">
+        <div class="card-body">
           <p>SeAT is built upon a large panel of components which are published under the following licenses :</p>
           <ul>
             <li>jQuery ~ <a href="https://opensource.org/licenses/mit-license.html">MIT License</a></li>
@@ -34,13 +36,15 @@
   <div class="row">
     <div class="col-md-12">
 
-      <div class="box box-solid">
+      <div class="card box-solid">
 
-        <div class="box-header with-border">
-          <i class="fa fa-building"></i>
-          <h3 class="box-title">CCP Disclaimer</h3>
+        <div class="card-header with-border">
+          <h3 class="card-title">
+            <i class="fas fa-building"></i>
+            CCP Disclaimer
+          </h3>
         </div>
-        <div class="box-body">
+        <div class="card-body">
           <p class="text-justify">
             <strong><a href="https://www.eveonline.com" target="_blank">EVE Online</a></strong> and the EVE logo are the
             registered trademarks of <strong><a href="https://www.ccpgames.com" target="_blank">CCP hf</a></strong>.
@@ -65,13 +69,15 @@
 
     <div class="col-md-6">
 
-      <div class="box box-solid">
+      <div class="card card-solid">
 
-        <div class="box-header with-border">
-          <i class="fa fa-comments"></i>
-          <h3 class="box-title">Contacts</h3>
+        <div class="card-header with-border">
+          <h3 class="card-title">
+            <i class="fas fa-comments"></i>
+            Contacts
+          </h3>
         </div>
-        <div class="box-body">
+        <div class="card-body">
           <p>
             Have a question ? Want to say thank you ? Need to express your opinion on SeAT ?<br/>
             Find us on Slack ! We are on the <a href="https://eve-seat.slack.com">eve-seat</a> Slack team. Get invites <a href="https://eveseat-slack.herokuapp.com">here</a>.
@@ -90,13 +96,15 @@
 
     <div class="col-md-6">
 
-      <div class="box box-solid">
+      <div class="card card-solid">
 
-        <div class="box-header with-border">
-          <i class="fa fa-user-secret"></i>
-          <h3 class="box-title">Security Concerns</h3>
+        <div class="card-header with-border">
+          <h3 class="card-title">
+            <i class="fas fa-user-secret"></i>
+            Security Concerns
+          </h3>
         </div>
-        <div class="box-body">
+        <div class="card-body">
           <p>
             If you find any security vulnerabilities within SeAT, please send an email to
             <a href="mailto:theninjabag@gmail.com">theninjabag@gmail.com</a> to address instead of creating a public Github issue.
