@@ -36,7 +36,7 @@
           </div><!-- /.box-body -->
 
           <div class="box-footer">
-            <button type="submit" class="btn btn-primary pull-right">
+            <button type="submit" class="btn btn-primary float-right">
               Update
             </button>
           </div>

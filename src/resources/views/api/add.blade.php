@@ -32,7 +32,7 @@
         <!-- /.box-body -->
 
         <div class="box-footer">
-          <button type="submit" class="btn btn-primary pull-right">
+          <button type="submit" class="btn btn-primary float-right">
             {{ trans('web::seat.check_key') }}
           </button>
         </div>

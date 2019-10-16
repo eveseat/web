@@ -46,10 +46,10 @@
       <!-- /.box-body -->
 
       <div class="box-footer">
-        <div class="pull-left">
+        <div class="float-left">
           <a href="{{ route('auth.login') }}" class="text-center">{{ trans('web::seat.existing_account') }}</a>
         </div>
-        <button type="submit" class="btn btn-success pull-right">{{ trans('web::seat.register_account') }}</button>
+        <button type="submit" class="btn btn-success float-right">{{ trans('web::seat.register_account') }}</button>
       </div>
       <!-- /.box-footer -->
 

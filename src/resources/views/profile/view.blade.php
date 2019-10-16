@@ -196,7 +196,7 @@
     <div class="panel-heading">
       <h3 class="panel-title">
         {{ trans('web::seat.user_account') }}
-        <span class="pull-right">
+        <span class="float-right">
           {{ trans('web::seat.last_login') }}: {{ auth()->user()->last_login }}
           ({{ human_diff(auth()->user()->last_login) }})
         </span>
@@ -255,7 +255,7 @@
                         </div><!-- /.box-body -->
 
                         <div class="box-footer">
-                          <button type="submit" class="btn btn-primary pull-right">
+                          <button type="submit" class="btn btn-primary float-right">
                             {{ trans('web::seat.change_email') }}
                           </button>
                         </div>
@@ -398,7 +398,7 @@
         {{ trans('web::seat.third_party_access') }}
       </p>
       <a href="https://community.eveonline.com/support/third-party-applications/" target="_blank"
-         class="btn btn-success btn-xs pull-right">
+         class="btn btn-success btn-xs float-right">
         {{ trans('web::seat.view_third_party_access') }}
       </a>
     </div>
@@ -411,7 +411,7 @@
 
         {{ trans('web::seat.linked_characters') }}
 
-        <span class="pull-right">
+        <span class="float-right">
 
           <a href="{{ route('auth.eve') }}" class="btn btn-primary btn-xs">
             {{ trans('web::seat.link_another_character') }}
