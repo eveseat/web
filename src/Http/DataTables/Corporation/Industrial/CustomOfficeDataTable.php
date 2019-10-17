@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -25,7 +26,7 @@ use Seat\Eveapi\Models\PlanetaryInteraction\CorporationCustomsOffice;
 use Yajra\DataTables\Services\DataTable;
 
 /**
- * Class CustomOfficeDataTable
+ * Class CustomOfficeDataTable.
  *
  * @package Seat\Web\Http\DataTables\Corporation\Industrial
  */
