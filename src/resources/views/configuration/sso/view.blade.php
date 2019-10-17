@@ -12,14 +12,12 @@
         {{ trans('web::seat.sso_scopes') }}
       </h3>
       <div class="card-tools">
-        <div class="float-right">
-          <a href="{{ route('configuration.sso.remove_all') }}" class="btn btn-sm btn-danger">
-            {{ trans('web::seat.remove_all') }}
-          </a>
-          <a href="{{ route('configuration.sso.enable_all') }}" class="btn btn-sm btn-primary">
-            {{ trans('web::seat.enable_all') }}
-          </a>
-        </div>
+        <a href="{{ route('configuration.sso.enable_all') }}" class="btn btn-sm btn-primary">
+          {{ trans('web::seat.enable_all') }}
+        </a>
+        <a href="{{ route('configuration.sso.remove_all') }}" class="btn btn-sm btn-danger">
+          {{ trans('web::seat.remove_all') }}
+        </a>
       </div>
     </div>
 
