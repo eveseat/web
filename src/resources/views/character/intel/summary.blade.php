@@ -8,9 +8,9 @@
 
   <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#" data-toggle="tab"
+      <li class="active"><a href="#" data-widget="tab"
                             data-characters="single">{{trans_choice('web::seat.character', 1)}}</a></li>
-      <li><a href="#" data-toggle="tab" data-characters="all">{{ trans('web::seat.linked_characters') }}</a></li>
+      <li><a href="#" data-widget="tab" data-characters="all">{{ trans('web::seat.linked_characters') }}</a></li>
     </ul>
 
     <div class="tab-content">
@@ -153,17 +153,17 @@
                 </thead>
               </table>
               <div class="panel-footer clearfix">
-                <div class="col-md-2 col-md-offset-2">
-                  <span class="label label-warning">0</span> Corporation
+                <div class="col-md-2 offset-md-2">
+                  <span class="badge badge-warning">0</span> Corporation
                 </div>
                 <div class="col-md-2">
-                  <span class="label label-primary">0</span> Alliance
+                  <span class="badge badge-primary">0</span> Alliance
                 </div>
                 <div class="col-md-2">
-                  <span class="label label-info">0</span> Characters
+                  <span class="badge badge-info">0</span> Characters
                 </div>
                 <div class="col-md-2">
-                  <span class="label label-success">0</span> Mailing-Lists
+                  <span class="badge badge-success">0</span> Mailing-Lists
                 </div>
               </div>
             </div>
@@ -189,7 +189,7 @@
 
             </div>
             <div class="modal-footer">
-              <a href="#" class="btn btn-default pull-left" data-bm-open="#topMailContentModal"
+              <a href="#" class="btn btn-default float-left" data-bm-open="#topMailContentModal"
                  data-bm-close="#mailContentModal">{{ trans('web::seat.back') }}</a>
             </div>
           </div>

@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
+use Illuminate\Support\Arr;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\CorporationDataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationScope;
@@ -37,7 +38,7 @@ class CorporationsController extends Controller
         if (auth()->user()->hasSuperUser())
             return $dataTable->render('web::corporation.list');
 
-        $allowed_corporation_ids = array_get(auth()->user()->getAffiliationMap(), 'corp');
+        $allowed_corporation_ids = array_keys(Arr::get(auth()->user()->getAffiliationMap(), 'corp'));
 
         return $dataTable
             ->addScope(new CorporationScope($allowed_corporation_ids))

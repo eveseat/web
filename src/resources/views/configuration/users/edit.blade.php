@@ -6,11 +6,11 @@
 
 @section('left')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::seat.edit_user') }}</h3>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">{{ trans('web::seat.edit_user') }}</h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
 
       <form role="form" action="{{ route('configuration.access.users.update') }}" method="post">
         {{ csrf_field() }}
@@ -18,14 +18,18 @@
 
         <div class="box-body">
 
-          <div class="form-group">
-            <label for="username">{{ trans_choice('web::seat.username', 1) }}</label>
-            <input type="text" name="username" class="form-control" id="username" value="{{ $user->name }}" disabled>
+          <div class="form-group row">
+            <label for="username" class="col-form-label col-md-4">{{ trans_choice('web::seat.username', 1) }}</label>
+            <div class="col-md-8">
+              <input type="text" name="username" class="form-control" id="username" value="{{ $user->name }}" disabled>
+            </div>
           </div>
 
-          <div class="form-group">
-            <label for="email">{{ trans_choice('web::seat.email', 1) }}</label>
-            <input type="email" name="email" class="form-control" id="email" value="{{ $user->email }}">
+          <div class="form-group row">
+            <label for="email" class="col-form-label col-md-4">{{ trans_choice('web::seat.email', 1) }}</label>
+            <div class="col-md-8">
+              <input type="email" name="email" class="form-control" id="email" value="{{ $user->email }}">
+            </div>
           </div>
 
         </div><!-- /.box-body -->
@@ -34,15 +38,18 @@
 
           @if(auth()->user()->id != $user->id)
             <a href="{{ route('configuration.users.edit.account_status', ['user_id' => $user->id]) }}"
-               class="btn btn-{{ $user->active ? 'warning' : 'success' }} pull-left">
+               class="btn btn-{{ $user->active ? 'danger' : 'success' }} float-left">
               @if($user->active)
+                <i class="fas fa-user-slash"></i>
                 {{ trans('web::seat.deactivate_user') }}
               @else
+                <i class="fas fa-user-check"></i>
                 {{ trans('web::seat.activate_user') }}
               @endif
             </a>
           @endif
-          <button type="submit" class="btn btn-primary pull-right">
+          <button type="submit" class="btn btn-warning float-right">
+            <i class="fas fa-pencil-alt"></i>
             {{ trans('web::seat.edit') }}
           </button>
         </div>
@@ -53,22 +60,21 @@
 
   <!-- account re-assignment -->
   @if($user->name != 'admin')
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::seat.reassign_user') }}</h3>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">{{ trans('web::seat.reassign_user') }}</h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
 
       <div>
-        <dl>
-          <dt>Current User Group</dt>
-          <dd>
-            <ul class="list-unstyled">
+        <dl class="row">
+          <dt class="col-md-4">Current User Group</dt>
+          <dd class="col-md-8">
+            <ul class="list-group list-group-flush">
               @if($user->group)
                 @foreach($user->group->users as $group_user)
-                  <li>
-                    {!! img('character', $group_user->id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                    {{ $group_user->name }}
+                  <li class="list-group-item">
+                    @include('web::partials.character', ['character' => $group_user->character])
                   </li>
                 @endforeach
               @endif
@@ -81,24 +87,27 @@
         {{ csrf_field() }}
         <input type="hidden" name="user_id" value="{{ $user->id }}">
 
-        <div class="form-group">
-          <label for="available_users">{{ trans_choice('web::seat.available_groups', 2) }}</label>
-          <select name="group_id" id="available_users" style="width: 100%">
+        <div class="form-group row">
+          <label for="available_users" class="col-form-label col-md-4">{{ trans_choice('web::seat.available_groups', 2) }}</label>
+          <div class="col-md-8">
+            <select name="group_id" id="available_users" style="width: 100%">
 
-            @foreach($groups as $group)
+              @foreach($groups as $group)
 
-              <option value="{{ $group->id }}">
-                {{ $group->users->map(function($user) { return $user->name; })->implode(', ') }}
-              </option>
+                <option value="{{ $group->id }}">
+                  {{ $group->users->map(function($user) { return $user->name; })->implode(', ') }}
+                </option>
 
-            @endforeach
+              @endforeach
 
-          </select>
+            </select>
+          </div>
         </div>
 
         <div class="box-footer">
 
-          <button type="submit" class="btn btn-primary pull-right">
+          <button type="submit" class="btn btn-primary float-right">
+            <i class="fas fa-user-friends"></i>
             {{ trans('web::seat.reassign') }}
           </button>
 
@@ -118,20 +127,22 @@
 
       <!-- role summary -->
       @if($user->name != 'admin')
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">{{ trans('web::seat.role_summary') }}</h3>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">{{ trans('web::seat.role_summary') }}</h3>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
 
           <table class="table table-hover table-condensed">
+            <thead>
+              <tr>
+                <th>{{ trans_choice('web::seat.role_name', 1) }}</th>
+                <th>{{ trans_choice('web::seat.permission', 2) }}</th>
+                <th>{{ trans_choice('web::seat.affiliation', 2) }}</th>
+                <th></th>
+              </tr>
+            </thead>
             <tbody>
-            <tr>
-              <th>{{ trans_choice('web::seat.role_name', 1) }}</th>
-              <th>{{ trans_choice('web::seat.permission', 2) }}</th>
-              <th>{{ trans_choice('web::seat.affiliation', 2) }}</th>
-              <th></th>
-            </tr>
 
             @if($user->group)
               @foreach($user->group->roles as $role)
@@ -141,24 +152,37 @@
                   <td>
                     @foreach($role->permissions as $permission)
                       <span
-                          class="label label-{{ $permission->title == 'superuser' ? 'danger' : 'info' }}">{{ studly_case($permission->title) }}</span>
+                          class="badge badge-{{ $permission->title == 'superuser' ? 'danger' : 'info' }}">{{ Str::studly($permission->title) }}</span>
                     @endforeach
                   </td>
                   <td>
                     @foreach($role->affiliations as $affiliation)
-                      <span class="label label-primary">{{ $affiliation->affiliation }} ({{ $affiliation->type }})</span>
+                      @switch($affiliation->type)
+                        @case('corp')
+                          @include('web::partials.corporation', ['corporation' => $affiliation->affiliation])
+                          @break
+                        @case('char')
+                          @include('web::partials.character', ['character' => $affiliation->affiliation])
+                          @break
+                        @default
+                          <span class="badge badge-primary">{{ $affiliation->affiliation }} ({{ $affiliation->type }})</span>
+                      @endswitch
                     @endforeach
                   </td>
                   <td>
                     @if(auth()->user()->id != $user->id)
-                      <a href="{{ route('configuration.access.roles.edit', ['id' => $role->id]) }}" type="button"
-                         class="btn btn-warning btn-xs">
-                        {{ trans('web::seat.edit') }}
-                      </a>
-                      <a href="{{ route('configuration.access.roles.edit.remove.group', ['role_id' => $role->id, 'user_id' => $user->group->id]) }}"
-                         type="button" class="btn btn-danger btn-xs">
-                        {{ trans('web::seat.remove') }}
-                      </a>
+                      <div class="btn-group btn-group-sm float-right">
+                        <a href="{{ route('configuration.access.roles.edit', ['id' => $role->id]) }}" type="button"
+                           class="btn btn-warning">
+                          <i class="fas fa-pencil-alt"></i>
+                          {{ trans('web::seat.edit') }}
+                        </a>
+                        <a href="{{ route('configuration.access.roles.edit.remove.group', ['role_id' => $role->id, 'user_id' => $user->group->id]) }}"
+                           type="button" class="btn btn-danger">
+                          <i class="fas fa-trash-alt"></i>
+                          {{ trans('web::seat.remove') }}
+                        </a>
+                      </div>
                     @endif
                   </td>
 
@@ -171,8 +195,8 @@
           </table>
 
         </div>
-        <div class="panel-footer">
-          <b>{{ count(optional($user->group)->roles) }}</b> {{ trans_choice('web::seat.role', count(optional($user->group)->roles)) }}
+        <div class="card-footer">
+          <i class="text-muted float-right">{{ count(optional($user->group)->roles) }} {{ trans_choice('web::seat.role', count(optional($user->group)->roles)) }}</i>
         </div>
       </div>
       @endif
@@ -182,40 +206,41 @@
     <div class="col-md-12">
 
       <!-- login history -->
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">{{ trans('web::seat.login_history') }}</h3>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">{{ trans('web::seat.login_history') }}</h3>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
 
           <table class="table table-hover table-condensed">
-            <tbody>
-            <tr>
-              <th>{{ trans_choice('web::seat.date', 1) }}</th>
-              <th>{{ trans_choice('web::seat.source', 1) }}</th>
-              <th>{{ trans_choice('web::seat.user_agent', 1) }}</th>
-              <th>{{ trans_choice('web::seat.action', 1) }}</th>
-              <th></th>
-            </tr>
-
-            @foreach($login_history as $history)
-
+            <thead>
               <tr>
-                <td>
-                  <span data-toggle="tooltip" title="" data-original-title="{{ $history->created_at }}">
-                    {{ human_diff($history->created_at) }}
-                  </span>
-                </td>
-                <td>{{ $history->source }}</td>
-                <td>
-                  <span data-toggle="tooltip" title="" data-original-title="{{ $history->user_agent }}">
-                    {{ str_limit($history->user_agent, 60, '...') }}
-                  </span>
-                </td>
-                <td>{{ ucfirst($history->action) }}</td>
+                <th>{{ trans_choice('web::seat.date', 1) }}</th>
+                <th>{{ trans_choice('web::seat.source', 1) }}</th>
+                <th>{{ trans_choice('web::seat.user_agent', 1) }}</th>
+                <th>{{ trans_choice('web::seat.action', 1) }}</th>
               </tr>
+            </thead>
+            <tbody>
 
-            @endforeach
+              @foreach($login_history as $history)
+
+                <tr>
+                  <td>
+                    <span data-toggle="tooltip" title="" data-original-title="{{ $history->created_at }}">
+                      {{ human_diff($history->created_at) }}
+                    </span>
+                  </td>
+                  <td>{{ $history->source }}</td>
+                  <td>
+                    <span data-toggle="tooltip" title="" data-original-title="{{ $history->user_agent }}">
+                      {{ Str::limit($history->user_agent, 60, '...') }}
+                    </span>
+                  </td>
+                  <td>{{ ucfirst($history->action) }}</td>
+                </tr>
+
+              @endforeach
 
             </tbody>
           </table>

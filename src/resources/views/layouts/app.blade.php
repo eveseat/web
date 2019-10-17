@@ -13,13 +13,13 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.5 -->
-  <link rel="stylesheet" href="{{ asset('web/css/bootstrap.min.css') }}">
+  <!--<link rel="stylesheet" href="{{ asset('web/css/bootstrap.min.css') }}">-->
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{ asset('web/css/font-awesome.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('web/css/all.min.css') }}">
   <!-- Select2 -->
   <link rel="stylesheet" href="{{ asset('web/css/select2.min.css') }}">
   <!-- DataTables -->
-  <link rel="stylesheet" href="{{ asset('web/css/datatables.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('web/css/dataTables.bootstrap4.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('web/css/adminlte.min.css') }}">
   <!-- Skin -->
@@ -46,7 +46,7 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-<body class="hold-transition {{ setting('skin') }} sidebar-mini {{ setting('sidebar') }}">
+<body class="hold-transition text-sm sidebar-mini {{ setting('sidebar') }}">
 
 <div class="wrapper">
 
@@ -61,21 +61,29 @@
 
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
-        @yield('page_header')
-        <small>@yield('page_description')</small>
-      </h1>
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">
+              @yield('page_header')
+              <small>@yield('page_description')</small>
+            </h1>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Main content -->
     <section class="content">
+      <div class="container-fluid">
 
-      <!-- Notifications -->
-    @include('web::includes.notifications')
+        <!-- Notifications -->
+      @include('web::includes.notifications')
 
-    <!-- Page Content Here -->
-      @yield('content')
+      <!-- Page Content Here -->
+        @yield('content')
 
+      </div>
     </section>
     <!-- /.content -->
 
@@ -95,7 +103,8 @@
 <!-- jQuery -->
 <script src="{{ asset('web/js/jquery.min.js') }}"></script>
 <!-- Bootstrap -->
-<script src="{{ asset('web/js/bootstrap.min.js') }}"></script>
+<!--<script src="{{ asset('web/js/bootstrap.min.js') }}"></script>-->
+<script src="{{ asset('web/js/bootstrap.bundle.min.js') }}"></script>
 <!-- Select2 -->
 <script src="{{ asset('web/js/select2.full.min.js') }}"></script>
 <!-- Bootbox -->
@@ -103,13 +112,17 @@
 <!-- jQuery Unveil -->
 <script src="{{ asset('web/js/jquery.unveil.js') }}"></script>
 <!-- DataTables -->
-<script src="{{ asset('web/js/datatables.min.js') }}"></script>
+<script src="{{ asset('web/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('web/js/dataTables.dataTables.min.js') }}"></script>
+<script src="{{ asset('web/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('web/js/dataTables.rowGroup.js') }}"></script>
+<script src="{{ asset('web/js/rowGroup.bootstrap4.js') }}"></script>
 <!-- MomentJS -->
 <script src="{{ asset('web/js/moment-with-locales.min.js') }}"></script>
 <!-- ChartJS -->
 <script src="{{ asset('web/js/chart.min.js') }}"></script>
 <!-- Theme JS -->
-<script src="{{ asset('web/js/app.min.js') }}"></script>
+<script src="{{ asset('web/js/adminlte.min.js') }}"></script>
 <!-- SeAT JS -->
 <script src="{{ asset('web/js/seat.js') }}"></script>
 

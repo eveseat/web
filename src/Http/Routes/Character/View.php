@@ -268,6 +268,12 @@ Route::get('/{character_id}/markets', [
 Route::get('/{character_id}/mining-ledger', [
     'as'         => 'character.view.mining_ledger',
     'middleware' => 'characterbouncer:mining',
+    'uses'       => 'MiningLedgerController@index',
+]);
+
+Route::get('/{character_id}/mining-ledger/details', [
+    'as'         => 'character.view.mining_ledger.details',
+    'middleware' => 'characterbouncer:mining',
     'uses'       => 'MiningLedgerController@show',
 ]);
 

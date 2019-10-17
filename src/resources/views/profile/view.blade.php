@@ -5,11 +5,11 @@
 
 @section('left')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::seat.user_preferences') }}</h3>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">{{ trans('web::seat.user_preferences') }}</h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
 
       <form role="form" action="{{ route('profile.update.settings') }}" method="post"
             class="form-horizontal">
@@ -21,8 +21,8 @@
 
           @if(auth()->user()->name != 'admin')
           <!-- Select Basic -->
-          <div class="form-group">
-            <label class="col-md-4 control-label"
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label"
                    for="main_character_id">{{ trans('web::seat.main_character') }}</label>
             <div class="col-md-6">
               <select id="main_character_id" name="main_character_id" class="form-control">
@@ -39,8 +39,8 @@
           @endif
 
           <!-- Select Basic -->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="skin">{{ trans('web::seat.seat_skin') }}</label>
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label" for="skin">{{ trans('web::seat.seat_skin') }}</label>
             <div class="col-md-6">
               <select id="skin" name="skin" class="form-control">
                 @foreach($skins as $skin)
@@ -55,8 +55,8 @@
           </div>
 
           <!-- Select Basic -->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="language">{{ trans('web::seat.language') }}</label>
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label" for="language">{{ trans('web::seat.language') }}</label>
             <div class="col-md-6">
               <select id="language" name="language" class="form-control">
                 @foreach($languages as $language)
@@ -71,8 +71,8 @@
           </div>
 
           <!-- Select Basic -->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="sidebar">{{ trans('web::seat.sidebar_size') }}</label>
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label" for="sidebar">{{ trans('web::seat.sidebar_size') }}</label>
             <div class="col-md-6">
               <select id="sidebar" name="sidebar" class="form-control">
                 @foreach($sidebar as $style)
@@ -87,8 +87,8 @@
           </div>
 
           <!-- Select Basic -->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="sidebar">{{ trans('web::seat.mail_as_threads') }}</label>
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label" for="sidebar">{{ trans('web::seat.mail_as_threads') }}</label>
             <div class="col-md-6">
               <select id="sidebar" name="mail_threads" class="form-control">
                 <option value="yes"
@@ -106,8 +106,8 @@
           <legend>{{ trans('web::seat.number_format') }}</legend>
 
           <!-- Select Basic -->
-          <div class="form-group">
-            <label class="col-md-4 control-label"
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label"
                    for="thousand_seperator">{{ trans('web::seat.thousands_seperator') }}</label>
             <div class="col-md-6">
               <div class="form-inline input-group">
@@ -127,8 +127,8 @@
           </div>
 
           <!-- Select Basic -->
-          <div class="form-group">
-            <label class="col-md-4 control-label"
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label"
                    for="decimal_seperator">{{ trans('web::seat.decimal_seperator') }}</label>
             <div class="col-md-6">
               <div class="form-inline input-group">
@@ -140,17 +140,17 @@
                   @endforeach
                 </select>
               </div>
-              <span class="help-block">
+              <p class="form-text text-muted mb-0">
                 {{ trans('web::seat.current_format') }}: {{ number(10000000.00) }}
-              </span>
+              </p>
             </div>
           </div>
 
           <legend>{{ trans('web::seat.notifications') }}</legend>
 
           <!-- Select Basic -->
-          <div class="form-group">
-            <label class="col-md-4 control-label"
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label"
                    for="email_notifications">{{ trans('web::seat.email_notifications') }}</label>
             <div class="col-md-6">
               <div class="form-inline input-group">
@@ -172,8 +172,8 @@
         <!-- /.box-body -->
 
         <div class="box-footer">
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="submit"></label>
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label" for="submit"></label>
             <div class="col-md-4">
               <button id="submit" type="submit" class="btn btn-primary">
                 {{ trans('web::seat.update') }}
@@ -192,17 +192,17 @@
 
 @section('right')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">
         {{ trans('web::seat.user_account') }}
-        <span class="pull-right">
+        <span class="float-right">
           {{ trans('web::seat.last_login') }}: {{ auth()->user()->last_login }}
           ({{ human_diff(auth()->user()->last_login) }})
         </span>
       </h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
 
       <div class="row">
         <div class="col-md-6">
@@ -212,20 +212,20 @@
             <li>
 
               <!-- Button trigger modal -->
-              <a type="button" data-toggle="modal" data-target="#emailModal">
-                <i class="fa fa-envelope"></i>
+              <button type="button" data-toggle="modal" data-target="#emailModal" class="btn btn-link btn-sm">
+                <i class="fas fa-envelope"></i>
                 {{ trans('web::seat.change_email') }}
-              </a>
+              </button>
 
               <!-- Modal -->
               <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
+                      <h4 class="modal-title" id="emailModalLabel">{{ trans('web::seat.change_email') }}</h4>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
-                      <h4 class="modal-title" id="emailModalLabel">{{ trans('web::seat.change_email') }}</h4>
                     </div>
                     <div class="modal-body">
 
@@ -234,28 +234,34 @@
 
                         <div class="box-body">
 
-                          <div class="form-group">
-                            <label for="current_email">{{ trans('web::seat.current_email') }}</label>
-                            <input type="email" name="current_email" class="form-control" placeholder="Current Email"
-                                   value="{{ setting('email_address') }}" disabled="disabled"/>
+                          <div class="form-group row">
+                            <label for="current_email" class="col-form-label col-md-4">{{ trans('web::seat.current_email') }}</label>
+                            <div class="col-md-8">
+                              <input type="email" name="current_email" class="form-control" placeholder="Current Email"
+                                     value="{{ setting('email_address') }}" disabled="disabled"/>
+                            </div>
                           </div>
 
-                          <div class="form-group">
-                            <label for="new_email">{{ trans('web::seat.new_email') }}</label>
-                            <input type="email" name="new_email" class="form-control" placeholder="New Email"
-                                   required="required"/>
+                          <div class="form-group row">
+                            <label for="new_email" class="col-form-label col-md-4">{{ trans('web::seat.new_email') }}</label>
+                            <div class="col-md-8">
+                              <input type="email" name="new_email" class="form-control" placeholder="New Email"
+                                     required="required"/>
+                            </div>
                           </div>
 
-                          <div class="form-group">
-                            <label for="new_email_confirmation">{{ trans('web::seat.confirm_new_email') }}</label>
-                            <input type="email" name="new_email_confirmation" class="form-control"
-                                   id="email_confirmation" placeholder="New Email Confirmation" required="required"/>
+                          <div class="form-group row">
+                            <label for="new_email_confirmation" class="col-form-label col-md-4">{{ trans('web::seat.confirm_new_email') }}</label>
+                            <div class="col-md-8">
+                              <input type="email" name="new_email_confirmation" class="form-control"
+                                     id="email_confirmation" placeholder="New Email Confirmation" required="required"/>
+                            </div>
                           </div>
 
                         </div><!-- /.box-body -->
 
                         <div class="box-footer">
-                          <button type="submit" class="btn btn-primary pull-right">
+                          <button type="submit" class="btn btn-primary float-right">
                             {{ trans('web::seat.change_email') }}
                           </button>
                         </div>
@@ -270,24 +276,24 @@
             <li>
 
               <!-- Button trigger modal -->
-              <a type="button" data-toggle="modal" data-target="#historyModal">
-                <i class="fa fa-lock"></i>
+              <button type="button" data-toggle="modal" data-target="#historyModal" class="btn btn-link btn-sm">
+                <i class="fas fa-lock"></i>
                 {{ trans('web::seat.login_history') }}
-              </a>
+              </button>
 
               <!-- Modal -->
               <div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="historyModalLabel">
-                <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
+                      <h4 class="modal-title" id="historyModalLabel">{{ trans('web::seat.login_history') }}</h4>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
-                      <h4 class="modal-title" id="historyModalLabel">{{ trans('web::seat.login_history') }}</h4>
                     </div>
                     <div class="modal-body">
 
-                      <table class="table table-condensed table-hover table-responsive">
+                      <table class="table table-condensed table-hover table-striped">
                         <tbody>
                         <tr>
                           <th>{{ trans('web::seat.date') }}</th>
@@ -307,7 +313,7 @@
                             </td>
                             <td>{{ ucfirst($entry->action) }}</td>
                             <td>{{ $entry->source }}</td>
-                            <td>{{ str_limit($entry->user_agent) }}</td>
+                            <td>{{ Str::limit($entry->user_agent) }}</td>
                           </tr>
 
                         @endforeach
@@ -327,24 +333,24 @@
             <li>
 
               <!-- Button trigger modal -->
-              <a type="button" data-toggle="modal" data-target="#scopesModal">
-                <i class="fa fa-shield"></i>
+              <button type="button" data-toggle="modal" data-target="#scopesModal" class="btn btn-link btn-sm">
+                <i class="fas fa-shield-alt"></i>
                 {{ trans_choice('web::seat.scope', 2) }}
-              </a>
+              </button>
 
               <!-- Modal -->
               <div class="modal fade" id="scopesModal" tabindex="-1" role="dialog" aria-labelledby="scopesModalLabel">
-                <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
+                      <h4 class="modal-title" id="scopesModalLabel">{{ trans_choice('web::seat.scope', 2) }}</h4>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
-                      <h4 class="modal-title" id="scopesModalLabel">{{ trans_choice('web::seat.scope', 2) }}</h4>
                     </div>
                     <div class="modal-body">
 
-                      <table class="table table-condensed table-hover table-responsive">
+                      <table class="table table-condensed table-hover table-striped">
                         <tbody>
 
                         @unless(is_null($scopes))
@@ -392,55 +398,47 @@
     </div>
   </div>
 
-  <div class="panel panel-default">
-    <div class="panel-body">
+  <div class="card">
+    <div class="card-body">
       <p>
         {{ trans('web::seat.third_party_access') }}
       </p>
       <a href="https://community.eveonline.com/support/third-party-applications/" target="_blank"
-         class="btn btn-success btn-xs pull-right">
+         class="btn btn-success btn-sm float-right">
         {{ trans('web::seat.view_third_party_access') }}
       </a>
     </div>
   </div>
 
   @if(auth()->user()->name != 'admin')
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">
-
-        {{ trans('web::seat.linked_characters') }}
-
-        <span class="pull-right">
-
-          <a href="{{ route('auth.eve') }}" class="btn btn-primary btn-xs">
-            {{ trans('web::seat.link_another_character') }}
-          </a>
-        </span>
-
-      </h3>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">{{ trans('web::seat.linked_characters') }}</h3>
+      <div class="card-tools">
+        <a href="{{ route('auth.eve') }}" class="btn btn-primary btn-sm">
+          <i class="fas fa-link"></i>
+          {{ trans('web::seat.link_another_character') }}
+        </a>
+      </div>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
 
       <div class="row">
         <div class="col-md-12">
 
-          <ul class="list-unstyled">
+          <ul class="list-group list-group-flush">
 
             @foreach($characters as $character)
-              <li>
+              <li class="list-group-item">
 
-                <a href="{{ route('character.view.sheet', ['character_id' => $character->character_id]) }}">
-                  {!! img('character', $character->id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                  {{ $character->name }}
-                </a>
+                @include('web::partials.character', ['character' => $character])
 
                 @if ($character->refresh_token )
-                  <button data-toggle="tooltip" title="" class="btn btn-xs btn-link" data-original-title="Valid Token">
+                  <button data-toggle="tooltip" title="" class="btn btn-sm btn-link" data-original-title="Valid Token">
                     <i class="fa fa-check text-success"></i>
                   </button>
                 @else
-                  <button data-toggle="tooltip" title="" class="btn btn-xs btn-link" data-original-title="Invalid Token"
+                  <button data-toggle="tooltip" title="" class="btn btn-sm btn-link" data-original-title="Invalid Token"
                           aria-describedby="tooltip257244">
                     <i class="fa fa-exclamation-triangle text-danger"></i>
                   </button>

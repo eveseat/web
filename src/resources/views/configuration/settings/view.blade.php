@@ -5,11 +5,11 @@
 
 @section('left')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::seat.settings') }}</h3>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">{{ trans('web::seat.settings') }}</h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
 
       <form role="form" action="{{ route('seat.update.settings') }}" method="post"
             class="form-horizontal">
@@ -20,22 +20,22 @@
           <legend>{{ trans('web::seat.admin_email') }}</legend>
 
           <!-- Text input-->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="admin_contact">{{ trans('web::seat.admin_email') }}</label>
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label" for="admin_contact">{{ trans('web::seat.admin_email') }}</label>
             <div class="col-md-6">
               <input id="admin_contact" name="admin_contact" type="email"
                      class="form-control input-md" value="{{ setting('admin_contact', true) }}">
-              <span class="help-block">
+              <p class="form-text text-muted mb-0">
                 {{ trans('web::seat.admin_email_help') }}
-              </span>
+              </p>
             </div>
           </div>
 
           <legend>{{ trans('web::seat.maintenance') }}</legend>
 
           <!-- Text input-->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="cleanup">{{ trans('web::seat.cleanup_data') }}</label>
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label" for="cleanup">{{ trans('web::seat.cleanup_data') }}</label>
             <div class="col-md-6">
               <select id="cleanup" name="cleanup_data" class="form-control">
                 <option value="yes"
@@ -47,17 +47,17 @@
                   {{ trans('web::seat.no') }}
                 </option>
               </select>
-              <span class="help-block">
+              <p class="form-text text-muted mb-0">
                 {{ trans('web::seat.cleanup_data_help') }}
-              </span>
+              </p>
             </div>
           </div>
 
           <legend>{{ trans('web::seat.registration') }}</legend>
 
           <!-- Select Basic -->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="registration">{{ trans('web::seat.allow_registration') }}</label>
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label" for="registration">{{ trans('web::seat.allow_registration') }}</label>
             <div class="col-md-6">
               <select id="registration" name="registration" class="form-control">
                 <option value="yes"
@@ -75,8 +75,8 @@
           <legend>{{ trans('web::seat.google_analytics') }}</legend>
 
           <!-- Select Basic -->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="allow_tracking">{{ trans('web::seat.allow_tracking') }}</label>
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label" for="allow_tracking">{{ trans('web::seat.allow_tracking') }}</label>
             <div class="col-md-6">
               <select id="allow_tracking" name="allow_tracking" class="form-control">
                 <option value="yes"
@@ -88,16 +88,16 @@
                   {{ trans('web::seat.no') }}
                 </option>
               </select>
-              <span class="help-block">
+              <p class="form-text text-muted mb-0">
                 {{ trans('web::seat.tracking_help') }}
                 <a href="https://eveseat.github.io/docs/admin_guides/understanding_tracking/">Usage Tracking</a>
-              </span>
+              </p>
             </div>
           </div>
 
           <!-- Text input-->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="tracking_id">{{ trans('web::seat.tracking_id') }}</label>
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label" for="tracking_id">{{ trans('web::seat.tracking_id') }}</label>
             <div class="col-md-6">
               <input id="tracking_id" name="tracking_id" type="text"
                      class="form-control input-md" value="{{ setting('analytics_id', true) }}" disabled>
@@ -108,10 +108,11 @@
         <!-- /.box-body -->
 
         <div class="box-footer">
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="submit"></label>
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label" for="submit"></label>
             <div class="col-md-4">
-              <button id="submit" type="submit" class="btn btn-primary">
+              <button id="submit" type="submit" class="btn btn-success">
+                <i class="fas fa-check"></i>
                 {{ trans('web::seat.update') }}
               </button>
             </div>
@@ -125,62 +126,66 @@
 @stop
 
 @section('right')
-  <div class="nav-tabs-custom">
-    <ul class="nav nav-tabs pull-right">
-      <li>
-        <a href="#" data-toggle="tooltip" title="Click to copy packages versions" id="copy-versions">
-          <i class="fa fa-copy"></i>
-        </a>
-      </li>
-      <li>
-        <a href="#plugin-packages" data-toggle="tab" aria-expanded="false">Plugins</a>
-      </li>
-      <li class="active">
-        <a href="#core-packages" data-toggle="tab" aria-expanded="true">Core</a>
-      </li>
-      <li class="pull-left header">
+  <div class="card">
+    <div class="card-header d-flex p-0">
+      <h3 class="card-title p-3">
         <i class="fa fa-code-fork"></i>
         {{ trans('web::seat.module_versions') }}
-      </li>
-    </ul>
-    <div class="tab-content">
-      <div id="core-packages" class="tab-pane active">
-        <dl>
+      </h3>
+      <ul class="nav nav-pills ml-auto p-2">
+        <li class="nav-item">
+          <a href="#core-packages" data-toggle="pill" aria-expanded="true" class="nav-link active">Core</a>
+        </li>
+        <li class="nav-item">
+          <a href="#plugin-packages" data-toggle="pill" aria-expanded="false" class="nav-link">Plugins</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" data-toggle="tooltip" title="Click to copy packages versions" id="copy-versions" class="nav-link">
+            <i class="fa fa-copy"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <div class="tab-content">
+        <div id="core-packages" class="tab-pane active">
+          <dl>
 
-          @foreach($packages->core as $package)
-            @include('web::configuration.settings.partials.packages.version')
-          @endforeach
+            @foreach($packages->core as $package)
+              @include('web::configuration.settings.partials.packages.version')
+            @endforeach
 
-        </dl>
-      </div>
-      <div id="plugin-packages" class="tab-pane">
-        <dl>
-
-          @foreach($packages->plugins as $package)
-            @include('web::configuration.settings.partials.packages.version')
-          @endforeach
-
-        </dl>
-      </div>
-      <div class="row text-center">
-        <div class="col-md-4">
-          <i class="fa fa-question-circle text-orange"></i> Checking packages (<span id="checking-packages">{{ $packages->core->count() + $packages->plugins->count() }}</span>)
+          </dl>
         </div>
-        <div class="col-md-4">
-          <i class="fa fa-check-circle text-green"></i> Updated packages (<span id="updated-packages">0</span>)
+        <div id="plugin-packages" class="tab-pane">
+          <dl>
+
+            @foreach($packages->plugins as $package)
+              @include('web::configuration.settings.partials.packages.version')
+            @endforeach
+
+          </dl>
         </div>
-        <div class="col-md-4">
-          <i class="fa fa-times-circle text-red"></i> Outdated packages (<span id="outdated-packages">0</span>)
+        <div class="row text-center">
+          <div class="col-md-4">
+            <i class="fa fa-question-circle text-orange"></i> Checking packages (<span id="checking-packages">{{ $packages->core->count() + $packages->plugins->count() }}</span>)
+          </div>
+          <div class="col-md-4">
+            <i class="fa fa-check-circle text-green"></i> Updated packages (<span id="updated-packages">0</span>)
+          </div>
+          <div class="col-md-4">
+            <i class="fa fa-times-circle text-red"></i> Outdated packages (<span id="outdated-packages">0</span>)
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::seat.tp_versions') }}</h3>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">{{ trans('web::seat.tp_versions') }}</h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
 
       <dl>
 

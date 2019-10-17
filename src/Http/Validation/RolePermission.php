@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\Validation;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 /**
  * Class RolePermission.
@@ -76,7 +77,7 @@ class RolePermission extends FormRequest
             // running array map on the categorized permissions and
             // appending the category to the rule to match the value
             // the form request would have sent.
-            if (str_contains($value, '.')) {
+            if (Str::contains($value, '.')) {
 
                 $category = explode('.', $value)[0];
 

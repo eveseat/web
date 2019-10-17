@@ -5,17 +5,13 @@
 
 @section('full')
 
+  <div class="card card-default">
 
-
-  <div class="col-md-12">
-
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">{{ trans_choice('web::seat.character', 2) }}</h3>
-      </div>
-      <div class="panel-body">
-        {{ $dataTable->table() }}
-      </div>
+    <div class="card-header">
+      <h3 class="card-title">{{ trans_choice('web::seat.character', 2) }}</h3>
+    </div>
+    <div class="card-body">
+      {{ $dataTable->table() }}
     </div>
 
   </div>

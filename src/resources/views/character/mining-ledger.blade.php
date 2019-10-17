@@ -5,12 +5,12 @@
 @inject('request', Illuminate\Http\Request')
 
 @section('character_content')
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::seat.mining') }}</h3>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">{{ trans('web::seat.mining') }}</h3>
     </div>
-    <div class="panel-body">
-      <div class="margin-bottom">
+    <div class="card-body">
+      <div class="mb-3">
         <select multiple="multiple" id="dt-character-selector" class="form-control">
           @foreach($characters as $character)
             @if($character->id == $request->character_id)
@@ -26,7 +26,7 @@
     </div>
   </div>
 
-  @include('web::character.includes.mining-ledger-modal')
+  @include('web::common.minings.modals.details.details')
 @stop
 
 @push('javascript')
@@ -39,6 +39,17 @@
               .on('change', function () {
                   window.LaravelDataTables['dataTableBuilder'].ajax.reload();
               });
+
+          $('#mining-detail').on('show.bs.modal', function (e) {
+              var body = $(e.target).find('.modal-body');
+              body.html('Loading...');
+
+              $.ajax($(e.relatedTarget).data('url'))
+                  .done(function (data) {
+                      body.html(data);
+                      $("[data-toggle=tooltip]").tooltip();
+                  });
+          });
       });
   </script>
 @endpush

@@ -1,7 +1,7 @@
 <footer class="main-footer">
 
   <!-- To the right -->
-  <div class="pull-right hidden-xs">
+  <div class="float-right d-none d-sm d-sm-inline">
     <i class="fa fa-server" data-toggle="tooltip" title="{{ gethostname() }}"></i>
 
     <i class="fa @if(optional($esi_status)->status == "ok") fa-refresh fa-spin @else fa-exclamation-triangle @endif"

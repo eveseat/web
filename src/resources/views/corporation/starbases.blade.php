@@ -19,37 +19,32 @@
     <div class="row">
       <div class="col-md-12">
 
-        <div class="panel panel-default" id="starbaseDetail{{ $starbase->starbase_id }}">
-          <div class="panel-heading">
-            <h3 class="panel-title">
+        <div class="card hidden" id="starbaseDetail{{ $starbase->starbase_id }}">
+          <div class="card-header">
+            <h3 class="card-title">
               {{ $starbase->type->name }} <i>({{ $starbase->moon->itemName }})</i>
             </h3>
           </div>
-          <div class="panel-body">
-            <div>
+          <div class="card-body">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item">
+                <a href="#status{{ $starbase->starbase_id }}" aria-controls="status{{ $starbase->starbase_id }}"
+                   role="tab" data-toggle="pill" class="nav-link active">Status</a>
+              </li>
+              <li class="nav-item">
+                <a href="#modules{{ $starbase->starbase_id }}" aria-controls="modules{{ $starbase->starbase_id }}"
+                   id="modules-tab" a-starbase-id="{{ $starbase->starbase_id }}"
+                   role="tab" data-toggle="pill" class="nav-link">{{ trans_choice('web::seat.module', 2) }}</a>
+              </li>
+            </ul>
 
-              <!-- Nav tabs -->
-              <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active">
-                  <a href="#status{{ $starbase->starbase_id }}" aria-controls="status{{ $starbase->starbase_id }}"
-                     role="tab" data-toggle="tab">Status</a>
-                </li>
-                <li role="presentation">
-                  <a href="#modules{{ $starbase->starbase_id }}" aria-controls="modules{{ $starbase->starbase_id }}"
-                     id="modules-tab" a-starbase-id="{{ $starbase->starbase_id }}"
-                     role="tab" data-toggle="tab">{{ trans_choice('web::seat.module', 2) }}</a>
-                </li>
-              </ul>
+            <div class="tab-content p-3">
 
-              <div class="tab-content">
+              @include('web::corporation.starbase.status-tab')
 
-                @include('web::corporation.starbase.status-tab')
-
-                <div role="tabpanel" class="tab-pane" id="modules{{ $starbase->starbase_id }}"
-                     a-ajax-loaded="false">
-                  <!-- ajax placeholder div -->
-                </div>
-
+              <div role="tabpanel" class="tab-pane" id="modules{{ $starbase->starbase_id }}" a-ajax-loaded="false">
+                <!-- ajax placeholder div -->
               </div>
 
             </div>
@@ -81,8 +76,7 @@
 
         $.ajax({
           type   : 'POST',
-          url    : "{{ route('corporation.view.starbase.modules',
-          ['corporation_id' => $request->corporation_id]) }}",
+          url    : "{{ route('corporation.view.starbase.modules', ['corporation_id' => $request->corporation_id]) }}",
           data   : {
             'starbase_id': starbase_id
           },
@@ -92,9 +86,9 @@
                 .attr('a-ajax-loaded', 'true');
           },
           error  : function (xhr, textStatus, errorThrown) {
-            console.log(xhr);
-            console.log(textStatus);
-            console.log(errorThrown);
+            console.error(xhr);
+            console.error(textStatus);
+            console.error(errorThrown);
           }
         });
       }

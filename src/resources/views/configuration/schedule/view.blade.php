@@ -5,11 +5,11 @@
 
 @section('left')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::seat.new_schedule') }}</h3>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">{{ trans('web::seat.new_schedule') }}</h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
 
       <form role="form" action="{{ route('configuration.schedule.new') }}" method="post">
         {{ csrf_field() }}
@@ -18,7 +18,7 @@
 
           <div class="form-group">
             <label for="command">{{ trans('web::seat.available_commands') }}</label>
-            <select name="command" id="available_commands" style="width: 100%">
+            <select name="command" id="available_commands" class="form-control w-100">
 
               @foreach($commands as $name => $data)
 
@@ -37,7 +37,7 @@
 
           <div class="form-group">
             <label for="expression">{{ trans('web::seat.cron_expression') }}</label>
-            <select name="expression" id="available_expressions" style="width: 100%">
+            <select name="expression" id="available_expressions" class="form-control w-100">
 
               @foreach($expressions as $name => $expression)
 
@@ -52,17 +52,18 @@
               @endforeach
 
             </select>
-            <span class="help-block">
+            <p class="form-text text-muted mb-0">
               <span id="expression"></span><br>
               {{ trans('web::seat.choose_prepop') }}
-            </span>
+            </p>
           </div>
 
         </div>
         <!-- /.box-body -->
 
         <div class="box-footer">
-          <button type="submit" class="btn btn-primary pull-right">
+          <button type="submit" class="btn btn-success float-right">
+            <i class="fas fa-plus-square"></i>
             {{ trans('web::seat.add_scheduled') }}
           </button>
         </div>
@@ -75,45 +76,48 @@
 
 @section('right')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{ trans('web::seat.current_schedule') }}</h3>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">{{ trans('web::seat.current_schedule') }}</h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
 
-      <table class="table table-condensed table-hover table-responsive">
-        <tbody>
-        <tr>
-          <th>{{ trans('web::seat.command') }}</th>
-          <th>{{ trans('web::seat.cron') }}</th>
-          <th>{{ trans('web::seat.allow_overlap') }}</th>
-          <th>{{ trans('web::seat.allow_maintenance') }}</th>
-          <th></th>
-        </tr>
-
-        @foreach($schedule as $job)
-
+      <table class="table table-sm table-condensed table-hover table-striped">
+        <thead>
           <tr>
-            <td>{{ $job->command }}</td>
-            <td>{{ $job->expression }}</td>
-            <td>{{ $job->allow_overlap }}</td>
-            <td>{{ $job->allow_maintenance }}</td>
-            <td>
-              <a href="{{ route('configuration.schedule.delete', ['schedule_id' => $job->id]) }}" type="button"
-                 class="btn btn-danger btn-xs confirmlink">
-                {{ trans('web::seat.delete') }}
-              </a>
-            </td>
+            <th>{{ trans('web::seat.command') }}</th>
+            <th>{{ trans('web::seat.cron') }}</th>
+            <th>{{ trans('web::seat.allow_overlap') }}</th>
+            <th>{{ trans('web::seat.allow_maintenance') }}</th>
+            <th></th>
           </tr>
+        </thead>
+        <tbody>
 
-        @endforeach
+          @foreach($schedule as $job)
+
+            <tr>
+              <td>{{ $job->command }}</td>
+              <td>{{ $job->expression }}</td>
+              <td>{{ $job->allow_overlap }}</td>
+              <td>{{ $job->allow_maintenance }}</td>
+              <td>
+                <a href="{{ route('configuration.schedule.delete', ['schedule_id' => $job->id]) }}" type="button"
+                   class="btn btn-danger btn-sm confirmlink">
+                  <i class="fas fa-trash-alt"></i>
+                  {{ trans('web::seat.delete') }}
+                </a>
+              </td>
+            </tr>
+
+          @endforeach
 
         </tbody>
       </table>
 
     </div>
-    <div class="panel-footer">
-      {{ count($schedule) }} {{ trans('web::seat.scheduled_commands') }}
+    <div class="card-footer">
+      <i class="text-muted float-right">{{ count($schedule) }} {{ trans('web::seat.scheduled_commands') }}</i>
     </div>
   </div>
 

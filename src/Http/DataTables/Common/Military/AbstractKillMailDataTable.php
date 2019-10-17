@@ -119,6 +119,7 @@ abstract class AbstractKillMailDataTable extends DataTable
             ->postAjax()
             ->columns($this->getColumns())
             ->addAction()
+            ->addTableClass('table-striped table-hover')
             ->parameters([
                 'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); ids_to_names(); }',
             ]);

@@ -9,7 +9,7 @@
 
       @else
 
-        <table class="table table-condensed table-hover table-responsive">
+        <table class="table table-condensed table-hover">
           <tbody>
           <tr>
             <th>{{ trans_choice('web::seat.type', 1) }}</th>
@@ -64,8 +64,8 @@
                 @if($starbase_module->content->count() > 0)
 
                 <!-- Button trigger modal -->
-                <a type="button" data-toggle="modal" data-target="#assetModal{{ $starbase_module->item_id }}">
-                  <i class="fa fa-cube"></i>
+                <a type="button" data-widget="modal" data-target="#assetModal{{ $starbase_module->item_id }}">
+                  <i class="fas fa-cube"></i>
                 </a>
 
                 <!-- Modal -->
@@ -84,7 +84,7 @@
                       </div>
                       <div class="modal-body">
 
-                        <table class="table table-condensed table-hover table-responsive">
+                        <table class="table table-sm table-condensed table-hover">
                           <tbody>
                           <tr>
                             <th>#</th>

@@ -6,27 +6,29 @@
 
 @section('left')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">New Standings Definition</h3>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">New Standings Definition</h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
 
       <form role="form" action="{{ route('tools.standings.new') }}" method="post">
         {{ csrf_field() }}
 
         <div class="box-body">
 
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" name="name" class="form-control" id="name" value="{{ old('name') }}"
-                   placeholder="Standings Definition Name">
+          <div class="form-group row">
+            <label for="name" class="col-md-4 col-form-label">Name</label>
+            <div class="col-md-8">
+              <input type="text" name="name" class="form-control" id="name" value="{{ old('name') }}"
+                     placeholder="Standings Definition Name">
+            </div>
           </div>
 
         </div><!-- /.box-body -->
 
         <div class="box-footer">
-          <button type="submit" class="btn btn-primary pull-right">
+          <button type="submit" class="btn btn-primary float-right">
             Add
           </button>
         </div>
@@ -39,45 +41,51 @@
 
 @section('right')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">Current Standings</h3>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">Current Standings</h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
 
-      <table class="table table-condensed table-hover table-responsive">
-        <tbody>
-        <tr>
-          <th>Name</th>
-          <th>Standings Defined</th>
-          <th>Edit</th>
-        </tr>
-
-        @foreach($standings as $standing)
-
+      <table class="table table-condensed table-hover">
+        <thead>
           <tr>
-            <td>{{ $standing->name }}</td>
-            <td>{{ $standing->standings->count() }}</td>
-            <td>
-              <a href="{{ route('tools.standings.edit', ['id' => $standing->id]) }}" type="button"
-                 class="btn btn-primary btn-xs">
-                {{ trans('web::seat.edit') }}
-              </a>
-              <a href="{{ route('tools.standings.delete', ['profile_id' => $standing->id]) }}" type="button"
-                 class="btn btn-danger btn-xs">
-                {{ trans('web::seat.delete') }}
-              </a>
-            </td>
+            <th>Name</th>
+            <th>Standings Defined</th>
+            <th>Action</th>
           </tr>
+        </thead>
+        <tbody>
 
-        @endforeach
+          @foreach($standings as $standing)
+
+            <tr>
+              <td>{{ $standing->name }}</td>
+              <td>{{ $standing->standings->count() }}</td>
+              <td>
+                <div class="btn-group btn-group-sm float-right">
+                  <a href="{{ route('tools.standings.edit', ['id' => $standing->id]) }}" type="button"
+                     class="btn btn-warning">
+                    <i class="fas fa-pencil-alt"></i>
+                    {{ trans('web::seat.edit') }}
+                  </a>
+                  <a href="{{ route('tools.standings.delete', ['profile_id' => $standing->id]) }}" type="button"
+                     class="btn btn-danger">
+                    <i class="fas fa-trash-alt"></i>
+                    {{ trans('web::seat.delete') }}
+                  </a>
+                </div>
+              </td>
+            </tr>
+
+          @endforeach
 
         </tbody>
       </table>
 
     </div>
-    <div class="panel-footer">
-      {{ $standings->count() }} Standings
+    <div class="card-footer">
+      <i class="text-muted float-right">{{ $standings->count() }} Standings</i>
     </div>
   </div>
 

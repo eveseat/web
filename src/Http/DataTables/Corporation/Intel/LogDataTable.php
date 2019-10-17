@@ -59,7 +59,8 @@ class LogDataTable extends DataTable
             ->columns($this->getColumns())
             ->parameters([
                 'drawCallback' => 'function () { $("img").unveil(100); ids_to_names(); }',
-            ]);
+            ])
+            ->orderBy(0, 'desc');
     }
 
     public function query()

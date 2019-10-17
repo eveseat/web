@@ -4,66 +4,58 @@
 
 @section('ledger_content')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">Available Ledgers</h3>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">Available Ledgers</h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
 
-      @foreach ($bountyprizes->chunk(3) as $chunk)
-        <div class="row">
+      @foreach ($ledgers->chunk(12) as $chunk)
+        <ul class="nav justify-content-between">
 
-          @foreach ($chunk as $prize)
-            <div class="col-xs-4">
-              <span class="text-bold">
-                <a href="{{ route('corporation.view.ledger.bountyprizesbymonth', ['corporation_id' => $corporation_id, 'year' => $prize->year, 'month' => $prize->month]) }}">
-                  {{ date("M Y", strtotime($prize->year."-".$prize->month."-01")) }}
-                </a>
-              </span>
-            </div>
+          @foreach ($chunk as $period)
+            <li class="nav-item">
+              <a href="{{ route('corporation.view.ledger.bountyprizesbymonth', ['corporation_id' => $corporation_id, 'year' => $period->year, 'month' => $period->month]) }}" class="nav-link">
+                {{ date("M Y", strtotime($period->year."-".$period->month."-01")) }}
+              </a>
+            </li>
           @endforeach
 
-        </div>
+        </ul>
       @endforeach
     </div>
   </div>
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{ trans_choice('web::seat.bountyprizesbymonth', 2) }}
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">{{ trans_choice('web::seat.bountyprizesbymonth', 2) }}
         - {{ date("M Y", strtotime($year."-".$month."-01")) }}</h3>
     </div>
 
-    <div class="panel-body">
-      <div>
-        <table class="table datatable table-condensed table-hover table-responsive">
-          <thead>
+    <div class="card-body">
+      <table class="table datatable table-sm table-condensed table-striped table-hover">
+        <thead>
+          <tr>
+            <th>{{ trans_choice('web::seat.name', 1) }}</th>
+            <th>{{ trans_choice('web::seat.bountyprizetotal', 1) }}</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          @foreach ($bounty_prizes as $bounty_prize)
             <tr>
-              <th>{{ trans_choice('web::seat.name', 1) }}</th>
-              <th>{{ trans_choice('web::seat.bountyprizetotal', 1) }}</th>
+              <td data-order="{{ $bounty_prize->second_party_id }}">
+                @include('web::partials.character', ['character' => $bounty_prize->second_party])
+              </td>
+              <td data-order="{{ $bounty_prize->total }}">{{ number($bounty_prize->total) }}</td>
             </tr>
-          </thead>
-          <tbody>
+          @endforeach
 
-            @foreach ($bountyprizedates as $bpbm)
-              <tr>
-                <td data-order="{{ $bpbm->second_party_id }}">
-                  <a href="{{ route('character.view.sheet', ['character_id' => $bpbm->second_party_id]) }}">
-                    {!! img('character', $bpbm->second_party_id, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-                    <span class="id-to-name"
-                          data-id="{{ $bpbm->second_party_id }}">{{ trans('web::seat.unknown') }}</span>
-                  </a>
-                </td>
-                <td data-order="{{ $bpbm->total }}">{{ number($bpbm->total) }}</td>
-              </tr>
-            @endforeach
-
-          </tbody>
-        </table>
-      </div>
+        </tbody>
+      </table>
     </div>
-    <div class="panel-footer">
-      <h3 class="panel-title">Total: {{ number($bountyprizedates->sum('total')) }}</h3>
+    <div class="card-footer">
+      <i>Total: {{ number($bounty_prizes->sum('total')) }}</i>
     </div>
   </div>
 

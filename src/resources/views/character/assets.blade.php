@@ -6,33 +6,43 @@
 
 @section('character_content')
 
-  <div class="nav-tabs-custom">
-    <ul class="nav nav-tabs">
-      <li class="active"><a href="#" data-toggle="tab" data-characters="single">{{trans_choice('web::seat.character',1)}} {{ trans('web::seat.assets') }}</a></li>
-      <li><a href="#" data-toggle="tab" data-characters="all">{{ trans('web::seat.linked_characters') }} {{ trans('web::seat.assets') }}</a></li>
-      @if(auth()->user()->has('character.jobs'))
-        <li class="pull-right">
-          <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.assets']) }}"
-             style="color: #000000">
-            <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_assets') }}"></i>
-          </a>
+  <div class="card card-gray card-outline card-outline-tabs">
+    <div class="card-header p-0 border-bottom-0">
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+          <a href="#" class="nav-link active" role="tab" data-toggle="pill" data-characters="single">{{trans_choice('web::seat.character',1)}} {{ trans('web::seat.assets') }}</a>
         </li>
-      @endif
-    </ul>
-    <div class="tab-content">
-      <table id="characterTable" class="table compact table-hover table-condensed table-responsive location-table">
-        <thead>
-        <tr>
-          <th></th>
-          <th>{{ trans('web::seat.quantity') }}</th>
-          <th>{{ trans_choice('web::seat.type', 1) }}</th>
-          <th>{{ trans('web::seat.volume') }}</th>
-          <th>{{ trans_choice('web::seat.group',1) }}</th>
-        </tr>
-        </thead>
-      </table>
+        <li class="nav-item">
+          <a href="#" class="nav-link" role="tab" data-toggle="pill" data-characters="all">{{ trans('web::seat.linked_characters') }} {{ trans('web::seat.assets') }}</a>
+        </li>
+        @if(auth()->user()->has('character.jobs'))
+          <li class="float-right">
+            <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.assets']) }}"
+               style="color: #000000">
+              <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_assets') }}"></i>
+            </a>
+          </li>
+        @endif
+      </ul>
     </div>
-    <!-- /.tab-content -->
+    <div class="card-body">
+      <div class="tab-content">
+        <div class="tab-pane fade show active">
+          <table id="characterTable" class="table compact table-hover table-condensed location-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>{{ trans('web::seat.quantity') }}</th>
+                <th>{{ trans_choice('web::seat.type', 1) }}</th>
+                <th>{{ trans('web::seat.volume') }}</th>
+                <th>{{ trans_choice('web::seat.group',1) }}</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+      <!-- /.tab-content -->
+    </div>
   </div>
 
 @stop
@@ -88,7 +98,7 @@
           },0);
 
           return $('<tr/>')
-              .append( '<td colspan="5"><b>'+group+'</b><span class="pull-right">'+ numberItems +' {{ trans('web::seat.items_taking') }} '+ abbreviateNumber(volume) +' m&sup3</span></td>' )
+              .append( '<td colspan="5"><b>'+group+'</b><span class="float-right">'+ numberItems +' {{ trans('web::seat.items_taking') }} '+ abbreviateNumber(volume) +' m&sup3</span></td>' )
         },
         dataSrc: 'locationName'
       },
@@ -96,12 +106,12 @@
         if(data.quantity == null){
           $(row).find("td:eq(0)")
               .addClass('details-control')
-              .append('<button class="btn btn-xs btn-link"><i class="fa fa-plus"></i></button>');
+              .append('<button class="btn btn-sm btn-link"><i class="fas fa-plus-square"></i></button>');
         }
       },
       drawCallback : function () {
         $("img").unveil(100);
-      },
+      }
     });
 
     assetGroupTable.on('click', 'td.details-control', function () {
@@ -115,12 +125,12 @@
       if (row.child.isShown()) {
         // This row is already open - close it
         row.child.hide();
-        symbol.removeClass("fa-minus").addClass("fa-plus");
+        symbol.removeClass("fa-minus-square").addClass("fa-plus-square");
 
         tr.removeClass('shown').css("background-color", "");
       } else {
         // Open this row
-        symbol.removeClass("fa-plus").addClass("fa-minus");
+        symbol.removeClass("fa-plus-square").addClass("fa-minus-square");
 
         row.child(template(row.data())).show();
         initTable(row.data());
@@ -157,7 +167,7 @@
                 .addClass('details-control')
                 .attr('data-location-id', data.item_id )
                 .attr('data-origin', data.location_id )
-                .append('<button class="btn btn-xs btn-link"><i class="fa fa-plus"></i></button>');
+                .append('<button class="btn btn-sm btn-link"><i class="fas fa-plus-square"></i></button>');
           }
         },
         drawCallback : function () {
@@ -165,7 +175,7 @@
           $("img").unveil(100);
           // remove additonal created group-rows
           $(".dtrg-group").remove();
-        },
+        }
       });
     }
 

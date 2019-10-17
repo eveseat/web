@@ -6,22 +6,22 @@
 
 @section('character_content')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">
         {{ trans('web::seat.fittings') }}
-        @if(auth()->user()->has('character.jobs'))
-          <span class="pull-right">
-            <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.fittings']) }}"
-               style="color: #000000">
-              <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_fittings') }}"></i>
-            </a>
-          </span>
-        @endif
       </h3>
+      @if(auth()->user()->has('character.jobs'))
+        <div class="card-tools">
+          <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.fittings']) }}"
+             class="text-dark">
+            <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_fittings') }}"></i>
+          </a>
+        </div>
+      @endif
     </div>
-    <div class="panel-body">
-      <div class="margin-bottom">
+    <div class="card-body">
+      <div class="mb-3">
         <select multiple="multiple" id="dt-character-selector" class="form-control">
           @foreach($characters as $character)
             @if($character->id == $request->character_id)
@@ -34,25 +34,6 @@
       </div>
 
       {{ $dataTable->table() }}
-    </div>
-  </div>
-
-  <!-- Fitting Items Modal -->
-  <div class="modal fade" id="fittingItemsModal" tabindex="-1" role="dialog"
-       aria-labelledby="fittingItemsModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">{{ trans('web::seat.fitting_items') }}</h4>
-        </div>
-        <div class="modal-body">
-
-          <span id="fittings-items-result"></span>
-
-        </div>
-      </div>
     </div>
   </div>
 

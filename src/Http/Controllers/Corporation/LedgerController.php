@@ -64,15 +64,12 @@ class LedgerController extends Controller
         ! is_null($year) ? $year : $year = date('Y');
         ! is_null($month) ? $year : $month = date('m');
 
-        $bountyprizes = $this->getCorporationLedgerBountyPrizeDates(
-            $corporation_id);
+        $ledgers = $this->getCorporationLedgerBountyPrizeDates($corporation_id);
 
-        $bountyprizedates = $this->getCorporationLedgerBountyPrizeByMonth(
-            $corporation_id, $year, $month);
+        $bounty_prizes = $this->getCorporationLedgerBountyPrizeByMonth($corporation_id, $year, $month);
 
         return view('web::corporation.ledger.bountyprizesbymonth',
-            compact('bountyprizes', 'bountyprizedates',
-                'corporation_id', 'month', 'year'));
+            compact('ledgers', 'bounty_prizes', 'corporation_id', 'month', 'year'));
     }
 
     /**
@@ -88,12 +85,11 @@ class LedgerController extends Controller
         ! is_null($year) ? $year : $year = date('Y');
         ! is_null($month) ? $year : $month = date('m');
 
-        $pidates = $this->getCorporationLedgerPIDates($corporation_id);
+        $ledgers = $this->getCorporationLedgerPIDates($corporation_id);
 
-        $pitotals = $this->getCorporationLedgerPITotalsByMonth(
-            $corporation_id, $year, $month);
+        $pi_taxes = $this->getCorporationLedgerPITotalsByMonth($corporation_id, $year, $month);
 
         return view('web::corporation.ledger.planetaryinteraction',
-            compact('pidates', 'pitotals', 'corporation_id', 'month', 'year'));
+            compact('ledgers', 'pi_taxes', 'corporation_id', 'month', 'year'));
     }
 }

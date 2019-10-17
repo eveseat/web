@@ -29,13 +29,11 @@ use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Horizon\Horizon;
-use Laravel\Socialite\SocialiteManager;
 use Seat\Services\AbstractSeatPlugin;
 use Seat\Web\Events\Attempt;
 use Seat\Web\Events\Login;
 use Seat\Web\Events\Logout;
 use Seat\Web\Events\SecLog;
-use Seat\Web\Extentions\EveOnlineProvider;
 use Seat\Web\Http\Composers\CharacterLayout;
 use Seat\Web\Http\Composers\CharacterMenu;
 use Seat\Web\Http\Composers\CharacterSummary;
@@ -60,16 +58,6 @@ use Seat\Web\Http\Middleware\Requirements;
  */
 class WebServiceProvider extends AbstractSeatPlugin
 {
-    /**
-     * The environment variable name used to setup the queue daemon balancing mode.
-     */
-    const QUEUE_BALANCING_MODE = 'QUEUE_BALANCING_MODE';
-
-    /**
-     * The environment variable name used to setup the queue workers amount.
-     */
-    const QUEUE_BALANCING_WORKERS = 'QUEUE_WORKERS';
-
     /**
      * Bootstrap the application services.
      *
@@ -130,11 +118,26 @@ class WebServiceProvider extends AbstractSeatPlugin
     {
 
         $this->publishes([
-            __DIR__ . '/resources/assets'                                        => public_path('web'),
+            __DIR__ . '/resources/css'                                           => public_path('web/css'),
+            __DIR__ . '/resources/img'                                           => public_path('web/img'),
+            __DIR__ . '/resources/js'                                            => public_path('web/js'),
 
-            // Font Awesome Pulled from packagist
-            base_path('vendor/components/font-awesome/css/font-awesome.min.css') => public_path('web/css/font-awesome.min.css'),
-            base_path('vendor/components/font-awesome/fonts')                    => public_path('web/fonts'),
+            // Bootstrap pulled from packagist
+            base_path('vendor/almasaeed2010/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') => public_path('web/js/bootstrap.bundle.min.js'),
+
+            // Datatables pulled from packagist
+            base_path('vendor/datatables/datatables/media/css/dataTables.bootstrap4.min.css') => public_path('web/css/dataTables.bootstrap4.min.css'),
+            base_path('vendor/datatables/datatables/media/js/jquery.dataTables.min.js')       => public_path('web/js/jquery.dataTables.min.js'),
+            base_path('vendor/datatables/datatables/media/js/dataTables.dataTables.min.js')   => public_path('web/js/dataTables.dataTables.min.js'),
+            base_path('vendor/datatables/datatables/media/js/dataTables.bootstrap4.min.js')   => public_path('web/js/dataTables.bootstrap4.min.js'),
+
+            // AdminLTE pulled from packagist
+            base_path('vendor/almasaeed2010/adminlte/dist/css/adminlte.min.css') => public_path('web/css/adminlte.min.css'),
+            base_path('vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js')   => public_path('web/js/adminlte.min.js'),
+
+            // Font Awesome pulled from packagist
+            base_path('vendor/components/font-awesome/css/all.min.css')          => public_path('web/css/all.min.css'),
+            base_path('vendor/components/font-awesome/webfonts')                 => public_path('web/webfonts'),
         ]);
     }
 
@@ -215,7 +218,7 @@ class WebServiceProvider extends AbstractSeatPlugin
     public function add_translations()
     {
 
-        $this->loadTranslationsFrom(__DIR__ . '/lang', 'web');
+        $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'web');
     }
 
     /**
@@ -294,10 +297,10 @@ class WebServiceProvider extends AbstractSeatPlugin
         });
 
         // attempt to parse the QUEUE_BALANCING variable into a boolean
-        $balancing_mode = filter_var(env(self::QUEUE_BALANCING_MODE, false), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        $balancing_mode = filter_var(config('seat.config.balancing', false), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
         // in case the variable cannot be parsed into a boolean, assign the environment value itself
         if (is_null($balancing_mode))
-            $balancing_mode = env(self::QUEUE_BALANCING_MODE, false);
+            $balancing_mode = 'auto';
 
         // Configure the workers for SeAT.
         $horizon_environments = [
@@ -306,7 +309,7 @@ class WebServiceProvider extends AbstractSeatPlugin
                     'connection' => 'redis',
                     'queue'      => ['high', 'medium', 'low', 'default'],
                     'balance'    => $balancing_mode,
-                    'processes'  => (int) env(self::QUEUE_BALANCING_WORKERS, 4),
+                    'processes'  => (int) config('seat.config.workers', 4),
                     'tries'      => 1,
                     'timeout'    => 900, // 15 minutes
                 ],
@@ -344,6 +347,7 @@ class WebServiceProvider extends AbstractSeatPlugin
 
         // Helper configurations
         $this->mergeConfigFrom(__DIR__ . '/Config/web.jobnames.php', 'web.jobnames');
+        $this->mergeConfigFrom(__DIR__ . '/Config/seat.php', 'seat.config');
 
         // Register any extra services.
         $this->register_services();
@@ -360,25 +364,6 @@ class WebServiceProvider extends AbstractSeatPlugin
      */
     public function register_services()
     {
-
-        // Register the Socialite Factory.
-        // From: Laravel\Socialite\SocialiteServiceProvider
-        $this->app->singleton('Laravel\Socialite\Contracts\Factory', function ($app) {
-
-            return new SocialiteManager($app);
-        });
-
-        // Slap in the Eveonline Socialite Provider
-        $eveonline = $this->app->make('Laravel\Socialite\Contracts\Factory');
-        $eveonline->extend('eveonline',
-            function ($app) use ($eveonline) {
-
-                $config = $app['config']['services.eveonline'];
-
-                return $eveonline->buildProvider(EveOnlineProvider::class, $config);
-            }
-        );
-
         // Register the datatables package! Thanks
         //  https://laracasts.com/discuss/channels/laravel/register-service-provider-and-facade-within-service-provider
         $this->app->register('Yajra\DataTables\DataTablesServiceProvider');

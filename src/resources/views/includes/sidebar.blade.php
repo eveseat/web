@@ -1,124 +1,162 @@
-<aside class="main-sidebar">
+<aside class="main-sidebar elevation-4 sidebar-dark-primary">
+
+  <!-- Logo -->
+  <a href="{{ route('home') }}" class="brand-link">
+    <img class="brand-image img-circle elevation-3" src="{{ asset('web/img/logo.png') }}" alt="SeAT" />
+    <span class="brand-text font-weight-light">S<b>e</b>AT</span>
+  </a>
 
   <!-- sidebar: style can be found in sidebar.less -->
-  <section class="sidebar">
+  <div class="sidebar">
 
     <!-- Sidebar user panel -->
-    <div class="user-panel">
-      <div class="pull-left image">
-        <img src="//image.eveonline.com/Character/{{ $user->id }}_128.jpg"
-             class="img-circle" alt="User Image">
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="image">
+        <img src="//image.eveonline.com/Character/{{ $user->id }}_128.jpg" class="img-circle elevation-2" alt="User Image">
       </div>
-      <div class="pull-left info">
-        <p>
-          @if(auth()->user()->name == 'admin')
-          <span>{{ trans('web::seat.hello') }}, {{ $user->name }}</span>
-          @else
-          <a href="{{ route('character.view.sheet', ['character_id' => $user->character_id]) }}">
-            {{ trans('web::seat.hello') }}, {{ $user->name }}
-          </a>
-          @endif
-        </p>
-        <!-- Status -->
-        <a href="#"><i class="fa fa-circle text-success"></i> {{ trans('web::seat.online') }}</a>
+      <div class="info">
+        @if(auth()->user()->name == 'admin')
+        <span>{{ $user->name }}</span>
+        @else
+        <a href="{{ route('character.view.sheet', ['character_id' => $user->character_id]) }}" class="d-block">
+          {{ $user->name }}
+        </a>
+        @endif
       </div>
     </div>
 
-    <!-- search form -->
-    <form action="{{ route('support.search') }}" method="get" class="sidebar-form">
-      <div class="input-group">
-        <input type="text" name="q" class="form-control" placeholder="{{ trans('web::seat.search') }}...">
-        <span class="input-group-btn">
-            <button type="submit" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-            </button>
-          </span>
-      </div>
-    </form>
-    <!-- /.search form -->
-
     <!-- Sidebar Menu -->
-    <ul class="sidebar-menu" data-widget="tree">
-      <li class="header">{{ trans('web::seat.main_menu') }}</li>
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu">
 
-      @foreach($menu as $entry)
+        @foreach($menu as $entry)
 
-        {{-- determine if we should pop a treeview --}}
-        @if(isset($entry['entries']))
+          {{-- determine if we should pop a treeview --}}
+          @if(isset($entry['entries']))
 
-          <li class="treeview {{ Request::segment(1) === $entry['route_segment'] ? 'active' : null }}">
-            <a href="#">
-              <i class="fa {{ $entry['icon'] }}"></i>
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link {{ Request::segment(1) === $entry['route_segment'] ? 'active' : null }}">
+                <i class="nav-icon {{ $entry['icon'] }}"></i>
 
-              @if (array_key_exists('label', $entry))
+                @if (array_key_exists('label', $entry))
 
-                <span>
                   @if(array_key_exists('plural', $entry))
-                    {{ trans_choice($entry['label'], 2) }}
+                    <p>
+                      {{ trans_choice($entry['label'], 2) }}
+                      <i class="right fas fa-angle-left"></i>
+                    </p>
                   @else
-                    {{ trans($entry['label']) }}
+                    <p>
+                      {{ trans($entry['label']) }}
+                      <i class="right fas fa-angle-left"></i>
+                    </p>
                   @endif
-                </span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
 
-              @else
+                @else
 
-                <span>{{ $entry['name'] }}</span> <i class="fa fa-angle-left pull-right"></i>
+                  <p>
+                    {{ $entry['name'] }}
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
 
-              @endif
+                @endif
 
-            </a>
-            <ul class="treeview-menu">
+              </a>
+              <ul class="nav nav-treeview">
 
-              @foreach($entry['entries'] as $item)
+                @foreach($entry['entries'] as $item)
 
-                {{-- check if a permisison is required an if its given --}}
-                @if(array_key_exists('permission', $item))
+                  {{-- check if a permisison is required an if its given --}}
+                  @if(array_key_exists('permission', $item))
 
-                  {{-- permision is required. check it --}}
-                  @if(auth()->user()->has($item['permission'], false))
+                    {{-- permision is required. check it --}}
+                    @if(auth()->user()->has($item['permission'], false))
 
-                    <li class="{{ isset($item['route']) ? (Request::url() === route($item['route']) ? 'active' : null) : null }}">
-                      <a href="{{ isset($item['route']) ? route($item['route']) : '#' }}">
+                      <li class="nav-item">
+                        <a href="{{ isset($item['route']) ? route($item['route']) : '#' }}" class="nav-link {{ isset($item['route']) ? (Request::url() === route($item['route']) ? 'active' : null) : null }}">
 
+                          @if (array_key_exists('label', $item))
+
+                            <i class="nav-icon {{ $item['icon'] ?? 'fa-circle-o' }}"></i>
+                            @if(array_key_exists('plural', $item))
+                              <p>{{ trans_choice($item['label'], 2) }}</p>
+                            @else
+                              <p>{{ trans($item['label']) }}</p>
+                            @endif
+
+                          @else
+
+                            <i class="nav-icon {{ $item['icon'] ?? 'fa-circle-o' }}"></i> {{ $item['name'] }}
+
+                          @endif
+
+                        </a>
+
+                        @if(array_key_exists('entries', $item))
+                          <ul class="nav nav-treeview">
+                            @foreach($item['entries'] as $subitem)
+                              <li class="nav-item">
+                                <a href="{{ isset($subitem['route']) ? route($subitem['route']) : '#' }}" class="nav-link {{ isset($subitem['route']) ? (Request::url() === route($subitem['route']) ? 'active' : null) : null }}">
+                                  @if (array_key_exists('label', $subitem))
+                                    <i class="nav-icon {{ $subitem['icon'] ?? 'fa-circle-o' }}"></i>
+                                    @if(array_key_exists('plural', $subitem))
+                                      <p>{{ trans_choice($subitem['label'], 2) }}</p>
+                                    @else
+                                      <p>{{ trans($subitem['label']) }}</p>
+                                    @endif
+                                  @else
+                                    <i class="nav-icon {{ $subitem['icon'] ?? 'fa-circle-o' }}"></i>
+                                    <p>{{ $subitem['name'] }}</p>
+                                  @endif
+                                </a>
+                              </li>
+                            @endforeach
+                          </ul>
+                        @endif
+
+                      </li>
+
+                    @endif
+
+                    {{-- TODO: Get rid of this copy pasta by using a partial or something. --}}
+                  @else
+
+                    <li class="nav-item">
+                      <a href="{{ isset($item['route']) ? route($item['route']) : '#' }}" class="nav-link {{ isset($item['route']) ? (Request::url() === route($item['route']) ? 'active' : null) : null }}">
                         @if (array_key_exists('label', $item))
 
-                          <i class="fa {{ $item['icon'] or 'fa-circle-o' }}"></i>
+                          <i class="nav-icon {{ $item['icon'] ?? 'fa-circle-o' }}"></i>
+
                           @if(array_key_exists('plural', $item))
-                            {{ trans_choice($item['label'], 2) }}
+                            <p>{{ trans_choice($item['label'], 2) }}</p>
                           @else
-                            {{ trans($item['label']) }}
+                            <p>{{ trans($item['label']) }}</p>
                           @endif
 
                         @else
 
-                          <i class="fa {{ $item['icon'] or 'fa-circle-o' }}"></i> {{ $item['name'] }}
+                          <i class="nav-icon {{ $item['icon'] ?? 'fa-circle-o' }}"></i>
+                          <p>{{ $item['name'] }}</p>
 
-                        @endif
-
-                        @if(array_key_exists('entries', $item))
-                          <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
-                        </span>
                         @endif
 
                       </a>
 
                       @if(array_key_exists('entries', $item))
-                        <ul class="treeview-menu">
+                        <ul class="nav nav-treeview">
                           @foreach($item['entries'] as $subitem)
-                            <li class="{{ isset($subitem['route']) ? (Request::url() === route($subitem['route']) ? 'active' : null) : null }}">
-                              <a href="{{ isset($subitem['route']) ? route($subitem['route']) : '#' }}">
+                            <li class="nav-item">
+                              <a href="{{ isset($subitem['route']) ? route($subitem['route']) : '#' }}" class="nav-link {{ isset($subitem['route']) ? (Request::url() === route($subitem['route']) ? 'active' : null) : null }}">
                                 @if (array_key_exists('label', $subitem))
-                                  <i class="fa {{ $subitem['icon'] or 'fa-circle-o' }}"></i>
+                                  <i class="nav-icon {{ $subitem['icon'] ?? 'fa-circle-o' }}"></i>
                                   @if(array_key_exists('plural', $subitem))
-                                    {{ trans_choice($subitem['label'], 2) }}
+                                    <p>{{ trans_choice($subitem['label'], 2) }}</p>
                                   @else
-                                    {{ trans($subitem['label']) }}
+                                    <p>{{ trans($subitem['label']) }}</p>
                                   @endif
                                 @else
-                                  <i class="fa {{ $subitem['icon'] or 'fa-circle-o' }}"></i> {{ $subitem['name'] }}
+                                  <i class="nav-icon {{ $subitem['icon'] ?? 'fa-circle-o' }}"></i>
+                                  <p>{{ $subitem['name'] }}</p>
                                 @endif
                               </a>
                             </li>
@@ -130,86 +168,35 @@
 
                   @endif
 
-                  {{-- TODO: Get rid of this copy pasta by using a partial or something. --}}
+                @endforeach
+              </ul>
+            </li>
+
+            {{-- no entries, so this looks like a single menu --}}
+          @else
+
+            <li class="nav-item">
+              <a href="{{ isset($entry['route']) ? route($entry['route']) : '#' }}" class="nav-link {{ Request::segment(1) === $entry['route_segment'] ? 'active' : null }}">
+
+                @if (array_key_exists('label', $entry))
+                  <i class="nav-icon {{ $entry['icon'] }}"></i>
+                  <p>{{ trans($entry['label']) }}</p>
                 @else
-
-                  <li class="{{ isset($item['route']) ? (Request::url() === route($item['route']) ? 'active' : null) : null }}">
-                    <a href="{{ isset($item['route']) ? route($item['route']) : '#' }}">
-                      @if (array_key_exists('label', $item))
-
-                        <i class="fa {{ $item['icon'] or 'fa-circle-o' }}"></i>
-
-                        @if(array_key_exists('plural', $item))
-                          {{ trans_choice($item['label'], 2) }}
-                        @else
-                          {{ trans($item['label']) }}
-                        @endif
-
-                      @else
-
-                        <i class="fa {{ $item['icon'] or 'fa-circle-o' }}"></i> {{ $item['name'] }}
-
-                      @endif
-
-                      @if(array_key_exists('entries', $item))
-                        <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
-                      </span>
-                      @endif
-
-                    </a>
-
-                    @if(array_key_exists('entries', $item))
-                      <ul class="treeview-menu">
-                        @foreach($item['entries'] as $subitem)
-                          <li class="{{ isset($subitem['route']) ? (Request::url() === route($subitem['route']) ? 'active' : null) : null }}">
-                            <a href="{{ isset($subitem['route']) ? route($subitem['route']) : '#' }}">
-                              @if (array_key_exists('label', $subitem))
-                                <i class="fa {{ $subitem['icon'] or 'fa-circle-o' }}"></i>
-                                @if(array_key_exists('plural', $subitem))
-                                  {{ trans_choice($subitem['label'], 2) }}
-                                @else
-                                  {{ trans($subitem['label']) }}
-                                @endif
-                              @else
-                                <i class="fa {{ $subitem['icon'] or 'fa-circle-o' }}"></i> {{ $subitem['name'] }}
-                              @endif
-                            </a>
-                          </li>
-                        @endforeach
-                      </ul>
-                    @endif
-
-                  </li>
-
+                  <i class="nav-icon {{ $entry['icon'] }}"></i>
+                  <p>{{ $entry['name'] }}</p>
                 @endif
 
-              @endforeach
-            </ul>
-          </li>
+              </a>
+            </li>
 
-          {{-- no entries, so this looks like a single menu --}}
-        @else
+          @endif
 
-          <li class="{{ Request::segment(1) === $entry['route_segment'] ? 'active' : null }}">
-            <a href="{{ isset($entry['route']) ? route($entry['route']) : '#' }}">
+        @endforeach
 
-              @if (array_key_exists('label', $entry))
-                <i class="fa {{ $entry['icon'] }}"></i> <span>{{ trans($entry['label']) }}</span>
-              @else
-                <i class="fa {{ $entry['icon'] }}"></i> <span>{{ $entry['name'] }}</span>
-              @endif
-
-            </a>
-          </li>
-
-        @endif
-
-      @endforeach
-
-    </ul>
+      </ul>
+    </nav>
     <!-- /.sidebar-menu -->
 
-  </section>
+  </div>
   <!-- /.sidebar -->
 </aside>

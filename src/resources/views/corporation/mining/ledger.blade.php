@@ -3,37 +3,37 @@
 @section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.mining') . ' ' . trans_choice('web::seat.mining_ledger', 2))
 
 @section('mining_content')
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">{{ trans_choice('web::seat.available_ledger', $ledgers->count()) }}</h3>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{{ trans_choice('web::seat.available_ledger', $ledgers->count()) }}</h3>
         </div>
-        <div class="panel-body">
+        <div class="card-body p-2">
             @foreach($ledgers->chunk(12) as $chunk)
-            <div class="row">
+            <ul class="nav justify-content-between">
                 @foreach ($chunk as $ledger)
-                <div class="col-xs-1">
-                    <span class="text-bold">
+                    <li class="nav-item">
                         <a href="{{ route('corporation.view.mining_ledger', [
                             request()->route()->parameter('corporation_id'),
                             date('Y', strtotime($ledger->year. '-01-01')),
                             date('m', strtotime($ledger->year . '-' . $ledger->month . '-01'))
-                        ]) }}">{{ date('M Y', strtotime($ledger->year . "-" . $ledger->month . "-01")) }}</a>
-                    </span>
-                </div>
+                        ]) }}" class="nav-link">{{ date('M Y', strtotime($ledger->year . "-" . $ledger->month . "-01")) }}</a>
+                    </li>
                 @endforeach
-            </div>
+            </ul>
             @endforeach
         </div>
     </div>
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">{{ trans_choice('web::seat.mining_ledger', 1) }}</h3>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{{ trans_choice('web::seat.mining_ledger', 1) }}</h3>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
             {{ $dataTable->table() }}
         </div>
     </div>
+
+    @include('web::common.minings.modals.details.details')
 @stop
 
 @push('javascript')
@@ -41,5 +41,20 @@
     {!! $dataTable->scripts() !!}
 
     @include('web::includes.javascript.character-id-to-main-character')
+
+    <script>
+        $(document).ready(function() {
+            $('#mining-detail').on('show.bs.modal', function (e) {
+                var body = $(e.target).find('.modal-body');
+                body.html('Loading...');
+
+                $.ajax($(e.relatedTarget).data('url'))
+                    .done(function (data) {
+                        body.html(data);
+                        $("[data-toggle=tooltip]").tooltip();
+                    });
+            });
+        });
+    </script>
 
 @endpush

@@ -6,91 +6,95 @@
 
 @section('left')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{ trans_choice('web::seat.permission', 2) }}</h3>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">{{ trans_choice('web::seat.permission', 2) }}</h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
 
       <form role="form" action="{{ route('configuration.access.roles.edit.permissions') }}" method="post">
         {{ csrf_field() }}
         <input type="hidden" name="role_id" value="{{ $role->id }}">
 
-        <div class="form-group">
-          <label for="permissions">{{ trans('web::seat.available_permissions') }}</label>
-          <select name="permissions[]" id="available_permissions" style="width: 100%" multiple>
+        <div class="form-group row">
+          <label for="permissions" class="col-form-label col-md-4">{{ trans('web::seat.available_permissions') }}</label>
+          <div class="col-md-8">
+            <select name="permissions[]" id="available_permissions" class="w-100" multiple>
 
-            @foreach(config('web.permissions') as $type => $permission)
+              @foreach(config('web.permissions') as $type => $permission)
 
-              @if(is_array($permission))
+                @if(is_array($permission))
 
-                @foreach($permission as $category_permission)
+                  @foreach($permission as $category_permission)
 
-                  <option value="{{ $type }}.{{ $category_permission }}">
-                    {{ studly_case($type) }}{{ studly_case($category_permission) }}
+                    <option value="{{ $type }}.{{ $category_permission }}">
+                      {{ Str::studly($type) }}{{ Str::studly($category_permission) }}
+                    </option>
+
+                  @endforeach
+
+                @else
+
+                  <option value="{{ $permission }}">
+                    {{ Str::studly($permission) }}
                   </option>
 
-                @endforeach
+                @endif
 
-              @else
+              @endforeach
 
-                <option value="{{ $permission }}">
-                  {{ studly_case($permission) }}
-                </option>
-
-              @endif
-
-            @endforeach
-
-          </select>
+            </select>
+          </div>
         </div>
 
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" name="inverse">
-            {{ trans('web::seat.inverse_permission') }}
-          </label>
+        <div class="form-group row">
+          <div class="offset-md-4 col-md-8">
+            <div class="form-check">
+              <input type="checkbox" name="inverse" class="form-check-input">
+              <label class="form-check-label">{{ trans('web::seat.inverse_permission') }}</label>
+            </div>
+          </div>
         </div>
 
-        <button type="submit" class="btn btn-success btn-block">
+        <button type="submit" class="btn btn-success btn-block mb-3">
           {{ trans('web::seat.grant_permissions') }}
         </button>
 
       </form>
 
-      <hr>
-
-      <table class="table table-hover table-condensed">
+      <table class="table table-sm table-hover table-condensed table-striped">
+        <thead>
+          <tr>
+            <th colspan="3" class="text-center">{{ trans('web::seat.current_permissions') }}</th>
+          </tr>
+        </thead>
         <tbody>
 
-        <tr>
-          <th colspan="3" class="text-center">{{ trans('web::seat.current_permissions') }}</th>
-        </tr>
+          @foreach($role->permissions as $permission)
 
-        @foreach($role->permissions as $permission)
+            <tr>
+              <td>{{ Str::studly($permission->title) }}</td>
+              <td>
+                @if($permission->pivot->not == 1)
+                  {{ trans('web::seat.inverse') }}
+                @endif
+              </td>
+              <td>
+                <a href="{{ route('configuration.access.roles.edit.remove.permission', ['role_id' => $role->id, 'permission_id' => $permission->id]) }}"
+                   type="button" class="btn btn-danger btn-sm float-right">
+                  <i class="fas fa-trash-alt"></i>
+                  {{ trans('web::seat.remove') }}
+                </a>
+              </td>
+            </tr>
 
-          <tr>
-            <td>{{ studly_case($permission->title) }}</td>
-            <td>
-              @if($permission->pivot->not == 1)
-                {{ trans('web::seat.inverse') }}
-              @endif
-            </td>
-            <td>
-              <a href="{{ route('configuration.access.roles.edit.remove.permission', ['role_id' => $role->id, 'permission_id' => $permission->id]) }}"
-                 type="button" class="btn btn-danger btn-xs pull-right">
-                {{ trans('web::seat.remove') }}
-              </a>
-            </td>
-          </tr>
-
-        @endforeach
+          @endforeach
 
         </tbody>
       </table>
 
     </div>
-    <div class="panel-footer">
+    <div class="card-footer">
       <b>{{ count($role->permissions) }}</b> {{ trans_choice('web::seat.permission', count($role->permissions)) }}
 
       {{-- determine if this role has the superuser role --}}
@@ -99,7 +103,7 @@
         {{-- ensure the role is not inversed --}}
         @if($role->permissions->where('title', 'superuser')->first()->pivot->not == 0)
 
-          <span class="label label-danger pull-right" data-toggle="tooltip"
+          <span class="badge badge-danger float-right" data-toggle="tooltip"
                 title="{{ trans('web::seat.permission_inherit') }}">
           {{ trans('web::seat.has_superuser') }}
           </span>
@@ -115,98 +119,103 @@
 
 @section('center')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{ trans_choice('web::seat.affiliation', 2) }}</h3>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">{{ trans_choice('web::seat.affiliation', 2) }}</h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
 
       <form role="form" action="{{ route('configuration.access.roles.edit.affiliations') }}" method="post">
         {{ csrf_field() }}
         <input type="hidden" name="role_id" value="{{ $role->id }}">
 
-        <div class="form-group">
-          <label for="corporations">{{ trans('web::seat.available_corporations') }}</label>
-          <select name="corporations[]" id="available_corporations" style="width: 100%" multiple>
+        <div class="form-group row">
+          <label for="corporations" class="col-form-label col-md-4">{{ trans('web::seat.available_corporations') }}</label>
+          <div class="col-md-8">
+            <select name="corporations[]" id="available_corporations" class="w-100" multiple>
 
-            <option value="0">All Corporations</option>
+              <option value="0">All Corporations</option>
 
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="characters">{{ trans('web::seat.available_characters') }}</label>
-          <select name="characters[]" id="available_characters" style="width: 100%" multiple>
-
-            <option value="0">All Characters</option>
-
-          </select>
-
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" name="inverse">
-              {{ trans('web::seat.inverse_affiliation') }}
-            </label>
+            </select>
           </div>
-
         </div>
 
-        <button type="submit" class="btn btn-success btn-block">
+        <div class="form-group row">
+          <label for="characters" class="col-form-label col-md-4">{{ trans('web::seat.available_characters') }}</label>
+          <div class="col-md-8">
+            <select name="characters[]" id="available_characters" class="w-100" multiple>
+
+              <option value="0">All Characters</option>
+
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="offset-md-4 col-md-8">
+            <div class="form-check">
+              <input type="checkbox" name="inverse" class="form-check-input">
+              <label class="form-check-label">{{ trans('web::seat.inverse_affiliation') }}</label>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-success btn-block mb-3">
           {{ trans('web::seat.add_affiliations') }}
         </button>
 
       </form>
 
-      <hr>
-
-      <table class="table table-hover table-condensed">
+      <table class="table table-sm table-hover table-condensed table-striped">
+        <thead>
+          <tr>
+            <th colspan="4" class="text-center">{{ trans('web::seat.current_affiliations') }}</th>
+          </tr>
+        </thead>
         <tbody>
 
-        <tr>
-          <th colspan="4" class="text-center">{{ trans('web::seat.current_affiliations') }}</th>
-        </tr>
+          @foreach($role->affiliations as $affiliation)
 
-        @foreach($role->affiliations as $affiliation)
+            <tr>
+              <td>
+                @if($affiliation->affiliation === 0)
 
-          <tr>
-            <td>
-              @if($affiliation->affiliation === 0)
+                  {{ trans('web::seat.all') }}
+                  @if($affiliation->type == 'corp')
+                    {{ trans_choice('web::seat.corporation', 2) }}
+                  @else
+                    {{ trans_choice('web::seat.character', 2) }}
+                  @endif
 
-                {{ trans('web::seat.all') }}
-                @if($affiliation->type == 'corp')
-                  {{ trans_choice('web::seat.corporation', 2) }}
                 @else
-                  {{ trans_choice('web::seat.character', 2) }}
+
+                  {!! img('auto', $affiliation->affiliation, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  <span class="id-to-name" data-id="{{$affiliation->affiliation}}">{{ trans('web::seat.unknown') }}</span>
+
                 @endif
+              </td>
+              <td>{{ ucfirst($affiliation->type) }}</td>
+              <td>
+                @if($affiliation->pivot->not == 1)
+                  {{ trans('web::seat.inverse') }}
+                @endif
+              </td>
+              <td>
+                <a href="{{ route('configuration.access.roles.edit.remove.affiliation', ['role_id' => $role->id, 'user_id' => $affiliation->id]) }}"
+                   type="button" class="btn btn-danger btn-sm float-right">
+                  <i class="fas fa-trash-alt"></i>
+                  {{ trans('web::seat.remove') }}
+                </a>
+              </td>
+            </tr>
 
-              @else
-
-                {!! img('auto', $affiliation->affiliation, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                <span class="id-to-name" data-id="{{$affiliation->affiliation}}">{{ trans('web::seat.unknown') }}</span>
-
-              @endif
-            </td>
-            <td>{{ ucfirst($affiliation->type) }}</td>
-            <td>
-              @if($affiliation->pivot->not == 1)
-                {{ trans('web::seat.inverse') }}
-              @endif
-            </td>
-            <td>
-              <a href="{{ route('configuration.access.roles.edit.remove.affiliation', ['role_id' => $role->id, 'user_id' => $affiliation->id]) }}"
-                 type="button" class="btn btn-danger btn-xs pull-right">
-                {{ trans('web::seat.remove') }}
-              </a>
-            </td>
-          </tr>
-
-        @endforeach
+          @endforeach
 
         </tbody>
       </table>
 
     </div>
-    <div class="panel-footer">
+    <div class="card-footer">
       <b>{{ count($role->affiliations) }}</b> {{ trans_choice('web::seat.affiliation', count($role->affiliations)) }}
     </div>
   </div>
@@ -215,56 +224,57 @@
 
 @section('right')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{ trans_choice('web::seat.group', 2) }}</h3>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">{{ trans_choice('web::seat.group', 2) }}</h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
 
       <form role="form" action="{{ route('configuration.access.roles.edit.groups') }}" method="post">
         {{ csrf_field() }}
         <input type="hidden" name="role_id" value="{{ $role->id }}">
 
-        <div class="form-group">
-          <label for="groups">{{ trans_choice('web::seat.available_groups',2) }}</label>
-          <select name="groups[]" id="available_users" style="width: 100%" multiple>
-          </select>
+        <div class="form-group row">
+          <label for="groups" class="col-md-4">{{ trans_choice('web::seat.available_groups',2) }}</label>
+          <div class="col-md-8">
+            <select name="groups[]" id="available_users" class="w-100" multiple></select>
+          </div>
         </div>
 
-        <button type="submit" class="btn btn-success btn-block">{{ trans_choice('web::seat.add_group', 2) }}</button>
+        <button type="submit" class="btn btn-success btn-block mb-3">{{ trans_choice('web::seat.add_group', 2) }}</button>
 
       </form>
 
-      <hr>
-
-      <table class="table table-hover table-condensed">
+      <table class="table table-sm table-hover table-condensed table-striped">
+        <thead>
+          <tr>
+            <th colspan="2" class="text-center">{{ trans_choice('web::seat.current_groups',2) }}</th>
+          </tr>
+        </thead>
         <tbody>
 
-        <tr>
-          <th colspan="2" class="text-center">{{ trans_choice('web::seat.current_groups',2) }}</th>
-        </tr>
+          @foreach($role->groups as $group)
 
-        @foreach($role->groups as $group)
+            <tr>
+              <td>
+                {{ $group->users->map(function($user) { return $user->name; })->implode(', ') }}
+              </td>
+              <td>
+                <a href="{{ route('configuration.access.roles.edit.remove.group', ['role_id' => $role->id, 'user_id' => $group->id]) }}"
+                   type="button" class="btn btn-danger btn-sm float-right">
+                  <i class="fas fa-trash-alt"></i>
+                  {{ trans('web::seat.remove') }}
+                </a>
+              </td>
+            </tr>
 
-          <tr>
-            <td>
-              {{ $group->users->map(function($user) { return $user->name; })->implode(', ') }}
-            </td>
-            <td>
-              <a href="{{ route('configuration.access.roles.edit.remove.group', ['role_id' => $role->id, 'user_id' => $group->id]) }}"
-                 type="button" class="btn btn-danger btn-xs pull-right">
-                {{ trans('web::seat.remove') }}
-              </a>
-            </td>
-          </tr>
-
-        @endforeach
+          @endforeach
 
         </tbody>
       </table>
 
     </div>
-    <div class="panel-footer">
+    <div class="card-footer">
         <b>{{ count($role->groups) }}</b>
         {{ trans_choice('web::seat.group', count($role->groups)) }}
     </div>

@@ -6,7 +6,7 @@
      data-toggle="tooltip"
      title="Checking package status..."></i> {{ app()->getProvider($package)->getName() }}
     @if (! is_null(app()->getProvider($package)->getChangelogUri()))
-    <a href="#" data-toggle="modal" data-target="#changelogModal"
+    <a href="#" data-widget="modal" data-target="#changelogModal"
        data-uri="{{ app()->getProvider($package)->getChangelogUri() }}"
        data-name="{{ app()->getProvider($package)->getName() }}"
        @if(app()->getProvider($package)->isChangelogApi())

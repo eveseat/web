@@ -1,9 +1,9 @@
-<a href="#" class="btn btn-sm btn-link pull-right"
+<a href="#" class="btn btn-sm btn-link float-right"
    data-type-id="{{$row->type_id}}"
    data-date="{{ $row->date }}"
    data-system-name="{{ $row->system->itemName }}"
    data-type-name="{{ $row->type->typeName }}"
    data-url="{{ route('character.view.detailed_mining_ledger', [$row->character_id, $row->date, $row->solar_system_id, $row->type_id]) }}"
-   data-toggle="modal" data-target="#detailed-ledger">
+   data-widget="modal" data-target="#detailed-ledger">
   <i class="fa fa-cubes"></i>
 </a>
