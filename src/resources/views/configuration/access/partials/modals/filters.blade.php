@@ -2,14 +2,14 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
+        <h4 class="modal-title">{{ trans('web::permissions.permission_limit') }}</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">{{ trans('web::permissions.permission_limit') }}</h4>
       </div>
       <div class="modal-body">
         <form>
-          <select id="permission-entity-lookup" style="width: 100%;"></select>
+          <select id="permission-entity-lookup" class="w-100"></select>
         </form>
         <table class="table table-striped table-hover">
           <thead>

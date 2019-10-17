@@ -35,63 +35,15 @@
               <div id="{{ $scope }}-permissions-content" class="tab-pane permissions-tab p-3 fade @if($loop->first) active show @endif"
                    role="tabpanel" aria-labelledby="{{ $scope }}-permissions">
                 @foreach($permissions as $ability => $permission)
-                  <div class="form-check mb-3">
-                    @if(is_array($permission) && array_key_exists('label', $permission))
-                      @if(in_array(sprintf('%s.%s', $scope, $ability), $role_permissions))
-                        <input type="checkbox" name="permissions[{{ $scope }}.{{ $ability }}]" form="role-form" checked="checked" data-target="#scope-{{ $scope }}-counter" id="permission-{{ $scope }}-{{ $ability }}" class="form-check-input" />
-                        <label for="permission-{{ $scope }}-{{ $ability }}" class="form-check-label">{{ trans($permission['label']) }}</label>
-                      @else
-                        <input type="checkbox" name="permissions[{{ $scope }}.{{ $ability }}]" form="role-form" data-target="#scope-{{ $scope }}-counter" id="permissions-{{ $scope }}-{{ $ability }}" class="form-check-input" />
-                        <label for="permissions-{{ $scope }}-{{ $ability }}" class="form-check-label">{{ trans($permission['label']) }}</label>
-                      @endif
-                      @if(in_array($scope, ['character', 'corporation']))
-                        @if(is_null($role->permissions->where('title', sprintf('%s.%s', $scope, $ability))->first()))
-                          <input type="hidden" name="filters[{{ $scope }}.{{ $ability }}]" value="{}" form="role-form" />
-                        @else
-                          <input type="hidden" name="filters[{{ $scope }}.{{ $ability }}]" value="{{ $role->permissions->where('title', sprintf('%s.%s', $scope, $ability))->first()->pivot->filters ?: '{}' }}" form="role-form" />
-                        @endif
-                      @endif
-                    @else
-                      @if($scope == 'global')
-                        @if(in_array($permission, $role_permissions))
-                          <input type="checkbox" name="permissions[{{ $permission }}]" checked="checked" form="role-form" data-target="#scope-global-counter" id="permissions-{{ $permission }}" class="form-check-input" />
-                          <label for="permissions-{{ $permission }}" class="form-check-label">{{ ucfirst($permission) }}</label>
-                        @else
-                          <input type="checkbox" name="permissions[{{ $permission }}]" form="role-form" data-target="#scope-global-counter" id="permissions-{{ $permission }}" class="form-check-input" />
-                          <label for="permissions-{{ $permission }}" class="form-check-label">{{ ucfirst($permission) }}</label>
-                        @endif
-                      @else
-                        @if(in_array(sprintf('%s.%s', $scope, $permission), $role_permissions))
-                          <input type="checkbox" name="permissions[{{ $scope }}.{{ $permission }}]" checked="checked" form="role-form" data-target="#scope-{{ $scope }}-counter" id="permissions-{{ $scope }}-{{ $permission }}" class="form-check-input" />
-                          <label for="permissions{{ $scope }}-{{ $permission }}" class="form-check-label">{{ ucfirst($permission) }}</label>
-                        @else
-                          <input type="checkbox" name="permissions[{{ $scope }}.{{ $permission }}]" form="role-form" data-target="#scope-{{ $scope }}-counter" id="permissions-{{ $scope }}-{{ $permission }}" class="form-check-input" />
-                          <label for="permissions-{{ $scope }}-{{ $permission }}" class="form-check-label">{{ ucfirst($permission) }}</label>
-                        @endif
-                        @if(in_array($scope, ['character', 'corporation']))
-                          @if(is_null($role->permissions->where('title', sprintf('%s.%s', $scope, $permission))->first()))
-                            <input type="hidden" name="filters[{{ $scope }}.{{ $permission }}]" value="{}" form="role-form" />
-                          @else
-                            <input type="hidden" name="filters[{{ $scope }}.{{ $permission }}]" value="{{ $role->permissions->where('title', sprintf('%s.%s', $scope, $permission))->first()->pivot->filters ?: '{}' }}" form="role-form" />
-                          @endif
-                        @endif
-                      @endif
-                    @endif
-                    @if(in_array($scope, ['character', 'corporation']))
-                      @if(is_null($role->permissions->where('title', sprintf('%s.%s', $scope, $ability))->first()) || is_null($role->permissions->where('title', sprintf('%s.%s', $scope, $ability))->first()->pivot->filters))
-                        @if(in_array(sprintf('%s.%s', $scope, $ability), $role_permissions))
-                          @include('web::configuration.access.partials.permissions.buttons.filters', ['role_id' => $role->id, 'scope' => $scope, 'class' => 'btn-default', 'disabled' => false])
-                        @else
-                          @include('web::configuration.access.partials.permissions.buttons.filters', ['role_id' => $role->id, 'scope' => $scope, 'class' => 'btn-default', 'disabled' => true])
-                        @endif
-                      @else
-                        @include('web::configuration.access.partials.permissions.buttons.filters', ['role_id' => $role->id, 'scope' => $scope, 'class' => 'btn-warning', 'disabled' => false])
-                      @endif
-                    @endif
-                    @if(is_array($permission) && array_key_exists('description', $permission))
-                      <i class="form-text text-muted">{{ trans($permission['description']) }}</i>
-                    @endif
-                  </div>
+                  @include('web::configuration.access.partials.permissions.inputs.permission', [
+                    'scope'       => $scope,
+                    'ability'     => is_array($permission) ? $ability : $permission,
+                    'label'       => (is_array($permission) && array_key_exists('label', $permission)) ? trans($permission['label']) : ucfirst($permission),
+                    'description' => (is_array($permission) && array_key_exists('description', $permission)) ? trans($permission['description']) : '',
+                    'filters'     => $role->permissions->where('title', sprintf('%s.%s', $scope, $ability))->first() ? $role->permissions->where('title', sprintf('%s.%s', $scope, $ability))->first()->pivot->filters : null,
+                    'is_granted'  => $scope == 'global' ? in_array($permission, $role_permissions) : in_array(sprintf('%s.%s', $scope, $ability), $role_permissions),
+                    'role_id'     => $role->id
+                  ])
                 @endforeach
               </div>
             @endforeach
