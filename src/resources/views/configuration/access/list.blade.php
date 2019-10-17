@@ -16,9 +16,11 @@
 
         <div class="box-body">
 
-          <div class="form-group">
-            <label for="exampleInputEmail1">{{ trans('web::seat.role_name') }}</label>
-            <input type="text" name="title" class="form-control" id="title" placeholder="Enter role name">
+          <div class="form-group row">
+            <label for="exampleInputEmail1" class="col-form-label col-md-4">{{ trans('web::seat.role_name') }}</label>
+            <div class="col-md-8">
+              <input type="text" name="title" class="form-control" id="title" placeholder="Enter role name">
+            </div>
           </div>
 
         </div><!-- /.box-body -->

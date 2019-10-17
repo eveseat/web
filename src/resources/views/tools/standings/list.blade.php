@@ -17,10 +17,12 @@
 
         <div class="box-body">
 
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" name="name" class="form-control" id="name" value="{{ old('name') }}"
-                   placeholder="Standings Definition Name">
+          <div class="form-group row">
+            <label for="name" class="col-md-4 col-form-label">Name</label>
+            <div class="col-md-8">
+              <input type="text" name="name" class="form-control" id="name" value="{{ old('name') }}"
+                     placeholder="Standings Definition Name">
+            </div>
           </div>
 
         </div><!-- /.box-body -->
