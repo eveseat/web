@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -26,7 +27,7 @@ use Seat\Web\Http\DataTables\Corporation\Industrial\CustomOfficeDataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 
 /**
- * Class CustomOfficeController
+ * Class CustomOfficeController.
  *
  * @package Seat\Web\Http\Controllers\Corporation
  */
