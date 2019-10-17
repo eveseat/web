@@ -16,40 +16,44 @@
         {{ csrf_field() }}
         <input type="hidden" name="role_id" value="{{ $role->id }}">
 
-        <div class="form-group">
-          <label for="permissions">{{ trans('web::seat.available_permissions') }}</label>
-          <select name="permissions[]" id="available_permissions" style="width: 100%" multiple>
+        <div class="form-group row">
+          <label for="permissions" class="col-form-label col-md-4">{{ trans('web::seat.available_permissions') }}</label>
+          <div class="col-md-8">
+            <select name="permissions[]" id="available_permissions" class="w-100" multiple>
 
-            @foreach(config('web.permissions') as $type => $permission)
+              @foreach(config('web.permissions') as $type => $permission)
 
-              @if(is_array($permission))
+                @if(is_array($permission))
 
-                @foreach($permission as $category_permission)
+                  @foreach($permission as $category_permission)
 
-                  <option value="{{ $type }}.{{ $category_permission }}">
-                    {{ Str::studly($type) }}{{ Str::studly($category_permission) }}
+                    <option value="{{ $type }}.{{ $category_permission }}">
+                      {{ Str::studly($type) }}{{ Str::studly($category_permission) }}
+                    </option>
+
+                  @endforeach
+
+                @else
+
+                  <option value="{{ $permission }}">
+                    {{ Str::studly($permission) }}
                   </option>
 
-                @endforeach
+                @endif
 
-              @else
+              @endforeach
 
-                <option value="{{ $permission }}">
-                  {{ Str::studly($permission) }}
-                </option>
-
-              @endif
-
-            @endforeach
-
-          </select>
+            </select>
+          </div>
         </div>
 
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" name="inverse">
-            {{ trans('web::seat.inverse_permission') }}
-          </label>
+        <div class="form-group row">
+          <div class="offset-md-4 col-md-8">
+            <div class="form-check">
+              <input type="checkbox" name="inverse" class="form-check-input">
+              <label class="form-check-label">{{ trans('web::seat.inverse_permission') }}</label>
+            </div>
+          </div>
         </div>
 
         <button type="submit" class="btn btn-success btn-block mb-3">
@@ -125,30 +129,35 @@
         {{ csrf_field() }}
         <input type="hidden" name="role_id" value="{{ $role->id }}">
 
-        <div class="form-group">
-          <label for="corporations">{{ trans('web::seat.available_corporations') }}</label>
-          <select name="corporations[]" id="available_corporations" style="width: 100%" multiple>
+        <div class="form-group row">
+          <label for="corporations" class="col-form-label col-md-4">{{ trans('web::seat.available_corporations') }}</label>
+          <div class="col-md-8">
+            <select name="corporations[]" id="available_corporations" class="w-100" multiple>
 
-            <option value="0">All Corporations</option>
+              <option value="0">All Corporations</option>
 
-          </select>
+            </select>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="characters">{{ trans('web::seat.available_characters') }}</label>
-          <select name="characters[]" id="available_characters" style="width: 100%" multiple>
+        <div class="form-group row">
+          <label for="characters" class="col-form-label col-md-4">{{ trans('web::seat.available_characters') }}</label>
+          <div class="col-md-8">
+            <select name="characters[]" id="available_characters" class="w-100" multiple>
 
-            <option value="0">All Characters</option>
+              <option value="0">All Characters</option>
 
-          </select>
-
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" name="inverse">
-              {{ trans('web::seat.inverse_affiliation') }}
-            </label>
+            </select>
           </div>
+        </div>
 
+        <div class="form-group row">
+          <div class="offset-md-4 col-md-8">
+            <div class="form-check">
+              <input type="checkbox" name="inverse" class="form-check-input">
+              <label class="form-check-label">{{ trans('web::seat.inverse_affiliation') }}</label>
+            </div>
+          </div>
         </div>
 
         <button type="submit" class="btn btn-success btn-block mb-3">
@@ -225,10 +234,11 @@
         {{ csrf_field() }}
         <input type="hidden" name="role_id" value="{{ $role->id }}">
 
-        <div class="form-group">
-          <label for="groups">{{ trans_choice('web::seat.available_groups',2) }}</label>
-          <select name="groups[]" id="available_users" style="width: 100%" multiple>
-          </select>
+        <div class="form-group row">
+          <label for="groups" class="col-md-4">{{ trans_choice('web::seat.available_groups',2) }}</label>
+          <div class="col-md-8">
+            <select name="groups[]" id="available_users" class="w-100" multiple></select>
+          </div>
         </div>
 
         <button type="submit" class="btn btn-success btn-block mb-3">{{ trans_choice('web::seat.add_group', 2) }}</button>

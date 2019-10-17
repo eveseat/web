@@ -18,14 +18,18 @@
 
         <div class="box-body">
 
-          <div class="form-group">
-            <label for="username">{{ trans_choice('web::seat.username', 1) }}</label>
-            <input type="text" name="username" class="form-control" id="username" value="{{ $user->name }}" disabled>
+          <div class="form-group row">
+            <label for="username" class="col-form-label col-md-4">{{ trans_choice('web::seat.username', 1) }}</label>
+            <div class="col-md-8">
+              <input type="text" name="username" class="form-control" id="username" value="{{ $user->name }}" disabled>
+            </div>
           </div>
 
-          <div class="form-group">
-            <label for="email">{{ trans_choice('web::seat.email', 1) }}</label>
-            <input type="email" name="email" class="form-control" id="email" value="{{ $user->email }}">
+          <div class="form-group row">
+            <label for="email" class="col-form-label col-md-4">{{ trans_choice('web::seat.email', 1) }}</label>
+            <div class="col-md-8">
+              <input type="email" name="email" class="form-control" id="email" value="{{ $user->email }}">
+            </div>
           </div>
 
         </div><!-- /.box-body -->
@@ -63,15 +67,14 @@
     <div class="card-body">
 
       <div>
-        <dl>
-          <dt>Current User Group</dt>
-          <dd>
-            <ul class="list-unstyled">
+        <dl class="row">
+          <dt class="col-md-4">Current User Group</dt>
+          <dd class="col-md-8">
+            <ul class="list-group list-group-flush">
               @if($user->group)
                 @foreach($user->group->users as $group_user)
-                  <li>
-                    {!! img('character', $group_user->id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                    {{ $group_user->name }}
+                  <li class="list-group-item">
+                    @include('web::partials.character', ['character' => $group_user->character])
                   </li>
                 @endforeach
               @endif
@@ -84,19 +87,21 @@
         {{ csrf_field() }}
         <input type="hidden" name="user_id" value="{{ $user->id }}">
 
-        <div class="form-group">
-          <label for="available_users">{{ trans_choice('web::seat.available_groups', 2) }}</label>
-          <select name="group_id" id="available_users" style="width: 100%">
+        <div class="form-group row">
+          <label for="available_users" class="col-form-label col-md-4">{{ trans_choice('web::seat.available_groups', 2) }}</label>
+          <div class="col-md-8">
+            <select name="group_id" id="available_users" style="width: 100%">
 
-            @foreach($groups as $group)
+              @foreach($groups as $group)
 
-              <option value="{{ $group->id }}">
-                {{ $group->users->map(function($user) { return $user->name; })->implode(', ') }}
-              </option>
+                <option value="{{ $group->id }}">
+                  {{ $group->users->map(function($user) { return $user->name; })->implode(', ') }}
+                </option>
 
-            @endforeach
+              @endforeach
 
-          </select>
+            </select>
+          </div>
         </div>
 
         <div class="box-footer">
