@@ -19,7 +19,7 @@
             @if(auth()->user()->has('character.jobs'))
               <div class="card-tools">
                 <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.skillqueue']) }}"
-                   class="float-left" style="color: #000000">
+                   class="text-dark">
                   <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_skill_queue') }}"></i>
                 </a>
               </div>
@@ -102,7 +102,7 @@
           @if(auth()->user()->has('character.jobs'))
             <div class="card-tools">
               <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.corphistory']) }}"
-                 class="float-right" style="color: #000000">
+                 class="text-dark">
                 <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_corp_history') }}"></i>
               </a>
             </div>
