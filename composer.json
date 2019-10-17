@@ -33,7 +33,7 @@
     "guzzlehttp/guzzle": "^6.3",
     "yajra/laravel-datatables-oracle": "~9",
     "yajra/laravel-datatables-buttons": "^4.0",
-    "intervention/image": "^2.4",
+    "intervention/image": "^2.5",
     "components/font-awesome": "^5.9",
     "erusev/parsedown": "^1.7",
     "almasaeed2010/adminlte": "^3.0",
@@ -42,8 +42,8 @@
     "ext-json": "*"
   },
   "require-dev": {
-    "orchestra/testbench": "~3.5",
-    "orchestra/database": "~3.5"
+    "orchestra/testbench": "^4.0",
+    "orchestra/database": "^4.0"
   },
   "extra": {
     "laravel": {

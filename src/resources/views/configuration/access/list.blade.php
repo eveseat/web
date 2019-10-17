@@ -66,11 +66,11 @@
               <td>{{ count($role->permissions) }}</td>
               <td>{{ count($role->affiliations) }}</td>
               <td>
-                <form method="post" action="{{ route('configuration.access.roles.delete', ['id' => $role->id]) }}">
+                <form method="post" action="{{ route('configuration.access.roles.delete', [$role->id]) }}">
                   {{ csrf_field() }}
                   {{ method_field('DELETE') }}
                   <div class="btn-group btn-group-sm float-right">
-                    <a href="{{ route('configuration.access.roles.edit', ['id' => $role->id]) }}" type="button"
+                    <a href="{{ route('configuration.access.roles.edit', [$role->id]) }}" type="button"
                        class="btn btn-warning">
                       <i class="fas fa-pencil-alt"></i>
                       {{ trans('web::seat.edit') }}

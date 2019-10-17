@@ -67,7 +67,7 @@ class AccessController extends Controller
 
         return redirect()
             ->route('configuration.access.roles.edit', [
-                'id' => $role->id,
+                $role->id,
             ])->with('success', trans('web::seat.role_added'));
     }
 

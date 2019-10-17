@@ -5,12 +5,13 @@
     //
     $('#nav-permissions .badge').text($('.permissions-tab input[type="checkbox"]').filter(':checked').length);
 
-    $('.permissions-tab').each(function () {
-      $(this).find('.active-permissions-counter b').text($(this).find('.panel-collapse input[type="checkbox"]').filter(':checked').length);
+    $('#permissions-accordion a').each(function (index, element) {
+        $(this).find('.active-permissions-counter b').text($(element.hash).find('input[type="checkbox"]').filter(':checked').length);
     });
 
-    $('.permissions-tab .panel-collapse input[type="checkbox"]').on('change', function () {
-      var checked_permissions = $(this).closest('.panel-collapse').find('input[type="checkbox"]').filter(':checked').length;
+    $('.permissions-tab input[type="checkbox"]').on('change', function () {
+      var checked_permissions = $(this).closest('.permissions-tab').find('input[type="checkbox"]').filter(':checked').length;
+      $($(this).data('target')).text(checked_permissions);
       $(this).closest('.permissions-tab').find('.panel-heading .active-permissions-counter b').text(checked_permissions);
       $('#nav-permissions .badge').text($('.permissions-tab input[type="checkbox"]').filter(':checked').length);
 
@@ -21,15 +22,15 @@
       if (filter_input.length > 0) {
         if (! $(this).is(':checked')) {
             filter_input.val('{}').trigger('change');
-            $(this).closest('.form-group').find('button').attr('disabled', 'disabled');
+            $(this).closest('.form-check').find('button').attr('disabled', 'disabled');
         } else {
-            $(this).closest('.form-group').find('button').removeAttr('disabled');
+            $(this).closest('.form-check').find('button').removeAttr('disabled');
         }
       }
     });
 
-    $('.permissions-tab .panel-collapse input[type="hidden"]').on('change', function () {
-      var button = $(this).closest('div.form-group').find('button');
+    $('.permissions-tab input[type="hidden"]').on('change', function () {
+      var button = $(this).closest('div.form-check').find('button');
 
       if ($(this).val() !== '{}' && !button.hasClass('btn-warning')) {
         button.addClass('btn-warning').removeClass('btn-default');
@@ -41,10 +42,10 @@
     });
 
     $('.check-all-permissions').on('click', function () {
-      var inputs = $(this).closest('.permissions-tab').find('input[type="checkbox"]');
+      var inputs = $($(this).data('target')).find('input[type="checkbox"]');
       inputs.prop('checked', inputs.length !== inputs.filter(':checked').length).trigger('change');
-      $(this).closest('.panel-title').find('.active-permissions-counter b').text(inputs.filter(':checked').length);
-      $('#nav-permissions .badge').text($('.permissions-tab input[type="checkbox"]').filter(':checked').length);
+      //$(this).closest('.panel-title').find('.active-permissions-counter b').text(inputs.filter(':checked').length);
+      //$('#nav-permissions .badge').text($('.permissions-tab input[type="checkbox"]').filter(':checked').length);
     });
 
     //

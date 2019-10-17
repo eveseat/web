@@ -1,4 +1,4 @@
-<div id="tab-members" class="tab-pane">
+<div role="tabpanel" aria-labelledby="nav-members" id="tab-members" class="tab-pane fade">
   <table class="table table-striped table-hover">
     <thead>
     <tr>

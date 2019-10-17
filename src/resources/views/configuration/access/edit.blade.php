@@ -9,26 +9,30 @@
 @stop
 
 @section('right')
-  <div class="nav-tabs-custom">
-    <ul class="nav nav-tabs">
-      <li class="active" id="nav-permissions">
-        <a href="#tab-permissions" data-toggle="tab">
-          <span class="badge">{{ count($role_permissions) }}</span> {{ trans_choice('web::seat.permission', 0) }}
-        </a>
-      </li>
-      <li id="nav-members">
-        <a href="#tab-members" data-toggle="tab">
-          <span class="badge">{{ $role->groups->where('id', '<>', 1)->count() }}</span> {{ trans_choice('web::seat.member', 0) }}
-        </a>
-      </li>
-    </ul>
-    <div class="tab-content">
-      @include('web::configuration.access.partials.permissions')
-      @include('web::configuration.access.partials.members')
+  <div class="card card-gray card-outline card-outline-tabs">
+    <div class="card-header p-0 border-bottom-0">
+      <ul class="nav nav-tabs" role="tablist">
+        <li id="nav-permissions" class="nav-item">
+          <a href="#tab-permissions" role="tab" data-toggle="pill" aria-controls="tab-members" aria-selected="true" class="nav-link active">
+            <span class="badge badge-secondary">{{ count($role_permissions) }}</span> {{ trans_choice('web::seat.permission', 0) }}
+          </a>
+        </li>
+        <li id="nav-members" class="nav-item">
+          <a href="#tab-members" role="tab" data-toggle="pill" aria-controls="tab-permissions" aria-selected="false" class="nav-link">
+            <span class="badge badge-secondary">{{ $role->groups->where('id', '<>', 1)->count() }}</span> {{ trans_choice('web::seat.member', 0) }}
+          </a>
+        </li>
+      </ul>
+      <div class="tab-content p-3">
+        @include('web::configuration.access.partials.permissions')
+        @include('web::configuration.access.partials.members')
+      </div>
+    </div>
+    <div class="card-body">
+      @include('web::configuration.access.partials.modals.filters')
+      @include('web::configuration.access.partials.modals.members')
     </div>
   </div>
-  @include('web::configuration.access.partials.modals.filters')
-  @include('web::configuration.access.partials.modals.members')
 @stop
 
 @push('javascript')
