@@ -97,19 +97,19 @@
 <div class="modal-dialog" role="document">
   <div class="modal-content">
     <div class="modal-header">
+      <h4 class="modal-title" id="characterSwitchModalLabel">{{ trans('web::seat.switch_character') }}</h4>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
-      <h4 class="modal-title" id="characterSwitchModalLabel">{{ trans('web::seat.switch_character') }}</h4>
     </div>
     <div class="modal-body">
 
-      <table class="table datatable compact table-condensed table-hover table-responsive">
+      <table class="table datatable compact table-condensed table-hover table-striped">
         <thead>
-        <tr>
-          <th>{{ trans_choice('web::seat.user', count(auth()->user()->group->users)) }}</th>
-          <th></th>
-        </tr>
+          <tr>
+            <th>{{ trans_choice('web::seat.user', count(auth()->user()->group->users)) }}</th>
+            <th></th>
+          </tr>
         </thead>
         <tbody>
 
@@ -121,7 +121,7 @@
               {{ $user->name }}
             </td>
             <td>
-              <a href="{{ route('profile.change-character', ['character_id' => $user->character_id]) }}">
+              <a href="{{ route('profile.change-character', ['character_id' => $user->character_id]) }}" class="float-right">
                 {{ trans('web::seat.switch_character') }}
               </a>
             </td>

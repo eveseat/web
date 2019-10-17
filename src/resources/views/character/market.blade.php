@@ -12,7 +12,7 @@
         {{ trans('web::seat.market') }}
       </h3>
       <div class="card-tools">
-        <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.market']) }}" class="float-right">
+        <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.market']) }}" class="text-dark">
           <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_market') }}"></i>
         </a>
       </div>
