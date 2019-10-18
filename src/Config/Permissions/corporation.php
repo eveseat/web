@@ -21,80 +21,166 @@
  */
 
 return [
-    'assets' => [
-        'label'       => 'web::permissions.corporation_assets_label',
-        'description' => 'web::permissions.corporation_assets_description',
+    'summary' => [
+        'label'       => 'web::permissions.corporation_summary_label',
+        'description' => 'web::permissions.corporation_summary_description',
     ],
-    'bookmarks' => [
-        'label'       => 'web::permissions.corporation_bookmarks_label',
-        'description' => 'web::permissions.corporation_bookmarks_description',
+    'asset' => [
+        'label'       => 'web::permissions.corporation_asset_label',
+        'description' => 'web::permissions.corporation_asset_description',
+        'division'    => 'assets',
     ],
-    'contacts' => [
-        'label'       => 'web::permissions.corporation_contacts_label',
-        'description' => 'web::permissions.corporation_contacts_description',
+    'asset_first_division' => [
+        'label'       => 'web::permissions.corporation_asset_first_division_label',
+        'description' => 'web::permissions.corporation_asset_first_division_description',
+        'division'    => 'assets',
     ],
-    'contracts' => [
-        'label'       => 'web::permissions.corporation_contracts_label',
-        'description' => 'web::permissions.corporation_contracts_description',
+    'asset_second_division' => [
+        'label'       => 'web::permissions.corporation_asset_second_division_label',
+        'description' => 'web::permissions.corporation_asset_second_division_description',
+        'division'    => 'assets',
     ],
-    'extractions' => [
-        'label'       => 'web::permissions.corporation_extractions_label',
-        'description' => 'web::permissions.corporation_extractions_description',
+    'asset_third_division' => [
+        'label'       => 'web::permissions.corporation_asset_third_division_label',
+        'description' => 'web::permissions.corporation_asset_third_division_description',
+        'division'    => 'assets',
     ],
-    'industry' => [
-        'label'       => 'web::permissions.corporation_industry_label',
-        'description' => 'web::permissions.corporation_industry_description',
+    'asset_fourth_division' => [
+        'label'       => 'web::permissions.corporation_asset_fourth_division_label',
+        'description' => 'web::permissions.corporation_asset_fourth_division_description',
+        'division'    => 'assets',
     ],
-    'killmails' => [
-        'label'       => 'web::permissions.corporation_killmails_label',
-        'description' => 'web::permissions.corporation_killmails_description',
+    'asset_fifth_division' => [
+        'label'       => 'web::permissions.corporation_asset_fifth_division_label',
+        'description' => 'web::permissions.corporation_asset_fifth_division_description',
+        'division'    => 'assets',
     ],
-    'ledger' => [
-        'label'       => 'web::permissions.corporation_ledger_label',
-        'description' => 'web::permissions.corporation_ledger_description',
+    'asset_sixth_division' => [
+        'label'       => 'web::permissions.corporation_asset_sixth_division_label',
+        'description' => 'web::permissions.corporation_asset_sixth_division_description',
+        'division'    => 'assets',
     ],
-    'market' => [
-        'label'       => 'web::permissions.corporation_market_label',
-        'description' => 'web::permissions.corporation_market_description',
+    'asset_seventh_division' => [
+        'label'       => 'web::permissions.corporation_asset_seventh_division_label',
+        'description' => 'web::permissions.corporation_asset_seventh_division_description',
+        'division'    => 'assets',
+    ],
+    'customs-office' => [
+        'label'       => 'web::permissions.corporation_customs-office_label',
+        'description' => 'web::permissions.corporation_customs-office_description',
+        'division'    => 'assets',
+    ],
+    'starbase' => [
+        'label'       => 'web::permissions.corporation_starbase_label',
+        'description' => 'web::permissions.corporation_starbase_description',
+        'division'    => 'assets',
+    ],
+    'structure' => [
+        'label'       => 'web::permissions.corporation_structure_label',
+        'description' => 'web::permissions.corporation_structure_description',
+        'division'    => 'assets',
     ],
     'mining' => [
         'label'       => 'web::permissions.corporation_mining_label',
         'description' => 'web::permissions.corporation_mining_description',
+        'division'    => 'industrial',
+    ],
+    'extraction' => [
+        'label'       => 'web::permissions.corporation_extraction_label',
+        'description' => 'web::permissions.corporation_extraction_description',
+        'division'    => 'industrial',
+    ],
+    'industry' => [
+        'label'       => 'web::permissions.corporation_industry_label',
+        'description' => 'web::permissions.corporation_industry_description',
+        'division'    => 'industrial',
+    ],
+    'contract' => [
+        'label'       => 'web::permissions.corporation_contract_label',
+        'description' => 'web::permissions.corporation_contract_description',
+        'division'    => 'financial',
+    ],
+    'market' => [
+        'label'       => 'web::permissions.corporation_market_label',
+        'description' => 'web::permissions.corporation_market_description',
+        'division'    => 'financial',
+    ],
+    'ledger' => [
+        'label'       => 'web::permissions.corporation_ledger_label',
+        'description' => 'web::permissions.corporation_ledger_description',
+        'division'    => 'financial',
+    ],
+    'journal' => [
+        'label'       => 'web::permissions.corporation_journal_label',
+        'description' => 'web::permissions.corporation_journal_description',
+        'division'    => 'financial',
+    ],
+    'transaction' => [
+        'label'       => 'web::permissions.corporation_transaction_label',
+        'description' => 'web::permissions.corporation_transaction_description',
+        'division'    => 'financial',
+    ],
+    'wallet_first_division' => [
+        'label'       => 'web::permissions.corporation_wallet_first_division_label',
+        'description' => 'web::permissions.corporation_wallet_first_division_description',
+        'division'    => 'financial',
+    ],
+    'wallet_second_division' => [
+        'label'       => 'web::permissions.corporation_wallet_second_division_label',
+        'description' => 'web::permissions.corporation_wallet_second_division_description',
+        'division'    => 'financial',
+    ],
+    'wallet_third_division' => [
+        'label'       => 'web::permissions.corporation_wallet_third_division_label',
+        'description' => 'web::permissions.corporation_wallet_third_division_description',
+        'division'    => 'financial',
+    ],
+    'wallet_fourth_division' => [
+        'label'       => 'web::permissions.corporation_wallet_fourth_division_label',
+        'description' => 'web::permissions.corporation_wallet_fourth_division_description',
+        'division'    => 'financial',
+    ],
+    'wallet_fifth_division' => [
+        'label'       => 'web::permissions.corporation_wallet_fifth_division_label',
+        'description' => 'web::permissions.corporation_wallet_fifth_division_description',
+        'division'    => 'financial',
+    ],
+    'wallet_sixth_division' => [
+        'label'       => 'web::permissions.corporation_wallet_sixth_division_label',
+        'description' => 'web::permissions.corporation_wallet_sixth_division_description',
+        'division'    => 'financial',
+    ],
+    'wallet_seventh_division' => [
+        'label'       => 'web::permissions.corporation_wallet_seventh_division_label',
+        'description' => 'web::permissions.corporation_wallet_seventh_division_description',
+        'division'    => 'financial',
+    ],
+    'bookmark' => [
+        'label'       => 'web::permissions.corporation_bookmark_label',
+        'description' => 'web::permissions.corporation_bookmark_description',
+        'division'    => 'military',
+    ],
+    'contact' => [
+        'label'       => 'web::permissions.corporation_contact_label',
+        'description' => 'web::permissions.corporation_contact_description',
+        'division'    => 'military',
+    ],
+    'standings' => [
+        'label'       => 'web::permissions.corporation_standing_label',
+        'description' => 'web::permissions.corporation_standing_description',
+        'division'    => 'military',
+    ],
+    'killmail' => [
+        'label'       => 'web::permissions.corporation_killmail_label',
+        'description' => 'web::permissions.corporation_killmail_description',
+        'division'    => 'military',
     ],
     'security' => [
         'label'       => 'web::permissions.corporation_security_label',
         'description' => 'web::permissions.corporation_security_description',
     ],
-    'standings' => [
-        'label'       => 'web::permissions.corporation_standings_label',
-        'description' => 'web::permissions.corporation_standings_description',
-    ],
     'tracking' => [
         'label'       => 'web::permissions.corporation_tracking_label',
         'description' => 'web::permissions.corporation_tracking_description',
-    ],
-    'pocos' => [
-        'label'       => 'web::permissions.corporation_pocos_label',
-        'description' => 'web::permissions.corporation_pocos_description',
-    ],
-    'starbases' => [
-        'label'       => 'web::permissions.corporation_starbases_label',
-        'description' => 'web::permissions.corporation_starbases_description',
-    ],
-    'structures' => [
-        'label'       => 'web::permissions.corporation_structures_label',
-        'description' => 'web::permissions.corporation_structures_description',
-    ],
-    'summary' => [
-        'label'       => 'web::permissions.corporation_summary_label',
-        'description' => 'web::permissions.corporation_summary_description',
-    ],
-    'journal' => [
-        'label'       => 'web::permissions.corporation_journal_label',
-        'description' => 'web::permissions.corporation_journal_description',
-    ],
-    'transactions' => [
-        'label'       => 'web::permissions.corporation_transactions_label',
-        'description' => 'web::permissions.corporation_transactions_description',
     ],
 ];

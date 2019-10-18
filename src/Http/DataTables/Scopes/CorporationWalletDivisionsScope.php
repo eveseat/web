@@ -20,27 +20,43 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\Controllers\Corporation;
+namespace Seat\Web\Http\DataTables\Scopes;
 
-use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Http\DataTables\Corporation\Industrial\CustomOfficeDataTable;
-use Seat\Web\Http\DataTables\Scopes\CorporationScope;
+use Yajra\DataTables\Contracts\DataTableScope;
 
 /**
- * Class CustomOfficeController.
+ * Class CorporationWalletDivisionScope.
  *
- * @package Seat\Web\Http\Controllers\Corporation
+ * This is a corporation wallet division scope.
+ * It will restrict user to the specified divisions.
+ *
+ * @package Seat\Web\Http\DataTables\Scopes
  */
-class CustomOfficeController extends Controller
+class CorporationWalletDivisionsScope implements DataTableScope
 {
     /**
-     * @param int $corporation_id
-     * @param \Seat\Web\Http\DataTables\Corporation\Industrial\CustomOfficeDataTable $data_table
+     * @var array
+     */
+    private $divisions = [];
+
+    /**
+     * CorporationScope constructor.
+     *
+     * @param array $corporation_ids
+     */
+    public function __construct(array $divisions)
+    {
+        $this->divisions = $divisions;
+    }
+
+    /**
+     * Apply a query scope.
+     *
+     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
      * @return mixed
      */
-    public function index(int $corporation_id, CustomOfficeDataTable $data_table)
+    public function apply($query)
     {
-        return $data_table->addScope(new CorporationScope([$corporation_id]))
-            ->render('web::corporation.customs-offices');
+        return $query->whereIn('division', $this->divisions);
     }
 }

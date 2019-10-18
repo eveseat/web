@@ -589,7 +589,7 @@ return [
     'no_known_assets'              => 'No Known Assets',
     'volume_usage'                 => 'Volume Usage',
     'loading_modules'              => 'Loading Module Information...',
-    'pocos'                        => 'Pocos',
+    'customs-offices'              => 'Customs Offices',
     'reinforcement'                => 'Reinforcement',
     'standing_level'               => 'Standing Level',
     'tax_alliance_corp'            => 'Tax: Alliance/Corp',

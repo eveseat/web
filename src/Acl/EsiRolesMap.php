@@ -41,7 +41,7 @@ class EsiRolesMap
         'Accountant'        => [
             'corporation.summary',
             'corporation.journal',
-            'corporation.transactions',
+            'corporation.transaction',
         ],
         'Auditor'           => [
             'corporation.summary',
@@ -60,7 +60,7 @@ class EsiRolesMap
         'Junior_Accountant' => [
             'corporation.summary',
             'corporation.journal',
-            'corporation.transactions',
+            'corporation.transaction',
         ],
         'Security_Officer'  => [
             'corporation.summary',

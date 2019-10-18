@@ -27,6 +27,7 @@ use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Financial\WalletJournalDataTable;
 use Seat\Web\Http\DataTables\Corporation\Financial\WalletTransactionDataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationScope;
+use Seat\Web\Http\DataTables\Scopes\CorporationWalletDivisionsScope;
 
 /**
  * Class WalletController.
@@ -44,7 +45,19 @@ class WalletController extends Controller
     public function journal(int $corporation_id, WalletJournalDataTable $dataTable)
     {
 
+        $division_ids = [];
+        $division_permissions = [
+            'wallet_first_division', 'wallet_second_division', 'wallet_third_division', 'wallet_fourth_division',
+            'wallet_fifth_division', 'wallet_sixth_division', 'wallet_seventh_division',
+        ];
+
+        foreach ($division_permissions as $key => $permission) {
+            if (auth()->user()->has(sprintf('corporation.%s', $permission)))
+                array_push($division_ids, ($key + 1));
+        }
+
         return $dataTable->addScope(new CorporationScope([$corporation_id]))
+            ->addScope(new CorporationWalletDivisionsScope($division_ids))
             ->render('web::corporation.wallet.journal.journal');
     }
 
@@ -56,7 +69,19 @@ class WalletController extends Controller
     public function transactions(int $corporation_id, WalletTransactionDataTable $dataTable)
     {
 
+        $division_ids = [];
+        $division_permissions = [
+            'wallet_first_division', 'wallet_second_division', 'wallet_third_division', 'wallet_fourth_division',
+            'wallet_fifth_division', 'wallet_sixth_division', 'wallet_seventh_division',
+        ];
+
+        foreach ($division_permissions as $key => $permission) {
+            if (auth()->user()->has(sprintf('corporation.%s', $permission)))
+                array_push($division_ids, ($key + 1));
+        }
+
         return $dataTable->addScope(new CorporationScope([$corporation_id]))
+            ->addScope(new CorporationWalletDivisionsScope($division_ids))
             ->render('web::corporation.wallet.transactions.transactions');
     }
 }

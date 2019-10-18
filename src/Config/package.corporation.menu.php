@@ -87,11 +87,11 @@ return [
         'route'          => 'corporation.view.mining_ledger',
     ],
     [
-        'name'           => 'pocos',
-        'label'          => 'web::seat.pocos',
-        'permission'     => 'corporation.pocos',
-        'highlight_view' => 'pocos',
-        'route'          => 'corporation.view.pocos',
+        'name'           => 'customs-offices',
+        'label'          => 'web::seat.customs-offices',
+        'permission'     => 'corporation.customs-office',
+        'highlight_view' => 'customs-offices',
+        'route'          => 'corporation.view.customs-offices',
     ],
     [
         'name'           => 'security',

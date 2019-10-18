@@ -91,8 +91,8 @@ Route::get('/{corporation_id}/mining-ledger/{year?}/{month?}', [
 ]);
 
 Route::get('/{corporation_id}/customs-offices', [
-    'as'         => 'corporation.view.pocos',
-    'middleware' => 'corporationbouncer:pocos',
+    'as'         => 'corporation.view.customs-offices',
+    'middleware' => 'corporationbouncer:customs-office',
     'uses'       => 'CustomOfficeController@index',
 ]);
 
