@@ -25,7 +25,12 @@ Route::get('/', [
     'uses' => 'CorporationsController@index',
 ]);
 
-Route::get('/view/assets/{corporation_id}', [
+Route::get('/{corporation_id}', [
+    'as'         => 'corporation.view.default',
+    'uses'       => 'CorporationsController@show',
+])->where('corporation_id', '[0-9]+');
+
+Route::get('/{corporation_id}/assets', [
     'as'         => 'corporation.view.assets',
     'middleware' => 'corporationbouncer:asset',
     'uses'       => 'AssetsController@getAssets',

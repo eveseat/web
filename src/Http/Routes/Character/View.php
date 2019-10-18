@@ -31,7 +31,12 @@ Route::get('/delete/{character_id}', [
     'uses'       => 'CharacterController@deleteCharacter',
 ]);
 
-Route::get('/view/assets/{character_id}', [
+Route::get('/{character_id}', [
+    'as'   => 'character.view.default',
+    'uses' => 'CharacterController@show',
+])->where('character_id', '[0-9]+');
+
+Route::get('/{character_id}/assets', [
     'as'         => 'character.view.assets',
     'middleware' => 'characterbouncer:asset',
     'uses'       => 'AssetsController@getAssetsView',
