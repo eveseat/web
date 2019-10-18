@@ -42,13 +42,13 @@ Route::get('/{character_id}/assets', [
     'uses'       => 'AssetsController@getAssetsView',
 ]);
 
-Route::get('/view/assets/{character_id}/details', [
+Route::get('/{character_id}/assets/details', [
     'as'         => 'character.view.assets.details',
     'middleware' => 'characterbouncer:asset',
     'uses'       => 'AssetsController@getCharacterAssets',
 ]);
 
-Route::get('/view/bookmarks/{character_id}', [
+Route::get('/{character_id}/bookmarks', [
     'as'         => 'character.view.bookmarks',
     'middleware' => 'characterbouncer:bookmark',
     'uses'       => 'BookmarksController@index',
@@ -96,22 +96,16 @@ Route::get('/{character_id}/industry', [
     'uses'       => 'IndustryController@index',
 ]);
 
-Route::get('/view/industry/data/{character_id}', [
-    'as'         => 'character.view.industry.data',
-    'middleware' => 'characterbouncer:industry',
-    'uses'       => 'IndustryController@getIndustryData',
-]);
+Route::group(['prefix' => '{character_id}/intel'], function () {
 
-Route::group(['prefix' => 'view/intel'], function () {
-
-    Route::get('summary/{character_id}', [
+    Route::get('summary', [
         'as'         => 'character.view.intel.summary',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@getIntelSummary',
     ]);
 
     // Ajax Call Journal
-    Route::get('summary/journal/data/{character_id}', [
+    Route::get('summary/journal/data', [
         'as'         => 'character.view.intel.summary.journal.data',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@getTopWalletJournalData',
@@ -124,81 +118,80 @@ Route::group(['prefix' => 'view/intel'], function () {
     ]);
 
     // Transactions
-    Route::get('summary/transactions/data/{character_id}', [
+    Route::get('summary/transactions/data', [
         'as'         => 'character.view.intel.summary.transactions.data',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@getTopTransactionsData',
     ]);
 
-    Route::get('summary/transactions/details/{character_id}/{client_id}', [
+    Route::get('summary/transactions/details/{client_id}', [
         'as'         => 'character.view.intel.summary.transactions.details',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@getTransactionContent',
     ]);
 
     // Mail
-    Route::get('summary/mail/data/{character_id}', [
+    Route::get('summary/mail/data', [
         'as'         => 'character.view.intel.summary.mail.data',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@getTopMailFromData',
     ]);
 
-    Route::get('summary/mail/details/{character_id}/{from}', [
+    Route::get('summary/mail/details/{from}', [
         'as'         => 'character.view.intel.summary.mail.details',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@getTopMailContent',
     ]);
 
     // Standings Comparison
-    Route::get('comparison/{character_id}', [
+    Route::get('comparison', [
         'as'         => 'character.view.intel.standingscomparison',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@getStandingsComparison',
     ]);
 
-    Route::get('comparison/data/{character_id}/{profile_id}', [
+    Route::get('comparison/data/{profile_id}', [
         'as'         => 'character.view.intel.standingscomparison.data',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@getCompareStandingsWithProfileData',
     ]);
 
     // Notes
-    Route::get('notes/{character_id}', [
+    Route::get('notes', [
         'as'         => 'character.view.intel.notes',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@getNotes',
     ]);
 
-    Route::get('notes/data/{character_id}', [
+    Route::get('notes/data', [
         'as'         => 'character.view.intel.notes.data',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@getNotesData',
     ]);
 
-    Route::get('notes/single/data/{character_id}/{note_id}', [
+    Route::get('notes/single/data/{note_id}', [
         'as'         => 'character.view.intel.notes.single.data',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@getSingleNotesData',
     ]);
 
-    Route::post('notes/new/{character_id}', [
+    Route::post('notes/new', [
         'as'         => 'character.view.intel.notes.new',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@postAddNew',
     ]);
 
-    Route::post('notes/update/{character_id}', [
+    Route::post('notes/update', [
         'as'         => 'character.view.intel.notes.update',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@postUpdateNote',
     ]);
 
-    Route::get('notes/delete/{character_id}/{note_id}', [
+    Route::get('notes/delete/{note_id}', [
         'as'         => 'character.view.intel.notes.delete',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@getDeleteNote',
     ]);
-
 });
 
 Route::get('/{character_id}/journal', [
@@ -265,7 +258,7 @@ Route::get('/{character_id}/notifications', [
     'uses'       => 'NotificationsController@index',
 ]);
 
-Route::get('/view/pi/{character_id}', [
+Route::get('/{character_id}/pi', [
     'as'         => 'character.view.pi',
     'middleware' => 'characterbouncer:pi',
     'uses'       => 'PiController@getPi',
@@ -283,7 +276,7 @@ Route::get('/{character_id}/sheet', [
     'uses'       => 'SheetController@show',
 ]);
 
-Route::get('/view/skills/{character_id}', [
+Route::get('/{character_id}/skills', [
     'as'         => 'character.view.skills',
     'middleware' => 'characterbouncer:skill',
     'uses'       => 'SkillsController@getSkills',

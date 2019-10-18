@@ -36,7 +36,7 @@ Route::get('/{corporation_id}/assets', [
     'uses'       => 'AssetsController@getAssets',
 ]);
 
-Route::get('/view/assets/contents/{corporation_id}/{item_id}', [
+Route::get('/{corporation_id}/assets/contents/{item_id}', [
     'as'         => 'corporation.view.assets.contents',
     'middleware' => 'corporationbouncer:asset',
     'uses'       => 'AssetsController@getAssetsContents',
@@ -96,55 +96,54 @@ Route::get('/{corporation_id}/customs-offices', [
     'uses'       => 'CustomOfficeController@index',
 ]);
 
-Route::get('/view/extractions/{corporation_id}', [
+Route::get('/{corporation_id}/extractions', [
     'as'         => 'corporation.view.extractions',
     'middleware' => 'corporationbouncer:extraction',
     'uses'       => 'ExtractionController@getExtractions',
 ]);
 
-Route::post('/view/extractions/report', [
+Route::post('/extractions/report', [
     'as'         => 'corporation.view.extractions.probe-report',
     'middleware' => 'corporationbouncer:extraction',
     'uses'       => 'ExtractionController@postProbeReport',
 ]);
 
-Route::group(['prefix' => 'view/security'], function () {
+Route::group(['prefix' => '{corporation_id}/security'], function () {
 
-    Route::get('roles/{corporation_id}', [
+    Route::get('roles', [
         'as'         => 'corporation.view.security.roles',
         'middleware' => 'corporationbouncer:security',
         'uses'       => 'SecurityController@getRoles',
     ]);
 
-    Route::get('titles/{corporation_id}', [
+    Route::get('titles', [
         'as'         => 'corporation.view.security.titles',
         'middleware' => 'corporationbouncer:security',
         'uses'       => 'SecurityController@getTitles',
     ]);
 
+    Route::get('logs', [
+        'as' => 'corporation.view.security.log',
+        'middleware' => 'corporationbouncer:security',
+        'uses'       => 'SecurityController@getLogs',
+    ]);
 });
 
-Route::get('/{corporation_id}/security/logs', [
-    'as' => 'corporation.view.security.log',
-    'middleware' => 'corporationbouncer:security',
-    'uses'       => 'SecurityController@getLogs',
-]);
+Route::group(['prefix' => '{corporation_id}/ledger'], function () {
 
-Route::group(['prefix' => 'view/ledger'], function () {
-
-    Route::get('summary/{corporation_id}', [
+    Route::get('summary', [
         'as'         => 'corporation.view.ledger.summary',
         'middleware' => 'corporationbouncer:ledger',
         'uses'       => 'LedgerController@getWalletSummary',
     ]);
 
-    Route::get('bountyprizes/{corporation_id}/{year?}/{month?}', [
+    Route::get('bountyprizes/{year?}/{month?}', [
         'as'         => 'corporation.view.ledger.bountyprizesbymonth',
         'middleware' => 'corporationbouncer:ledger',
         'uses'       => 'LedgerController@getBountyPrizesByMonth',
     ]);
 
-    Route::get('planetaryinteraction/{corporation_id}/{year?}/{month?}', [
+    Route::get('planetaryinteraction/{year?}/{month?}', [
         'as'         => 'corporation.view.ledger.planetaryinteraction',
         'middleware' => 'corporationbouncer:ledger',
         'uses'       => 'LedgerController@getPlanetaryInteractionByMonth',
@@ -164,31 +163,31 @@ Route::get('/{corporation_id}/standings', [
     'uses'       => 'StandingsController@index',
 ]);
 
-Route::get('/view/starbases/{corporation_id}', [
+Route::get('/{corporation_id}/starbases', [
     'as'         => 'corporation.view.starbases',
     'middleware' => 'corporationbouncer:starbase',
     'uses'       => 'StarbaseController@getStarbases',
 ]);
 
-Route::post('/view/starbase/modules/{corporation_id}', [
+Route::post('/{corporation_id}/starbase/modules', [
     'as'         => 'corporation.view.starbase.modules',
     'middleware' => 'corporationbouncer:starbase',
     'uses'       => 'StarbaseController@postStarbaseModules',
 ]);
 
-Route::get('/view/structures/{corporation_id}', [
+Route::get('/{corporation_id}/structures', [
     'as'         => 'corporation.view.structures',
     'middleware' => 'corporationbouncer:structure',
     'uses'       => 'StructureController@getStructures',
 ]);
 
-Route::get('/view/tracking/{corporation_id}', [
+Route::get('/{corporation_id}/tracking', [
     'as'         => 'corporation.view.tracking',
     'middleware' => 'corporationbouncer:tracking',
     'uses'       => 'TrackingController@getTracking',
 ]);
 
-Route::get('/view/tracking/{corporation_id}/membertracking', [
+Route::get('/{corporation_id}/tracking/member-tracking', [
     'as'         => 'corporation.view.tracking.data',
     'middleware' => 'corporationbouncer:tracking',
     'uses'       => 'TrackingController@getMemberTracking',
