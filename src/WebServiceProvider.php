@@ -22,6 +22,7 @@
 
 namespace Seat\Web;
 
+use App\Providers\AbstractSeatPlugin;
 use Illuminate\Auth\Events\Attempting;
 use Illuminate\Auth\Events\Login as LoginEvent;
 use Illuminate\Auth\Events\Logout as LogoutEvent;
@@ -29,7 +30,6 @@ use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Horizon\Horizon;
-use Seat\Services\AbstractSeatPlugin;
 use Seat\Web\Events\Attempt;
 use Seat\Web\Events\Login;
 use Seat\Web\Events\Logout;
