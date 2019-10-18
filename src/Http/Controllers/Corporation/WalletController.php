@@ -27,7 +27,6 @@ use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Financial\WalletJournalDataTable;
 use Seat\Web\Http\DataTables\Corporation\Financial\WalletTransactionDataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationScope;
-use Yajra\DataTables\DataTables;
 
 /**
  * Class WalletController.

@@ -30,7 +30,6 @@ use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Intel\MailDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 use Seat\Web\Models\User;
-use Yajra\DataTables\DataTables;
 
 /**
  * Class MailController.
