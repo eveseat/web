@@ -27,37 +27,37 @@ Route::get('/', [
 
 Route::get('/view/assets/{corporation_id}', [
     'as'         => 'corporation.view.assets',
-    'middleware' => 'corporationbouncer:assets',
+    'middleware' => 'corporationbouncer:asset',
     'uses'       => 'AssetsController@getAssets',
 ]);
 
 Route::get('/view/assets/contents/{corporation_id}/{item_id}', [
     'as'         => 'corporation.view.assets.contents',
-    'middleware' => 'corporationbouncer:assets',
+    'middleware' => 'corporationbouncer:asset',
     'uses'       => 'AssetsController@getAssetsContents',
 ]);
 
 Route::get('/{corporation_id}/bookmarks', [
     'as'         => 'corporation.view.bookmarks',
-    'middleware' => 'corporationbouncer:bookmarks',
+    'middleware' => 'corporationbouncer:bookmark',
     'uses'       => 'BookmarksController@index',
 ]);
 
 Route::get('/{corporation_id}/contacts', [
     'as'         => 'corporation.view.contacts',
-    'middleware' => 'corporationbouncer:contacts',
+    'middleware' => 'corporationbouncer:contact',
     'uses'       => 'ContactsController@index',
 ]);
 
 Route::get('/{corporation_id}/contracts', [
     'as'         => 'corporation.view.contracts',
-    'middleware' => 'corporationbouncer:contracts',
+    'middleware' => 'corporationbouncer:contract',
     'uses'       => 'ContractsController@index',
 ]);
 
 Route::get('/{corporation_id}/contracts/{contract_id}', [
     'as'         => 'corporation.view.contracts.items',
-    'middleware' => 'corporationbouncer:contracts',
+    'middleware' => 'corporationbouncer:contract',
     'uses'       => 'ContractsController@show',
 ]);
 
@@ -75,7 +75,7 @@ Route::get('/view/industry/data/{corporation_id}', [
 
 Route::get('/{corporation_id}/killmails', [
     'as'         => 'corporation.view.killmails',
-    'middleware' => 'corporationbouncer:killmails',
+    'middleware' => 'corporationbouncer:killmail',
     'uses'       => 'KillmailsController@index',
 ]);
 
@@ -105,13 +105,13 @@ Route::get('/{corporation_id}/customs-offices', [
 
 Route::get('/view/extractions/{corporation_id}', [
     'as'         => 'corporation.view.extractions',
-    'middleware' => 'corporationbouncer:extractions',
+    'middleware' => 'corporationbouncer:extraction',
     'uses'       => 'ExtractionController@getExtractions',
 ]);
 
 Route::post('/view/extractions/report', [
     'as'         => 'corporation.view.extractions.probe-report',
-    'middleware' => 'corporationbouncer:extractions',
+    'middleware' => 'corporationbouncer:extraction',
     'uses'       => 'ExtractionController@postProbeReport',
 ]);
 
@@ -167,25 +167,25 @@ Route::get('/{corporation_id}/summary', [
 
 Route::get('/{corporation_id}/standings', [
     'as'         => 'corporation.view.standings',
-    'middleware' => 'corporationbouncer:standings',
+    'middleware' => 'corporationbouncer:standing',
     'uses'       => 'StandingsController@index',
 ]);
 
 Route::get('/view/starbases/{corporation_id}', [
     'as'         => 'corporation.view.starbases',
-    'middleware' => 'corporationbouncer:starbases',
+    'middleware' => 'corporationbouncer:starbase',
     'uses'       => 'StarbaseController@getStarbases',
 ]);
 
 Route::post('/view/starbase/modules/{corporation_id}', [
     'as'         => 'corporation.view.starbase.modules',
-    'middleware' => 'corporationbouncer:starbases',
+    'middleware' => 'corporationbouncer:starbase',
     'uses'       => 'StarbaseController@postStarbaseModules',
 ]);
 
 Route::get('/view/structures/{corporation_id}', [
     'as'         => 'corporation.view.structures',
-    'middleware' => 'corporationbouncer:structures',
+    'middleware' => 'corporationbouncer:structure',
     'uses'       => 'StructureController@getStructures',
 ]);
 
@@ -215,7 +215,7 @@ Route::get('/view/journal/data/{corporation_id}', [
 
 Route::get('/{corporation_id}/transactions', [
     'as'         => 'corporation.view.transactions',
-    'middleware' => 'corporationbouncer:transactions',
+    'middleware' => 'corporationbouncer:transaction',
     'uses'       => 'WalletController@transactions',
 ]);
 

@@ -53,7 +53,6 @@ return [
     'character_mining_label'             => 'Grant access to Character Mining',
     'character_mining_description'       => 'The Character Mining is showing stats regarding mining made by a character. It is based on the in-game Personal Mining Ledger and show date, system, ore, quantity, volume and average value.',
     'character_notification_label'       => 'Grant access to Character Notification',
-    'character_notification_description' => '',
     'character_planetary_label'          => 'Grant access to Character Planetary Interaction',
     'character_planetary_description'    => 'Display planets on which the character deploy a command center and the linked installations.',
     'character_research_label'           => 'Grant access to Character Research Agents',
@@ -108,36 +107,4 @@ return [
     'corporation_journal_description'      => 'This will show the Wallet Journal from the corporation.',
     'corporation_transactions_label'       => 'Grant access to Corporation Wallet Transactions',
     'corporation_transactions_description' => 'This will show the Wallet Transaction from the corporation.',
-
-    // Mail Scope
-    'mail_bodies_label'         => '',
-    'mail_bodies_description'   => '',
-    'mail_subjects_label'       => '',
-    'mail_subjects_description' => '',
-
-    // People Scope
-    'people_create_label'       => '',
-    'people_create_description' => '',
-    'people_edit_label'         => '',
-    'people_edit_description'   => '',
-    'people_view_label'         => '',
-    'people_view_description'   => '',
-
-    // Search Scope
-    'search_character_assets_label'              => '',
-    'search_character_assets_description'        => '',
-    'search_character_contact_lists_label'       => '',
-    'search_character_contact_lists_description' => '',
-    'search_character_mail_label'                => '',
-    'search_character_mail_description'          => '',
-    'search_characters_label'                    => '',
-    'search_characters_description'              => '',
-    'search_character_skills_label'              => '',
-    'search_character_skills_description'        => '',
-    'search_character_standings_label'           => '',
-    'search_character_standings_description'     => '',
-    'search_corporation_assets_label'            => '',
-    'search_corporation_assets_description'      => '',
-    'search_corporation_standings_label'         => '',
-    'search_corporation_standings_description'   => '',
 ];

@@ -21,7 +21,7 @@
  */
 
 Route::get('/dispatch/{character_id}/{job_name}', [
-    'middleware' => 'characterbouncer:jobs',
+    'middleware' => 'characterbouncer:job',
     'as'         => 'tools.jobs.dispatch',
     'uses'       => 'JobController@getDispatchUpdateJob',
 ]);

@@ -333,8 +333,6 @@ class WebServiceProvider extends AbstractSeatPlugin
         $this->mergeConfigFrom(
             __DIR__ . '/Config/web.config.php', 'web.config');
         $this->mergeConfigFrom(
-            __DIR__ . '/Config/web.permissions.php', 'web.permissions');
-        $this->mergeConfigFrom(
             __DIR__ . '/Config/web.locale.php', 'web.locale');
 
         // Menu Configurations
@@ -348,6 +346,16 @@ class WebServiceProvider extends AbstractSeatPlugin
         // Helper configurations
         $this->mergeConfigFrom(__DIR__ . '/Config/web.jobnames.php', 'web.jobnames');
         $this->mergeConfigFrom(__DIR__ . '/Config/seat.php', 'seat.config');
+
+        // Permissions
+        $this->registerPermissions(__DIR__ . '/Config/Permissions/character.php', 'character');
+        $this->registerPermissions(__DIR__ . '/Config/Permissions/corporation.php', 'corporation');
+        $this->registerPermissions(__DIR__ . '/Config/Permissions/global.php', 'global');
+        $this->registerPermissions(__DIR__ . '/Config/Permissions/mail.php', 'mail');
+        $this->registerPermissions(__DIR__ . '/Config/Permissions/people.php', 'people');
+        $this->registerPermissions(__DIR__ . '/Config/Permissions/search.php', 'search');
+
+        //dd($this->app['config']);
 
         // Register any extra services.
         $this->register_services();

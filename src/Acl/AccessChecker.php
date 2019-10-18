@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Acl;
 
+use Illuminate\Support\Arr;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Character\Character;
@@ -175,29 +176,37 @@ trait AccessChecker
             $query->whereIn('title', $array_permission);
         })->get();
 
-        if ($roles->isEmpty())
-            return false;
-
         // loop over each roles assigned to the currently authenticated user
-        foreach ($roles as $role) {
+        if (! $roles->isEmpty()) {
+            foreach ($roles as $role) {
 
-            // pull permissions which are matching to the requested permissions
-            $permissions = $role->permissions->whereIn('title', $array_permission)->filter(function ($permission) {
-                return ! $permission->isGlobalScope();
-            });
+                // pull permissions which are matching to the requested permissions
+                $permissions = $role->permissions->whereIn('title', $array_permission)->filter(function ($permission) {
+                    return ! $permission->isGlobalScope();
+                });
 
-            foreach ($permissions as $role_permission) {
+                foreach ($permissions as $role_permission) {
 
-                // in case the permission does not have any filters, grant access
-                if (is_null($role_permission->pivot->filters))
-                    return true;
+                    // in case the permission does not have any filters, grant access
+                    if (is_null($role_permission->pivot->filters))
+                        return true;
 
-                // decode the filters into an object
-                $filters = json_decode($role_permission->pivot->filters);
+                    // decode the filters into an object
+                    $filters = json_decode($role_permission->pivot->filters);
 
-                if ($this->isGrantedByFilters($role_permission, $filters, $character ?: $corporation))
-                    return true;
+                    if ($this->isGrantedByFilters($role_permission, $filters, $character ?: $corporation))
+                        return true;
+                }
             }
+        }
+
+        if (! is_null($corporation)) {
+            $corporation_permissions = Arr::get($this->getPermissionsFromCorporationRoles(), request()->corporation_id);
+
+            if (in_array('corporation.*', $corporation_permissions))
+                return true;
+
+            return in_array($requested_permission, $corporation_permissions);
         }
 
         return false;

@@ -3,13 +3,7 @@
     <div class="row">
       <div class="col-md-4">
         <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
-          @foreach(collect(config('web.permissions'))->mapToGroups(function ($item, $key) {
-            if (is_int($key)) return ['global' => $item];
-            return [$key => $item];
-          })->map(function ($item) {
-            if(is_array($item->first())) return $item->first();
-            return $item;
-          }) as $scope => $permissions)
+          @foreach(collect(config('seat.permissions'))->sortKeys() as $scope => $permissions)
             <a class="nav-link mt-0 border-top-0 @if($loop->first) active show @endif" data-toggle="pill" href="#{{ $scope }}-permissions-content" role="tab" aria-controls="{{ $scope }}-permissions-content" aria-selected="{{ $loop->first ? 'active' : 'false' }}">
               {{ ucfirst($scope) }}
               <span class="active-permissions-counter">(<b id="scope-{{ $scope }}-counter">0</b>/{{ count($permissions) }})</span>
@@ -25,23 +19,17 @@
       </div>
       <div class="col-md-8">
         <div class="tab-content">
-            @foreach(collect(config('web.permissions'))->mapToGroups(function ($item, $key) {
-              if (is_int($key)) return ['global' => $item];
-              return [$key => $item];
-            })->map(function ($item) {
-              if(is_array($item->first())) return $item->first();
-              return $item;
-            }) as $scope => $permissions)
+            @foreach(collect(config('seat.permissions'))->sortKeys() as $scope => $permissions)
               <div id="{{ $scope }}-permissions-content" class="tab-pane permissions-tab p-3 fade @if($loop->first) active show @endif"
                    role="tabpanel" aria-labelledby="{{ $scope }}-permissions">
                 @foreach($permissions as $ability => $permission)
                   @include('web::configuration.access.partials.permissions.inputs.permission', [
                     'scope'       => $scope,
                     'ability'     => is_array($permission) ? $ability : $permission,
-                    'label'       => (is_array($permission) && array_key_exists('label', $permission)) ? trans($permission['label']) : ucfirst($permission),
-                    'description' => (is_array($permission) && array_key_exists('description', $permission)) ? trans($permission['description']) : '',
+                    'label'       => trans($permission['label']),
+                    'description' => array_key_exists('description', $permission) ? trans($permission['description']) : '',
                     'filters'     => $role->permissions->where('title', sprintf('%s.%s', $scope, $ability))->first() ? $role->permissions->where('title', sprintf('%s.%s', $scope, $ability))->first()->pivot->filters : null,
-                    'is_granted'  => $scope == 'global' ? in_array($permission, $role_permissions) : in_array(sprintf('%s.%s', $scope, $ability), $role_permissions),
+                    'is_granted'  => in_array($scope, ['character', 'corporation']) ? in_array(sprintf('%s.%s', $scope, $ability), $role_permissions) : in_array($permission, $role_permissions),
                     'role_id'     => $role->id
                   ])
                 @endforeach

@@ -38,19 +38,19 @@ Route::get('/delete/{character_id}', [
 
 Route::get('/view/assets/{character_id}', [
     'as'         => 'character.view.assets',
-    'middleware' => 'characterbouncer:assets',
+    'middleware' => 'characterbouncer:asset',
     'uses'       => 'AssetsController@getAssetsView',
 ]);
 
 Route::get('/view/assets/{character_id}/details', [
     'as'         => 'character.view.assets.details',
-    'middleware' => 'characterbouncer:assets',
+    'middleware' => 'characterbouncer:asset',
     'uses'       => 'AssetsController@getCharacterAssets',
 ]);
 
 Route::get('/view/bookmarks/{character_id}', [
     'as'         => 'character.view.bookmarks',
-    'middleware' => 'characterbouncer:bookmarks',
+    'middleware' => 'characterbouncer:bookmark',
     'uses'       => 'BookmarksController@index',
 ]);
 
@@ -62,31 +62,31 @@ Route::get('/{character_id}/calendar', [
 
 Route::get('/{character_id}/contacts', [
     'as'         => 'character.view.contacts',
-    'middleware' => 'characterbouncer:contacts',
+    'middleware' => 'characterbouncer:contact',
     'uses'       => 'ContactsController@index',
 ]);
 
 Route::get('/{character_id}/contracts', [
     'as'         => 'character.view.contracts',
-    'middleware' => 'characterbouncer:contracts',
+    'middleware' => 'characterbouncer:contract',
     'uses'       => 'ContractsController@index',
 ]);
 
 Route::get('/{character_id}/contracts/{contract_id}', [
     'as'         => 'character.view.contracts.items',
-    'middleware' => 'characterbouncer:contracts',
+    'middleware' => 'characterbouncer:contract',
     'uses'       => 'ContractsController@show',
 ]);
 
 Route::get('/{character_id}/fittings', [
     'as'         => 'character.view.fittings',
-    'middleware' => 'characterbouncer:fittings',
+    'middleware' => 'characterbouncer:fitting',
     'uses'       => 'FittingController@index',
 ]);
 
 Route::get('/{character_id}/fittings/{fitting_id}', [
     'as'         => 'character.view.fittings.items',
-    'middleware' => 'characterbouncer:fittings',
+    'middleware' => 'characterbouncer:fitting',
     'uses'       => 'FittingController@show',
 ]);
 
@@ -221,7 +221,7 @@ Route::get('/view/journal/graph/balance/{character_id}', [
 
 Route::get('/{character_id}/killmails', [
     'as'         => 'character.view.killmails',
-    'middleware' => 'characterbouncer:killmails',
+    'middleware' => 'characterbouncer:killmail',
     'uses'       => 'KillmailController@index',
 ]);
 
@@ -303,7 +303,7 @@ Route::get('/{character_id}/sheet', [
 
 Route::get('/view/skills/{character_id}', [
     'as'         => 'character.view.skills',
-    'middleware' => 'characterbouncer:skills',
+    'middleware' => 'characterbouncer:skill',
     'uses'       => 'SkillsController@getSkills',
 ]);
 
@@ -321,13 +321,13 @@ Route::get('/view/skills/graph/coverage/{character_id}', [
 
 Route::get('/{character_id}/standings', [
     'as'         => 'character.view.standings',
-    'middleware' => 'characterbouncer:standings',
+    'middleware' => 'characterbouncer:standing',
     'uses'       => 'StandingsController@index',
 ]);
 
 Route::get('/{character_id}/transactions', [
     'as'         => 'character.view.transactions',
-    'middleware' => 'characterbouncer:transactions',
+    'middleware' => 'characterbouncer:transaction',
     'uses'       => 'WalletController@transactions',
 ]);
 

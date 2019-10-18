@@ -133,7 +133,7 @@ class AccessController extends Controller
         $removed_counter = 0;
         $filter_counter = 0;
 
-        foreach (config('web.permissions') as $scope => $permissions) {
+        foreach (config('seat.permissions') as $scope => $permissions) {
 
             // in case the permission does not have any scope, cast it into an array
             if (! is_array($permissions))
