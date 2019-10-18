@@ -60,39 +60,4 @@ class WalletController extends Controller
         return $dataTable->addScope(new CorporationScope([$corporation_id]))
             ->render('web::corporation.wallet.transactions.transactions');
     }
-
-    /**
-     * @param int $corporation_id
-     *
-     * @return mixed
-     * @throws \Exception
-     */
-    public function getTransactionsData(int $corporation_id)
-    {
-
-        $transactions = $this->getCorporationWalletTransactions($corporation_id, false);
-
-        return DataTables::of($transactions)
-            ->editColumn('is_buy', function ($row) {
-
-                return view('web::partials.transactiontype', compact('row'))
-                    ->render();
-            })
-            ->editColumn('unit_price', function ($row) {
-
-                return number($row->unit_price);
-            })
-            ->addColumn('total', function ($row) {
-
-                return number($row->unit_price * $row->quantity);
-            })
-            ->editColumn('client_id', function ($row) {
-
-                return view('web::partials.transactionclient', compact('row'))
-                    ->render();
-            })
-            ->rawColumns(['is_buy', 'client_id'])
-            ->make(true);
-
-    }
 }

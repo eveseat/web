@@ -25,11 +25,6 @@ Route::get('/', [
     'uses' => 'CharacterController@index',
 ]);
 
-Route::get('/list/data', [
-    'as'   => 'character.list.data',
-    'uses' => 'CharacterController@getCharactersData',
-]);
-
 Route::get('/delete/{character_id}', [
     'as'         => 'character.delete',
     'middleware' => 'bouncer:superuser',
@@ -207,12 +202,6 @@ Route::get('/{character_id}/journal', [
     'uses'       => 'WalletController@journal',
 ]);
 
-Route::get('/view/journal/data/{character_id}', [
-    'as'         => 'character.view.journal.data',
-    'middleware' => 'characterbouncer:journal',
-    'uses'       => 'WalletController@getJournalData',
-]);
-
 Route::get('/view/journal/graph/balance/{character_id}', [
     'as'         => 'character.view.journal.graph.balance',
     'middleware' => 'characterbouncer:journal',
@@ -223,12 +212,6 @@ Route::get('/{character_id}/killmails', [
     'as'         => 'character.view.killmails',
     'middleware' => 'characterbouncer:killmail',
     'uses'       => 'KillmailController@index',
-]);
-
-Route::get('/view/killmails/data/{character_id}', [
-    'as'         => 'character.view.killmails.data',
-    'middleware' => 'characterbouncer:killmails',
-    'uses'       => 'KillmailController@getKillmailsData',
 ]);
 
 Route::get('/view/mail/timeline', [
@@ -251,12 +234,6 @@ Route::get('/{character_id}/mail/{message_id}', [
     'as'         => 'character.view.mail.read',
     'middleware' => 'characterbouncer:mail',
     'uses'       => 'MailController@show',
-]);
-
-Route::get('/view/mail/data/{character_id}', [
-    'as'         => 'character.view.mail.data',
-    'middleware' => 'characterbouncer:mail',
-    'uses'       => 'MailController@getMailData',
 ]);
 
 Route::get('/{character_id}/markets', [
@@ -329,10 +306,4 @@ Route::get('/{character_id}/transactions', [
     'as'         => 'character.view.transactions',
     'middleware' => 'characterbouncer:transaction',
     'uses'       => 'WalletController@transactions',
-]);
-
-Route::get('/view/transactions/data/{character_id}', [
-    'as'         => 'character.view.transactions.data',
-    'middleware' => 'characterbouncer:transactions',
-    'uses'       => 'WalletController@getTransactionsData',
 ]);

@@ -67,22 +67,10 @@ Route::get('/{corporation_id}/industry', [
     'uses'       => 'IndustryController@index',
 ]);
 
-Route::get('/view/industry/data/{corporation_id}', [
-    'as'         => 'corporation.view.industry.data',
-    'middleware' => 'corporationbouncer:industry',
-    'uses'       => 'IndustryController@getIndustryData',
-]);
-
 Route::get('/{corporation_id}/killmails', [
     'as'         => 'corporation.view.killmails',
     'middleware' => 'corporationbouncer:killmail',
     'uses'       => 'KillmailsController@index',
-]);
-
-Route::get('/view/killmails/data/{corporation_id}', [
-    'as'         => 'corporation.view.killmails.data',
-    'middleware' => 'corporationbouncer:killmails',
-    'uses'       => 'KillmailsController@getKillmailsData',
 ]);
 
 Route::get('/{corporation_id}/markets', [
@@ -207,20 +195,8 @@ Route::get('/{corporation_id}/journal', [
     'uses'       => 'WalletController@journal',
 ]);
 
-Route::get('/view/journal/data/{corporation_id}', [
-    'as'         => 'corporation.view.journal.data',
-    'middleware' => 'corporationbouncer:journal',
-    'uses'       => 'WalletController@getJournalData',
-]);
-
 Route::get('/{corporation_id}/transactions', [
     'as'         => 'corporation.view.transactions',
     'middleware' => 'corporationbouncer:transaction',
     'uses'       => 'WalletController@transactions',
-]);
-
-Route::get('/view/transactions/data/{corporation_id}', [
-    'as'         => 'corporation.view.transactions.data',
-    'middleware' => 'corporationbouncer:transactions',
-    'uses'       => 'WalletController@getTransactionsData',
 ]);
