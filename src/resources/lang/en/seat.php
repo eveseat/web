@@ -366,9 +366,11 @@ return [
 
     // Ledger
     'ledger'                       => 'Wallet Ledger',
-    'bountyprizesbymonth'          => 'Bounty Prizes By Month',
-    'bountyprizetotal'             => 'Prize Total',
-    'pitotals'                     => 'PI Total Taxes',
+    'bounty_prizes'                => 'Bounty Prizes',
+    'offices_rentals'              => 'Offices Rentals',
+    'industry_facility'            => 'Industry Facility',
+    'reprocessing'                 => 'Reprocessing',
+    'jump_bridges'                 => 'Jump Bridges',
     'wallet_division_name'         => 'Wallet Division Name',
     'wallet_summary'               => 'Wallet Summary|Wallet Summaries',
 
