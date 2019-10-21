@@ -11,13 +11,13 @@
   <tbody>
     <tr>
       <td class="text-center">
-        @include('web::partials.character', ['character' => $contract->issuer->entity_id])
+        @include('web::partials.character', ['character' => $contract->issuer])
       </td>
       <td class="text-center">
-        @include('web::partials.character', ['character' => $contract->assignee->entity_id])
+        @include('web::partials.character', ['character' => $contract->assignee])
       </td>
       <td class="text-center">
-        @include('web::partials.character', ['character' => $contract->acceptor->entity_id])
+        @include('web::partials.character', ['character' => $contract->acceptor])
       </td>
     </tr>
   </tbody>

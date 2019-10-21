@@ -54,11 +54,11 @@ class CorporationDataTable extends DataTable
                     $row->member_count, $row->member_limit->limit, number($row->member_count / $row->member_limit->limit * 100));
             })
             ->addColumn('ceo', function ($row) {
-                return view('web::partials.character', ['character' => $row->ceo_id]);
+                return view('web::partials.character', ['character' => $row->ceo]);
             })
             ->addColumn('alliance', function ($row) {
                 if (! is_null($row->alliance_id))
-                    return view('web::partials.alliance', ['alliance' => $row->alliance_id]);
+                    return view('web::partials.alliance', ['alliance' => $row->alliance]);
 
                 return '';
             })
