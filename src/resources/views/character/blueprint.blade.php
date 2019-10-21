@@ -26,8 +26,8 @@
       </div>
       <div class="mb-3">
         <div class="btn-group d-flex">
-          <button type="button" id="dt-filters-bpo" class="btn btn-primary w-50 active">Original</button>
-          <button type="button" id="dt-filters-bpc" class="btn btn-info w-50 active">Copy</button>
+          <button type="button" id="dt-filters-bpo" class="btn btn-primary active">Original</button>
+          <button type="button" id="dt-filters-bpc" class="btn btn-info active">Copy</button>
         </div>
       </div>
 
