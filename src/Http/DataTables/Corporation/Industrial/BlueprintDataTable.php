@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -26,7 +27,7 @@ use Seat\Eveapi\Models\Corporation\CorporationDivision;
 use Seat\Web\Http\DataTables\Common\Industrial\AbstractBlueprintDataTable;
 
 /**
- * Class BlueprintDataTable
+ * Class BlueprintDataTable.
  *
  * @package Seat\Web\Http\DataTables\Corporation\Industrial
  */

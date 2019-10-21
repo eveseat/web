@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -28,7 +29,7 @@ use Seat\Web\Http\DataTables\Scopes\Filters\BlueprintCopyScope;
 use Seat\Web\Http\DataTables\Scopes\Filters\BlueprintOriginalScope;
 
 /**
- * Class BlueprintController
+ * Class BlueprintController.
  *
  * @package Seat\Web\Http\Controllers\Character
  */
@@ -43,10 +44,10 @@ class BlueprintController extends Controller
     {
         $dataTable->addScope(new CorporationScope([$corporation_id]));
 
-        if (request()->input('filters.bpo') == "true" && request()->input('filters.bpc') == "false")
+        if (request()->input('filters.bpo') == 'true' && request()->input('filters.bpc') == 'false')
             $dataTable->addScope(new BlueprintOriginalScope());
 
-        if (request()->input('filters.bpo') == "false" && request()->input('filters.bpc') == "true")
+        if (request()->input('filters.bpo') == 'false' && request()->input('filters.bpc') == 'true')
             $dataTable->addScope(new BlueprintCopyScope());
 
         return $dataTable->render('web::corporation.blueprint');
