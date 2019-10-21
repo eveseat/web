@@ -1,6 +1,9 @@
 <div class="card card-gray card-outline">
   <div class="card-header">
     <h3 class="card-title">{{ trans('web::seat.summary') }}</h3>
+    <div class="card-tools">
+      <span class="badge badge-secondary">{{ $characters->count() }}</span>
+    </div>
   </div>
   <div class="card-body box-profile">
 
