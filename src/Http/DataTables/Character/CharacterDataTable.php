@@ -44,11 +44,11 @@ class CharacterDataTable extends DataTable
                 return view('web::partials.character', ['character' => $row]);
             })
             ->addColumn('corporation', function ($row) {
-                return view('web::partials.corporation', ['corporation' => $row->corporation->entity_id]);
+                return view('web::partials.corporation', ['corporation' => $row->corporation]);
             })
             ->addColumn('alliance', function ($row) {
                 if (! is_null($row->alliance_id))
-                    return view('web::partials.alliance', ['alliance' => $row->alliance->entity_id]);
+                    return view('web::partials.alliance', ['alliance' => $row->alliance]);
 
                 return '';
             })

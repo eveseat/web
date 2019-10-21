@@ -58,9 +58,9 @@ abstract class AbstractKillMailDataTable extends DataTable
                 ]);
             })
             ->addColumn('victim', function ($row) {
-                return view('web::partials.character', ['character' => $row->victim->character->entity_id]) . '<br/>' .
-                    view('web::partials.corporation', ['corporation' => $row->victim->corporation->entity_id]) .
-                    view('web::partials.alliance', ['alliance' => $row->victim->alliance->entity_id]);
+                return view('web::partials.character', ['character' => $row->victim->character]) . '<br/>' .
+                    view('web::partials.corporation', ['corporation' => $row->victim->corporation]) .
+                    view('web::partials.alliance', ['alliance' => $row->victim->alliance]);
             })
             ->addColumn('killer', function ($row) {
                 $killer = $row->attackers->where('final_blow', true)->first();
@@ -68,9 +68,9 @@ abstract class AbstractKillMailDataTable extends DataTable
                 if (is_null($killer))
                     return '';
 
-                return view('web::partials.character', ['character' => $killer->character_id]) . '<br/>' .
-                    view('web::partials.corporation', ['corporation' => $killer->corporation_id]) . ' ' .
-                    view('web::partials.alliance', ['alliance' => $killer->alliance_id]);
+                return view('web::partials.character', ['character' => $killer->character]) . '<br/>' .
+                    view('web::partials.corporation', ['corporation' => $killer->corporation]) . ' ' .
+                    view('web::partials.alliance', ['alliance' => $killer->alliance]);
             })
             ->filterColumn('ship', function ($query, $keyword) {
                 return $query->whereHas('victim.ship', function ($sub_query) use ($keyword) {

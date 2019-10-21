@@ -7,13 +7,13 @@
   </li>
   <li>
     <b>{{ trans('web::mail.author') }}: </b>
-    @include('web::partials.character', ['character' => $mail->sender->entity_id])
+    @include('web::partials.character', ['character' => $mail->sender])
   </li>
   @if($mail->recipients->where('recipient_type', 'character')->isNotEmpty())
   <li>
     <b>{{ trans_choice('web::seat.character', 0) }}: </b>
     @foreach($mail->recipients->where('recipient_type', 'character') as $character)
-      @include('web::partials.character', ['character' => $character->entity->entity_id])
+      @include('web::partials.character', ['character' => $character->entity])
     @endforeach
   </li>
   @endif
@@ -35,7 +35,7 @@
       <li>
         <b>{{ trans('web::seat.alliance') }}: </b>
         @foreach($mail->recipients->where('recipient_type', 'alliance') as $alliance)
-          @include('web::partials.alliance', ['alliance' => $alliance->entity->entity_id])
+          @include('web::partials.alliance', ['alliance' => $alliance->entity])
         @endforeach
       </li>
     @endif
