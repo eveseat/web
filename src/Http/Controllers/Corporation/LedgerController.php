@@ -47,7 +47,7 @@ class LedgerController extends Controller
 
         $divisions = $this->getCorporationWalletDivisionSummary($corporation_id);
 
-        return view('web::corporation.ledger.walletsummary',
+        return view('web::corporation.ledger.wallet_summary',
             compact('divisions'));
     }
 
@@ -61,15 +61,14 @@ class LedgerController extends Controller
     public function getBountyPrizesByMonth(int $corporation_id, $year = null, $month = null)
     {
 
-        ! is_null($year) ? $year : $year = date('Y');
-        ! is_null($month) ? $year : $month = date('m');
+        $year = is_null($year) ? date('Y') : $year;
+        $month = is_null($month) ? date('m') : $month;
 
-        $ledgers = $this->getCorporationLedgerBountyPrizeDates($corporation_id);
+        $periods = $this->getCorporationLedgerBountyPrizeDates($corporation_id);
+        $entries = $this->getCorporationLedgerBountyPrizeByMonth($corporation_id, $year, $month);
 
-        $bounty_prizes = $this->getCorporationLedgerBountyPrizeByMonth($corporation_id, $year, $month);
-
-        return view('web::corporation.ledger.bountyprizesbymonth',
-            compact('ledgers', 'bounty_prizes', 'corporation_id', 'month', 'year'));
+        return view('web::corporation.ledger.bounty_prizes',
+            compact('periods', 'entries', 'corporation_id', 'month', 'year'));
     }
 
     /**
@@ -82,14 +81,103 @@ class LedgerController extends Controller
     public function getPlanetaryInteractionByMonth(int $corporation_id, $year = null, $month = null)
     {
 
-        ! is_null($year) ? $year : $year = date('Y');
-        ! is_null($month) ? $year : $month = date('m');
+        $year = is_null($year) ? date('Y') : $year;
+        $month = is_null($month) ? date('m') : $month;
 
-        $ledgers = $this->getCorporationLedgerPIDates($corporation_id);
+        $periods = $this->getCorporationLedgerPIDates($corporation_id);
+        $entries = $this->getCorporationLedgerPITotalsByMonth($corporation_id, $year, $month);
 
-        $pi_taxes = $this->getCorporationLedgerPITotalsByMonth($corporation_id, $year, $month);
+        return view('web::corporation.ledger.planetary_interaction',
+            compact('periods', 'entries', 'corporation_id', 'month', 'year'));
+    }
 
-        return view('web::corporation.ledger.planetaryinteraction',
-            compact('ledgers', 'pi_taxes', 'corporation_id', 'month', 'year'));
+    /**
+     * @param int $corporation_id
+     * @param int|null $year
+     * @param int|null $month
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getOfficesRentalsByMonth(int $corporation_id, ?int $year = null, ?int $month = null)
+    {
+        $year = is_null($year) ? date('Y') : $year;
+        $month = is_null($month) ? date('m') : $month;
+
+        $periods = $this->getCorporationLedgerOfficesRentalsPeriods($corporation_id);
+        $entries = $this->getCorporationLedgerOfficesRentalsByMonth($corporation_id, $year, $month);
+
+        return view('web::corporation.ledger.offices_rentals',
+            compact('periods', 'entries', 'corporation_id', 'month', 'year'));
+    }
+
+    /**
+     * @param int $corporation_id
+     * @param int|null $year
+     * @param int|null $month
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getIndustryFacilityByMonth(int $corporation_id, ?int $year = null, ?int $month = null)
+    {
+        $year = is_null($year) ? date('Y') : $year;
+        $month = is_null($month) ? date('m') : $month;
+
+        $periods = $this->getCorporationLedgerIndustryFacilityPeriods($corporation_id);
+        $entries = $this->getCorporationLedgerIndustryFacilityByMonth($corporation_id, $year, $month);
+
+        return view('web::corporation.ledger.industry_facility',
+            compact('periods', 'entries', 'corporation_id', 'month', 'year'));
+    }
+
+    /**
+     * @param int $corporation_id
+     * @param int|null $year
+     * @param int|null $month
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getReprocessingByMonth(int $corporation_id, ?int $year = null, ?int $month = null)
+    {
+        $year = is_null($year) ? date('Y') : $year;
+        $month = is_null($month) ? date('m') : $month;
+
+        $periods = $this->getCorporationLedgerReprocessingPeriods($corporation_id);
+        $entries = $this->getCorporationLedgerReprocessingByMonth($corporation_id, $year, $month);
+
+        return view('web::corporation.ledger.reprocessing',
+            compact('periods', 'entries', 'corporation_id', 'month', 'year'));
+    }
+
+    /**
+     * @param int $corporation_id
+     * @param int|null $year
+     * @param int|null $month
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getJumpClonesByMonth(int $corporation_id, ?int $year = null, ?int $month = null)
+    {
+        $year = is_null($year) ? date('Y') : $year;
+        $month = is_null($month) ? date('m') : $month;
+
+        $periods = $this->getCorporationLedgerJumpClonesPeriods($corporation_id);
+        $entries = $this->getCorporationLedgerJumpClonesByMonth($corporation_id, $year, $month);
+
+        return view('web::corporation.ledger.jump_clones',
+            compact('periods', 'entries', 'corporation_id', 'month', 'year'));
+    }
+
+    /**
+     * @param int $corporation_id
+     * @param int|null $year
+     * @param int|null $month
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getJumpBridgesByMonth(int $corporation_id, ?int $year = null, ?int $month = null)
+    {
+        $year = is_null($year) ? date('Y') : $year;
+        $month = is_null($month) ? date('m') : $month;
+
+        $periods = $this->getCorporationLedgerJumpBridgesPeriods($corporation_id);
+        $entries = $this->getCorporationLedgerJumpBridgesByMonth($corporation_id, $year, $month);
+
+        return view('web::corporation.ledger.jump_bridges',
+            compact('periods', 'entries', 'corporation_id', 'month', 'year'));
     }
 }
