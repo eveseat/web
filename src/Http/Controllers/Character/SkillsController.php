@@ -122,4 +122,21 @@ class SkillsController extends Controller
             ],
         ]);
     }
+
+    /**
+     * @param int $character_id
+     * @return mixed
+     */
+    public function export(int $character_id)
+    {
+        return response()->streamDownload(function () use ($character_id) {
+            $skills = $this->getCharacterSkillsInformation($character_id);
+
+            echo $skills->map(function ($skill) {
+                return sprintf("%s\t%d", $skill->typeName, $skill->trained_skill_level);
+            })->implode(PHP_EOL);
+        }, sprintf('characters_%d_skills.txt', $character_id), [
+            'Content-Type' => 'text/plain',
+        ]);
+    }
 }

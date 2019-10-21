@@ -307,6 +307,12 @@ Route::get('/view/skills/{character_id}', [
     'uses'       => 'SkillsController@getSkills',
 ]);
 
+Route::get('/{character_id}/skills/export', [
+    'as'         => 'character.export.skills',
+    'middleware' => 'characterbouncer:skills',
+    'uses'       => 'SkillsController@export',
+]);
+
 Route::get('/view/skills/graph/level/{character_id}', [
     'as'         => 'character.view.skills.graph.level',
     'middleware' => 'characterbouncer:sheet',
