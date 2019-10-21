@@ -48,11 +48,11 @@ abstract class AbstractStandingDataTable extends DataTable
             ->editColumn('from.name', function ($row) {
                 switch ($row->from_type) {
                     case 'agent':
-                        return view('web::partials.character', ['character' => $row->from_id])->render();
+                        return view('web::partials.character', ['character' => $row->from])->render();
                     case 'npc_corp':
-                        return view('web::partials.corporation', ['corporation' => $row->from_id])->render();
+                        return view('web::partials.corporation', ['corporation' => $row->from])->render();
                     case 'faction':
-                        return view('web::partials.faction', ['faction' => $row->from_id])->render();
+                        return view('web::partials.faction', ['faction' => $row->from])->render();
                 }
 
                 return $row->from->name;

@@ -49,11 +49,11 @@ class NotificationDataTable extends DataTable
             ->addColumn('sender', function ($row) {
                 switch ($row->sender->category) {
                     case 'alliance':
-                        return view('web::partials.alliance', ['alliance' => $row->sender_id]);
+                        return view('web::partials.alliance', ['alliance' => $row->sender]);
                     case 'corporation':
-                        return view('web::partials.corporation', ['corporation' => $row->sender_id]);
+                        return view('web::partials.corporation', ['corporation' => $row->sender]);
                     case 'character':
-                        return view('web::partials.character', ['character' => $row->sender_id]);
+                        return view('web::partials.character', ['character' => $row->sender]);
                 }
 
                 return $row->sender->name;

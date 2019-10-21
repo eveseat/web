@@ -63,11 +63,11 @@ abstract class AbstractWalletTransactionDataTable extends DataTable
             ->addColumn('party', function ($row) {
                 switch ($row->party->category) {
                     case 'alliance':
-                        return view('web::partials.alliance', ['alliance' => $row->client_id]);
+                        return view('web::partials.alliance', ['alliance' => $row->party]);
                     case 'corporation':
-                        return view('web::partials.corporation', ['corporation' => $row->client_id]);
+                        return view('web::partials.corporation', ['corporation' => $row->party]);
                     case 'character':
-                        return view('web::partials.character', ['character' => $row->client_id]);
+                        return view('web::partials.character', ['character' => $row->party]);
                     default:
                         return '';
                 }

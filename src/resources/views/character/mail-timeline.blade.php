@@ -36,7 +36,7 @@
               <ul class="list-unstyled">
                 <li>
                   <b>{{ trans('web::seat.from') }}: </b>
-                  @include('web::partials.character', ['character' => $CharacterInfo::find($message->from) ?: $message->from, 'character_id' => $message->character_id])
+                  @include('web::partials.character', ['character' => $message->sender])
                 </li>
 
                 @if ($message->recipients->where('recipient_type', 'alliance')->count() > 0)
@@ -75,7 +75,7 @@
 
                     @foreach($message->recipients->where('recipient_type', 'character') as $recipient)
 
-                      @include('web::partials.character', ['character' => $CharacterInfo::find($recipient->recipient_id) ?: $recipient->recipient_id, 'character_id' => $message->character_id])
+                      @include('web::partials.character', ['character' => $recipient->entity])
 
                     @endforeach
 

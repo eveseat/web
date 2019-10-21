@@ -55,13 +55,13 @@ abstract class AbstractContactDataTable extends DataTable
                 }
             })
             ->addColumn('name', function ($row) {
-                switch ($row->contact_type) {
+                switch ($row->entity->category) {
                     case 'alliance':
-                        return view('web::partials.alliance', ['alliance' => $row->contact_id]);
+                        return view('web::partials.alliance', ['alliance' => $row->entity]);
                     case 'corporation':
-                        return view('web::partials.corporation', ['corporation' => $row->contact_id]);
+                        return view('web::partials.corporation', ['corporation' => $row->entity]);
                     case 'character':
-                        return view('web::partials.character', ['character' => $row->contact_id]);
+                        return view('web::partials.character', ['character' => $row->entity]);
                     default:
                         return '';
                 }
