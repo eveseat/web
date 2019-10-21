@@ -25,6 +25,8 @@ namespace Seat\Web\Http\Controllers\Corporation;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Financial\MarketDataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationScope;
+use Seat\Web\Http\DataTables\Scopes\Filters\MarketOrderTypeScope;
+use Seat\Web\Http\DataTables\Scopes\Filters\MarketStatusScope;
 
 /**
  * Class MarketController.
@@ -41,6 +43,8 @@ class MarketController extends Controller
     {
 
         return $dataTable->addScope(new CorporationScope([$corporation_id]))
+            ->addScope(new MarketStatusScope(request()->input('filters.status')))
+            ->addScope(new MarketOrderTypeScope(request()->input('filters.type')))
             ->render('web::corporation.market');
     }
 }
