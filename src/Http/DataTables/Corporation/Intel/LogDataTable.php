@@ -40,10 +40,10 @@ class LogDataTable extends DataTable
                 return view('web::partials.date', ['datetime' => $row->changed_at]);
             })
             ->editColumn('issuer.name', function ($row) {
-                return view('web::partials.character', ['character' => $row->issuer->entity_id])->render();
+                return view('web::partials.character', ['character' => $row->issuer])->render();
             })
             ->editColumn('character.name', function ($row) {
-                return view('web::partials.character', ['character' => $row->character->entity_id])->render();
+                return view('web::partials.character', ['character' => $row->character])->render();
             })
             ->editColumn('role', function ($row) {
                 return str_replace('_', ' ', $row->role);

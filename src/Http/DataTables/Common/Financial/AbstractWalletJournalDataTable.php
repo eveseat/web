@@ -55,11 +55,11 @@ abstract class AbstractWalletJournalDataTable extends DataTable
             ->addColumn('from_party', function ($row) {
                 switch ($row->first_party->category) {
                     case 'alliance':
-                        return view('web::partials.alliance', ['alliance' => $row->first_party_id]);
+                        return view('web::partials.alliance', ['alliance' => $row->first_party]);
                     case 'corporation':
-                        return view('web::partials.corporation', ['corporation' => $row->first_party_id]);
+                        return view('web::partials.corporation', ['corporation' => $row->first_party]);
                     case 'character':
-                        return view('web::partials.character', ['character' => $row->first_party_id]);
+                        return view('web::partials.character', ['character' => $row->first_party]);
                     default:
                         return '';
                 }
@@ -67,11 +67,11 @@ abstract class AbstractWalletJournalDataTable extends DataTable
             ->addColumn('to_party', function ($row) {
                 switch ($row->second_party->category) {
                     case 'alliance':
-                        return view('web::partials.alliance', ['alliance' => $row->second_party_id]);
+                        return view('web::partials.alliance', ['alliance' => $row->second_party]);
                     case 'corporation':
-                        return view('web::partials.corporation', ['corporation' => $row->second_party_id]);
+                        return view('web::partials.corporation', ['corporation' => $row->second_party]);
                     case 'character':
-                        return view('web::partials.character', ['character' => $row->second_party_id]);
+                        return view('web::partials.character', ['character' => $row->second_party]);
                     default:
                         return '';
                 }
