@@ -143,18 +143,47 @@ Route::group(['prefix' => '{corporation_id}/ledger'], function () {
         'uses'       => 'LedgerController@getWalletSummary',
     ]);
 
-    Route::get('bountyprizes/{year?}/{month?}', [
-        'as'         => 'corporation.view.ledger.bountyprizesbymonth',
+    Route::get('bounty-prizes/{year?}/{month?}', [
+        'as'         => 'corporation.view.ledger.bounty_prizes',
         'middleware' => 'corporationbouncer:ledger',
         'uses'       => 'LedgerController@getBountyPrizesByMonth',
     ]);
 
     Route::get('planetaryinteraction/{year?}/{month?}', [
-        'as'         => 'corporation.view.ledger.planetaryinteraction',
+        'as'         => 'corporation.view.ledger.planetary_interaction',
         'middleware' => 'corporationbouncer:ledger',
         'uses'       => 'LedgerController@getPlanetaryInteractionByMonth',
     ]);
 
+    Route::get('offices-rentals/{year?}/{month?}', [
+        'as'         => 'corporation.view.ledger.offices_rentals',
+        'middleware' => 'corporationbouncer:ledger',
+        'uses'       => 'LedgerController@getOfficesRentalsByMonth',
+    ]);
+
+    Route::get('industry-facility/{year?}/{month?}', [
+        'as'         => 'corporation.view.ledger.industry_facility',
+        'middleware' => 'corporationbouncer:ledger',
+        'uses'       => 'LedgerController@getIndustryFacilityByMonth',
+    ]);
+
+    Route::get('reprocessing/{year?}/{month?}', [
+        'as'         => 'corporation.view.ledger.reprocessing',
+        'middleware' => 'corporationbouncer:ledger',
+        'uses'       => 'LedgerController@getReprocessingByMonth',
+    ]);
+
+    Route::get('jump-clones/{year?}/{month?}', [
+        'as'         => 'corporation.view.ledger.jump_clones',
+        'middleware' => 'corporationbouncer:ledger',
+        'uses'       => 'LedgerController@getJumpClonesByMonth',
+    ]);
+
+    Route::get('jump-bridges/{year?}/{month?}', [
+        'as'         => 'corporation.view.ledger.jump_bridges',
+        'middleware' => 'corporationbouncer:ledger',
+        'uses'       => 'LedgerController@getJumpBridgesByMonth',
+    ]);
 });
 
 Route::get('/{corporation_id}/summary', [
