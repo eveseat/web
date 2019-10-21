@@ -4,7 +4,7 @@
   {!! img('type', $fitting->ship->typeID, 64, ['class' => 'align-self-center mr-3', 'alt' => $fitting->ship->typeName], false) !!}
   <div class="media-body">
     <h5 class="mt-0">{{ $fitting->ship->typeName }}</h5>
-    <p class="text-justify">{{ $fitting->ship->description }}</p>
+    <p class="text-justify">{!! $fitting->ship->description !!}</p>
   </div>
 </div>
 
