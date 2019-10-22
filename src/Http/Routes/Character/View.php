@@ -90,6 +90,12 @@ Route::get('/{character_id}/fittings/{fitting_id}', [
     'uses'       => 'FittingController@show',
 ]);
 
+Route::get('/{character_id}/blueprint', [
+    'as'         => 'character.view.blueprint',
+    'middleware' => 'characterbouncer:blueprint',
+    'uses'       => 'BlueprintController@index',
+]);
+
 Route::get('/{character_id}/industry', [
     'as'         => 'character.view.industry',
     'middleware' => 'characterbouncer:industry',

@@ -59,6 +59,13 @@ return [
         'route'          => 'corporation.view.extractions',
     ],
     [
+        'name'           => 'blueprint',
+        'label'          => 'web::seat.blueprint',
+        'permission'     => 'corporation.blueprint',
+        'highlight_view' => 'blueprint',
+        'route'          => 'corporation.view.blueprint',
+    ],
+    [
         'name'           => 'industry',
         'label'          => 'web::seat.industry',
         'permission'     => 'corporation.industry',
