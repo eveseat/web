@@ -47,7 +47,7 @@ class MarketDataTable extends AbstractMarketDataTable
     {
         return parent::html()
             ->ajax([
-                'data' => 'function(d) { d.characters = $("#dt-character-selector").val(); }',
+                'data' => 'function(d) { d.characters = $("#dt-character-selector").val(); d.filters = { type: $(".dt-filters-type.active").map(function (index, element) { return $(element).data("filter"); }).toArray(), status: $(".dt-filters-status.active").map(function (index, element) { return $(element).data("filter"); }).toArray() } }',
             ]);
     }
 }

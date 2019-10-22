@@ -25,6 +25,8 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Financial\MarketDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
+use Seat\Web\Http\DataTables\Scopes\Filters\MarketOrderTypeScope;
+use Seat\Web\Http\DataTables\Scopes\Filters\MarketStatusScope;
 use Seat\Web\Models\User;
 
 /**
@@ -44,6 +46,8 @@ class MarketController extends Controller
 
         return $dataTable
             ->addScope(new CharacterScope('character.market', $character_id, request()->input('characters', [])))
+            ->addScope(new MarketStatusScope(request()->input('filters.status')))
+            ->addScope(new MarketOrderTypeScope(request()->input('filters.type')))
             ->render('web::character.market', compact('characters'));
     }
 }
