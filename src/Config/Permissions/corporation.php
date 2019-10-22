@@ -95,6 +95,11 @@ return [
         'description' => 'web::permissions.corporation_industry_description',
         'division'    => 'industrial',
     ],
+    'blueprint' => [
+        'label'       => 'web::permissions.corporation_blueprint_label',
+        'description' => 'web::permissions.corporation_blueprint_description',
+        'division'    => 'industrial',
+    ],
     'contract' => [
         'label'       => 'web::permissions.corporation_contract_label',
         'description' => 'web::permissions.corporation_contract_description',
