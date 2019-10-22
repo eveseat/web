@@ -22,12 +22,12 @@
 
 namespace Seat\Web\Http\Controllers\Configuration;
 
+use App\Providers\AbstractSeatPlugin;
 use Cache;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Parsedown;
-use Seat\Services\AbstractSeatPlugin;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\PackageChangelog;
 use Seat\Web\Http\Validation\PackageVersionCheck;

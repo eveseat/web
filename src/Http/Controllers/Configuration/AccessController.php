@@ -22,15 +22,15 @@
 
 namespace Seat\Web\Http\Controllers\Configuration;
 
+use Illuminate\Http\Request;
+use Intervention\Image\Exception\NotReadableException;
 use Seat\Services\Repositories\Character\Character;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Services\Repositories\Corporation\Corporation;
 use Seat\Web\Acl\AccessManager;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Http\Validation\Role;
-use Seat\Web\Http\Validation\RoleAffilliation;
-use Seat\Web\Http\Validation\RoleGroup;
-use Seat\Web\Http\Validation\RolePermission;
+use Seat\Web\Models\Acl\Permission;
+use Seat\Web\Models\Acl\Role;
 
 /**
  * Class AccessController.
@@ -43,7 +43,7 @@ class AccessController extends Controller
     /**
      * @return \Illuminate\View\View
      */
-    public function getAll()
+    public function index()
     {
 
         $roles = $this->getCompleteRole();
@@ -52,161 +52,182 @@ class AccessController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Http\Validation\Role $request
-     *
-     * @return mixed
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function newRole(Role $request)
+    public function store(Request $request)
     {
+        $request->validate([
+            'title' => 'required|unique:roles,title|max:255',
+        ]);
 
-        $role = $this->addRole($request->input('title'));
+        $role = Role::create([
+            'title' => $request->input('title'),
+        ]);
 
         return redirect()
-            ->route('configuration.access.roles.edit', ['id' => $role->id])
-            ->with('success', trans('web::seat.role_added'));
+            ->route('configuration.access.roles.edit', [
+                $role->id,
+            ])->with('success', trans('web::seat.role_added'));
     }
 
     /**
-     * @param $role_id
-     *
-     * @return mixed
-     */
-    public function deleteRole($role_id)
-    {
-
-        $this->removeRole($role_id);
-
-        return redirect()->back()
-            ->with('success', trans('web::seat.role_removed'));
-    }
-
-    /**
-     * @param $role_id
-     *
+     * @param Role $role
      * @return \Illuminate\View\View
      */
-    public function editRole($role_id)
+    public function edit(Role $role)
     {
 
         // Get the role. We don't get the full one
         // as we need to mangle some of the data to
         // arrays for easier processing in the view
-        $role = $this->getRole($role_id);
 
         $role_permissions = $role->permissions()->get()->pluck('title')->toArray();
-        $role_affiliations = $role->affiliations();
-        $role_groups = $role->groups()->get()->pluck('id')->toArray();
-        $all_groups = $this->getAllGroups();
-        $all_characters = $this->getAllCharacters();
-        $all_corporations = $this->getAllCorporations();
 
-        return view(
-            'web::configuration.access.edit',
-            compact(
-                'role', 'role_permissions', 'role_groups', 'all_groups',
-                'role_affiliations', 'all_characters', 'all_corporations'
-            ));
+        return view('web::configuration.access.edit', compact('role', 'role_permissions'));
     }
 
     /**
-     * @param \Seat\Web\Http\Validation\RolePermission $request
-     *
-     * @return mixed
+     * @param Request $request
+     * @param Role $role
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function grantPermissions(RolePermission $request)
+    public function update(Request $request, Role $role)
     {
+        $request->validate([
+            'title' => 'string|required',
+            'description' => 'string',
+            'permissions' => 'array|required_with:filters',
+            'filters' => 'array',
+            'logo' => 'image',
+            'members' => 'json',
+        ]);
 
-        $this->giveRolePermissions(
-            $request->input('role_id'),
-            $request->input('permissions'),
-            $request->input('inverse') ? true : false);
+        //
+        // updating role information
+        //
 
-        return redirect()->back()
-            ->with('success', trans('web::seat.permissions_granted'));
+        try {
+            $role->title = $request->input('title');
+            $role->description = $request->input('description');
+            $role->logo = $request->file('logo');
+        } catch (NotReadableException $e) {
+            return redirect()->route('configuration.access.roles.edit', [$role->id])
+                ->with('error', $e->getMessage());
+        }
+
+        //
+        // updating role members
+        //
+
+        $this->giveGroupsRole(json_decode($request->input('members')), $role->id);
+
+        //
+        // updating role permissions and filters
+        //
+
+        $new_permissions = $request->input('permissions', []);
+        $new_filters = $request->input('filters', []);
+
+        $added_counter = 0;
+        $removed_counter = 0;
+        $filter_counter = 0;
+
+        foreach (config('seat.permissions') as $scope => $permissions) {
+
+            // in case the permission does not have any scope, cast it into an array
+            if (! is_array($permissions))
+                $permissions = [$permissions];
+
+            foreach ($permissions as $permission => $permission_meta) {
+
+                $permission_filters = null;
+
+                $permission_title = $permission;
+
+                // in case the permission is using vanilla description, use meta_data instead of key
+                if (! is_array($permission_meta))
+                    $permission_title = $permission_meta;
+
+                // in case we have a scope, concatenate it to the permission itself
+                if (! is_int($scope))
+                    $permission_title = sprintf('%s.%s', $scope, $permission_title);
+
+                // search the permission in system or create a new one
+                $acl_permission = Permission::firstOrCreate([
+                    'title' => $permission_title,
+                ]);
+
+                // the permission has been removed from the role
+                if (! array_key_exists($acl_permission->title, $new_permissions) && $role->permissions->contains($acl_permission->id)) {
+                    $role->permissions()->detach($acl_permission->id);
+                    $removed_counter++;
+
+                    continue;
+                }
+
+                // retrieve any filters set to the permission
+                if (array_key_exists($acl_permission->title, $new_filters)) {
+                    if ($new_filters[$acl_permission->title] != '{}')
+                        $permission_filters = $new_filters[$acl_permission->title];
+                }
+
+                if (array_key_exists($acl_permission->title, $new_permissions)) {
+
+                    if ($role->permissions->contains($acl_permission->id)) {
+
+                        // the permission has been updated
+                        $role->permissions()->syncWithoutDetaching([
+                            $acl_permission->id => [
+                                'filters' => $permission_filters,
+                            ],
+                        ]);
+
+                    } else {
+
+                        // the permission has been added to the role
+                        $role->permissions()->attach($acl_permission->id, [
+                            'filters' => $permission_filters,
+                        ]);
+
+                        $added_counter++;
+                    }
+                }
+
+                if (! is_null($permission_filters))
+                    $filter_counter++;
+            }
+        }
+
+        $role->save();
+
+        return redirect()->route('configuration.access.roles.edit', [$role->id])
+            ->with('success', trans('web::seat.role_updated', [
+                'added'   => $added_counter,
+                'removed' => $removed_counter,
+                'filtered' => $filter_counter,
+            ]));
     }
 
     /**
-     * @param $role_id
-     * @param $permission_id
-     *
-     * @return mixed
+     * @param Role $role
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function removePermissions($role_id, $permission_id)
+    public function destroy(Role $role)
     {
+        Role::destroy($role->id);
 
-        $this->removePermissionFromRole($permission_id, $role_id);
-
-        return redirect()->back()
-            ->with('success', trans('web::seat.permission_revoked'));
-    }
-
-    /**
-     * @param \Seat\Web\Http\Validation\RoleGroup $request
-     *
-     * @return mixed
-     */
-    public function addGroups(RoleGroup $request)
-    {
-
-        $this->giveGroupsRole(
-            $request->input('groups'), $request->input('role_id'));
-
-        return redirect()->back()
-            ->with('success', trans('web::seat.user_added'));
-
+        return redirect()->route('configuration.access.roles')
+            ->with('success', trans('web::seat.role_removed'));
     }
 
     /**
      * @param $role_id
      * @param $group_id
-     *
-     * @return mixed
      */
     public function removeGroup($role_id, $group_id)
     {
 
         $this->removeGroupFromRole($group_id, $role_id);
-
-        return redirect()->back()
-            ->with('success', trans('web::seat.user_removed'));
-    }
-
-    /**
-     * @param \Seat\Web\Http\Validation\RoleAffilliation $request
-     *
-     * @return mixed
-     */
-    public function addAffiliations(RoleAffilliation $request)
-    {
-
-        if ($request->input('corporations'))
-            $this->giveRoleCorporationAffiliations(
-                $request->input('role_id'),
-                $request->input('corporations'),
-                $request->input('inverse') ? true : false);
-
-        if ($request->input('characters'))
-            $this->giveRoleCharacterAffiliations(
-                $request->input('role_id'),
-                $request->input('characters'),
-                $request->input('inverse') ? true : false);
-
-        return redirect()->back()
-            ->with('success', 'Affiliations were added to this role');
-    }
-
-    /**
-     * @param $role_id
-     * @param $affiliation_id
-     *
-     * @return mixed
-     */
-    public function removeAffiliation($role_id, $affiliation_id)
-    {
-
-        $this->removeAffiliationFromRole($role_id, $affiliation_id);
-
-        return redirect()->back()
-            ->with('success', trans('web::seat.affiliation_removed'));
     }
 }
