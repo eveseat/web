@@ -49,7 +49,7 @@ class HomeController extends Controller
                 session()->flash('warning', trans('web::seat.admin_contact_warning'));
 
         // Warn if a refresh token is missing.
-        if (! auth()->user()->refresh_token)
+        if (! auth()->user()->refresh_token && auth()->user()->name !== 'admin')
             session()->flash('warning', trans('web::seat.refresh_token_warning'));
 
         $server_status = $this->getEveLastServerStatus();
