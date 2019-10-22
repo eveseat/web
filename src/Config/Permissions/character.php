@@ -60,6 +60,11 @@ return [
         'description' => 'web::permissions.character_industry_description',
         'division'    => 'industrial',
     ],
+    'blueprint' => [
+        'label'       => 'web::permissions.character_blueprint_label',
+        'description' => 'web::permissions.character_blueprint_description',
+        'division'    => 'industrial',
+    ],
     'research' => [
         'label'       => 'web::permissions.character_research_label',
         'description' => 'web::permissions.character_research_description',
