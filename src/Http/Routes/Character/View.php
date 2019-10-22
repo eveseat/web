@@ -25,32 +25,32 @@ Route::get('/', [
     'uses' => 'CharacterController@index',
 ]);
 
-Route::get('/list/data', [
-    'as'   => 'character.list.data',
-    'uses' => 'CharacterController@getCharactersData',
-]);
-
 Route::get('/delete/{character_id}', [
     'as'         => 'character.delete',
     'middleware' => 'bouncer:superuser',
     'uses'       => 'CharacterController@deleteCharacter',
 ]);
 
-Route::get('/view/assets/{character_id}', [
+Route::get('/{character_id}', [
+    'as'   => 'character.view.default',
+    'uses' => 'CharacterController@show',
+])->where('character_id', '[0-9]+');
+
+Route::get('/{character_id}/assets', [
     'as'         => 'character.view.assets',
-    'middleware' => 'characterbouncer:assets',
+    'middleware' => 'characterbouncer:asset',
     'uses'       => 'AssetsController@getAssetsView',
 ]);
 
-Route::get('/view/assets/{character_id}/details', [
+Route::get('/{character_id}/assets/details', [
     'as'         => 'character.view.assets.details',
-    'middleware' => 'characterbouncer:assets',
+    'middleware' => 'characterbouncer:asset',
     'uses'       => 'AssetsController@getCharacterAssets',
 ]);
 
-Route::get('/view/bookmarks/{character_id}', [
+Route::get('/{character_id}/bookmarks', [
     'as'         => 'character.view.bookmarks',
-    'middleware' => 'characterbouncer:bookmarks',
+    'middleware' => 'characterbouncer:bookmark',
     'uses'       => 'BookmarksController@index',
 ]);
 
@@ -62,31 +62,31 @@ Route::get('/{character_id}/calendar', [
 
 Route::get('/{character_id}/contacts', [
     'as'         => 'character.view.contacts',
-    'middleware' => 'characterbouncer:contacts',
+    'middleware' => 'characterbouncer:contact',
     'uses'       => 'ContactsController@index',
 ]);
 
 Route::get('/{character_id}/contracts', [
     'as'         => 'character.view.contracts',
-    'middleware' => 'characterbouncer:contracts',
+    'middleware' => 'characterbouncer:contract',
     'uses'       => 'ContractsController@index',
 ]);
 
 Route::get('/{character_id}/contracts/{contract_id}', [
     'as'         => 'character.view.contracts.items',
-    'middleware' => 'characterbouncer:contracts',
+    'middleware' => 'characterbouncer:contract',
     'uses'       => 'ContractsController@show',
 ]);
 
 Route::get('/{character_id}/fittings', [
     'as'         => 'character.view.fittings',
-    'middleware' => 'characterbouncer:fittings',
+    'middleware' => 'characterbouncer:fitting',
     'uses'       => 'FittingController@index',
 ]);
 
 Route::get('/{character_id}/fittings/{fitting_id}', [
     'as'         => 'character.view.fittings.items',
-    'middleware' => 'characterbouncer:fittings',
+    'middleware' => 'characterbouncer:fitting',
     'uses'       => 'FittingController@show',
 ]);
 
@@ -102,22 +102,16 @@ Route::get('/{character_id}/industry', [
     'uses'       => 'IndustryController@index',
 ]);
 
-Route::get('/view/industry/data/{character_id}', [
-    'as'         => 'character.view.industry.data',
-    'middleware' => 'characterbouncer:industry',
-    'uses'       => 'IndustryController@getIndustryData',
-]);
+Route::group(['prefix' => '{character_id}/intel'], function () {
 
-Route::group(['prefix' => 'view/intel'], function () {
-
-    Route::get('summary/{character_id}', [
+    Route::get('summary', [
         'as'         => 'character.view.intel.summary',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@getIntelSummary',
     ]);
 
     // Ajax Call Journal
-    Route::get('summary/journal/data/{character_id}', [
+    Route::get('summary/journal/data', [
         'as'         => 'character.view.intel.summary.journal.data',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@getTopWalletJournalData',
@@ -130,93 +124,86 @@ Route::group(['prefix' => 'view/intel'], function () {
     ]);
 
     // Transactions
-    Route::get('summary/transactions/data/{character_id}', [
+    Route::get('summary/transactions/data', [
         'as'         => 'character.view.intel.summary.transactions.data',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@getTopTransactionsData',
     ]);
 
-    Route::get('summary/transactions/details/{character_id}/{client_id}', [
+    Route::get('summary/transactions/details/{client_id}', [
         'as'         => 'character.view.intel.summary.transactions.details',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@getTransactionContent',
     ]);
 
     // Mail
-    Route::get('summary/mail/data/{character_id}', [
+    Route::get('summary/mail/data', [
         'as'         => 'character.view.intel.summary.mail.data',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@getTopMailFromData',
     ]);
 
-    Route::get('summary/mail/details/{character_id}/{from}', [
+    Route::get('summary/mail/details/{from}', [
         'as'         => 'character.view.intel.summary.mail.details',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@getTopMailContent',
     ]);
 
     // Standings Comparison
-    Route::get('comparison/{character_id}', [
+    Route::get('comparison', [
         'as'         => 'character.view.intel.standingscomparison',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@getStandingsComparison',
     ]);
 
-    Route::get('comparison/data/{character_id}/{profile_id}', [
+    Route::get('comparison/data/{profile_id}', [
         'as'         => 'character.view.intel.standingscomparison.data',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@getCompareStandingsWithProfileData',
     ]);
 
     // Notes
-    Route::get('notes/{character_id}', [
+    Route::get('notes', [
         'as'         => 'character.view.intel.notes',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@getNotes',
     ]);
 
-    Route::get('notes/data/{character_id}', [
+    Route::get('notes/data', [
         'as'         => 'character.view.intel.notes.data',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@getNotesData',
     ]);
 
-    Route::get('notes/single/data/{character_id}/{note_id}', [
+    Route::get('notes/single/data/{note_id}', [
         'as'         => 'character.view.intel.notes.single.data',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@getSingleNotesData',
     ]);
 
-    Route::post('notes/new/{character_id}', [
+    Route::post('notes/new', [
         'as'         => 'character.view.intel.notes.new',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@postAddNew',
     ]);
 
-    Route::post('notes/update/{character_id}', [
+    Route::post('notes/update', [
         'as'         => 'character.view.intel.notes.update',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@postUpdateNote',
     ]);
 
-    Route::get('notes/delete/{character_id}/{note_id}', [
+    Route::get('notes/delete/{note_id}', [
         'as'         => 'character.view.intel.notes.delete',
         'middleware' => 'characterbouncer:intel',
         'uses'       => 'IntelController@getDeleteNote',
     ]);
-
 });
 
 Route::get('/{character_id}/journal', [
     'as'         => 'character.view.journal',
     'middleware' => 'characterbouncer:journal',
     'uses'       => 'WalletController@journal',
-]);
-
-Route::get('/view/journal/data/{character_id}', [
-    'as'         => 'character.view.journal.data',
-    'middleware' => 'characterbouncer:journal',
-    'uses'       => 'WalletController@getJournalData',
 ]);
 
 Route::get('/view/journal/graph/balance/{character_id}', [
@@ -227,14 +214,8 @@ Route::get('/view/journal/graph/balance/{character_id}', [
 
 Route::get('/{character_id}/killmails', [
     'as'         => 'character.view.killmails',
-    'middleware' => 'characterbouncer:killmails',
+    'middleware' => 'characterbouncer:killmail',
     'uses'       => 'KillmailController@index',
-]);
-
-Route::get('/view/killmails/data/{character_id}', [
-    'as'         => 'character.view.killmails.data',
-    'middleware' => 'characterbouncer:killmails',
-    'uses'       => 'KillmailController@getKillmailsData',
 ]);
 
 Route::get('/view/mail/timeline', [
@@ -257,12 +238,6 @@ Route::get('/{character_id}/mail/{message_id}', [
     'as'         => 'character.view.mail.read',
     'middleware' => 'characterbouncer:mail',
     'uses'       => 'MailController@show',
-]);
-
-Route::get('/view/mail/data/{character_id}', [
-    'as'         => 'character.view.mail.data',
-    'middleware' => 'characterbouncer:mail',
-    'uses'       => 'MailController@getMailData',
 ]);
 
 Route::get('/{character_id}/markets', [
@@ -289,7 +264,7 @@ Route::get('/{character_id}/notifications', [
     'uses'       => 'NotificationsController@index',
 ]);
 
-Route::get('/view/pi/{character_id}', [
+Route::get('/{character_id}/pi', [
     'as'         => 'character.view.pi',
     'middleware' => 'characterbouncer:pi',
     'uses'       => 'PiController@getPi',
@@ -307,9 +282,9 @@ Route::get('/{character_id}/sheet', [
     'uses'       => 'SheetController@show',
 ]);
 
-Route::get('/view/skills/{character_id}', [
+Route::get('/{character_id}/skills', [
     'as'         => 'character.view.skills',
-    'middleware' => 'characterbouncer:skills',
+    'middleware' => 'characterbouncer:skill',
     'uses'       => 'SkillsController@getSkills',
 ]);
 
@@ -327,18 +302,12 @@ Route::get('/view/skills/graph/coverage/{character_id}', [
 
 Route::get('/{character_id}/standings', [
     'as'         => 'character.view.standings',
-    'middleware' => 'characterbouncer:standings',
+    'middleware' => 'characterbouncer:standing',
     'uses'       => 'StandingsController@index',
 ]);
 
 Route::get('/{character_id}/transactions', [
     'as'         => 'character.view.transactions',
-    'middleware' => 'characterbouncer:transactions',
+    'middleware' => 'characterbouncer:transaction',
     'uses'       => 'WalletController@transactions',
-]);
-
-Route::get('/view/transactions/data/{character_id}', [
-    'as'         => 'character.view.transactions.data',
-    'middleware' => 'characterbouncer:transactions',
-    'uses'       => 'WalletController@getTransactionsData',
 ]);

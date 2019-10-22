@@ -44,6 +44,8 @@ class Login
      */
     public static function handle(LoginEvent $event)
     {
+        if (session()->has('impersonation_origin'))
+            return;
 
         // Create a log entry for this login.
         $event->user->last_login_source = Request::getClientIp();

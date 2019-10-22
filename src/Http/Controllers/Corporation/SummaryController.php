@@ -50,11 +50,11 @@ class SummaryController extends Controller
             return redirect()->back()
                 ->with('error', trans('web::seat.unknown_corporation'));
 
-        $divisions = $this->getCorporationDivisions($corporation_id);
+        $asset_divisions = $this->getCorporationDivisions($corporation_id);
         $wallet_divisions = $this->getCorporationWalletDivisions($corporation_id);
 
         return view('web::corporation.summary',
-            compact('divisions', 'sheet', 'wallet_divisions'));
+            compact('sheet', 'asset_divisions', 'wallet_divisions'));
 
     }
 }
