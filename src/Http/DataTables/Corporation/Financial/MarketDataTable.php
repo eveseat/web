@@ -39,4 +39,14 @@ class MarketDataTable extends AbstractMarketDataTable
     {
         return CorporationOrder::query();
     }
+
+    /**
+     * @return \Yajra\DataTables\Html\Builder
+     */
+    public function html()
+    {
+        return parent::html()->ajax([
+            'data' => 'function(d) { d.filters = { type: $(".dt-filters-type.active").map(function (index, element) { return $(element).data("filter"); }).toArray(), status: $(".dt-filters-status.active").map(function (index, element) { return $(element).data("filter"); }).toArray() } }',
+        ]);
+    }
 }
