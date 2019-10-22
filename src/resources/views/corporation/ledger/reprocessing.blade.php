@@ -45,16 +45,16 @@
           @foreach ($entries as $entry)
 
             <tr>
-              <td data-order="{{ $entry->second_party->name }}">
-                @switch($entry->second_party->category)
+              <td data-order="{{ $entry->first_party->name }}">
+                @switch($entry->first_party->category)
                   @case('character')
-                    @include('web::partials.character', ['character' => $entry->second_party])
+                    @include('web::partials.character', ['character' => $entry->first_party])
                   @break
                   @case('corporation')
-                    @include('web::partials.corporation', ['corporation' => $entry->second_party])
+                    @include('web::partials.corporation', ['corporation' => $entry->first_party])
                   @break
                   @case('alliance')
-                    @include('web::partials.alliance', ['alliance' => $entry->second_party])
+                    @include('web::partials.alliance', ['alliance' => $entry->first_party])
                   @break
                 @endswitch
               </td>
