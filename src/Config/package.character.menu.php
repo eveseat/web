@@ -65,6 +65,13 @@ return [
         'route'          => 'character.view.fittings',
     ],
     [
+        'name'           => 'blueprint',
+        'label'          => 'web::seat.blueprint',
+        'permission'     => 'character.blueprint',
+        'highlight_view' => 'blueprint',
+        'route'          => 'character.view.blueprint',
+    ],
+    [
         'name'           => 'industry',
         'label'          => 'web::seat.industry',
         'permission'     => 'character.industry',
