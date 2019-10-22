@@ -10,20 +10,18 @@
   <div class="sidebar">
 
     <!-- Sidebar user panel -->
+    @if(auth()->user()->name != 'admin')
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
         <img src="//image.eveonline.com/Character/{{ $user->id }}_128.jpg" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
-        @if(auth()->user()->name == 'admin')
-        <span>{{ $user->name }}</span>
-        @else
         <a href="{{ route('character.view.sheet', ['character_id' => $user->character_id]) }}" class="d-block">
           {{ $user->name }}
         </a>
-        @endif
       </div>
     </div>
+    @endif
 
     <!-- Sidebar Menu -->
     <nav class="mt-2">
