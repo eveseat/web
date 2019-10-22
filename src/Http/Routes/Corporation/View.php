@@ -72,6 +72,12 @@ Route::get('/{corporation_id}/industry', [
     'uses'       => 'IndustryController@index',
 ]);
 
+Route::get('/{corporation_id}/blueprint', [
+    'as'         => 'corporation.view.blueprint',
+    'middleware' => 'corporationbouncer:blueprint',
+    'uses'       => 'BlueprintController@index',
+]);
+
 Route::get('/{corporation_id}/killmails', [
     'as'         => 'corporation.view.killmails',
     'middleware' => 'corporationbouncer:killmail',
