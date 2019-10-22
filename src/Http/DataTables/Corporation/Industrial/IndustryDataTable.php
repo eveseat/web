@@ -39,4 +39,14 @@ class IndustryDataTable extends AbstractIndustryDataTable
     {
         return CorporationIndustryJob::with('location', 'blueprint', 'product');
     }
+
+    /**
+     * @return \Yajra\DataTables\Html\Builder
+     */
+    public function html()
+    {
+        return parent::html()->ajax([
+            'data' => 'function(d) { d.filters = { status: $(".dt-filters-status.active").map(function (index, element) { return $(element).data("filter"); }).toArray(), activity: $(".dt-filters-activity.active").map(function (index, element) { return $(element).data("filter"); }).toArray() } }',
+        ]);
+    }
 }
