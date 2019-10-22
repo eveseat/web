@@ -86,6 +86,7 @@ class CorporationDataTable extends DataTable
     {
         return $this->builder()
             ->columns($this->getColumns())
+            ->orderBy(0, 'asc')
             ->postAjax()
             ->parameters([
                 'drawCallback' => 'function() { ids_to_names(); }',
