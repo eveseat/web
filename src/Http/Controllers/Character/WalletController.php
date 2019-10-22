@@ -22,14 +22,12 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
-use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Services\Repositories\Character\Wallet;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Financial\WalletJournalDataTable;
 use Seat\Web\Http\DataTables\Character\Financial\WalletTransactionDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 use Seat\Web\Models\User;
-use Yajra\DataTables\DataTables;
 
 /**
  * Class WalletController.
@@ -110,61 +108,5 @@ class WalletController extends Controller
                 ],
             ],
         ]);
-    }
-
-    /**
-     * @param int $character_id
-     *
-     * @return mixed
-     * @throws \Exception
-     */
-    public function getTransactionsData(int $character_id)
-    {
-
-        if (! request()->has('all_linked_characters'))
-            return abort(500);
-
-        if (request('all_linked_characters') === 'false')
-            $character_ids = collect($character_id);
-
-        $user_group = User::find($character_id)->group->users
-            ->filter(function ($user) {
-
-                return $user->name !== 'admin' && $user->id !== 1;
-            })
-            ->pluck('id');
-
-        if (request('all_linked_characters') === 'true')
-            $character_ids = $user_group;
-
-        $transactions = $this->getCharacterWalletTransactions($character_ids);
-
-        return DataTables::of($transactions)
-            ->editColumn('is_buy', function ($row) {
-
-                return view('web::partials.transactionbuysell', compact('row'));
-            })
-            ->editColumn('unit_price', function ($row) {
-
-                return number($row->unit_price);
-            })
-            ->addColumn('item_view', function ($row) {
-                return view('web::partials.transactiontype', compact('row'));
-            })
-            ->addColumn('total', function ($row) {
-
-                return number($row->unit_price * $row->quantity);
-            })
-            ->addColumn('client_view', function ($row) {
-
-                $character_id = $row->character_id;
-
-                $character = CharacterInfo::find($row->client_id) ?: $row->client_id;
-
-                return view('web::partials.character', compact('character', 'character_id'));
-            })
-            ->rawColumns(['is_buy', 'client_view', 'item_view'])
-            ->make(true);
-
     }
 }

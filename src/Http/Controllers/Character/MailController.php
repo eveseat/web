@@ -30,7 +30,6 @@ use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Intel\MailDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 use Seat\Web\Models\User;
-use Yajra\DataTables\DataTables;
 
 /**
  * Class MailController.
@@ -67,60 +66,6 @@ class MailController extends Controller
             ->first();
 
         return view('web::common.mails.modals.read.content', compact('mail'));
-    }
-
-    /**
-     * @param int $character_id
-     *
-     * @return mixed
-     * @throws \Exception
-     */
-    public function getMailData(int $character_id)
-    {
-
-        if (! request()->has('all_linked_characters'))
-            return abort(500);
-
-        if (request('all_linked_characters') === 'false')
-            $character_ids = collect($character_id);
-
-        $user_group = User::find($character_id)->group->users
-            ->filter(function ($user) {
-
-                return $user->name !== 'admin' && $user->id !== 1;
-            })
-            ->pluck('id');
-
-        if (request('all_linked_characters') === 'true')
-            $character_ids = $user_group;
-
-        $mail = $this->getCharacterMail($character_ids);
-
-        return DataTables::of($mail)
-            ->editColumn('from', function ($row) {
-
-                $character_id = $row->character_id;
-
-                $character = CharacterInfo::find($row->from) ?: $row->from;
-
-                return view('web::partials.character', compact('character', 'character_id'));
-            })
-            ->editColumn('subject', function ($row) {
-
-                return view('web::character.partials.mailtitle', compact('row'));
-            })
-            ->editColumn('tocounts', function ($row) {
-
-                return view('web::character.partials.mailtocounts', compact('row'));
-            })
-            ->addColumn('read', function ($row) {
-
-                return view('web::character.partials.mailread', compact('row'));
-
-            })
-            ->rawColumns(['from', 'subject', 'tocounts', 'read'])
-            ->make(true);
-
     }
 
     /**

@@ -87,7 +87,7 @@ class RolePermission extends FormRequest
 
                             return $category . '.' . $web_perm;
 
-                        }, config('web.permissions.' . $category))));
+                        }, config('seat.permissions.' . $category))));
 
             } else {
 
@@ -105,7 +105,7 @@ class RolePermission extends FormRequest
 
                             return $web_perm;
 
-                        }, config('web.permissions'))));
+                        }, config('seat.permissions'))));
             }
 
         return $rules;

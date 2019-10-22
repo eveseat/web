@@ -407,7 +407,7 @@ return [
     'no_known_assets'              => 'Keine bekannten Assets',
     'volume_usage'                 => 'Lagergebrauch .DE',
     'loading_modules'              => 'Lade Modul Informationen...',
-    'pocos'                        => 'Pocos',
+    'customs-offices'              => 'Customs Offices',
     'reinforcement'                => 'Reinforcement',
     'standing_level'               => 'Ansehen level',
     'tax_alliance_corp'            => 'Tax: Alliance/Corp .DE',

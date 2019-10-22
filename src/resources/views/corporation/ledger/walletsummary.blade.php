@@ -20,10 +20,20 @@
           <tbody>
           @foreach ($divisions->sortBy('name') as $division)
 
-            <tr>
-              <td>{{ $division->name }}</td>
-              <td data-order="{{ $division->balance }}">{{ number($division->balance) }}</td>
-            </tr>
+            @switch(true)
+              @case($division->division == 1 && auth()->user()->has('corporation.wallet_first_division'))
+              @case($division->division == 2 && auth()->user()->has('corporation.wallet_second_division'))
+              @case($division->division == 3 && auth()->user()->has('corporation.wallet_third_division'))
+              @case($division->division == 4 && auth()->user()->has('corporation.wallet_fourth_division'))
+              @case($division->division == 5 && auth()->user()->has('corporation.wallet_fifth_division'))
+              @case($division->division == 6 && auth()->user()->has('corporation.wallet_sixth_division'))
+              @case($division->division == 7 && auth()->user()->has('corporation.wallet_seventh_division'))
+                <tr>
+                  <td>{{ $division->name }}</td>
+                  <td data-order="{{ $division->balance }}">{{ number($division->balance) }}</td>
+                </tr>
+              @break
+            @endswitch
 
           @endforeach
 

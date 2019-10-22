@@ -48,8 +48,18 @@
             <dt><i class="fas fa-cubes"></i> {{ trans('web::seat.corporation_divisions') }}</dt>
             <dd>
               <ol>
-                @foreach($divisions as $division)
-                  <li>{{ $division->name }}</li>
+                @foreach($asset_divisions as $asset_division)
+                  @switch(true)
+                    @case($asset_division->division == 1 && auth()->user()->has('corporation.asset_first_division'))
+                    @case($asset_division->division == 2 && auth()->user()->has('corporation.asset_second_division'))
+                    @case($asset_division->division == 3 && auth()->user()->has('corporation.asset_third_division'))
+                    @case($asset_division->division == 4 && auth()->user()->has('corporation.asset_fourth_division'))
+                    @case($asset_division->division == 5 && auth()->user()->has('corporation.asset_fifth_division'))
+                    @case($asset_division->division == 6 && auth()->user()->has('corporation.asset_sixth_division'))
+                    @case($asset_division->division == 7 && auth()->user()->has('corporation.asset_seventh_division'))
+                      <li>{{ $asset_division->name }}</li>
+                    @break
+                  @endswitch
                 @endforeach
               </ol>
             </dd>
@@ -60,11 +70,21 @@
             <dd>
               <ol>
                 @foreach($wallet_divisions as $wallet_division)
-                  @if(is_null($wallet_division->name))
-                    <li>Master</li>
-                  @else
-                    <li>{{ $wallet_division->name }}</li>
-                  @endif
+                  @switch(true)
+                    @case($wallet_division->division == 1 && auth()->user()->has('corporation.wallet_first_division'))
+                    @case($wallet_division->division == 2 && auth()->user()->has('corporation.wallet_second_division'))
+                    @case($wallet_division->division == 3 && auth()->user()->has('corporation.wallet_third_division'))
+                    @case($wallet_division->division == 4 && auth()->user()->has('corporation.wallet_fourth_division'))
+                    @case($wallet_division->division == 5 && auth()->user()->has('corporation.wallet_fifth_division'))
+                    @case($wallet_division->division == 6 && auth()->user()->has('corporation.wallet_sixth_division'))
+                    @case($wallet_division->division == 7 && auth()->user()->has('corporation.wallet_seventh_division'))
+                      @if(is_null($wallet_division->name))
+                        <li>Master</li>
+                      @else
+                        <li>{{ $wallet_division->name }}</li>
+                      @endif
+                    @break
+                  @endswitch
                 @endforeach
               </ol>
             </dd>

@@ -13,6 +13,11 @@
       "Seat\\Web\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Seat\\Tests\\Web\\": "tests/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
@@ -21,13 +26,24 @@
     "laravel/horizon": "^3.4",
     "laravel/tinker": "~1.0",
     "laravel/socialite": "^4.2",
+    "socialiteproviders/manager": "^3.0",
     "eveseat/eseye": "~1",
     "eveseat/eveapi": "4.0.x-dev",
     "eveseat/services": "4.0.x-dev",
     "guzzlehttp/guzzle": "^6.3",
     "yajra/laravel-datatables-oracle": "~9",
+    "yajra/laravel-datatables-buttons": "^4.0",
+    "intervention/image": "^2.5",
     "components/font-awesome": "^5.9",
-    "erusev/parsedown": "^1.7"
+    "erusev/parsedown": "^1.7",
+    "almasaeed2010/adminlte": "^3.0",
+    "twbs/bootstrap": "^4.3",
+    "datatables/datatables": "^1.10",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^4.0",
+    "orchestra/database": "^4.0"
   },
   "extra": {
     "laravel": {
