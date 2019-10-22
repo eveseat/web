@@ -1,0 +1,20 @@
+{
+  "character": [
+    {
+      "id":90795931,
+      "text":"Warlof Tutsimo"
+    }
+  ],
+  "corporation": [
+    {
+      "id":98413060,
+      "text":"Daerie Inc."
+    }
+  ],
+  "alliance": [
+    {
+      "id":150097440,
+      "text":"Get Off My Lawn"
+    }
+  ]
+}

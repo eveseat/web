@@ -38,7 +38,7 @@ class Permission extends Model
     /**
      * @var array
      */
-    protected $fillable = ['title'];
+    protected $fillable = ['title', 'filters'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -48,5 +48,38 @@ class Permission extends Model
 
         return $this->belongsToMany(Role::class)
             ->withPivot('not');
+    }
+
+    /**
+     * Determine if the permission is in global scope.
+     *
+     * @return bool
+     */
+    public function isGlobalScope(): bool
+    {
+
+        return ! $this->isCharacterScope() && ! $this->isCorporationScope();
+    }
+
+    /**
+     * Determine if the permission is in the character scope.
+     *
+     * @return bool
+     */
+    public function isCharacterScope(): bool
+    {
+
+        return strpos($this->title, 'character.') !== false;
+    }
+
+    /**
+     * Determine if the permission is in the corporation scope.
+     *
+     * @return bool
+     */
+    public function isCorporationScope(): bool
+    {
+
+        return strpos($this->title, 'corporation.') !== false;
     }
 }

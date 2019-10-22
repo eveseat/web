@@ -428,7 +428,7 @@ return [
     'no_known_assets'              => 'Aucuns biens',
     'volume_usage'                 => 'Utilisation',
     'loading_modules'              => 'Chargement des informations...',
-    'pocos'                        => 'Pocos',
+    'customs-offices'              => 'Bureaux de douanes',
     'reinforcement'                => 'Renforcé',
     'standing_level'               => 'Niveau de réputation',
     'tax_alliance_corp'            => 'Taxes: Alliance/Corp',

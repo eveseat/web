@@ -4,7 +4,7 @@
 
 @if (isset($character->name) || isset($character->entity_name))
 
-  <a href="{{ route('character.view.sheet', ['character_id' => $character->character_id ?? $character->entity_id]) }}">
+  <a href="{{ route('character.view.default', ['character_id' => $character->character_id ?? $character->entity_id]) }}">
     {!! img('character', $character->character_id ?? $character->entity_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
     {{$character->name ?? $character->entity_name}}
   </a>
