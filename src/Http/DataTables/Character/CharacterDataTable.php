@@ -74,6 +74,7 @@ class CharacterDataTable extends DataTable
         return $this->builder()
             ->postAjax()
             ->columns($this->getColumns())
+            ->orderBy(0, 'asc')
             ->parameters([
                 'drawCallback' => 'function() { ids_to_names(); }',
             ]);
