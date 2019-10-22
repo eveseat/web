@@ -553,7 +553,7 @@ return [
     'no_known_assets'              => 'Нет известных активов',
     'volume_usage'                 => 'Использование объёма',
     'loading_modules'              => 'Загрузка информации о модуле...',
-    'pocos'                        => 'Таможенные офисы',
+    'customs-offices'              => 'Таможенные офисы',
     'reinforcement'                => 'Реинфорс',
     'standing_level'               => 'Уровень репутации',
     'tax_alliance_corp'            => 'Налог: Альянс/Корпорация',

@@ -24,6 +24,7 @@ namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Financial\MarketDataTable;
+use Seat\Web\Http\DataTables\Scopes\CorporationMarketDivisionsScope;
 use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 use Seat\Web\Http\DataTables\Scopes\Filters\MarketOrderTypeScope;
 use Seat\Web\Http\DataTables\Scopes\Filters\MarketStatusScope;
@@ -42,9 +43,21 @@ class MarketController extends Controller
     public function index(int $corporation_id, MarketDataTable $dataTable)
     {
 
+        $division_ids = [];
+        $division_permissions = [
+            'wallet_first_division', 'wallet_second_division', 'wallet_third_division', 'wallet_fourth_division',
+            'wallet_fifth_division', 'wallet_sixth_division', 'wallet_seventh_division',
+        ];
+
+        foreach ($division_permissions as $key => $permission) {
+            if (auth()->user()->has(sprintf('corporation.%s', $permission)))
+                array_push($division_ids, ($key + 1));
+        }
+
         return $dataTable->addScope(new CorporationScope([$corporation_id]))
             ->addScope(new MarketStatusScope(request()->input('filters.status')))
             ->addScope(new MarketOrderTypeScope(request()->input('filters.type')))
+            ->addScope(new CorporationMarketDivisionsScope($division_ids))
             ->render('web::corporation.market');
     }
 }

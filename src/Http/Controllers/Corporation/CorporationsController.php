@@ -47,9 +47,40 @@ class CorporationsController extends Controller
 
     /**
      * @param int $corporation_id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function show(int $corporation_id)
     {
+        // by default, redirect user to corporation sheet
+        if (auth()->user()->has('corporation.summary'))
+            return redirect()->route('corporation.view.summary', [
+                'corporation_id' => request()->corporation_id,
+            ]);
 
+        // collect all registered routes for corporation scope and sort them alphabetically
+        $configured_routes = array_values(Arr::sort(config('package.corporation.menu'), function ($menu) {
+            return $menu['name'];
+        }));
+
+        // for each route, check if the current user got a valid access and redirect him to the first valid entry
+        foreach ($configured_routes as $menu) {
+            $permissions = $menu['permission'];
+
+            if (! is_array($permissions))
+                $permissions = [$permissions];
+
+            foreach ($permissions as $permission) {
+                if (auth()->user()->has($permission))
+                    return redirect()->route($menu['route'], [
+                        'corporation_id' => request()->corporation_id,
+                    ]);
+            }
+        }
+        $message = sprintf('Request to %s was denied by the corporationbouncer.', request()->path());
+
+        event('security.log', [$message, 'authorization']);
+
+        // Redirect away from the original request
+        return redirect()->route('auth.unauthorized');
     }
 }

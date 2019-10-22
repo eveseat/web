@@ -25,6 +25,8 @@ namespace Seat\Web\Http\Controllers\Corporation;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Industrial\IndustryDataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationScope;
+use Seat\Web\Http\DataTables\Scopes\Filters\IndustryActivityScope;
+use Seat\Web\Http\DataTables\Scopes\Filters\IndustryStatusScope;
 
 /**
  * Class IndustryController.
@@ -41,6 +43,8 @@ class IndustryController extends Controller
     {
 
         return $dataTable->addScope(new CorporationScope([$corporation_id]))
+            ->addScope(new IndustryStatusScope(request()->input('filters.status')))
+            ->addScope(new IndustryActivityScope(request()->input('filters.activity')))
             ->render('web::corporation.industry');
     }
 }

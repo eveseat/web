@@ -22,9 +22,9 @@
 
 return [
     [
-        'name'           => 'Assets',
+        'name'           => 'assets',
         'label'          => 'web::seat.assets',
-        'permission'     => 'character.assets',
+        'permission'     => 'character.asset',
         'highlight_view' => 'assets',
         'route'          => 'character.view.assets',
     ],
@@ -32,7 +32,7 @@ return [
         'name'           => 'bookmarks',
         'label'          => 'web::seat.bookmark',
         'plural'         => true,
-        'permission'     => 'character.bookmarks',
+        'permission'     => 'character.bookmark',
         'highlight_view' => 'bookmarks',
         'route'          => 'character.view.bookmarks',
     ],
@@ -46,23 +46,30 @@ return [
     [
         'name'           => 'contacts',
         'label'          => 'web::seat.contacts',
-        'permission'     => 'character.contacts',
+        'permission'     => 'character.contact',
         'highlight_view' => 'contacts',
         'route'          => 'character.view.contacts',
     ],
     [
         'name'           => 'contracts',
         'label'          => 'web::seat.contracts',
-        'permission'     => 'character.contracts',
+        'permission'     => 'character.contract',
         'highlight_view' => 'contracts',
         'route'          => 'character.view.contracts',
     ],
     [
         'name'           => 'fittings',
         'label'          => 'web::seat.fittings',
-        'permission'     => 'character.fittings',
+        'permission'     => 'character.fitting',
         'highlight_view' => 'fittings',
         'route'          => 'character.view.fittings',
+    ],
+    [
+        'name'           => 'blueprint',
+        'label'          => 'web::seat.blueprint',
+        'permission'     => 'character.blueprint',
+        'highlight_view' => 'blueprint',
+        'route'          => 'character.view.blueprint',
     ],
     [
         'name'           => 'industry',
@@ -81,7 +88,7 @@ return [
     [
         'name'           => 'killmails',
         'label'          => 'web::seat.killmails',
-        'permission'     => 'character.killmails',
+        'permission'     => 'character.killmail',
         'highlight_view' => 'killmails',
         'route'          => 'character.view.killmails',
     ],
@@ -109,7 +116,7 @@ return [
     [
         'name'           => 'notifications',
         'label'          => 'web::seat.notifications',
-        'permission'     => 'character.notifications',
+        'permission'     => 'character.notification',
         'highlight_view' => 'notifications',
         'route'          => 'character.view.notifications',
     ],
@@ -137,7 +144,7 @@ return [
     [
         'name'           => 'skills',
         'label'          => 'web::seat.skills',
-        'permission'     => 'character.skills',
+        'permission'     => 'character.skill',
         'highlight_view' => 'skills',
         'route'          => 'character.view.skills',
     ],
@@ -145,7 +152,7 @@ return [
         'name'           => 'standings',
         'label'          => 'web::seat.standings',
         'plural'         => true,
-        'permission'     => 'character.standings',
+        'permission'     => 'character.standing',
         'highlight_view' => 'standings',
         'route'          => 'character.view.standings',
     ],

@@ -540,7 +540,7 @@ return [
     'no_known_assets'              => '无已知资产',
     'volume_usage'                 => '容量情况',
     'loading_modules'              => '加载模块信息...',
-    'pocos'                        => '海关',
+    'customs-offices'              => '海关',
     'reinforcement'                => '增强',
     'standing_level'               => '声望',
     'tax_alliance_corp'            => '税: 联盟/公司',

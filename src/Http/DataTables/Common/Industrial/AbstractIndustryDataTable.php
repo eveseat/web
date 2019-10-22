@@ -46,13 +46,41 @@ abstract class AbstractIndustryDataTable extends DataTable
                 return view('web::partials.date', ['datetime' => $row->end_date]);
             })
             ->editColumn('runs', function ($row) {
-                return number($row->runs, 0);
+                switch ($row->status) {
+                    case 'active':
+                        return sprintf('<span class="badge badge-primary">%s</span>', number($row->runs, 0));
+                    case 'cancelled':
+                        return sprintf('<span class="badge badge-danger">%s</span>', number($row->runs, 0));
+                    case 'delivered':
+                        return sprintf('<span class="badge badge-secondary">%s</span>', number($row->runs, 0));
+                    case 'paused':
+                        return sprintf('<span class="badge badge-warning">%s</span>', number($row->runs, 0));
+                    case 'ready':
+                        return sprintf('<span class="badge badge-success">%s</span>', number($row->runs, 0));
+                    default:
+                        return number($row->runs, 0);
+                }
             })
             ->addColumn('location', function ($row) {
                 return $row->location->name;
             })
             ->addColumn('activity', function ($row) {
-                return $row->activity->activityName;
+                switch ($row->activity->activityName) {
+                    case 'Manufacturing':
+                        return '<i class="fas fa-industry"></i> ' . $row->activity->activityName;
+                    case 'Researching Time Efficiency':
+                        return '<i class="fas fa-hourglass-half"></i> ' . $row->activity->activityName;
+                    case 'Researching Material Efficiency':
+                        return '<i class="fas fa-gem"></i> ' . $row->activity->activityName;
+                    case 'Copying':
+                        return '<i class="fas fa-flask"></i> ' . $row->activity->activityName;
+                    case 'Invention':
+                        return '<i class="fas fa-microscope"></i> ' . $row->activity->activityName;
+                    case 'Reactions':
+                        return '<i class="fas fa-atom"></i> ' . $row->activity->activityName;
+                    default:
+                        return $row->activity->activityName;
+                }
             })
             ->addColumn('blueprint', function ($row) {
                 return view('web::partials.type', ['type_id' => $row->blueprint->typeID, 'type_name' => $row->blueprint->typeName]);
@@ -80,7 +108,7 @@ abstract class AbstractIndustryDataTable extends DataTable
                     return $sub_query->whereRaw('typeName LIKE ?', ["%$keyword%"]);
                 });
             })
-            ->rawColumns(['start_date', 'end_date', 'blueprint', 'product'])
+            ->rawColumns(['start_date', 'end_date', 'activity', 'runs', 'blueprint', 'product'])
             ->make(true);
     }
 
