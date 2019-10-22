@@ -20,6 +20,12 @@
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">{{ trans('web::seat.main_char_skills_coverage') }}</h3>
+            <div class="card-tools">
+              <a href="{{ route('character.export.skills', [request()->character_id]) }}" class="btn btn-sm btn-light">
+                <i class="fas fa-file-export"></i>
+                Export Skills (Pyfa Format)
+              </a>
+            </div>
           </div>
           <div class="card-body">
             <canvas id="skills-coverage" height="200"></canvas>
