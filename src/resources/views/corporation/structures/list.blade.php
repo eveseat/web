@@ -24,6 +24,7 @@
                 <th>{{ trans_choice('web::seat.offline', 1) }}</th>
                 <th>{{ trans('web::seat.reinforce_week_hour') }}</th>
                 <th data-orderable="false"></th>
+                <th data-orderable="false"></th>
               </tr>
             </thead>
             <tbody>
@@ -47,10 +48,10 @@
                       </span>
                   </td>
                   <td>
-              <span data-toggle="tooltip" title=""
-                    data-original-title="Weekday: {{ $structure->reinforce_weekday }} | Hour: {{ $structure->reinforce_hour }}">
-                {{ $structure->reinforce_weekday }}/{{ $structure->reinforce_hour }}
-              </span>
+                    <span data-toggle="tooltip" title=""
+                          data-original-title="Weekday: {{ $structure->reinforce_weekday }} | Hour: {{ $structure->reinforce_hour }}">
+                      {{ $structure->reinforce_weekday }}/{{ $structure->reinforce_hour }}
+                    </span>
                   </td>
                   <td>
                     <ul>
@@ -70,7 +71,14 @@
                       @endforeach
                     </ul>
                   </td>
+                  <td>
+                    @include('web::corporation.structures.buttons.detail', [
+                      'corporation_id' => $structure->corporation_id,
+                      'structure_id' => $structure->structure_id
+                    ])
 
+                    @include('web::corporation.structures.buttons.export', ['data_export' => $structure->toEve()])
+                  </td>
                 </tr>
 
               @endforeach
@@ -84,4 +92,36 @@
     </div>
   </div> <!-- ./row -->
 
+  @include('web::corporation.structures.modals.fitting.fitting')
+
 @stop
+
+@push('javascript')
+  <script>
+      $('#fitting-detail').on('show.bs.modal', function (e) {
+          var body = $(e.target).find('.modal-body');
+          body.html('Loading...');
+
+          $.ajax($(e.relatedTarget).data('url'))
+              .done(function (data) {
+                  body.html(data);
+                  $(document).find('span[data-toggle="tooltip"]').tooltip();
+              });
+      });
+
+      $(document).on('click', '.copy-fitting', function (e) {
+          var buffer = $(this).data('export');
+
+          $('body').append('<textarea id="copied-fitting"></textarea>');
+          $('#copied-fitting').val(buffer);
+          document.getElementById('copied-fitting').select();
+          document.execCommand('copy');
+          document.getElementById('copied-fitting').remove();
+
+          $(this).attr('data-original-title', 'Copied !')
+              .tooltip('show');
+
+          $(this).attr('data-original-title', 'Copy to clipboard');
+      });
+  </script>
+@endpush
