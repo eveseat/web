@@ -1,4 +1,4 @@
-<a href="#" data-toggle="modal" data-target="#fitting-detail"
+<button data-toggle="modal" data-target="#fitting-detail" class="btn btn-sm btn-link"
    @if(isset($character_id))
    data-url="{{ route('character.view.fittings.items', ['character_id' => $character_id, 'fitting_id' => $fitting_id]) }}"
    @else
@@ -6,4 +6,4 @@
    @endif
 >
   <i class="fa fa-wrench"></i>
-</a>
+</button>
