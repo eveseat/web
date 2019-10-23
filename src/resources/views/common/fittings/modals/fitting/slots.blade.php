@@ -12,9 +12,9 @@
   <tbody>
   @foreach($rows as $row)
     <tr>
-      <td>@include('web::partials.type', ['type_id' => $row->type->typeID, 'type_name' => $row->type->typeName])</td>
-      <td>{{ number($row->quantity) }}</td>
-      <td>{{ number($row->type->price->adjusted_price) }}</td>
+      <td class="w-50">@include('web::partials.type', ['type_id' => $row->type->typeID, 'type_name' => $row->type->typeName])</td>
+      <td class="w-25">{{ number($row->quantity) }}</td>
+      <td class="w-25">{{ number($row->type->price->adjusted_price) }}</td>
     </tr>
   @endforeach
   </tbody>
