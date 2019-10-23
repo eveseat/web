@@ -10,22 +10,26 @@
 
 <h4>Financial</h4>
 
-<table class="table table-sm no-border">
-  <thead>
-    <tr>
-      <th>Hull Estimated Price</th>
-      <th>Fitting Estimated Price</th>
-      <th>Full Estimated Price</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>{{ number($fitting->ship->price->adjusted_price) }}</td>
-      <td>{{ number($fitting->fitting_estimated_price) }}</td>
-      <td>{{ number($fitting->estimated_price) }}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="row mb-3">
+  <div class="col-4">
+    <dl>
+      <dt>Hull Estimated Price</dt>
+      <dd>{{ number($fitting->ship->price->adjusted_price) }}</dd>
+    </dl>
+  </div>
+  <div class="col-4">
+    <dl>
+      <dt>Fitting Estimated Price</dt>
+      <dd>{{ number($fitting->fitting_estimated_price) }}</dd>
+    </dl>
+  </div>
+  <div class="col-4">
+    <dl>
+      <dt>Full Estimated Price</dt>
+      <dd>{{ number($fitting->estimated_price) }}</dd>
+    </dl>
+  </div>
+</div>
 
 @include('web::common.fittings.modals.fitting.slots', [
   'title' => 'Sub-Systems Slots',
