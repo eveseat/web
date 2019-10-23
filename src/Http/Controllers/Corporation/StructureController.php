@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
+use Seat\Eveapi\Models\Corporation\CorporationStructure;
 use Seat\Services\Repositories\Corporation\Structures;
 use Seat\Web\Http\Controllers\Controller;
 
@@ -43,6 +44,21 @@ class StructureController extends Controller
 
         $structures = $this->getCorporationStructures($corporation_id);
 
-        return view('web::corporation.structures', compact('structures'));
+        return view('web::corporation.structures.list', compact('structures'));
+    }
+
+    /**
+     * @param int $corporation_id
+     * @param int $structure_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show(int $corporation_id, int $structure_id)
+    {
+        $structure = CorporationStructure::with('info', 'type', 'services', 'items', 'items.type', 'items.type.dogma_attributes', 'system')
+            ->where('corporation_id', $corporation_id)
+            ->where('structure_id', $structure_id)
+            ->first();
+
+        return view('web::corporation.structures.modals.fitting.content', compact('structure'));
     }
 }

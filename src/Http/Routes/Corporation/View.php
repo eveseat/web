@@ -216,6 +216,12 @@ Route::get('/{corporation_id}/structures', [
     'uses'       => 'StructureController@getStructures',
 ]);
 
+Route::get('/{corporation_id}/structures/{structure_id}', [
+    'as'         => 'corporation.view.structures.show',
+    'middleware' => 'corporationbouncer:structure',
+    'uses'       => 'StructureController@show',
+]);
+
 Route::get('/{corporation_id}/tracking', [
     'as'         => 'corporation.view.tracking',
     'middleware' => 'corporationbouncer:tracking',
