@@ -125,10 +125,11 @@ return [
         'route_segment' => 'tools',
         'entries'       => [
             [
-                'name'  => 'standing profiles',
-                'label' => 'web::seat.standings_builder',
-                'icon'  => 'fas fa-address-book',
-                'route' => 'tools.standings',
+                'name'       => 'standing profiles',
+                'label'      => 'web::seat.standings_builder',
+                'icon'       => 'fas fa-address-book',
+                'permission' => 'global.standing_builder',
+                'route'      => 'tools.standings',
             ],
         ],
     ],
