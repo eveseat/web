@@ -133,61 +133,58 @@
         </div>
         <div class="card-body">
 
-          <table class="table table-hover table-condensed">
+          <table class="table table-hover table-condensed" id="roles">
             <thead>
               <tr>
                 <th>{{ trans_choice('web::seat.role_name', 1) }}</th>
-                <th>{{ trans_choice('web::seat.permission', 2) }}</th>
-                <th>{{ trans_choice('web::seat.affiliation', 2) }}</th>
                 <th></th>
+                <th>{{ trans_choice('web::seat.permission', 2) }}</th>
+                <th>{{ trans_choice('web::seat.filter', 2) }}</th>
               </tr>
             </thead>
             <tbody>
 
             @if($user->group)
               @foreach($user->group->roles as $role)
-
-                <tr>
-                  <td>{{ $role->title }}</td>
-                  <td>
-                    @foreach($role->permissions as $permission)
-                      <span
-                          class="badge badge-{{ $permission->title == 'global.superuser' ? 'danger' : 'info' }}">{{ Str::studly($permission->title) }}</span>
-                    @endforeach
-                  </td>
-                  <td>
-                    @foreach($role->affiliations as $affiliation)
-                      @switch($affiliation->type)
-                        @case('corp')
-                          @include('web::partials.corporation', ['corporation' => $affiliation->affiliation])
-                          @break
-                        @case('char')
-                          @include('web::partials.character', ['character' => $affiliation->affiliation])
-                          @break
-                        @default
-                          <span class="badge badge-primary">{{ $affiliation->affiliation }} ({{ $affiliation->type }})</span>
-                      @endswitch
-                    @endforeach
-                  </td>
-                  <td>
-                    @if(auth()->user()->id != $user->id)
-                      <div class="btn-group btn-group-sm float-right">
-                        <a href="{{ route('configuration.access.roles.edit', ['id' => $role->id]) }}" type="button"
-                           class="btn btn-warning">
-                          <i class="fas fa-pencil-alt"></i>
-                          {{ trans('web::seat.edit') }}
-                        </a>
-                        <a href="{{ route('configuration.access.roles.edit.remove.group', ['role_id' => $role->id, 'user_id' => $user->group->id]) }}"
-                           type="button" class="btn btn-danger">
-                          <i class="fas fa-trash-alt"></i>
-                          {{ trans('web::seat.remove') }}
-                        </a>
-                      </div>
-                    @endif
-                  </td>
-
-                </tr>
-
+                @foreach($role->permissions as $permission)
+                  <tr>
+                    <td>{{ $role->title }}</td>
+                    <td>
+                      @if(auth()->user()->id != $user->id)
+                        <div class="btn-group btn-group-sm float-right">
+                          <a href="{{ route('configuration.access.roles.edit', [$role->id]) }}" type="button"
+                             class="btn btn-warning">
+                            <i class="fas fa-pencil-alt"></i>
+                            {{ trans('web::seat.edit') }}
+                          </a>
+                          <form method="post" action="{{ route('configuration.access.roles.edit.remove.group', ['role_id' => $role->id, 'group_id' => $user->group->id]) }}">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <button type="submit" class="btn btn-danger">
+                              <i class="fas fa-trash-alt"></i>
+                              {{ trans('web::seat.remove') }}
+                            </button>
+                          </form>
+                        </div>
+                      @endif
+                    </td>
+                    <td>
+                      <span class="badge badge-{{ $permission->title == 'global.superuser' ? 'danger' : 'info' }}">
+                        {{ Str::studly($permission->title) }}
+                      </span>
+                    </td>
+                    <td>
+                      @if($permission->pivot->filters)
+                        @foreach(json_decode($permission->pivot->filters) as $type => $entities)
+                          @foreach($entities as $entity)
+                            {!! img($type, $entity->id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
+                            {{ $entity->text }}
+                          @endforeach
+                        @endforeach
+                      @endif
+                    </td>
+                  </tr>
+                @endforeach
               @endforeach
             @endif
 
@@ -196,7 +193,7 @@
 
         </div>
         <div class="card-footer">
-          <i class="text-muted float-right">{{ count(optional($user->group)->roles) }} {{ trans_choice('web::seat.role', count(optional($user->group)->roles)) }}</i>
+          <i class="text-muted float-right">{{ $user->group->roles->count() }} {{ trans_choice('web::seat.role', $user->group->roles->count()) }}</i>
         </div>
       </div>
       @endif
@@ -262,6 +259,37 @@
   <script>
     $("#available_users").select2({
       placeholder: "{{ trans('web::seat.select_group_to_assign') }}"
+    });
+
+    $('#roles').DataTable({
+        'columns': [
+            {'visible': false},
+            {'visible': false},
+            {},
+            {}
+        ],
+    'drawCallback': function (settings) {
+        var last = null;
+        var api = this.api();
+        var rows = api.rows({
+            page:'current'
+        }).nodes();
+
+        $(api.cells({page:'current'})[0])
+            .each(function (i, cell) {
+                if (cell.column === 0) {
+                    group = api.cell(this).data();
+
+                    if (last !== group) {
+                        $(rows).eq((i === 0) ? 0 : (i / 4))
+                            .before('<tr class="bg-gray"><th class="align-middle">' + group + '</th><th>' + api.cell(cell.row, 1).data() + '</th></tr>');
+
+                        last = group;
+                    }
+                }
+            });
+
+        ids_to_names(); }
     });
   </script>
 
