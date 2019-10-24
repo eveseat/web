@@ -55,7 +55,6 @@ class Role extends Model
         // and affiliations that it had
         $this->groups()->detach();
         $this->permissions()->detach();
-        $this->affiliations()->detach();
 
         return parent::delete();
     }
@@ -77,19 +76,6 @@ class Role extends Model
 
         return $this->belongsToMany(Permission::class)
             ->withPivot(['not', 'filters']);
-    }
-
-    /**
-     * This role may be affiliated manually to
-     * other characterID's and or corporations.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function affiliations()
-    {
-
-        return $this->belongsToMany(Affiliation::class)
-            ->withPivot('not');
     }
 
     /**
