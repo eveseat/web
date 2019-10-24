@@ -127,17 +127,17 @@
 
             <tr class="
               @if($standing->standing > 0)
-                    success
-                  @elseif($standing->standing < 0)
-                    danger
-                  @endif
-                    ">
+                table-success
+              @elseif($standing->standing < 0)
+                table-danger
+              @endif
+            ">
               <td>{{ ucfirst($standing->type) }}</td>
               <td>
                 {!! img('auto', $standing->elementID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
                 <span class="id-to-name" data-id="{{ $standing->elementID }}">{{ trans('web::seat.unknown') }}</span>
               </td>
-              <td>{{ $standing->standing }}</td>
+              <td>{!! view('web::partials.standing', ['standing' => $standing->standing]) !!}</td>
               <td>
                 <a href="{{ route('tools.standings.edit.remove', ['element_id' => $standing->id, 'profile_id' => $request->id]) }}"
                    type="button" class="btn btn-danger btn-sm">
