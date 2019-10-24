@@ -480,7 +480,7 @@ class AccessCheckerTest extends TestCase
                 98413060 => [
                     'corporation.summary',
                     'corporation.journal',
-                    'corporation.transactions',
+                    'corporation.transaction',
                 ],
             ],
             'inverted_permissions' => [
@@ -533,12 +533,12 @@ class AccessCheckerTest extends TestCase
     public function corporationRoleProvider()
     {
         return [
-            ['Accountant', [98413060 => ['corporation.summary', 'corporation.journal', 'corporation.transactions']]],
+            ['Accountant', [98413060 => ['corporation.summary', 'corporation.journal', 'corporation.transaction']]],
             ['Auditor', [98413060 => ['corporation.summary']]],
             ['Contract_Manager', [98413060 => ['corporation.summary', 'corporation.contracts']]],
             ['Diplomat', [98413060 => ['corporation.summary', 'corporation.tracking']]],
             ['Director', [98413060 => ['corporation.*']]],
-            ['Junior_Accountant', [98413060 => ['corporation.summary', 'corporation.journal', 'corporation.transactions']]],
+            ['Junior_Accountant', [98413060 => ['corporation.summary', 'corporation.journal', 'corporation.transaction']]],
             ['Security_Officer', [98413060 => ['corporation.summary', 'corporation.security']]],
             ['Trader', [98413060 => ['corporation.summary', 'corporation.market']]],
         ];
