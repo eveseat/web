@@ -27,7 +27,7 @@ Route::get('/', [
 
 Route::get('/delete/{character_id}', [
     'as'         => 'character.delete',
-    'middleware' => 'bouncer:superuser',
+    'middleware' => 'bouncer:global.superuser',
     'uses'       => 'CharacterController@deleteCharacter',
 ]);
 

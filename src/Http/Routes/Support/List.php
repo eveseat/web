@@ -27,6 +27,6 @@ Route::get('/inv/types', [
 
 Route::get('/api-key/userlist', [
     'as'         => 'support.api-key.userlist',
-    'middleware' => 'bouncer:superuser',
+    'middleware' => 'bouncer:global.superuser',
     'uses'       => 'ListController@getSeatUserList',
 ]);
