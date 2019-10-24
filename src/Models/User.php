@@ -223,7 +223,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function character()
     {
 
-        return $this->belongsTo(CharacterInfo::class, 'id', 'character_id');
+        return $this->belongsTo(CharacterInfo::class, 'id', 'character_id')
+            ->withDefault([
+                'character_id' => $this->id,
+                'name'         => $this->name,
+            ]);
     }
 
     /**
