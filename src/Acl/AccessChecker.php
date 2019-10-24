@@ -93,7 +93,7 @@ trait AccessChecker
     public function hasSuperUser()
     {
 
-        return in_array('superuser', $this->getAllPermissions());
+        return in_array('global.superuser', $this->getAllPermissions());
     }
 
     /**

@@ -67,7 +67,7 @@ return [
     'settings'    => [
         'name'          => 'configuration',
         'label'         => 'web::seat.configuration',
-        'permission'    => 'superuser',
+        'permission'    => 'global.superuser',
         'icon'          => 'fas fa-cogs',
         'route_segment' => 'configuration',
         'entries'       => [

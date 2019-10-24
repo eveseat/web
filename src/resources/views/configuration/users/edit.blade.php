@@ -152,7 +152,7 @@
                   <td>
                     @foreach($role->permissions as $permission)
                       <span
-                          class="badge badge-{{ $permission->title == 'superuser' ? 'danger' : 'info' }}">{{ Str::studly($permission->title) }}</span>
+                          class="badge badge-{{ $permission->title == 'global.superuser' ? 'danger' : 'info' }}">{{ Str::studly($permission->title) }}</span>
                     @endforeach
                   </td>
                   <td>
