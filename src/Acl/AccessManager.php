@@ -24,7 +24,6 @@ namespace Seat\Web\Acl;
 
 use Seat\Web\Events\UserGroupRoleAdded;
 use Seat\Web\Events\UserGroupRoleRemoved;
-use Seat\Web\Models\Acl\Affiliation as AffiliationModel;
 use Seat\Web\Models\Acl\Permission as PermissionModel;
 use Seat\Web\Models\Acl\Role as RoleModel;
 use Seat\Web\Models\Group;
