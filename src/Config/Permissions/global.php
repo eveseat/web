@@ -27,4 +27,8 @@ return [
     'queue_manager' => [
         'label' => 'web::permissions.global_queue_manager_label',
     ],
+    'standing_builder' => [
+        'label'       => 'web::permissions.global_standing_builder_label',
+        'description' => 'web::permissions.global_standing_builder_description',
+    ],
 ];

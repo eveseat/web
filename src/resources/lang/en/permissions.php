@@ -34,6 +34,10 @@ return [
     'financial_division'                 => 'This permission is part of Financial division',
     'assets_division'                    => 'This permission is part of Assets division',
 
+    // Global Scope
+    'global_standing_builder_label'       => 'Grant access to Standings Builder',
+    'global_standing_builder_description' => 'Standing Builder is used to design standings mapping which then can be applied on Character Intel.',
+
     // Character Scope
     'character_asset_label'              => 'Grant access to Character Assets',
     'character_asset_description'        => 'The Character Assets is showing every single owned assets, their location and quantity. ',
