@@ -53,7 +53,7 @@ class AccessCheckerTest extends TestCase
 
     protected $user_permissions;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
