@@ -30,7 +30,7 @@
                     'description' => array_key_exists('description', $permission) ? trans($permission['description']) : '',
                     'division'    => array_key_exists('division', $permission) ? $permission['division'] : '',
                     'filters'     => $role->permissions->where('title', sprintf('%s.%s', $scope, $ability))->first() ? $role->permissions->where('title', sprintf('%s.%s', $scope, $ability))->first()->pivot->filters : null,
-                    'is_granted'  => in_array($scope, ['character', 'corporation']) ? in_array(sprintf('%s.%s', $scope, $ability), $role_permissions) : in_array($permission, $role_permissions),
+                    'is_granted'  => in_array(sprintf('%s.%s', $scope, $ability), $role_permissions),
                     'role_id'     => $role->id
                   ])
                 @endforeach
