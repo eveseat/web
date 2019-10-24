@@ -343,6 +343,17 @@ trait AccessChecker
                                 }
                             }
 
+                            if ($map_type == 'corp') {
+
+                                if ($permission->isCharacterScope()) {
+                                    $map_type = 'char';
+                                    $entities_id = $this->getAllCharacters()
+                                        ->where('corporation_id', $entity->id)
+                                        ->pluck('character_id');
+                                }
+
+                            }
+
                             foreach ($entities_id as $entity_id) {
 
                                 // in case the type does not exist yet in the mapping array, create an empty one
