@@ -170,7 +170,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
         // Cleanup the user
         $this->login_history()->delete();
-        $this->affiliations()->detach();
         $this->refresh_token()->forceDelete();
 
         $this->settings()->delete();
@@ -187,19 +186,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
 
         return $this->hasMany(UserLoginHistory::class);
-    }
-
-    /**
-     * This user may be affiliated manually to
-     * other characterID's and or corporations.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function affiliations()
-    {
-
-        return $this->belongsToMany(Affiliation::class)
-            ->withPivot('not');
     }
 
     /**
