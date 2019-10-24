@@ -68,7 +68,10 @@ class UserController extends Controller
             })
             ->editColumn('name', function ($row) {
 
-                $character = CharacterInfo::find($row->id) ?: $row->id;
+                $character = CharacterInfo::find($row->id) ?: new CharacterInfo([
+                    'character_id' => $row->id,
+                    'name'         => trans('web::seat.unknown'),
+                ]);
 
                 return view('web::partials.character', compact('character'));
             })
@@ -104,12 +107,15 @@ class UserController extends Controller
             })
             ->addColumn('main_character_blade', function (User $user) {
 
-                $main_character_id = null;
+                $main_character_id = 0;
 
                 if ($user->group)
-                    $main_character_id = optional($user->group->main_character)->character_id ?: null;
+                    $main_character_id = optional($user->group->main_character)->character_id ?: 0;
 
-                $character = CharacterInfo::find($main_character_id) ?: $main_character_id;
+                $character = CharacterInfo::find($main_character_id) ?: new CharacterInfo([
+                    'character_id' => $main_character_id,
+                    'name'         => trans('web::seat.unknown'),
+                ]);
 
                 return view('web::partials.character', compact('character'));
             })
