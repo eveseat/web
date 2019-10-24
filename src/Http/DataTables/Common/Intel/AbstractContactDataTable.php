@@ -41,18 +41,7 @@ abstract class AbstractContactDataTable extends DataTable
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('standing', function ($row) {
-                switch (true) {
-                    case $row->standing > 5:
-                        return '<b class="text-navy">' . $row->standing . '</b>';
-                    case $row->standing > 0:
-                        return '<b class="text-primary">' . $row->standing . '</b>';
-                    case $row->standing < -5:
-                        return '<b class="text-red">' . $row->standing . '</b>';
-                    case $row->standing < 0:
-                        return '<b class="text-orange">' . $row->standing . '</b>';
-                    default:
-                        return '<b class="text-gray">' . $row->standing . '</b>';
-                }
+                return view('web::partials.standing', ['standing' => $row->standing]);
             })
             ->addColumn('name', function ($row) {
                 switch ($row->entity->category) {
