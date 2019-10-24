@@ -62,9 +62,9 @@
 
             <tr>
               <td>{{ $role->title }}</td>
-              <td>{{ count($role->groups) }}</td>
-              <td>{{ count($role->permissions) }}</td>
-              <td>{{ count($role->affiliations) }}</td>
+              <td>{{ $role->groups->count() }}</td>
+              <td>{{ $role->permissions->count() }}</td>
+              <td>{{ $role->permissions->filter(function ($permission) { return ! is_null($permission->pivot->filters); })->count() }}</td>
               <td>
                 <form method="post" action="{{ route('configuration.access.roles.delete', [$role->id]) }}">
                   {{ csrf_field() }}

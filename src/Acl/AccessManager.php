@@ -46,7 +46,7 @@ trait AccessManager
     public function getCompleteRole(int $role_id = null)
     {
 
-        $roles = RoleModel::with('permissions', 'groups', 'affiliations');
+        $roles = RoleModel::with('permissions', 'groups');
 
         if (! is_null($role_id)) {
 
@@ -214,83 +214,6 @@ trait AccessManager
         $role = $this->getRole($role_id);
         if ($role->groups()->detach($group_id) > 0)
             event(new UserGroupRoleRemoved($group_id, $role));
-
-    }
-
-    /**
-     * @param int   $role_id
-     * @param array $affiliations
-     * @param bool  $inverse
-     */
-    public function giveRoleCorporationAffiliations(int $role_id, array $affiliations, bool $inverse)
-    {
-
-        foreach ($affiliations as $affiliation)
-            $this->giveRoleCorporationAffiliation($role_id, $affiliation, $inverse);
-
-    }
-
-    /**
-     * @param int  $role_id
-     * @param int  $corporation_id
-     * @param bool $inverse
-     */
-    public function giveRoleCorporationAffiliation(int $role_id, int $corporation_id, bool $inverse)
-    {
-
-        $role = $this->getRole($role_id);
-
-        $affiliation = AffiliationModel::firstOrNew([
-            'affiliation' => $corporation_id,
-            'type'        => 'corp',
-        ]);
-
-        if (! $role->affiliations->contains($affiliation))
-            $role->affiliations()->save($affiliation, ['not' => $inverse]);
-
-    }
-
-    /**
-     * @param int   $role_id
-     * @param array $affiliations
-     * @param bool  $inverse
-     */
-    public function giveRoleCharacterAffiliations(int $role_id, array $affiliations, bool $inverse)
-    {
-
-        foreach ($affiliations as $affiliation)
-            $this->giveRoleCharacterAffiliation($role_id, $affiliation, $inverse);
-
-    }
-
-    /**
-     * @param int  $role_id
-     * @param int  $character_id
-     * @param bool $inverse
-     */
-    public function giveRoleCharacterAffiliation(int $role_id, int $character_id, bool $inverse)
-    {
-
-        $role = $this->getRole($role_id);
-
-        $affiliation = AffiliationModel::firstOrNew([
-            'affiliation' => $character_id,
-            'type'        => 'char',
-        ]);
-
-        if (! $role->affiliations->contains($affiliation))
-            $role->affiliations()->save($affiliation, ['not' => $inverse]);
-    }
-
-    /**
-     * @param int $role_id
-     * @param int $affiliation_id
-     */
-    public function removeAffiliationFromRole(int $role_id, int $affiliation_id)
-    {
-
-        $role = $this->getRole($role_id);
-        $role->affiliations()->detach($affiliation_id);
 
     }
 }
