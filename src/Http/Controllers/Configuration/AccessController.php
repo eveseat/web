@@ -224,10 +224,14 @@ class AccessController extends Controller
     /**
      * @param $role_id
      * @param $group_id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function removeGroup($role_id, $group_id)
     {
 
         $this->removeGroupFromRole($group_id, $role_id);
+
+        return redirect()->back()
+            ->with('success', 'Role has been removed from user');
     }
 }
