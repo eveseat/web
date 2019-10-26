@@ -11,9 +11,9 @@
   <title>SeAT | @yield('title', 'Eve Online API Tool')</title>
 
   <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.5 -->
-  <!--<link rel="stylesheet" href="{{ asset('web/css/bootstrap.min.css') }}">-->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap 4 -->
+  <link rel="stylesheet" href="{{ asset('web/css/bootstrap.min.css') }}">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ asset('web/css/all.min.css') }}">
   <!-- Select2 -->
@@ -25,8 +25,7 @@
   <!-- Skin -->
   <link rel="stylesheet" href="{{ asset('web/css/skins/' . setting('skin') . '.min.css') }}">
   <!-- Google Font -->
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <!-- SeAT CSS -->
   <link rel="stylesheet" href="{{ asset('web/css/seat.css') }}">
   <!-- Custom layout CSS -->
