@@ -38,10 +38,10 @@ class CorporationsController extends Controller
         if (auth()->user()->hasSuperUser())
             return $dataTable->render('web::corporation.list');
 
-        $allowed_corporation_ids = array_keys(Arr::get(auth()->user()->getAffiliationMap(), 'corp'));
+        $allowed_corporations = array_keys(Arr::get(auth()->user()->getAffiliationMap(), 'corp'));
 
         return $dataTable
-            ->addScope(new CorporationScope($allowed_corporation_ids))
+            ->addScope(new CorporationScope($allowed_corporations))
             ->render('web::corporation.list');
     }
 
@@ -54,7 +54,7 @@ class CorporationsController extends Controller
         // by default, redirect user to corporation sheet
         if (auth()->user()->has('corporation.summary'))
             return redirect()->route('corporation.view.summary', [
-                'corporation_id' => request()->corporation_id,
+                'corporation_id' => $corporation_id,
             ]);
 
         // collect all registered routes for corporation scope and sort them alphabetically
@@ -72,7 +72,7 @@ class CorporationsController extends Controller
             foreach ($permissions as $permission) {
                 if (auth()->user()->has($permission))
                     return redirect()->route($menu['route'], [
-                        'corporation_id' => request()->corporation_id,
+                        'corporation_id' => $corporation_id,
                     ]);
             }
         }
