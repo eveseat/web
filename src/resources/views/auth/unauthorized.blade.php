@@ -5,24 +5,27 @@
 @section('content')
 
   <div class="login-logo">
-    S<b>e</b>AT <br>
-    <hr>
-    <i class="fa fa-exclamation-triangle"></i>
-    {{ trans('web::seat.unauthorized_request') }}
+    <a href="#">S<b>e</b>AT</a>
   </div>
 
-  <hr>
+  <div class="card">
+    <div class="card-body login-card-body">
+      <h5 class="text-center">
+        <i class="fas fa-exclamation-triangle"></i>
+        {{ trans('web::seat.unauthorized_request') }}
+      </h5>
 
-  <div class="login-box-body">
-    <p class="login-box-msg">
+      <hr/>
 
-      {{ trans('web::seat.unauthorized_request_logged') }}
-    </p>
+      <p class="card-text login-box-msg">
+        {{ trans('web::seat.unauthorized_request_logged') }}
+      </p>
 
-    <a href="{{ route('home') }}" class="btn btn-primary btn-block">
-      {{ trans('web::seat.home') }}
-    </a>
+      <a href="{{ route('home') }}" class="btn btn-block btn-primary">
+        {{ trans('web::seat.home') }}
+      </a>
 
+    </div>
   </div>
 
 @stop
