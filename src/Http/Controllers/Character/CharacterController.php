@@ -43,11 +43,10 @@ class CharacterController extends Controller
         if (auth()->user()->hasSuperUser())
             return $dataTable->render('web::character.list');
 
-        $owned_character_ids = auth()->user()->associatedCharacterIds()->toArray();
-        $allowed_character_ids = array_keys(Arr::get(auth()->user()->getAffiliationMap(), 'char'));
+        $allowed_characters = array_keys(Arr::get(auth()->user()->getAffiliationMap(), 'char'));
 
         return $dataTable
-            ->addScope(new CharacterScope('character.sheet', auth()->user()->id, array_merge($owned_character_ids, $allowed_character_ids)))
+            ->addScope(new CharacterScope('character.sheet', auth()->user()->id, $allowed_characters))
             ->render('web::character.list');
     }
 
@@ -60,7 +59,7 @@ class CharacterController extends Controller
         // by default, redirect user to character sheet
         if (auth()->user()->has('character.sheet'))
             return redirect()->route('character.view.sheet', [
-                'character_id' => request()->character_id,
+                'character_id' => $character_id,
             ]);
 
         // collect all registered routes for character scope and sort them alphabetically
@@ -78,7 +77,7 @@ class CharacterController extends Controller
             foreach ($permissions as $permission) {
                 if (auth()->user()->has($permission))
                     return redirect()->route($menu['route'], [
-                        'character_id' => request()->character_id,
+                        'character_id' => $character_id,
                     ]);
             }
         }
