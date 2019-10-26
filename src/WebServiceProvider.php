@@ -123,6 +123,7 @@ class WebServiceProvider extends AbstractSeatPlugin
             __DIR__ . '/resources/js'                                            => public_path('web/js'),
 
             // Bootstrap pulled from packagist
+            base_path('vendor/twbs/bootstrap/dist/css/bootstrap.min.css')                           => public_path('web/css/bootstrap.min.css'),
             base_path('vendor/almasaeed2010/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') => public_path('web/js/bootstrap.bundle.min.js'),
 
             // Datatables pulled from packagist
