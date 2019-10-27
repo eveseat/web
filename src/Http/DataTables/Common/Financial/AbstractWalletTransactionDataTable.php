@@ -54,13 +54,13 @@ abstract class AbstractWalletTransactionDataTable extends DataTable
             ->addColumn('total', function ($row) {
                 return number($row->quantity * $row->unit_price);
             })
-            ->addColumn('type', function ($row) {
+            ->editColumn('type.typeName', function ($row) {
                 return view('web::partials.type', ['type_id' => $row->type->typeID, 'type_name' => $row->type->typeName]);
             })
-            ->addColumn('location', function ($row) {
+            ->editColumn('location.name', function ($row) {
                 return $row->location->name;
             })
-            ->addColumn('party', function ($row) {
+            ->editColumn('party.name', function ($row) {
                 switch ($row->party->category) {
                     case 'alliance':
                         return view('web::partials.alliance', ['alliance' => $row->party]);
@@ -82,21 +82,10 @@ abstract class AbstractWalletTransactionDataTable extends DataTable
 
                 return $query;
             })
-            ->filterColumn('type', function ($query, $keyword) {
-                return $query->whereHas('type', function ($sub_query) use ($keyword) {
-                    return $sub_query->whereRaw('typeName LIKE ?', ["%$keyword%"]);
-                });
-            })
             ->filterColumn('total', function ($query, $keyword) {
                 return $query->whereRaw('(unit_price * quantity) LIKE ?', ["%$keyword%"]);
             })
-            ->filterColumn('party', function ($query, $keyword) {
-                return $query->whereHas('party', function ($sub_query) use ($keyword) {
-                    return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
-                });
-            })
             ->orderColumn('total', '(unit_price * quantity) $1')
-            ->rawColumns(['date', 'is_buy', 'type', 'party'])
             ->make(true);
     }
 
@@ -126,12 +115,12 @@ abstract class AbstractWalletTransactionDataTable extends DataTable
         return [
             ['data' => 'date', 'title' => trans('web::wallet.date')],
             ['data' => 'is_buy', 'title' => trans('web::wallet.order')],
-            ['data' => 'type', 'title' => trans('web::wallet.type')],
-            ['data' => 'location', 'title' => trans('web::wallet.location')],
+            ['data' => 'type.typeName', 'title' => trans('web::wallet.type')],
+            ['data' => 'location.name', 'title' => trans('web::wallet.location')],
             ['data' => 'unit_price', 'title' => trans('web::wallet.price')],
             ['data' => 'quantity', 'title' => trans('web::wallet.quantity')],
             ['data' => 'total', 'title' => trans('web::wallet.total')],
-            ['data' => 'party', 'title' => trans('web::wallet.party')],
+            ['data' => 'party.name', 'title' => trans('web::wallet.party')],
         ];
     }
 }

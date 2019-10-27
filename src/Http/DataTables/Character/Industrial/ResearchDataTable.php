@@ -43,10 +43,10 @@ class ResearchDataTable extends DataTable
             ->editColumn('started_at', function ($row) {
                 return view('web::partials.date', ['datetime' => $row->started_at]);
             })
-            ->addColumn('agent', function ($row) {
-                return view('web::partials.character', ['character' => $row->agent_id]);
+            ->editColumn('agent.name', function ($row) {
+                return view('web::partials.character', ['character' => $row->agent]);
             })
-            ->addColumn('skill', function ($row) {
+            ->editColumn('skill.typeName', function ($row) {
                 return view('web::partials.type', ['type_id' => $row->skill->typeID, 'type_name' => $row->skill->typeName]);
             })
             ->filterColumn('agent', function ($query, $keyword) {
@@ -94,8 +94,8 @@ class ResearchDataTable extends DataTable
     {
         return [
             ['data' => 'started_at', 'title' => trans('web::research.start')],
-            ['data' => 'agent', 'title' => trans('web::research.agent')],
-            ['data' => 'skill', 'title' => trans('web::research.skill')],
+            ['data' => 'agent.name', 'title' => trans('web::research.agent')],
+            ['data' => 'skill.typeName', 'title' => trans('web::research.skill')],
             ['data' => 'points_per_day', 'title' => trans_choice('web::research.point_per_day', 0)],
             ['data' => 'remainder_points', 'title' => trans('web::research.remainder')],
         ];

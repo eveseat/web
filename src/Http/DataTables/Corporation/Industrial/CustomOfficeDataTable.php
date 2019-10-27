@@ -58,7 +58,7 @@ class CustomOfficeDataTable extends DataTable
 
                 return trans('web::seat.no');
             })
-            ->addColumn('standing_level', function ($row) {
+            ->editColumn('standing_level', function ($row) {
                 switch ($row->standing_level) {
                     case 'terrible':
                         return '<span class="badge badge-danger">Terrible</span>';

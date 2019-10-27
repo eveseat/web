@@ -37,6 +37,6 @@ class WalletTransactionDataTable extends AbstractWalletTransactionDataTable
      */
     public function query()
     {
-        return CorporationWalletTransaction::with('type', 'party');
+        return CorporationWalletTransaction::with('type', 'party', 'location');
     }
 }

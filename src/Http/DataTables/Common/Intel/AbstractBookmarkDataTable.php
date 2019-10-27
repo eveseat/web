@@ -45,7 +45,6 @@ abstract class AbstractBookmarkDataTable extends DataTable
             ->addColumn('coordinates', function ($row) {
                 return view('web::common.bookmarks.coordinates', compact('row'));
             })
-            ->rawColumns(['created', 'notes', 'coordinates'])
             ->make(true);
     }
 
