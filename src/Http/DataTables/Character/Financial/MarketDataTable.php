@@ -37,7 +37,7 @@ class MarketDataTable extends AbstractMarketDataTable
      */
     public function query()
     {
-        return CharacterOrder::query();
+        return CharacterOrder::with('type');
     }
 
     /**

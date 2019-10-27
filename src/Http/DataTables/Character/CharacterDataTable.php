@@ -43,26 +43,15 @@ class CharacterDataTable extends DataTable
             ->editColumn('name', function ($row) {
                 return view('web::partials.character', ['character' => $row]);
             })
-            ->addColumn('corporation', function ($row) {
+            ->editColumn('corporation.name', function ($row) {
                 return view('web::partials.corporation', ['corporation' => $row->corporation]);
             })
-            ->addColumn('alliance', function ($row) {
+            ->editColumn('alliance.name', function ($row) {
                 if (! is_null($row->alliance_id))
                     return view('web::partials.alliance', ['alliance' => $row->alliance]);
 
                 return '';
             })
-            ->filterColumn('corporation', function ($query, $keyword) {
-                return $query->whereHas('corporation', function ($sub_query) use ($keyword) {
-                    return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
-                });
-            })
-            ->filterColumn('alliance', function ($query, $keyword) {
-                return $query->whereHas('alliance', function ($sub_query) use ($keyword) {
-                    return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
-                });
-            })
-            ->rawColumns(['name', 'corporation', 'alliance'])
             ->make(true);
     }
 
@@ -95,8 +84,8 @@ class CharacterDataTable extends DataTable
     {
         return [
             ['data' => 'name', 'title' => trans_choice('web::seat.name', 1)],
-            ['data' => 'corporation', 'title' => trans_choice('web::seat.corporation', 1), 'orderable' => false],
-            ['data' => 'alliance', 'title' => trans('web::seat.alliance'), 'orderable' => false],
+            ['data' => 'corporation.name', 'title' => trans_choice('web::seat.corporation', 1)],
+            ['data' => 'alliance.name', 'title' => trans('web::seat.alliance')],
             ['data' => 'security_status', 'title' => trans('web::seat.security_status')],
         ];
     }

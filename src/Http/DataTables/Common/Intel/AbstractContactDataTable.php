@@ -43,7 +43,7 @@ abstract class AbstractContactDataTable extends DataTable
             ->editColumn('standing', function ($row) {
                 return view('web::partials.standing', ['standing' => $row->standing]);
             })
-            ->addColumn('name', function ($row) {
+            ->editColumn('entity.name', function ($row) {
                 switch ($row->entity->category) {
                     case 'alliance':
                         return view('web::partials.alliance', ['alliance' => $row->entity]);
@@ -71,7 +71,6 @@ abstract class AbstractContactDataTable extends DataTable
                     $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
                 });
             })
-            ->rawColumns(['name', 'standing', 'action'])
             ->make(true);
     }
 
@@ -100,7 +99,7 @@ abstract class AbstractContactDataTable extends DataTable
     public function getColumns()
     {
         return [
-            'name',
+            'entity.name',
             'contact_type',
             'standing',
             'labels',

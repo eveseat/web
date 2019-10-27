@@ -37,7 +37,9 @@ class KillMailDataTable extends AbstractKillMailDataTable
      */
     public function query()
     {
-        return CharacterKillmail::orderByDesc('killmail_id');
+        return CharacterKillmail::with('detail', 'detail', 'detail.system',
+            'victim', 'victim.character', 'victim.corporation', 'victim.alliance', 'victim.ship',
+            'attackers', 'attackers.character', 'attackers.corporation', 'attackers.alliance');
     }
 
     /**

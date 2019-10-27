@@ -48,7 +48,6 @@ class LogDataTable extends DataTable
             ->editColumn('role', function ($row) {
                 return str_replace('_', ' ', $row->role);
             })
-            ->rawColumns(['changed_at', 'issuer.name', 'character.name'])
             ->make(true);
     }
 

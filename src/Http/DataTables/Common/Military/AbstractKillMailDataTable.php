@@ -42,22 +42,22 @@ abstract class AbstractKillMailDataTable extends DataTable
             ->editColumn('action', function ($row) {
                 return view('web::common.killmails.killmailzkb', compact('row'));
             })
-            ->addColumn('date', function ($row) {
+            ->editColumn('detail.killmail_time', function ($row) {
                 return view('web::partials.date', ['datetime' => $row->detail->killmail_time]);
             })
-            ->addColumn('ship', function ($row) {
+            ->editColumn('victim.ship.typeName', function ($row) {
                 return view('web::partials.type', [
                     'type_id' => $row->victim->ship->typeID,
                     'type_name' => $row->victim->ship->typeName,
                 ]);
             })
-            ->addColumn('system', function ($row) {
+            ->editColumn('detail.system.itemName', function ($row) {
                 return view('web::partials.system', [
                     'system' => $row->detail->system->itemName,
                     'security' => $row->detail->system->security,
                 ]);
             })
-            ->addColumn('victim', function ($row) {
+            ->editColumn('victim.character.name', function ($row) {
                 return view('web::partials.character', ['character' => $row->victim->character]) . '<br/>' .
                     view('web::partials.corporation', ['corporation' => $row->victim->corporation]) .
                     view('web::partials.alliance', ['alliance' => $row->victim->alliance]);
@@ -72,17 +72,7 @@ abstract class AbstractKillMailDataTable extends DataTable
                     view('web::partials.corporation', ['corporation' => $killer->corporation]) . ' ' .
                     view('web::partials.alliance', ['alliance' => $killer->alliance]);
             })
-            ->filterColumn('ship', function ($query, $keyword) {
-                return $query->whereHas('victim.ship', function ($sub_query) use ($keyword) {
-                    return $sub_query->whereRaw('typeName LIKE ?', ["%$keyword%"]);
-                });
-            })
-            ->filterColumn('system', function ($query, $keyword) {
-                return $query->whereHas('detail.system', function ($sub_query) use ($keyword) {
-                    return $sub_query->whereRaw('itemName LIKE ?', ["%$keyword%"]);
-                });
-            })
-            ->filterColumn('victim', function ($query, $keyword) {
+            ->filterColumn('victim.character.name', function ($query, $keyword) {
                 $query->whereHas('victim.character', function ($sub_query) use ($keyword) {
                     return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
                 });
@@ -106,7 +96,7 @@ abstract class AbstractKillMailDataTable extends DataTable
                     });
                 });
             })
-            ->rawColumns(['date', 'ship', 'system', 'victim', 'killer', 'action'])
+            ->rawColumns(['victim.character.name', 'killer'])
             ->make(true);
     }
 
@@ -136,10 +126,10 @@ abstract class AbstractKillMailDataTable extends DataTable
     public function getColumns()
     {
         return [
-            ['data' => 'date', 'title' => trans('web::kills.date'), 'orderable' => false],
-            ['data' => 'ship', 'title' => trans('web::kills.ship'), 'orderable' => false],
-            ['data' => 'system', 'title' => trans('web::kills.solar_system'), 'orderable' => false],
-            ['data' => 'victim', 'title' => trans('web::kills.victim'), 'orderable' => false],
+            ['data' => 'detail.killmail_time', 'title' => trans('web::kills.date')],
+            ['data' => 'victim.ship.typeName', 'title' => trans('web::kills.ship')],
+            ['data' => 'detail.system.itemName', 'title' => trans('web::kills.solar_system')],
+            ['data' => 'victim.character.name', 'title' => trans('web::kills.victim'), 'orderable' => false],
             ['data' => 'killer', 'title' => trans('web::kills.killer'), 'orderable' => false],
         ];
     }
