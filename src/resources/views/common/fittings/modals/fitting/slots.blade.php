@@ -14,7 +14,7 @@
     <tr>
       <td class="w-50">@include('web::partials.type', ['type_id' => $row->type->typeID, 'type_name' => $row->type->typeName])</td>
       <td class="w-25">{{ number($row->quantity) }}</td>
-      <td class="w-25">{{ number($row->type->price->adjusted_price) }}</td>
+      <td class="w-25">{{ number($row->type->price->average_price) }}</td>
     </tr>
   @endforeach
   </tbody>
@@ -25,7 +25,7 @@
     <th>
       {{
         number($rows->sum(function ($item) {
-            return $item->type->price->adjusted_price * $item->quantity;
+            return $item->type->price->average_price * $item->quantity;
           }))
       }}
     </th>
