@@ -25,8 +25,7 @@ namespace Seat\Web\Http\Controllers\Corporation;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Industrial\BlueprintDataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationScope;
-use Seat\Web\Http\DataTables\Scopes\Filters\BlueprintCopyScope;
-use Seat\Web\Http\DataTables\Scopes\Filters\BlueprintOriginalScope;
+use Seat\Web\Http\DataTables\Scopes\Filters\BlueprintTypeScope;
 
 /**
  * Class BlueprintController.
@@ -37,19 +36,13 @@ class BlueprintController extends Controller
 {
     /**
      * @param int $corporation_id
-     * @param \Seat\Web\Http\DataTables\Corporation\Industrial\BlueprintDataTable $data_table
+     * @param \Seat\Web\Http\DataTables\Corporation\Industrial\BlueprintDataTable $dataTable
      * @return mixed
      */
     public function index(int $corporation_id, BlueprintDataTable $dataTable)
     {
-        $dataTable->addScope(new CorporationScope([$corporation_id]));
-
-        if (request()->input('filters.bpo') == 'true' && request()->input('filters.bpc') == 'false')
-            $dataTable->addScope(new BlueprintOriginalScope());
-
-        if (request()->input('filters.bpo') == 'false' && request()->input('filters.bpc') == 'true')
-            $dataTable->addScope(new BlueprintCopyScope());
-
-        return $dataTable->render('web::corporation.blueprint');
+        return $dataTable->addScope(new CorporationScope([$corporation_id]))
+            ->addScope(new BlueprintTypeScope(request()->input('filters.type')))
+            ->render('web::corporation.blueprint');
     }
 }
