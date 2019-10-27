@@ -44,7 +44,7 @@
         </td>
         <td>{{ number($entries->sum('quantity') * $material->quantity / 100, 0) }}</td>
         <td>{{ number($entries->sum('quantity') * $material->quantity * $material->type->volume / 100, 2) }}</td>
-        <td>{{ number($entries->sum('quantity') * $material->quantity * $material->type->price->adjusted_price / 100, 2) }}</td>
+        <td>{{ number($entries->sum('quantity') * $material->quantity * $material->type->price->average_price / 100, 2) }}</td>
       </tr>
     @endforeach
   </tbody>
@@ -67,7 +67,7 @@
         <td>{{ $entry->time }}</td>
         <td>{{ number($entry->quantity, 0) }}</td>
         <td>{{ number($entry->quantity * $entry->type->volume, 2) }}</td>
-        <td>{{ number($entry->quantity * $entry->type->price->adjusted_price, 2) }}</td>
+        <td>{{ number($entry->quantity * $entry->type->price->average_price, 2) }}</td>
       </tr>
     @endforeach
   </tbody>
