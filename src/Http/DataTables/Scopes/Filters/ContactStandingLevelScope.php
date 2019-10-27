@@ -20,33 +20,43 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\DataTables\Corporation\Financial;
+namespace Seat\Web\Http\DataTables\Scopes\Filters;
 
-use Seat\Eveapi\Models\Market\CorporationOrder;
-use Seat\Web\Http\DataTables\Common\Financial\AbstractMarketDataTable;
+use Yajra\DataTables\Contracts\DataTableScope;
 
 /**
- * Class MarketDataTable.
+ * Class ContactStandingLevelScope.
  *
- * @package Seat\Web\Http\DataTables\Corporation\Financial
+ * This is a filter scope for contacts tables.
+ * It will restrict returned data based on status.
+ *
+ * @package Seat\Web\Http\DataTables\Scopes\Filters
  */
-class MarketDataTable extends AbstractMarketDataTable
+class ContactStandingLevelScope implements DataTableScope
 {
     /**
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @var array
      */
-    public function query()
+    private $levels = [];
+
+    /**
+     * ContactStandingLevelScope constructor.
+     *
+     * @param array|null $levels
+     */
+    public function __construct(?array $levels)
     {
-        return CorporationOrder::with('type');
+        $this->levels = $levels ?: [];
     }
 
     /**
-     * @return \Yajra\DataTables\Html\Builder
+     * Apply a query scope.
+     *
+     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
+     * @return mixed
      */
-    public function html()
+    public function apply($query)
     {
-        return parent::html()->ajax([
-            'data' => 'function(d) { d.filters = {}; $("[data-filter-field].dt-filters.active").each(function (i, e) { var a = $(e); var field = a.data("filter-field"); var value = a.data("filter-value"); if (! d.filters[field]) { d.filters[field] = []; } d.filters[field].push(value); }); }',
-        ]);
+        return $query->whereIn('standing', $this->levels);
     }
 }
