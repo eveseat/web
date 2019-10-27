@@ -24,12 +24,8 @@
           @endforeach
         </select>
       </div>
-      <div class="mb-3">
-        <div class="btn-group d-flex">
-          <button type="button" id="dt-filters-bpo" class="btn btn-primary active">Original</button>
-          <button type="button" id="dt-filters-bpc" class="btn btn-info active">Copy</button>
-        </div>
-      </div>
+
+      @include('web::common.blueprints.buttons.filters')
 
       {{ $dataTable->table() }}
     </div>
@@ -48,11 +44,6 @@
               .on('change', function () {
                   window.LaravelDataTables['dataTableBuilder'].ajax.reload();
               });
-
-          $('#dt-filters-bpc, #dt-filters-bpo').on('click', function () {
-              $(this).hasClass('active') ? $(this).removeClass('active') : $(this).addClass('active');
-              window.LaravelDataTables['dataTableBuilder'].ajax.reload();
-          });
       });
   </script>
 @endpush

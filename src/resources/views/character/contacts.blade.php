@@ -23,6 +23,8 @@
         </select>
       </div>
 
+      @include('web::common.contacts.buttons.filters')
+
       {!! $dataTable->table() !!}
     </div>
   </div>

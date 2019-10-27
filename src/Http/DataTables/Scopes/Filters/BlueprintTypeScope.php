@@ -25,14 +25,24 @@ namespace Seat\Web\Http\DataTables\Scopes\Filters;
 use Yajra\DataTables\Contracts\DataTableScope;
 
 /**
- * Class BlueprintCopyScope.
+ * Class BlueprintTypeScope.
  *
  * This is a specific scope designed to filters blueprint result based on copy state.
  *
  * @package Seat\Web\Http\DataTables\Scopes\Filters
  */
-class BlueprintCopyScope implements DataTableScope
+class BlueprintTypeScope implements DataTableScope
 {
+    /**
+     * @var array
+     */
+    private $type = [];
+
+    public function __construct(?array $type)
+    {
+        $this->type = $type ?: [];
+    }
+
     /**
      * Apply a query scope.
      *
@@ -41,6 +51,12 @@ class BlueprintCopyScope implements DataTableScope
      */
     public function apply($query)
     {
-        return $query->where('runs', '>', -1);
+        return $query->where(function ($sub_query) {
+            if (in_array('bpo', $this->type))
+                $sub_query->where('runs', -1);
+
+            if (in_array('bpc', $this->type))
+                $sub_query->orWhere('runs', '>', -1);
+        });
     }
 }

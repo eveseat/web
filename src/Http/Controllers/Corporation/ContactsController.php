@@ -25,6 +25,8 @@ namespace Seat\Web\Http\Controllers\Corporation;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Intel\ContactDataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationScope;
+use Seat\Web\Http\DataTables\Scopes\Filters\ContactCategoryScope;
+use Seat\Web\Http\DataTables\Scopes\Filters\ContactStandingLevelScope;
 
 /**
  * Class ContactsController.
@@ -42,6 +44,8 @@ class ContactsController extends Controller
     {
 
         return $dataTable->addScope(new CorporationScope([$corporation_id]))
+            ->addScope(new ContactCategoryScope(request()->input('filters.category')))
+            ->addScope(new ContactStandingLevelScope(request()->input('filters.standing')))
             ->render('web::corporation.contacts');
     }
 }
