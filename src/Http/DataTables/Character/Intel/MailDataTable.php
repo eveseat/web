@@ -46,7 +46,7 @@ class MailDataTable extends DataTable
             ->editColumn('action', function ($row) {
                 return view('web::common.mails.buttons.read', ['character_id' => $row->character_id, 'mail_id' => $row->mail_id]);
             })
-            ->addColumn('sender', function ($row) {
+            ->editColumn('sender.name', function ($row) {
                 switch ($row->sender->category) {
                     case 'character':
                         return view('web::partials.character', ['character' => $row->sender]);
@@ -73,7 +73,7 @@ class MailDataTable extends DataTable
                     return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
                 });
             })
-            ->rawColumns(['timestamp', 'sender', 'subject', 'recipients', 'action'])
+            ->rawColumns(['subject', 'action'])
             ->make(true);
     }
 
@@ -106,7 +106,7 @@ class MailDataTable extends DataTable
     {
         return [
             ['data' => 'timestamp', 'title' => trans('web::mail.date')],
-            ['data' => 'sender', 'title' => trans('web::mail.sender'), 'orderable' => false],
+            ['data' => 'sender.name', 'title' => trans('web::mail.sender')],
             ['data' => 'subject', 'title' => trans('web::mail.subject')],
             ['data' => 'recipients', 'title' => trans('web::mail.recipients')],
             ['data' => 'body.body', 'visible' => false],

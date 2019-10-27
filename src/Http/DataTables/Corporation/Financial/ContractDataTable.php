@@ -37,6 +37,6 @@ class ContractDataTable extends AbstractContractDataTable
      */
     public function query()
     {
-        return CorporationContract::orderByDesc('contract_id');
+        return CorporationContract::with('detail', 'detail.issuer', 'detail.assignee', 'detail.acceptor');
     }
 }

@@ -24,7 +24,7 @@ namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Military\KillMailDataTable;
-use Seat\Web\Http\DataTables\Scopes\CharacterScope;
+use Seat\Web\Http\DataTables\Scopes\KillMailCharacterScope;
 use Seat\Web\Models\User;
 
 /**
@@ -43,7 +43,7 @@ class KillmailController extends Controller
         $characters = (User::find($character_id))->group->users;
 
         return $dataTable
-            ->addScope(new CharacterScope('character.killmail', $character_id, request()->input('characters', [])))
+            ->addScope(new KillMailCharacterScope('character.killmail', $character_id, request()->input('characters', [])))
             ->render('web::character.killmails', compact('characters'));
 
     }

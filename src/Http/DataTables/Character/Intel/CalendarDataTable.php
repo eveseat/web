@@ -50,7 +50,7 @@ class CalendarDataTable extends DataTable
             ->editColumn('event_response', function ($row) {
                 return trans(sprintf('web::calendar.%s', $row->event_response));
             })
-            ->addColumn('owner', function ($row) {
+            ->editColumn('owner.name', function ($row) {
                 switch ($row->detail->owner->category) {
                     case 'alliance':
                         return view('web::partials.alliance', ['alliance' => $row->detail->owner]);
@@ -70,12 +70,6 @@ class CalendarDataTable extends DataTable
 
                 $query->whereIn('event_response', $status);
             })
-            ->filterColumn('owner', function ($query, $keyword) {
-                return $query->whereHas('owner', function ($sub_query) use ($keyword) {
-                    return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
-                });
-            })
-            ->rawColumns(['event_date', 'owner', 'title'])
             ->make(true);
     }
 
@@ -110,7 +104,7 @@ class CalendarDataTable extends DataTable
     {
         return [
             ['data' => 'event_date', 'title' => trans('web::calendar.date')],
-            ['data' => 'owner', 'title' => trans('web::calendar.owner')],
+            ['data' => 'owner.name', 'title' => trans('web::calendar.owner')],
             ['data' => 'title', 'title' => trans('web::calendar.description')],
             ['data' => 'event_response', 'title' => trans('web::calendar.status')],
         ];

@@ -20,34 +20,42 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\DataTables\Character\Financial;
+namespace Seat\Web\Http\DataTables\Scopes;
 
-use Seat\Eveapi\Models\Contracts\CharacterContract;
-use Seat\Web\Http\DataTables\Common\Financial\AbstractContractDataTable;
+use Yajra\DataTables\Contracts\DataTableScope;
 
 /**
- * Class ContractDataTable.
+ * Class KillMailCorporationScope.
  *
- * @package Seat\Web\Http\DataTables\Character\Financial
+ * This is a specific scope for kill-mails in order to avoid collision on corporation_id field.
+ *
+ * @package Seat\Web\Http\DataTables\Scopes
  */
-class ContractDataTable extends AbstractContractDataTable
+class KillMailCorporationScope implements DataTableScope
 {
     /**
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @var array
      */
-    public function query()
+    private $corporation_ids = [];
+
+    /**
+     * KillMailCorporationScope constructor.
+     *
+     * @param array $corporation_ids
+     */
+    public function __construct(array $corporation_ids)
     {
-        return CharacterContract::with('detail', 'detail.issuer', 'detail.assignee', 'detail.acceptor');
+        $this->corporation_ids = $corporation_ids;
     }
 
     /**
-     * @return \Yajra\DataTables\Html\Builder
+     * Apply a query scope.
+     *
+     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
+     * @return mixed
      */
-    public function html()
+    public function apply($query)
     {
-        return parent::html()
-            ->ajax([
-                'data' => 'function(d) { d.characters = $("#dt-character-selector").val(); }',
-            ]);
+        return $query->whereIn('corporation_killmails.corporation_id', $this->corporation_ids);
     }
 }
