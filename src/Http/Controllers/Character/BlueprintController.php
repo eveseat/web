@@ -25,8 +25,7 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Industrial\BlueprintDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
-use Seat\Web\Http\DataTables\Scopes\Filters\BlueprintCopyScope;
-use Seat\Web\Http\DataTables\Scopes\Filters\BlueprintOriginalScope;
+use Seat\Web\Http\DataTables\Scopes\Filters\BlueprintTypeScope;
 use Seat\Web\Models\User;
 
 /**
@@ -38,21 +37,15 @@ class BlueprintController extends Controller
 {
     /**
      * @param int $character_id
-     * @param \Seat\Web\Http\DataTables\Character\Industrial\BlueprintDataTable $data_table
+     * @param \Seat\Web\Http\DataTables\Character\Industrial\BlueprintDataTable $dataTable
      * @return mixed
      */
     public function index(int $character_id, BlueprintDataTable $dataTable)
     {
         $characters = (User::find($character_id))->group->users;
 
-        $dataTable->addScope(new CharacterScope('character.blueprint', $character_id, request()->input('characters')));
-
-        if (request()->input('filters.bpo') == 'true' && request()->input('filters.bpc') == 'false')
-            $dataTable->addScope(new BlueprintOriginalScope());
-
-        if (request()->input('filters.bpo') == 'false' && request()->input('filters.bpc') == 'true')
-            $dataTable->addScope(new BlueprintCopyScope());
-
-        return $dataTable->render('web::character.blueprint', compact('characters'));
+        return $dataTable->addScope(new CharacterScope('character.blueprint', $character_id, request()->input('characters')))
+            ->addScope(new BlueprintTypeScope(request()->input('filters.type')))
+            ->render('web::character.blueprint', compact('characters'));
     }
 }

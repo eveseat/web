@@ -98,7 +98,7 @@ class BlueprintDataTable extends AbstractBlueprintDataTable
     public function html()
     {
         return parent::html()->ajax([
-            'data' => 'function(d) { d.filters = { bpo : $("#dt-filters-bpo").hasClass("active"), bpc : $("#dt-filters-bpc").hasClass("active") } }',
+            'data' => 'function(d) { d.filters = {}; $("[data-filter-field].dt-filters.active").each(function (i, e) { var a = $(e); var field = a.data("filter-field"); var value = a.data("filter-value"); if (! d.filters[field]) { d.filters[field] = []; } d.filters[field].push(value); }); }',
         ]);
     }
 }

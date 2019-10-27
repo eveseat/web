@@ -25,14 +25,30 @@ namespace Seat\Web\Http\DataTables\Scopes\Filters;
 use Yajra\DataTables\Contracts\DataTableScope;
 
 /**
- * Class BlueprintOriginalScope.
+ * Class ContactCategoryScope.
  *
- * This is a specific scope designed to filters blueprint result based on original state.
+ * This is a filter scope for contacts tables.
+ * It will restrict returned data based on category.
  *
  * @package Seat\Web\Http\DataTables\Scopes\Filters
  */
-class BlueprintOriginalScope implements DataTableScope
+class ContactCategoryScope implements DataTableScope
 {
+    /**
+     * @var array
+     */
+    private $categories = [];
+
+    /**
+     * ContactCategoryScope constructor.
+     *
+     * @param array|null $categories
+     */
+    public function __construct(?array $categories)
+    {
+        $this->categories = $categories ?: [];
+    }
+
     /**
      * Apply a query scope.
      *
@@ -41,6 +57,8 @@ class BlueprintOriginalScope implements DataTableScope
      */
     public function apply($query)
     {
-        return $query->where('runs', -1);
+        return $query->whereHas('entity', function ($sub_query) {
+            return $sub_query->whereIn('category', $this->categories);
+        });
     }
 }

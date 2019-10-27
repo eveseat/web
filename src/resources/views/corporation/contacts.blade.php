@@ -9,6 +9,9 @@
       <h3 class="card-title">{{ trans('web::seat.contacts') }}</h3>
     </div>
     <div class="card-body">
+
+      @include('web::common.contacts.buttons.filters')
+
       {!! $dataTable->table() !!}
     </div>
   </div>
