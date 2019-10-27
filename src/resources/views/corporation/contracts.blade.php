@@ -12,6 +12,8 @@
     </div>
     <div class="card-body">
 
+      @include('web::common.contracts.buttons.filters')
+
       {{ $dataTable->table() }}
 
     </div>
