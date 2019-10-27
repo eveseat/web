@@ -14,7 +14,7 @@
   <div class="col-4">
     <dl>
       <dt>Hull Estimated Price</dt>
-      <dd>{{ number($fitting->ship->price->adjusted_price) }}</dd>
+      <dd>{{ number($fitting->ship->price->average_price) }}</dd>
     </dl>
   </div>
   <div class="col-4">
