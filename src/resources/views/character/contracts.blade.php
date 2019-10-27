@@ -23,6 +23,8 @@
         </select>
       </div>
 
+      @include('web::common.contracts.buttons.filters')
+
       {{ $dataTable->table() }}
     </div>
 
