@@ -25,7 +25,7 @@ namespace Seat\Web\Http\Controllers\Corporation;
 use Seat\Services\Repositories\Corporation\Killmails;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Military\KillMailDataTable;
-use Seat\Web\Http\DataTables\Scopes\CorporationScope;
+use Seat\Web\Http\DataTables\Scopes\KillMailCorporationScope;
 
 /**
  * Class KillmailsController.
@@ -43,7 +43,7 @@ class KillmailsController extends Controller
     public function index(int $corporation_id, KillMailDataTable $dataTable)
     {
 
-        return $dataTable->addScope(new CorporationScope([$corporation_id]))
+        return $dataTable->addScope(new KillMailCorporationScope([$corporation_id]))
             ->render('web::corporation.killmails');
     }
 }

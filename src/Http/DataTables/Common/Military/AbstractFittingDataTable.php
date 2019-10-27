@@ -39,7 +39,7 @@ abstract class AbstractFittingDataTable extends DataTable
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
-            ->addColumn('type', function ($row) {
+            ->editColumn('ship.typeName', function ($row) {
                 return view('web::partials.type', ['type_id' => $row->ship->typeID, 'type_name' => $row->ship->typeName]);
             })
             ->addColumn('items', function ($row) {
@@ -70,11 +70,6 @@ abstract class AbstractFittingDataTable extends DataTable
                     view('web::common.fittings.buttons.detail', $detail_parameters) . ' ' .
                     view('web::common.fittings.buttons.export', ['data_export' => $row->toEve()]);
             })
-            ->filterColumn('type', function ($query, $keyword) {
-                $query->whereHas('ship', function ($sub_query) use ($keyword) {
-                    $sub_query->whereRaw('typeName LIKE ?', ["%$keyword%"]);
-                });
-            })
             ->filterColumn('items', function ($query, $keyword) {
                 $query->whereHas('items', function ($sub_query) use ($keyword) {
                     $sub_query->whereHas('type', function ($type_query) use ($keyword) {
@@ -82,7 +77,7 @@ abstract class AbstractFittingDataTable extends DataTable
                     });
                 });
             })
-            ->rawColumns(['type', 'action'])
+            ->rawColumns(['action'])
             ->make(true);
     }
 
@@ -112,7 +107,7 @@ abstract class AbstractFittingDataTable extends DataTable
     {
         return [
             ['data' => 'name', 'title' => trans('web::fitting.name')],
-            ['data' => 'type', 'title' => trans('web::fitting.type'), 'orderable' => false],
+            ['data' => 'ship.typeName', 'title' => trans('web::fitting.type')],
             ['data' => 'items', 'title' => trans('web::fitting.items'), 'orderable' => false],
             ['data' => 'hull_estimated_value', 'title' => trans('web::fitting.hull_estimated_value'), 'searchable' => false, 'orderable' => false],
             ['data' => 'fitting_estimated_value', 'title' => trans('web::fitting.fitting_estimated_value'), 'searchable' => false, 'orderable' => false],

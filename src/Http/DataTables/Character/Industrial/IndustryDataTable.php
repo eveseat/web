@@ -37,7 +37,7 @@ class IndustryDataTable extends AbstractIndustryDataTable
      */
     public function query()
     {
-        return CharacterIndustryJob::with('location', 'blueprint', 'product');
+        return CharacterIndustryJob::with('location', 'blueprint', 'product', 'activity');
     }
 
     /**

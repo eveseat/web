@@ -48,11 +48,11 @@ abstract class AbstractStandingDataTable extends DataTable
             ->editColumn('from.name', function ($row) {
                 switch ($row->from_type) {
                     case 'agent':
-                        return view('web::partials.character', ['character' => $row->from])->render();
+                        return view('web::partials.character', ['character' => $row->from]);
                     case 'npc_corp':
-                        return view('web::partials.corporation', ['corporation' => $row->from])->render();
+                        return view('web::partials.corporation', ['corporation' => $row->from]);
                     case 'faction':
-                        return view('web::partials.faction', ['faction' => $row->from])->render();
+                        return view('web::partials.faction', ['faction' => $row->from]);
                 }
 
                 return $row->from->name;
@@ -69,7 +69,7 @@ abstract class AbstractStandingDataTable extends DataTable
                 else
                     return '<span class="label label-danger">' . $row->standing . '</span>';
             })
-            ->rawColumns(['from.name', 'standing'])
+            ->rawColumns(['standing'])
             ->make(true);
     }
 
