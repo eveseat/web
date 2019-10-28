@@ -1,33 +1,31 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Characters Results</h3>
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">Characters Results</h3>
   </div>
-  <div class="panel-body">
-
-    <table class="table compact table-condensed table-hover table-responsive"
-           id="characters">
+  <div class="card-body">
+    <table class="table table-condensed table-striped table-hover" id="characters">
       <thead>
-      <tr>
-        <th>{{ trans_choice('web::seat.name', 1) }}</th>
-        <th>{{ trans_choice('web::seat.corporation', 1) }}</th>
-      </tr>
+        <tr>
+          <th>{{ trans_choice('web::seat.name', 1) }}</th>
+          <th>{{ trans_choice('web::seat.corporation', 1) }}</th>
+          <th>{{ trans_choice('web::seat.alliance', 1) }}</th>
+        </tr>
       </thead>
     </table>
-
   </div>
 </div>
 
 @push('javascript')
 
   <script>
-
     $('table#characters').DataTable({
       processing  : true,
       serverSide  : true,
       ajax        : '{{ route('support.search.characters.data') }}',
       columns     : [
         {data: 'name', name: 'name'},
-        {data: 'corporation_id', name: 'corporation_id', searchable: false}
+        {data: 'corporation.name', name: 'corporation.name'},
+        {data: 'alliance.name', name: 'alliance.name'}
       ],
       drawCallback: function () {
         $('img').unveil(100);
@@ -38,7 +36,6 @@
       },
       order       : [[0, "asc"]]
     });
-
   </script>
 
 @endpush

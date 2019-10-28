@@ -12,7 +12,7 @@
 
   @include('web::search.components.mail')
 
-  @include('web::search.components.characterassets')
+  @include('web::search.components.character_assets')
 
   @include('web::search.components.skills')
 
