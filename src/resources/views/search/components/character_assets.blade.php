@@ -1,17 +1,19 @@
 <div class="card">
   <div class="card-header">
-    <h3 class="card-title">Characters Skills</h3>
+    <h3 class="card-title">Characters Assets</h3>
   </div>
   <div class="card-body">
-    <table class="table table-condensed table-striped table-hover" id="character-skills">
+    <table class="table table-condensed table-striped table-hover" id="character-assets">
       <thead>
         <tr>
-          <th>{{ trans_choice('web::seat.name', 1) }}</th>
+          <th>{{ trans_choice('web::seat.character', 1) }}</th>
           <th>{{ trans_choice('web::seat.corporation', 1) }}</th>
           <th>{{ trans_choice('web::seat.alliance', 1) }}</th>
+          <th>{{ trans_choice('web::seat.name', 1) }}</th>
+          <th>{{ trans('web::seat.location') }}</th>
           <th>{{ trans_choice('web::seat.group', 1) }}</th>
           <th>{{ trans_choice('web::seat.type', 1) }}</th>
-          <th>{{ trans('web::seat.level') }}</th>
+          <th>{{ trans('web::seat.quantity') }}</th>
         </tr>
       </thead>
     </table>
@@ -20,18 +22,20 @@
 
 @push('javascript')
 
-  <script type="text/javascript">
-    $('table#character-skills').DataTable({
+  <script>
+    $('table#character-assets').DataTable({
       processing  : true,
       serverSide  : true,
-      ajax        : '{{ route('support.search.skills.data') }}',
+      ajax        : '{{ route('support.search.assets.data') }}',
       columns     : [
         {data: 'character.name', name: 'character.name'},
         {data: 'character.corporation.name', name: 'character.corporation.name'},
         {data: 'character.alliance.name', name: 'character.alliance.name'},
+        {data: 'asset_name', name: 'asset_name'},
+        {data: 'location_name', name: 'location_name'},
         {data: 'type.group.groupName', name: 'type.group.groupName'},
         {data: 'type.typeName', name: 'type.typeName'},
-        {data: 'trained_skill_level', name: 'trained_skill_level'}
+        {data: 'quantity', name: 'quantity'}
       ],
       drawCallback: function () {
         $('img').unveil(100);
