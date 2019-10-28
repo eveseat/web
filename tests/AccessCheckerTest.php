@@ -193,7 +193,7 @@ class AccessCheckerTest extends TestCase
 
         $this->user_permissions = [
             'character.sheet',
-            'superuser',
+            'global.superuser',
             'corporation.summary',
             'corporation.assets',
         ];
@@ -230,7 +230,7 @@ class AccessCheckerTest extends TestCase
         $this->assertTrue($this->hasRole('Test Role C'));
 
         $this->user_permissions = [
-            'superuser',
+            'global.superuser',
         ];
 
         $this->assertTrue($this->hasRole('Test Role D'));
@@ -316,7 +316,7 @@ class AccessCheckerTest extends TestCase
 
         $this->user_permissions = [
             'corporation.summary',
-            'superuser',
+            'global.superuser',
         ];
 
         $this->assertTrue($this->has('character.sheet', false));
@@ -334,7 +334,7 @@ class AccessCheckerTest extends TestCase
         $this->assertFalse($this->hasAny(['character.sheet', 'corporation.summary'], false));
 
         $this->user_permissions = [
-            'superuser',
+            'global.superuser',
         ];
 
         $this->assertTrue($this->hasAny(['character.sheet', 'corporation.summary'], false));
@@ -354,7 +354,7 @@ class AccessCheckerTest extends TestCase
         // define permissions table
         $permission_specifications = [
             [
-                'superuser' => [
+                'global.superuser' => [
                     'not'     => false,
                     'filters' => null,
                 ],
