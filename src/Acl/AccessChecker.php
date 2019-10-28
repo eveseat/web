@@ -503,7 +503,7 @@ trait AccessChecker
 
         if (request()->character_id) {
             $character = CharacterInfo::find(request()->character_id);
-            $corporation_id = $character->corporation_id;
+            $corporation_id = $character ? $character->corporation_id : null;
         }
 
         if (is_null($corporation_id))
