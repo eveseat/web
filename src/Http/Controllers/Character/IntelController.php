@@ -489,7 +489,7 @@ class IntelController extends Controller
             })
             ->editColumn('subject', function ($row) {
 
-                return view('web::character.partials.mailtitle', compact('row'));
+                return view('web::character.partials.mail_title', compact('row'));
             })
             ->editColumn('tocounts', function ($row) {
 
