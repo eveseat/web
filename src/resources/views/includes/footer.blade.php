@@ -14,7 +14,7 @@
          title="Exception threshold reached. TTL: {{ $rate_limit_ttl }}s"></i> |
     @endif
 
-    <b>{{ trans('web::seat.render_in') }}</b> {{ number((microtime(true) - LARAVEL_START), 3) }}s |
+    <b>{{ trans('web::seat.render_in') }}</b> {{ number_format((microtime(true) - LARAVEL_START), 3) }}s |
     <b>{{ trans('web::seat.sde_version') }}</b> {{ setting('installed_sde', true) }} |
     <b>{{ trans('web::seat.web_version') }}</b> {{ config('web.config.version') }}
   </div>

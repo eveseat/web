@@ -41,12 +41,12 @@
                   @if(is_null($starbase_module->content))
                   0%
                   @else
-                  {{ number($starbase_module->usedVolumeRate, 2) }}%
+                  {{ number_format($starbase_module->usedVolumeRate, 2) }}%
                   @endif
                 </b>
                 <i>
-                  ({{ number($starbase_module->usedVolume) }} m&sup3; / {{ number($starbase_module->type->capacity) }} m&sup3;)
-                  {{ number($starbase_module->content->count(), 0) }}
+                  ({{ number_format($starbase_module->usedVolume) }} m&sup3; / {{ number_format($starbase_module->type->capacity) }} m&sup3;)
+                  {{ number_format($starbase_module->content->count(), 0) }}
                   {{ trans_choice('web::seat.item', $starbase_module->content->count()) }}
                 </i>
                 @endif
