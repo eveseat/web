@@ -166,37 +166,7 @@ Route::group(['prefix' => '{character_id}/intel'], function () {
     Route::get('notes', [
         'as'         => 'character.view.intel.notes',
         'middleware' => 'characterbouncer:intel',
-        'uses'       => 'IntelController@getNotes',
-    ]);
-
-    Route::get('notes/data', [
-        'as'         => 'character.view.intel.notes.data',
-        'middleware' => 'characterbouncer:intel',
-        'uses'       => 'IntelController@getNotesData',
-    ]);
-
-    Route::get('notes/single/data/{note_id}', [
-        'as'         => 'character.view.intel.notes.single.data',
-        'middleware' => 'characterbouncer:intel',
-        'uses'       => 'IntelController@getSingleNotesData',
-    ]);
-
-    Route::post('notes/new', [
-        'as'         => 'character.view.intel.notes.new',
-        'middleware' => 'characterbouncer:intel',
-        'uses'       => 'IntelController@postAddNew',
-    ]);
-
-    Route::post('notes/update', [
-        'as'         => 'character.view.intel.notes.update',
-        'middleware' => 'characterbouncer:intel',
-        'uses'       => 'IntelController@postUpdateNote',
-    ]);
-
-    Route::get('notes/delete/{note_id}', [
-        'as'         => 'character.view.intel.notes.delete',
-        'middleware' => 'characterbouncer:intel',
-        'uses'       => 'IntelController@getDeleteNote',
+        'uses'       => 'IntelController@notes',
     ]);
 });
 
