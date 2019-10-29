@@ -21,10 +21,12 @@
           <div class="card-header">
             <h3 class="card-title">{{ trans('web::seat.main_char_skills_coverage') }}</h3>
             <div class="card-tools">
-              <a href="{{ route('character.export.skills', [request()->character_id]) }}" class="btn btn-sm btn-light">
-                <i class="fas fa-file-export"></i>
-                Export Skills (Pyfa Format)
-              </a>
+              <div class="input-group input-group-sm">
+                <a href="{{ route('character.export.skills', [request()->character_id]) }}" class="btn btn-sm btn-light">
+                  <i class="fas fa-file-export"></i>
+                  Export Skills (Pyfa Format)
+                </a>
+              </div>
             </div>
           </div>
           <div class="card-body">
@@ -46,10 +48,12 @@
                 <h3 class="card-title">{{ $skill_group->groupName }}</h3>
                 @if(auth()->user()->has('character.jobs'))
                   <div class="card-tools">
-                    <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.skills']) }}"
-                       class="text-dark">
-                      <i class="fa fa-refresh" data-toggle="tooltip" title="{{ trans('web::seat.update_skills') }}"></i>
-                    </a>
+                    <div class="input-group input-group-sm">
+                      <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.skills']) }}"
+                         class="btn btn-sm btn-light">
+                        <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_skills') }}"></i>
+                      </a>
+                    </div>
                   </div>
                 @endif
               </div>
