@@ -18,10 +18,12 @@
             </h3>
             @if(auth()->user()->has('character.jobs'))
               <div class="card-tools">
-                <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.skillqueue']) }}"
-                   class="text-dark">
-                  <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_skill_queue') }}"></i>
-                </a>
+                <div class="input-group input-group-sm">
+                  <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.skillqueue']) }}"
+                     class="btn btn-sm btn-light">
+                    <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_skill_queue') }}"></i>
+                  </a>
+                </div>
               </div>
             @endif
           </div>
@@ -101,10 +103,12 @@
           </h3>
           @if(auth()->user()->has('character.jobs'))
             <div class="card-tools">
-              <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.corphistory']) }}"
-                 class="text-dark">
-                <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_corp_history') }}"></i>
-              </a>
+              <div class="input-group input-group-sm">
+                <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.corphistory']) }}"
+                   class="btn btn-sm btn-light">
+                  <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_corp_history') }}"></i>
+                </a>
+              </div>
             </div>
           @endif
         </div>

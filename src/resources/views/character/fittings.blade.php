@@ -13,10 +13,12 @@
       </h3>
       @if(auth()->user()->has('character.jobs'))
         <div class="card-tools">
-          <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.fittings']) }}"
-             class="text-dark">
-            <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_fittings') }}"></i>
-          </a>
+          <div class="input-group input-group-sm">
+            <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.fittings']) }}"
+               class="btn btn-sm btn-light">
+              <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_fittings') }}"></i>
+            </a>
+          </div>
         </div>
       @endif
     </div>
