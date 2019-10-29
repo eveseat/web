@@ -32,8 +32,7 @@ use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Universe\UniverseName;
 use Seat\Services\Repositories\Character\Intel;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Http\Validation\NewIntelNote;
-use Seat\Web\Http\Validation\UpdateIntelNote;
+use Seat\Web\Http\DataTables\Character\Intel\NoteDataTable;
 use Seat\Web\Models\User;
 use Yajra\DataTables\DataTables;
 
@@ -251,100 +250,12 @@ class IntelController extends Controller
 
     /**
      * @param int $character_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|View
-     */
-    public function getNotes(int $character_id)
-    {
-
-        return view('web::character.intel.notes');
-
-    }
-
-    /**
-     * @param int $character_id
-     *
+     * @param \Seat\Web\Http\DataTables\Character\Intel\NoteDataTable $dataTable
      * @return mixed
-     * @throws \Exception
      */
-    public function getNotesData(int $character_id)
+    public function notes(int $character_id, NoteDataTable $dataTable)
     {
-
-        return DataTables::of(CharacterInfo::getNotes($character_id))
-            ->addColumn('actions', function ($row) {
-
-                return view('web::character.intel.partials.notesactions', compact('row'))
-                    ->render();
-            })
-            ->rawColumns(['actions'])
-            ->make(true);
-
-    }
-
-    /**
-     * @param int $character_id
-     * @param int $note_id
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getSingleNotesData(int $character_id, int $note_id)
-    {
-
-        return response()->json(
-            CharacterInfo::getNote($character_id, $note_id)->first());
-
-    }
-
-    /**
-     * @param \Seat\Web\Http\Validation\NewIntelNote $request
-     * @param int                                    $character_id
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function postAddNew(NewIntelNote $request, int $character_id)
-    {
-
-        CharacterInfo::addNote(
-            $character_id, $request->input('title'), $request->input('note'));
-
-        return redirect()->back()
-            ->with('success', 'Note Added');
-
-    }
-
-    /**
-     * @param int $character_id
-     * @param int $note_id
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function getDeleteNote(int $character_id, int $note_id)
-    {
-
-        CharacterInfo::deleteNote($character_id, $note_id);
-
-        return redirect()->back()
-            ->with('success', 'Note deleted!');
-
-    }
-
-    /**
-     * @param \Seat\Web\Http\Validation\UpdateIntelNote $request
-     * @param int                                       $character_id
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function postUpdateNote(UpdateIntelNote $request, int $character_id)
-    {
-
-        CharacterInfo::updateNote(
-            $character_id, $request->input('note_id'),
-            $request->input('title'),
-            $request->input('note'));
-
-        return redirect()->back()
-            ->with('success', 'Note updated!');
-
+        return $dataTable->render('web::character.intel.notes');
     }
 
     /**
