@@ -6,11 +6,11 @@
 
 @section('intel_content')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">Standings Profile</h3>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">Standings Profile</h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
 
       <form role="form" action="#" method="post">
         {{ csrf_field() }}
@@ -18,7 +18,7 @@
         <div class="box-body">
 
           <div class="form-group">
-            <select id="standings-profile-id" style="width: 100%">
+            <select id="standings-profile-id" class="w-100">
               <option></option> <!-- blank option for select2 placeholder. quirky -_- -->
               @foreach($profiles as $profile)
                 <option value="{{ $profile->id }}">{{ $profile->name }}</option>
@@ -33,22 +33,22 @@
     </div>
   </div>
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">Interactions</h3>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">Interactions</h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
 
-      <table class="table compact table-condensed table-hover table-responsive"
-             id="character-standings-interactions">
+      <table class="table table-condensed table-hover table-striped" id="character-standings-interactions">
         <thead>
-        <tr>
-          <th>Interactions</th>
-          <th>Character Name</th>
-          <th>Character Corp</th>
-          <th>Character Alliance</th>
-          <th>Standing</th>
-        </tr>
+          <tr>
+            <th>Interactions</th>
+            <th>Character Name</th>
+            <th>Character Corp</th>
+            <th>Character Alliance</th>
+            <th>Character Faction</th>
+            <th>Standing</th>
+          </tr>
         </thead>
       </table>
 
@@ -72,9 +72,10 @@
     serverSide      : true,
     columns         : [
       {data: 'total', name: 'total', searchable: false},
-      {data: 'characterName', name: 'characterName'},
-      {data: 'corporationName', name: 'corporationName'},
-      {data: 'allianceName', name: 'allianceName'},
+      {data: 'character.name', name: 'character.name'},
+      {data: 'corporation.name', name: 'corporation.name'},
+      {data: 'alliance.name', name: 'alliance.name'},
+      {data: 'faction.name', name: 'faction.name'},
       {data: 'standing', name: 'standing'}
     ],
     dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>',
