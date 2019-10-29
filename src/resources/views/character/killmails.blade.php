@@ -12,9 +12,12 @@
         {{ trans('web::seat.killmails') }}
       </h3>
       <div class="card-tools">
-        <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.killmails']) }}" class="text-dark">
-          <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_killmails') }}"></i>
-        </a>
+        <div class="input-group input-group-sm">
+          <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.killmails']) }}"
+             class="btn btn-sm btn-light">
+            <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_killmails') }}"></i>
+          </a>
+        </div>
       </div>
     </div>
     <div class="card-body">
