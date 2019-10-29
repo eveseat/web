@@ -228,22 +228,21 @@ class IntelController extends Controller
         $journal = $this->getCharacterJournalStandingsWithProfile($character_id, $profile_id);
 
         return DataTables::of($journal)
-            ->editColumn('characterName', function ($row) {
-
-                return view('web::character.intel.partials.charactername', compact('row'))
-                    ->render();
+            ->editColumn('character.name', function ($row) {
+                return view('web::partials.character', ['character' => $row->character]);
             })
-            ->editColumn('corporationName', function ($row) {
-
-                return view('web::character.intel.partials.corporationname', compact('row'))
-                    ->render();
+            ->editColumn('corporation.name', function ($row) {
+                return view('web::partials.corporation', ['corporation' => $row->corporation]);
             })
-            ->editColumn('allianceName', function ($row) {
-
-                return view('web::character.intel.partials.alliancename', compact('row'))
-                    ->render();
+            ->editColumn('alliance.name', function ($row) {
+                return view('web::partials.alliance', ['alliance' => $row->alliance]);
             })
-            ->rawColumns(['characterName', 'corporationName', 'allianceName'])
+            ->editColumn('faction.name', function ($row) {
+                return view('web::partials.faction', ['faction' => $row->faction]);
+            })
+            ->editColumn('standing', function ($row) {
+                return view('web::partials.standing', ['standing' => $row->standing]);
+            })
             ->make(true);
 
     }
