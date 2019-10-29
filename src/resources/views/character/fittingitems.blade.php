@@ -11,7 +11,7 @@
   @foreach($items as $item)
 
     <tr>
-      <td>{{ number($item->quantity, 0) }}</td>
+      <td>{{ number_format($item->quantity, 0) }}</td>
       <td>
         {!! img('type', $item->type_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
         {{ $item->type->typeName }}

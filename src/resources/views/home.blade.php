@@ -47,7 +47,7 @@
         <div class="info-box-content">
           <span class="info-box-text">{{ trans('web::seat.total_character_isk') }}</span>
           <span class="info-box-number">
-            {{ number($total_character_isk)  }}
+            {{ number_format($total_character_isk)  }}
           </span>
         </div><!-- /.info-box-content -->
       </div><!-- /.info-box -->
@@ -62,7 +62,7 @@
         <div class="info-box-content">
           <span class="info-box-text">{{ trans('web::seat.total_character_mined_isk') }}</span>
           <span class="info-box-number">
-            {{number($total_character_mining)}}
+            {{ number_format($total_character_mining) }}
           </span>
         </div><!-- /.info-box-content -->
       </div><!-- /.info-box -->
@@ -79,7 +79,7 @@
         <div class="info-box-content">
           <span class="info-box-text">{{ trans('web::seat.total_character_skillpoints') }}</span>
           <span class="info-box-number">
-            {{ number($total_character_skillpoints, 0)  }}
+            {{ number_format($total_character_skillpoints, 0)  }}
           </span>
         </div><!-- /.info-box-content -->
       </div><!-- /.info-box -->

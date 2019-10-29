@@ -128,7 +128,7 @@
           {{ trans('web::seat.fuel_blocks') }}
         </span>
         <span class="progress-number">
-          <b>{{ number(optional($starbase->fuelBays->whereIn('type_id', [4051, 4246, 4247, 4312, 36945]))->first()->quantity ?? 0, 0) }}</b>/{{ number($starbase->type->capacity / 5, 0) }}
+          <b>{{ number_format(optional($starbase->fuelBays->whereIn('type_id', [4051, 4246, 4247, 4312, 36945]))->first()->quantity ?? 0, 0) }}</b>/{{ number_format($starbase->type->capacity / 5, 0) }}
           {{ trans_choice('web::seat.unit', 2) }}
         </span>
 
@@ -146,7 +146,7 @@
         </span>
         <span class="progress-number">
           <b>
-            {{ number(optional($starbase->fuelBays->where('type_id', 16275))->first()->quantity ?? 0, 0) }}</b>/{{ number($starbase->strontiumBaySize / 3, 0) }}
+            {{ number_format(optional($starbase->fuelBays->where('type_id', 16275))->first()->quantity ?? 0, 0) }}</b>/{{ number_format($starbase->strontiumBaySize / 3, 0) }}
           {{ trans_choice('web::seat.unit', 2) }}
         </span>
 
