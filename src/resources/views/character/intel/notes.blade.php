@@ -6,64 +6,38 @@
 
 @section('intel_content')
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">
-        Notes
-        <!-- Button trigger modal -->
-        <span class="float-right">
-          <a type="button" data-widget="modal" data-target="#createModal">
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">Notes</h3>
+      <div class="card-tools">
+        <div class="input-group input-group-sm">
+          <!-- Button trigger modal -->
+          <button type="button" data-toggle="modal" data-target="#note-create-modal"
+                  data-object-type="{{ Seat\Eveapi\Models\Character\CharacterInfo::class }}"
+                  data-object-id="{{ request()->character_id }}" class="btn btn-sm btn-success">
+            <i class="fas fa-plus-square"></i>
             Add Note
-          </a>
-        </span>
-      </h3>
+          </button>
+        </div>
+      </div>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
 
-      <table class="table compact table-condensed table-hover table-responsive"
-             id="character-notes">
-        <thead>
-        <tr>
-          <th>Created</th>
-          <th>Title</th>
-          <th>Note</th>
-          <th></th>
-        </tr>
-        </thead>
-      </table>
+      {!! $dataTable->table() !!}
 
     </div>
   </div>
 
   {{-- include the note creation modal --}}
-  @include('web::includes.modals.createnote',
-    ['post_route' => route('character.view.intel.notes.new', ['character_id' => $request->character_id])])
+  @include('web::common.notes.modals.create')
 
   {{-- include the note edit modal --}}
-  @include('web::includes.modals.editnote',
-    ['post_route' => route('character.view.intel.notes.update', ['character_id' => $request->character_id])])
+  @include('web::common.notes.modals.edit')
 
 @stop
 
 @push('javascript')
 
-<script>
-
-  $(function () {
-    $('table#character-notes').DataTable({
-      processing: true,
-      serverSide: true,
-      ajax      : '{{ route('character.view.intel.notes.data', ['character_id' => $request->character_id]) }}',
-      columns   : [
-        {data: 'created_at', name: 'created_at', render: human_readable},
-        {data: 'title', name: 'title'},
-        {data: 'note', name: 'note'},
-        {data: 'actions', name: 'actions', searchable: false}
-      ],
-      dom: '<"row"<"col-sm-6"l><"col-sm-6"f>><"row"<"col-sm-6"i><"col-sm-6"p>>rt<"row"<"col-sm-6"i><"col-sm-6"p>><"row"<"col-sm-6"l><"col-sm-6"f>>'
-    });
-  });
-
-</script>
+  {!! $dataTable->scripts() !!}
 
 @endpush

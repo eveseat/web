@@ -184,6 +184,7 @@ Route::group([
 
             include __DIR__ . '/Routes/Tools/Job.php';
             include __DIR__ . '/Routes/Tools/Standings.php';
+            include __DIR__ . '/Routes/Tools/Notes.php';
         });
 
     });
