@@ -42,9 +42,9 @@
           {!! img('type', $material->type->typeID, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
           {{ $material->type->typeName }}
         </td>
-        <td>{{ number($entries->sum('quantity') * $material->quantity / 100, 0) }}</td>
-        <td>{{ number($entries->sum('quantity') * $material->quantity * $material->type->volume / 100, 2) }}</td>
-        <td>{{ number($entries->sum('quantity') * $material->quantity * $material->type->price->average_price / 100, 2) }}</td>
+        <td>{{ number_format($entries->sum('quantity') * $material->quantity / 100, 0) }}</td>
+        <td>{{ number_format($entries->sum('quantity') * $material->quantity * $material->type->volume / 100, 2) }}</td>
+        <td>{{ number_format($entries->sum('quantity') * $material->quantity * $material->type->price->average_price / 100, 2) }}</td>
       </tr>
     @endforeach
   </tbody>
@@ -65,9 +65,9 @@
     @foreach($entries as $entry)
       <tr>
         <td>{{ $entry->time }}</td>
-        <td>{{ number($entry->quantity, 0) }}</td>
-        <td>{{ number($entry->quantity * $entry->type->volume, 2) }}</td>
-        <td>{{ number($entry->quantity * $entry->type->price->average_price, 2) }}</td>
+        <td>{{ number_format($entry->quantity, 0) }}</td>
+        <td>{{ number_format($entry->quantity * $entry->type->volume, 2) }}</td>
+        <td>{{ number_format($entry->quantity * $entry->type->price->average_price, 2) }}</td>
       </tr>
     @endforeach
   </tbody>

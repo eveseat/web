@@ -30,7 +30,7 @@
               @case($division->division == 7 && auth()->user()->has('corporation.wallet_seventh_division'))
                 <tr>
                   <td>{{ $division->name }}</td>
-                  <td data-order="{{ $division->balance }}">{{ number($division->balance) }}</td>
+                  <td data-order="{{ $division->balance }}">{{ number_format($division->balance) }}</td>
                 </tr>
               @break
             @endswitch
@@ -42,7 +42,7 @@
       </div>
     </div>
     <div class="card-footer">
-      <i>Total: {{ number($divisions->sum('balance')) }}</i>
+      <i>Total: {{ number_format($divisions->sum('balance')) }}</i>
     </div>
   </div>
 

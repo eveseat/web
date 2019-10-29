@@ -23,7 +23,7 @@
         <div class="progress-bar" style="width: {{ round(carbon($extraction->extraction_start_time)->diffInSeconds(carbon()) / carbon($extraction->chunk_arrival_time)->diffInSeconds($extraction->extraction_start_time) * 100, 0) }}%"></div>
       </div>
       @endif
-      <span class="progress-description">Chunk age: {{number(carbon($extraction->chunk_arrival_time)->diffInDays($extraction->extraction_start_time), 0)}} days</span>
+      <span class="progress-description">Chunk age: {{number_format(carbon($extraction->chunk_arrival_time)->diffInDays($extraction->extraction_start_time), 0)}} days</span>
     </div>
   </div>
   <div class="card">

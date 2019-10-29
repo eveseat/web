@@ -47,7 +47,7 @@
     @if(! is_null($content->type))
     <tr>
       <td>{!! img('type', $content->type->typeID, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!} {{ $content->type->typeName }}</td>
-      <td>{{ number($content->rate * 100) }} %</td>
+      <td>{{ number_format($content->rate * 100) }} %</td>
       <td>
         @switch($content->type->marketGroupID)
           @case(2396)
