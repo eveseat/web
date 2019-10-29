@@ -87,7 +87,7 @@
                   <i class="text-muted">{{ count($skills->where('groupID', $skill_group->groupID)) }} skills</i>
                 </div>
                 <div class="float-right">
-                  <i class="text-muted">{{ number($skills->where('groupID', $skill_group->groupID)->sum('skillpoints_in_skill'), 0) }} skillpoints</i>
+                  <i class="text-muted">{{ number_format($skills->where('groupID', $skill_group->groupID)->sum('skillpoints_in_skill'), 0) }} skillpoints</i>
                 </div>
               </div>
             </div>

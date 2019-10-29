@@ -57,7 +57,7 @@
                   @break
                 @endswitch
               </td>
-              <td data-order="{{ $entry->total }}">{{ number($entry->total) }}</td>
+              <td data-order="{{ $entry->total }}">{{ number_format($entry->total) }}</td>
             </tr>
           @endforeach
 
@@ -65,7 +65,7 @@
       </table>
     </div>
     <div class="card-footer">
-      <i>Total: {{ number($entries->sum('total')) }}</i>
+      <i>Total: {{ number_format($entries->sum('total')) }}</i>
     </div>
   </div>
 

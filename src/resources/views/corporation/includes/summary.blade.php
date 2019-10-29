@@ -49,7 +49,7 @@
       </dd>
 
       <dt>{{ trans('web::seat.tax_rate') }}</dt>
-      <dd>{{ number($sheet->tax_rate * 100) }}%</dd>
+      <dd>{{ number_format($sheet->tax_rate * 100) }}%</dd>
 
       <dt>{{ trans('web::seat.member_count') }}</dt>
       <dd>
