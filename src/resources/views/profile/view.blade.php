@@ -415,10 +415,12 @@
     <div class="card-header">
       <h3 class="card-title">{{ trans('web::seat.linked_characters') }}</h3>
       <div class="card-tools">
-        <a href="{{ route('auth.eve') }}" class="btn btn-primary btn-sm">
-          <i class="fas fa-link"></i>
-          {{ trans('web::seat.link_another_character') }}
-        </a>
+        <div class="input-group input-group-sm">
+          <a href="{{ route('auth.eve') }}" class="btn btn-sm btn-primary">
+            <i class="fas fa-link"></i>
+            {{ trans('web::seat.link_another_character') }}
+          </a>
+        </div>
       </div>
     </div>
     <div class="card-body">
