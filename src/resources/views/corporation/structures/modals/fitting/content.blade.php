@@ -8,17 +8,37 @@
   </div>
 </div>
 
-<div class="row mb-3">
+<div class="row">
   <div class="col-4">
     <dl>
       <dt>Activation Consumption</dt>
-      <dd>{{ number($structure->activation_fuel_consumption, 0) }} fuel blocks</dd>
+      <dd>{{ number_format($structure->activation_fuel_consumption, 0) }} fuel blocks</dd>
     </dl>
   </div>
   <div class="col-4">
     <dl>
       <dt>Hourly Consumption</dt>
-      <dd>{{ number($structure->fuel_consumption, 0) }} fuel blocks</dd>
+      <dd>{{ number_format($structure->fuel_consumption, 0) }} fuel blocks</dd>
+    </dl>
+  </div>
+  <div class="col-4">
+    <dl>
+      <dt>Monthly Consumption</dt>
+      <dd>{{ number_format($structure->fuel_consumption * 30, 0) }} fuel blocks</dd>
+    </dl>
+  </div>
+</div>
+<div class="row mb-3">
+  <div class="col-4">
+    <dl>
+      <dt>Location</dt>
+      <dd>{{ $structure->system->itemName }}</dd>
+    </dl>
+  </div>
+  <div class="col-4">
+    <dl>
+      <dt>State</dt>
+      <dd>{{ ucfirst(str_replace('_', ' ', $structure->state)) }}</dd>
     </dl>
   </div>
   <div class="col-4">
@@ -47,19 +67,19 @@
   <div class="col-4">
     <dl>
       <dt>Hull Estimated Price</dt>
-      <dd>{{ number($structure->type->price->average_price) }}</dd>
+      <dd>{{ number_format($structure->type->price->average_price) }}</dd>
     </dl>
   </div>
   <div class="col-4">
     <dl>
       <dt>Fitting Estimated Price</dt>
-      <dd>{{ number($structure->fitting_estimated_price) }}</dd>
+      <dd>{{ number_format($structure->fitting_estimated_price) }}</dd>
     </dl>
   </div>
   <div class="col-4">
     <dl>
       <dt>Full Estimated Price</dt>
-      <dd>{{ number($structure->estimated_price) }}</dd>
+      <dd>{{ number_format($structure->estimated_price) }}</dd>
     </dl>
   </div>
 </div>
