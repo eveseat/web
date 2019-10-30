@@ -26,6 +26,7 @@ use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Seat\Eveapi\Jobs\Character\Affiliation;
 use Seat\Eveapi\Jobs\Universe\Names;
+use Seat\Eveapi\Models\Alliances\Alliance;
 use Seat\Eveapi\Models\Character\CharacterAffiliation;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
@@ -96,23 +97,29 @@ class IntelController extends Controller
 
                 return ucwords(str_replace('_', ' ', $row->ref_type));
             })
-            ->addColumn('character', function ($row) {
+            ->editColumn('character.name', function ($row) {
 
-                return $this->getIntelView('character', $row->character_id, $row->first_party_id, $row->second_party_id);
+                return view('web::partials.character', ['character' => $row->character]);
             })
-            ->addColumn('corporation', function ($row) {
+            ->editColumn('corporation.name', function ($row) {
 
-                return $this->getIntelView('corporation', $row->character_id, $row->first_party_id, $row->second_party_id);
+                return view('web::partials.corporation', ['corporation' => $row->corporation]);
             })
-            ->addColumn('alliance', function ($row) {
+            ->editColumn('alliance.name', function ($row) {
 
-                return $this->getIntelView('alliance', $row->character_id, $row->first_party_id, $row->second_party_id)
-                    . view('web::character.intel.partials.journalcontentbutton', compact('row'));
+                return view('web::partials.alliance', ['alliance' => $row->alliance]);
+            })
+            ->editColumn('faction.name', function ($row) {
+
+                return view('web::partials.faction', ['faction' => $row->faction]);
+            })
+            ->addColumn('action', function ($row) {
+                return view('web::character.intel.buttons.journal', compact('row'));
             })
             ->addColumn('is_in_group', function ($row) use ($user_group) {
-                return in_array($row->first_party_id, $user_group->toArray()) && in_array($row->second_party_id, $user_group->toArray());
+                //return in_array($row->first_party_id, $user_group->toArray()) && in_array($row->second_party_id, $user_group->toArray());
             })
-            ->rawColumns(['character', 'corporation', 'alliance', 'button'])
+            ->rawColumns(['button'])
             ->make(true);
 
     }
@@ -142,20 +149,26 @@ class IntelController extends Controller
         $top = $this->characterTopWalletTransactionInteractions($character_ids);
 
         return DataTables::of($top)
-            ->addColumn('character', function ($row) {
+            ->editColumn('character.name', function ($row) {
 
-                return $this->getIntelView('character', $row->character_id, $row->client_id);
+                return view('web::partials.character', ['character' => $row->character]);
             })
-            ->addColumn('corporation', function ($row) {
+            ->editColumn('corporation.name', function ($row) {
 
-                return $this->getIntelView('corporation', $row->character_id, $row->client_id);
+                return view('web::partials.corporation', ['corporation' => $row->corporation]);
             })
-            ->addColumn('alliance', function ($row) {
+            ->editColumn('alliance.name', function ($row) {
 
-                return $this->getIntelView('alliance', $row->character_id, $row->client_id)
-                    . view('web::character.intel.partials.transactioncontentbutton', compact('row'));
+                return view('web::partials.alliance', ['alliance' => $row->alliance]);
+                    //. view('web::character.intel.partials.transactioncontentbutton', compact('row'));
             })
-            ->rawColumns(['character', 'corporation', 'alliance'])
+            ->editColumn('faction.name', function ($row) {
+
+                return view('web::partials.faction', ['faction' => $row->faction]);
+            })
+            ->addColumn('action', function ($row) {
+                return view('web::character.intel.buttons.transaction', compact('row'));
+            })
             ->make(true);
 
     }
@@ -185,20 +198,26 @@ class IntelController extends Controller
         $top = $this->characterTopMailInteractions($character_ids);
 
         return DataTables::of($top)
-            ->editColumn('character_id', function ($row) {
+            ->editColumn('character.name', function ($row) {
 
-                return $this->getIntelView('character', $row->character_id, $row->from);
+                return view('web::partials.character', ['character' => $row->character]);
             })
-            ->editColumn('corporation_id', function ($row) {
+            ->editColumn('corporation.name', function ($row) {
 
-                return $this->getIntelView('corporation', $row->character_id, $row->from);
+                return view('web::partials.corporation', ['corporation' => $row->corporation]);
             })
-            ->editColumn('alliance_id', function ($row) {
+            ->editColumn('alliance.name', function ($row) {
 
-                return $this->getIntelView('alliance', $row->character_id, $row->from)
-                    . view('web::character.intel.partials.mailcontentbutton', compact('row'));
+                return view('web::partials.alliance', ['alliance' => $row->alliance]);
+                    //. view('web::character.intel.partials.mailcontentbutton', compact('row'));
             })
-            ->rawColumns(['character_id', 'corporation_id', 'alliance_id'])
+            ->editColumn('faction.name', function ($row) {
+
+                return view('web::partials.faction', ['faction' => $row->faction]);
+            })
+            ->addColumn('action', function ($row) {
+                return view('web::character.intel.buttons.mail', compact('row'));
+            })
             ->make(true);
     }
 
@@ -264,7 +283,7 @@ class IntelController extends Controller
      * @return mixed
      * @throws \Exception
      */
-    public function getJournalContent(int $first_party_id, int $second_party_id)
+    public function getJournalContent(int $character_id, int $first_party_id, int $second_party_id)
     {
 
         $journal = $this->characterWalletJournalInteractions($first_party_id, $second_party_id);
@@ -272,7 +291,7 @@ class IntelController extends Controller
         return DataTables::of($journal)
             ->editColumn('ref_type', function ($row) {
 
-                return view('web::partials.journaltranstype', compact('row'));
+                return view('web::common.wallets.journaltranstype', compact('row'));
             })
             ->editColumn('first_party_id', function ($row) {
 
@@ -349,30 +368,46 @@ class IntelController extends Controller
         $transactions = $this->characterWalletTransactionInteraction($character_id, $client_id);
 
         return DataTables::of($transactions)
+            ->editColumn('date', function ($row) {
+                return view('web::partials.date', ['datetime' => $row->date]);
+            })
             ->editColumn('is_buy', function ($row) {
-
-                return view('web::partials.transactionbuysell', compact('row'));
+                return view('web::partials.marketbuysell', ['is_buy' => $row->is_buy]);
+            })
+            ->editColumn('quantity', function ($row) {
+                return number_format($row->quantity, 0);
             })
             ->editColumn('unit_price', function ($row) {
 
-                return number($row->unit_price);
+                return number_format($row->unit_price, 2);
             })
-            ->addColumn('item_view', function ($row) {
-                return view('web::partials.transactiontype', compact('row'));
+            ->editColumn('type.typeName', function ($row) {
+                return view('web::partials.type', ['type_id' => $row->type->typeID, 'type_name' => $row->type->typeName]);
+            })
+            ->editColumn('location.name', function ($row) {
+                return $row->location->name;
             })
             ->addColumn('total', function ($row) {
-
                 return number($row->unit_price * $row->quantity);
             })
-            ->addColumn('client_view', function ($row) {
-
-                $character_id = $row->character_id;
-
-                $character = CharacterInfo::find($row->client_id) ?: $row->client_id;
-
-                return view('web::partials.character', compact('character', 'character_id'));
+            ->editColumn('party.name', function ($row) {
+                switch ($row->party->category) {
+                    case 'character':
+                        return view('web::partials.character', ['character' => $row->party]);
+                    case 'corporation':
+                        return view('web::partials.corporation', ['corporation' => $row->party]);
+                    case 'alliance':
+                        return view('web::partials.alliance', ['alliance' => $row->party]);
+                    case 'faction':
+                        return view('web::partials.faction', ['faction' => $row->party]);
+                    default:
+                        return '';
+                }
             })
-            ->rawColumns(['is_buy', 'client_view', 'item_view'])
+            ->filterColumn('total', function ($query, $keyword) {
+                return $query->whereRaw('(unit_price * quantity) LIKE ?', ["%$keyword%"]);
+            })
+            ->orderColumn('total', '(unit_price * quantity) $1')
             ->make(true);
     }
 
@@ -389,184 +424,31 @@ class IntelController extends Controller
         $mail = $this->getMailContent($character_id, $from);
 
         return DataTables::of($mail)
-            ->editColumn('from', function ($row) {
-
-                $character_id = $row->character_id;
-
-                $character = CharacterInfo::find($row->from) ?: $row->from;
-
-                return view('web::partials.character', compact('character', 'character_id'));
+            ->editColumn('sender.name', function ($row) {
+                switch ($row->sender->category) {
+                    case 'character':
+                        return view('web::partials.character', ['character' => $row->sender]);
+                    case 'corporation':
+                        return view('web::partials.corporation', ['corporation' => $row->sender]);
+                    case 'alliance':
+                        return view('web::partials.alliance', ['alliance' => $row->sender]);
+                    case 'faction':
+                        return view('web::partials.faction', ['faction' => $row->sender]);
+                    default:
+                        return '';
+                }
             })
             ->editColumn('subject', function ($row) {
-
                 return view('web::character.partials.mail_title', compact('row'));
             })
-            ->editColumn('tocounts', function ($row) {
-
-                return view('web::character.partials.mailtocounts', compact('row'));
+            ->addColumn('recipients', function ($row) {
+                return view('web::common.mails.modals.read.tags', compact('row'));
             })
-            ->addColumn('read', function ($row) {
-
-                return view('web::character.partials.topmailread', compact('row'));
+            ->addColumn('read', function ($row) use ($character_id) {
+                return view('web::common.mails.buttons.read', ['character_id' => $character_id, 'mail_id' => $row->mail_id]);
             })
             ->rawColumns(['from', 'subject', 'tocounts', 'read'])
             ->make(true);
 
-    }
-
-    /**
-     * @param int      $character_id
-     * @param int      $first_party_id
-     * @param int|null $second_party_id
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    private function getUniverseNameResolved(int $character_id, int $first_party_id, int $second_party_id = null) : Collection
-    {
-        // f.e. market escrow -> self referential payment.
-        if($first_party_id === $second_party_id)
-            return collect([
-                'character_id' => $character_id,
-                'corporation_id' => CharacterInfo::find($character_id)->corporation_id,
-                'alliance_id' => CharacterInfo::find($character_id)->alliance_id,
-            ]);
-
-        return collect([UniverseName::find($first_party_id), UniverseName::find($second_party_id)])
-            ->filter()
-            ->filter(function ($universe_name) use ($character_id) {
-
-                return $universe_name->entity_id !== $character_id;
-            })
-            ->pipe(function ($collection) use ($character_id, $first_party_id,$second_party_id) {
-
-                if ($collection->isNotEmpty()){
-
-                    return $collection->flatten()->map(function ($item) {
-
-                        if($item->category === 'character')
-                            return collect([
-                                'character_id' => $item->entity_id,
-                                'corporation_id' => optional(CharacterAffiliation::find($item->entity_id))->corporation_id,
-                                'alliance_id' => optional(CharacterAffiliation::find($item->entity_id))->alliance_id,
-                            ])->filter();
-
-                        if($item->category === 'corporation')
-                            return collect([
-                                'corporation_id' => $item->entity_id,
-                                'alliance_id' => optional(CharacterAffiliation::where('corporation_id', $item->entity_id)->get()->first())->alliance_id,
-                            ])->filter();
-
-                        if($item->category === 'alliance')
-                            return collect(['alliance_id' => $item->entity_id]);
-
-                        return collect(['other_resolved_id' => $item->entity_id]);
-                    })->filter();
-                }
-
-                return $collection->push(collect(['unknown_id' => $character_id !== $first_party_id ? $first_party_id : $second_party_id, 'character_id' => $character_id]));
-            })
-            ->flatMap(function ($value) {
-
-                return $value;
-            });
-    }
-
-    /**
-     * @param string   $type
-     * @param int      $character_id
-     * @param int      $first_other_id
-     * @param int|null $second_other_id
-     *
-     * @return string
-     */
-    private function getIntelView(string $type, int $character_id, int $first_other_id, int $second_other_id = null) : string
-    {
-        $universe_name = $this->getUniverseNameResolved($character_id, $first_other_id, $second_other_id);
-
-        if($type === 'character')
-            return $this->getCharacterIntelView($universe_name, $character_id);
-
-        if($type === 'corporation')
-            return $this->getCorporationIntelView($universe_name, $character_id);
-
-        if($type === 'alliance')
-            return $this->getAllianceIntelView($universe_name, $character_id);
-
-        return '';
-
-    }
-
-    /**
-     * @param \Illuminate\Support\Collection $universe_name
-     *
-     * @param int                            $character_id
-     *
-     * @return string
-     */
-    private function getCharacterIntelView(Collection $universe_name, int $character_id) : string
-    {
-        if ($universe_name->has('unknown_id'))
-            return $this->getUnknownIntelView($universe_name);
-
-        if (! $universe_name->has('character_id'))
-            return '';
-
-        $character = CharacterInfo::find($universe_name['character_id']) ?: $universe_name['character_id'];
-
-        return view('web::partials.character', compact('character', 'character_id'));
-    }
-
-    /**
-     * @param \Illuminate\Support\Collection $universe_name
-     *
-     * @param int                            $character_id
-     *
-     * @return string
-     */
-    private function getCorporationIntelView(Collection $universe_name, int $character_id) : string
-    {
-        if ($universe_name->has('unknown_id'))
-            return $this->getUnknownIntelView($universe_name);
-
-        if (! $universe_name->has('corporation_id'))
-            return '';
-
-        $corporation = CorporationInfo::find($universe_name['corporation_id']) ?: $universe_name['corporation_id'];
-
-        return view('web::partials.corporation', compact('corporation', 'character_id'));
-    }
-
-    /**
-     * @param \Illuminate\Support\Collection $universe_name
-     *
-     * @param int                            $character_id
-     *
-     * @return string
-     */
-    private function getAllianceIntelView(Collection $universe_name, int $character_id) : string
-    {
-        if ($universe_name->has('unknown_id'))
-            return $this->getUnknownIntelView($universe_name);
-
-        if (! $universe_name->has('alliance_id'))
-            return '';
-
-        $alliance = $universe_name['alliance_id'];
-
-        return view('web::partials.alliance', compact('alliance', 'character_id'));
-    }
-
-    /**
-     * @param \Illuminate\Support\Collection $universe_name
-     *
-     * @return string
-     */
-    private function getUnknownIntelView(Collection $universe_name) : string
-    {
-
-        return view('web::partials.unknown', [
-            'unknown_id' => $universe_name['unknown_id'],
-            'character_id' => $universe_name['character_id'],
-        ]);
     }
 }
