@@ -40,22 +40,22 @@
   @endif
 
   <!-- Queue information -->
+  @if(auth()->user()->has('global.queue_manager', false))
     <li class="nav-item dropdown">
-      <a href="{{ auth()->user()->has('queue_manager', false) ? route('horizon.index') : '#queue_count' }}"
-         class="nav-link" data-widget="dropdown" data-placement="bottom"
+      <a href="{{ route('horizon.index') }}" class="nav-link" data-widget="dropdown" data-placement="bottom"
          title="{{ trans('web::seat.queued') }}">
         <i class="fas fa-truck"></i>
         <span class="badge badge-success navbar-badge" id="queue_count">0</span>
       </a>
     </li>
     <li class="nav-item dropdown">
-      <a href="{{ auth()->user()->has('queue_manager', false) ? route('horizon.index') : '#error_count' }}"
-         class="nav-link" data-widget="dropdown" data-placement="bottom"
+      <a href="{{ route('horizon.index') }}" class="nav-link" data-widget="dropdown" data-placement="bottom"
          title="{{ trans('web::seat.error') }}">
         <i class="fas fa-exclamation"></i>
         <span class="badge badge-danger navbar-badge" id="error_count">0</span>
       </a>
     </li>
+  @endif
 
     <!-- User Account Menu -->
     <li class="nav-item dropdown">
