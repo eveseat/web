@@ -24,6 +24,7 @@ namespace Seat\Web\Http\Controllers\Support;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Seat\Eveapi\Models\Alliances\Alliance;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Universe\UniverseName;
@@ -117,6 +118,11 @@ class ResolveController extends Controller
             ->pipe(function ($collection) {
                 return $collection->when($collection->isNotEmpty(), function ($ids) {
                     return $this->resolveInternalCorporationIDs($ids);
+                });
+            })
+            ->pipe(function ($collection) {
+                return $collection->when($collection->isNotEmpty(), function ($ids) {
+                    return $this->resolveInternalAllianceIDs($ids);
                 });
             })
             ->chunk(1000)
@@ -226,6 +232,28 @@ class ResolveController extends Controller
                     'id' => $corporation->corporation_id,
                     'name' => $corporation->name,
                     'category' => 'corporation',
+                ]);
+            });
+
+        return $this->cacheIDsAndReturnUnresolvedIDs($names, $ids);
+    }
+
+    /**
+     * @param \Illuminate\Support\Collection $ids
+     * @return \Illuminate\Support\Collection
+     */
+    private function resolveInternalAllianceIDs(Collection $ids)
+    {
+
+        // resolve names that are already in SeAT
+        // no unnecessary api calls if the request can be resolved internally.
+        $names = Alliance::whereIn('alliance_id', $ids->flatten()->toArray())
+            ->get()
+            ->map(function ($alliance) {
+                return collect([
+                    'id'       => $alliance->alliance_id,
+                    'name'     => $alliance->name,
+                    'category' => 'alliance',
                 ]);
             });
 
