@@ -22,15 +22,11 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
-use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Seat\Eveapi\Jobs\Character\Affiliation;
 use Seat\Eveapi\Jobs\Universe\Names;
-use Seat\Eveapi\Models\Alliances\Alliance;
-use Seat\Eveapi\Models\Character\CharacterAffiliation;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
-use Seat\Eveapi\Models\Universe\UniverseName;
 use Seat\Services\Repositories\Character\Intel;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Intel\NoteDataTable;

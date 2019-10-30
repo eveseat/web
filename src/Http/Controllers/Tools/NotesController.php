@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -65,7 +66,7 @@ class NotesController extends Controller
      */
     public function update(NewIntelNote $request, int $id)
     {
-        $note  = Note::find($id);
+        $note = Note::find($id);
 
         if (! is_null($request->input('title')))
             $note->title = $request->input('title');
