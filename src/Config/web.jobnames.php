@@ -51,9 +51,8 @@ return [
             \Seat\Eveapi\Jobs\Killmails\Character\Detail::class,
         ],
         'mail'          => [
-            \Seat\Eveapi\Jobs\Mail\Headers::class,
-            \Seat\Eveapi\Jobs\Mail\Bodies::class,
             \Seat\Eveapi\Jobs\Mail\Labels::class,
+            \Seat\Eveapi\Jobs\Mail\Mails::class,
             \Seat\Eveapi\Jobs\Mail\MailingLists::class,
         ],
         'market'        => \Seat\Eveapi\Jobs\Market\Character\Orders::class,

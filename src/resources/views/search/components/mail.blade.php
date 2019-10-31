@@ -34,8 +34,7 @@
         {data: 'body.body', name: 'body.body'},
         {data: 'tocounts', name: 'tocounts', searchable: false, sortable: false},
         {data: 'read', name: 'read', searchable: false, sortable: false},
-        {data: 'recipients', name: 'recipients', visible: false},
-        {data: 'character.name', name: 'character.name', visible: false}
+        {data: 'recipients', name: 'recipients', visible: false}
       ],
       drawCallback: function () {
         $('[data-toggle="tooltip"]').tooltip();
