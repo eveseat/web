@@ -28,7 +28,7 @@ use Seat\Eveapi\Models\Mail\MailHeader;
 use Seat\Services\Repositories\Character\Mail;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Intel\MailDataTable;
-use Seat\Web\Http\DataTables\Scopes\CharacterScope;
+use Seat\Web\Http\DataTables\Scopes\CharacterMailScope;
 use Seat\Web\Models\User;
 
 /**
@@ -49,7 +49,7 @@ class MailController extends Controller
         $characters = (User::find($character_id))->group->users;
 
         return $dataTable
-            ->addScope(new CharacterScope('character.mail', $character_id, request()->input('characters', [])))
+            ->addScope(new CharacterMailScope($character_id, request()->input('characters', [])))
             ->render('web::character.mail', compact('characters'));
 
     }
