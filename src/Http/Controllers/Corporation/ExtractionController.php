@@ -22,11 +22,8 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
-use Illuminate\Database\QueryException;
-use Seat\Eveapi\Models\Universe\UniverseMoonContent;
 use Seat\Services\Repositories\Corporation\Extractions;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Http\Validation\ProbeReport;
 
 /**
  * Class ExtractionController.
