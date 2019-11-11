@@ -201,7 +201,7 @@ trait AccessChecker
         }
 
         if (! is_null($corporation)) {
-            $corporation_permissions = Arr::get($this->getPermissionsFromCorporationRoles(), request()->corporation_id);
+            $corporation_permissions = Arr::get($this->getPermissionsFromCorporationRoles(), request()->corporation_id, []);
 
             if (in_array('corporation.*', $corporation_permissions))
                 return true;
