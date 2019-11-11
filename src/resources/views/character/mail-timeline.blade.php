@@ -36,7 +36,17 @@
               <ul class="list-unstyled">
                 <li>
                   <b>{{ trans('web::seat.from') }}: </b>
-                  @include('web::partials.character', ['character' => $message->sender])
+                  @switch($message->sender->category)
+                    @case('character')
+                      @include('web::partials.character', ['character' => $message->sender])
+                      @break
+                    @case('corporation')
+                      @include('web::partials.corporation', ['corporation' => $message->sender])
+                      @break
+                    @case('alliance')
+                      @include('web::partials.alliance', ['alliance' => $message->sender])
+                      @break
+                  @endswitch
                 </li>
 
                 @if ($message->recipients->where('recipient_type', 'alliance')->count() > 0)
