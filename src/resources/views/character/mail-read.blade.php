@@ -18,7 +18,7 @@
     <li>
       <b>To Alliance:</b>
       @foreach($message->recipients->where('recipient_type', 'alliance') as $alliance)
-        {!! img('alliance', $alliance->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+        {!! img('alliances', 'logo', $alliance->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
         <span class="id-to-name" data-id="{{ $alliance->recipient_id }}">{{ trans('web::seat.unknown') }}</span>
       @endforeach
     </li>

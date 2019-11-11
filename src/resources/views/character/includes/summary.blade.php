@@ -9,7 +9,7 @@
 
     <div class="text-center">
 
-      {!! img('character', $summary->character_id, 128, ['class' => 'profile-user-img img-fluid img-circle']) !!}
+      {!! img('characters', 'portrait', $summary->character_id, 128, ['class' => 'profile-user-img img-fluid img-circle']) !!}
 
     </div>
     <h3 class="profile-username text-center">
@@ -29,7 +29,7 @@
 
             <a href="{{ route(\Illuminate\Support\Facades\Route::currentRouteName(),
              array_merge(request()->route()->parameters, ['character_id' => $character->character_id])) }}">
-              {!! img('character', $character->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+              {!! img('characters', 'portrait', $character->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
               {{ $character->name }}
             </a>
 

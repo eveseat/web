@@ -33,8 +33,7 @@
 
                 <tr>
                   <td>
-                    {!! img('type', $structure->type->typeID, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-                    {{ $structure->type->typeName }}
+                    @include('web::partials.type', ['type_id' => $structure->type->typeID, 'type_name' => $structure->type->typeName])
                   </td>
                   <td>
                     {{ $structure->system->itemName }}

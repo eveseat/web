@@ -6,7 +6,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h4 class="modal-title">
-                    {!! img('type', 0, 32, ['class' => 'img-circle eve-icon'], false) !!} Detailed Ledger for
+                    {!! img('types', 'icon', 0, 32, ['class' => 'img-circle eve-icon'], false) !!} Detailed Ledger for
                     <span id="modal-ledger-system-name">{system_name}</span> on <span id="modal-ledger-date">{date}</span> -
                     <span id="modal-ledger-type-name">{type_name}</span>
                 </h4>
