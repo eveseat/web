@@ -131,6 +131,13 @@ return [
                 'permission' => 'global.standing_builder',
                 'route'      => 'tools.standings',
             ],
+            [
+                'name'       => 'moons reporter',
+                'label'      => 'web::seat.moons_reporter',
+                'icon'       => 'fas fa-moon',
+                'permission' => 'global.moons_reporter',
+                'route'      => 'tools.moons.index',
+            ],
         ],
     ],
 ];
