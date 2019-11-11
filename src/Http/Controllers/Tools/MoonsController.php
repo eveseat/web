@@ -86,14 +86,14 @@ class MoonsController extends Controller
                         $loop_first = false;
 
                         // search for any existing and outdated report regarding current moon
-                        UniverseMoonContent::where('moon_id', (int)$component->moonID)
+                        UniverseMoonContent::where('moon_id', (int) $component->moonID)
                             ->delete();
                     }
 
                     UniverseMoonContent::create([
-                        'moon_id' => (int)$component->moonID,
-                        'type_id' => (int)$component->oreTypeID,
-                        'rate' => (float)$component->quantity,
+                        'moon_id' => (int) $component->moonID,
+                        'type_id' => (int) $component->oreTypeID,
+                        'rate' => (float) $component->quantity,
                     ]);
                 }
             }
