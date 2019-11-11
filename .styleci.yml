@@ -11,7 +11,6 @@ disabled:
   - braces
   - phpdoc_no_package
   - concat_without_spaces
-  - length_ordered_imports
   - no_blank_lines_after_class_opening
   - no_blank_lines_after_throw
   
