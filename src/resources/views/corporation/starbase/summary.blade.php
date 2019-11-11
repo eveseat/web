@@ -11,8 +11,7 @@
         <th>{{ trans_choice('web::seat.type', 1) }}</th>
         <th>{{ trans_choice('web::seat.location', 1) }}</th>
         <th>
-          {!! img('type', 4051, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-          {{ trans('web::seat.fuel_level') }}
+          @include('web::partials.type', ['type_id' => 4051, 'type_name' => trans('web::seat.fuel_level')])
         </th>
         <th>{{ trans_choice('web::seat.offline', 1) }}</th>
         <th data-orderable="false"></th>
@@ -41,8 +40,7 @@
           <td data-order="{{ $starbase->type->typeName }}">
               <span data-toggle="tooltip"
                     title="" data-original-title="{{ $starbase->type->typeName }}">
-                {!! img('type', $starbase->type_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                {{ $starbase->type->typeName }}
+                @include('web::partials.type', ['type_id' => $starbase->type_id, 'type_name' => $starbase->type->typeName])
               </span>
             @if($starbase->system->sovereignty->alliance_id == $sheet->alliance_id || $starbase->system->sovereignty->corporation_id == $starbase->corporation_id)
 

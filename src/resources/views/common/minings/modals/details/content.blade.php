@@ -17,8 +17,7 @@
         @include('web::partials.system', ['system' => $entries->first()->system->itemName, 'security' => $entries->first()->system->security])
       </td>
       <td class="text-center">
-        {!! img('type', $entries->first()->type->typeID, 32, ['class' => 'img-circle eve-icon'], false) !!}
-        {{ $entries->first()->type->typeName }}
+        @include('web::partials.type', ['type_id' => $entries->first()->type->typeID, 'type_name' => $entries->first()->type->typeName])
       </td>
     </tr>
   </tbody>
@@ -39,8 +38,7 @@
     @foreach($entries->first()->type->materials as $material)
       <tr>
         <td>
-          {!! img('type', $material->type->typeID, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-          {{ $material->type->typeName }}
+          @include('web::partials.type', ['type_id' => $material->type->typeID, 'type_name' => $material->type->typeName])
         </td>
         <td>{{ number_format($entries->sum('quantity') * $material->quantity / 100, 0) }}</td>
         <td>{{ number_format($entries->sum('quantity') * $material->quantity * $material->type->volume / 100, 2) }}</td>

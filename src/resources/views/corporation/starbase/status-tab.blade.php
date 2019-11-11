@@ -33,8 +33,7 @@
 
         <dt>{{ trans_choice('web::seat.type', 1) }}:</dt>
         <dd>
-          {!! img('type', $starbase->type_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-          {{ $starbase->type->typeName }}
+          @include('web::partials.type', ['type_id' => $starbase->type_id, 'type_name' => $starbase->type->typeName])
         </dd>
 
         <dt>{{ trans_choice('web::seat.name', 1) }}:</dt>
@@ -69,10 +68,10 @@
         <dt>{{ trans('web::seat.use_standings_from') }}:</dt>
         <dd>
           @if($starbase->detail->use_alliance_standings)
-          {!! img('alliance', $sheet->alliance_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+          {!! img('alliances', 'logo', $sheet->alliance_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
             <span class="id-to-name" data-id="{{ $sheet->alliance_id }}">{{ trans('web::seat.unknown') }}</span>
           @else
-          {!! img('corporation', $starbase->corporation_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+          {!! img('corporations', 'logo', $starbase->corporation_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
             <span class="id-to-name" data-id="{{ $starbase->corporation_id }}">{{ trans('web::seat.unknown') }}</span>
           @endif
         </dd>
@@ -124,8 +123,7 @@
 
       <div class="progress-group">
         <span class="progress-text">
-          {!! img('type', 4051, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-          {{ trans('web::seat.fuel_blocks') }}
+          @include('web::partials.type', ['type_id' => 4051, 'type_name' => trans('web::seat.fuel_blocks')])
         </span>
         <span class="progress-number">
           <b>{{ number_format(optional($starbase->fuelBays->whereIn('type_id', [4051, 4246, 4247, 4312, 36945]))->first()->quantity ?? 0, 0) }}</b>/{{ number_format($starbase->type->capacity / 5, 0) }}
@@ -141,8 +139,7 @@
       <!-- /.progress-group -->
       <div class="progress-group">
         <span class="progress-text">
-          {!! img('type', 16275, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-          Strontium
+          @include('web::partials.type', ['type_id' => 16275, 'type_name' => 'Strontium'])
         </span>
         <span class="progress-number">
           <b>

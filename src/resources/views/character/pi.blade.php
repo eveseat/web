@@ -46,8 +46,7 @@
               </td>
               <td>{{ $colony->itemName }}</td>
               <td>
-                {!! img('type', $colony->typeID, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                {{ ucfirst($colony->planet_type) }}
+                @include('web::partials.type', ['type_id' => $colony->typeID, 'type_name' => $colony->planet_type])
               </td>
               <td>{{ $colony->upgrade_level }}</td>
               <td>{{ $colony->num_pins }}</td>
@@ -83,13 +82,11 @@
 
             <tr>
               <td>
-                {!! img('type', $extractor['typeID'], 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                {{ ucfirst($extractor['planet_type']) }}
+                @include('web::partials.type', ['type_id' => $extractor['typeID'], 'type_name' => ucfirst($extractor['planet_type']))
               </td>
               <td>{{ $extractor['itemName'] . " " . $extractor['celestialIndex'] }}</td>
               <td>
-                {!! img('type', $extractor['product_type_id'], 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                {{ ucfirst($extractor['typeName']) }}
+                @include('web::partials.type', ['type_id' => $extractor['product_type_id'], 'type_name' => ucfirst($extractor['typeName']))
               </td>
               <td>
                 <div class="countdown-progressbar" data-expiry-time="{{$extractor['expiry_time']}}"

@@ -83,7 +83,11 @@ abstract class AbstractIndustryDataTable extends DataTable
                 }
             })
             ->editColumn('blueprint.typeName', function ($row) {
-                return view('web::partials.type', ['type_id' => $row->blueprint->typeID, 'type_name' => $row->blueprint->typeName]);
+                return view('web::partials.type', [
+                    'type_id' => $row->blueprint->typeID,
+                    'type_name' => $row->blueprint->typeName,
+                    'variation' => 'bpc',
+                ]);
             })
             ->editColumn('product.typeName', function ($row) {
                 return view('web::partials.type', ['type_id' => $row->product->typeID, 'type_name' => $row->product->typeName]);

@@ -6,7 +6,7 @@
 
     <div class="text-center">
 
-      {!! img('corporation', $sheet->corporation_id, 128, ['class' => 'profile-user-img img-responsive img-circle']) !!}
+      {!! img('corporations', 'logo', $sheet->corporation_id, 128, ['class' => 'profile-user-img img-responsive img-circle']) !!}
 
     </div>
 
@@ -35,7 +35,7 @@
       <dt>{{ trans('web::seat.ceo') }}</dt>
       <dd>
         <a href="{{ route('character.view.sheet', ['character_id' => $sheet->ceo_id]) }}">
-          {!! img('character', $sheet->ceo_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
+          {!! img('characters', 'portrait', $sheet->ceo_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
           <span class="id-to-name" data-id="{{ $sheet->ceo_id }}">{{ trans('web::seat.unknown') }}</span>
         </a>
       </dd>

@@ -13,8 +13,7 @@
     <tr>
       <td>{{ number_format($item->quantity, 0) }}</td>
       <td>
-        {!! img('type', $item->type_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-        {{ $item->type->typeName }}
+        @include('web::partials.type', ['type_id' => $item->type_id, 'type_name' => $item->type->typeName])
       </td>
     </tr>
 

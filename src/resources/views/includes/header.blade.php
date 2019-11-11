@@ -117,7 +117,7 @@
 
           <tr>
             <td>
-              {!! img('character', $user->character_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
+              {!! img('characters', 'portrait', $user->character_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
               {{ $user->name }}
             </td>
             <td>

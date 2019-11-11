@@ -1,7 +1,7 @@
 <h4>About</h4>
 
 <div class="media">
-  {!! img('type', $structure->type->typeID, 64, ['class' => 'align-self-center mr-3', 'alt' => $structure->type->typeName], false) !!}
+  {!! img('types', 'render', $structure->type->typeID, 64, ['class' => 'align-self-center mr-3', 'alt' => $structure->type->typeName], false) !!}
   <div class="media-body">
     <h5 class="mt-0">{{ $structure->type->typeName }}</h5>
     <p class="text-justify">{!! $structure->type->description !!}</p>
@@ -24,7 +24,7 @@
   <div class="col-4">
     <dl>
       <dt>Monthly Consumption</dt>
-      <dd>{{ number_format($structure->fuel_consumption * 30, 0) }} fuel blocks</dd>
+      <dd>{{ number_format($structure->fuel_consumption * 24 * 30, 0) }} fuel blocks</dd>
     </dl>
   </div>
 </div>
