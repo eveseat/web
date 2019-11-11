@@ -1,4 +1,4 @@
-<div class="modal fade" tabindex="-1" role="dialog" id="moon-modal">
+<div class="modal fade" tabindex="-1" role="dialog" id="moon-import">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -8,7 +8,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form method="post" action="{{ route('corporation.view.extractions.probe-report') }}" id="moon-report-form">
+        <form method="post" action="{{ route('tools.moons.store') }}" id="moon-report-form">
           {{ csrf_field() }}
           <div class="form-group">
             <label for="moon-report" class="control-label">Report</label>

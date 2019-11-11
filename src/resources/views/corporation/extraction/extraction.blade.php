@@ -10,5 +10,5 @@
   @endforeach
   </div>
 @endforeach
-@include('web::corporation.extraction.partials.modal')
+@include('web::tools.moons.modals.import.import')
 @stop

@@ -35,8 +35,12 @@ return [
     'assets_division'                    => 'This permission is part of Assets division',
 
     // Global Scope
-    'global_standing_builder_label'       => 'Grant access to Standings Builder',
-    'global_standing_builder_description' => 'Standing Builder is used to design standings mapping which then can be applied on Character Intel.',
+    'global_standing_builder_label'             => 'Grant access to Standings Builder',
+    'global_standing_builder_description'       => 'Standing Builder is used to design standings mapping which then can be applied on Character Intel.',
+    'global_moons_reporter_label'               => 'Moons Reporter',
+    'global_moons_reporter_description'         => 'Moons Reporter can show all moons from New Eden and their registered composition reports.',
+    'global_moons_reporter_manager_label'       => 'Moons Reporter Manager',
+    'global_moons_reporter_manager_description' => 'Moons Reporter Manager can create and update moon reports.',
 
     // Character Scope
     'character_asset_label'              => 'Grant access to Character Assets',

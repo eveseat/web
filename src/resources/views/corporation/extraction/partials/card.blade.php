@@ -30,10 +30,12 @@
     <div class="card-body">
       @include('web::corporation.extraction.partials.card-body')
     </div>
+    @if(auth()->user()->has('global.moons_reporter_manager', false))
     <div class="card-footer">
-      <button type="button" data-toggle="modal" data-target="#moon-modal" class="btn btn-sm btn-link float-right" aria-label="Settings">
+      <button type="button" data-toggle="modal" data-target="#moon-import" class="btn btn-sm btn-link float-right" aria-label="Settings">
         <i class="fas fa-cogs"></i> Settings
       </button>
     </div>
+    @endif
   </div>
 </div>
