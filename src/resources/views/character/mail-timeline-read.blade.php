@@ -20,7 +20,7 @@
             <li>
               <b>{{ trans('web::seat.from') }}: </b>
               <a href="{{ route('character.view.sheet', ['character_id' => $message->from]) }}">
-                {!! img('character', $message->from, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                {!! img('characters', 'portrait', $message->from, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                 <span class="id-to-name" data-id="{{ $message->from }}">{{ trans('web::seat.unknown') }}</span>
               </a>
             </li>
@@ -31,7 +31,7 @@
 
                 @foreach($message->recipients->where('recipient_type', 'alliance') as $recipient)
 
-                  {!! img('alliance', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  {!! img('alliances', 'logo', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                   <span class="id-to-name" data-id="{{ $recipient->recipient_id }}">{{ trans('web::seat.unknown') }}</span>
 
                 @endforeach
@@ -45,7 +45,7 @@
 
                 @foreach($message->recipients->where('recipient_type', 'corporation') as $recipient)
 
-                  {!! img('corporation', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  {!! img('corporations', 'logo', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                   <span class="id-to-name" data-id="{{ $recipient->recipient_id }}">{{ trans('web::seat.unknown') }}</span>
 
                 @endforeach
@@ -58,7 +58,7 @@
 
                 @foreach($message->recipients->where('recipient_type', 'character') as $recipient)
 
-                  {!! img('character', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  {!! img('characters', 'portrait', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                   <span class="id-to-name" data-id="{{ $recipient->recipient_id }}">{{ trans('web::seat.unknown') }}</span>
 
                 @endforeach

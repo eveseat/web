@@ -134,7 +134,7 @@
             ">
               <td>{{ ucfirst($standing->type) }}</td>
               <td>
-                {!! img('auto', $standing->elementID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
+                {!! img('auto', '', $standing->elementID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
                 <span class="id-to-name" data-id="{{ $standing->elementID }}">{{ trans('web::seat.unknown') }}</span>
               </td>
               <td>{!! view('web::partials.standing', ['standing' => $standing->standing]) !!}</td>

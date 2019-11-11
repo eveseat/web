@@ -21,8 +21,7 @@
 
             <tr>
               <td>
-                {!! img('type', $starbase_module->type_id, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-                {{ $starbase_module->type->typeName }}
+                @include('web::partials.type', ['type_id' => $starbase_module->type_id, 'type_name' => $starbase_module->type->typeName])
                 @if($starbase_module->type->typeName !== $starbase_module->name)
                   <i>({{ $starbase_module->name }})</i>
                 @endif
@@ -31,7 +30,7 @@
                 @foreach($starbase_module->content as $content)
                 <span data-toggle="tooltip"
                       title="" data-original-title="{{ $content->type->typeName }}">
-                  {!! img('type', $content->type_id, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
+                  {!! img('types', 'icon', $content->type_id, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
                 </span>
                 @endforeach
               </td>
@@ -97,8 +96,7 @@
                             <tr>
                               <td>{{ $content->quantity }}</td>
                               <td>
-                                {!! img('type', $content->type_id, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-                                {{ $content->type->typeName }}
+                                @include('web::partials.type', ['type_id' => $content->type_id, 'type_name' => $content->type->typeName])
                               </td>
                               <td>
                                 @include('web::macros.progressbar',

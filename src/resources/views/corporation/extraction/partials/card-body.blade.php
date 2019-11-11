@@ -46,7 +46,9 @@
     @foreach($extraction->moon->moon_contents as $content)
     @if(! is_null($content->type))
     <tr>
-      <td>{!! img('type', $content->type->typeID, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!} {{ $content->type->typeName }}</td>
+      <td>
+        @include('web::partials.type', ['type_id' => $content->type->typeID, 'type_name' => $content->type->typeName])
+      </td>
       <td>{{ number_format($content->rate * 100) }} %</td>
       <td>
         @switch($content->type->marketGroupID)
