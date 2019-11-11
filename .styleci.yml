@@ -3,8 +3,6 @@ preset: laravel
 risky: false
 
 enabled:
-  - alpha_ordered_imports
-  - concat_with_spaces
   - no_empty_comment
 
 disabled:
