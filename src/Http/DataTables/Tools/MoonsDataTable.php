@@ -53,11 +53,11 @@ class MoonsDataTable extends DataTable
             })
             ->editColumn('sovereignty', function ($row) {
                 switch (true) {
-                    case (! is_null($row->system->sovereignty->faction_id)):
+                    case ! is_null($row->system->sovereignty->faction_id):
                         return view('web::partials.faction', ['faction' => $row->system->sovereignty->faction]);
-                    case (! is_null($row->system->sovereignty->alliance_id)):
+                    case ! is_null($row->system->sovereignty->alliance_id):
                         return view('web::partials.alliance', ['alliance' => $row->system->sovereignty->alliance]);
-                    case (! is_null($row->system->sovereignty->corporation_id)):
+                    case ! is_null($row->system->sovereignty->corporation_id):
                         return view('web::partials.corporation', ['corporation' => $row->system->sovereignty->corporation]);
                     default:
                         return '';
