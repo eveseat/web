@@ -9,7 +9,13 @@
       </div>
       <div class="modal-body">
         <form>
-          <select id="permission-entity-lookup" class="w-100"></select>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <select id="permission-entity-lookup" class="form-control select2 w-100"></select>
+              </div>
+            </div>
+          </div>
         </form>
         <table class="table table-striped table-hover">
           <thead>

@@ -694,6 +694,7 @@ return [
 
     // Tools
     'standings_builder'            => 'Standings Builder',
+    'moons_reporter'               => 'Moons Reporter',
 
     // Footer
     'web_version'                  => 'Web Version',

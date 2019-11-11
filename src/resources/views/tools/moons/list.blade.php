@@ -1,0 +1,53 @@
+@extends('web::layouts.grids.12')
+
+@section('title', trans('web::seat.moons_reporter'))
+@section('page_header', trans('web::seat.tools'))
+@section('page_description', trans('web::seat.moons_reporter'))
+
+@section('content')
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title">Moons</h4>
+      <div class="card-tools">
+        <div class="input-group input-group-sm">
+          @if(auth()->user()->has('global.moons_reporter_manager', false))
+          @include('web::tools.moons.buttons.import')
+          @endif
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      {!! $dataTable->table() !!}
+    </div>
+    <div class="card-footer">
+      <ul class="list-inline">
+        <li class="list-inline-item col-2">
+          <span class="badge badge-success">0</span> Gaz
+        </li>
+        <li class="list-inline-item col-2">
+          <span class="badge badge-primary">0</span> R8
+        </li>
+        <li class="list-inline-item col-2">
+          <span class="badge badge-info">0</span> R16
+        </li>
+        <li class="list-inline-item col-2">
+          <span class="badge badge-warning">0</span> R32
+        </li>
+        <li class="list-inline-item col-2">
+          <span class="badge badge-danger">0</span> R64
+        </li>
+        <li class="list-inline-item">
+          <span class="badge badge-default">0</span> ORE
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  @include('web::tools.moons.modals.components.components')
+  @include('web::tools.moons.modals.import.import')
+@endsection
+
+@push('javascript')
+  {!! $dataTable->scripts() !!}
+  @include('web::includes.javascript.id-to-name')
+@endpush
