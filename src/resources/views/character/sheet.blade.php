@@ -120,7 +120,7 @@
               @foreach($employment as $history)
 
                 <li>
-                  {!! img('corporation', $history->corporation_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  {!! img('corporations', 'logo', $history->corporation_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
                   <b><span class="id-to-name"
                            data-id="{{ $history->corporation_id }}">{{ trans('web::seat.unknown') }}</span></b>
                   on {{ carbon($history->start_date)->toDateString() }}

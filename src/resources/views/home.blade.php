@@ -151,7 +151,7 @@
           <div class="card-header border-0">
             <div class="d-flex justify-content-between">
               <h3 class="card-title">
-                {!! img('character', auth()->user()->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                {!! img('characters', 'portrait', auth()->user()->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                 {{ trans('web::seat.main_char_skills', ['character_name' => auth()->user()->name]) }}
               </h3>
               <span class="text-bold text-lg">{{ trans('web::seat.main_char_skills_per_level') }}</span>
@@ -171,7 +171,7 @@
           <div class="card-header border-0">
             <div class="d-flex justify-content-between">
               <h3 class="card-title">
-                {!! img('character', auth()->user()->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                {!! img('characters', 'portrait', auth()->user()->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                 {{ trans('web::seat.main_char_skills', ['character_name' => auth()->user()->name]) }}
               </h3>
               <span class="text-bold text-lg">{{ trans('web::seat.main_char_skills_coverage') }}</span>

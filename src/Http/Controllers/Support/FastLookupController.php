@@ -70,7 +70,7 @@ class FastLookupController extends Controller
                     'img'          => $characters->map(function ($character) {
                         $entity_id = property_exists($character, 'id') ? $character->id : $character->character_id;
 
-                        return img('character', $entity_id, 64, ['class' => 'img-circle eve-icon small-icon'], false);
+                        return img('characters', 'portrait', $entity_id, 64, ['class' => 'img-circle eve-icon small-icon'], false);
                     }),
                 ];
             }),
@@ -191,11 +191,28 @@ class FastLookupController extends Controller
 
         return response()->json([
             'results' => $union->get()->map(function ($entity, $key) {
+                switch ($entity->entity_type) {
+                    case 'corporation':
+                        $img_type = 'corporations';
+                        break;
+                    case 'alliance':
+                        $img_type = 'alliances';
+                        break;
+                    default:
+                        $img_type = 'characters';
+                }
+
                 return [
                     'id'   => $entity->entity_id,
                     'text' => $entity->name,
                     'type' => $entity->entity_type,
-                    'img'  => img($entity->entity_type, $entity->entity_id, 64, ['class' => 'img-circle eve-icon small-icon'], false),
+                    'img'  => img(
+                        $img_type,
+                        $img_type == 'characters' ? 'portrait' : 'logo',
+                        $entity->entity_id,
+                        64,
+                        ['class' => 'img-circle eve-icon small-icon'],
+                        false),
                 ];
             }),
         ]);

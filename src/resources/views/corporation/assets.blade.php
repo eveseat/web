@@ -73,11 +73,10 @@
                 @endif
 
                 <td>
-                  {!! img('type', $asset->type_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
                   @if($asset->name != $asset->type->typeName)
-                    {{ $asset->name }} ({{ $asset->type->typeName }})
+                    @include('web::partials.type', ['type_id' => $asset->type_id, 'type_name' => sprintf('%s (%s)', $asset->name, $asset->type->typeName)])
                   @else
-                    {{ $asset->type->typeName }}
+                    @include('web::partials.type', ['type_id' => $asset->type_id, 'type_name' => $asset->type->typeName])
                   @endif
                   @if(! $asset->is_singleton)
                     <span class="text-red">(packaged)</span>

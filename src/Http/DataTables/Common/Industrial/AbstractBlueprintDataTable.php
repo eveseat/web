@@ -60,7 +60,11 @@ abstract class AbstractBlueprintDataTable extends DataTable
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('type.typeName', function ($row) {
-                return view('web::partials.type', ['type_id' => $row->type->typeID, 'type_name' => $row->type->typeName]);
+                return view('web::partials.type', [
+                    'type_id' => $row->type->typeID,
+                    'type_name' => $row->type->typeName,
+                    'variation' => $row->quantity == -1 ? 'bp' : 'bpc',
+                ]);
             })
             ->editColumn('location_flag', function ($row) {
                 return preg_replace('([A-Z])', ' $0', $row->location_flag);
