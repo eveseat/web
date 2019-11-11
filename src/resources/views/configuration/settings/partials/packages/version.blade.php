@@ -6,17 +6,17 @@
      data-toggle="tooltip"
      title="Checking package status..."></i> {{ app()->getProvider($package)->getName() }}
     @if (! is_null(app()->getProvider($package)->getChangelogUri()))
-    <a href="#" data-widget="modal" data-target="#changelogModal"
-       data-uri="{{ app()->getProvider($package)->getChangelogUri() }}"
-       data-name="{{ app()->getProvider($package)->getName() }}"
-       @if(app()->getProvider($package)->isChangelogApi())
-       data-tag="{{ app()->getProvider($package)->getChangelogTagAttribute() }}"
-       data-body="{{ app()->getProvider($package)->getChangelogBodyAttribute() }}"
-        @endif>
+    <button data-toggle="modal" data-target="#changelogModal"
+            data-uri="{{ app()->getProvider($package)->getChangelogUri() }}"
+            data-name="{{ app()->getProvider($package)->getName() }}"
+            @if(app()->getProvider($package)->isChangelogApi())
+            data-tag="{{ app()->getProvider($package)->getChangelogTagAttribute() }}"
+            data-body="{{ app()->getProvider($package)->getChangelogBodyAttribute() }}"
+            @endif>
       <span data-toggle="tooltip" title="Show the changelog">
         <i class="fa fa-history"></i>
       </span>
-    </a>
+    </button>
     @endif
 </dt>
 <dd>
