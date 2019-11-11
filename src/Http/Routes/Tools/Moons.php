@@ -22,7 +22,7 @@
 
 Route::group([
     'prefix' => '/moons/',
-    'middleware' => 'bouncer:global.moons_reporter'
+    'middleware' => 'bouncer:global.moons_reporter',
 ], function () {
     Route::get('/', [
         'as' => 'tools.moons.index',
