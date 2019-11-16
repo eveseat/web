@@ -31,7 +31,6 @@ use Seat\Web\Acl\AccessChecker;
 use Seat\Web\Exceptions\BouncerException;
 use Seat\Web\Models\Acl\Permission;
 use Seat\Web\Models\Acl\Role;
-use Seat\Web\Models\Group;
 use Seat\Web\Models\User;
 
 class AccessCheckerTest extends TestCase
@@ -77,14 +76,9 @@ class AccessCheckerTest extends TestCase
         ]);
 
         // init an user model which will mock the authenticated user
-        $this->group = new Group();
         $this->user = new User([
             'id' => 90795931,
         ]);
-        $this->user->group = $this->group;
-        $this->user->group()->associate(new User([
-            'id' => 90795919,
-        ]));
 
         $this->filters = json_decode(file_get_contents(__DIR__ . '/artifacts/access_filters.json'));
     }
@@ -224,7 +218,7 @@ class AccessCheckerTest extends TestCase
             ]),
         ];
 
-        $this->group->roles = collect($roles);
+        $this->roles = collect($roles);
 
         $this->assertFalse($this->hasRole('Test Role B'));
         $this->assertTrue($this->hasRole('Test Role C'));
@@ -442,7 +436,7 @@ class AccessCheckerTest extends TestCase
         }
 
         // assign roles to the user
-        $this->group->roles = collect($roles);
+        $this->roles = collect($roles);
 
         // assign corporation role to the character
         $this->character = $this->request_character;
