@@ -10,21 +10,23 @@
 
   <hr>
 
-  <div class="login-box-body">
-    <p class="login-box-msg">
-      {{ trans('web::seat.php_version_message') }}
-    </p>
+  <div class="card">
+    <div class="card-body login-box-body">
+      <p class="login-box-msg">
+        {{ trans('web::seat.php_version_message') }}
+      </p>
 
-    <dl class="dl-horizontal">
+      <dl class="dl-horizontal">
 
-      <dt>{{ trans('web::seat.installed_version') }}</dt>
-      <dd><span class="text-danger">{{ phpversion() }}</span></dd>
-      <dt>{{ trans('web::seat.min_version') }}</dt>
-      <dd>5.5.14</dd>
+        <dt>{{ trans('web::seat.installed_version') }}</dt>
+        <dd><span class="text-danger">{{ phpversion() }}</span></dd>
+        <dt>{{ trans('web::seat.min_version') }}</dt>
+        <dd>7.3.0</dd>
 
-    </dl>
+      </dl>
 
+    </div>
+    <!-- /.login-box-body -->
   </div>
-  <!-- /.login-box-body -->
 
 @stop
