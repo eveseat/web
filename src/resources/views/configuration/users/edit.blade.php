@@ -12,8 +12,9 @@
     </div>
     <div class="card-body">
 
-      <form role="form" action="{{ route('configuration.access.users.update') }}" method="post">
+      <form role="form" action="{{ route('configuration.users.update', ['user_id' => $user->id]) }}" method="post">
         {{ csrf_field() }}
+        {!! method_field('put') !!}
         <input type="hidden" name="user_id" value="{{ $user->id }}">
 
         <div class="box-body">
@@ -58,61 +59,39 @@
     </div>
   </div>
 
-  <!-- account re-assignment -->
+  <!-- characters -->
   @if($user->name != 'admin')
   <div class="card">
     <div class="card-header">
-      <h3 class="card-title">{{ trans('web::seat.reassign_user') }}</h3>
+      <h3 class="card-title">{{ trans_choice('web::seat.character', 0) }}</h3>
     </div>
-    <div class="card-body">
+    <div class="card-body pt-0 pb-0">
 
-      <div>
-        <dl class="row">
-          <dt class="col-md-4">Current User Group</dt>
-          <dd class="col-md-8">
-            <ul class="list-group list-group-flush">
-              @if($user->group)
-                @foreach($user->group->users as $group_user)
-                  <li class="list-group-item">
-                    @include('web::partials.character', ['character' => $group_user->character])
-                  </li>
-                @endforeach
-              @endif
-            </ul>
-          </dd>
-        </dl>
-      </div>
+      <ul class="list-group list-group-flush">
 
-      <form role="form" action="{{ route('configuration.access.users.reassign') }}" method="post">
-        {{ csrf_field() }}
-        <input type="hidden" name="user_id" value="{{ $user->id }}">
+        @foreach($user->characters as $character)
+          <li class="list-group-item">
 
-        <div class="form-group row">
-          <label for="available_users" class="col-form-label col-md-4">{{ trans_choice('web::seat.available_groups', 2) }}</label>
-          <div class="col-md-8">
-            <select name="group_id" id="available_users" style="width: 100%">
+            @if ($character->refresh_token)
+              <button data-toggle="tooltip" title="Valid Token" class="btn btn-sm btn-link">
+                <i class="fa fa-check text-success"></i>
+              </button>
+            @else
+              <button data-toggle="tooltip" title="Invalid Token" class="btn btn-sm btn-link">
+                <i class="fa fa-exclamation-triangle text-danger"></i>
+              </button>
+            @endif
 
-              @foreach($groups as $group)
+            @if($character->refresh_token)
+              @include('web::profile.buttons.scopes')
+            @endif
 
-                <option value="{{ $group->id }}">
-                  {{ $group->users->map(function($user) { return $user->name; })->implode(', ') }}
-                </option>
+            @include('web::partials.character', ['character' => $character])
 
-              @endforeach
+          </li>
+        @endforeach
 
-            </select>
-          </div>
-        </div>
-
-        <div class="box-footer">
-
-          <button type="submit" class="btn btn-primary float-right">
-            <i class="fas fa-user-friends"></i>
-            {{ trans('web::seat.reassign') }}
-          </button>
-
-        </div>
-      </form>
+      </ul>
 
     </div>
   </div>
@@ -144,8 +123,7 @@
             </thead>
             <tbody>
 
-            @if($user->group)
-              @foreach($user->group->roles as $role)
+              @foreach($user->roles as $role)
                 @foreach($role->permissions as $permission)
                   <tr>
                     <td>{{ $role->title }}</td>
@@ -157,7 +135,7 @@
                             <i class="fas fa-pencil-alt"></i>
                             {{ trans('web::seat.edit') }}
                           </a>
-                          <form method="post" action="{{ route('configuration.access.roles.edit.remove.group', ['role_id' => $role->id, 'group_id' => $user->group->id]) }}">
+                          <form method="post" action="{{ route('configuration.access.roles.edit.remove.user', ['role_id' => $role->id, 'user_id' => $user->id]) }}">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
                             <button type="submit" class="btn btn-danger">
@@ -177,7 +155,17 @@
                       @if($permission->pivot->filters)
                         @foreach(json_decode($permission->pivot->filters) as $type => $entities)
                           @foreach($entities as $entity)
-                            {!! img($type, $entity->id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
+                            @switch($type)
+                              @case('character')
+                                {!! img('characters', 'portrait', $entity->id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
+                              @break
+                              @case('corporation')
+                                {!! img('corporations', 'logo', $entity->id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
+                              @break
+                              @case('alliance')
+                                {!! img('alliances', 'logo', $entity->id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
+                              @break
+                            @endswitch
                             {{ $entity->text }}
                           @endforeach
                         @endforeach
@@ -186,14 +174,13 @@
                   </tr>
                 @endforeach
               @endforeach
-            @endif
 
             </tbody>
           </table>
 
         </div>
         <div class="card-footer">
-          <i class="text-muted float-right">{{ $user->group->roles->count() }} {{ trans_choice('web::seat.role', $user->group->roles->count()) }}</i>
+          <i class="text-muted float-right">{{ $user->roles->count() }} {{ trans_choice('web::seat.role', $user->roles->count()) }}</i>
         </div>
       </div>
       @endif
@@ -249,6 +236,7 @@
 
   </div><!-- ./row -->
 
+  @include('web::profile.modals.scopes.scopes')
 
 @stop
 
@@ -257,9 +245,6 @@
   @include('web::includes.javascript.id-to-name')
 
   <script>
-    $("#available_users").select2({
-      placeholder: "{{ trans('web::seat.select_group_to_assign') }}"
-    });
 
     $('#roles').DataTable({
         'columns': [
@@ -290,6 +275,16 @@
             });
 
         ids_to_names(); }
+    });
+
+    $('#scopesModal').on('show.bs.modal', function (e) {
+        var body = $(e.target).find('.modal-body');
+        body.html('Loading...');
+
+        $.ajax($(e.relatedTarget).data('url'))
+            .done(function (data) {
+                body.html(data);
+            });
     });
   </script>
 

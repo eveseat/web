@@ -25,6 +25,11 @@ Route::get('/groups', [
     'uses' => 'FastLookupController@getGroups',
 ]);
 
+Route::get('/users', [
+    'as'   => 'fastlookup.users',
+    'uses' => 'FastLookupController@getUsers',
+]);
+
 Route::get('/characters', [
     'as'   => 'fastlookup.characters',
     'uses' => 'FastLookupController@getCharacters',

@@ -9,7 +9,7 @@
       </div>
       <div class="modal-body">
         <form>
-          <select id="member-entity-lookup" class="w-100"></select>
+          <select id="member-entity-lookup" style="width: 100%;"></select>
         </form>
         <table class="table table-striped table-hover">
           <thead>

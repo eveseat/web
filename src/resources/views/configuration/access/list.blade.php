@@ -50,9 +50,9 @@
         <thead>
           <tr>
             <th>{{ trans_choice('web::seat.name', 2) }}</th>
-            <th>{{ trans_choice('web::seat.group', 2) }}</th>
+            <th>{{ trans_choice('web::seat.member', 2) }}</th>
             <th>{{ trans_choice('web::seat.permission', 2) }}</th>
-            <th>{{ trans_choice('web::seat.affiliation', 2) }}</th>
+            <th>{{ trans_choice('web::seat.filter', 2) }}</th>
             <th></th>
           </tr>
         </thead>
@@ -62,7 +62,7 @@
 
             <tr>
               <td>{{ $role->title }}</td>
-              <td>{{ $role->groups->count() }}</td>
+              <td>{{ $role->users->filter(function ($user) { return $user->name !== 'admin'; })->count() }}</td>
               <td>{{ $role->permissions->count() }}</td>
               <td>{{ $role->permissions->filter(function ($permission) { return ! is_null($permission->pivot->filters); })->count() }}</td>
               <td>
@@ -75,10 +75,12 @@
                       <i class="fas fa-pencil-alt"></i>
                       {{ trans('web::seat.edit') }}
                     </a>
+                    @if($role->title !== 'Superuser')
                     <button type="submit" class="btn btn-danger">
                       <i class="fas fa-trash-alt"></i>
                       {{ trans('web::seat.delete') }}
                     </button>
+                    @endif
                   </div>
                 </form>
               </td>

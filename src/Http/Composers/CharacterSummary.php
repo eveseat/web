@@ -24,7 +24,10 @@ namespace Seat\Web\Http\Composers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\Repositories\Configuration\UserRespository;
+use Seat\Web\Models\User;
 
 /**
  * Class CharacterSummary.
@@ -60,9 +63,10 @@ class CharacterSummary
     public function compose(View $view)
     {
 
-        $owner = $this->getUser($this->request->character_id);
-        $summary = $owner->character;
-        $characters = $owner->group->users;
+        $token = RefreshToken::where('character_id', $this->request->character_id)->first();
+        $owner = User::with('characters')->find($token->user_id);
+        $summary = CharacterInfo::findOrFail($this->request->character_id);
+        $characters = $owner->characters;
 
         $view->with('summary', $summary);
         $view->with('characters', $characters);

@@ -22,13 +22,14 @@
 
 namespace Seat\Web\Http\Controllers\Profile;
 
+use Illuminate\Http\Request;
+use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\Repositories\Character\Info;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Services\Settings\Profile;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\EmailUpdate;
 use Seat\Web\Http\Validation\ProfileSettings;
-use Seat\Web\Models\User;
 
 /**
  * Class ProfileController.
@@ -45,22 +46,36 @@ class ProfileController extends Controller
     {
 
         $user = $this->getFullUser(auth()->user()->id);
-        $history = auth()->user()->login_history
-            ->take(50)->sortByDesc('created_at');
+        $history = auth()->user()->login_history->take(50)->sortByDesc('created_at');
 
         // Settings value possibilities
-        $characters = $this->getUserGroupCharacters(auth()->user()->group);
-        $scopes = optional(auth()->user()->refresh_token)->scopes;
-        $skins = Profile::$options['skins'];
-        $languages = config('web.locale.languages');
-        $sidebar = Profile::$options['sidebar'];
+        $characters = auth()->user()->characters;
 
+        // available languages
+        $languages = config('web.locale.languages');
+
+        // available options
+        $skins = Profile::$options['skins'];
+        $sidebar = Profile::$options['sidebar'];
         $thousand = Profile::$options['thousand_seperator'];
         $decimal = Profile::$options['decimal_seperator'];
 
         return view('web::profile.view',
-            compact('user', 'history', 'characters', 'scopes', 'skins', 'languages',
+            compact('user', 'history', 'characters', 'skins', 'languages',
                 'sidebar', 'thousand', 'decimal'));
+    }
+
+    /**
+     * @param int $character_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getCharacterScopes(int $character_id)
+    {
+        $token = RefreshToken::where('character_id', $character_id)
+            ->where('user_id', auth()->user()->id)
+            ->first();
+
+        return view('web::profile.modals.scopes.content', ['scopes' => $token->scopes]);
     }
 
     /**
@@ -69,7 +84,7 @@ class ProfileController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Seat\Services\Exceptions\SettingException
      */
-    public function getUpdateUserSettings(ProfileSettings $request)
+    public function postUpdateUserSettings(ProfileSettings $request)
     {
 
         // Update the rest of the settings
@@ -104,18 +119,23 @@ class ProfileController extends Controller
     }
 
     /**
-     * @param int $character_id
-     *
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function getChangeCharacter(int $character_id)
+    public function postChangeCharacter(Request $request)
     {
+        $request->validate([
+            'character_id' => 'integer|exists:character_infos,character_id|required',
+        ]);
 
-        $user_characters = $this->getUserGroupCharacters(
-            auth()->user()->group)->pluck('id');
+        $character_id = $request->character_id;
 
-        // Prevent logins to arbitrary characters.
-        if (! $user_characters->contains($character_id)) {
+        $requested_character = auth()->user()->characters->filter(function ($character) use ($character_id) {
+            return $character->character_id == $character_id;
+        })->first();
+
+        // Prevent login to arbitrary characters.
+        if (! $requested_character) {
 
             // Log this attempt
             event('security.log', ['Character change denied ', 'authentication']);
@@ -123,15 +143,20 @@ class ProfileController extends Controller
         }
 
         // Find the new user to login as.
-        $user = User::findOrFail($character_id);
+        auth()->user()->fill([
+            'main_character_id' => $requested_character->character_id,
+            'name'              => $requested_character->name,
+        ])->save();
 
         // Log the character change login event.
         event('security.log', [
-            'Character change to ' . $user->name . ' from ' . auth()->user()->name,
+            'Main character change to ' . $requested_character->name . ' from ' . auth()->user()->name,
             'authentication',
         ]);
 
-        auth()->login($user, true);
+        auth()->user()->fresh();
+
+        //auth()->login($user, true);
 
         return redirect()->back();
     }

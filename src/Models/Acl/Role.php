@@ -24,7 +24,7 @@ namespace Seat\Web\Models\Acl;
 
 use Illuminate\Database\Eloquent\Model;
 use Intervention\Image\Facades\Image;
-use Seat\Web\Models\Group;
+use Seat\Web\Models\User;
 
 /**
  * Class Role.
@@ -53,19 +53,9 @@ class Role extends Model
 
         // Remove the Role from users, permissions
         // and affiliations that it had
-        $this->groups()->detach();
         $this->permissions()->detach();
 
         return parent::delete();
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function groups()
-    {
-
-        return $this->belongsToMany(Group::class);
     }
 
     /**
@@ -76,6 +66,14 @@ class Role extends Model
 
         return $this->belongsToMany(Permission::class)
             ->withPivot(['not', 'filters']);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
     }
 
     /**

@@ -23,7 +23,6 @@
 namespace Seat\Web\Http\Validation;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Seat\Web\Models\Group;
 
 /**
  * Class ReassignUser.

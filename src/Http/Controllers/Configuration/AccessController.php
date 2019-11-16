@@ -120,7 +120,7 @@ class AccessController extends Controller
         // updating role members
         //
 
-        $this->giveGroupsRole(json_decode($request->input('members')), $role->id);
+        $this->giveUsersRole(json_decode($request->input('members')), $role->id);
 
         //
         // updating role permissions and filters
@@ -223,15 +223,10 @@ class AccessController extends Controller
 
     /**
      * @param $role_id
-     * @param $group_id
-     * @return \Illuminate\Http\RedirectResponse
+     * @param $user_id
      */
-    public function removeGroup($role_id, $group_id)
+    public function removeUser($role_id, $user_id)
     {
-
-        $this->removeGroupFromRole($group_id, $role_id);
-
-        return redirect()->back()
-            ->with('success', 'Role has been removed from user');
+        $this->removeUserFromRole($user_id, $role_id);
     }
 }

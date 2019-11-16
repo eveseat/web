@@ -8,21 +8,14 @@
     </tr>
     </thead>
     <tbody>
-    @foreach($role->groups->filter(function ($group) { return $group->users->first()->name != 'admin'; }) as $member)
+    @foreach($role->users->filter(function ($user) { return $user->name != 'admin'; }) as $member)
       <tr>
         <td>
-          @if(! is_null($member->main_character))
             {!! view('web::partials.character', ['character' => $member->main_character]) !!}
-          @else
-            {!! view('web::partials.character', ['character' => $member->users->first()]) !!}
-          @endif
         </td>
         <td>
           {!!
-            $member->users->filter(function ($item, $key) use ($member) {
-              if (is_null($member->main_character) && ($key === 0))
-                return false;
-
+            $member->characters->filter(function ($item, $key) use ($member) {
               return $item->name !== $member->main_character->name;
             })->map(function ($user) {
               return view('web::partials.character', ['character' => $user])->render();
@@ -30,8 +23,12 @@
           !!}
         </td>
         <td>
-          @if(auth()->user()->group_id != $member->id)
-            <button type="button" class="btn btn-danger btn-xs pull-right" data-groupid="{{ $member->id }}">{{ trans('web::seat.remove') }}</button>
+          @if(auth()->user()->id != $member->id)
+            <button type="button" class="btn btn-danger btn-xs pull-right"
+                    data-url="{{ route('configuration.access.roles.edit.remove.user', ['role_id' => $role->id, 'user_id' => $member->id]) }}">
+              <i class="fas fa-trash"></i>
+              {{ trans('web::seat.remove') }}
+            </button>
           @endif
         </td>
       </tr>

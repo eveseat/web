@@ -24,6 +24,8 @@ namespace Seat\Web\Extentions\Socialite\EveOnline;
 
 use Illuminate\Support\Arr;
 use Laravel\Socialite\Two\InvalidStateException;
+use Seat\Services\Exceptions\EveImageException;
+use Seat\Services\Image\Eve;
 use SocialiteProviders\Manager\OAuth2\AbstractProvider;
 use SocialiteProviders\Manager\OAuth2\User;
 
@@ -111,15 +113,24 @@ class Provider extends AbstractProvider
      */
     protected function mapUserToObject(array $user)
     {
+        try {
+            $avatar = (new Eve('characters', 'portrait', $user['CharacterID'], 128))->url(128);
+        } catch (EveImageException $e) {
+            logger()->error($e->getMessage(), $e->getTrace());
+        }
+
         return (new User)->setRaw($user)->map([
-            'character_id'         => $user['CharacterID'],
+            'id'                   => $user['CharacterID'],
             'name'                 => $user['CharacterName'],
+            'nickname'             => $user['CharacterName'],
             'character_owner_hash' => $user['CharacterOwnerHash'],
             'scopes'               => $user['Scopes'],
-            'refresh_token'        => $user['RefreshToken'],
-            'expires_on'           => Carbon($user['ExpiresOn']),
-            'avatar'               => sprintf('https://image.eveonline.com/Character/%d_128.jpg', $user['CharacterID']),
-        ]);
+            'expires_on'           => carbon($user['ExpiresOn']),
+            'avatar'               => $avatar,
+        ])
+        ->setRefreshToken($user['RefreshToken'])
+        ->setExpiresIn(carbon($user['ExpiresOn'])->diffInSeconds())
+        ->setAccessTokenResponseBody($user);
     }
 
     /**

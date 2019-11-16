@@ -26,17 +26,18 @@ use Illuminate\Queue\SerializesModels;
 use Seat\Web\Models\Acl\Role;
 
 /**
- * Class UserGroupRoleAdded.
+ * Class UserRoleAdded
+ *
  * @package Seat\Web\Events
  */
-class UserGroupRoleAdded
+class UserRoleAdded
 {
     use SerializesModels;
 
     /**
      * @var int
      */
-    public $group_id;
+    public $user_id;
 
     /**
      * @var Role
@@ -44,13 +45,14 @@ class UserGroupRoleAdded
     public $role;
 
     /**
-     * UserGroupRoleAdded constructor.
-     * @param int $group_id
-     * @param Role $role
+     * UserRoleAdded constructor.
+     *
+     * @param int $user_id
+     * @param \Seat\Web\Models\Acl\Role $role
      */
-    public function __construct(int $group_id, Role $role)
+    public function __construct(int $user_id, Role $role)
     {
-        $this->group_id = $group_id;
+        $this->user_id = $user_id;
         $this->role = $role;
     }
 }
