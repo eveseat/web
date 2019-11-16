@@ -100,15 +100,7 @@ class TrackingController extends Controller
                 if(is_null($row->user))
                     return '';
 
-                $main_character_id = $character_id;
-
-                if (! is_null($row->user->group) && ! is_null(optional($row->user->group)->main_character_id))
-                    $main_character_id = $row->user->group->main_character_id;
-
-                $character = CharacterInfo::find($main_character_id) ?: new CharacterInfo([
-                    'character_id' => $main_character_id,
-                    'name'         => trans('web::seat.unknown'),
-                ]);
+                $character = $row->user->main_character;
 
                 return view('web::partials.character', compact('character', 'character_id'));
             })

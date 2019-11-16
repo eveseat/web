@@ -364,11 +364,9 @@ class ResolveController extends Controller
 
         })->each(function ($chunk) {
 
-            $character = User::find($chunk);
+            $character = User::find($chunk)->main_character;
 
-            $maincharacter = is_null($character) ? null : $character->group->main_character;
-
-            $this->response[$chunk] = view('web::partials.maincharacter', compact('maincharacter'))->render();
+            $this->response[$chunk] = view('web::partials.character', compact('character'))->render();
         });
 
         return response()->json($this->response);
