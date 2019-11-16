@@ -26,7 +26,7 @@ use Seat\Web\Models\User;
 use Yajra\DataTables\Services\DataTable;
 
 /**
- * Class UsersDataTable
+ * Class UsersDataTable.
  *
  * @package Seat\Web\Http\DataTables\Configuration
  */

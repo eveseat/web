@@ -26,7 +26,7 @@ use Illuminate\Queue\SerializesModels;
 use Seat\Web\Models\Acl\Role;
 
 /**
- * Class UserRoleAdded
+ * Class UserRoleAdded.
  *
  * @package Seat\Web\Events
  */
