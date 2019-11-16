@@ -149,7 +149,7 @@ class SsoController extends Controller
         $user->active = true;
         $user->save();
 
-        return User::where('main_character_id',$eve_user->id)
+        return User::where('main_character_id', $eve_user->id)
             ->first();
     }
 
@@ -162,7 +162,7 @@ class SsoController extends Controller
 
         RefreshToken::withTrashed()->firstOrNew([
             'character_id'         => $eve_user->id,
-            'character_owner_hash' => $eve_user->character_owner_hash
+            'character_owner_hash' => $eve_user->character_owner_hash,
         ])->fill([
             'user_id'       => $seat_user->id,
             'refresh_token' => $eve_user->refreshToken,

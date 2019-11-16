@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Class DropGroupsTable
+ * Class DropGroupsTable.
  */
 class DropGroupsTable extends Migration
 {
