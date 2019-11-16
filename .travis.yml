@@ -1,4 +1,6 @@
 language: php
+php:
+  - 7.3
 before_script:
   - pecl install -o -f redis <<<""
   - composer update
