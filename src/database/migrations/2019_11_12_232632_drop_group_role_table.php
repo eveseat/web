@@ -20,37 +20,36 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Events;
-
-use Illuminate\Queue\SerializesModels;
-use Seat\Web\Models\Acl\Role;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 /**
- * Class UserGroupRoleRemoved.
- * @package Seat\Web\Events
+ * Class DropGroupRoleTable
  */
-class UserGroupRoleRemoved
+class DropGroupRoleTable extends Migration
 {
-    use SerializesModels;
-
     /**
-     * @var int
+     * Run the migrations.
+     *
+     * @return void
      */
-    public $group_id;
-
-    /**
-     * @var Role
-     */
-    public $role;
-
-    /**
-     * UserGroupRoleRemoved constructor.
-     * @param int $group_id
-     * @param Role $role
-     */
-    public function __construct(int $group_id, Role $role)
+    public function up()
     {
-        $this->group_id = $group_id;
-        $this->role = $role;
+        Schema::dropIfExists('group_role');
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('group_role', function (Blueprint $table) {
+            $table->integer('role_id');
+            $table->integer('group_id');
+            $table->boolean('not');
+        });
     }
 }

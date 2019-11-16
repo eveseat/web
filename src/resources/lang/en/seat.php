@@ -146,7 +146,8 @@ return [
     'profile'               => 'Profile',
     'sign_out'              => 'Sign Out',
     'stop_impersonation'    => 'Stop Impersonation',
-    'switch_character'      => 'Switch Character',
+    'switch_character'      => 'Change Main Character',
+    'use_as_main_character' => 'Use as Main Character',
     'link_character'        => 'Link Character',
     'characters_in_group'   => 'Character in group|Characters in group',
 

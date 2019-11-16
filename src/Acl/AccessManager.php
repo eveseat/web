@@ -22,11 +22,11 @@
 
 namespace Seat\Web\Acl;
 
-use Seat\Web\Events\UserGroupRoleAdded;
-use Seat\Web\Events\UserGroupRoleRemoved;
+use Seat\Web\Events\UserRoleAdded;
+use Seat\Web\Events\UserRoleRemoved;
 use Seat\Web\Models\Acl\Permission as PermissionModel;
 use Seat\Web\Models\Acl\Role as RoleModel;
-use Seat\Web\Models\Group;
+use Seat\Web\Models\User;
 
 /**
  * Class AccessManager.
@@ -45,7 +45,7 @@ trait AccessManager
     public function getCompleteRole(int $role_id = null)
     {
 
-        $roles = RoleModel::with('permissions', 'groups');
+        $roles = RoleModel::with('permissions', 'users');
 
         if (! is_null($role_id)) {
 
@@ -167,52 +167,46 @@ trait AccessManager
     }
 
     /**
-     * Give an array of group_ids a role.
+     * Give an array of user_ids a role.
      *
-     * @param array $group_ids
-     * @param int   $role_id
+     * @param array $user_ids
+     * @param int $role_id
      */
-    public function giveGroupsRole(array $group_ids, int $role_id)
+    public function giveUsersRole(array $user_ids, int $role_id)
     {
-
-        foreach ($group_ids as $group_id) {
-
-            $group = Group::where('id', $group_id)->first();
-            $this->giveGroupRole($group->id, $role_id);
+        foreach ($user_ids as $user_id) {
+            $this->giveUserRole($user_id, $role_id);
         }
     }
 
     /**
-     * Give a group a Role.
+     * Give to an user a Role.
      *
-     * @param int $group_id
+     * @param int $user_id
      * @param int $role_id
      */
-    public function giveGroupRole(int $group_id, int $role_id)
+    public function giveUserRole(int $user_id, int $role_id)
     {
-
-        $group = Group::find($group_id);
+        $user = User::find($user_id);
         $role = RoleModel::firstOrNew(['id' => $role_id]);
 
-        // If the role does not already have the group add it.
-        if (! $role->groups->contains($group_id)) {
-            $role->groups()->save($group);
-            event(new UserGroupRoleAdded($group_id, $role));
+        // If the role does not already have the user, add it.
+        if (! $role->users->contains($user_id)) {
+            $role->users()->save($user);
+            event(new UserRoleAdded($user_id, $role));
         }
     }
 
     /**
-     * Remove a group from a role.
+     * Remove an user from a role.
      *
-     * @param int $group_id
+     * @param int $user_id
      * @param int $role_id
      */
-    public function removeGroupFromRole(int $group_id, int $role_id)
+    public function removeUserFromRole(int $user_id, int $role_id)
     {
-
         $role = $this->getRole($role_id);
-        if ($role->groups()->detach($group_id) > 0)
-            event(new UserGroupRoleRemoved($group_id, $role));
-
+        if ($role->users()->detach($user_id) > 0)
+            event(new UserRoleRemoved($user_id, $role));
     }
 }

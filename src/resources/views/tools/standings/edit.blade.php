@@ -23,14 +23,14 @@
           <div class="form-group row">
             <label for="characterstanding" class="col-form-label col-md-4">Characters</label>
             <div class="col-md-8">
-              <select id="characterstanding" name="character" class="w-100"></select>
+              <select id="characterstanding" name="character" style="width: 100%;"></select>
             </div>
           </div>
 
           <div class="form-group row">
             <label for="corporationstanding" class="col-form-label col-md-4">Corporations</label>
             <div class="col-md-8">
-              <select id="corporationstanding" name="corporation" class="w-100"></select>
+              <select id="corporationstanding" name="corporation" style="width: 100%;"></select>
             </div>
           </div>
 
@@ -62,14 +62,14 @@
           <div class="form-group row">
             <label for="element-name" class="col-form-label col-md-4">Name</label>
             <div class="col-md-8">
-              <select id="element-name" name="element_id" class="w-100"></select>
+              <select id="element-name" name="element_id" style="width: 100%;"></select>
             </div>
           </div>
 
           <div class="form-group row">
             <label for="element-type" class="col-form-label col-md-4">Type</label>
             <div class="col-md-8">
-              <select id="element-type" name="type" class="w-100">
+              <select id="element-type" name="type" style="width: 100%;">
                 <option value="character">Character</option>
                 <option value="corporation">Corporation</option>
                 <option value="alliance">Alliance</option>
@@ -80,7 +80,7 @@
           <div class="form-group row">
             <label for="element-standing" class="col-form-label col-md-4">Standing</label>
             <div class="col-md-8">
-              <select id="element-standing" name="standing" class="w-100">
+              <select id="element-standing" name="standing" style="width: 100%;">
                 <option value="-10">-10</option>
                 <option value="-5">-5</option>
                 <option value="0">0</option>

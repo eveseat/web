@@ -37,7 +37,7 @@
           <div class="form-group row">
             <label class="col-md-4 col-form-label" for="cleanup">{{ trans('web::seat.cleanup_data') }}</label>
             <div class="col-md-6">
-              <select id="cleanup" name="cleanup_data" class="form-control">
+              <select id="cleanup" name="cleanup_data" class="form-control" style="width: 100%;">
                 <option value="yes"
                         @if(setting('cleanup_data', true) == "yes") selected @endif>
                   {{ trans('web::seat.yes') }}
@@ -59,7 +59,7 @@
           <div class="form-group row">
             <label class="col-md-4 col-form-label" for="registration">{{ trans('web::seat.allow_registration') }}</label>
             <div class="col-md-6">
-              <select id="registration" name="registration" class="form-control">
+              <select id="registration" name="registration" class="form-control" style="width: 100%;">
                 <option value="yes"
                         @if(setting('registration', true) == "yes") selected @endif>
                   {{ trans('web::seat.yes') }}
@@ -78,7 +78,7 @@
           <div class="form-group row">
             <label class="col-md-4 col-form-label" for="allow_tracking">{{ trans('web::seat.allow_tracking') }}</label>
             <div class="col-md-6">
-              <select id="allow_tracking" name="allow_tracking" class="form-control">
+              <select id="allow_tracking" name="allow_tracking" class="form-control" style="width: 100%;">
                 <option value="yes"
                         @if(setting('allow_tracking', true) == "yes") selected @endif>
                   {{ trans('web::seat.yes') }}

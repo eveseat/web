@@ -107,23 +107,25 @@
       <table class="table datatable compact table-condensed table-hover table-striped">
         <thead>
           <tr>
-            <th>{{ trans_choice('web::seat.user', count(auth()->user()->group->users)) }}</th>
+            <th>{{ trans_choice('web::seat.user', auth()->user()->characters->count()) }}</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
 
-        @foreach(auth()->user()->group->users as $user)
+        @foreach(auth()->user()->characters as $character)
 
           <tr>
             <td>
-              {!! img('characters', 'portrait', $user->character_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-              {{ $user->name }}
+              {!! img('characters', 'portrait', $character->character_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
+              {{ $character->name }}
             </td>
             <td>
-              <a href="{{ route('profile.change-character', ['character_id' => $user->character_id]) }}" class="float-right">
-                {{ trans('web::seat.switch_character') }}
-              </a>
+              <form method="post" action="{{ route('profile.change-character') }}">
+                {!! csrf_field() !!}
+                <input type="hidden" name="character_id" value="{{ $character->character_id }}" />
+                <button type="submit" class="btn btn-sm btn-link">{{ trans('web::seat.use_as_main_character') }}</button>
+              </form>
             </td>
           </tr>
 

@@ -19,7 +19,7 @@
         </li>
         <li id="nav-members" class="nav-item">
           <a href="#tab-members" role="tab" data-toggle="pill" aria-controls="tab-permissions" aria-selected="false" class="nav-link">
-            <span class="badge badge-secondary">{{ $role->groups->where('id', '<>', 1)->count() }}</span> {{ trans_choice('web::seat.member', 0) }}
+            <span class="badge badge-secondary">{{ $role->users->where('id', '<>', 1)->count() }}</span> {{ trans_choice('web::seat.member', 0) }}
           </a>
         </li>
       </ul>

@@ -82,11 +82,11 @@
 
             <tr>
               <td>
-                @include('web::partials.type', ['type_id' => $extractor['typeID'], 'type_name' => ucfirst($extractor['planet_type']))
+                @include('web::partials.type', ['type_id' => $extractor['typeID'], 'type_name' => ucfirst($extractor['planet_type'])])
               </td>
               <td>{{ $extractor['itemName'] . " " . $extractor['celestialIndex'] }}</td>
               <td>
-                @include('web::partials.type', ['type_id' => $extractor['product_type_id'], 'type_name' => ucfirst($extractor['typeName']))
+                @include('web::partials.type', ['type_id' => $extractor['product_type_id'], 'type_name' => ucfirst($extractor['typeName'])])
               </td>
               <td>
                 <div class="countdown-progressbar" data-expiry-time="{{$extractor['expiry_time']}}"
