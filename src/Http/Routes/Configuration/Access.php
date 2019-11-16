@@ -34,7 +34,7 @@ Route::resource('roles', 'AccessController', [
     ],
 ]);
 
-Route::delete('/roles/{role_id}/members/{group_id}', [
-    'as'   => 'configuration.access.roles.edit.remove.group',
-    'uses' => 'AccessController@removeGroup',
+Route::delete('/roles/{role_id}/members/{user_id}', [
+    'as'   => 'configuration.access.roles.edit.remove.user',
+    'uses' => 'AccessController@removeUser',
 ]);

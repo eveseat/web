@@ -49,12 +49,11 @@ class CharacterBouncer
 
         // Check on the clipboard if this permission
         // should be granted.
-        if (auth()->user()->has('character.' . $permission))
+        if (auth()->user()->has(sprintf('character.%s', $permission)))
             return $next($request);
 
-        $message = 'Request to ' . $request->path() . ' was ' .
-            'denied by the characterbouncer. The permission required is ' .
-            'character.' . $permission . '.';
+        $message = sprintf('Request to %s was denied by the character bouncer. ' .
+            'The permission required is character.%s.', $request->path(), $permission);
 
         event('security.log', [$message, 'authorization']);
 

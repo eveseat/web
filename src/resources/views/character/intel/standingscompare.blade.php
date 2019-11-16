@@ -18,7 +18,7 @@
         <div class="box-body">
 
           <div class="form-group">
-            <select id="standings-profile-id" class="w-100">
+            <select id="standings-profile-id" style="width: 100%;">
               <option></option> <!-- blank option for select2 placeholder. quirky -_- -->
               @foreach($profiles as $profile)
                 <option value="{{ $profile->id }}">{{ $profile->name }}</option>

@@ -25,9 +25,14 @@ Route::get('/', [
     'uses' => 'ProfileController@getView',
 ]);
 
+Route::get('/scopes/{character_id}', [
+    'as'   => 'profile.character.scopes',
+    'uses' => 'ProfileController@getCharacterScopes',
+]);
+
 Route::post('/update', [
     'as'   => 'profile.update.settings',
-    'uses' => 'ProfileController@getUpdateUserSettings',
+    'uses' => 'ProfileController@postUpdateUserSettings',
 ]);
 
 Route::post('/update/email', [
@@ -35,7 +40,7 @@ Route::post('/update/email', [
     'uses' => 'ProfileController@postUpdateEmail',
 ]);
 
-Route::get('/change-character/{character_id}', [
+Route::post('/update/main-character', [
     'as'   => 'profile.change-character',
-    'uses' => 'ProfileController@getChangeCharacter',
+    'uses' => 'ProfileController@postChangeCharacter',
 ]);

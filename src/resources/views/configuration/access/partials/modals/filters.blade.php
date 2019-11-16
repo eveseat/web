@@ -12,7 +12,7 @@
           <div class="row">
             <div class="col-12">
               <div class="form-group">
-                <select id="permission-entity-lookup" class="form-control select2 w-100"></select>
+                <select id="permission-entity-lookup" class="form-control select2" style="width: 100%;"></select>
               </div>
             </div>
           </div>

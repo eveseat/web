@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
+use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\Repositories\Character\Wallet;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Financial\WalletJournalDataTable;
@@ -44,7 +45,8 @@ class WalletController extends Controller
      */
     public function journal(int $character_id, WalletJournalDataTable $dataTable)
     {
-        $characters = (User::find($character_id))->group->users;
+        $token = RefreshToken::where('character_id', $character_id)->first();
+        $characters = User::with('characters')->find($token->user_id)->characters;
 
         return $dataTable
             ->addScope(new CharacterScope('character.journal', $character_id, request()->input('characters', [])))
@@ -58,7 +60,8 @@ class WalletController extends Controller
      */
     public function transactions(int $character_id, WalletTransactionDataTable $dataTable)
     {
-        $characters = (User::find($character_id))->group->users;
+        $token = RefreshToken::where('character_id', $character_id)->first();
+        $characters = User::with('characters')->find($token->user_id)->characters;
 
         return $dataTable
             ->addScope(new CharacterScope('character.transaction', $character_id, request()->input('characters')))

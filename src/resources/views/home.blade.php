@@ -151,7 +151,7 @@
           <div class="card-header border-0">
             <div class="d-flex justify-content-between">
               <h3 class="card-title">
-                {!! img('characters', 'portrait', auth()->user()->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                {!! img('characters', 'portrait', auth()->user()->main_character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                 {{ trans('web::seat.main_char_skills', ['character_name' => auth()->user()->name]) }}
               </h3>
               <span class="text-bold text-lg">{{ trans('web::seat.main_char_skills_per_level') }}</span>
@@ -171,7 +171,7 @@
           <div class="card-header border-0">
             <div class="d-flex justify-content-between">
               <h3 class="card-title">
-                {!! img('characters', 'portrait', auth()->user()->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+                {!! img('characters', 'portrait', auth()->user()->main_character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                 {{ trans('web::seat.main_char_skills', ['character_name' => auth()->user()->name]) }}
               </h3>
               <span class="text-bold text-lg">{{ trans('web::seat.main_char_skills_coverage') }}</span>
@@ -233,7 +233,7 @@
     });
 
     if ($('canvas#skills-level').length)
-      $.get("{{ route('character.view.skills.graph.level', ['character_id' => auth()->user()->character_id]) }}", function (data) {
+      $.get("{{ route('character.view.skills.graph.level', ['character_id' => auth()->user()->main_character_id]) }}", function (data) {
         new Chart($("canvas#skills-level"), {
           type: 'pie',
           data: data
@@ -241,7 +241,7 @@
       });
 
     if ($('canvas#skills-coverage').length)
-      $.get("{{ route('character.view.skills.graph.coverage', ['character_id' => auth()->user()->character_id]) }}", function (data) {
+      $.get("{{ route('character.view.skills.graph.coverage', ['character_id' => auth()->user()->main_character_id]) }}", function (data) {
         new Chart($('canvas#skills-coverage'), {
           type   : 'radar',
           data   : data,

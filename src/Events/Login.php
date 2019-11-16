@@ -61,13 +61,13 @@ class Login
         $message = 'User logged in from ' . Request::getClientIp();
         event('security.log', [$message, 'authentication']);
 
-        if ($event->user->refresh_token()->exists()) {
+        foreach ($event->user->refresh_tokens as $token) {
 
-            // Update Character information
-            (new CharacterTokenShouldUpdate($event->user->refresh_token, 'high'))->fire();
+            // Update Character Information
+            (new CharacterTokenShouldUpdate($token, 'high'))->fire();
 
-            // Update Corporation information
-            (new CorporationTokenShouldUpdate($event->user->refresh_token, 'high'))->fire();
+            // Update Corporation Information
+            (new CorporationTokenShouldUpdate($token, 'high'))->fire();
         }
     }
 }

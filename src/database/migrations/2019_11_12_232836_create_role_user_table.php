@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2020 Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,37 +20,36 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Events;
-
-use Illuminate\Queue\SerializesModels;
-use Seat\Web\Models\Acl\Role;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 /**
- * Class UserGroupRoleRemoved.
- * @package Seat\Web\Events
+ * Class CreateRoleUserTable
  */
-class UserGroupRoleRemoved
+class CreateRoleUserTable extends Migration
 {
-    use SerializesModels;
-
     /**
-     * @var int
+     * Run the migrations.
+     *
+     * @return void
      */
-    public $group_id;
-
-    /**
-     * @var Role
-     */
-    public $role;
-
-    /**
-     * UserGroupRoleRemoved constructor.
-     * @param int $group_id
-     * @param Role $role
-     */
-    public function __construct(int $group_id, Role $role)
+    public function up()
     {
-        $this->group_id = $group_id;
-        $this->role = $role;
+        Schema::create('role_user', function (Blueprint $table) {
+            $table->integer('role_id');
+            $table->integer('user_id');
+            $table->primary(['role_id', 'user_id']);
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('user_role');
     }
 }
