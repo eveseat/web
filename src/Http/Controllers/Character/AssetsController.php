@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Services\Repositories\Character\Assets;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\User;
@@ -61,14 +62,10 @@ class AssetsController extends Controller
             $character_ids = collect($character_id);
 
         if (request('all_linked_characters') === 'true')
-            $character_ids = User::find($character_id)->group->users
-                ->filter(function ($user) {
-                    if (! $user->name === 'admin' || $user->id === 1)
-                        return false;
 
-                    return true;
-                })
-                ->pluck('id');
+            $character_ids = User::find(CharacterInfo::find($character_id)->refresh_token->user_id)
+                ->characters
+                ->pluck('character_id');
 
         $assets = $this->getCharacterAssetsBuilder($character_ids);
 

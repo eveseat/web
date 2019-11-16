@@ -71,22 +71,14 @@ class IntelController extends Controller
 
         $character_ids = collect($character_id);
 
-        $user_group = User::find($character_id)->group->users
-            ->filter(function ($user) {
-                return $user->name !== 'admin' && $user->id !== 1;
-            })
-            ->pluck('id');
+        $related_characters_ids = User::find(CharacterInfo::find($character_id)->refresh_token->user_id)
+            ->characters
+            ->pluck('character_id');
 
         if (request('all_linked_characters') === 'true')
-            $character_ids = $user_group;
+            $character_ids = $related_characters_ids;
 
         $top = $this->characterTopWalletJournalInteractions($character_ids);
-
-        $user_group = User::find($character_id)->group->users
-            ->filter(function ($user) {
-                return $user->name !== 'admin' && $user->id !== 1;
-            })
-            ->pluck('id');
 
         return DataTables::of($top)
             ->editColumn('ref_type', function ($row) {
@@ -112,7 +104,7 @@ class IntelController extends Controller
             ->addColumn('action', function ($row) {
                 return view('web::character.intel.buttons.journal', compact('row'));
             })
-            ->addColumn('is_in_group', function ($row) use ($user_group) {
+            ->addColumn('is_in_group', function ($row) use ($related_characters_ids) {
                 //return in_array($row->first_party_id, $user_group->toArray()) && in_array($row->second_party_id, $user_group->toArray());
             })
             ->rawColumns(['button'])
@@ -133,14 +125,12 @@ class IntelController extends Controller
 
         $character_ids = collect($character_id);
 
-        $user_group = User::find($character_id)->group->users
-            ->filter(function ($user) {
-                return $user->name !== 'admin' && $user->id !== 1;
-            })
-            ->pluck('id');
+        $related_characters_ids = User::find(CharacterInfo::find($character_id)->refresh_token->user_id)
+            ->characters
+            ->pluck('character_id');
 
         if (request('all_linked_characters') === 'true')
-            $character_ids = $user_group;
+            $character_ids = $related_characters_ids;
 
         $top = $this->characterTopWalletTransactionInteractions($character_ids);
 
@@ -182,14 +172,12 @@ class IntelController extends Controller
 
         $character_ids = collect($character_id);
 
-        $user_group = User::find($character_id)->group->users
-            ->filter(function ($user) {
-                return $user->name !== 'admin' && $user->id !== 1;
-            })
-            ->pluck('id');
+        $related_characters_ids = User::find(CharacterInfo::find($character_id)->refresh_token->user_id)
+            ->characters
+            ->pluck('character_id');
 
         if (request('all_linked_characters') === 'true')
-            $character_ids = $user_group;
+            $character_ids = $related_characters_ids;
 
         $top = $this->characterTopMailInteractions($character_ids);
 
