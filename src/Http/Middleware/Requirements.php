@@ -36,7 +36,7 @@ class Requirements
      * @var array
      */
     public static $extensions = [
-        'intl', 'gd', 'PDO', 'curl', 'mbstring', 'dom', 'bz2',
+        'intl', 'gd', 'PDO', 'curl', 'mbstring', 'dom', 'bz2', 'redis',
     ];
 
     /**
@@ -66,13 +66,12 @@ class Requirements
 
             return $item['loaded'] === false;
 
-        })->isEmpty()
-        )
-            return response()->view('web::requirements.extentions', compact('requirements'));
+        })->isEmpty())
+            return response()->view('web::requirements.extensions', compact('requirements'));
 
         // Check the PHP Version.
-        if (! version_compare(phpversion(), '5.5.14', '>='))
-            return view('web::requirements.phpversion');
+        if (! version_compare(phpversion(), '7.3.0', '>='))
+            return response()->view('web::requirements.phpversion');
 
         // Everything ok \o/
         return $next($request);
