@@ -18,7 +18,7 @@
 
           <div class="form-group">
             <label for="command">{{ trans('web::seat.available_commands') }}</label>
-            <select name="command" id="available_commands" class="form-control w-100">
+            <select name="command" id="available_commands" class="form-control" style="width: 100%;">
 
               @foreach($commands as $name => $data)
 
@@ -37,7 +37,7 @@
 
           <div class="form-group">
             <label for="expression">{{ trans('web::seat.cron_expression') }}</label>
-            <select name="expression" id="available_expressions" class="form-control w-100">
+            <select name="expression" id="available_expressions" class="form-control" style="width: 100%;">
 
               @foreach($expressions as $name => $expression)
 

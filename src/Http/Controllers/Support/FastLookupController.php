@@ -27,7 +27,7 @@ use Seat\Eveapi\Models\Alliances\Alliance;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Models\Group;
+use Seat\Web\Models\User;
 
 /**
  * Class FastLookupController.
@@ -37,45 +37,33 @@ class FastLookupController extends Controller
 {
     /**
      * @param \Illuminate\Http\Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getGroups(Request $request)
+    public function getUsers(Request $request)
     {
-
-        $groups = Group::whereHas('users', function ($query) use ($request) {
-            $query->where('name', 'like', '%' . $request->query('q', '') . '%');
-        })->get();
+        $users = User::with('characters')->where('name', 'like', ["%{$request->query('q', '')}%"])->get();
 
         return response()->json([
-            'results' => $groups->map(function ($group) {
-                $main_character = $group->main_character;
+            'results' => $users->map(function ($user) {
 
-                if (is_null($main_character))
-                    $main_character = $group->users->first();
+                $characters = $user->characters->sortBy(function ($character, $key) use ($user) {
+                    if ($character->character_id == $user->main_character_id)
+                        return -1;
 
-                $characters = $group->users->reject(function ($user) use ($main_character) {
-                    return $user->id === $main_character->character_id;
+                    return $character->name;
                 });
 
-                $characters->prepend($main_character);
-
                 return [
-                    'id'           => $group->id,
-                    'text'         => $characters->pluck('name'),
-                    'type'         => 'character',
-                    'character_id' => $characters->map(function ($character) {
-                        return property_exists($character, 'id') ? $character->id : $character->character_id;
-                    }),
-                    'img'          => $characters->map(function ($character) {
-                        $entity_id = property_exists($character, 'id') ? $character->id : $character->character_id;
-
-                        return img('characters', 'portrait', $entity_id, 64, ['class' => 'img-circle eve-icon small-icon'], false);
+                    'id' => $user->id,
+                    'text' => $characters->pluck('name'),
+                    'type' => 'characters',
+                    'character_id' => $characters->pluck('character_id'),
+                    'img' => $characters->map(function ($character) {
+                        return img('characters', 'portrait', $character->character_id, 64, ['class' => 'img-circle eve-icon small-icon'], false);
                     }),
                 ];
             }),
         ]);
-
     }
 
     /**

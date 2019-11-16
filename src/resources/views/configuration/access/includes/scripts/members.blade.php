@@ -3,7 +3,7 @@
     $('#member-entity-lookup').select2({
         placeholder: '{{ trans('web::seat.select_item_add') }}',
         ajax: {
-            url: '{{ route('fastlookup.groups') }}',
+            url: '{{ route('fastlookup.users') }}',
             dataType: 'json',
             cache: true,
             processResults: function (data, params) {
@@ -88,21 +88,19 @@
     //
     $(document).on('click', '#tab-members table tbody tr td button.btn-danger', function () {
       var button = $(this);
-      var group_id = button.data('groupid');
       var row = button.closest('tr');
-      var url = '{{ route('configuration.access.roles.edit.remove.group', ['role_id' => $role->id, 'group_id' => '']) }}';
 
       button.attr('disabled', 'disabled');
       row.addClass('danger');
 
       $.ajax({
-        url: url + '/' + group_id,
+        url: button.data('url'),
         method: 'DELETE'
       }).done(function () {
         row.remove();
         $('#nav-members a span.badge').text($('#tab-members table tbody tr').length)
       }).fail(function () {
-        console.error('An error occured while attempting to remove the user.');
+        console.error('An error occurred while attempting to remove the user.');
         button.removeAttr('disabled');
         row.removeClass('danger');
       });

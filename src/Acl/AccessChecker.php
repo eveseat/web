@@ -107,7 +107,7 @@ trait AccessChecker
 
         $permissions = [];
 
-        $roles = $this->group->roles()->with('permissions')->get();
+        $roles = $this->roles()->with('permissions')->get();
 
         // Go through every role...
         foreach ($roles as $role) {
@@ -172,7 +172,7 @@ trait AccessChecker
         $corporation = is_null(request()->corporation_id) ? null : CorporationInfo::find(request()->corporation_id);
 
         // retrieve only roles which contain the requested permission
-        $roles = $this->group->roles()->whereHas('permissions', function ($query) use ($array_permission) {
+        $roles = $this->roles()->whereHas('permissions', function ($query) use ($array_permission) {
             $query->whereIn('title', $array_permission);
         })->get();
 
@@ -279,7 +279,7 @@ trait AccessChecker
         // Next we move through the roles the user has
         // and populate the permissions that the affiliations
         // offer us.
-        foreach ($this->group->roles as $role) {
+        foreach ($this->roles as $role) {
 
             // A blank array for the permissions granted to
             // this role.
@@ -468,7 +468,7 @@ trait AccessChecker
         if ($this->hasSuperUser())
             return true;
 
-        foreach ($this->group->roles as $role)
+        foreach ($this->roles as $role)
             if ($role->title == $role_name)
                 return true;
 

@@ -24,9 +24,9 @@ namespace Seat\Web\Http\Controllers\Auth;
 
 use Laravel\Socialite\Contracts\Factory as Socialite;
 use Laravel\Socialite\Two\User as SocialiteUser;
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Models\Group;
 use Seat\Web\Models\User;
 
 /**
@@ -39,8 +39,7 @@ class SsoController extends Controller
      * Redirect the user to the Eve Online authentication page.
      *
      * @param \Laravel\Socialite\Contracts\Factory $social
-     *
-     * @return \Seat\Web\Http\Controllers\Auth\Response
+     * @return mixed
      * @throws \Seat\Services\Exceptions\SettingException
      */
     public function redirectToProvider(Socialite $social)
@@ -55,8 +54,7 @@ class SsoController extends Controller
      * Obtain the user information from Eve Online.
      *
      * @param \Laravel\Socialite\Contracts\Factory $social
-     *
-     * @return \Seat\Web\Http\Controllers\Auth\Response
+     * @return \Illuminate\Http\RedirectResponse
      * @throws \Seat\Services\Exceptions\SettingException
      */
     public function handleProviderCallback(Socialite $social)
@@ -70,7 +68,7 @@ class SsoController extends Controller
                 ->with('error', 'Login failed. Requested access are not matching, please try again.');
 
         // Avoid self attachment
-        if (auth()->check() && auth()->user()->id == $eve_data->character_id)
+        if (auth()->check() && auth()->user()->id == $eve_data->id)
             return redirect()->route('home')
                 ->with('error', 'You cannot add yourself. Did you forget to change character in Eve Online SSO form ?');
 
@@ -78,24 +76,14 @@ class SsoController extends Controller
         $user = $this->findOrCreateUser($eve_data);
 
         // Update the refresh token for this character.
-        $this->updateRefreshToken($eve_data);
+        $this->updateRefreshToken($eve_data, $user);
+
+        // init character_info for this character.
+        $this->updateCharacterInfo($eve_data);
 
         if (! $this->loginUser($user))
             return redirect()->route('auth.login')
                 ->with('error', 'Login failed. Please contact your administrator.');
-
-        // ensure the user got a valid group - spawn it otherwise
-        if (is_null($user->group)) {
-            Group::forceCreate([
-                'id' => $user->group_id,
-            ]);
-
-            // force laravel to update model relationship information
-            $user->load('group');
-        }
-
-        // Set the main characterID based on the response.
-        $this->updateMainCharacterId($user);
 
         return redirect()->intended();
     }
@@ -106,7 +94,7 @@ class SsoController extends Controller
      *
      * Group memberships are also managed here, ensuring that
      * characters are automatically 'linked' via a group. If
-     * an existsing, logged in session is detected, the new login
+     * an existing, logged in session is detected, the new login
      * will be associated with that sessions group. Otherwise,
      * a new group for this user will be created.
      *
@@ -117,93 +105,106 @@ class SsoController extends Controller
     private function findOrCreateUser(SocialiteUser $eve_user): User
     {
 
-        // Check if this user already exists in the database.
-        if ($existing = User::find($eve_user->character_id)) {
+        // remove all existing tokens with a different hash.
+        // in case a hash has been altered, it might be because
+        // that character has been sold.
+        RefreshToken::where('character_id', $eve_user->id)
+            ->where('character_owner_hash', '<>', $eve_user->character_owner_hash)
+            ->whereNull('deleted_at')
+            ->delete();
 
-            // If the character_owner_hash has changed, it might be that
-            // this character was transferred. We will still allow the login,
-            // but the group memberships the character had will be removed.
-            if ($existing->character_owner_hash !== $eve_user->character_owner_hash) {
+        // retrieve first account linked to a refresh token
+        // for authenticating character with the exact same hash.
+        $user = User::whereHas('refresh_tokens', function ($query) use ($eve_user) {
+            $query->where('character_id', $eve_user->id)
+                ->where('character_owner_hash', '=', $eve_user->character_owner_hash)
+                ->whereNull('deleted_at');
+        })->first();
 
-                // Update the group_id for this user based on the current
-                // session status. If there is a user already logged in,
-                // simply associate the user with a new group id. If not,
-                // a new group is generated and given to this user.
-                $existing->group_id = auth()->check() ?
-                    auth()->user()->group->id : Group::create()->id;
-
-                // Update the new character_owner_hash
-                $existing->character_owner_hash = $eve_user->character_owner_hash;
-                $existing->save();
+        // determine if the user is actually authenticated
+        // if that the case, we need to revoke found user access
+        // related to authenticating eve user.
+        if (auth()->check()) {
+            if (! is_null($user) && auth()->user()->id !== $user->id) {
+                RefreshToken::where('character_id', $eve_user->id)
+                    ->where('user_id', $user->id)
+                    ->delete();
             }
 
-            // Detect if the current session is already logged in. If
-            // it is, update the group_id for the new login to the same
-            // as the current session, thereby associating the characters.
-            if (auth()->check()) {
-
-                // Log the association update
-                event('security.log', [
-                    'Updating ' . $existing->name . ' to be part of ' . auth()->user()->name,
-                    'authentication',
-                ]);
-
-                // Re-associate the group membership for the newly logged in user.
-                $existing->group_id = auth()->user()->group->id;
-                $existing->save();
-
-                // Remove any orphan groups we could create during the attachment process
-                Group::doesntHave('users')->delete();
-
-            }
-
-            return $existing;
+            $user = auth()->user();
         }
+
+        if ($user)
+            return $user;
 
         // Log the new account creation
         event('security.log', [
             'Creating new account for ' . $eve_user->name, 'authentication',
         ]);
 
-        // Detect if the current session is already logged in. If
-        // it is, update the group_id for the new login to the same
-        // as the current session, thereby associating the characters.
-        if (auth()->check()) {
+        // Generate a new bucket User and use the authenticating character as main.
+        $user = new User();
+        $user->main_character_id = $eve_user->id;
+        $user->name = $eve_user->name;
+        $user->active = true;
+        $user->save();
 
-            // Log the association update
-            event('security.log', [
-                'Updating ' . $eve_user->name . ' to be part of ' . auth()->user()->name,
-                'authentication',
-            ]);
-        }
-
-        return User::forceCreate([  // Only because I don't want to set id as fillable
-            'id'                   => $eve_user->character_id,
-            'group_id'             => auth()->check() ?
-                auth()->user()->group->id : Group::create()->id,
-            'name'                 => $eve_user->name,
-            'active'               => true,
-            'character_owner_hash' => $eve_user->character_owner_hash,
-        ]);
+        return User::where('main_character_id',$eve_user->id)
+            ->first();
     }
 
     /**
-     * @param \Laravel\Socialite\Two\User $eve_data
+     * @param \Laravel\Socialite\Two\User $eve_user
+     * @param \Seat\Web\Models\User $seat_user
      */
-    public function updateRefreshToken(SocialiteUser $eve_data): void
+    public function updateRefreshToken(SocialiteUser $eve_user, User $seat_user): void
     {
 
-        RefreshToken::withTrashed()->firstOrNew(['character_id' => $eve_data->character_id])
-            ->fill([
-                'refresh_token' => $eve_data->refresh_token,
-                'scopes'        => explode(' ', $eve_data->scopes),
-                'token'         => $eve_data->token,
-                'expires_on'    => $eve_data->expires_on,
-            ])
-            ->save();
+        RefreshToken::withTrashed()->firstOrNew([
+            'character_id'         => $eve_user->id,
+            'character_owner_hash' => $eve_user->character_owner_hash
+        ])->fill([
+            'user_id'       => $seat_user->id,
+            'refresh_token' => $eve_user->refreshToken,
+            'scopes'        => explode(' ', $eve_user->scopes),
+            'token'         => $eve_user->token,
+            'expires_on'    => $eve_user->expires_on,
+        ])->save();
 
         // restore soft deleted token if any
-        RefreshToken::onlyTrashed()->where('character_id', $eve_data->character_id)->restore();
+        RefreshToken::onlyTrashed()
+            ->where('character_id', $eve_user->id)
+            ->where('user_id', $seat_user->id)
+            ->restore();
+    }
+
+    /**
+     * @param \Laravel\Socialite\Two\User $eve_user
+     */
+    private function updateCharacterInfo(SocialiteUser $eve_user)
+    {
+        $eseye = app('esi-client')->get();
+
+        $eseye->setVersion('v4');
+        $character = $eseye->invoke('get', '/characters/{character_id}/', [
+            'character_id' => $eve_user->id,
+        ]);
+
+        CharacterInfo::firstOrNew([
+            'character_id' => $eve_user->id,
+        ])->fill([
+            'name'            => $character->name,
+            'description'     => $character->optional('description'),
+            'corporation_id'  => $character->corporation_id,
+            'alliance_id'     => $character->optional('alliance_id'),
+            'birthday'        => $character->birthday,
+            'gender'          => $character->gender,
+            'race_id'         => $character->race_id,
+            'bloodline_id'    => $character->bloodline_id,
+            'ancestry_id'     => $character->optional('ancestry_id'),
+            'security_status' => $character->optional('security_status'),
+            'faction_id'      => $character->optional('faction_id'),
+        ])->save();
     }
 
     /**
@@ -236,20 +237,5 @@ class SsoController extends Controller
         auth()->login($user, true);
 
         return true;
-    }
-
-    /**
-     * Set the main character_id for a group if it is
-     * not already set.
-     *
-     * @param \Seat\Web\Models\User $user
-     *
-     * @throws \Seat\Services\Exceptions\SettingException
-     */
-    private function updateMainCharacterId(User $user)
-    {
-
-        if (setting('main_character_id') == 0)
-            setting(['main_character_id', $user->character_id]);
     }
 }

@@ -25,6 +25,7 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Mail\MailHeader;
+use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\Repositories\Character\Mail;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Intel\MailDataTable;
@@ -46,7 +47,8 @@ class MailController extends Controller
      */
     public function index(int $character_id, MailDataTable $dataTable)
     {
-        $characters = (User::find($character_id))->group->users;
+        $token = RefreshToken::where('character_id', $character_id)->first();
+        $characters = User::with('characters')->find($token->user_id)->characters;
 
         return $dataTable
             ->addScope(new CharacterMailScope($character_id, request()->input('characters', [])))

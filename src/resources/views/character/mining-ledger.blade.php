@@ -11,12 +11,12 @@
     </div>
     <div class="card-body">
       <div class="mb-3">
-        <select multiple="multiple" id="dt-character-selector" class="form-control">
+        <select multiple="multiple" id="dt-character-selector" class="form-control" style="width: 100%;">
           @foreach($characters as $character)
-            @if($character->id == $request->character_id)
-              <option selected="selected" value="{{ $character->id }}">{{ $character->name }}</option>
+            @if($character->character_id == $request->character_id)
+              <option selected="selected" value="{{ $character->character_id }}">{{ $character->name }}</option>
             @else
-              <option value="{{ $character->id }}">{{ $character->name }}</option>
+              <option value="{{ $character->character_id }}">{{ $character->name }}</option>
             @endif
           @endforeach
         </select>

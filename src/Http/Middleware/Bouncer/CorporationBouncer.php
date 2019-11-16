@@ -49,12 +49,11 @@ class CorporationBouncer
 
         // Check on the clipboard if this permission
         // should be granted.
-        if (auth()->user()->has('corporation.' . $permission))
+        if (auth()->user()->has(sprintf('corporation.%s', $permission)))
             return $next($request);
 
-        $message = 'Request to ' . $request->path() . ' was ' .
-            'denied by the corporationbouncer. The permission required is ' .
-            'corporation.' . $permission . '.';
+        $message = sprintf('Request to %s was denied by the corporation bouncer. ' .
+            'The permission required is corporation.%s.', $request->path(), $permission);
 
         event('security.log', [$message, 'authorization']);
 

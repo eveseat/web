@@ -22,27 +22,22 @@
 
 Route::get('/', [
     'as'   => 'configuration.users',
-    'uses' => 'UserController@getAll',
+    'uses' => 'UserController@index',
 ]);
 
-Route::post('/update', [
-    'as'   => 'configuration.access.users.update',
-    'uses' => 'UserController@updateUser',
-]);
-
-Route::post('/reassign', [
-    'as'   => 'configuration.access.users.reassign',
-    'uses' => 'UserController@postReassignuser',
-]);
-
-Route::get('/delete/{user_id}', [
-    'as'   => 'configuration.users.delete',
-    'uses' => 'UserController@deleteUser',
-]);
-
-Route::get('/edit/{user_id}', [
+Route::get('/{user_id}', [
     'as'   => 'configuration.users.edit',
-    'uses' => 'UserController@editUser',
+    'uses' => 'UserController@edit',
+]);
+
+Route::put('/{user_id}', [
+    'as'   => 'configuration.users.update',
+    'uses' => 'UserController@update',
+]);
+
+Route::delete('/{user_id}', [
+    'as'   => 'configuration.users.delete',
+    'uses' => 'UserController@delete',
 ]);
 
 Route::get('/edit/{user_id}/account_status', [
@@ -50,7 +45,7 @@ Route::get('/edit/{user_id}/account_status', [
     'uses' => 'UserController@editUserAccountStatus',
 ]);
 
-Route::get('/impersonate/{user_id}', [
+Route::post('/{user_id}/impersonate', [
     'as'   => 'configuration.users.impersonate',
     'uses' => 'UserController@impersonate',
 ]);

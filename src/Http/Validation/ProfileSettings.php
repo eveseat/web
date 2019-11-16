@@ -49,7 +49,6 @@ class ProfileSettings extends FormRequest
         $allowed_main_character_ids = auth()->user()->associatedCharacterIds()->implode(',');
         $allowed_skins = implode(',', Profile::$options['skins']);
         $allowed_languages = implode(',', array_map(function ($entry) {
-
             return $entry['short'];
         }, config('web.locale.languages')));
         $allowed_sidebar = implode(',', Profile::$options['sidebar']);

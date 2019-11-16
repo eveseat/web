@@ -20,41 +20,39 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\Controllers\Auth;
+namespace Seat\Web\Events;
 
-use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Models\User;
+use Illuminate\Queue\SerializesModels;
+use Seat\Web\Models\Acl\Role;
 
 /**
- * Class EmailController.
- * @package Seat\Web\Http\Controllers\Auth
+ * Class UserRoleAdded
+ *
+ * @package Seat\Web\Events
  */
-class EmailController extends Controller
+class UserRoleAdded
 {
+    use SerializesModels;
+
     /**
-     * @param $token
+     * @var int
+     */
+    public $user_id;
+
+    /**
+     * @var Role
+     */
+    public $role;
+
+    /**
+     * UserRoleAdded constructor.
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @param int $user_id
+     * @param \Seat\Web\Models\Acl\Role $role
      */
-    public function confirmEmail($token)
+    public function __construct(int $user_id, Role $role)
     {
-
-        $user = User::whereActivationToken($token)->firstOrFail();
-        $user->confirmEmail();
-
-        auth()->login($user);
-
-        return redirect()->intended()
-            ->with('success', 'Email verified!');
-
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getEmailRequired()
-    {
-
-        return view('web::auth.email');
+        $this->user_id = $user_id;
+        $this->role = $role;
     }
 }

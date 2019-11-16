@@ -32,7 +32,7 @@
           <div class="col-12">
             <div class="form-group">
               <label for="available_scopes">{{ trans('web::seat.available_scopes') }}</label>
-              <select name="scopes[]" id="available_scopes" class="form-control select2 w-100"
+              <select name="scopes[]" id="available_scopes" class="form-control select2" style="width: 100%;"
                       multiple="multiple" data-placeholder="{{ trans('web::seat.select_item_add') }}">
 
                 @foreach(config('eveapi.scopes') as $scope)
