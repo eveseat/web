@@ -66,7 +66,7 @@
       @foreach($material->first()->type->reactions->groupBy('typeID')->flatten() as $reaction)
         <tr>
           <td>
-            @include('web::partials.type', ['type_id' => $reaction->typeID, 'type_name' => $reaction->typeName])
+            @include('web::partials.type', ['type_id' => $reaction->typeID, 'type_name' => $reaction->typeName, 'variation' => 'reaction'])
           </td>
           <td>{{ number_format($reaction->pivot->quantity) }}</td>
           <td>{{ number_format($reaction->pivot->quantity * $reaction->volume, 2) }}</td>
