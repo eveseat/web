@@ -88,7 +88,7 @@ class MarketController extends Controller
 
                 $character = CharacterInfo::find($row->issued_by) ?: $row->issued_by;
 
-                return view('web::partials.character', compact('character', 'character_id'));
+                return view('web::partials.character', compact('character'));
             })
             ->filterColumn('issued_by', function ($query, $keyword) {
 
