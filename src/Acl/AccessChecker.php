@@ -428,11 +428,11 @@ trait AccessChecker
                 'corporation.summary',
                 'corporation.tracking',
             ],
-            'Director'          => ['corporation.*'],   // All roles for you!
+            'Director'          => [
+                'corporation.*', // All roles for you!
+            ],
             'Junior_Accountant' => [
                 'corporation.summary',
-                'corporation.journal',
-                'corporation.transactions',
             ],
             'Security_Officer'  => [
                 'corporation.summary',
