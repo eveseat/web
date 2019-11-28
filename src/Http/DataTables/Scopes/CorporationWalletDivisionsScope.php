@@ -40,9 +40,9 @@ class CorporationWalletDivisionsScope implements DataTableScope
     private $divisions = [];
 
     /**
-     * CorporationScope constructor.
+     * CorporationWalletDivisionsScope constructor.
      *
-     * @param array $corporation_ids
+     * @param array $divisions
      */
     public function __construct(array $divisions)
     {

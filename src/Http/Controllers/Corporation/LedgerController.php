@@ -38,8 +38,7 @@ class LedgerController extends Controller
     use Wallet;
 
     /**
-     * @param $corporation_id
-     *
+     * @param int $corporation_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getWalletSummary(int $corporation_id)
@@ -52,13 +51,12 @@ class LedgerController extends Controller
     }
 
     /**
-     * @param      $corporation_id
-     * @param null $year
-     * @param null $month
-     *
+     * @param int $corporation_id
+     * @param int|null $year
+     * @param int|null $month
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getBountyPrizesByMonth(int $corporation_id, $year = null, $month = null)
+    public function getBountyPrizesByMonth(int $corporation_id, ?int $year, ?int $month)
     {
 
         $year = is_null($year) ? date('Y') : $year;
@@ -72,13 +70,12 @@ class LedgerController extends Controller
     }
 
     /**
-     * @param      $corporation_id
-     * @param null $year
-     * @param null $month
-     *
+     * @param int $corporation_id
+     * @param int|null $year
+     * @param int|null $month
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getPlanetaryInteractionByMonth(int $corporation_id, $year = null, $month = null)
+    public function getPlanetaryInteractionByMonth(int $corporation_id, ?int $year, ?int $month)
     {
 
         $year = is_null($year) ? date('Y') : $year;
@@ -97,7 +94,7 @@ class LedgerController extends Controller
      * @param int|null $month
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getOfficesRentalsByMonth(int $corporation_id, ?int $year = null, ?int $month = null)
+    public function getOfficesRentalsByMonth(int $corporation_id, ?int $year, ?int $month)
     {
         $year = is_null($year) ? date('Y') : $year;
         $month = is_null($month) ? date('m') : $month;
@@ -115,7 +112,7 @@ class LedgerController extends Controller
      * @param int|null $month
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getIndustryFacilityByMonth(int $corporation_id, ?int $year = null, ?int $month = null)
+    public function getIndustryFacilityByMonth(int $corporation_id, ?int $year, ?int $month)
     {
         $year = is_null($year) ? date('Y') : $year;
         $month = is_null($month) ? date('m') : $month;
@@ -133,7 +130,7 @@ class LedgerController extends Controller
      * @param int|null $month
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getReprocessingByMonth(int $corporation_id, ?int $year = null, ?int $month = null)
+    public function getReprocessingByMonth(int $corporation_id, ?int $year, ?int $month)
     {
         $year = is_null($year) ? date('Y') : $year;
         $month = is_null($month) ? date('m') : $month;
@@ -151,7 +148,7 @@ class LedgerController extends Controller
      * @param int|null $month
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getJumpClonesByMonth(int $corporation_id, ?int $year = null, ?int $month = null)
+    public function getJumpClonesByMonth(int $corporation_id, ?int $year, ?int $month)
     {
         $year = is_null($year) ? date('Y') : $year;
         $month = is_null($month) ? date('m') : $month;
@@ -169,7 +166,7 @@ class LedgerController extends Controller
      * @param int|null $month
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getJumpBridgesByMonth(int $corporation_id, ?int $year = null, ?int $month = null)
+    public function getJumpBridgesByMonth(int $corporation_id, ?int $year, ?int $month)
     {
         $year = is_null($year) ? date('Y') : $year;
         $month = is_null($month) ? date('m') : $month;

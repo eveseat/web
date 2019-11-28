@@ -30,9 +30,8 @@ abstract class AbstractMenu
     /**
      * Bind data to the view.
      *
-     * @param  View $view
-     *
-     * @return void
+     * @param \Illuminate\Contracts\View\View $view
+     * @return mixed
      */
     abstract public function compose(View $view);
 
@@ -48,14 +47,13 @@ abstract class AbstractMenu
      * 'package.sidebar' namespace. The structure of these
      * menus can be seen in the SeAT Wiki.
      *
-     * @param $package_name
-     * @param $menu_data
-     * @param $require_affiliation bool True if the menu is requiring affiliation
-     *
-     * @return array
+     * @param string $package_name
+     * @param array $menu_data
+     * @param bool $require_affiliation
+     * @return array|null
      * @throws \Seat\Web\Exceptions\PackageMenuBuilderException
      */
-    public function load_plugin_menu($package_name, $menu_data, bool $require_affiliation = false)
+    public function load_plugin_menu(string $package_name, array $menu_data, bool $require_affiliation = false): ?array
     {
 
         // Validate the package menu
@@ -85,12 +83,11 @@ abstract class AbstractMenu
     /**
      * The actual menu validation logic.
      *
-     * @param $package_name
-     * @param $menu_data
-     *
+     * @param string $package_name
+     * @param array $menu_data
      * @throws \Seat\Web\Exceptions\PackageMenuBuilderException
      */
-    public function validate_menu($package_name, $menu_data)
+    public function validate_menu(string $package_name, array $menu_data)
     {
 
         if (! is_string($package_name))

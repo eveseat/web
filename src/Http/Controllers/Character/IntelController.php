@@ -48,8 +48,7 @@ class IntelController extends Controller
 
     /**
      * @param int $character_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getIntelSummary(int $character_id)
     {
@@ -60,8 +59,6 @@ class IntelController extends Controller
 
     /**
      * @param int $character_id
-     *
-     * @return mixed
      * @throws \Exception
      */
     public function getTopWalletJournalData(int $character_id)
@@ -104,9 +101,6 @@ class IntelController extends Controller
             ->addColumn('action', function ($row) {
                 return view('web::character.intel.buttons.journal', compact('row'));
             })
-            ->addColumn('is_in_group', function ($row) use ($related_characters_ids) {
-                //return in_array($row->first_party_id, $user_group->toArray()) && in_array($row->second_party_id, $user_group->toArray());
-            })
             ->rawColumns(['button'])
             ->make(true);
 
@@ -114,8 +108,6 @@ class IntelController extends Controller
 
     /**
      * @param int $character_id
-     *
-     * @return mixed
      * @throws \Exception
      */
     public function getTopTransactionsData(int $character_id)
@@ -146,7 +138,6 @@ class IntelController extends Controller
             ->editColumn('alliance.name', function ($row) {
 
                 return view('web::partials.alliance', ['alliance' => $row->alliance]);
-                    //. view('web::character.intel.partials.transactioncontentbutton', compact('row'));
             })
             ->editColumn('faction.name', function ($row) {
 
@@ -161,8 +152,6 @@ class IntelController extends Controller
 
     /**
      * @param int $character_id
-     *
-     * @return mixed
      * @throws \Exception
      */
     public function getTopMailFromData(int $character_id)
@@ -193,7 +182,6 @@ class IntelController extends Controller
             ->editColumn('alliance.name', function ($row) {
 
                 return view('web::partials.alliance', ['alliance' => $row->alliance]);
-                    //. view('web::character.intel.partials.mailcontentbutton', compact('row'));
             })
             ->editColumn('faction.name', function ($row) {
 
@@ -207,8 +195,7 @@ class IntelController extends Controller
 
     /**
      * @param int $character_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getStandingsComparison(int $character_id)
     {
@@ -221,8 +208,7 @@ class IntelController extends Controller
     /**
      * @param int $character_id
      * @param int $profile_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|View
+     * @return mixed
      * @throws \Exception
      */
     public function getCompareStandingsWithProfileData(int $character_id, int $profile_id)
@@ -261,9 +247,9 @@ class IntelController extends Controller
     }
 
     /**
+     * @param int $character_id
      * @param int $first_party_id
      * @param int $second_party_id
-     *
      * @return mixed
      * @throws \Exception
      */
@@ -342,7 +328,6 @@ class IntelController extends Controller
     /**
      * @param int $character_id
      * @param int $client_id
-     *
      * @return mixed
      * @throws \Exception
      */
@@ -398,7 +383,6 @@ class IntelController extends Controller
     /**
      * @param int $character_id
      * @param int $from
-     *
      * @return mixed
      * @throws \Exception
      */

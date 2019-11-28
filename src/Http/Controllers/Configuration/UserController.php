@@ -49,11 +49,10 @@ class UserController extends Controller
     }
 
     /**
-     * @param $user_id
-     *
-     * @return \Illuminate\View\View
+     * @param int $user_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit($user_id)
+    public function edit(int $user_id)
     {
 
         $user = $this->getFullUser($user_id);
@@ -67,8 +66,7 @@ class UserController extends Controller
 
     /**
      * @param \Seat\Web\Http\Validation\EditUser $request
-     *
-     * @return mixed
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(EditUser $request)
     {
@@ -99,11 +97,10 @@ class UserController extends Controller
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @param                          $user_id
-     *
-     * @return mixed
+     * @param int $user_id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function delete(Request $request, $user_id)
+    public function delete(Request $request, int $user_id)
     {
 
         if ($request->user()->id == $user_id)
@@ -118,11 +115,10 @@ class UserController extends Controller
     }
 
     /**
-     * @param $user_id
-     *
-     * @return mixed
+     * @param int $user_id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function editUserAccountStatus($user_id)
+    public function editUserAccountStatus(int $user_id)
     {
 
         $this->flipUserAccountStatus($user_id);
@@ -132,11 +128,10 @@ class UserController extends Controller
     }
 
     /**
-     * @param $user_id
-     *
-     * @return mixed
+     * @param int $user_id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function impersonate($user_id)
+    public function impersonate(int $user_id)
     {
 
         // Store the original user in the session

@@ -222,10 +222,10 @@ class AccessController extends Controller
     }
 
     /**
-     * @param $role_id
-     * @param $user_id
+     * @param int $role_id
+     * @param int $user_id
      */
-    public function removeUser($role_id, $user_id)
+    public function removeUser(int $role_id, int $user_id)
     {
         $this->removeUserFromRole($user_id, $role_id);
     }

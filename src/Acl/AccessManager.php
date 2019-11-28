@@ -103,11 +103,11 @@ trait AccessManager
     /**
      * Give a role many permissions.
      *
-     * @param       $role_id
+     * @param int   $role_id
      * @param array $permissions
      * @param bool  $inverse
      */
-    public function giveRolePermissions($role_id, array $permissions, bool $inverse)
+    public function giveRolePermissions(int $role_id, array $permissions, bool $inverse)
     {
 
         foreach ($permissions as $key => $permission_name)

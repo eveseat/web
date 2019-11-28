@@ -79,7 +79,7 @@ class Role extends Model
     /**
      * Return the logo url-encoded.
      *
-     * @param $value
+     * @param mixed $value
      * @return string
      */
     public function getLogoAttribute($value): string
@@ -96,7 +96,7 @@ class Role extends Model
     /**
      * Store the file into blob attribute using url-encoding.
      *
-     * @param $value
+     * @param mixed $value
      */
     public function setLogoAttribute($value)
     {
@@ -110,7 +110,7 @@ class Role extends Model
     /**
      * Generating an empty image canvas.
      *
-     * @return Image
+     * @return \Intervention\Image\Image
      */
     private function generateEmptyImage()
     {
