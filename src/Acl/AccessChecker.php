@@ -502,7 +502,7 @@ trait AccessChecker
 
         if (request()->character_id) {
             $character = CharacterInfo::find(request()->character_id);
-            $corporation_id = $character ? $character->corporation_id : null;
+            $corporation_id = $character ? $character->affiliation->corporation_id : null;
         }
 
         if (is_null($corporation_id))
@@ -577,7 +577,7 @@ trait AccessChecker
         }
 
         return [
-            $this->character->corporation_id => $permissions,
+            $this->character->affiliation->corporation_id => $permissions,
         ];
     }
 }

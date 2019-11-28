@@ -44,11 +44,17 @@ class CharacterDataTable extends DataTable
                 return view('web::partials.character', ['character' => $row]);
             })
             ->editColumn('corporation.name', function ($row) {
-                return view('web::partials.corporation', ['corporation' => $row->corporation]);
+                return view('web::partials.corporation', ['corporation' => $row->affiliation->corporation]);
             })
             ->editColumn('alliance.name', function ($row) {
-                if (! is_null($row->alliance_id))
-                    return view('web::partials.alliance', ['alliance' => $row->alliance]);
+                if (! is_null($row->affiliation->alliance_id))
+                    return view('web::partials.alliance', ['alliance' => $row->affiliation->alliance]);
+
+                return '';
+            })
+            ->editColumn('faction.name', function ($row) {
+                if (! is_null($row->affiliation->faction_id))
+                    return view('web::partials.faction', ['faction' => $row->affiliation->faction]);
 
                 return '';
             })
@@ -74,7 +80,7 @@ class CharacterDataTable extends DataTable
      */
     public function query()
     {
-        return CharacterInfo::with('corporation', 'alliance');
+        return CharacterInfo::with('affiliation', 'affiliation.corporation', 'affiliation.alliance', 'affiliation.faction');
     }
 
     /**
@@ -86,6 +92,7 @@ class CharacterDataTable extends DataTable
             ['data' => 'name', 'title' => trans_choice('web::seat.name', 1)],
             ['data' => 'corporation.name', 'title' => trans_choice('web::seat.corporation', 1)],
             ['data' => 'alliance.name', 'title' => trans('web::seat.alliance')],
+            ['data' => 'faction.name', 'title' => trans('web::seat.faction')],
             ['data' => 'security_status', 'title' => trans('web::seat.security_status')],
         ];
     }
