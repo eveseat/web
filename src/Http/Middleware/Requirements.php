@@ -70,7 +70,7 @@ class Requirements
             return response()->view('web::requirements.extensions', compact('requirements'));
 
         // Check the PHP Version.
-        if (! version_compare(phpversion(), '7.3.0', '>='))
+        if (! version_compare(phpversion(), '7.2.0', '>='))
             return response()->view('web::requirements.phpversion');
 
         // Everything ok \o/
