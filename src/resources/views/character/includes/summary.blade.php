@@ -17,7 +17,7 @@
     </h3>
 
     <p class="text-muted text-center">
-      <span class="id-to-name" data-id="{{ $summary->corporation_id }}">{{ trans('web::seat.unknown') }}</span>
+      @include('web::partials.corporation', ['corporation' => $summary->affiliation->corporation])
     </p>
 
     <ul class="list-group list-group-unbordered mb-3">
@@ -33,7 +33,7 @@
               {{ $character->name }}
             </a>
 
-            <span class="id-to-name text-muted float-right" data-id="{{ is_null($character->character) ? 0 : $character->character->corporation_id }}">{{ trans('web::seat.unknown') }}</span>
+            <span class="id-to-name text-muted float-right" data-id="{{ $character->affiliation->corporation_id }}">{{ $character->affiliation->corporation->name }}</span>
           </li>
 
         @endif

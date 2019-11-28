@@ -24,6 +24,7 @@ namespace Seat\Web\Http\Controllers\Auth;
 
 use Laravel\Socialite\Contracts\Factory as Socialite;
 use Laravel\Socialite\Two\User as SocialiteUser;
+use Seat\Eveapi\Models\Character\CharacterAffiliation;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Http\Controllers\Controller;
@@ -185,8 +186,7 @@ class SsoController extends Controller
     {
         $eseye = app('esi-client')->get();
 
-        $eseye->setVersion('v4');
-        $character = $eseye->invoke('get', '/characters/{character_id}/', [
+        $character = $eseye->setVersion('v4')->invoke('get', '/characters/{character_id}/', [
             'character_id' => $eve_user->id,
         ]);
 
@@ -195,15 +195,24 @@ class SsoController extends Controller
         ])->fill([
             'name'            => $character->name,
             'description'     => $character->optional('description'),
-            'corporation_id'  => $character->corporation_id,
-            'alliance_id'     => $character->optional('alliance_id'),
             'birthday'        => $character->birthday,
             'gender'          => $character->gender,
             'race_id'         => $character->race_id,
             'bloodline_id'    => $character->bloodline_id,
             'ancestry_id'     => $character->optional('ancestry_id'),
             'security_status' => $character->optional('security_status'),
-            'faction_id'      => $character->optional('faction_id'),
+        ])->save();
+
+        $affiliation = $eseye->setVersion('v1')->setBody([
+            $eve_user->id,
+        ])->invoke('/post', '/characters/affiliation');
+
+        CharacterAffiliation::firstOrNew([
+            'character_id' => $eve_user->id,
+        ])->fill([
+            'corporation_id' => $affiliation->corporation_id,
+            'alliance_id' => $affiliation->optional('alliance_id'),
+            'faction_id' => $affiliation->optional('faction_id'),
         ])->save();
     }
 
