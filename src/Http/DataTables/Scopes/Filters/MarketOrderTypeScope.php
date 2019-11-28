@@ -42,7 +42,7 @@ class MarketOrderTypeScope implements DataTableScope
     /**
      * MarketOrderTypeScope constructor.
      *
-     * @param array $corporation_ids
+     * @param array|null $order_type
      */
     public function __construct(?array $order_type)
     {

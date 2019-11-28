@@ -40,9 +40,9 @@ class MarketStatusScope implements DataTableScope
     private $status = [];
 
     /**
-     * MarketOrderTypeScope constructor.
+     * MarketStatusScope constructor.
      *
-     * @param array $corporation_ids
+     * @param array|null $status
      */
     public function __construct(?array $status)
     {

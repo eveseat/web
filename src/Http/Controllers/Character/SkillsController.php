@@ -37,9 +37,8 @@ class SkillsController extends Controller
     use EveRepository;
 
     /**
-     * @param $character_id
-     *
-     * @return \Illuminate\View\View
+     * @param int $character_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getSkills(int $character_id)
     {
@@ -52,8 +51,7 @@ class SkillsController extends Controller
     }
 
     /**
-     * @param $character_id
-     *
+     * @param int $character_id
      * @return \Illuminate\Http\JsonResponse
      */
     public function getCharacterSkillsLevelChartData(int $character_id)
@@ -86,11 +84,10 @@ class SkillsController extends Controller
     }
 
     /**
-     * @param $character_id
-     *
+     * @param int $character_id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getCharacterSkillsCoverageChartData($character_id)
+    public function getCharacterSkillsCoverageChartData(int $character_id)
     {
 
         if ($character_id == 1) {
@@ -125,7 +122,7 @@ class SkillsController extends Controller
 
     /**
      * @param int $character_id
-     * @return mixed
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
     public function export(int $character_id)
     {

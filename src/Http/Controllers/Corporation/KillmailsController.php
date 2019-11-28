@@ -36,9 +36,9 @@ class KillmailsController extends Controller
     use Killmails;
 
     /**
-     * @param $corporation_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param int $corporation_id
+     * @param \Seat\Web\Http\DataTables\Corporation\Military\KillMailDataTable $dataTable
+     * @return mixed
      */
     public function index(int $corporation_id, KillMailDataTable $dataTable)
     {

@@ -31,7 +31,7 @@ use Illuminate\Database\Eloquent\Model;
 class StandingsProfileStanding extends Model
 {
     /**
-     * @var array
+     * @var string
      */
     protected $table = 'standings_profile_standings';
 

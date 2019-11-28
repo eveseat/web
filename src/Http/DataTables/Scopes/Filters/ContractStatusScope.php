@@ -48,7 +48,7 @@ class ContractStatusScope implements DataTableScope
     {
         $this->status = collect($status ?: [])->map(function ($item) {
             return explode('|', $item);
-        })->flatten();
+        })->flatten()->toArray();
     }
 
     /**

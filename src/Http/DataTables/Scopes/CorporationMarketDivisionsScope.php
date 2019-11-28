@@ -40,9 +40,9 @@ class CorporationMarketDivisionsScope implements DataTableScope
     private $divisions = [];
 
     /**
-     * CorporationScope constructor.
+     * CorporationMarketDivisionsScope constructor.
      *
-     * @param array $corporation_ids
+     * @param array $divisions
      */
     public function __construct(array $divisions)
     {

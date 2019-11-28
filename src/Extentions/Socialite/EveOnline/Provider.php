@@ -46,7 +46,7 @@ class Provider extends AbstractProvider
     /**
      * Get the User instance for the authenticated user.
      *
-     * @return \Laravel\Socialite\Contracts\User
+     * @return \SocialiteProviders\Manager\OAuth2\User
      */
     public function user()
     {
@@ -109,10 +109,12 @@ class Provider extends AbstractProvider
      * Map the raw user array to a Socialite User instance.
      *
      * @param array $user
-     * @return \Laravel\Socialite\Two\User
+     * @return mixed
      */
     protected function mapUserToObject(array $user)
     {
+        $avatar = asset('img/evewho.png');
+
         try {
             $avatar = (new Eve('characters', 'portrait', $user['CharacterID'], 128))->url(128);
         } catch (EveImageException $e) {

@@ -37,9 +37,8 @@ class AssetsController extends Controller
     use Assets;
 
     /**
-     * @param $character_id
-     *
-     * @return \Illuminate\View\View
+     * @param int $character_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getAssetsView(int $character_id)
     {
@@ -49,8 +48,6 @@ class AssetsController extends Controller
 
     /**
      * @param int $character_id
-     *
-     * @return mixed
      * @throws \Exception
      */
     public function getCharacterAssets(int $character_id)
@@ -58,8 +55,7 @@ class AssetsController extends Controller
         if (! request()->has('all_linked_characters'))
             return abort(500);
 
-        if (request('all_linked_characters') === 'false')
-            $character_ids = collect($character_id);
+        $character_ids = collect($character_id);
 
         if (request('all_linked_characters') === 'true')
 

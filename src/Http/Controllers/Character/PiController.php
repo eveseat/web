@@ -30,8 +30,7 @@ class PiController extends Controller
     use Pi;
 
     /**
-     * @param $character_id
-     *
+     * @param int $character_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getPi(int $character_id)

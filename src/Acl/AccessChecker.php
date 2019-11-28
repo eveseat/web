@@ -68,7 +68,7 @@ trait AccessChecker
      * the ACL logic. It's sole purpose is to ensure that
      * a logged in user has a specific permission.
      *
-     * @param      $permission
+     * @param string|array $permission
      * @param bool $need_affiliation
      *
      * @return bool
@@ -129,7 +129,7 @@ trait AccessChecker
      * Check if a user has the permission, ignoring
      * affiliation completely.
      *
-     * @param $permission
+     * @param string|array $permission
      *
      * @return bool
      */
@@ -146,8 +146,7 @@ trait AccessChecker
      * *and* has the requested permission on that
      * affiliation.
      *
-     * @param $requested_permission
-     *
+     * @param string|array $requested_permission
      * @return bool
      * @throws \Seat\Web\Exceptions\BouncerException
      */
@@ -458,11 +457,11 @@ trait AccessChecker
      * Determine if the current user has a specific
      * role.
      *
-     * @param $role_name
+     * @param string $role_name
      *
      * @return bool
      */
-    public function hasRole($role_name)
+    public function hasRole(string $role_name)
     {
 
         if ($this->hasSuperUser())
@@ -517,9 +516,9 @@ trait AccessChecker
     /**
      * Determine if the requested entity is granted by a permission filter.
      *
-     * @param string $permission
+     * @param \Seat\Web\Models\Acl\Permission $permission
      * @param stdClass $filters
-     * @param $entity
+     * @param mixed $entity
      * @return bool
      */
     private function isGrantedByFilters(Permission $permission, stdClass $filters, $entity): bool

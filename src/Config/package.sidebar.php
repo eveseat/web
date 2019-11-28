@@ -38,7 +38,7 @@ return [
             [
                 'name'  => 'all corporations',
                 'label' => 'web::seat.all_corp',
-                'icon'  => 'fas fa-users',
+                'icon'  => 'fas fa-hotel',
                 'route' => 'corporation.list',
             ],
         ],

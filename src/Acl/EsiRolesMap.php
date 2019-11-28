@@ -59,8 +59,6 @@ class EsiRolesMap
         ],
         'Junior_Accountant' => [
             'corporation.summary',
-            'corporation.journal',
-            'corporation.transaction',
         ],
         'Security_Officer'  => [
             'corporation.summary',
