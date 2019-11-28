@@ -35,8 +35,7 @@ class AssetsController extends Controller
     use Assets, Divisions;
 
     /**
-     * @param $corporation_id
-     *
+     * @param int $corporation_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getAssets(int $corporation_id)
@@ -51,7 +50,6 @@ class AssetsController extends Controller
     /**
      * @param int $corporation_id
      * @param int $item_id
-     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getAssetsContents(int $corporation_id, int $item_id)

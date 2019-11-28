@@ -34,9 +34,8 @@ class SummaryController extends Controller
     use Wallet;
 
     /**
-     * @param $corporation_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param int $corporation_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function show(int $corporation_id)
     {

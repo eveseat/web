@@ -62,7 +62,7 @@ class Affiliation extends Model
     }
 
     /**
-     * @param $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
      *
      * @return mixed
      */
@@ -73,7 +73,7 @@ class Affiliation extends Model
     }
 
     /**
-     * @param $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
      *
      * @return mixed
      */

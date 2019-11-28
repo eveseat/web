@@ -35,9 +35,9 @@ use Seat\Web\Models\User;
 class KillmailController extends Controller
 {
     /**
-     * @param $character_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param int $character_id
+     * @param \Seat\Web\Http\DataTables\Character\Military\KillMailDataTable $dataTable
+     * @return mixed
      */
     public function index(int $character_id, KillMailDataTable $dataTable)
     {

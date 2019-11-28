@@ -46,9 +46,8 @@ class SheetController extends Controller
     use UserRespository;
 
     /**
-     * @param $character_id
-     *
-     * @return \Illuminate\View\View
+     * @param int $character_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function show(int $character_id)
     {

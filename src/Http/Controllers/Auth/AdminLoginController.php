@@ -35,9 +35,7 @@ class AdminLoginController extends Controller
      * Login using the cached admin user token.
      *
      * @param string $token
-     *
      * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public function checkLoginToken(string $token)
@@ -46,7 +44,7 @@ class AdminLoginController extends Controller
         if ($token != cache('admin_login_token'))
             abort(404);
 
-        $user = User::whereName('admin')->first();
+        $user = User::where('name', 'admin')->first();
 
         if (is_null($user))
             return redirect()->route('auth.login')

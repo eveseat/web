@@ -38,7 +38,8 @@ use Seat\Web\Models\User;
 class ContactsController extends Controller
 {
     /**
-     * @param \Seat\Web\Http\DataTables\Character\Intel\ContactDataTable $table
+     * @param int $character_id
+     * @param \Seat\Web\Http\DataTables\Character\Intel\ContactDataTable $dataTable
      * @return mixed
      */
     public function index(int $character_id, ContactDataTable $dataTable)

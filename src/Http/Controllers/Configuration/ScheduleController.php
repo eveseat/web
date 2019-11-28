@@ -60,7 +60,6 @@ class ScheduleController extends Controller
 
     /**
      * @param \Seat\Web\Http\Validation\NewSchedule $request
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function newSchedule(NewSchedule $request)
@@ -74,11 +73,10 @@ class ScheduleController extends Controller
     }
 
     /**
-     * @param $schedule_id
-     *
+     * @param int $schedule_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function deleteSchedule($schedule_id)
+    public function deleteSchedule(int $schedule_id)
     {
 
         Schedule::findOrFail($schedule_id)->delete();

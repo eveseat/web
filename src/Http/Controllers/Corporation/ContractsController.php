@@ -36,9 +36,9 @@ use Seat\Web\Http\DataTables\Scopes\Filters\ContractTypeScope;
 class ContractsController extends Controller
 {
     /**
-     * @param $corporation_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param int $corporation_id
+     * @param \Seat\Web\Http\DataTables\Corporation\Financial\ContractDataTable $dataTable
+     * @return mixed
      */
     public function index(int $corporation_id, ContractDataTable $dataTable)
     {

@@ -36,7 +36,7 @@ class TrackingController extends Controller
     use Members;
 
     /**
-     * @param $corporation_id
+     * @param int $corporation_id
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */

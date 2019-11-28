@@ -225,9 +225,9 @@ class WebServiceProvider extends AbstractSeatPlugin
     /**
      * Include the middleware needed.
      *
-     * @param $router
+     * @param \Illuminate\Routing\Router $router
      */
-    public function add_middleware($router)
+    public function add_middleware(Router $router)
     {
 
         // Authenticate checks that the session is

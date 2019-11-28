@@ -40,7 +40,7 @@ class StarbaseController extends Controller
     use Starbases;
 
     /**
-     * @param $corporation_id
+     * @param int $corporation_id
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -60,8 +60,7 @@ class StarbaseController extends Controller
 
     /**
      * @param \Seat\Web\Http\Validation\StarbaseModule $request
-     * @param                                          $corporation_id
-     *
+     * @param int $corporation_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function postStarbaseModules(StarbaseModule $request, int $corporation_id)

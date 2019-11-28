@@ -267,7 +267,7 @@ class ResolveController extends Controller
      * If name could be resolved, save the name to universe_names table.
      *
      * @param \Illuminate\Support\Collection $ids
-     * @param                                $eseye
+     * @param \Seat\Eseye\Eseye $eseye
      */
     private function resolveIDsfromESI(Collection $ids, $eseye)
     {

@@ -43,7 +43,7 @@ class NotesController extends Controller
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param \Seat\Web\Http\Validation\NewIntelNote $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(NewIntelNote $request)
@@ -60,8 +60,8 @@ class NotesController extends Controller
     }
 
     /**
+     * @param \Seat\Web\Http\Validation\NewIntelNote $request
      * @param int $id
-     * @param \Illuminate\Database\Eloquent\Model $model
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(NewIntelNote $request, int $id)

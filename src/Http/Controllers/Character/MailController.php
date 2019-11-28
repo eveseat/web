@@ -73,8 +73,7 @@ class MailController extends Controller
     /**
      * @param int $character_id
      * @param int $message_id
-     *
-     * @return \Illuminate\View\View
+     * @return array|string
      * @throws \Throwable
      */
     public function getMailRead(int $character_id, int $message_id)
@@ -117,8 +116,7 @@ class MailController extends Controller
     }
 
     /**
-     * @param $message_id
-     *
+     * @param int $message_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getMailTimelineRead(int $message_id)

@@ -36,7 +36,7 @@ class IndustryController extends Controller
 {
     /**
      * @param int $corporation_id
-     * @param \Seat\Web\Http\DataTables\Corporation\Industrial\MiningDataTable $dataTable
+     * @param \Seat\Web\Http\DataTables\Corporation\Industrial\IndustryDataTable $dataTable
      * @return mixed
      */
     public function index(int $corporation_id, IndustryDataTable $dataTable)

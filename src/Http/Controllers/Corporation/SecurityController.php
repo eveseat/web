@@ -38,8 +38,7 @@ class SecurityController extends Controller
     use Security;
 
     /**
-     * @param $corporation_id
-     *
+     * @param int $corporation_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getRoles(int $corporation_id)
@@ -51,8 +50,7 @@ class SecurityController extends Controller
     }
 
     /**
-     * @param $corporation_id
-     *
+     * @param int $corporation_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getTitles(int $corporation_id)
@@ -64,9 +62,9 @@ class SecurityController extends Controller
     }
 
     /**
-     * @param $corporation_id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param int $corporation_id
+     * @param \Seat\Web\Http\DataTables\Corporation\Intel\LogDataTable $dataTable
+     * @return mixed
      */
     public function getLogs(int $corporation_id, LogDataTable $dataTable)
     {
