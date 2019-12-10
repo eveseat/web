@@ -37,18 +37,20 @@ class DropGroupsTable extends Migration
      */
     public function up()
     {
-        // drop admin account
+        // drop admin account - if exists
         $entry = DB::table('users')
             ->where('name', 'admin')
             ->first();
 
-        DB::table('refresh_tokens')
-            ->where('character_id', $entry->id)
-            ->delete();
+        if ($entry) {
+            DB::table('refresh_tokens')
+                ->where('character_id', $entry->id)
+                ->delete();
 
-        DB::table('users')
-            ->where('id', $entry->id)
-            ->delete();
+            DB::table('users')
+                ->where('id', $entry->id)
+                ->delete();
+        }
 
         // drop erased tokens
         DB::table('refresh_tokens')
