@@ -27,7 +27,7 @@
     "laravel/tinker": "~1.0",
     "laravel/socialite": "^4.2",
     "socialiteproviders/manager": "^3.0",
-    "eveseat/eseye": "~1",
+    "eveseat/eseye": "4.0.x-dev",
     "eveseat/eveapi": "4.0.x-dev",
     "eveseat/services": "4.0.x-dev",
     "guzzlehttp/guzzle": "^6.3",
