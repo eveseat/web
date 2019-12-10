@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Auth;
 
+use Illuminate\Support\Arr;
 use Laravel\Socialite\Contracts\Factory as Socialite;
 use Laravel\Socialite\Two\User as SocialiteUser;
 use Seat\Eveapi\Models\Character\CharacterAffiliation;
@@ -203,16 +204,16 @@ class SsoController extends Controller
             'security_status' => $character->optional('security_status'),
         ])->save();
 
-        $affiliation = $eseye->setVersion('v1')->setBody([
+        $affiliation = Arr::first($eseye->setVersion('v1')->setBody([
             $eve_user->id,
-        ])->invoke('/post', '/characters/affiliation');
+        ])->invoke('post', '/characters/affiliation'));
 
         CharacterAffiliation::firstOrNew([
             'character_id' => $eve_user->id,
         ])->fill([
             'corporation_id' => $affiliation->corporation_id,
-            'alliance_id' => $affiliation->optional('alliance_id'),
-            'faction_id' => $affiliation->optional('faction_id'),
+            'alliance_id' => $affiliation->alliance_id ?? null,
+            'faction_id' => $affiliation->faction_id ?? null,
         ])->save();
     }
 
