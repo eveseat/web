@@ -17,8 +17,8 @@
           {!!
             $member->characters->filter(function ($item, $key) use ($member) {
               return $item->name !== $member->main_character->name;
-            })->map(function ($user) {
-              return view('web::partials.character', ['character' => $user])->render();
+            })->map(function ($character) {
+              return img('characters', 'portrait', $character->character_id, 32, ['class' => 'img-circle eve-icon small-icon'], false);
             })->implode(' ')
           !!}
         </td>
