@@ -1,6 +1,7 @@
 <script type="text/javascript">
   $(document).ready(function() {
-    $('#member-entity-lookup').select2({
+    $('#member-entity-lookup')
+      .select2({
         placeholder: '{{ trans('web::seat.select_item_add') }}',
         ajax: {
             url: '{{ route('fastlookup.users') }}',
@@ -18,33 +19,30 @@
             if (! group.type)
                 return group.text;
 
-            for (var i = 0; i < group.text.length; i++) {
-                html += '<span data-id="' + group.character_id[i] +'">' + group.img[i] + ' ' + group.text[i] + '</span> ';
+            html += '<span data-id="' + group.character_id + '">' + group.img[0] + ' ' + group.text + '</span> ';
+
+            for (var i = 1; i < group.img.length; i++) {
+                html += group.img[i] + ' ';
             }
 
             return $(html);
         },
         minimumInputLength: 3
-    }).on('select2:select', function (e) {
+      })
+      .on('select2:select', function (e) {
         var entity = e.params.data, character;
-        var url = '{{ route('character.view.sheet', ['character_id' => '']) }}';
-        var row = $('<tr><td></td><td></td><td><button type="button" class="btn btn-xs btn-danger pull-right">remove</button></td></tr>');
+        var row = $('<tr><td></td><td></td><td><button type="button" class="btn btn-xs btn-danger pull-right"><i class="fas fa-trash"></i> Remove</button></td></tr>');
 
         character = $('<a></a>');
-        character.attr('href', url + '/' + entity.character_id[0]);
-        character.attr('data-entityid', entity.character_id[0]);
-        character.html(entity.img[0] + ' ' + entity.text[0]);
+        character.attr('href', entity.href);
+        character.attr('data-entityid', entity.character_id);
+        character.html(entity.img[0] + ' ' + entity.text);
 
         row.attr('data-groupid', entity.id);
         row.find('td:eq(0)').append(character);
 
-        for (var i = 1; i < entity.text.length; i++) {
-            character = $('<a></a>');
-            character.attr('href', url + '/' + entity.character_id[i]);
-            character.attr('data-entityid', entity.character_id[i]);
-            character.html(entity.img[i] + ' ' + entity.text[i]);
-
-            row.find('td:eq(1)').append(character).append(' ');
+        for (var i = 1; i < entity.img.length; i++) {
+            row.find('td:eq(1)').append(entity.img[i]).append(' ');
         }
 
         row.find('button').attr('data-groupid', entity.id);
@@ -52,7 +50,7 @@
         $('#member-modal table tbody').append(row);
 
         $('#member-entity-lookup').val(null).trigger('change');
-    });
+      });
 
     $(document).on('click', '#member-modal table tbody tr td button.btn-danger', function () {
         var button = $(this);
@@ -90,6 +88,12 @@
       var button = $(this);
       var row = button.closest('tr');
 
+      if (! button.data('url')) {
+          row.remove();
+          $('#nav-members a span.badge').text($('#tab-members table tbody tr').length);
+          return;
+      }
+
       button.attr('disabled', 'disabled');
       row.addClass('danger');
 
@@ -98,7 +102,7 @@
         method: 'DELETE'
       }).done(function () {
         row.remove();
-        $('#nav-members a span.badge').text($('#tab-members table tbody tr').length)
+        $('#nav-members a span.badge').text($('#tab-members table tbody tr').length);
       }).fail(function () {
         console.error('An error occurred while attempting to remove the user.');
         button.removeAttr('disabled');
