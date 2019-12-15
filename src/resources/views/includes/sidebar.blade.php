@@ -40,7 +40,7 @@
 
                   @if(array_key_exists('plural', $entry))
                     <p>
-                      {{ trans_choice($entry['label'], 2) }}
+                      {{ trans_choice($entry['label'], $entry['plural'] ? 0 : 1) }}
                       <i class="right fas fa-angle-left"></i>
                     </p>
                   @else
@@ -77,7 +77,7 @@
 
                             <i class="nav-icon {{ $item['icon'] ?? 'fa-circle-o' }}"></i>
                             @if(array_key_exists('plural', $item))
-                              <p>{{ trans_choice($item['label'], 2) }}</p>
+                              <p>{{ trans_choice($item['label'], $item['plural'] ? 0 : 1) }}</p>
                             @else
                               <p>{{ trans($item['label']) }}</p>
                             @endif
@@ -98,7 +98,7 @@
                                   @if (array_key_exists('label', $subitem))
                                     <i class="nav-icon {{ $subitem['icon'] ?? 'fa-circle-o' }}"></i>
                                     @if(array_key_exists('plural', $subitem))
-                                      <p>{{ trans_choice($subitem['label'], 2) }}</p>
+                                      <p>{{ trans_choice($subitem['label'], $subitem['plural'] ? 0 : 1) }}</p>
                                     @else
                                       <p>{{ trans($subitem['label']) }}</p>
                                     @endif
@@ -126,7 +126,7 @@
                           <i class="nav-icon {{ $item['icon'] ?? 'fa-circle-o' }}"></i>
 
                           @if(array_key_exists('plural', $item))
-                            <p>{{ trans_choice($item['label'], 2) }}</p>
+                            <p>{{ trans_choice($item['label'], $item['plural'] ? 0 : 1) }}</p>
                           @else
                             <p>{{ trans($item['label']) }}</p>
                           @endif
@@ -148,7 +148,7 @@
                                 @if (array_key_exists('label', $subitem))
                                   <i class="nav-icon {{ $subitem['icon'] ?? 'fa-circle-o' }}"></i>
                                   @if(array_key_exists('plural', $subitem))
-                                    <p>{{ trans_choice($subitem['label'], 2) }}</p>
+                                    <p>{{ trans_choice($subitem['label'], $subitem['plural'] ? 0 : 1) }}</p>
                                   @else
                                     <p>{{ trans($subitem['label']) }}</p>
                                   @endif
@@ -178,7 +178,11 @@
 
                 @if (array_key_exists('label', $entry))
                   <i class="nav-icon {{ $entry['icon'] }}"></i>
-                  <p>{{ trans($entry['label']) }}</p>
+                  @if(array_key_exists('plural', $entry))
+                    <p>{{ trans_choice($entry['label'], $entry['plural'] ? 0 : 1) }}</p>
+                  @else
+                    <p>{{ trans($entry['label']) }}</p>
+                  @endif
                 @else
                   <i class="nav-icon {{ $entry['icon'] }}"></i>
                   <p>{{ $entry['name'] }}</p>
