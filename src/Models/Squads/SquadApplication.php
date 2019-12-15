@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2020 Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,15 +20,44 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Models\Acl;
+namespace Seat\Web\Models\Squads;
 
 use Illuminate\Database\Eloquent\Model;
+use Seat\Web\Models\User;
 
 /**
- * Class GroupRole.
- * @package Seat\Web\Models\Acl
+ * Class SquadApplication.
+ *
+ * @package Seat\Web\Models\Squads
  */
-class GroupRole extends Model
+class SquadApplication extends Model
 {
+    /**
+     * @var string
+     */
+    protected $primaryKey = 'application_id';
 
+    /**
+     * @var array
+     */
+    protected $fillable = ['message'];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function squad()
+    {
+        return $this->belongsTo(Squad::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class)
+            ->withDefault([
+                'name' => trans('web::seat.unknown'),
+            ]);
+    }
 }
