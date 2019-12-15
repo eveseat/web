@@ -118,6 +118,14 @@ Route::group([
             include __DIR__ . '/Routes/Character/View.php';
         });
 
+        // Squads Routes
+        Route::group([
+            'namespace' => 'Squads',
+            'prefix'    => 'squads',
+        ], function () {
+            include __DIR__ . '/Routes/Squads/Routes.php';
+        });
+
         // Configuration Routes. In the context of seat,
         // all configuration should only be possible if
         // a user has the 'superuser' role.
