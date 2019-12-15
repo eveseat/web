@@ -20,15 +20,40 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Models\Acl;
-
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 /**
- * Class GroupRole.
- * @package Seat\Web\Models\Acl
+ * Class CreateSquadMemberTable.
  */
-class GroupRole extends Model
+class CreateSquadMemberTable extends Migration
 {
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('squad_member', function (Blueprint $table) {
+            $table->integer('squad_id');
+            $table->bigInteger('user_id');
+            $table->primary(['squad_id', 'user_id']);
+            $table->timestamps();
 
+            $table->index('squad_id');
+            $table->index('user_id');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('squad_member');
+    }
 }
