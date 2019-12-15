@@ -64,6 +64,14 @@ return [
             ],
         ],
     ],
+    'squads'      => [
+        'name'          => 'squads',
+        'label'         => 'web::squads.squad',
+        'plural'        => true,
+        'icon'          => 'fas fa-user-friends',
+        'route_segment' => 'squads',
+        'route'         => 'squads.list',
+    ],
     'settings'    => [
         'name'          => 'configuration',
         'label'         => 'web::seat.configuration',

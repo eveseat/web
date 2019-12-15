@@ -34,6 +34,7 @@ use Seat\Services\Models\UserSetting;
 use Seat\Services\Settings\Profile;
 use Seat\Web\Acl\AccessChecker;
 use Seat\Web\Models\Acl\Role;
+use Seat\Web\Models\Squads\Squad;
 
 /**
  * Class User.
@@ -228,6 +229,15 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return $this->hasOne(CharacterInfo::class, 'character_id', 'main_character_id')
             ->withDefault();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function squads()
+    {
+        return $this->belongsToMany(Squad::class, 'squad_member')
+            ->withPivot('created_at');
     }
 
     /**

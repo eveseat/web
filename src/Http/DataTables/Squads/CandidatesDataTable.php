@@ -1,0 +1,92 @@
+<?php
+
+/*
+ * This file is part of SeAT
+ *
+ * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
+namespace Seat\Web\Http\DataTables\Squads;
+
+use Seat\Web\Models\Squads\SquadApplication;
+use Yajra\DataTables\Services\DataTable;
+
+/**
+ * Class CandidatesDataTable.
+ *
+ * @package Seat\Web\Http\DataTables\Squads
+ */
+class CandidatesDataTable extends DataTable
+{
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function ajax()
+    {
+        return datatables()
+            ->eloquent($this->query())
+            ->addColumn('characters', function ($row) {
+                return $row->user->characters->reject(function ($character) use ($row) {
+                    return $character->character_id == $row->main_character_id;
+                })->map(function ($character) {
+                    return view('web::configuration.users.partials.character', compact('character'))->render();
+                })->join(' ');
+            })
+            ->editColumn('user.name', function ($row) {
+                return view('web::partials.character', ['character' => $row->user->main_character]);
+            })
+            ->editColumn('created_at', function ($row) {
+                return view('web::partials.date', ['datetime' => $row->created_at]);
+            })
+            ->editColumn('action', function ($row) {
+                return view('web::squads.buttons.application.action', compact('row'));
+            })
+            ->rawColumns(['characters'])
+            ->make(true);
+    }
+
+    /**
+     * @return \Yajra\DataTables\Html\Builder
+     */
+    public function html()
+    {
+        return $this->builder()
+            ->columns($this->columns())
+            ->addAction();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function query()
+    {
+        return SquadApplication::with('user')
+            ->where('squad_id', $this->request->id);
+    }
+
+    /**
+     * @return array
+     */
+    public function columns()
+    {
+        return [
+            ['data' => 'user.name', 'title' => trans_choice('web::squads.name', 1)],
+            ['data' => 'characters', 'title' => trans_choice('web::squads.character', 0)],
+            ['data' => 'created_at', 'title' => trans('web::squads.applied_at')],
+        ];
+    }
+}
