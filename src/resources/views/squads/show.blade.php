@@ -20,21 +20,26 @@
     </div>
   </div>
 
-  @if(auth()->user()->name !== 'admin')
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-body">
-            @if($squad->isMember)
-              @include('web::squads.buttons.squads.leave')
-            @else
-              @include('web::squads.buttons.squads.join')
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="btn btn-group float-right">
+            @if(auth()->user()->hasSuperUser())
+              @include('web::squads.buttons.squads.filters')
+            @endif
+            @if(auth()->user()->name !== 'admin')
+              @if($squad->isMember)
+                @include('web::squads.buttons.squads.leave')
+              @else
+                @include('web::squads.buttons.squads.join')
+              @endif
             @endif
           </div>
         </div>
       </div>
     </div>
-  @endif
+  </div>
 
   <div class="row">
     <div class="col-12">
@@ -102,6 +107,7 @@
 
   @include('web::squads.modals.applications.create.application')
   @include('web::squads.modals.applications.read.application')
+  @include('web::squads.modals.filters.filters')
 @endsection
 
 @push('javascript')
