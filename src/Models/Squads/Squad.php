@@ -23,7 +23,9 @@
 namespace Seat\Web\Models\Squads;
 
 use Illuminate\Database\Eloquent\Model;
+use Seat\Web\Models\Filterable;
 use Seat\Web\Models\User;
+use stdClass;
 
 /**
  * Class Squad.
@@ -32,6 +34,15 @@ use Seat\Web\Models\User;
  */
 class Squad extends Model
 {
+    use Filterable;
+
+    /**
+     * @var array
+     */
+    protected $casts = [
+        'filters' => 'object',
+    ];
+
     /**
      * @var bool
      */
@@ -40,7 +51,7 @@ class Squad extends Model
     /**
      * @return bool
      */
-    public function getIsCandidateAttribute()
+    public function isCandidate()
     {
         return $this->applications->where('id', auth()->user()->id)->count() !== 0;
     }
@@ -48,7 +59,7 @@ class Squad extends Model
     /**
      * @return bool
      */
-    public function getIsMemberAttribute()
+    public function isMember()
     {
         return $this->members->where('id', auth()->user()->id)->count() !== 0;
     }
@@ -56,7 +67,7 @@ class Squad extends Model
     /**
      * @return bool
      */
-    public function getIsModeratorAttribute()
+    public function isModerator()
     {
         return $this->moderators->where('id', auth()->user()->id)->count() !== 0;
     }
@@ -84,5 +95,13 @@ class Squad extends Model
     public function moderators()
     {
         return $this->belongsToMany(User::class, 'squad_moderator');
+    }
+
+    /**
+     * @return \stdClass
+     */
+    public function getFilters(): stdClass
+    {
+        return $this->filters;
     }
 }

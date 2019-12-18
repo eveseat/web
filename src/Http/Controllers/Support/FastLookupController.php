@@ -79,12 +79,15 @@ class FastLookupController extends Controller
      */
     public function getCharacters(Request $request)
     {
-        $characters = CharacterInfo::where('name', 'like', '%' . $request->query('q', '') . '%')->get()->map(function ($char, $key) {
-            return [
-                'id' => $char->character_id,
-                'text' => $char->name,
-            ];
-        });
+        $characters = CharacterInfo::where('name', 'like', '%' . $request->query('q', '') . '%')
+            ->orderBy('name')
+            ->get()
+            ->map(function ($char, $key) {
+                return [
+                    'id' => $char->character_id,
+                    'text' => $char->name,
+                ];
+            });
 
         return response()->json([
             'results' => $characters,
@@ -99,12 +102,15 @@ class FastLookupController extends Controller
     public function getCorporations(Request $request)
     {
 
-        $corporations = CorporationInfo::where('name', 'like', '%' . $request->query('q', '') . '%')->get()->map(function ($corp, $key) {
-            return [
-                'id' => $corp->corporation_id,
-                'text' => $corp->name,
-            ];
-        });
+        $corporations = CorporationInfo::where('name', 'like', '%' . $request->query('q', '') . '%')
+            ->orderBy('name')
+            ->get()
+            ->map(function ($corp, $key) {
+                return [
+                    'id' => $corp->corporation_id,
+                    'text' => $corp->name,
+                ];
+            });
 
         return response()->json([
             'results' => $corporations,
@@ -120,12 +126,15 @@ class FastLookupController extends Controller
     public function getAlliances(Request $request)
     {
 
-        $alliance = Alliance::where('name', 'like', '%' . $request->query('q', '') . '%')->get()->map(function ($alli, $key) {
-            return [
-                'id' => $alli->alliance_id,
-                'text' => $alli->name,
-            ];
-        });
+        $alliance = Alliance::where('name', 'like', '%' . $request->query('q', '') . '%')
+            ->orderBy('name')
+            ->get()
+            ->map(function ($alli, $key) {
+                return [
+                    'id' => $alli->alliance_id,
+                    'text' => $alli->name,
+                ];
+            });
 
         return response()->json([
             'results' => $alliance,

@@ -42,6 +42,7 @@ class CreateSquadsTable extends Migration
             $table->text('description');
             $table->mediumText('logo')->nullable();
             $table->boolean('is_moderated')->default(false);
+            $table->json('filters')->default('{}');
             $table->timestamps();
         });
     }
