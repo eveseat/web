@@ -107,7 +107,8 @@
 
   @include('web::squads.modals.applications.create.application')
   @include('web::squads.modals.applications.read.application')
-  @include('web::squads.modals.filters.filters')
+  @include('web::components.filters.modals.filters.filters')
+
 @endsection
 
 @push('javascript')
