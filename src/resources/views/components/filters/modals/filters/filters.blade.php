@@ -48,8 +48,8 @@
 </div>
 
 {{-- JS templates --}}
-@include('web::squads.modals.filters.rule')
-@include('web::squads.modals.filters.ruleset')
+@include('web::components.filters.modals.filters.rule')
+@include('web::components.filters.modals.filters.ruleset')
 
 @push('javascript')
   <script>
@@ -65,7 +65,8 @@
                 switch ($(rule).data('type')) {
                     case 'rule':
                         filters[match.val()].push({
-                            filter: $(rule).find('.rule-type').first().val(),
+                            path: $('option:selected', $(rule).find('.rule-type')).data('path'),
+                            field: $('option:selected', $(rule).find('.rule-type')).data('field'),
                             operator: $(rule).find('.rule-operator').first().val(),
                             criteria: $(rule).find('.rule-criteria').first().val()
                         });

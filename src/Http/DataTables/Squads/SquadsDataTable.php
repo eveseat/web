@@ -42,13 +42,13 @@ class SquadsDataTable extends DataTable
         return datatables()
             ->eloquent($this->query())
             ->addColumn('is_candidate', function ($row) {
-                return view('web::squads.partials.yes_no', ['value' => $row->is_candidate]);
+                return view('web::squads.partials.yes_no', ['value' => $row->isCandidate()]);
             })
             ->addColumn('is_member', function ($row) {
-                return view('web::squads.partials.yes_no', ['value' => $row->is_member]);
+                return view('web::squads.partials.yes_no', ['value' => $row->isMember()]);
             })
             ->addColumn('is_moderator', function ($row) {
-                return view('web::squads.partials.yes_no', ['value' => $row->is_moderator]);
+                return view('web::squads.partials.yes_no', ['value' => $row->isModerator()]);
             })
             ->editColumn('name', function ($row) {
                 return $row->name;
