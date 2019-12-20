@@ -26,7 +26,7 @@ use Illuminate\Database\Eloquent\Model;
 use stdClass;
 
 /**
- * Class Filterable
+ * Class Filterable.
  *
  * @package Seat\Web\Models
  */
@@ -35,13 +35,13 @@ trait Filterable
     /**
      * @return \stdClass
      */
-    public abstract function getFilters(): stdClass;
+    abstract public function getFilters(): stdClass;
 
     /**
      * @param \Illuminate\Database\Eloquent\Model $member
      * @return bool
      */
-    public final function isMemberOf(Model $member): bool
+    final public function eligible(Model $member): bool
     {
         // in case no filters exists, bypass check
         if (! property_exists($this->getFilters(), 'and') && ! property_exists($this->getFilters(), 'or'))
@@ -52,26 +52,25 @@ trait Filterable
 
         return (new $class)::where($member->getKeyName(), $member->id)
             ->where(function ($query) {
+
                 // verb will determine what kind of method we have to use (simple andWhere or orWhere)
                 $verb = property_exists($this->getFilters(), 'and') ? 'whereHas' : 'orWhereHas';
 
                 // rules will determine all objects and ruleset in the current object root
                 $rules = property_exists($this->getFilters(), 'and') ? $this->getFilters()->and : $this->getFilters()->or;
 
-                foreach ($rules as $rule) {
+                foreach ($rules as $key => $rule) {
 
                     // in case the current object contain a filter property, this is a rule object
                     // add a query using proper words
-                    if (property_exists($rule, 'filter')) {
+                    if (property_exists($rule, 'criteria')) {
                         $query->$verb($rule->path, function ($sub_query) use ($rule) {
                             $sub_query->where($rule->field, $rule->operator, $rule->criteria);
                         });
                     }
 
                     // in case the current object is an array, this is a ruleset object
-                    // TODO : ruleset need fix - dunno exactly where :(
-                    /*
-                    if (is_array($rule)) {
+                    if (property_exists($rule, 'or') || property_exists($rule, 'and')) {
 
                         // verb will determine what kind of method we have to use (simple andWhere or orWhere)
                         $ruleset_verb = property_exists($this->getFilters(), 'and') ? 'where' : 'orWhere';
@@ -92,9 +91,7 @@ trait Filterable
                             }
                         });
                     }
-                    */
                 }
-            })
-            ->exists();
+            })->exists();
     }
 }
