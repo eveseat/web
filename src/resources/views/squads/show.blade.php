@@ -29,10 +29,12 @@
               @include('web::squads.buttons.squads.filters')
             @endif
             @if(auth()->user()->name !== 'admin')
-              @if($squad->isMember)
+              @if($squad->isMember())
                 @include('web::squads.buttons.squads.leave')
               @else
-                @include('web::squads.buttons.squads.join')
+                @if(! $squad->isCandidate())
+                  @include('web::squads.buttons.squads.join')
+                @endif
               @endif
             @endif
           </div>
@@ -66,7 +68,7 @@
                   <h3 class="card-title">Members</h3>
                 </div>
                 <div class="card-body">
-                  @if($squad->isMember)
+                  @if($squad->isMember())
                     {!! $dataTable->table() !!}
                   @else
                     <p class="text-center">You are not member of that squad.</p>
@@ -76,7 +78,7 @@
             </div>
           </div>
 
-          @if($squad->isModerator || auth()->user()->has('superuser'))
+          @if($squad->isModerator() || auth()->user()->has('superuser'))
             <div class="row">
               <div class="col-12">
                 <div class="card ml-0 mr-0">
@@ -107,7 +109,15 @@
 
   @include('web::squads.modals.applications.create.application')
   @include('web::squads.modals.applications.read.application')
-  @include('web::components.filters.modals.filters.filters')
+  @include('web::components.filters.modals.filters.filters', [
+    'filters' => [
+        (object) ['name' => 'character', 'src' => route('fastlookup.characters'), 'path' => 'characters', 'field' => 'character_infos.character_id', 'label' => 'Character'],
+        (object) ['name' => 'corporation', 'src' => route('fastlookup.corporations'), 'path' => 'characters.affiliation', 'field' => 'corporation_id', 'label' => 'Corporation'],
+        (object) ['name' => 'alliance', 'src' => route('fastlookup.alliances'), 'path' => 'characters.affiliation', 'field' => 'alliance_id', 'label' => 'Alliance'],
+        (object) ['name' => 'skill', 'src' => route('fastlookup.skills'), 'path' => 'characters.skills', 'field' => 'skill_id', 'label' => 'Skill'],
+        (object) ['name' => 'type', 'src' => route('fastlookup.items'), 'path' => 'characters.assets', 'field' => 'type_id', 'label' => 'Item'],
+    ],
+])
 
 @endsection
 
