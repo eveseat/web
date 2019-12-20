@@ -22,10 +22,12 @@
 
 namespace Seat\Web\Http\Controllers\Support;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Seat\Eveapi\Models\Alliances\Alliance;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
+use Seat\Eveapi\Models\Sde\InvType;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\User;
 
@@ -35,6 +37,8 @@ use Seat\Web\Models\User;
  */
 class FastLookupController extends Controller
 {
+    const SKILL_CATEGORY_ID = 16;
+
     /**
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -74,7 +78,6 @@ class FastLookupController extends Controller
 
     /**
      * @param \Illuminate\Http\Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function getCharacters(Request $request)
@@ -82,10 +85,10 @@ class FastLookupController extends Controller
         $characters = CharacterInfo::where('name', 'like', '%' . $request->query('q', '') . '%')
             ->orderBy('name')
             ->get()
-            ->map(function ($char, $key) {
+            ->map(function ($character, $key) {
                 return [
-                    'id' => $char->character_id,
-                    'text' => $char->name,
+                    'id' => $character->character_id,
+                    'text' => $character->name,
                 ];
             });
 
@@ -96,7 +99,6 @@ class FastLookupController extends Controller
 
     /**
      * @param \Illuminate\Http\Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function getCorporations(Request $request)
@@ -105,10 +107,10 @@ class FastLookupController extends Controller
         $corporations = CorporationInfo::where('name', 'like', '%' . $request->query('q', '') . '%')
             ->orderBy('name')
             ->get()
-            ->map(function ($corp, $key) {
+            ->map(function ($corporation, $key) {
                 return [
-                    'id' => $corp->corporation_id,
-                    'text' => $corp->name,
+                    'id' => $corporation->corporation_id,
+                    'text' => $corporation->name,
                 ];
             });
 
@@ -120,24 +122,23 @@ class FastLookupController extends Controller
 
     /**
      * @param \Illuminate\Http\Request $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function getAlliances(Request $request)
     {
 
-        $alliance = Alliance::where('name', 'like', '%' . $request->query('q', '') . '%')
+        $alliances = Alliance::where('name', 'like', '%' . $request->query('q', '') . '%')
             ->orderBy('name')
             ->get()
-            ->map(function ($alli, $key) {
+            ->map(function ($alliance, $key) {
                 return [
-                    'id' => $alli->alliance_id,
-                    'text' => $alli->name,
+                    'id' => $alliance->alliance_id,
+                    'text' => $alliance->name,
                 ];
             });
 
         return response()->json([
-            'results' => $alliance,
+            'results' => $alliances,
         ]);
 
     }
@@ -218,6 +219,53 @@ class FastLookupController extends Controller
                         false),
                 ];
             }),
+        ]);
+    }
+
+    /***
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getItems(Request $request)
+    {
+        $items = InvType::where('typeName', 'like', '%' . $request->query('q', '') . '%')
+            ->where('published', true)
+            ->orderBy('typeName')
+            ->get()
+            ->map(function ($item, $key) {
+                return [
+                    'id' => $item->typeID,
+                    'text' => $item->typeName,
+                ];
+            });
+
+        return response()->json([
+            'results' => $items,
+        ]);
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getSkills(Request $request)
+    {
+        $skills = InvType::whereHas('group', function (Builder $query) {
+                $query->where('categoryID', self::SKILL_CATEGORY_ID);
+            })
+            ->where('typeName', 'like', '%' . $request->query('q', '') . '%')
+            ->where('published', true)
+            ->orderBy('typeName')
+            ->get()
+            ->map(function ($skill, $key) {
+                return [
+                    'id' => $skill->typeID,
+                    'text' => $skill->typeName,
+                ];
+            });
+
+        return response()->json([
+            'results' => $skills,
         ]);
     }
 }
