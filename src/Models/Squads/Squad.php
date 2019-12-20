@@ -51,15 +51,15 @@ class Squad extends Model
     /**
      * @return bool
      */
-    public function isCandidate()
+    public function isCandidate(): bool
     {
-        return $this->applications->where('id', auth()->user()->id)->count() !== 0;
+        return $this->applications->where('user_id', auth()->user()->id)->count() !== 0;
     }
 
     /**
      * @return bool
      */
-    public function isMember()
+    public function isMember(): bool
     {
         return $this->members->where('id', auth()->user()->id)->count() !== 0;
     }
@@ -67,7 +67,7 @@ class Squad extends Model
     /**
      * @return bool
      */
-    public function isModerator()
+    public function isModerator(): bool
     {
         return $this->moderators->where('id', auth()->user()->id)->count() !== 0;
     }
