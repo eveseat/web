@@ -20,28 +20,56 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-body">
-          <div class="btn btn-group float-right">
-            @if(auth()->user()->hasSuperUser())
-              @include('web::components.filters.buttons.filters', ['rules' => $squad->filters])
-            @endif
-            @if(auth()->user()->name !== 'admin' && $squad->type != 'auto')
-              @if($squad->isMember())
-                @include('web::squads.buttons.squads.leave')
-              @else
-                @if(! $squad->isCandidate() && (! $squad->hasFilters() || $squad->isEligible(auth()->user())))
-                  @include('web::squads.buttons.squads.join')
-                @endif
-              @endif
-            @endif
+  @if(auth()->user()->hasSuperUser())
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Roles & Constraints</h3>
+            <div class="card-tools">
+              <div class="input-group input-group-sm">
+                @include('web::components.filters.buttons.filters', ['rules' => $squad->filters])
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <table class="table table-striped table-hover" id="roles-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Permissions</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+            </table>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  @endif
+
+  @if($squad->type != 'auto')
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="btn btn-group float-right">
+              @if(auth()->user()->name !== 'admin')
+                @if($squad->isMember())
+                  @include('web::squads.buttons.squads.leave')
+                @else
+                  @if(! $squad->isCandidate() && $squad->isEligible(auth()->user()))
+                    @include('web::squads.buttons.squads.join')
+                  @endif
+                @endif
+              @endif
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  @endif
 
   <div class="row">
     <div class="col-12">
@@ -136,6 +164,22 @@
                 {data: 'user.name', name: 'user.name'},
                 {data: 'characters', name: 'characters'},
                 {data: 'created_at', name: 'created_at'},
+                {defaultContent: "", data: "action", name: "action", title: "Action", "orderable": false, "searchable": false}
+            ]
+        });
+    }
+
+    if (! $.fn.dataTable.isDataTable('#roles-table')) {
+        $('#roles-table').DataTable({
+            dom: 'Bfrtip',
+            processing: true,
+            serverSide: true,
+            order: [[0, 'desc']],
+            ajax: '{{ route('squads.roles', $squad->id) }}',
+            columns: [
+                {data: 'title', name: 'title'},
+                {data: 'description', name: 'description'},
+                {data: 'permissions', name: 'permissions'},
                 {defaultContent: "", data: "action", name: "action", title: "Action", "orderable": false, "searchable": false}
             ]
         });

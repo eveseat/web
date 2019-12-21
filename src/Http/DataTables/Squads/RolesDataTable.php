@@ -22,15 +22,17 @@
 
 namespace Seat\Web\Http\DataTables\Squads;
 
+use Illuminate\Support\Facades\DB;
+use Seat\Web\Models\Acl\Role;
 use Seat\Web\Models\User;
 use Yajra\DataTables\Services\DataTable;
 
 /**
- * Class MembersDataTable.
+ * Class RolesDataTable.
  *
  * @package Seat\Web\Http\DataTables\Squads
  */
-class MembersDataTable extends DataTable
+class RolesDataTable extends DataTable
 {
     /**
      * @return \Illuminate\Http\JsonResponse
@@ -39,22 +41,24 @@ class MembersDataTable extends DataTable
     {
         return datatables()
             ->eloquent($this->query())
-            ->addColumn('characters', function ($row) {
-                return $row->characters->reject(function ($character) use ($row) {
-                    return $character->character_id == $row->main_character_id;
-                })->map(function ($character) {
-                    return view('web::configuration.users.partials.character', compact('character'))->render();
-                })->join(' ');
-            })
-            ->editColumn('name', function ($row) {
-                return sprintf('%s %s',
-                    img('characters', 'portrait', $row->main_character_id, 64, ['class' => 'img-circle eve-icon small-icon'], false),
-                    $row->name);
+            ->editColumn('permissions', function ($row) {
+                return view('web::squads.partials.permissions', compact('row'));
             })
             ->editColumn('action', function ($row) {
-                return view('web::squads.buttons.squads.kick', compact('row'));
+                return '';
             })
-            ->rawColumns(['name', 'characters'])
+            ->filterColumn('permissions', function ($query, $keyword) {
+                $query->whereHas('permissions', function ($sub_query) use ($keyword) {
+                    $sub_query->whereRaw('title LIKE ?', ["%$keyword%"]);
+                });
+            })
+            ->orderColumn('permissions', function ($query, $order) {
+                $query->select('id', 'title', 'description')
+                    ->leftJoin('squad_role', 'roles.id', 'squad_role.role_id')
+                    ->leftJoin('permission_role', 'squad_role.role_id', 'permission_role.role_id')
+                    ->orderBy(DB::raw('COUNT(permission_id)'), $order)
+                    ->groupBy('id', 'title', 'description');
+            })
             ->make(true);
     }
 
@@ -73,7 +77,7 @@ class MembersDataTable extends DataTable
      */
     public function query()
     {
-        return User::with('characters')
+        return Role::with('permissions')
             ->whereHas('squads', function ($query) {
                 $query->where('id', $this->request->id);
             });
@@ -85,8 +89,9 @@ class MembersDataTable extends DataTable
     public function columns()
     {
         return [
-            ['data' => 'name', 'title' => trans_choice('web::squads.name', 1)],
-            ['data' => 'characters', 'title' => trans_choice('web::squads.character', 0)],
+            ['data' => 'title', 'title' => trans_choice('web::squads.name', 1)],
+            ['data' => 'description', 'title' => trans('web::squads.description')],
+            ['data' => 'permissions', 'title' => trans_choice('web::squads.permission', 0)],
         ];
     }
 }
