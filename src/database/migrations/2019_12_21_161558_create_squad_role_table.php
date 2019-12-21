@@ -25,7 +25,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Class CreateSquadRoleTable
+ * Class CreateSquadRoleTable.
  */
 class CreateSquadRoleTable extends Migration
 {
