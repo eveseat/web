@@ -38,10 +38,18 @@ trait Filterable
     abstract public function getFilters(): stdClass;
 
     /**
+     * @return bool
+     */
+    final public function hasFilters(): bool
+    {
+        return $this->getFilters() != (new StdClass());
+    }
+
+    /**
      * @param \Illuminate\Database\Eloquent\Model $member
      * @return bool
      */
-    final public function eligible(Model $member): bool
+    final public function isEligible(Model $member): bool
     {
         // in case no filters exists, bypass check
         if (! property_exists($this->getFilters(), 'and') && ! property_exists($this->getFilters(), 'or'))
@@ -63,7 +71,7 @@ trait Filterable
 
                     // in case the current object contain a filter property, this is a rule object
                     // add a query using proper words
-                    if (property_exists($rule, 'criteria')) {
+                    if (property_exists($rule, 'name')) {
                         $query->$verb($rule->path, function ($sub_query) use ($rule) {
                             $sub_query->where($rule->field, $rule->operator, $rule->criteria);
                         });
