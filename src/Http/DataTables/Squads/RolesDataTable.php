@@ -24,7 +24,6 @@ namespace Seat\Web\Http\DataTables\Squads;
 
 use Illuminate\Support\Facades\DB;
 use Seat\Web\Models\Acl\Role;
-use Seat\Web\Models\User;
 use Yajra\DataTables\Services\DataTable;
 
 /**
