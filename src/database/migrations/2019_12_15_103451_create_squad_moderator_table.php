@@ -37,12 +37,22 @@ class CreateSquadModeratorTable extends Migration
     public function up()
     {
         Schema::create('squad_moderator', function (Blueprint $table) {
-            $table->integer('squad_id');
-            $table->bigInteger('user_id');
+            $table->integer('squad_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->primary(['squad_id', 'user_id']);
 
             $table->index('squad_id');
             $table->index('user_id');
+
+            $table->foreign('squad_id')
+                ->references('id')
+                ->on('squads')
+                ->onDelete('cascade');
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 

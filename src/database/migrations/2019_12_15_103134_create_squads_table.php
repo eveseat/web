@@ -45,6 +45,8 @@ class CreateSquadsTable extends Migration
             $table->boolean('is_moderated')->default(false);
             $table->json('filters')->default('{}');
             $table->timestamps();
+
+            $table->index('type');
         });
     }
 
