@@ -34,15 +34,15 @@ use Seat\Web\Models\User;
 abstract class AbstractSquadObserver
 {
     /**
-     * Return the User owning the model which fired the catch event
+     * Return the User owning the model which fired the catch event.
      *
      * @param \Illuminate\Database\Eloquent\Model $fired_model The model which fired the catch event
      * @return \Seat\Web\Models\User|null The user owning this model
      */
-    protected abstract function findRelatedUser(Model $fired_model): ?User;
+    abstract protected function findRelatedUser(Model $fired_model): ?User;
 
     /**
-     * Update squads to which the user owning model firing the event is member
+     * Update squads to which the user owning model firing the event is member.
      *
      * @param \Illuminate\Database\Eloquent\Model $fired_model The model which fired the catch event
      */

@@ -58,7 +58,7 @@ class CharacterSkillObserver extends AbstractSquadObserver
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function findRelatedUser(Model $fired_model): ?User
     {
