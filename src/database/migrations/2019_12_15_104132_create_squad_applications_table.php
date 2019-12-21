@@ -38,13 +38,23 @@ class CreateSquadApplicationsTable extends Migration
     {
         Schema::create('squad_applications', function (Blueprint $table) {
             $table->bigIncrements('application_id');
-            $table->bigInteger('user_id');
-            $table->integer('squad_id');
+            $table->integer('user_id')->unsigned();
+            $table->integer('squad_id')->unique();
             $table->text('message')->default('');
             $table->timestamps();
 
             $table->index('squad_id');
             $table->index('user_id');
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+
+            $table->foreign('squad_id')
+                ->references('id')
+                ->on('squads')
+                ->onDelete('cascade');
         });
     }
 
