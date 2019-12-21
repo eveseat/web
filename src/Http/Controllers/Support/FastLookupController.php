@@ -82,6 +82,15 @@ class FastLookupController extends Controller
      */
     public function getCharacters(Request $request)
     {
+        if ($request->query('_type', 'query') == 'find') {
+            $character = CharacterInfo::find($request->query('q', 0));
+
+            return response()->json([
+                'id' => $character->character_id,
+                'text' => $character->name,
+            ]);
+        }
+
         $characters = CharacterInfo::where('name', 'like', '%' . $request->query('q', '') . '%')
             ->orderBy('name')
             ->get()
@@ -103,6 +112,14 @@ class FastLookupController extends Controller
      */
     public function getCorporations(Request $request)
     {
+        if ($request->query('_type', 'query') == 'find') {
+            $corporation = CorporationInfo::find($request->query('q', 0));
+
+            return response()->json([
+                'id' => $corporation->corporation_id,
+                'text' => $corporation->name,
+            ]);
+        }
 
         $corporations = CorporationInfo::where('name', 'like', '%' . $request->query('q', '') . '%')
             ->orderBy('name')
@@ -126,6 +143,14 @@ class FastLookupController extends Controller
      */
     public function getAlliances(Request $request)
     {
+        if ($request->query('_type', 'query') == 'find') {
+            $alliance = Alliance::find($request->query('q', 0));
+
+            return response()->json([
+                'id' => $alliance->alliance_id,
+                'text' => $alliance->name,
+            ]);
+        }
 
         $alliances = Alliance::where('name', 'like', '%' . $request->query('q', '') . '%')
             ->orderBy('name')
@@ -228,6 +253,15 @@ class FastLookupController extends Controller
      */
     public function getItems(Request $request)
     {
+        if ($request->query('_type', 'query') == 'find') {
+            $item = InvType::find($request->query('q', 0));
+
+            return response()->json([
+                'id' => $item->typeID,
+                'text' => $item->typeName,
+            ]);
+        }
+
         $items = InvType::where('typeName', 'like', '%' . $request->query('q', '') . '%')
             ->where('published', true)
             ->orderBy('typeName')
@@ -250,6 +284,15 @@ class FastLookupController extends Controller
      */
     public function getSkills(Request $request)
     {
+        if ($request->query('_type', 'query') == 'find') {
+            $skill = InvType::find($request->query('q', 0));
+
+            return response()->json([
+                'id' => $skill->typeID,
+                'text' => $skill->typeName,
+            ]);
+        }
+
         $skills = InvType::whereHas('group', function (Builder $query) {
                 $query->where('categoryID', self::SKILL_CATEGORY_ID);
             })
