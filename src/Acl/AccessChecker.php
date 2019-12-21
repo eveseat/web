@@ -510,6 +510,9 @@ trait AccessChecker
 
         $corporation = CorporationInfo::find($corporation_id);
 
+        if (is_null($corporation))
+            return false;
+
         return in_array($corporation->ceo_id, $this->associatedCharacterIds()->toArray());
     }
 
