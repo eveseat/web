@@ -72,16 +72,16 @@ class SquadsDataTable extends DataTable
                 return view('web::squads.buttons.squads.show', compact('row'));
             })
             ->orderColumn('members', function ($query, $order) {
-                $query->select('id', 'name', 'description', 'is_moderated')
+                $query->select('id', 'name', 'description', 'type', 'is_moderated')
                     ->leftJoin('squad_member', 'id', 'squad_id')
                     ->orderBy(DB::raw('COUNT(squad_id)'), $order)
-                    ->groupBy('id', 'name', 'description', 'is_moderated');
+                    ->groupBy('id', 'name', 'description', 'type', 'is_moderated');
             })
             ->orderColumn('moderators', function ($query, $order) {
-                $query->select('id', 'name', 'description', 'is_moderated')
+                $query->select('id', 'name', 'description', 'type', 'is_moderated')
                     ->leftJoin('squad_moderator', 'id', 'squad_id')
                     ->orderBy(DB::raw('COUNT(squad_id)'), $order)
-                    ->groupBy('id', 'name', 'description', 'is_moderated');
+                    ->groupBy('id', 'name', 'description', 'type', 'is_moderated');
             })
             ->make(true);
     }
@@ -115,7 +115,7 @@ class SquadsDataTable extends DataTable
             ['data' => 'type', 'title' => trans('web::squads.type')],
             ['data' => 'members', 'title' => trans_choice('web::squads.member', 0), 'searchable' => false],
             ['data' => 'moderators', 'title' => trans_choice('web::squads.moderator', 0), 'searchable' => false],
-            ['data' => 'is_moderated', 'title' => trans('web::squads.moderated'), 'searchable' => false, 'orderable' => false],
+            ['data' => 'is_moderated', 'title' => trans('web::squads.moderated'), 'searchable' => false],
             ['data' => 'is_candidate', 'title' => trans_choice('web::squads.candidate', 1), 'searchable' => false, 'orderable' => false],
             ['data' => 'is_member', 'title' => trans_choice('web::squads.member', 1), 'searchable' => false, 'orderable' => false],
             ['data' => 'is_moderator', 'title' => trans_choice('web::squads.moderator', 1), 'searchable' => false, 'orderable' => false],
