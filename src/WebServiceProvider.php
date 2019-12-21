@@ -30,6 +30,9 @@ use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Horizon\Horizon;
+use Seat\Eveapi\Models\Assets\CharacterAsset;
+use Seat\Eveapi\Models\Character\CharacterAffiliation;
+use Seat\Eveapi\Models\Character\CharacterSkill;
 use Seat\Web\Events\Attempt;
 use Seat\Web\Events\Login;
 use Seat\Web\Events\Logout;
@@ -51,6 +54,13 @@ use Seat\Web\Http\Middleware\Bouncer\KeyBouncer;
 use Seat\Web\Http\Middleware\Locale;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
 use Seat\Web\Http\Middleware\Requirements;
+use Seat\Web\Models\Squads\SquadMember;
+use Seat\Web\Models\Squads\SquadRole;
+use Seat\Web\Observers\CharacterAffiliationObserver;
+use Seat\Web\Observers\CharacterAssetObserver;
+use Seat\Web\Observers\CharacterSkillObserver;
+use Seat\Web\Observers\SquadMemberObserver;
+use Seat\Web\Observers\SquadRoleObserver;
 
 /**
  * Class WebServiceProvider.
@@ -268,6 +278,13 @@ class WebServiceProvider extends AbstractSeatPlugin
 
         // Custom Events
         $this->app->events->listen('security.log', SecLog::class);
+
+        // Squads Events
+        CharacterAffiliation::observe(CharacterAffiliationObserver::class);
+        CharacterAsset::observe(CharacterAssetObserver::class);
+        CharacterSkill::observe(CharacterSkillObserver::class);
+        SquadMember::observe(SquadMemberObserver::class);
+        SquadRole::observe(SquadRoleObserver::class);
     }
 
     /**
