@@ -26,13 +26,13 @@
         <div class="card-body">
           <div class="btn btn-group float-right">
             @if(auth()->user()->hasSuperUser())
-              @include('web::squads.buttons.squads.filters')
+              @include('web::components.filters.buttons.filters', ['rules' => $squad->filters])
             @endif
             @if(auth()->user()->name !== 'admin')
               @if($squad->isMember())
                 @include('web::squads.buttons.squads.leave')
               @else
-                @if(! $squad->isCandidate())
+                @if(! $squad->isCandidate() && (! $squad->hasFilters() || $squad->isEligible(auth()->user())))
                   @include('web::squads.buttons.squads.join')
                 @endif
               @endif
