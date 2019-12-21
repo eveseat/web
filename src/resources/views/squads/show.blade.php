@@ -45,7 +45,7 @@
 
   <div class="row">
     <div class="col-12">
-      <div class="card-deck">
+      <div class="card-deck mb-3">
         <div class="card col-2">
           <div class="card-header">
             <h3 class="card-title">Moderators</h3>
@@ -68,7 +68,7 @@
                   <h3 class="card-title">Members</h3>
                 </div>
                 <div class="card-body">
-                  @if($squad->isMember())
+                  @if($squad->isMember() || auth()->user()->hasSuperUser())
                     {!! $dataTable->table() !!}
                   @else
                     <p class="text-center">You are not member of that squad.</p>
@@ -78,7 +78,7 @@
             </div>
           </div>
 
-          @if($squad->isModerator() || auth()->user()->has('superuser'))
+          @if($squad->isModerator() || auth()->user()->hasSuperUser())
             <div class="row">
               <div class="col-12">
                 <div class="card ml-0 mr-0">
