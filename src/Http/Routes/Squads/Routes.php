@@ -77,4 +77,9 @@ Route::group(['prefix' => '/ajax'], function () {
         'as'   => 'squads.candidates',
         'uses' => 'SquadsController@getSquadCandidates',
     ]);
+
+    Route::get('/{id}/roles', [
+        'as'   => 'squads.roles',
+        'uses' => 'SquadsController@getSquadRoles',
+    ]);
 });

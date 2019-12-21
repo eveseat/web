@@ -24,6 +24,8 @@ namespace Seat\Web\Models\Acl;
 
 use Illuminate\Database\Eloquent\Model;
 use Intervention\Image\Facades\Image;
+use Seat\Web\Models\Squads\Squad;
+use Seat\Web\Models\Squads\SquadRole;
 use Seat\Web\Models\User;
 
 /**
@@ -66,6 +68,16 @@ class Role extends Model
 
         return $this->belongsToMany(Permission::class)
             ->withPivot(['not', 'filters']);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function squads()
+    {
+
+        return $this->belongsToMany(Squad::class, 'squad_role')
+            ->using(SquadRole::class);
     }
 
     /**
