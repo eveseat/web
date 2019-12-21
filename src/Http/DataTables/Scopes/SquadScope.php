@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2020 Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,23 +20,29 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-return [
-    'squad'        => 'Squad|Squads',
-    'name'         => 'Name|Names',
-    'description'  => 'Description',
-    'type'         => 'Type',
-    'member'       => 'Member|Members',
-    'moderated'    => 'Moderated',
-    'moderator'    => 'Moderator|Moderators',
-    'candidate'    => 'Candidate|Candidates',
-    'member_since' => 'Member Since',
-    'applied_at'   => 'Applied At',
-    'character'    => 'Character|Characters',
-    'show'         => 'Show',
-    'approve'      => 'Approve',
-    'reject'       => 'Reject',
-    'kick'         => 'Kick',
-    'leave'        => 'Leave',
-    'join'         => 'Join',
-    'message'      => 'Message',
-];
+namespace Seat\Web\Http\DataTables\Scopes;
+
+use Illuminate\Database\Eloquent\Builder;
+use Yajra\DataTables\Contracts\DataTableScope;
+
+/**
+ * Class SquadScope.
+ *
+ * @package Seat\Web\Http\DataTables\Scopes
+ */
+class SquadScope implements DataTableScope
+{
+    /**
+     * @inheritDoc
+     */
+    public function apply($query)
+    {
+        return $query->whereIn('type', ['manual', 'auto'])
+            ->orWhereHas('moderators', function (Builder $sub_query) {
+                $sub_query->where('id', auth()->user()->id);
+            })
+            ->orWhereHas('members', function (Builder $sub_query) {
+                $sub_query->where('id', auth()->user()->id);
+            });
+    }
+}

@@ -24,6 +24,7 @@ namespace Seat\Web\Http\Controllers\Squads;
 
 use Illuminate\Http\Request;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Scopes\SquadScope;
 use Seat\Web\Http\DataTables\Squads\CandidatesDataTable;
 use Seat\Web\Http\DataTables\Squads\MembersDataTable;
 use Seat\Web\Http\DataTables\Squads\SquadsDataTable;
@@ -42,6 +43,11 @@ class SquadsController extends Controller
      */
     public function index(SquadsDataTable $dataTable)
     {
+        // in case authenticated user is not superuser
+        // exclude all hidden squad for which he's not either member or moderators
+        if (! auth()->user()->hasSuperUser())
+            $dataTable->addScope(new SquadScope());
+
         return $dataTable->render('web::squads.list');
     }
 

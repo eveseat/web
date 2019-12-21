@@ -28,7 +28,7 @@
             @if(auth()->user()->hasSuperUser())
               @include('web::components.filters.buttons.filters', ['rules' => $squad->filters])
             @endif
-            @if(auth()->user()->name !== 'admin')
+            @if(auth()->user()->name !== 'admin' && $squad->type != 'auto')
               @if($squad->isMember())
                 @include('web::squads.buttons.squads.leave')
               @else
