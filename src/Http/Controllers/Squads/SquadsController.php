@@ -63,6 +63,17 @@ class SquadsController extends Controller
 
     /**
      * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(int $id)
+    {
+        Squad::destroy($id);
+
+        return redirect()->back();
+    }
+
+    /**
+     * @param int $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function showApplication(int $id)

@@ -69,7 +69,7 @@ class SquadsDataTable extends DataTable
                 return $row->moderators->count();
             })
             ->editColumn('action', function ($row) {
-                return view('web::squads.buttons.squads.show', compact('row'));
+                return view('web::squads.buttons.squads.action', compact('row'));
             })
             ->orderColumn('members', function ($query, $order) {
                 $query->select('id', 'name', 'description', 'type', 'is_moderated')
