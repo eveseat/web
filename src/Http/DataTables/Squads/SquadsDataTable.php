@@ -40,7 +40,7 @@ class SquadsDataTable extends DataTable
     public function ajax()
     {
         return datatables()
-            ->eloquent($this->query())
+            ->eloquent($this->applyScopes($this->query()))
             ->addColumn('is_candidate', function ($row) {
                 return view('web::squads.partials.yes_no', ['value' => $row->isCandidate()]);
             })
@@ -55,6 +55,9 @@ class SquadsDataTable extends DataTable
             })
             ->editColumn('description', function ($row) {
                 return Str::limit($row->description);
+            })
+            ->editColumn('type', function ($row) {
+                return view('web::squads.partials.type', compact('row'));
             })
             ->editColumn('is_moderated', function ($row) {
                 return view('web::squads.partials.yes_no', ['value' => $row->is_moderated]);
@@ -71,6 +74,12 @@ class SquadsDataTable extends DataTable
             ->orderColumn('members', function ($query, $order) {
                 $query->select('id', 'name', 'description', 'is_moderated')
                     ->leftJoin('squad_member', 'id', 'squad_id')
+                    ->orderBy(DB::raw('COUNT(squad_id)'), $order)
+                    ->groupBy('id', 'name', 'description', 'is_moderated');
+            })
+            ->orderColumn('moderators', function ($query, $order) {
+                $query->select('id', 'name', 'description', 'is_moderated')
+                    ->leftJoin('squad_moderator', 'id', 'squad_id')
                     ->orderBy(DB::raw('COUNT(squad_id)'), $order)
                     ->groupBy('id', 'name', 'description', 'is_moderated');
             })
@@ -103,7 +112,9 @@ class SquadsDataTable extends DataTable
         return [
             ['data' => 'name', 'title' => trans_choice('web::squads.name', 1)],
             ['data' => 'description', 'title' => trans('web::squads.description')],
+            ['data' => 'type', 'title' => trans('web::squads.type')],
             ['data' => 'members', 'title' => trans_choice('web::squads.member', 0), 'searchable' => false],
+            ['data' => 'moderators', 'title' => trans_choice('web::squads.moderator', 0), 'searchable' => false],
             ['data' => 'is_moderated', 'title' => trans('web::squads.moderated'), 'searchable' => false, 'orderable' => false],
             ['data' => 'is_candidate', 'title' => trans_choice('web::squads.candidate', 1), 'searchable' => false, 'orderable' => false],
             ['data' => 'is_member', 'title' => trans_choice('web::squads.member', 1), 'searchable' => false, 'orderable' => false],
