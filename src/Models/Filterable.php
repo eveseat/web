@@ -38,14 +38,6 @@ trait Filterable
     abstract public function getFilters(): stdClass;
 
     /**
-     * @return bool
-     */
-    final public function hasFilters(): bool
-    {
-        return $this->getFilters() != (new StdClass());
-    }
-
-    /**
      * @param \Illuminate\Database\Eloquent\Model $member
      * @return bool
      */
