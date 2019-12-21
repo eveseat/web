@@ -33,6 +33,7 @@ return [
     'applied_at'   => 'Applied At',
     'character'    => 'Character|Characters',
     'show'         => 'Show',
+    'delete'       => 'Delete',
     'approve'      => 'Approve',
     'reject'       => 'Reject',
     'kick'         => 'Kick',

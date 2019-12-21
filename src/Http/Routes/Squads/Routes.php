@@ -30,6 +30,11 @@ Route::get('/{id}', [
     'uses' => 'SquadsController@show',
 ]);
 
+Route::delete('/{id}', [
+    'as' => 'squads.destroy',
+    'uses' => 'SquadsController@destroy',
+]);
+
 Route::post('/{id}/members/join', [
     'as'   => 'squads.members.join',
     'uses' => 'SquadsController@join',
