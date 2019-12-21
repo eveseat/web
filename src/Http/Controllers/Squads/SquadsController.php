@@ -27,6 +27,7 @@ use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Scopes\SquadScope;
 use Seat\Web\Http\DataTables\Squads\CandidatesDataTable;
 use Seat\Web\Http\DataTables\Squads\MembersDataTable;
+use Seat\Web\Http\DataTables\Squads\RolesDataTable;
 use Seat\Web\Http\DataTables\Squads\SquadsDataTable;
 use Seat\Web\Models\Squads\Squad;
 use Seat\Web\Models\Squads\SquadApplication;
@@ -173,6 +174,18 @@ class SquadsController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getSquadCandidates(CandidatesDataTable $dataTable, int $id)
+    {
+        $squad = Squad::with('members', 'moderators', 'moderators.main_character')->find($id);
+
+        return $dataTable->render('web::squads.show', compact('squad'));
+    }
+
+    /**
+     * @param \Seat\Web\Http\DataTables\Squads\RolesDataTable $dataTable
+     * @param int $id
+     * @return mixed
+     */
+    public function getSquadRoles(RolesDataTable $dataTable, int $id)
     {
         $squad = Squad::with('members', 'moderators', 'moderators.main_character')->find($id);
 

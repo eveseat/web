@@ -23,6 +23,7 @@
 namespace Seat\Web\Models\Squads;
 
 use Illuminate\Database\Eloquent\Model;
+use Seat\Web\Models\Acl\Role;
 use Seat\Web\Models\Filterable;
 use Seat\Web\Models\User;
 use stdClass;
@@ -86,7 +87,8 @@ class Squad extends Model
     public function members()
     {
         return $this->belongsToMany(User::class, 'squad_member')
-            ->withPivot('created_at');
+            ->using(SquadMember::class)
+            ->withTimestamps();
     }
 
     /**
@@ -95,6 +97,15 @@ class Squad extends Model
     public function moderators()
     {
         return $this->belongsToMany(User::class, 'squad_moderator');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'squad_role')
+            ->using(SquadRole::class);
     }
 
     /**
