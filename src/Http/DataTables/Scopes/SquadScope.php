@@ -33,7 +33,7 @@ use Yajra\DataTables\Contracts\DataTableScope;
 class SquadScope implements DataTableScope
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function apply($query)
     {
