@@ -22,15 +22,8 @@
         <div class="col-md-4">
           <div class="media">
             <div class="media-left media-middle">
-              <img src="{{ $role->logo }}" width="128" height="128" class="media-object" />
-            </div>
-          </div>
-        </div>
-        <div class="col-md-8">
-          <div class="input-group">
-            <div class="custom-file">
-              <label for="role-logo" class="custom-file-label">Logo</label>
-              <input type="file" name="logo" id="role-logo" class="custom-file-input" />
+              <img src="{{ $role->logo }}" width="128" height="128" class="border media-object" id="role-logo" />
+              <input type="file" name="logo" class="d-none" />
             </div>
           </div>
         </div>
@@ -48,3 +41,34 @@
     </div>
   </div>
 </div>
+
+@push('javascript')
+  <script>
+      $('#role-logo')
+          .on('mouseenter', function () {
+              $(this).addClass('border-info');
+          })
+          .on('mouseleave', function () {
+              $(this).removeClass('border-info');
+          })
+          .on('click', function () {
+              $('input[name="logo"]').click();
+          });
+
+      $('input[name=logo]').on('change', function () {
+          readImage(this, '#role-logo');
+      });
+
+      function readImage(input, id) {
+          if (input.files && input.files[0]) {
+              var reader = new FileReader();
+
+              reader.onload = function (e) {
+                  $(id).attr('src', e.target.result);
+              };
+
+              reader.readAsDataURL(input.files[0]);
+          }
+      }
+  </script>
+@endpush
