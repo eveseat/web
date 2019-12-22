@@ -112,11 +112,13 @@ class Role extends Model
      */
     public function setLogoAttribute($value)
     {
-        if (! is_null($value) && ! empty($value)) {
-            $picture = Image::make($value)->encode('data-url');
-
-            $this->attributes['logo'] = $picture;
+        if (is_null($value) || empty($value)) {
+            $this->attributes['logo'] = null;
+            return;
         }
+
+        $picture = Image::make($value)->encode('data-url');
+        $this->attributes['logo'] = $picture;
     }
 
     /**
