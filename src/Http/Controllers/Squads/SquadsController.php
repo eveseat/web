@@ -63,6 +63,40 @@ class SquadsController extends Controller
     }
 
     /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function create()
+    {
+        return view('web::squads.create');
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name'        => 'required|unique:squads|max:255',
+            'type'        => 'required|in:manual,auto,hidden',
+            'description' => 'required',
+            'logo'        => 'mimes:jpeg,jpg,png|max:2000',
+            'filters'     => 'json'
+        ]);
+
+        $squad = Squad::create([
+            'name'        => $request->input('name'),
+            'type'        => $request->input('type'),
+            'description' => $request->input('description'),
+            'filters'     => json_decode($request->input('filters')),
+            'logo'        => $request->file('logo'),
+        ]);
+
+        return redirect()->route('squads.show', $squad->id)
+            ->with('success', 'Squad has successfully been created. Please complete its setup by providing roles & moderators.');
+    }
+
+    /**
      * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -70,7 +104,8 @@ class SquadsController extends Controller
     {
         Squad::destroy($id);
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with('success', 'Squad has been deleted.');
     }
 
     /**
