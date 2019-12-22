@@ -12,7 +12,7 @@
           <div class="media">
             <img src="{{ $squad->logo }}" width="128" height="128" class="align-self-center mr-3" />
             <div class="media-body">
-              <p>{{ $squad->description }}</p>
+              <p>{!! $squad->description !!}</p>
             </div>
           </div>
         </div>
@@ -145,7 +145,7 @@
         (object) ['name' => 'skill', 'src' => route('fastlookup.skills'), 'path' => 'characters.skills', 'field' => 'skill_id', 'label' => 'Skill'],
         (object) ['name' => 'type', 'src' => route('fastlookup.items'), 'path' => 'characters.assets', 'field' => 'type_id', 'label' => 'Item'],
     ],
-])
+  ])
 
 @endsection
 
