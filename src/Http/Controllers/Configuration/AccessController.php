@@ -99,7 +99,7 @@ class AccessController extends Controller
             'description' => 'string',
             'permissions' => 'array|required_with:filters',
             'filters' => 'array',
-            'logo' => 'image',
+            'logo' => 'mimes:jpeg,jpg,png|max:2000',
             'members' => 'json',
         ]);
 
