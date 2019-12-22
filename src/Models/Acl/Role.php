@@ -114,6 +114,7 @@ class Role extends Model
     {
         if (is_null($value) || empty($value)) {
             $this->attributes['logo'] = null;
+
             return;
         }
 

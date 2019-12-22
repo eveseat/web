@@ -81,7 +81,7 @@ class SquadsController extends Controller
             'type'        => 'required|in:manual,auto,hidden',
             'description' => 'required',
             'logo'        => 'mimes:jpeg,jpg,png|max:2000',
-            'filters'     => 'json'
+            'filters'     => 'json',
         ]);
 
         $squad = Squad::create([
