@@ -129,6 +129,9 @@
 
           rules = rules.hasOwnProperty('and') ? rules.and : rules.or;
 
+          if (! rules)
+              return;
+
           rules.forEach((rule) => {
               if (rule.hasOwnProperty('name')) {
                   node = $('#rule-template').clone();
@@ -173,39 +176,41 @@
 
                   ruleset_rules = rule.hasOwnProperty('and') ? rule.and : rule.or;
 
-                  ruleset_rules.forEach((ruleset_rule) => {
-                      node = $('#rule-template').clone();
-                      node.removeAttr('id');
-                      node.removeClass('d-none');
+                  if (ruleset_rules) {
+                      ruleset_rules.forEach((ruleset_rule) => {
+                          node = $('#rule-template').clone();
+                          node.removeAttr('id');
+                          node.removeClass('d-none');
 
-                      node.find('.rule-operator').val(ruleset_rule.operator);
+                          node.find('.rule-operator').val(ruleset_rule.operator);
 
-                      type = node.find('.rule-type');
-                      criteria = node.find('.rule-criteria');
+                          type = node.find('.rule-type');
+                          criteria = node.find('.rule-criteria');
 
-                      type.val(ruleset_rule.name);
+                          type.val(ruleset_rule.name);
 
-                      criteria.select2({
-                          ajax: {
-                              url: function () {
-                                  return $('option:selected', type).data('src');
+                          criteria.select2({
+                              ajax: {
+                                  url: function () {
+                                      return $('option:selected', type).data('src');
+                                  }
                               }
-                          }
-                      });
+                          });
 
-                      criteria.append(new Option(ruleset_rule.text, ruleset_rule.criteria, true, true)).trigger('change');
-                      criteria.trigger({
-                          type: 'select2:select',
-                          params: {
-                              data: {
-                                  text: ruleset_rule.text,
-                                  id: ruleset_rule.criteria
-                              },
-                          }
-                      });
+                          criteria.append(new Option(ruleset_rule.text, ruleset_rule.criteria, true, true)).trigger('change');
+                          criteria.trigger({
+                              type: 'select2:select',
+                              params: {
+                                  data: {
+                                      text: ruleset_rule.text,
+                                      id: ruleset_rule.criteria
+                                  },
+                              }
+                          });
 
-                      ruleset.find('.card-body').append(node);
-                  });
+                          ruleset.find('.card-body').append(node);
+                      });
+                  }
 
                   modal.append(ruleset);
               }
