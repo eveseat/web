@@ -54,7 +54,7 @@ class SquadsDataTable extends DataTable
                 return $row->name;
             })
             ->editColumn('description', function ($row) {
-                return Str::limit($row->description);
+                return Str::limit(strip_tags($row->description));
             })
             ->editColumn('type', function ($row) {
                 return view('web::squads.partials.type', compact('row'));

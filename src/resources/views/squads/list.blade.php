@@ -5,6 +5,18 @@
 
 @section('full')
   <div class="card card-default">
+    <div class="card-header">
+      <h3 class="card-title">List</h3>
+      <div class="card-tools">
+        <div class="input-group input-group-sm">
+          @if(auth()->user()->hasSuperUser())
+            <a class="btn btn-sm btn-light" href="{{ route('squads.create') }}">
+              <i class="fas fa-plus"></i>
+            </a>
+          @endif
+        </div>
+      </div>
+    </div>
     <div class="card-body">
       {!! $dataTable->table() !!}
     </div>

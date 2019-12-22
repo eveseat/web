@@ -25,6 +25,16 @@ Route::get('/', [
     'uses' => 'SquadsController@index',
 ]);
 
+Route::get('/create', [
+    'as'   => 'squads.create',
+    'uses' => 'SquadsController@create',
+]);
+
+Route::post('/', [
+    'as'   => 'squads.store',
+    'uses' => 'SquadsController@store',
+]);
+
 Route::get('/{id}', [
     'as'   => 'squads.show',
     'uses' => 'SquadsController@show',
