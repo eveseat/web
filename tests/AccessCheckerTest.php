@@ -24,6 +24,7 @@ namespace Seat\Tests\Web;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
 use Orchestra\Testbench\TestCase;
+use Seat\Eveapi\Models\Character\CharacterAffiliation;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Character\CharacterRole;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
@@ -63,6 +64,10 @@ class AccessCheckerTest extends TestCase
 
         // init a character model which will mock the requested page
         $this->request_character = new CharacterInfo([
+            'character_id'   => 90795931,
+        ]);
+
+        $this->request_character->affiliation = new CharacterAffiliation([
             'character_id'   => 90795931,
             'corporation_id' => 98413060,
             'alliance_id'    => 150097440,
@@ -238,6 +243,10 @@ class AccessCheckerTest extends TestCase
 
         $requested_character = new CharacterInfo([
             'character_id'   => 90795931,
+        ]);
+
+        $requested_character->affiliation = new CharacterAffiliation([
+            'character_id'   => 90795931,
             'corporation_id' => 98413060,
             'alliance_id'    => 150097440,
         ]);
@@ -245,6 +254,10 @@ class AccessCheckerTest extends TestCase
         $this->assertTrue($this->isGrantedByFilters($permission, $this->filters, $requested_character));
 
         $requested_character = new CharacterInfo([
+            'character_id'   => 90795932,
+        ]);
+
+        $requested_character->affiliation = new CharacterAffiliation([
             'character_id'   => 90795932,
             'corporation_id' => 98413061,
             'alliance_id'    => 150097441,
@@ -295,7 +308,10 @@ class AccessCheckerTest extends TestCase
 
         $this->assertTrue($this->isCeo());
 
-        $character = factory(CharacterInfo::class)->create([
+        $character = factory(CharacterInfo::class)->create();
+
+        $character->affiliation = factory(CharacterAffiliation::class)->create([
+            'character_id' => $character->affiliation,
             'corporation_id' => $corporation->corporation_id,
         ]);
 
@@ -498,6 +514,10 @@ class AccessCheckerTest extends TestCase
 
         $this->character = new CharacterInfo([
             'character_id'   => 90795931,
+        ]);
+
+        $this->character->affiliation = new CharacterAffiliation([
+            'character_id'   => 90795931,
             'corporation_id' => 98413060,
             'alliance_id'    => 150097440,
         ]);
@@ -532,7 +552,7 @@ class AccessCheckerTest extends TestCase
             ['Contract_Manager', [98413060 => ['corporation.summary', 'corporation.contracts']]],
             ['Diplomat', [98413060 => ['corporation.summary', 'corporation.tracking']]],
             ['Director', [98413060 => ['corporation.*']]],
-            ['Junior_Accountant', [98413060 => ['corporation.summary', 'corporation.journal', 'corporation.transaction']]],
+            ['Junior_Accountant', [98413060 => ['corporation.summary']]],
             ['Security_Officer', [98413060 => ['corporation.summary', 'corporation.security']]],
             ['Trader', [98413060 => ['corporation.summary', 'corporation.market']]],
         ];
