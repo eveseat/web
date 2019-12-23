@@ -24,7 +24,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCharacterInfosTestTable extends Migration
+class CreateCharacterAffiliationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -34,21 +34,14 @@ class CreateCharacterInfosTestTable extends Migration
     public function up()
     {
 
-        Schema::create('character_infos', function (Blueprint $table) {
+        Schema::create('character_affiliations', function (Blueprint $table) {
 
             $table->bigInteger('character_id')->primary();
-
-            $table->string('name');
-            $table->text('description')->nullable();
-            $table->string('birthday');
-            $table->string('gender');
-            $table->integer('race_id');
-            $table->integer('bloodline_id');
-            $table->integer('ancestry_id')->nullable();
-            $table->float('security_status')->nullable();
+            $table->bigInteger('corporation_id');
+            $table->bigInteger('alliance_id')->nullable();
+            $table->bigInteger('faction_id')->nullable();
 
             $table->timestamps();
-
         });
     }
 
@@ -60,6 +53,6 @@ class CreateCharacterInfosTestTable extends Migration
     public function down()
     {
 
-        Schema::dropIfExists('character_infos');
+        Schema::dropIfExists('character_affiliations');
     }
 }

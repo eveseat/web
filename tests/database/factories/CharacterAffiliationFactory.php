@@ -21,17 +21,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 use Faker\Generator;
 
-$factory->define(\Seat\Eveapi\Models\Character\CharacterInfo::class, function (Generator $faker) {
+$factory->define(\Seat\Eveapi\Models\Character\CharacterAffiliation::class, function (Generator $faker) {
 
     return [
         'character_id'    => $faker->unique()->numberBetween(90000000, 90001000),
-        'name'            => $faker->name,
-        'description'     => $faker->sentences(5, true),
-        'birthday'        => $faker->dateTime(),
-        'gender'          => $faker->randomElement(['male', 'female']),
-        'race_id'         => $faker->randomElement([1, 2, 4, 8]),
-        'bloodline_id'    => $faker->randomElement([1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 13, 14]),
-        'ancestry_id'     => $faker->randomElement([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42]),
-        'security_status' => $faker->randomFloat(2, -10, 10),
+        'corporation_id'  => $faker->numberBetween(98000000, 98001794),
+        'alliance_id'     => $faker->numberBetween(99000000, 99000010),
+        'faction_id'      => $faker->randomElement([null, 500002, 500003, 500004]),
     ];
 });
