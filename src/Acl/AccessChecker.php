@@ -535,8 +535,8 @@ trait AccessChecker
         }
 
         // determine if the requested entity is related to a corporation or alliance include in the permission filters
-        return $this->isGrantedByFilter($filters, 'corporation', $entity->corporation_id) ||
-            $this->isGrantedByFilter($filters, 'alliance', $entity->alliance_id);
+        return $this->isGrantedByFilter($filters, 'corporation', $entity->affiliation->corporation_id ?? $entity->corporation_id) ||
+            $this->isGrantedByFilter($filters, 'alliance', $entity->affiliation->alliance_id ?? $entity->alliance_id);
     }
 
     /**
