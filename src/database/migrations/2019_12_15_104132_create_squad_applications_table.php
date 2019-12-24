@@ -39,7 +39,7 @@ class CreateSquadApplicationsTable extends Migration
         Schema::create('squad_applications', function (Blueprint $table) {
             $table->bigIncrements('application_id');
             $table->integer('user_id')->unsigned();
-            $table->integer('squad_id')->unique();
+            $table->integer('squad_id')->unsigned()->unique();
             $table->text('message')->default('');
             $table->timestamps();
 
