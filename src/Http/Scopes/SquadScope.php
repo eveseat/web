@@ -20,24 +20,28 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\DataTables\Scopes;
+namespace Seat\Web\Http\Scopes;
 
 use Illuminate\Database\Eloquent\Builder;
-use Yajra\DataTables\Contracts\DataTableScope;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Scope;
 
 /**
  * Class SquadScope.
  *
- * @package Seat\Web\Http\DataTables\Scopes
+ * @package Seat\Web\Http\Scopes
  */
-class SquadScope implements DataTableScope
+class SquadScope implements Scope
 {
     /**
      * {@inheritdoc}
      */
-    public function apply($query)
+    public function apply(Builder $builder, Model $model)
     {
-        return $query->whereIn('type', ['manual', 'auto'])
+        if (auth()->user()->hasSuperUser())
+            return $builder;
+
+        return $builder->whereIn('type', ['manual', 'auto'])
             ->orWhereHas('moderators', function (Builder $sub_query) {
                 $sub_query->where('id', auth()->user()->id);
             })

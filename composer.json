@@ -34,6 +34,7 @@
     "yajra/laravel-datatables-oracle": "~9",
     "yajra/laravel-datatables-buttons": "^4.0",
     "intervention/image": "^2.5",
+    "lasserafn/php-initial-avatar-generator": "^4.0",
     "components/font-awesome": "^5.9",
     "erusev/parsedown": "^1.7",
     "almasaeed2010/adminlte": "^3.0",
