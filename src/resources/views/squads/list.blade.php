@@ -11,6 +11,12 @@
       </div>
       <div class="col">
         <div class="btn-group d-flex">
+          @if(auth()->user()->hasSuperUser())
+            <a href="{{ route('squads.create') }}" class="btn btn-default">
+              <i class="fas fa-plus"></i>
+              Create
+            </a>
+          @endif
           <button data-filter-field="type" data-filter-value="manual" type="button" class="btn btn-success deck-filters active">
             <i class="fas fa-check-circle"></i>
             Manual
@@ -97,9 +103,11 @@
                                                     <a href="${data.link}" class="btn btn-sm btn-light">
                                                         <i class="fas fa-eye"></i> Show
                                                     </a>
-                                                    <button class="btn btn-sm btn-danger" data-id="${data.id}">
+                                                    @if(auth()->user()->hasSuperUser())
+                                                    <button class="btn btn-sm btn-danger delete-squad" data-id="${data.id}">
                                                       <i class="fas fa-trash-alt"></i> Delete
                                                     </button>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -201,12 +209,24 @@
 
               refreshSquadDeck(keyword, $(this).data('page'));
           })
-          .on('click', '.deck-filters', function (e) {
+          .on('click', '.deck-filters', function () {
               var keyword = $('input[name="search-squad"]').val();
               $(this).hasClass('active') ? $(this).removeClass('active') : $(this).addClass('active');
               $(this).hasClass('active') ? $(this).prepend('<i class="fas fa-check-circle">') : $(this).find('i').remove();
 
               refreshSquadDeck(keyword, 1);
+          })
+          .on('click', '.delete-squad', function () {
+              var endpoint = `${window.location.protocol}//${window.location.hostname}:${window.location.port}${window.location.pathname}/${this.dataset.id}`;
+
+              $(this).closest('.card').fadeOut('slow');
+
+              $.ajax(endpoint, {
+                  method: 'DELETE'
+              }).always(function () {
+                  var keyword = $('input[name="search-squad"]').val();
+                  refreshSquadDeck(keyword, 1);
+              });
           });
   </script>
 @endpush
