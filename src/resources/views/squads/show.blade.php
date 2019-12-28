@@ -96,7 +96,7 @@
                   <h3 class="card-title">Members</h3>
                 </div>
                 <div class="card-body">
-                  @if($squad->isMember() || auth()->user()->hasSuperUser())
+                  @if($squad->is_member || auth()->user()->hasSuperUser())
                     {!! $dataTable->table() !!}
                   @else
                     <p class="text-center">You are not member of that squad.</p>
@@ -106,7 +106,7 @@
             </div>
           </div>
 
-          @if($squad->isModerator() || auth()->user()->hasSuperUser())
+          @if($squad->is_moderator || auth()->user()->hasSuperUser())
             <div class="row">
               <div class="col-12">
                 <div class="card ml-0 mr-0">
