@@ -24,11 +24,9 @@ namespace Seat\Web\Http\Controllers\Squads;
 
 use Illuminate\Http\Request;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Http\DataTables\Scopes\SquadScope;
 use Seat\Web\Http\DataTables\Squads\CandidatesDataTable;
 use Seat\Web\Http\DataTables\Squads\MembersDataTable;
 use Seat\Web\Http\DataTables\Squads\RolesDataTable;
-use Seat\Web\Http\DataTables\Squads\SquadsDataTable;
 use Seat\Web\Models\Squads\Squad;
 use Seat\Web\Models\Squads\SquadApplication;
 
@@ -40,16 +38,29 @@ use Seat\Web\Models\Squads\SquadApplication;
 class SquadsController extends Controller
 {
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
      */
-    public function index(SquadsDataTable $dataTable)
+    public function index(Request $request)
     {
-        // in case authenticated user is not superuser
-        // exclude all hidden squad for which he's not either member or moderators
-        if (! auth()->user()->hasSuperUser())
-            $dataTable->addScope(new SquadScope());
+        $squads = Squad::with('members', 'moderators', 'applications');
 
-        return $dataTable->render('web::squads.list');
+        if ($request->has('query')) {
+            $keyword = $request->query('query');
+
+            $squads->where('name', 'like', ["%$keyword%"]);
+            $squads->orWhere('description', 'like', ["%$keyword%"]);
+            $squads->orWhereHas('moderators', function ($query) use ($keyword) {
+                $query->where('name', 'like', "%$keyword%");
+            });
+        }
+
+        $squads = $squads->paginate(6);
+
+        if (request()->ajax())
+            return response()->json($squads);
+
+        return view('web::squads.list', compact('squads'));
     }
 
     /**
