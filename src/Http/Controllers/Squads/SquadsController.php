@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\Controllers\Squads;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Squads\CandidatesDataTable;
 use Seat\Web\Http\DataTables\Squads\MembersDataTable;
@@ -45,13 +46,34 @@ class SquadsController extends Controller
     {
         $squads = Squad::with('members', 'moderators', 'applications');
 
+        if ($request->has('filters')) {
+            $filters = $request->query('filters');
+
+            if (key_exists('type', $filters))
+                $squads = $squads->ofType(Arr::get($filters, 'type'));
+
+            if (key_exists('is_moderated', $filters))
+                $squads = $squads->moderated();
+
+            if (key_exists('candidates', $filters))
+                $squads = $squads->candidate();
+
+            if (key_exists('members', $filters))
+                $squads = $squads->member();
+
+            if (key_exists('moderators', $filters))
+                $squads = $squads->moderator();
+        }
+
         if ($request->has('query')) {
             $keyword = $request->query('query');
 
-            $squads->where('name', 'like', ["%$keyword%"]);
-            $squads->orWhere('description', 'like', ["%$keyword%"]);
-            $squads->orWhereHas('moderators', function ($query) use ($keyword) {
-                $query->where('name', 'like', "%$keyword%");
+            $squads->where(function ($query) use ($keyword) {
+                $query->where('name', 'like', ["%$keyword%"]);
+                $query->orWhere('description', 'like', ["%$keyword%"]);
+                $query->orWhereHas('moderators', function ($sub_query) use ($keyword) {
+                    $sub_query->where('name', 'like', "%$keyword%");
+                });
             });
         }
 
