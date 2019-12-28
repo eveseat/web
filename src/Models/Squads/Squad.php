@@ -23,7 +23,10 @@
 namespace Seat\Web\Models\Squads;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
+use LasseRafn\InitialAvatarGenerator\InitialAvatar;
+use Seat\Web\Http\Scopes\SquadScope;
 use Seat\Web\Models\Acl\Role;
 use Seat\Web\Models\Filterable;
 use Seat\Web\Models\User;
@@ -41,6 +44,21 @@ class Squad extends Model
     /**
      * @var array
      */
+    protected $appends = [
+        'summary', 'is_candidate', 'is_member', 'is_moderator', 'link',
+        'applications_count', 'members_count', 'moderators_count',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $hidden = [
+        'applications', 'members',
+    ];
+
+    /**
+     * @var array
+     */
     protected $casts = [
         'filters' => 'object',
     ];
@@ -51,9 +69,19 @@ class Squad extends Model
     protected static $unguarded = true;
 
     /**
+     * {@inheritdoc}
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new SquadScope());
+    }
+
+    /**
      * @return bool
      */
-    public function isCandidate(): bool
+    public function getIsCandidateAttribute(): bool
     {
         return $this->applications->where('user_id', auth()->user()->id)->count() !== 0;
     }
@@ -61,7 +89,7 @@ class Squad extends Model
     /**
      * @return bool
      */
-    public function isMember(): bool
+    public function getIsMemberAttribute(): bool
     {
         return $this->members->where('id', auth()->user()->id)->count() !== 0;
     }
@@ -69,9 +97,52 @@ class Squad extends Model
     /**
      * @return bool
      */
-    public function isModerator(): bool
+    public function getIsModeratorAttribute(): bool
     {
         return $this->moderators->where('id', auth()->user()->id)->count() !== 0;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSummaryAttribute(): string
+    {
+        if (is_null($this->description) || empty($this->description))
+            return '';
+
+        return Str::limit(strip_tags($this->description));
+    }
+
+    /**
+     * @return int
+     */
+    public function getApplicationsCountAttribute(): int
+    {
+        return $this->applications->count();
+    }
+
+    /**
+     * @return int
+     */
+    public function getMembersCountAttribute(): int
+    {
+        return $this->members->count();
+    }
+
+    /**
+     * @return int
+     */
+    public function getModeratorsCountAttribute(): int
+    {
+        return $this->moderators->count();
+    }
+
+    /**
+     * @return string
+     */
+    public function getLinkAttribute(): string
+    {
+        return route('squads.show', $this->id);
     }
 
     /**
@@ -83,7 +154,7 @@ class Squad extends Model
     public function getLogoAttribute($value): string
     {
         if (is_null($value) || empty($value))
-            $picture = $this->generateEmptyImage();
+            $picture = (is_null($this->name) || empty($this->name)) ? $this->generateEmptyImage() : $this->generateNameImage();
         else
             $picture = Image::make($value);
 
@@ -175,5 +246,19 @@ class Squad extends Model
         });
 
         return $picture;
+    }
+
+    /**
+     * @return \Intervention\Image\Image
+     */
+    private function generateNameImage()
+    {
+        $picture = new InitialAvatar();
+
+        return $picture->name($this->name)
+            ->size(256)
+            ->color('#c2c7d0')
+            ->background('#343a40')
+            ->generate();
     }
 }
