@@ -179,6 +179,58 @@ class Squad extends Model
     }
 
     /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeCandidate($query)
+    {
+        return $query->whereHas('applications', function ($sub_query) {
+            $sub_query->where('user_id', auth()->user()->id);
+        });
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeMember($query)
+    {
+        return $query->whereHas('members', function ($sub_query) {
+            $sub_query->where('user_id', auth()->user()->id);
+        });
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeModerator($query)
+    {
+        return $query->whereHas('moderators', function ($sub_query) {
+            $sub_query->where('user_id', auth()->user()->id);
+        });
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeModerated($query)
+    {
+        return $query->where('is_moderated', true);
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param array $types
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfType($query, $types)
+    {
+        return $query->whereIn('type', $types);
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function applications()
