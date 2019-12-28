@@ -11,14 +11,30 @@
       </div>
       <div class="col">
         <div class="btn-group d-flex">
-          <button data-filter-field="type" data-filter-value="manual" type="button" class="btn btn-success deck-filters active">Manual</button>
-          <button data-filter-field="type" data-filter-value="auto" type="button" class="btn btn-info deck-filters active">Auto</button>
-          <button data-filter-field="type" data-filter-value="hidden" type="button" class="btn btn-dark deck-filters active">Hidden</button>
-          <button data-filter-field="eligible" data-filter-value="{{ auth()->user()->id }}" type="button" class="btn btn-secondary deck-filters active">Eligible</button>
-          <button data-filter-field="candidates" data-filter-value="{{ auth()->user()->id }}" type="button" class="btn btn-primary deck-filters active">Candidates</button>
-          <button data-filter-field="members" data-filter-value="{{ auth()->user()->id }}" type="button" class="btn btn-light deck-filters active">Members</button>
-          <button data-filter-field="moderators" data-filter-value="{{ auth()->user()->id }}" type="button" class="btn btn-warning deck-filters active">Moderators</button>
-          <button data-filter-field="is_moderated" data-filter-value="true" type="button" class="btn btn-danger deck-filters active">Moderated</button>
+          <button data-filter-field="type" data-filter-value="manual" type="button" class="btn btn-success deck-filters active">
+            <i class="fas fa-check-circle"></i>
+            Manual
+          </button>
+          <button data-filter-field="type" data-filter-value="auto" type="button" class="btn btn-info deck-filters active">
+            <i class="fas fa-check-circle"></i>
+            Auto
+          </button>
+          <button data-filter-field="type" data-filter-value="hidden" type="button" class="btn btn-dark deck-filters active">
+            <i class="fas fa-check-circle"></i>
+            Hidden
+          </button>
+          <button data-filter-field="candidates" data-filter-value="{{ auth()->user()->id }}" type="button" class="btn btn-primary deck-filters">
+            Candidate
+          </button>
+          <button data-filter-field="members" data-filter-value="{{ auth()->user()->id }}" type="button" class="btn btn-light deck-filters">
+            Member
+          </button>
+          <button data-filter-field="moderators" data-filter-value="{{ auth()->user()->id }}" type="button" class="btn btn-warning deck-filters">
+            Moderator
+          </button>
+          <button data-filter-field="is_moderated" data-filter-value="true" type="button" class="btn btn-danger deck-filters">
+            Moderated Only
+          </button>
         </div>
       </div>
     </div>
@@ -119,9 +135,19 @@
       }
 
       function refreshSquadDeck(keyword, page) {
+          var filters = {};
           var endpoint = `${window.location.protocol}//${window.location.hostname}:${window.location.port}${window.location.pathname}`;
 
-          $.get(endpoint, {query: keyword, page: page}, function (d) {
+          $('.deck-filters.active').each(function (i, e) {
+              var a = $(e);
+              var f = a.data('filter-field');
+              var v = a.data('filter-value');
+
+              if (! filters[f]) filters[f] = [];
+              filters[f].push(v);
+          });
+
+          $.get(endpoint, {query: keyword, page: page, filters: filters}, function (d) {
               $('#squad-deck').empty();
 
               chunk(d.data, 6).forEach(function (row) {
@@ -164,17 +190,23 @@
           refreshSquadDeck(this.value, 1);
       }, 500));
 
-      $(document).on('click', '.pagination a', function(e) {
-          var keyword = $('input[name="search-squad]').val();
-          e.preventDefault();
+      $(document)
+          .on('click', '.pagination a', function(e) {
+              var keyword = $('input[name="search-squad]').val();
+              e.preventDefault();
 
-          $('.pagination li')
-              .removeClass('active');
+              $('.pagination li').removeClass('active');
 
-          $(this).parent('li')
-              .addClass('active');
+              $(this).parent('li').addClass('active');
 
-          refreshSquadDeck(keyword, $(this).data('page'));
-      });
+              refreshSquadDeck(keyword, $(this).data('page'));
+          })
+          .on('click', '.deck-filters', function (e) {
+              var keyword = $('input[name="search-squad"]').val();
+              $(this).hasClass('active') ? $(this).removeClass('active') : $(this).addClass('active');
+              $(this).hasClass('active') ? $(this).prepend('<i class="fas fa-check-circle">') : $(this).find('i').remove();
+
+              refreshSquadDeck(keyword, 1);
+          });
   </script>
 @endpush
