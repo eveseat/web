@@ -9,11 +9,17 @@
     <div class="col-12">
       <div class="card">
         <div class="card-body">
-          <h3>Summary</h3>
+          <h3>
+            Summary
+            <button type="submit" class="btn btn-sm btn-danger float-right" form="delete-squad">
+              <i class="fas fa-trash-alt"></i>
+              Delete
+            </button>
+          </h3>
 
           <hr/>
 
-          <div class="media">
+          <div class="media mb-3">
             <img src="{{ $squad->logo }}" width="128" height="128" class="align-self-center mr-3" />
             <div class="media-body">
               <p>{!! $squad->description !!}</p>

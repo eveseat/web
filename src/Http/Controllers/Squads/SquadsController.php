@@ -137,45 +137,8 @@ class SquadsController extends Controller
     {
         Squad::destroy($id);
 
-        return redirect()->back()
+        return redirect()->route('squads.list')
             ->with('success', 'Squad has been deleted.');
-    }
-
-    /**
-     * @param int $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function showApplication(int $id)
-    {
-        $application = SquadApplication::with('user')->find($id);
-
-        return view('web::squads.modals.applications.read.content', compact('application'));
-    }
-
-    /**
-     * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
-     */
-    public function approveApplication(int $id)
-    {
-        $application = SquadApplication::with('squad', 'user')->find($id);
-
-        $application->squad->members()->save($application->user);
-        $application->delete();
-
-        return redirect()->back();
-    }
-
-    /**
-     * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function rejectApplication(int $id)
-    {
-        $application = SquadApplication::find($id)->delete();
-
-        return redirect()->back();
     }
 
     /**
@@ -216,7 +179,7 @@ class SquadsController extends Controller
      * @param int $user_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function kickMember(int $id, int $user_id)
+    public function kick(int $id, int $user_id)
     {
         $squad = Squad::find($id);
         $squad->members()->detach($user_id);
@@ -230,18 +193,6 @@ class SquadsController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getSquadMembers(MembersDataTable $dataTable, int $id)
-    {
-        $squad = Squad::with('members', 'moderators', 'moderators.main_character')->find($id);
-
-        return $dataTable->render('web::squads.show', compact('squad'));
-    }
-
-    /**
-     * @param \Seat\Web\Http\DataTables\Squads\CandidatesDataTable $dataTable
-     * @param int $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getSquadCandidates(CandidatesDataTable $dataTable, int $id)
     {
         $squad = Squad::with('members', 'moderators', 'moderators.main_character')->find($id);
 
