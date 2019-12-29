@@ -70,19 +70,19 @@
                                                 <ul class="list-group list-group-flush">
                                                     <li class="list-group-item">
                                                         ${data.is_moderated ? '<i class="fas fa-check text-success"></i>' : '<i class="fas fa-times text-danger"></i>'}
-                                                        moderated
+                                                        Moderated
                                                     </li>
                                                     <li class="list-group-item">
                                                         ${data.is_moderator ? '<i class="fas fa-check text-success"></i>' : '<i class="fas fa-times text-danger"></i>'}
-                                                        moderator
+                                                        Moderator
                                                     </li>
                                                     <li class="list-group-item">
                                                         ${data.is_member ? '<i class="fas fa-check text-success"></i>' : '<i class="fas fa-times text-danger"></i>'}
-                                                        member
+                                                        Member
                                                     </li>
                                                     <li class="list-group-item">
                                                         ${data.is_candidate ? '<i class="fas fa-check text-success"></i>' : '<i class="fas fa-times text-danger"></i>'}
-                                                        candidate
+                                                        Candidate
                                                     </li>
                                                 </ul>
                                                 <div class="row mt-3">
