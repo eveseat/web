@@ -63,17 +63,17 @@ Route::delete('/{id}/members/{user_id}', [
 Route::group(['prefix' => 'applications'], function () {
     Route::get('/{id}', [
         'as'   => 'squads.application',
-        'uses' => 'SquadsController@showApplication',
+        'uses' => 'ApplicationsController@show',
     ]);
 
     Route::post('/{id}', [
         'as'   => 'squads.application.approve',
-        'uses' => 'SquadsController@approveApplication',
+        'uses' => 'ApplicationsController@approve',
     ]);
 
     Route::delete('/{id}', [
         'as'   => 'squads.application.reject',
-        'uses' => 'SquadsController@rejectApplication',
+        'uses' => 'ApplicationsController@reject',
     ]);
 });
 
@@ -86,10 +86,5 @@ Route::group(['prefix' => '/ajax'], function () {
     Route::get('/{id}/candidates', [
         'as'   => 'squads.candidates',
         'uses' => 'SquadsController@getSquadCandidates',
-    ]);
-
-    Route::get('/{id}/roles', [
-        'as'   => 'squads.roles',
-        'uses' => 'SquadsController@getSquadRoles',
     ]);
 });
