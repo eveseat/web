@@ -62,7 +62,7 @@
           );
 
       const card_factory = (data) => `<div class="col mb-4">
-                                        <div class="card h-100">
+                                        <div class="card h-100" data-link="${data.link}" style="cursor: pointer";>
                                             <img src="${data.logo}" alt="${data.name}" width="128" class="card-img-top" />
                                             <div class="card-body pb-0">
                                                 <h5 class="card-title">${data.name}</h5>
@@ -99,16 +99,6 @@
                                             </div>
                                             <div class="card-footer">
                                                 <span class="badge ${data.type === 'hidden' ? 'badge-dark' : data.type === 'auto' ? 'badge-info' : 'badge-success' }">${data.type.substr(0, 1).toUpperCase() + data.type.substr(1).toLowerCase()}</span>
-                                                <div class="btn-group float-right">
-                                                    <a href="${data.link}" class="btn btn-sm btn-light">
-                                                        <i class="fas fa-eye"></i> Show
-                                                    </a>
-                                                    @if(auth()->user()->hasSuperUser())
-                                                    <button class="btn btn-sm btn-danger delete-squad" data-id="${data.id}">
-                                                      <i class="fas fa-trash-alt"></i> Delete
-                                                    </button>
-                                                    @endif
-                                                </div>
                                             </div>
                                         </div>
                                     </div>`;
@@ -216,17 +206,14 @@
 
               refreshSquadDeck(keyword, 1);
           })
-          .on('click', '.delete-squad', function () {
-              var endpoint = `${window.location.protocol}//${window.location.hostname}:${window.location.port}${window.location.pathname}/${this.dataset.id}`;
-
-              $(this).closest('.card').fadeOut('slow');
-
-              $.ajax(endpoint, {
-                  method: 'DELETE'
-              }).always(function () {
-                  var keyword = $('input[name="search-squad"]').val();
-                  refreshSquadDeck(keyword, 1);
-              });
+          .on('mouseover', '.card', function () {
+              $(this).fadeTo('fast', 0.6);
+          })
+          .on('mouseleave', '.card', function () {
+              $(this).fadeTo('fast', 1.0);
+          })
+          .on('click', '.card', function () {
+              window.location.href = this.dataset.link;
           });
   </script>
 @endpush
