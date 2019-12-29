@@ -80,10 +80,14 @@
                 <div class="col-2">
                   @include('web::partials.character', ['character' => $moderator->main_character])
                   @if(auth()->user()->hasSuperUser())
-                    <button type="button" class="btn btn-sm btn-danger float-right">
-                      <i class="fas fa-trash-alt"></i>
-                      Remove
-                    </button>
+                    <form method="post" action="{{ route('squads.moderators.remove', ['id' => $squad->id, 'user_id' => $moderator->id]) }}" class="float-right">
+                      {!! csrf_field() !!}
+                      {!! method_field('DELETE') !!}
+                      <button type="submit" class="btn btn-sm btn-danger">
+                        <i class="fas fa-trash-alt"></i>
+                        Remove
+                      </button>
+                    </form>
                   @endif
                 </div>
               @endforeach
@@ -91,7 +95,24 @@
           @endforeach
 
           @if(auth()->user()->hasSuperUser())
-            <span class="text-danger">TODO : button + drill-down to add moderators</span>
+            <form method="post" action="{{ route('squads.moderators.add', $squad->id) }}" class="mt-3">
+              {!! csrf_field() !!}
+              <div class="form-row align-items-center">
+                <div class="col-3 offset-8">
+                  <label for="squad-moderator" class="sr-only">User</label>
+                  <select name="user_id" class="form-control" id="squad-moderator" style="width: 100%;"></select>
+                </div>
+                <div class="col-auto col-1">
+                  <button type="submit" class="btn btn-success">
+                    <i class="fas fa-plus"></i> Add
+                  </button>
+                </div>
+              </div>
+            </form>
+            <form method="post" action="{{ route('squads.destroy', $squad->id) }}" id="delete-squad">
+              {!! csrf_field() !!}
+              {!! method_field('DELETE') !!}
+            </form>
           @endif
         </div>
         @if($squad->type != 'auto' && auth()->user()->name !== 'admin')
@@ -208,6 +229,21 @@
 
   <script>
     ids_to_names();
+
+    $('#squad-moderator')
+        .select2({
+            placeholder: '{{ trans('web::seat.select_item_add') }}',
+            ajax: {
+                url: '{{ route('squads.moderators.available', $squad->id) }}',
+                dataType: 'json',
+                cache: true,
+                processResults: function (data, params) {
+                    return {
+                        results: data.results
+                    };
+                }
+            }
+        });
 
     if (! $.fn.dataTable.isDataTable('#candidates-table')) {
         $('#candidates-table').DataTable({
