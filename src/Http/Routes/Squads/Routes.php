@@ -55,9 +55,19 @@ Route::delete('/{id}/members/leave', [
     'uses' => 'SquadsController@leave',
 ]);
 
+Route::post('/{id}/moderators', [
+    'as'   => 'squads.moderators.add',
+    'uses' => 'SquadsController@addModerator',
+]);
+
 Route::delete('/{id}/members/{user_id}', [
     'as'   => 'squads.members.kick',
-    'uses' => 'SquadsController@kickMember',
+    'uses' => 'SquadsController@kick',
+]);
+
+Route::delete('/{id}/moderators/{user_id}', [
+    'as'   => 'squads.moderators.remove',
+    'uses' => 'SquadsController@removeModerator',
 ]);
 
 Route::group(['prefix' => 'applications'], function () {
@@ -78,13 +88,23 @@ Route::group(['prefix' => 'applications'], function () {
 });
 
 Route::group(['prefix' => '/ajax'], function () {
+    Route::get('/{id}/candidates', [
+        'as'   => 'squads.candidates',
+        'uses' => 'ApplicationsController@index',
+    ]);
+
     Route::get('/{id}/members', [
         'as'   => 'squads.members',
         'uses' => 'SquadsController@getSquadMembers',
     ]);
 
-    Route::get('/{id}/candidates', [
-        'as'   => 'squads.candidates',
-        'uses' => 'SquadsController@getSquadCandidates',
+    Route::get('/{id}/roles', [
+        'as'   => 'squads.roles',
+        'uses' => 'SquadsController@getSquadRoles',
+    ]);
+
+    Route::get('/{id}/users', [
+        'as'   => 'squads.moderators.available',
+        'uses' => 'SquadsController@getAvailableModerators',
     ]);
 });
