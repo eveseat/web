@@ -38,9 +38,18 @@ class SquadScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
+        // in order to avoid any null exception - we have to check if there is an active user
+        if (! auth()->check())
+            return $builder;
+
+        // in case the current user is super user - we do not apply any constraint on the made query
         if (auth()->user()->hasSuperUser())
             return $builder;
 
+        // otherwise, we only show user the list of squads :
+        //  - which are either of type manual or auto
+        //  - from which he is a moderator
+        //  - from which he is a member
         return $builder->whereIn('type', ['manual', 'auto'])
             ->orWhereHas('moderators', function (Builder $sub_query) {
                 $sub_query->where('id', auth()->user()->id);
