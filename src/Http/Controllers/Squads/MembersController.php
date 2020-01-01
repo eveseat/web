@@ -107,7 +107,7 @@ class MembersController extends Controller
         ]);
 
         $squad = Squad::find($id);
-        $user  = User::find($request->input('user_id'));
+        $user = User::find($request->input('user_id'));
         $squad->members()->detach($user->id);
 
         return redirect()->back()
