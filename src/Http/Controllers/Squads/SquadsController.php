@@ -25,7 +25,6 @@ namespace Seat\Web\Http\Controllers\Squads;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Http\DataTables\Squads\CandidatesDataTable;
 use Seat\Web\Http\DataTables\Squads\MembersDataTable;
 use Seat\Web\Http\DataTables\Squads\RolesDataTable;
 use Seat\Web\Models\Squads\Squad;
