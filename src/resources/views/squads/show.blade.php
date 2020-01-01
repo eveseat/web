@@ -128,6 +128,12 @@
                 <i class="fas fa-sign-out-alt"></i> {{ trans('web::squads.leave') }}
               </button>
             @else
+              @if($squad->is_candidate)
+                <div class="text-right">
+                  You have applied to this squad
+                  @include('web::partials.date', ['datetime' => $squad->applications->where('user_id', auth()->user()->id)->first()->created_at])
+                </div>
+              @endif
               @if(! $squad->is_candidate && $squad->isEligible(auth()->user()))
                 <button data-toggle="modal" data-target="#application-create" class="btn btn-sm btn-success float-right">
                   <i class="fas fa-sign-in-alt"></i> {{ trans('web::squads.join') }}
