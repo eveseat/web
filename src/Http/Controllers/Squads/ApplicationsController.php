@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Squads;
 
+use Illuminate\Http\Request;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Squads\CandidatesDataTable;
 use Seat\Web\Models\Squads\Squad;
@@ -55,6 +56,27 @@ class ApplicationsController extends Controller
         $application = SquadApplication::with('user')->find($id);
 
         return view('web::squads.modals.applications.read.content', compact('application'));
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request, int $id)
+    {
+        $squad = Squad::find($id);
+
+        $application = new SquadApplication([
+            'message' => $request->input('message', ''),
+        ]);
+
+        $application->user()->associate(auth()->user());
+        $application->squad()->associate($squad);
+
+        $application->save();
+
+        return redirect()->back();
     }
 
     /**
