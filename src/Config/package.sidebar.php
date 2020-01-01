@@ -70,7 +70,7 @@ return [
         'plural'        => true,
         'icon'          => 'fas fa-user-friends',
         'route_segment' => 'squads',
-        'route'         => 'squads.list',
+        'route'         => 'squads.index',
     ],
     'settings'    => [
         'name'          => 'configuration',
