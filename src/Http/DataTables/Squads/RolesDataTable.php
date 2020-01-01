@@ -44,7 +44,7 @@ class RolesDataTable extends DataTable
                 return view('web::squads.partials.permissions', compact('row'));
             })
             ->editColumn('action', function ($row) {
-                return '';
+                return view('web::squads.buttons.roles.remove', compact('row'));
             })
             ->filterColumn('permissions', function ($query, $keyword) {
                 $query->whereHas('permissions', function ($sub_query) use ($keyword) {

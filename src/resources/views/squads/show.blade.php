@@ -82,7 +82,7 @@
                 <div class="col-2">
                   @include('web::partials.character', ['character' => $moderator->main_character])
                   @if(auth()->user()->hasSuperUser())
-                    <form method="post" action="{{ route('squads.moderators.remove', ['id' => $squad->id, 'user_id' => $moderator->id]) }}" class="float-right">
+                    <form method="post" action="{{ route('squads.moderators.destroy', ['id' => $squad->id, 'user_id' => $moderator->id]) }}" class="float-right">
                       {!! csrf_field() !!}
                       {!! method_field('DELETE') !!}
                       <button type="submit" class="btn btn-sm btn-danger">
@@ -97,7 +97,7 @@
           @endforeach
 
           @if(auth()->user()->hasSuperUser())
-            <form method="post" action="{{ route('squads.moderators.add', $squad->id) }}" class="mt-3">
+            <form method="post" action="{{ route('squads.moderators.store', $squad->id) }}" class="mt-3">
               {!! csrf_field() !!}
               <div class="form-row align-items-center">
                 <div class="col-3 offset-8">
@@ -169,6 +169,20 @@
                 </tr>
               </thead>
             </table>
+            <form method="post" action="{{ route('squads.roles.store', $squad->id) }}" class="mt-3">
+              {!! csrf_field() !!}
+              <div class="form-row align-items-center">
+                <div class="col-3 offset-8">
+                  <label for="squad-role" class="sr-only">Role</label>
+                  <select name="role_id" class="form-control" id="squad-role" style="width: 100%;"></select>
+                </div>
+                <div class="col-auto col-1">
+                  <button type="submit" class="btn btn-success">
+                    <i class="fas fa-plus"></i> Add
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -186,6 +200,22 @@
             {!! $dataTable->table() !!}
           @else
             <p class="text-center">You are not member of that squad.</p>
+          @endif
+          @if(auth()->user()->hasSuperUser() || $squad->is_moderator)
+            <form method="post" action="{{ route('squads.members.store', $squad->id) }}" class="mt-3">
+              {!! csrf_field() !!}
+              <div class="form-row align-items-center">
+                <div class="col-3 offset-8">
+                  <label for="squad-member" class="sr-only">Member</label>
+                  <select name="user_id" class="form-control" id="squad-member" style="width: 100%;"></select>
+                </div>
+                <div class="col-auto col-1">
+                  <button type="submit" class="btn btn-success">
+                    <i class="fas fa-plus"></i> Add
+                  </button>
+                </div>
+              </div>
+            </form>
           @endif
         </div>
       </div>
@@ -242,7 +272,37 @@
         .select2({
             placeholder: '{{ trans('web::seat.select_item_add') }}',
             ajax: {
-                url: '{{ route('squads.moderators.available', $squad->id) }}',
+                url: '{{ route('squads.moderators.lookup', $squad->id) }}',
+                dataType: 'json',
+                cache: true,
+                processResults: function (data, params) {
+                    return {
+                        results: data.results
+                    };
+                }
+            }
+        });
+
+    $('#squad-role')
+      .select2({
+          placeholder: '{{ trans('web::seat.select_item_add') }}',
+          ajax: {
+              url: '{{ route('squads.roles.lookup', $squad->id) }}',
+              dataType: 'json',
+              cache: true,
+              processResults: function (data, params) {
+                  return {
+                      results: data.results
+                  };
+              }
+          }
+      });
+
+    $('#squad-member')
+        .select2({
+            placeholder: '{{ trans('web::seat.select_item_add') }}',
+            ajax: {
+                url: '{{ route('squads.members.lookup', $squad->id) }}',
                 dataType: 'json',
                 cache: true,
                 processResults: function (data, params) {
@@ -259,7 +319,7 @@
             processing: true,
             serverSide: true,
             order: [[0, 'desc']],
-            ajax: '{{ route('squads.candidates', $squad->id) }}',
+            ajax: '{{ route('squads.candidates.index', $squad->id) }}',
             columns: [
                 {data: 'user.name', name: 'user.name'},
                 {data: 'characters', name: 'characters'},
@@ -275,7 +335,7 @@
             processing: true,
             serverSide: true,
             order: [[0, 'desc']],
-            ajax: '{{ route('squads.roles', $squad->id) }}',
+            ajax: '{{ route('squads.roles.show', $squad->id) }}',
             columns: [
                 {data: 'title', name: 'title'},
                 {data: 'description', name: 'description'},

@@ -21,7 +21,7 @@
  */
 
 Route::get('/', [
-    'as'   => 'squads.list',
+    'as'   => 'squads.index',
     'uses' => 'SquadsController@index',
 ]);
 
@@ -45,66 +45,97 @@ Route::delete('/{id}', [
     'uses' => 'SquadsController@destroy',
 ]);
 
-Route::post('/{id}/members/join', [
-    'as'   => 'squads.members.join',
-    'uses' => 'SquadsController@join',
-]);
-
-Route::delete('/{id}/members/leave', [
-    'as'   => 'squads.members.leave',
-    'uses' => 'SquadsController@leave',
-]);
-
-Route::post('/{id}/moderators', [
-    'as'   => 'squads.moderators.add',
-    'uses' => 'SquadsController@addModerator',
-]);
-
-Route::delete('/{id}/members/{user_id}', [
-    'as'   => 'squads.members.kick',
-    'uses' => 'SquadsController@kick',
-]);
-
-Route::delete('/{id}/moderators/{user_id}', [
-    'as'   => 'squads.moderators.remove',
-    'uses' => 'SquadsController@removeModerator',
-]);
-
-Route::group(['prefix' => 'applications'], function () {
-    Route::get('/{id}', [
-        'as'   => 'squads.application',
-        'uses' => 'ApplicationsController@show',
-    ]);
-
-    Route::post('/{id}', [
-        'as'   => 'squads.application.approve',
-        'uses' => 'ApplicationsController@approve',
-    ]);
-
-    Route::delete('/{id}', [
-        'as'   => 'squads.application.reject',
-        'uses' => 'ApplicationsController@reject',
-    ]);
-});
-
-Route::group(['prefix' => '/ajax'], function () {
-    Route::get('/{id}/candidates', [
-        'as'   => 'squads.candidates',
+Route::prefix('/{id}/candidates')->group(function () {
+    Route::get('/', [
+        'as'   => 'squads.candidates.index',
         'uses' => 'ApplicationsController@index',
     ]);
 
-    Route::get('/{id}/members', [
-        'as'   => 'squads.members',
-        'uses' => 'SquadsController@getSquadMembers',
+    Route::post('/', [
+        'as'   => 'squads.candidates.store',
+        'uses' => 'ApplicationsController@store',
+    ]);
+});
+
+Route::prefix('/{id}/members')->group(function () {
+    Route::get('/', [
+        'as'   => 'squads.members.show',
+        'uses' => 'MembersController@show',
     ]);
 
-    Route::get('/{id}/roles', [
-        'as'   => 'squads.roles',
-        'uses' => 'SquadsController@getSquadRoles',
+    Route::get('/lookup', [
+        'as'   => 'squads.members.lookup',
+        'uses' => 'MembersController@lookup',
     ]);
 
-    Route::get('/{id}/users', [
-        'as'   => 'squads.moderators.available',
-        'uses' => 'SquadsController@getAvailableModerators',
+    Route::post('/', [
+        'as'   => 'squads.members.store',
+        'uses' => 'MembersController@store',
+    ]);
+
+    Route::delete('/', [
+        'as'   => 'squads.members.kick',
+        'uses' => 'MembersController@destroy',
+    ]);
+
+    Route::delete('/leave', [
+        'as'   => 'squads.members.leave',
+        'uses' => 'MembersController@leave',
+    ]);
+});
+
+Route::prefix('/{id}/moderators')->group(function () {
+    Route::get('/lookup', [
+        'as'   => 'squads.moderators.lookup',
+        'uses' => 'ModeratorsController@lookup',
+    ]);
+
+    Route::post('/', [
+        'as'   => 'squads.moderators.store',
+        'uses' => 'ModeratorsController@store',
+    ]);
+
+    Route::delete('/', [
+        'as'   => 'squads.moderators.destroy',
+        'uses' => 'ModeratorsController@destroy',
+    ]);
+});
+
+Route::prefix('/{id}/roles')->group(function () {
+    Route::get('/', [
+        'as'   => 'squads.roles.show',
+        'uses' => 'RolesController@show',
+    ]);
+
+    Route::get('/lookup', [
+        'as'   => 'squads.roles.lookup',
+        'uses' => 'RolesController@lookup',
+    ]);
+
+    Route::post('/', [
+        'as'   => 'squads.roles.store',
+        'uses' => 'RolesController@store',
+    ]);
+
+    Route::delete('/', [
+        'as'   => 'squads.roles.destroy',
+        'uses' => 'RolesController@destroy',
+    ]);
+});
+
+Route::prefix('/applications/{id}')->group(function () {
+    Route::get('/', [
+        'as'   => 'squads.applications.show',
+        'uses' => 'ApplicationsController@show',
+    ]);
+
+    Route::post('/', [
+        'as'   => 'squads.applications.approve',
+        'uses' => 'ApplicationsController@approve',
+    ]);
+
+    Route::delete('/', [
+        'as'   => 'squads.applications.reject',
+        'uses' => 'ApplicationsController@reject',
     ]);
 });
