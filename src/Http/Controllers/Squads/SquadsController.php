@@ -26,10 +26,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Squads\MembersDataTable;
-use Seat\Web\Http\DataTables\Squads\RolesDataTable;
 use Seat\Web\Models\Squads\Squad;
-use Seat\Web\Models\Squads\SquadApplication;
-use Seat\Web\Models\User;
 
 /**
  * Class SquadsController.
@@ -92,7 +89,9 @@ class SquadsController extends Controller
      */
     public function show(MembersDataTable $dataTable, int $id)
     {
-        return $this->getSquadMembers($dataTable, $id);
+        $squad = Squad::with('members', 'moderators', 'moderators.main_character')->find($id);
+
+        return $dataTable->render('web::squads.show', compact('squad'));
     }
 
     /**
@@ -139,139 +138,5 @@ class SquadsController extends Controller
 
         return redirect()->route('squads.list')
             ->with('success', 'Squad has been deleted.');
-    }
-
-    /**
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function join(Request $request, int $id)
-    {
-        $squad = Squad::find($id);
-
-        $application = new SquadApplication([
-            'message' => $request->input('message') ?: '',
-        ]);
-
-        $application->user()->associate(auth()->user());
-        $application->squad()->associate($squad);
-
-        $application->save();
-
-        return redirect()->back();
-    }
-
-    /**
-     * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function leave(int $id)
-    {
-        $squad = Squad::find($id);
-        $squad->members()->detach(auth()->user()->id);
-
-        return redirect()->route('squads.list');
-    }
-
-    /**
-     * @param int $id
-     * @param int $user_id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function kick(int $id, int $user_id)
-    {
-        $squad = Squad::find($id);
-        $squad->members()->detach($user_id);
-
-        return redirect()->back();
-    }
-
-    /**
-     * @param int $id
-     * @param int $user_id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function addModerator(Request $request, int $id)
-    {
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
-        ]);
-
-        $user = User::find($request->input('user_id'));
-        $squad = Squad::find($id);
-        $squad->moderators()->save($user);
-
-        return redirect()->back()
-            ->with('success', sprintf('%s has been successfully added as moderator to this Squad.', $user->name));
-    }
-
-    /**
-     * @param int $id
-     * @param int $user_id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function removeModerator(int $id, int $user_id)
-    {
-        $user = User::find($user_id);
-        $squad = Squad::find($id);
-
-        $squad->moderators()->detach($user_id);
-
-        return redirect()->back()
-            ->with('success', sprintf('%s has been successfully removed from moderators of that Squad.', $user->name));
-    }
-
-    /**
-     * @param \Seat\Web\Http\DataTables\Squads\MembersDataTable $dataTable
-     * @param int $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getSquadMembers(MembersDataTable $dataTable, int $id)
-    {
-        $squad = Squad::with('members', 'moderators', 'moderators.main_character')->find($id);
-
-        return $dataTable->render('web::squads.show', compact('squad'));
-    }
-
-    /**
-     * @param \Seat\Web\Http\DataTables\Squads\RolesDataTable $dataTable
-     * @param int $id
-     * @return mixed
-     */
-    public function getSquadRoles(RolesDataTable $dataTable, int $id)
-    {
-        $squad = Squad::with('members', 'moderators', 'moderators.main_character')->find($id);
-
-        return $dataTable->render('web::squads.show', compact('squad'));
-    }
-
-    /**
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getAvailableModerators(Request $request, int $id)
-    {
-        $users = User::whereNotIn('id', Squad::find($id)->moderators->pluck('id'))
-            ->where(function ($query) use ($request) {
-                $query->where('name', 'like', ["%{$request->query('q', '')}%"]);
-                $query->orWhereHas('characters', function ($sub_query) use ($request) {
-                    $sub_query->where('name', 'like', ["%{$request->query('q', '')}%"]);
-                });
-            })
-            ->where('name', '<>', 'admin')
-            ->orderBy('name')
-            ->get()
-            ->map(function ($user) {
-                return [
-                    'id'   => $user->id,
-                    'text' => $user->name,
-                ];
-            });
-
-        return response()->json([
-            'results' => $users,
-        ]);
     }
 }
