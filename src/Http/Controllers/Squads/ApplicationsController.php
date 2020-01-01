@@ -28,7 +28,7 @@ use Seat\Web\Models\Squads\Squad;
 use Seat\Web\Models\Squads\SquadApplication;
 
 /**
- * Class ApplicationsController
+ * Class ApplicationsController.
  *
  * @package Seat\Web\Http\Controllers\Squads
  */
