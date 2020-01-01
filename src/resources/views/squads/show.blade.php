@@ -11,10 +11,12 @@
         <div class="card-body">
           <h3>
             Summary
-            <button type="submit" class="btn btn-sm btn-danger float-right" form="delete-squad">
-              <i class="fas fa-trash-alt"></i>
-              Delete
-            </button>
+            @if(auth()->user()->hasSuperUser())
+              <button type="submit" class="btn btn-sm btn-danger float-right" form="delete-squad">
+                <i class="fas fa-trash-alt"></i>
+                Delete
+              </button>
+            @endif
           </h3>
 
           <hr/>
