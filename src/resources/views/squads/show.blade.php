@@ -99,15 +99,17 @@
           @if(auth()->user()->hasSuperUser())
             <form method="post" action="{{ route('squads.moderators.store', $squad->id) }}" class="mt-3">
               {!! csrf_field() !!}
-              <div class="form-row align-items-center">
-                <div class="col-3 offset-8">
-                  <label for="squad-moderator" class="sr-only">User</label>
-                  <select name="user_id" class="form-control" id="squad-moderator" style="width: 100%;"></select>
-                </div>
-                <div class="col-auto col-1">
-                  <button type="submit" class="btn btn-success">
-                    <i class="fas fa-plus"></i> Add
-                  </button>
+              <div class="row justify-content-end">
+                <div class="col-4">
+                  <div class="input-group input-group-sm">
+                    <label for="squad-moderator" class="sr-only">User</label>
+                    <select name="user_id" class="form-control input-sm" id="squad-moderator" style="width: 89%;"></select>
+                    <span class="input-group-append">
+                      <button class="btn btn-sm btn-success" type="submit">
+                        <i class="fas fa-plus"></i> Add
+                      </button>
+                    </span>
+                  </div>
                 </div>
               </div>
             </form>
@@ -169,17 +171,21 @@
                 </tr>
               </thead>
             </table>
-            <form method="post" action="{{ route('squads.roles.store', $squad->id) }}" class="mt-3">
+          </div>
+          <div class="card-footer">
+            <form method="post" action="{{ route('squads.roles.store', $squad->id) }}" data-table="rolesTableBuilder" id="squad-role-form">
               {!! csrf_field() !!}
-              <div class="form-row align-items-center">
-                <div class="col-3 offset-8">
-                  <label for="squad-role" class="sr-only">Role</label>
-                  <select name="role_id" class="form-control" id="squad-role" style="width: 100%;"></select>
-                </div>
-                <div class="col-auto col-1">
-                  <button type="submit" class="btn btn-success">
-                    <i class="fas fa-plus"></i> Add
-                  </button>
+              <div class="row justify-content-end">
+                <div class="col-4">
+                  <div class="input-group input-group-sm">
+                    <label for="squad-role" class="sr-only">Role</label>
+                    <select name="role_id" class="form-control input-sm" id="squad-role" style="width: 88%;"></select>
+                    <span class="input-group-append">
+                      <button class="btn btn-sm btn-success" type="submit">
+                        <i class="fas fa-plus"></i> Add
+                      </button>
+                    </span>
+                  </div>
                 </div>
               </div>
             </form>
@@ -201,23 +207,27 @@
           @else
             <p class="text-center">You are not member of that squad.</p>
           @endif
-          @if(auth()->user()->hasSuperUser() || $squad->is_moderator)
-            <form method="post" action="{{ route('squads.members.store', $squad->id) }}" class="mt-3">
+        </div>
+        @if(auth()->user()->hasSuperUser() || $squad->is_moderator)
+          <div class="card-footer">
+            <form method="post" action="{{ route('squads.members.store', $squad->id) }}" data-table="dataTableBuilder" id="squad-member-form">
               {!! csrf_field() !!}
-              <div class="form-row align-items-center">
-                <div class="col-3 offset-8">
-                  <label for="squad-member" class="sr-only">Member</label>
-                  <select name="user_id" class="form-control" id="squad-member" style="width: 100%;"></select>
-                </div>
-                <div class="col-auto col-1">
-                  <button type="submit" class="btn btn-success">
-                    <i class="fas fa-plus"></i> Add
-                  </button>
+              <div class="row justify-content-end">
+                <div class="col-4">
+                  <div class="input-group input-group-sm">
+                    <label for="squad-member" class="sr-only">User</label>
+                    <select name="user_id" class="form-control input-sm" id="squad-member" style="width: 88%;"></select>
+                    <span class="input-group-append">
+                      <button class="btn btn-sm btn-success" type="submit">
+                        <i class="fas fa-plus"></i> Add
+                      </button>
+                    </span>
+                  </div>
                 </div>
               </div>
             </form>
-          @endif
-        </div>
+          </div>
+        @endif
       </div>
     </div>
   </div>
@@ -270,7 +280,7 @@
 
     $('#squad-moderator')
         .select2({
-            placeholder: '{{ trans('web::seat.select_item_add') }}',
+            placeholder: 'Select a moderator to add to this Squad',
             ajax: {
                 url: '{{ route('squads.moderators.lookup', $squad->id) }}',
                 dataType: 'json',
@@ -285,7 +295,7 @@
 
     $('#squad-role')
       .select2({
-          placeholder: '{{ trans('web::seat.select_item_add') }}',
+          placeholder: 'Select a role to add to this Squad',
           ajax: {
               url: '{{ route('squads.roles.lookup', $squad->id) }}',
               dataType: 'json',
@@ -300,7 +310,7 @@
 
     $('#squad-member')
         .select2({
-            placeholder: '{{ trans('web::seat.select_item_add') }}',
+            placeholder: 'Select an user to add to this Squad',
             ajax: {
                 url: '{{ route('squads.members.lookup', $squad->id) }}',
                 dataType: 'json',
@@ -313,8 +323,38 @@
             }
         });
 
+    $('#squad-member-form, #squad-role-form')
+        .on('submit', function (e) {
+            e.preventDefault();
+
+            var button = $(this).find('.btn-success');
+            var table = $(this).data('table');
+
+            button.attr('disabled', true);
+            button.find('i').remove();
+            button.prepend('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true">');
+
+            $(this).find('.btn-success i').addClass('spinner-border');
+
+            $.ajax({
+                data: $(this).serialize(),
+                url: $(this).attr('action'),
+                method: $(this).attr('method'),
+            }).done(function () {
+                $(this).find('select').empty().trigger('change');
+
+                button.find('.spinner-border').remove();
+                button.prepend('<i class="fas fa-plus">');
+                button.removeAttr('disabled');
+
+                window.LaravelDataTables[table].ajax.reload();
+            });
+
+            return false;
+        });
+
     if (! $.fn.dataTable.isDataTable('#candidates-table')) {
-        $('#candidates-table').DataTable({
+        window.LaravelDataTables["candidatesTableBuilder"] = $('#candidates-table').DataTable({
             dom: 'Bfrtip',
             processing: true,
             serverSide: true,
@@ -330,7 +370,7 @@
     }
 
     if (! $.fn.dataTable.isDataTable('#roles-table')) {
-        $('#roles-table').DataTable({
+        window.LaravelDataTables["rolesTableBuilder"] = $('#roles-table').DataTable({
             dom: 'Bfrtip',
             processing: true,
             serverSide: true,
