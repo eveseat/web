@@ -123,6 +123,6 @@ class MembersController extends Controller
         $squad = Squad::find($id);
         $squad->members()->detach(auth()->user()->id);
 
-        return redirect()->route('squads.list');
+        return redirect()->route('squads.index');
     }
 }
