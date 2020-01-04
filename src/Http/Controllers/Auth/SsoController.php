@@ -64,11 +64,6 @@ class SsoController extends Controller
 
         $eve_data = $social->driver('eveonline')->user();
 
-        // enforce requested scopes control
-        if (! empty(array_diff(setting('sso_scopes', true), explode(' ', $eve_data->scopes))))
-            return redirect()->route('auth.login')
-                ->with('error', 'Login failed. Requested access are not matching, please try again.');
-
         // Avoid self attachment
         if (auth()->check() && auth()->user()->id == $eve_data->id)
             return redirect()->route('home')
@@ -168,7 +163,7 @@ class SsoController extends Controller
         ])->fill([
             'user_id'       => $seat_user->id,
             'refresh_token' => $eve_user->refreshToken,
-            'scopes'        => explode(' ', $eve_user->scopes),
+            'scopes'        => $eve_user->scopes,
             'token'         => $eve_user->token,
             'expires_on'    => $eve_user->expires_on,
         ])->save();
