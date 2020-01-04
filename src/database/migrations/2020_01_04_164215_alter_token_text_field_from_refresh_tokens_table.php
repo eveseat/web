@@ -20,19 +20,34 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Extentions\Socialite\EveOnline;
-
-use SocialiteProviders\Manager\SocialiteWasCalled;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 /**
- * Class EveOnlineExtendSocialite.
- *
- * @package Seat\Web\Extentions\Socialite\EveOnline
+ * Class AlterTokenTextFieldFromRefreshTokensTable.
  */
-class EveOnlineExtendSocialite
+class AlterTokenTextFieldFromRefreshTokensTable extends Migration
 {
-    public function handle(SocialiteWasCalled $socialiteWasCalled)
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
     {
-        $socialiteWasCalled->extendSocialite('eveonline', Provider::class);
+        Schema::table('refresh_tokens', function (Blueprint $table) {
+            $table->text('token')->change();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+
     }
 }
