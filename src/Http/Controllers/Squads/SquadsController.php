@@ -79,7 +79,7 @@ class SquadsController extends Controller
         if (request()->ajax())
             return response()->json($squads);
 
-        return view('web::squads.list', compact('squads'));
+        return view('web::squads.index', compact('squads'));
     }
 
     /**
@@ -136,7 +136,7 @@ class SquadsController extends Controller
     {
         Squad::destroy($id);
 
-        return redirect()->route('squads.list')
+        return redirect()->route('squads.index')
             ->with('success', 'Squad has been deleted.');
     }
 }
