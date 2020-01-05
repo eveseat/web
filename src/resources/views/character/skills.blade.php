@@ -39,7 +39,7 @@
 
   @foreach($skill_groups->chunk(2) as $skill_group_row)
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12 mt-3">
         <div class="card-deck">
 
           @foreach($skill_group_row as $skill_group)
