@@ -23,8 +23,9 @@
 namespace Seat\Web\Http\Composers;
 
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Redis;
+use Seat\Eveapi\Jobs\EsiBase;
 use Seat\Eveapi\Models\Status\EsiStatus;
-use Seat\Eveapi\Traits\RateLimitsEsiCalls;
 use Seat\Services\Repositories\Configuration\UserRespository;
 
 /**
@@ -33,7 +34,7 @@ use Seat\Services\Repositories\Configuration\UserRespository;
  */
 class Esi
 {
-    use UserRespository, RateLimitsEsiCalls;
+    use UserRespository;
 
     /**
      * Bind data to the view.
@@ -47,7 +48,7 @@ class Esi
     {
 
         $view->with('esi_status', EsiStatus::latest()->first());
-        $view->with('is_rate_limited', $this->isEsiRateLimited());
-        $view->with('rate_limit_ttl', $this->getRateLimitKeyTtl());
+        $view->with('is_rate_limited', cache(EsiBase::RATE_LIMIT_KEY) >= EsiBase::RATE_LIMIT);
+        $view->with('rate_limit_ttl', Redis::ttl('seat:' . EsiBase::RATE_LIMIT_KEY));
     }
 }

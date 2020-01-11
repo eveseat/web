@@ -32,13 +32,4 @@ use Seat\Web\Http\DataTables\Common\Military\AbstractKillMailDataTable;
  */
 class KillMailDataTable extends AbstractKillMailDataTable
 {
-    /**
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function query()
-    {
-        return CorporationKillmail::with('detail', 'detail', 'detail.system',
-            'victim', 'victim.character', 'victim.corporation', 'victim.alliance', 'victim.ship',
-            'attackers', 'attackers.character', 'attackers.corporation', 'attackers.alliance');
-    }
 }

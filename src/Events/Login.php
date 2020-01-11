@@ -27,6 +27,7 @@ use Illuminate\Auth\Events\Login as LoginEvent;
 use Illuminate\Support\Facades\Request;
 use Seat\Console\Bus\CharacterTokenShouldUpdate;
 use Seat\Console\Bus\CorporationTokenShouldUpdate;
+use Seat\Eveapi\Models\Character\CharacterRole;
 use Seat\Web\Models\UserLoginHistory;
 
 /**
@@ -66,8 +67,9 @@ class Login
             // Update Character Information
             (new CharacterTokenShouldUpdate($token, 'high'))->fire();
 
-            // Update Corporation Information
-            (new CorporationTokenShouldUpdate($token, 'high'))->fire();
+            // Update Corporation Information if user is Director (otherwise, keep normal flow)
+            if (CharacterRole::where('character_id', $token->character_id)->where('role', 'Director')->exists())
+                (new CorporationTokenShouldUpdate($token, 'high'))->fire();
         }
     }
 }
