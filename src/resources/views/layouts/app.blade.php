@@ -22,8 +22,6 @@
     <link rel="stylesheet" href="{{ asset('web/css/dataTables.bootstrap4.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('web/css/adminlte.min.css') }}">
-    <!-- Skin -->
-    <link rel="stylesheet" href="{{ asset('web/css/skins/' . setting('skin') . '.min.css') }}">
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <!-- SeAT CSS -->
