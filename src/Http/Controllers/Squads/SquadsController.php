@@ -79,7 +79,7 @@ class SquadsController extends Controller
         if (request()->ajax())
             return response()->json($squads);
 
-        return view('web::squads.index', compact('squads'));
+        return view('web::squads.list', compact('squads'));
     }
 
     /**
