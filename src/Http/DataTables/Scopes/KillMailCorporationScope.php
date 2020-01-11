@@ -56,6 +56,10 @@ class KillMailCorporationScope implements DataTableScope
      */
     public function apply($query)
     {
-        return $query->whereIn('corporation_killmails.corporation_id', $this->corporation_ids);
+        return $query->whereHas('attackers', function ($sub_query) {
+            $sub_query->whereIn('killmail_attackers.character_id', $this->corporation_ids);
+        })->orWhereHas('victim', function ($sub_query) {
+            $sub_query->whereIn('killmail_victims.character_id', $this->corporation_ids);
+        });
     }
 }

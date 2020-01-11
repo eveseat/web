@@ -321,16 +321,45 @@ class WebServiceProvider extends AbstractSeatPlugin
             $balancing_mode = 'auto';
 
         // Configure the workers for SeAT.
+
+        /*
+        |-----------------------------------------------------------------------------------------
+        | Queue Worker Configuration
+        | ----------------------------------------------------------------------------------------
+        | Default queue is used to collect all jobs with no queue specified
+        | High queue is used to collect all jobs which need to be execute as soon as possible
+        | Characters queue is used to collect characters jobs dispatched by the scheduler
+        | Corporations queue is used to collect corporations jobs dispatched by the scheduler
+        | Notifications queue is used to collect notifications jobs
+        */
+
+        $horizon_environment_tpl = [
+            'connection' => 'redis',
+            'queue'      => ['default', 'high', 'characters', 'corporations', 'public', 'notifications'],
+            'balance'    => $balancing_mode,
+            'tries'      => 3,
+            'timeout'    => 900, // 15 minutes
+        ];
+
+        $horizon_environment = $horizon_environment_tpl;
+
+        // adapt queue worker configuration according to auto balancing mode
+        if ($balancing_mode === 'auto') {
+            $horizon_environment['minProcesses'] = 1;
+            $horizon_environment['maxProcesses'] = (int) config('seat.config.workers', $horizon_environment['minProcesses'] * 2);
+        }
+
+        // adapt queue worker configuration according to simple balancing mode
+        if ($balancing_mode === 'simple') {
+            $horizon_environment['processes'] = (int) config('seat.config.workers', count($horizon_environment['queue']));
+        }
+
         $horizon_environments = [
+            'production' => [
+                'seat-workers' => $horizon_environment,
+            ],
             'local' => [
-                'seat-workers' => [
-                    'connection' => 'redis',
-                    'queue'      => ['high', 'medium', 'low', 'default'],
-                    'balance'    => $balancing_mode,
-                    'processes'  => (int) config('seat.config.workers', 4),
-                    'tries'      => 1,
-                    'timeout'    => 900, // 15 minutes
-                ],
+                'seat-workers' => $horizon_environment,
             ],
         ];
 

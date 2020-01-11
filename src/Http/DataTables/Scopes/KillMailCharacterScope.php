@@ -86,6 +86,10 @@ class KillMailCharacterScope implements DataTableScope
             }
         }
 
-        return $query->whereIn('character_killmails.character_id', $this->character_ids);
+        return $query->whereHas('attackers', function ($sub_query) use ($character_ids) {
+            $sub_query->whereIn('killmail_attackers.character_id', $character_ids);
+        })->orWhereHas('victim', function ($sub_query) use ($character_ids) {
+            $sub_query->whereIn('killmail_victims.character_id', $character_ids);
+        });
     }
 }
