@@ -27,7 +27,7 @@ return [
     'sell'    => 'Verkaufen',
     'order'   => 'Auftrag',
     'range'   => 'Reichweite',
-    'volume'  => 'Menge',
+    'volume'  => 'Volumen',
     'price'   => 'Preis',
     'total'   => 'Total',
     'type'    => 'Typ',
