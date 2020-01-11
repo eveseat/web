@@ -25,6 +25,6 @@ return [
     'type'            => 'Typ',
     'items'           => 'Gegenstände',
     'hull_estimated_value' => 'Geschätzter Preis der Hülle',
-    'fitting_estimated_value' => 'Geschätzter Preis der gegenstände',
+    'fitting_estimated_value' => 'Geschätzter Preis der Gegenstände',
     'full_estimated_value' => 'Geschätzter Preis komplett',
 ];
