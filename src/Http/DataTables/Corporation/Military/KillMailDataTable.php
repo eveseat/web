@@ -22,7 +22,6 @@
 
 namespace Seat\Web\Http\DataTables\Corporation\Military;
 
-use Seat\Eveapi\Models\Killmails\CorporationKillmail;
 use Seat\Web\Http\DataTables\Common\Military\AbstractKillMailDataTable;
 
 /**
