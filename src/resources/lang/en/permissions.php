@@ -108,7 +108,7 @@ return [
     'corporation_contact_label'                       => 'Grant access to Corporation Contacts',
     'corporation_contact_description'                 => 'Displays corporation contacts including name, standing and link to third-party platforms (like zkillboard).',
     'corporation_contract_label'                      => 'Grant access to Corporation Contracts',
-    'corporation_contract_description'                => 'Dispkays corporation contracts including creation date, type, status and content.',
+    'corporation_contract_description'                => 'Displays corporation contracts including creation date, type, status and content.',
     'corporation_extraction_label'                    => 'Grant access to Corporation Extractions',
     'corporation_extraction_description'              => 'Displays moon extraction information of refineries owned by a corporation.',
     'corporation_industry_label'                      => 'Grant access to Corporation Industry',
