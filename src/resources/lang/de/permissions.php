@@ -84,7 +84,7 @@ return [
     'character_journal_label'            => 'Zugriff auf Character Kontenjournal gewähren.',
     'character_journal_description'      => 'Zeigt das Journal des Kontos eines Charakters an.',
     'character_transaction_label'        => 'Zugriff auf Charakter Kontentransaktionen gewähren.',
-    'character_transaction_description'  => 'Zeigt die TRansaktionen des Kontos eines Charakzers an.',
+    'character_transaction_description'  => 'Zeigt die Transaktionen des Kontos eines Charakzers an.',
 
     // Corporation Scope
     'corporation_asset_label'                         => 'Zugriff auf Corp Besitz gewähren.',
@@ -146,7 +146,7 @@ return [
     'corporation_wallet_fourth_division_label'        => 'Zugriff auf das vierte Corp Konto gewähren.',
     'corporation_wallet_fourth_division_description'  => 'Zeigt das vierte Corp Konto an.',
     'corporation_wallet_fifth_division_label'         => 'Zugriff auf das fünfte Corp Konto gewähren.',
-    'corporation_wallet_fifth_division_description'   => 'Zeigt das fünter Corp Konto an.',
+    'corporation_wallet_fifth_division_description'   => 'Zeigt das fünfte Corp Konto an.',
     'corporation_wallet_sixth_division_label'         => 'Zugriff auf das sechste Corp Konto gewähren.',
     'corporation_wallet_sixth_division_description'   => 'Zeigt das sechste Corp Konto an.',
     'corporation_wallet_seventh_division_label'       => 'Zugriff auf das siebte Corp Konto gewähren.',
@@ -154,5 +154,5 @@ return [
     'corporation_journal_label'                       => 'Zugriff auf das Corp Konto Journal gewähren.',
     'corporation_journal_description'                 => 'Zeigt das Journal des Corp Kontos an.',
     'corporation_transaction_label'                   => 'Zugriff auf die Corp Konto Transaktionen gewähren.',
-    'corporation_transaction_description'             => 'Zeigt die TRansaktionen des Corp Kontos an.',
+    'corporation_transaction_description'             => 'Zeigt die Transaktionen des Corp Kontos an.',
 ];
