@@ -22,7 +22,6 @@
 
 namespace Seat\Web\Http\DataTables\Character\Military;
 
-use Seat\Eveapi\Models\Killmails\CharacterKillmail;
 use Seat\Web\Http\DataTables\Common\Military\AbstractKillMailDataTable;
 
 /**
@@ -32,16 +31,6 @@ use Seat\Web\Http\DataTables\Common\Military\AbstractKillMailDataTable;
  */
 class KillMailDataTable extends AbstractKillMailDataTable
 {
-    /**
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function query()
-    {
-        return CharacterKillmail::with('detail', 'detail', 'detail.system',
-            'victim', 'victim.character', 'victim.corporation', 'victim.alliance', 'victim.ship',
-            'attackers', 'attackers.character', 'attackers.corporation', 'attackers.alliance');
-    }
-
     /**
      * @return \Yajra\DataTables\Html\Builder
      */

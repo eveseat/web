@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Common\Military;
 
+use Seat\Eveapi\Models\Killmails\Killmail;
 use Yajra\DataTables\Services\DataTable;
 
 /**
@@ -118,7 +119,12 @@ abstract class AbstractKillMailDataTable extends DataTable
     /**
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    abstract public function query();
+    public function query()
+    {
+        return Killmail::with('detail', 'detail.system',
+            'victim', 'victim.character', 'victim.corporation', 'victim.alliance', 'victim.ship',
+            'attackers', 'attackers.character', 'attackers.corporation', 'attackers.alliance');
+    }
 
     /**
      * @return array
