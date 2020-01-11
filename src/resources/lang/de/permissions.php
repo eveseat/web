@@ -35,7 +35,7 @@ return [
     'assets_division'                    => 'Diese Berechtigung ist Teil des Geschäftsbereichs Besitztümer',
 
     // Global Scope
-    'global_standing_builder_label'             => 'Gewähren Sie Zugriff auf den Standings Builder',
+    'global_standing_builder_label'             => 'Gewähre Zugriff auf den Standings Builder',
     'global_standing_builder_description'       => 'Der Standings Builder zeigt eine Übersicht Ihrer Charakter-, Corporation- und Allianzansehen. Es wird hauptsächlich zum Austausch von Ansehen zwischen Bündnissen einer Allianz oder Corps innerhalb einer Allianz verwendet. Auch nützlich für Charakter Intel.',
     'global_moons_reporter_label'               => 'Mondreporter',
     'global_moons_reporter_description'         => 'Der Mondreporter kann alle Monde von New Eden und ihre registrierten Kompositionsberichte anzeigen.',
