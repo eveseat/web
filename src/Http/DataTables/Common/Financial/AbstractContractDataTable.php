@@ -74,6 +74,9 @@ abstract class AbstractContractDataTable extends DataTable
                 }
             })
             ->editColumn('detail.acceptor.name', function ($row) {
+                if ($row->detail->acceptor->entity_id == 0)
+                    return '';
+
                 switch ($row->detail->acceptor->category) {
                     case 'alliance':
                         return view('web::partials.alliance', ['alliance' => $row->detail->acceptor]);
