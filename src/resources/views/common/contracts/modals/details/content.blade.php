@@ -17,7 +17,9 @@
         @include('web::partials.character', ['character' => $contract->assignee])
       </td>
       <td class="text-center">
-        @include('web::partials.character', ['character' => $contract->acceptor])
+        @if($contract->acceptor && $contract->acceptor->entity_id != 0)
+          @include('web::partials.character', ['character' => $contract->acceptor])
+        @endif
       </td>
     </tr>
   </tbody>
