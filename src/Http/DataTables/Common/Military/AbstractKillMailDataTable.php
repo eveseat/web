@@ -59,9 +59,7 @@ abstract class AbstractKillMailDataTable extends DataTable
                 ]);
             })
             ->editColumn('victim.character.name', function ($row) {
-                return view('web::partials.character', ['character' => $row->victim->character]) . '<br/>' .
-                    view('web::partials.corporation', ['corporation' => $row->victim->corporation]) .
-                    view('web::partials.alliance', ['alliance' => $row->victim->alliance]);
+                return view('web::common.killmails.entity', ['entity' => $row->victim]);
             })
             ->addColumn('killer', function ($row) {
                 $killer = $row->attackers->where('final_blow', true)->first();
@@ -69,9 +67,7 @@ abstract class AbstractKillMailDataTable extends DataTable
                 if (is_null($killer))
                     return '';
 
-                return view('web::partials.character', ['character' => $killer->character]) . '<br/>' .
-                    view('web::partials.corporation', ['corporation' => $killer->corporation]) . ' ' .
-                    view('web::partials.alliance', ['alliance' => $killer->alliance]);
+                return view('web::common.killmails.entity', ['entity' => $killer]);
             })
             ->filterColumn('victim.character.name', function ($query, $keyword) {
                 $query->whereHas('victim.character', function ($sub_query) use ($keyword) {
@@ -81,6 +77,9 @@ abstract class AbstractKillMailDataTable extends DataTable
                     return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
                 });
                 $query->orWhereHas('victim.alliance', function ($sub_query) use ($keyword) {
+                    return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
+                });
+                $query->orWhereHas('victim.faction', function ($sub_query) use ($keyword) {
                     return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
                 });
             })
@@ -95,9 +94,11 @@ abstract class AbstractKillMailDataTable extends DataTable
                     $sub_query->orWhereHas('alliance', function ($children_query) use ($keyword) {
                         return $children_query->whereRaw('name LIKE ?', ["%$keyword%"]);
                     });
+                    $sub_query->orWhereHas('faction', function ($children_query) use ($keyword) {
+                        return $children_query->whereRaw('name LIKE ?', ["%$keyword%"]);
+                    });
                 });
             })
-            ->rawColumns(['victim.character.name', 'killer'])
             ->make(true);
     }
 
@@ -122,8 +123,8 @@ abstract class AbstractKillMailDataTable extends DataTable
     public function query()
     {
         return Killmail::with('detail', 'detail.system',
-            'victim', 'victim.character', 'victim.corporation', 'victim.alliance', 'victim.ship',
-            'attackers', 'attackers.character', 'attackers.corporation', 'attackers.alliance');
+            'victim', 'victim.character', 'victim.corporation', 'victim.alliance', 'victim.faction', 'victim.ship',
+            'attackers', 'attackers.character', 'attackers.corporation', 'attackers.alliance', 'attackers.faction');
     }
 
     /**
