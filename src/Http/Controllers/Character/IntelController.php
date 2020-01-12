@@ -22,9 +22,6 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
-use Illuminate\View\View;
-use Seat\Eveapi\Jobs\Character\Affiliation;
-use Seat\Eveapi\Jobs\Universe\Names;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Character\Intel;
@@ -52,8 +49,6 @@ class IntelController extends Controller
      */
     public function getIntelSummary(int $character_id)
     {
-        Affiliation::withChain([new Names])->dispatch();
-
         return view('web::character.intel.summary');
     }
 
