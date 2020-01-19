@@ -43,7 +43,7 @@ class CreateSquadsTable extends Migration
             $table->mediumText('logo')->nullable();
             $table->enum('type', ['manual', 'auto', 'hidden'])->default('auto');
             $table->boolean('is_moderated')->default(false);
-            $table->json('filters')->default('{}');
+            $table->json('filters')->nullable();
             $table->timestamps();
 
             $table->index('type');
