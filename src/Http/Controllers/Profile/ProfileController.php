@@ -66,13 +66,14 @@ class ProfileController extends Controller
     }
 
     /**
+     * @param int $user_id
      * @param int $character_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getCharacterScopes(int $character_id)
+    public function getCharacterScopes(int $user_id, int $character_id)
     {
         $token = RefreshToken::where('character_id', $character_id)
-            ->where('user_id', auth()->user()->id)
+            ->where('user_id', $user_id)
             ->first();
 
         return view('web::profile.modals.scopes.content', ['scopes' => $token->scopes]);
