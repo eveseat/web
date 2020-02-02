@@ -25,7 +25,7 @@ Route::get('/', [
     'uses' => 'ProfileController@getView',
 ]);
 
-Route::get('/scopes/{character_id}', [
+Route::get('/scopes/{user_id}/{character_id}', [
     'as'   => 'profile.character.scopes',
     'uses' => 'ProfileController@getCharacterScopes',
 ]);
