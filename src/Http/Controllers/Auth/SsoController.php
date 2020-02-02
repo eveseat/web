@@ -25,8 +25,10 @@ namespace Seat\Web\Http\Controllers\Auth;
 use Illuminate\Support\Arr;
 use Laravel\Socialite\Contracts\Factory as Socialite;
 use Laravel\Socialite\Two\User as SocialiteUser;
+use Seat\Eveapi\Jobs\Corporation\Info;
 use Seat\Eveapi\Models\Character\CharacterAffiliation;
 use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\User;
@@ -210,6 +212,10 @@ class SsoController extends Controller
             'alliance_id' => $affiliation->alliance_id ?? null,
             'faction_id' => $affiliation->faction_id ?? null,
         ])->save();
+
+        // in case the corporation is unknown, enqueue a corporation info job
+        if (! CorporationInfo::find($affiliation->corporation_id))
+            Info::dispatch($affiliation->corporation_id);
     }
 
     /**
