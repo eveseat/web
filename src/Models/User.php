@@ -128,7 +128,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     /**
      * @var bool
      */
-    public $incrementing = false;
+    public $incrementing = true;
 
     /**
      * @var array
