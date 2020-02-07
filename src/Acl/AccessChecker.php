@@ -325,7 +325,7 @@ trait AccessChecker
                         foreach ($this->getAllCharacters()->pluck('character_id') as $characterID) {
 
                             if (isset($map['char'][$characterID]))
-                                $map['char'][$characterID] += $role_permissions;
+                                $map['char'][$characterID] = array_unique(array_merge($map['char'][$characterID], $role_permissions));
 
                             else
                                 $map['char'][$characterID] = $role_permissions;
@@ -339,7 +339,7 @@ trait AccessChecker
                         foreach ($this->getAllCorporations()->pluck('corporation_id') as $corporationID) {
 
                             if (isset($map['corp'][$corporationID]))
-                                $map['corp'][$corporationID] += $role_permissions;
+                                $map['corp'][$corporationID] = array_unique(array_merge($map['corp'][$corporationID], $role_permissions));
 
                             else
                                 $map['corp'][$corporationID] = $role_permissions;
@@ -377,7 +377,7 @@ trait AccessChecker
                     // affiliations already exist. Not using a ternary of coalesce operator
                     // here as it makes reading this really hard.
                     if (isset($map[$affiliation->type][$affiliation->affiliation]))
-                        $map[$affiliation->type][$affiliation->affiliation] += $role_permissions;
+                        $map[$affiliation->type][$affiliation->affiliation] = array_unique(array_merge($map[$affiliation->type][$affiliation->affiliation], $role_permissions));
 
                     else
                         $map[$affiliation->type][$affiliation->affiliation] = $role_permissions;
