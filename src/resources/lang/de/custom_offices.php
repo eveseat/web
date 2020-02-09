@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -18,12 +19,13 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 return [
     'planet'            => 'Planet',
-    'reinforcement'     => 'Verstärkungsphase',
-    'alliance'          => 'Erlaube Allianz',
-    'standings'         => 'Erlaube nach Ansehen',
+    'reinforcement'     => 'Rf. Zeit', // in lack of a good german translation, I leave this here, because the translation of reinforcement makes no sense in german for that matter.
+    'alliance'          => 'Erlaube Zugruff durch Allianz',
+    'standings'         => 'Erlaube Zugriff durch Ansehen',
     'standing_level'    => 'Minimales Ansehen',
-    'tax_alliance_corp' => 'Steuer für Allianz/Corporation',
-    'tax_standings'     => 'Steuer für Angesehene',
+    'tax_alliance_corp' => 'Steuern Allianz/Corp',
+    'tax_standings'     => 'Steuern Ansehen',
 ];

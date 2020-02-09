@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -18,6 +19,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 return [
     'region'        => 'Region|Regionen',
     'constellation' => 'Konstellation|Constellationen',
@@ -25,5 +27,5 @@ return [
     'planet'        => 'Planet|Planeten',
     'moon'          => 'Mond|Monde',
     'indicator'     => 'Indikator|Indikatoren',
-    'sovereignty'   => 'Gebietshoheit|Gebietshoheiten',
+    'sovereignty'   => 'Souveränität',
 ];

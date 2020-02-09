@@ -61,11 +61,6 @@ class MailDataTable extends DataTable
             ->addColumn('recipients', function ($row) {
                 return view('web::common.mails.modals.read.tags', compact('row'));
             })
-            ->filterColumn('sender', function ($query, $keyword) {
-                return $query->whereHas('sender', function ($sub_query) use ($keyword) {
-                    return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
-                });
-            })
             ->filterColumn('recipients', function ($query, $keyword) {
                 return $query->whereHas('recipients.entity', function ($sub_query) use ($keyword) {
                     return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
@@ -105,7 +100,7 @@ class MailDataTable extends DataTable
     public function getColumns()
     {
         return [
-            ['data' => 'timestamp', 'title' => trans('web::mail.date')],
+            ['data' => 'timestamp', 'title' => trans('web::mail.date'), 'searchable' => false],
             ['data' => 'sender.name', 'title' => trans('web::mail.sender')],
             ['data' => 'subject', 'title' => trans('web::mail.subject')],
             ['data' => 'recipients', 'title' => trans('web::mail.recipients')],

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -18,10 +19,11 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 return [
-    'start'         => 'Start',
+    'start'         => 'Beginn',
     'agent'         => 'Agent',
-    'skill'         => 'Fähigkeit',
+    'skill'         => 'Skill',
     'point_per_day' => 'Punkte pro Tag',
-    'remainder'     => 'Rest',
+    'remainder'     => 'Verbleibend',
 ];

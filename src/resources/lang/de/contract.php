@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -18,25 +19,26 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 return [
     'created'             => 'Erstellt',
     'type'                => 'Typ',
     'issuer'              => 'Aussteller',
-    'assignee'            => 'Beauftragter',
-    'acceptor'            => 'Annehmer',
+    'assignee'            => 'Ausgetsellt an',
+    'acceptor'            => 'Angenommen von',
     'status'              => 'Status',
     'price'               => 'Preis',
     'reward'              => 'Belohnung',
     'unknown'             => 'Unbekannt',
-    'item_exchange'       => 'Gegenstandsaustausch',
+    'item_exchange'       => 'Gegenstandstausch',
     'auction'             => 'Auktion',
-    'courier'             => 'Transport',
+    'courier'             => 'Kurier',
     'loan'                => 'Darlehen',
     'outstanding'         => 'Ausstehend',
     'in_progress'         => 'In Bearbeitung',
     'finished_issuer'     => 'Abgeschlossen durch Auftraggeber',
     'finished_contractor' => 'Abgeschlossen durch Auftragnehmer',
-    'finished'            => 'Abgeschlossen',
+    'finished'            => 'Beendet',
     'cancelled'           => 'Abgebrochen',
     'rejected'            => 'Abgelehnt',
     'failed'              => 'Fehlgeschlagen',

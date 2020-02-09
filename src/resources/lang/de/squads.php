@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -18,6 +19,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 return [
     'squad'        => 'Geschwader',
     'name'         => 'Name|Namen',
@@ -27,7 +29,7 @@ return [
     'moderated'    => 'Moderiert',
     'moderator'    => 'Moderator|Moderatoren',
     'candidate'    => 'Kandidat|kandidaten',
-    'member_since' => 'Mitlgied set',
+    'member_since' => 'Mitglied seit',
     'applied_at'   => 'Beworben am',
     'character'    => 'Charakter|Charaktere',
     'show'         => 'Zeigen',

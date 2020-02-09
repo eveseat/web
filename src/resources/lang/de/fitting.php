@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -18,11 +19,12 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 return [
     'name'            => 'Name',
     'type'            => 'Typ',
     'items'           => 'Gegenstände',
-    'hull_estimated_value' => 'Geschätzer Schiffswert',
-    'fitting_estimated_value' => 'Geschätzer Ausrüstungswert',
-    'full_estimated_value' => 'Geschätzter Gesamtwert',
+    'hull_estimated_value' => 'Geschätzter Preis der Hülle',
+    'fitting_estimated_value' => '"Geschätzter Preis der Ausrüstung',
+    'full_estimated_value' => 'Geschätzter Preis komplett',
 ];
