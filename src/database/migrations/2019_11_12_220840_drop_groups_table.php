@@ -67,7 +67,7 @@ class DropGroupsTable extends Migration
                 $join->on('users.group_id', 'user_settings.group_id');
                 $join->where('user_settings.name', 'main_character_id');
             })
-            ->select('users.group_id', 'users.id', 'users.character_owner_hash', 'user_settings.value')
+            ->select('users.group_id', 'users.id', 'users.name', 'users.character_owner_hash', 'user_settings.value')
             ->get();
 
         foreach ($entries as $entry) {
