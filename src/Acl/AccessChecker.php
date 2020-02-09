@@ -414,7 +414,14 @@ trait AccessChecker
         // TODO: This is going to need a major revamp in 3.1!
 
         // Check if there are corporation roles we can add. If so, add 'em.
-        $map['corp'] += $this->getPermissionsFromCorporationRoles();
+        $corp_role_permissions_map = $this->getPermissionsFromCorporationRoles();
+
+        foreach ($corp_role_permissions_map as $corporation_id => $permissions) {
+            if (! array_key_exists($corporation_id, $map['corp']))
+                $map['corp'][$corporation_id] = [];
+
+            $map['corp'][$corporation_id] = array_unique(array_merge($map['corp'][$corporation_id], $permissions));
+        }
 
         // Finally, return the calculated map!
         return $map;
