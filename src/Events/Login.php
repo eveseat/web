@@ -65,11 +65,11 @@ class Login
         foreach ($event->user->refresh_tokens as $token) {
 
             // Update Character Information
-            (new CharacterTokenShouldUpdate($token, 'high'))->fire();
+            (new CharacterTokenShouldUpdate($token))->fire();
 
             // Update Corporation Information if user is Director (otherwise, keep normal flow)
             if (CharacterRole::where('character_id', $token->character_id)->where('role', 'Director')->exists())
-                (new CorporationTokenShouldUpdate($token, 'high'))->fire();
+                (new CorporationTokenShouldUpdate($token->affiliation->corporation_id, $token))->fire();
         }
     }
 }
