@@ -70,7 +70,7 @@ class MiningCorporationScope implements DataTableScope
         return $query
             ->where('year', $this->year)
             ->where('month', $this->month)
-            ->whereHas('character', function ($sub_query) {
+            ->whereHas('character.affiliation', function ($sub_query) {
                 $sub_query->whereIn('corporation_id', $this->corporation_ids);
             });
     }
