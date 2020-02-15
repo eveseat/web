@@ -44,7 +44,11 @@ class BlueprintController extends Controller
     public function index(int $character_id, BlueprintDataTable $dataTable)
     {
         $token = RefreshToken::where('character_id', $character_id)->first();
-        $characters = User::with('characters')->find($token->user_id)->characters;
+        if ($token) {
+            $characters = User::with('characters')->find($token->user_id)->characters;
+        } else {
+            $characters = collect();
+        }
 
         return $dataTable->addScope(new CharacterScope('character.blueprint', $character_id, request()->input('characters')))
             ->addScope(new BlueprintTypeScope(request()->input('filters.type')))

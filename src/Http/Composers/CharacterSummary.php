@@ -63,10 +63,14 @@ class CharacterSummary
     public function compose(View $view)
     {
 
-        $token = RefreshToken::where('character_id', $this->request->character_id)->first();
-        $owner = User::with('characters')->find($token->user_id);
         $summary = CharacterInfo::findOrFail($this->request->character_id);
-        $characters = $owner->characters;
+        $token = RefreshToken::where('character_id', $this->request->character_id)->first();
+        if ($token) {
+            $owner = User::with('characters')->find($token->user_id);
+            $characters = $owner->characters;
+        } else {
+            $characters = collect();
+        }
 
         $view->with('summary', $summary);
         $view->with('characters', $characters);
