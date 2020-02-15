@@ -58,10 +58,11 @@ class AssetsController extends Controller
         $character_ids = collect($character_id);
 
         if (request('all_linked_characters') === 'true')
-
-            $character_ids = User::find(CharacterInfo::find($character_id)->refresh_token->user_id)
-                ->characters
-                ->pluck('character_id');
+            if(CharacterInfo::find($character_id)->refresh_token) {
+                $character_ids = User::find(CharacterInfo::find($character_id)->refresh_token->user_id)
+                    ->characters
+                    ->pluck('character_id');
+            }
 
         $assets = $this->getCharacterAssetsBuilder($character_ids);
 

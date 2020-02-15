@@ -48,7 +48,11 @@ class MailController extends Controller
     public function index(int $character_id, MailDataTable $dataTable)
     {
         $token = RefreshToken::where('character_id', $character_id)->first();
-        $characters = User::with('characters')->find($token->user_id)->characters;
+        if ($token) {
+            $characters = User::with('characters')->find($token->user_id)->characters;
+        } else {
+            $characters = collect();
+        }
 
         return $dataTable
             ->addScope(new CharacterMailScope($character_id, request()->input('characters', [])))
