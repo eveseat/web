@@ -46,7 +46,11 @@ class WalletController extends Controller
     public function journal(int $character_id, WalletJournalDataTable $dataTable)
     {
         $token = RefreshToken::where('character_id', $character_id)->first();
-        $characters = User::with('characters')->find($token->user_id)->characters;
+        if ($token) {
+            $characters = User::with('characters')->find($token->user_id)->characters;
+        } else {
+            $characters = collect();
+        }
 
         return $dataTable
             ->addScope(new CharacterScope('character.journal', $character_id, request()->input('characters', [])))
@@ -61,7 +65,11 @@ class WalletController extends Controller
     public function transactions(int $character_id, WalletTransactionDataTable $dataTable)
     {
         $token = RefreshToken::where('character_id', $character_id)->first();
-        $characters = User::with('characters')->find($token->user_id)->characters;
+        if ($token) {
+            $characters = User::with('characters')->find($token->user_id)->characters;
+        } else {
+            $characters = collect();
+        }
 
         return $dataTable
             ->addScope(new CharacterScope('character.transaction', $character_id, request()->input('characters')))
