@@ -84,7 +84,8 @@ class CorporationDataTable extends DataTable
      */
     public function query()
     {
-        return CorporationInfo::with('member_limit', 'ceo', 'alliance');
+        return CorporationInfo::with('member_limit', 'ceo', 'alliance')
+            ->select('corporation_infos.*');
     }
 
     /**

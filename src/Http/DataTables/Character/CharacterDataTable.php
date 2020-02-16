@@ -80,7 +80,8 @@ class CharacterDataTable extends DataTable
      */
     public function query()
     {
-        return CharacterInfo::with('affiliation', 'affiliation.corporation', 'affiliation.alliance', 'affiliation.faction');
+        return CharacterInfo::with(['affiliation', 'affiliation.corporation', 'affiliation.alliance', 'affiliation.faction'])
+            ->select('character_infos.*');
     }
 
     /**

@@ -24,8 +24,8 @@
       ajax        : '{{ route('support.search.characters.data') }}',
       columns     : [
         {data: 'name', name: 'name'},
-        {data: 'corporation.name', name: 'corporation.name'},
-        {data: 'alliance.name', name: 'alliance.name'}
+        {data: 'affiliation.corporation.name', name: 'affiliation.corporation.name'},
+        {data: 'affiliation.alliance.name', name: 'affiliation.alliance.name'}
       ],
       drawCallback: function () {
         $('img').unveil(100);
