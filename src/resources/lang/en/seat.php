@@ -599,6 +599,7 @@ return [
     'tax_standings'                => 'Tax: Standings',
     'no_storage'                   => 'There is no storage',
     'member'                       => 'Member|Members',
+    'faction'                      => 'Faction',
 
     'start_at'                     => 'Start at',
     'chunk_arrival'                => 'Chunk Arrival',
