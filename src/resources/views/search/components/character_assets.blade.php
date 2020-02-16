@@ -29,8 +29,8 @@
       ajax        : '{{ route('support.search.assets.data') }}',
       columns     : [
         {data: 'character.name', name: 'character.name'},
-        {data: 'character.corporation.name', name: 'character.corporation.name'},
-        {data: 'character.alliance.name', name: 'character.alliance.name'},
+        {data: 'character.affiliation.corporation.name', name: 'character.affiliation.corporation.name'},
+        {data: 'character.affiliation.alliance.name', name: 'character.affiliation.alliance.name'},
         {data: 'asset_name', name: 'asset_name'},
         {data: 'location_name', name: 'location_name'},
         {data: 'type.group.groupName', name: 'type.group.groupName'},

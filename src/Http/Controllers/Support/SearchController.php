@@ -66,11 +66,11 @@ class SearchController extends Controller
             ->editColumn('name', function ($row) {
                 return view('web::partials.character', ['character' => $row]);
             })
-            ->editColumn('corporation.name', function ($row) {
-                return view('web::partials.corporation', ['corporation' => $row->corporation]);
+            ->editColumn('affiliation.corporation.name', function ($row) {
+                return view('web::partials.corporation', ['corporation' => $row->affiliation->corporation]);
             })
-            ->editColumn('alliance.name', function ($row) {
-                return view('web::partials.alliance', ['alliance' => $row->alliance]);
+            ->editColumn('affiliation.alliance.name', function ($row) {
+                return view('web::partials.alliance', ['alliance' => $row->affiliation->alliance]);
             })
             ->make(true);
 
@@ -126,7 +126,7 @@ class SearchController extends Controller
                 return view('web::common.mails.modals.read.tags', compact('row'));
             })
             ->addColumn('read', function ($row) {
-                return view('web::common.mails.buttons.read', ['character_id' => $row->character_id, 'mail_id' => $row->mail_id]);
+                return view('web::common.mails.buttons.read', ['character_id' => $row->from, 'mail_id' => $row->mail_id]);
             })
             ->addColumn('recipients', function ($row) {
 
@@ -177,11 +177,11 @@ class SearchController extends Controller
             ->editColumn('character.name', function ($row) {
                 return view('web::partials.character', ['character' => $row->character]);
             })
-            ->editColumn('character.corporation.name', function ($row) {
-                return view('web::partials.corporation', ['corporation' => $row->character->corporation]);
+            ->editColumn('character.affiliation.corporation.name', function ($row) {
+                return view('web::partials.corporation', ['corporation' => $row->character->affiliation->corporation]);
             })
-            ->editColumn('character.alliance.name', function ($row) {
-                return view('web::partials.alliance', ['alliance' => $row->character->alliance]);
+            ->editColumn('character.affiliation.alliance.name', function ($row) {
+                return view('web::partials.alliance', ['alliance' => $row->character->affiliation->alliance]);
             })
             ->editColumn('type.typeName', function ($row) {
                 return view('web::partials.type', ['type_id' => $row->type->typeID, 'type_name' => $row->type->typeName]);
@@ -224,11 +224,11 @@ class SearchController extends Controller
             ->editColumn('character.name', function ($row) {
                 return view('web::partials.character', ['character' => $row->character]);
             })
-            ->editColumn('character.corporation.name', function ($row) {
-                return view('web::partials.corporation', ['corporation' => $row->character->corporation]);
+            ->editColumn('character.affiliation.corporation.name', function ($row) {
+                return view('web::partials.corporation', ['corporation' => $row->character->affiliation->corporation]);
             })
-            ->editColumn('character.alliance.name', function ($row) {
-                return view('web::partials.alliance', ['alliance' => $row->character->alliance]);
+            ->editColumn('character.affiliation.alliance.name', function ($row) {
+                return view('web::partials.alliance', ['alliance' => $row->character->affiliation->alliance]);
             })
             ->editColumn('type.typeName', function ($row) {
                 return view('web::partials.type', ['type_id' => $row->type->typeID, 'type_name' => $row->type->typeName]);
