@@ -57,13 +57,6 @@ class Squad extends Model
     ];
 
     /**
-     * @var array
-     */
-    protected $casts = [
-        'filters' => 'object',
-    ];
-
-    /**
      * @var bool
      */
     protected static $unguarded = true;
@@ -270,7 +263,7 @@ class Squad extends Model
      */
     public function getFilters(): stdClass
     {
-        return $this->filters;
+        return json_decode($this->filters);
     }
 
     /**
