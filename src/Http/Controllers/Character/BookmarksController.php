@@ -43,7 +43,10 @@ class BookmarksController extends Controller
     public function index(int $character_id, BookmarkDataTable $dataTable)
     {
         $token = RefreshToken::where('character_id', $character_id)->first();
-        $characters = User::with('characters')->find($token->user_id)->characters;
+        $characters = collect();
+        if ($token) {
+            $characters = User::with('characters')->find($token->user_id)->characters;
+        }
 
         return $dataTable
             ->addScope(new BookmarkCharacterScope('character.bookmark', $character_id, request()->input('characters')))

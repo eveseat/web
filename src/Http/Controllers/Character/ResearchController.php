@@ -43,7 +43,10 @@ class ResearchController extends Controller
     public function index(int $character_id, ResearchDataTable $dataTable)
     {
         $token = RefreshToken::where('character_id', $character_id)->first();
-        $characters = User::with('characters')->find($token->user_id)->characters;
+        $characters = collect();
+        if ($token) {
+            $characters = User::with('characters')->find($token->user_id)->characters;
+        }
 
         return $dataTable
             ->addScope(new CharacterScope('character.research', $character_id, request()->input('characters', [])))
