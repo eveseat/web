@@ -27,7 +27,7 @@
             <div class="col-md-6">
               <select id="main_character_id" name="main_character_id" class="form-control" style="width: 100%;">
                 @foreach($characters as $character)
-                  <option value="{{ $character->id }}"
+                  <option value="{{ $character->character_id }}"
                           @if(setting('main_character_id') == $character->id)
                           selected
                       @endif>
