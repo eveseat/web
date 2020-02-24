@@ -40,6 +40,16 @@ Route::get('/{id}', [
     'uses' => 'SquadsController@show',
 ]);
 
+Route::get('/{id}/edit', [
+    'as'   => 'squads.edit',
+    'uses' => 'SquadsController@edit',
+]);
+
+Route::put('/{id}', [
+    'as'   => 'squads.update',
+    'uses' => 'SquadsController@update',
+]);
+
 Route::delete('/{id}', [
     'as' => 'squads.destroy',
     'uses' => 'SquadsController@destroy',
