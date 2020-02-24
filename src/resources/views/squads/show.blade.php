@@ -12,10 +12,16 @@
           <h3>
             Summary
             @if(auth()->user()->hasSuperUser())
-              <button type="submit" class="btn btn-sm btn-danger float-right" form="delete-squad">
-                <i class="fas fa-trash-alt"></i>
-                Delete
-              </button>
+              <div class="btn-group float-right" role="group">
+                <a href="{{ route('squads.edit', $squad->id) }}" class="btn btn-sm btn-warning">
+                  <i class="fas fa-edit"></i>
+                  Edit
+                </a>
+                <button type="submit" class="btn btn-sm btn-danger" form="delete-squad">
+                  <i class="fas fa-trash-alt"></i>
+                  Delete
+                </button>
+              </div>
             @endif
           </h3>
 
@@ -153,12 +159,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">Roles & Constraints</h3>
-            <div class="card-tools">
-              <div class="input-group input-group-sm">
-                @include('web::components.filters.buttons.filters', ['rules' => $squad->filters])
-              </div>
-            </div>
+            <h3 class="card-title">Roles</h3>
           </div>
           <div class="card-body">
             <table class="table table-striped table-hover" id="roles-table">
@@ -258,15 +259,6 @@
 
   @include('web::squads.modals.applications.create.application')
   @include('web::squads.modals.applications.read.application')
-  @include('web::components.filters.modals.filters.filters', [
-    'filters' => [
-        (object) ['name' => 'character', 'src' => route('fastlookup.characters'), 'path' => 'characters', 'field' => 'character_infos.character_id', 'label' => 'Character'],
-        (object) ['name' => 'corporation', 'src' => route('fastlookup.corporations'), 'path' => 'characters.affiliation', 'field' => 'corporation_id', 'label' => 'Corporation'],
-        (object) ['name' => 'alliance', 'src' => route('fastlookup.alliances'), 'path' => 'characters.affiliation', 'field' => 'alliance_id', 'label' => 'Alliance'],
-        (object) ['name' => 'skill', 'src' => route('fastlookup.skills'), 'path' => 'characters.skills', 'field' => 'skill_id', 'label' => 'Skill'],
-        (object) ['name' => 'type', 'src' => route('fastlookup.items'), 'path' => 'characters.assets', 'field' => 'type_id', 'label' => 'Item'],
-    ],
-  ])
 
 @endsection
 
