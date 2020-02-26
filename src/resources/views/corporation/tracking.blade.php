@@ -18,9 +18,6 @@
         <li class="nav-item">
           <a href="#" class="nav-link" data-toggle="pill" data-filter="invalid_token">{{ trans_choice('web::seat.invalid_token', 2) }}</a>
         </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link" data-toggle="pill" data-filter="missing_users">{{ trans('web::seat.none') }} {{ trans('web::seat.seat_user') }}</a>
-        </li>
       </ul>
     </div>
     <div class="card-body">
@@ -31,8 +28,10 @@
             <thead>
               <tr>
                 <th data-orderable="false">{{ trans('web::seat.token') }}</th>
+                <th>{{ trans('web::seat.main_character') }}</th>
                 <th>{{ trans_choice('web::seat.name', 1) }}</th>
                 <th>{{ trans('web::seat.last_location') }}</th>
+                <th>{{ trans('web::seat.current_ship') }}</th>
                 <th>{{ trans('web::seat.joined') }}</th>
                 <th>{{ trans('web::seat.last_login') }}</th>
               </tr>
@@ -68,20 +67,26 @@
         }
       },
       columns         : [
-        {data: 'refresh_token', name: 'user.refresh_token', orderable: false, searchable: false},
-        {data: 'character_id', name: 'character_id'},
+        {data: 'refresh_token_status', name: 'refresh_token_status', orderable: false, searchable: false},
+        {data: 'refresh_token.user.main_character.name', name: 'refresh_token.user.main_character.name', visible: false},
+        {data: 'character.name', name: 'character.name', orderData: [1, 2]},
         {data: 'location', name: 'location'},
+        {data: 'ship.typeName', name: 'ship.typeName'},
         {data: 'start_date', name: 'start_date', render: human_readable, searchable: false},
         {data: 'logon_date', name: 'logon_date', render: human_readable, searchable: false}
       ],
+      aaSorting: [ [1, 'asc'], [2, 'asc'] ],
       rowGroup: {
         startRender: function(rows, group) {
 
-          var character_group = rows.data().pluck('main_character')[0];
+          var character_group = rows.data().pluck('refresh_token').pluck('user').pluck('main_character').pluck('name')[0];
 
-          return '{{trans('web::seat.main_character')}}: ' + character_group;
+          if (character_group == '')
+            return 'No group';
+          else
+            return '{{trans('web::seat.main_character')}}: ' + character_group;
         },
-        dataSrc: 'main_character'
+        dataSrc: 'refresh_token.user.main_character.name'
       },
       drawCallback: function () {
         $("img").unveil(100);

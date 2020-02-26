@@ -3,9 +3,3 @@
 @else
   Unknown Location
 @endif
-
-@if (! is_null($row->ship_type_id))
-  <i class="float-right" data-toggle="tooltip" title="" data-original-title="{{ optional($row->type)->typeName }}">
-    {!! img('types', 'icon', $row->ship_type_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-  </i>
-@endif
