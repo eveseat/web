@@ -22,10 +22,8 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
-use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Sde\MapDenormalize;
 use Seat\Eveapi\Models\Sde\StaStation;
-use Seat\Eveapi\Models\Universe\UniverseName;
 use Seat\Eveapi\Models\Universe\UniverseStructure;
 use Seat\Services\Repositories\Corporation\Members;
 use Seat\Web\Http\Controllers\Controller;
@@ -60,54 +58,38 @@ class TrackingController extends Controller
         $tracking = $this->getCorporationMemberTracking($corporation_id);
 
         if($selected_status->contains('valid_token'))
-            $tracking->has('user.refresh_token');
+            $tracking->has('refresh_token');
 
         if($selected_status->contains('invalid_token'))
-            $tracking->doesntHave('user.refresh_token');
-
-        if($selected_status->contains('missing_users'))
-            $tracking->doesntHave('user');
+            $tracking->doesntHave('refresh_token');
 
         return DataTables::of($tracking)
-            ->editColumn('character_id', function ($row) {
+            ->editColumn('refresh_token.user.main_character.name', function ($row) {
+                if(is_null(optional($row)->refresh_token))
+                    return '';
 
-                $character_id = $row->character_id;
-
-                $character = CharacterInfo::find($row->character_id) ?: new CharacterInfo([
-                    'character_id' => $row->character_id,
-                    'name'         => trans('web::seat.unknown'),
-                ]);
-
-                return view('web::partials.character', compact('character', 'character_id'));
+                return view('web::partials.character', ['character' => $row->refresh_token->user->main_character]);
+            })
+            ->editColumn('character.name', function ($row) {
+                return view('web::partials.character', ['character' => $row->character]);
             })
             ->addColumn('location', function ($row) {
                 return view('web::corporation.partials.location', compact('row'));
             })
+            ->editColumn('ship.typeName', function ($row) {
+                if(is_null(optional($row)->ship))
+                    return '';
 
-            ->addColumn('refresh_token', function ($row) {
+                return view('web::partials.type', ['type_id' => $row->ship->typeID, 'type_name' => $row->ship->typeName]);
+            })
+            ->addColumn('refresh_token_status', function ($row) {
 
                 $refresh_token = false;
 
-                if(! is_null(optional($row->user)->refresh_token))
+                if(! is_null(optional($row)->refresh_token))
                     $refresh_token = true;
 
                 return view('web::corporation.partials.refresh-token', compact('refresh_token'));
-            })
-            ->addColumn('main_character', function ($row) {
-
-                $character_id = $row->character_id;
-
-                if(is_null($row->user))
-                    return '';
-
-                $character = $row->user->main_character;
-
-                return view('web::partials.character', compact('character', 'character_id'));
-            })
-            ->filterColumn('character_id', function ($query, $keyword) {
-                $resolved_ids = UniverseName::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($resolved_id) { return $resolved_id->entity_id; });
-                $character_info_ids = CharacterInfo::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($character_info) { return $character_info->character_id; });
-                $query->whereIn('character_id', array_merge($resolved_ids->toArray(), $character_info_ids->toArray()));
             })
             ->filterColumn('location', function ($query, $keyword) {
 
@@ -122,7 +104,7 @@ class TrackingController extends Controller
                 $query->whereIn('location_id', array_merge($system_ids->toArray(), $station_ids->toArray(), $structure_ids->toArray()));
 
             })
-            ->rawColumns(['character_id', 'main_character', 'refresh_token', 'location'])
+            ->rawColumns(['refresh_token_status', 'location'])
             ->make(true);
 
     }
