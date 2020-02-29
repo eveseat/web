@@ -22,22 +22,22 @@
     <div class="card-footer">
       <ul class="list-inline">
         <li class="list-inline-item col-2">
-          <span class="badge badge-success">0</span> Gaz
+          <span class="badge badge-success">{{ $stats->ubiquitous }}</span> Gaz
         </li>
         <li class="list-inline-item col-2">
-          <span class="badge badge-primary">0</span> R8
+          <span class="badge badge-primary">{{ $stats->common }}</span> R8
         </li>
         <li class="list-inline-item col-2">
-          <span class="badge badge-info">0</span> R16
+          <span class="badge badge-info">{{ $stats->uncommon }}</span> R16
         </li>
         <li class="list-inline-item col-2">
-          <span class="badge badge-warning">0</span> R32
+          <span class="badge badge-warning">{{ $stats->rare }}</span> R32
         </li>
         <li class="list-inline-item col-2">
-          <span class="badge badge-danger">0</span> R64
+          <span class="badge badge-danger">{{ $stats->exceptional }}</span> R64
         </li>
         <li class="list-inline-item">
-          <span class="badge badge-default">0</span> ORE
+          <span class="badge badge-default">{{ $stats->standard }}</span> ORE
         </li>
       </ul>
     </div>
