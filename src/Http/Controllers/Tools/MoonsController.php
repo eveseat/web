@@ -43,7 +43,16 @@ class MoonsController extends Controller
      */
     public function index(MoonsDataTable $dataTable)
     {
-        return $dataTable->render('web::tools.moons.list');
+        $stats = (object) [
+            'ubiquitous' => UniverseMoonContent::ubiquitous()->count(),
+            'common' => UniverseMoonContent::common()->count(),
+            'uncommon' => UniverseMoonContent::uncommon()->count(),
+            'rare' => UniverseMoonContent::rare()->count(),
+            'exceptional' => UniverseMoonContent::exceptional()->count(),
+            'standard' => UniverseMoonContent::standard()->count(),
+        ];
+
+        return $dataTable->render('web::tools.moons.list', compact('stats'));
     }
 
     /**
