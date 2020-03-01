@@ -84,6 +84,11 @@ class DropGroupsTable extends Migration
                     $entry->id, $entry->name, $entry->group_id));
         }
 
+        // remove orphan settings
+        DB::table('user_settings')
+            ->whereNotIn('group_id', DB::table('groups')->select('id'))
+            ->delete();
+
         // control regarding main_character
         $entries = DB::table('user_settings')
             ->where('name', 'main_character_id')
@@ -94,8 +99,48 @@ class DropGroupsTable extends Migration
             ->get();
 
         if ($entries->isNotEmpty())
-            throw new Exception('The following main_character is set to more than a single group: %s',
-                implode(',', $entries->pick('value')->flatten()));
+            throw new Exception(sprintf('The following main_character are set to more than a single group: %s',
+                implode(',', $entries->pluck('value')->flatten()->toArray())));
+
+        ///
+        /// Ensure compatibility level with third party structures
+        ///
+
+        // SeAT Calendar
+
+        if (Schema::hasTable('calendar_attendees')) {
+            Schema::table('calendar_attendees', function (Blueprint $table) {
+                $table->dropForeign(['user_id']);
+            });
+        }
+
+        if (Schema::hasTable('calendar_operations')) {
+            Schema::table('calendar_operations', function (Blueprint $table) {
+                $table->dropForeign(['user_id']);
+            });
+        }
+
+        // Slack
+
+        if (Schema::hasTable('slack_users')) {
+            Schema::table('slack_users', function (Blueprint $table) {
+                $table->dropForeign(['group_id']);
+            });
+        }
+
+        if (Schema::hasTable('slack_channel_users')) {
+            Schema::table('slack_channel_users', function (Blueprint $table) {
+                $table->dropForeign(['group_id']);
+            });
+        }
+
+        // SeAT Connector
+
+        if (Schema::hasTable('seat_connector_users')) {
+            Schema::table('seat_connector_users', function (Blueprint $table) {
+                $table->dropForeign('fk_groups');
+            });
+        }
 
         ///
         /// Update tables
