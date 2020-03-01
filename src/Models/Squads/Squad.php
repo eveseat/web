@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Models\Squads;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
@@ -57,13 +58,6 @@ class Squad extends Model
     ];
 
     /**
-     * @var array
-     */
-    protected $casts = [
-        'filters' => 'object',
-    ];
-
-    /**
      * @var bool
      */
     protected static $unguarded = true;
@@ -76,6 +70,33 @@ class Squad extends Model
         parent::boot();
 
         static::addGlobalScope(new SquadScope());
+
+        self::updated(function ($model) {
+
+            // apply updates only if filters or type has been altered
+            if (! array_key_exists('filters', $model->getChanges()) &&
+                ! array_key_exists('type', $model->getChanges()))
+                return;
+
+            // kick members which are non longer eligible according to new filters
+            $model->members->each(function ($user) use ($model) {
+                if (!$model->isEligible($user))
+                    $model->members()->detach($user->id);
+            });
+
+            // invite members which are eligible according to new filters (only for auto squads)
+            if ($model->type == 'auto') {
+                $users = User::standard()
+                    ->whereDoesntHave('squads', function (Builder $query) use ($model) {
+                        $query->where('id', $model->id);
+                    })->get();
+
+                $users->each(function ($user) use ($model) {
+                    if ($model->isEligible($user))
+                        $model->members()->save($user);
+                });
+            }
+        });
     }
 
     /**
@@ -270,7 +291,7 @@ class Squad extends Model
      */
     public function getFilters(): stdClass
     {
-        return $this->filters;
+        return json_decode($this->filters);
     }
 
     /**

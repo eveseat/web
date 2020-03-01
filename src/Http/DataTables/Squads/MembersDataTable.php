@@ -74,6 +74,7 @@ class MembersDataTable extends DataTable
     public function query()
     {
         return User::with('characters')
+            ->standard()
             ->whereHas('squads', function ($query) {
                 $query->where('id', $this->request->id);
             });

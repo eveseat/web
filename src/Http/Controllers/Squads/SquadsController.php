@@ -26,6 +26,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Squads\MembersDataTable;
+use Seat\Web\Http\Validation\Squad as SquadValidation;
 use Seat\Web\Models\Squads\Squad;
 
 /**
@@ -106,26 +107,53 @@ class SquadsController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(SquadValidation $request)
     {
-        $request->validate([
-            'name'        => 'required|unique:squads|max:255',
-            'type'        => 'required|in:manual,auto,hidden',
-            'description' => 'required',
-            'logo'        => 'mimes:jpeg,jpg,png|max:2000',
-            'filters'     => 'json',
-        ]);
-
         $squad = Squad::create([
             'name'        => $request->input('name'),
             'type'        => $request->input('type'),
             'description' => $request->input('description'),
-            'filters'     => json_decode($request->input('filters')),
+            'filters'     => $request->input('filters'),
             'logo'        => $request->file('logo'),
         ]);
 
         return redirect()->route('squads.show', $squad->id)
             ->with('success', 'Squad has successfully been created. Please complete its setup by providing roles & moderators.');
+    }
+
+    /**
+     * @param int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit(int $id)
+    {
+        $squad = Squad::find($id);
+
+        return view('web::squads.edit', compact('squad'));
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request, int $id)
+    {
+        $squad = Squad::find($id);
+
+        $squad->name = $request->input('name');
+        $squad->type = $request->input('type');
+        $squad->description = $request->input('description');
+        $squad->filters = $request->input('filters');
+
+        if ($request->hasFile('logo'))
+            $squad->logo = $request->file('logo');
+
+        $squad->save();
+
+        return redirect()
+            ->route('squads.show', [$id])
+            ->with('success', 'Squad has successfully been updated.');
     }
 
     /**

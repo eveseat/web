@@ -101,7 +101,7 @@ class UsersDataTable extends DataTable
     public function query()
     {
         return User::with('main_character', 'characters', 'roles', 'roles.permissions')
-            ->where('users.name', '<>', 'admin');
+            ->standard();
     }
 
     /**
