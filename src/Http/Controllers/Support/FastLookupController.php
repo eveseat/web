@@ -45,7 +45,10 @@ class FastLookupController extends Controller
      */
     public function getUsers(Request $request)
     {
-        $users = User::with('characters')->where('name', 'like', ["%{$request->query('q', '')}%"])->get();
+        $users = User::with('characters')
+            ->standard()
+            ->where('name', 'like', ["%{$request->query('q', '')}%"])
+            ->get();
 
         return response()->json([
             'results' => $users->map(function ($user) {

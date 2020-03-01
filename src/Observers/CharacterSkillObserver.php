@@ -63,8 +63,10 @@ class CharacterSkillObserver extends AbstractSquadObserver
     protected function findRelatedUser(Model $fired_model): ?User
     {
         // retrieve user related to the character affiliation
-        return User::with('squads')->whereHas('characters', function ($query) use ($fired_model) {
-            $query->where('character_infos.character_id', $fired_model->character_id);
-        })->first();
+        return User::with('squads')
+            ->standard()
+            ->whereHas('characters', function ($query) use ($fired_model) {
+                $query->where('character_infos.character_id', $fired_model->character_id);
+            })->first();
     }
 }
