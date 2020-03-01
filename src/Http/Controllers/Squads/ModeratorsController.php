@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Squads;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\Squads\Squad;
@@ -41,14 +42,16 @@ class ModeratorsController extends Controller
      */
     public function lookup(Request $request, int $id)
     {
-        $users = User::whereNotIn('id', Squad::find($id)->moderators->pluck('id'))
+        $users = User::standard()
+            ->whereDoesntHave('moderators', function (Builder $query) use ($id) {
+                $query->where('id', $id);
+            })
             ->where(function ($query) use ($request) {
                 $query->where('name', 'like', ["%{$request->query('q', '')}%"]);
                 $query->orWhereHas('characters', function ($sub_query) use ($request) {
                     $sub_query->where('name', 'like', ["%{$request->query('q', '')}%"]);
                 });
             })
-            ->where('name', '<>', 'admin')
             ->orderBy('name')
             ->get()
             ->map(function ($user) {
