@@ -234,6 +234,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
+    public function moderators()
+    {
+        return $this->belongsToMany(Squad::class, 'squad_moderator');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function squads()
     {
         return $this->belongsToMany(Squad::class, 'squad_member')
@@ -265,5 +273,23 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function associatedCharacterIds()
     {
         return $this->characters->pluck('character_id')->flatten();
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeStandard($query)
+    {
+        return $query->where('name', '<>', 'admin');
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSystem($query)
+    {
+        return $query->where('name', 'admin');
     }
 }
