@@ -96,7 +96,7 @@ class AccessController extends Controller
     {
         $request->validate([
             'title' => 'string|required',
-            'description' => 'string',
+            'description' => 'string|nullable',
             'permissions' => 'array|required_with:filters',
             'filters' => 'array',
             'logo' => 'mimes:jpeg,jpg,png|max:2000',
@@ -120,7 +120,7 @@ class AccessController extends Controller
         // updating role members
         //
 
-        $this->giveUsersRole(json_decode($request->input('members')), $role->id);
+        $this->giveUsersRole(json_decode($request->input('members'), true), $role->id);
 
         //
         // updating role permissions and filters
