@@ -3,9 +3,9 @@
 <table class="table table-sm table-condensed no-border">
   <thead>
     <tr>
-      <th class="col-md-4 text-center">{{ trans('web::mining.date') }}</th>
-      <th class="col-md-4 text-center">{{ trans('web::mining.system') }}</th>
-      <th class="col-md-4 text-center">{{ trans('web::mining.ore') }}</th>
+      <th class="text-center">{{ trans('web::mining.date') }}</th>
+      <th class="text-center">{{ trans('web::mining.system') }}</th>
+      <th class="text-center">{{ trans('web::mining.ore') }}</th>
     </tr>
   </thead>
   <tbody>
