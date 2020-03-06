@@ -65,6 +65,10 @@ class ApplicationsController extends Controller
      */
     public function store(Request $request, int $id)
     {
+        $request->validate([
+		'message' => 'required',
+		]);
+        
         $squad = Squad::find($id);
 
         $application = new SquadApplication([
