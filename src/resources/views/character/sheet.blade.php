@@ -55,7 +55,7 @@
               <dt>{{ trans('web::seat.skill_queue') }}</dt>
               <dd>
                 @if($skill_queue && count($skill_queue) > 0)
-                  <ol>
+                  <ol class="skill-list">
 
                     @foreach($skill_queue->where('finish_date', '>', carbon())->slice(1)->all() as $skill)
 
@@ -306,6 +306,17 @@
   </div>
 
 @stop
+
+@push('head')
+  <style>
+    .skill-list {
+      overflow: auto;
+      max-height: 300px;
+      padding-inline-start: 30px;
+      white-space: nowrap;
+    }
+  </style>
+@endpush
 
 @push('javascript')
   @include('web::includes.javascript.id-to-name')
