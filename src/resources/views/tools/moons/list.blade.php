@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="card-body">
-      {!! $dataTable->table() !!}
+      {!! $dataTable->table(['class' => 'table table-hover']) !!}
     </div>
     <div class="card-footer">
       <ul class="list-inline">
