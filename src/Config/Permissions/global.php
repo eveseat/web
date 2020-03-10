@@ -30,15 +30,5 @@ return [
     'standing_builder' => [
         'label'       => 'web::permissions.global_standing_builder_label',
         'description' => 'web::permissions.global_standing_builder_description',
-    ],
-    'moons_reporter' => [
-        'label'       => 'web::permissions.global_moons_reporter_label',
-        'description' => 'web::permissions.global_moons_reporter_description',
-        'division'    => 'industrial',
-    ],
-    'moons_reporter_manager' => [
-        'label'       => 'web::permissions.global_moons_reporter_manager_label',
-        'description' => 'web::permissions.global_moons_reporter_manager_description',
-        'division'    => 'industrial',
-    ],
+    ]
 ];

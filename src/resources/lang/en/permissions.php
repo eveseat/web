@@ -42,6 +42,14 @@ return [
     'global_moons_reporter_manager_label'       => 'Moon Reports Manager',
     'global_moons_reporter_manager_description' => 'The Moon Reports Manager can create and update moon reports.',
 
+    // Moon Reporter Scope
+    'view_moon_reports_label'           => 'Grants access to view moon reports.',
+    'view_moon_reports_description'     => 'Displays all moons and any data available for each moon.',
+    'create_moon_reports_label'         => 'Grants access to creating new moon reports.',
+    'create_moon_reports_description'   => 'Allows a user to submit their moon probe results to the database.',
+    'manage_moon_reports_label'         => 'Grants access to moon report management.',
+    'manage_moon_reports_description'   => 'Allows a user to view, edit, and approve moon reports.',
+
     // Character Scope
     'character_asset_label'              => 'Grant access to Character Assets',
     'character_asset_description'        => 'Displays every asset (item) of a character as well as their location and quantity.',
