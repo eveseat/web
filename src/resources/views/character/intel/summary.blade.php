@@ -8,6 +8,27 @@
 
   <div class="card">
     <div class="card-header">
+      <h3 class="card-title">
+        {{ trans_choice('web::seat.character', 2) }}
+      </h3>
+    </div>
+    <div class="card-body">
+      <div class="mb-3">
+        <select multiple="multiple" id="dt-character-selector" class="form-control" style="width: 100%;">
+          @foreach($characters as $character)
+            @if($character->character_id == $request->character_id)
+              <option selected="selected" value="{{ $character->character_id }}">{{ $character->name }}</option>
+            @else
+              <option value="{{ $character->character_id }}">{{ $character->name }}</option>
+            @endif
+          @endforeach
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
       <h3 class="card-title">Top Wallet Journal Interactions</h3>
     </div>
     <div class="card-body">
@@ -18,10 +39,10 @@
           <tr>
             <th>Total</th>
             <th>Type</th>
-            <th>Character Name</th>
-            <th>Character Corp</th>
-            <th>Character Alliance</th>
-            <th>Character Faction</th>
+            <th>Party Name</th>
+            <th>Party Corp</th>
+            <th>Party Alliance</th>
+            <th>Party Faction</th>
             <th></th>
           </tr>
         </thead>
@@ -41,10 +62,10 @@
         <thead>
           <tr>
             <th>Total</th>
-            <th>Character Name</th>
-            <th>Character Corp</th>
-            <th>Character Alliance</th>
-            <th>Character Faction</th>
+            <th>Party Name</th>
+            <th>Party Corp</th>
+            <th>Party Alliance</th>
+            <th>Party Faction</th>
             <th></th>
           </tr>
         </thead>
@@ -90,6 +111,18 @@
 @push('javascript')
 
   <script>
+      $(document).ready(function() {
+          $('#dt-character-selector')
+              .select2()
+              .on('change', function () {
+                  character_top_journal_table.ajax.reload();
+                  character_top_transactions_table.ajax.reload();
+                  character_top_mails_table.ajax.reload();
+              });
+      });
+  </script>
+
+  <script>
     var character_top_journal_table, character_top_transactions_table, character_top_mails_table,
         character_journal, character_transactions, character_mails;
 
@@ -99,11 +132,6 @@
       character_top_mails_table.draw();
     });
 
-    function allLinkedCharacters() {
-      var character_ids = $("div.nav-tabs-custom > ul > li.active > a").data('characters');
-      return character_ids !== 'single';
-    }
-
     character_top_journal_table = $('table#character-top-journal-interactions').DataTable({
       processing  : true,
       serverSide  : true,
@@ -112,16 +140,16 @@
       ajax        : {
         url : '{{ route('character.view.intel.summary.journal.data', ['character_id' => $request->character_id]) }}',
         data: function (d) {
-          d.all_linked_characters = allLinkedCharacters();
+          d.characters = $('#dt-character-selector').val();
         }
       },
       columns: [
         {data: 'total', name: 'total', searchable: false},
         {data: 'ref_type', name: 'ref_type'},
-        {data: 'character.name', name: 'character.name'},
-        {data: 'corporation.name', name: 'corporation.name'},
-        {data: 'alliance.name', name: 'alliance.name'},
-        {data: 'faction.name', name: 'faction.name'},
+        {data: 'entity_name', name: 'entity_name'},
+        {data: 'corporation_id', name: 'corporation_id'},
+        {data: 'alliance_id', name: 'alliance_id'},
+        {data: 'faction_id', name: 'faction_id'},
         {data: 'action', name: 'action'}
       ],
       createdRow: function (row, data) {
@@ -143,15 +171,15 @@
       ajax        : {
         url : '{{ route('character.view.intel.summary.transactions.data', ['character_id' => $request->character_id]) }}',
         data: function (d) {
-          d.all_linked_characters = allLinkedCharacters();
+          d.characters = $('#dt-character-selector').val();
         }
       },
       columns     : [
         {data: 'total', name: 'total', searchable: false},
-        {data: 'character.name', name: 'character.name'},
-        {data: 'corporation.name', name: 'corporation.name'},
-        {data: 'alliance.name', name: 'alliance.name'},
-        {data: 'faction.name', name: 'faction.name'},
+        {data: 'entity_name', name: 'entity_name'},
+        {data: 'corporation_id', name: 'corporation_id'},
+        {data: 'alliance_id', name: 'alliance_id'},
+        {data: 'faction_id', name: 'faction_id'},
         {data: 'action', name: 'action'}
       ],
       drawCallback: function () {
@@ -168,15 +196,15 @@
       ajax        : {
         url : '{{ route('character.view.intel.summary.mail.data', ['character_id' => $request->character_id]) }}',
         data: function (d) {
-          d.all_linked_characters = allLinkedCharacters();
+          d.characters = $('#dt-character-selector').val();
         }
       },
       columns     : [
         {data: 'total', name: 'total', searchable: false},
-        {data: 'character.name', name: 'character.name'},
-        {data: 'corporation.name', name: 'corporation.name'},
-        {data: 'alliance.name', name: 'alliance.name'},
-        {data: 'faction.name', name: 'faction.name'},
+        {data: 'character_id', name: 'character_id'},
+        {data: 'corporation_id', name: 'corporation_id'},
+        {data: 'alliance_id', name: 'alliance_id'},
+        {data: 'faction_id', name: 'faction_id'},
         {data: 'action', name: 'action'}
       ],
       drawCallback: function () {
