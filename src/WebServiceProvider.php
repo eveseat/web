@@ -401,7 +401,8 @@ class WebServiceProvider extends AbstractSeatPlugin
         $this->registerPermissions(__DIR__ . '/Config/Permissions/mail.php', 'mail');
         $this->registerPermissions(__DIR__ . '/Config/Permissions/people.php', 'people');
         $this->registerPermissions(__DIR__ . '/Config/Permissions/search.php', 'search');
-
+        $this->registerPermissions(__DIR__ . '/Config/Permissions/moon.php', 'moon');
+        
         //dd($this->app['config']);
 
         // Register any extra services.
