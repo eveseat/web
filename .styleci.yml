@@ -5,9 +5,9 @@ risky: false
 enabled:
   - concat_with_spaces
   - no_empty_comment
-  - psr2_braces
-
+  
 disabled:
+  - psr2_braces
   - phpdoc_no_package
   - concat_without_spaces
   - no_blank_lines_after_class_opening
