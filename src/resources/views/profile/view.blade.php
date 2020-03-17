@@ -248,6 +248,29 @@
     </div>
   </div>
 
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">{{ trans('web::seat.user_sharing') }}</h3>
+      <div class="card-tools">
+        <div class="input-group input-group-sm">
+          <a href="{{ route('profile.update.sharinglink') }}" class="btn btn-sm btn-primary">
+            <i class="fas fa-plus"></i>
+            {{ trans('web::seat.user_sharing_generate_link') }}
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+    <p>{{ trans('web::seat.user_sharing_description') }}</p>
+    @if(auth()->user()->sharing)
+      <span>
+        <i class="fas fa-link"></i>
+        {{ route('profile.activate.sharinglink', ['token' => auth()->user()->sharing->token]) }} (expires {{ auth()->user()->sharing->expires_on->diffForHumans() }})
+      </span>
+    @endif
+    </div>
+  </div>
+
   @if(auth()->user()->name != 'admin')
   <div class="card">
     <div class="card-header">

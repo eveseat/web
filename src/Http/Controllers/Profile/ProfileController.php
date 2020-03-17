@@ -23,6 +23,8 @@
 namespace Seat\Web\Http\Controllers\Profile;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\Repositories\Character\Info;
 use Seat\Services\Repositories\Configuration\UserRespository;
@@ -30,6 +32,7 @@ use Seat\Services\Settings\Profile;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\EmailUpdate;
 use Seat\Web\Http\Validation\ProfileSettings;
+use Seat\Web\Models\UserSharingLink;
 
 /**
  * Class ProfileController.
@@ -160,5 +163,47 @@ class ProfileController extends Controller
         //auth()->login($user, true);
 
         return redirect()->back();
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function getUpdateSharingLink()
+    {
+
+        $token = Str::random(12);
+        UserSharingLink::updateOrCreate([
+            'user_id' => auth()->user()->id,
+        ], [
+            'token'      => $token,
+            'expires_on' => now()->addDays(7),
+        ]);
+
+        return redirect()->back()
+            ->with('success', 'A new sharing link has been generated!');
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function getActivateSharingLink($token)
+    {
+
+        // Fetch token from DB, if we can.
+        $token = UserSharingLink::where('token', $token)->first();
+
+        // Is this a valid sharing link?
+        if(! $token)
+            abort(500);
+
+        // Is token still valid?
+        if($token->expires_on->lessThan(now()))
+            return redirect()->back()
+                ->with('error', 'Token has expired.');
+
+        // Add this as user_sharing to the current users session.
+        session()->put('user_sharing', $token->user_id);
+        return redirect()->back()
+            ->with('success', 'You have now been granted access to the requested users characters.');
     }
 }

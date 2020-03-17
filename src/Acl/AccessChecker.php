@@ -29,6 +29,7 @@ use Seat\Services\Repositories\Character\Character;
 use Seat\Services\Repositories\Corporation\Corporation;
 use Seat\Web\Exceptions\BouncerException;
 use Seat\Web\Models\Acl\Permission;
+use Seat\Web\Models\User;
 use stdClass;
 
 /**
@@ -166,6 +167,10 @@ trait AccessChecker
         if ($this->isCeo() || $this->isOwner())
             return true;
 
+        // if the currently authenticated user has sharing access, grant access
+        if ($this->isValidSharingSession())
+            return true;
+
         $character = is_null(request()->character_id) ? null : CharacterInfo::find(request()->character_id);
 
         $corporation = is_null(request()->corporation_id) ? null : CorporationInfo::find(request()->corporation_id);
@@ -275,6 +280,21 @@ trait AccessChecker
 
             }
 
+        }
+
+        // if a sharing code is present in the users session, add 
+        // all the characters that user owns..
+        $sharing = session()->get('user_sharing', null);
+        $sharing_user = User::find($sharing);
+        if ($sharing) {
+
+            // For each character, assign wildcard permission for that character.
+            $sharing_user_character_ids = $sharing_user->associatedCharacterIds()->toArray();
+
+            foreach ($sharing_user_character_ids as $sharing_user_character_id) {
+
+                $map['char'][$sharing_user_character_id] = ['character.*'];
+            }
         }
 
         // Next we move through the roles the user has
@@ -523,6 +543,26 @@ trait AccessChecker
             return false;
 
         return in_array($corporation->ceo_id, $this->associatedCharacterIds()->toArray());
+    }
+
+    /**
+     * Determine if the currently authenticated user has a valid sharing session for this user.
+     *
+     * @return bool
+     */
+    private function isValidSharingSession(): bool
+    {
+
+        $character_id = null;
+
+        if (request()->character_id) {
+            $character = CharacterInfo::find(request()->character_id);
+        }
+
+        if (is_null($character))
+            return false;
+
+        return optional($character->user)->id === session()->get('user_sharing', null);
     }
 
     /**

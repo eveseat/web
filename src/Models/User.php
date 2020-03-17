@@ -292,4 +292,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return $query->where('name', 'admin');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function sharing()
+    {
+        return $this->hasOne(UserSharingLink::class);
+    }
 }
