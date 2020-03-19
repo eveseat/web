@@ -179,6 +179,11 @@ class ProfileController extends Controller
             'expires_on' => now()->addDays(7),
         ]);
 
+        // Log the new sharelink creation
+        event('security.log', [
+            'New share link created for user ' . auth()->user()->name, 'sharelink',
+        ]);
+
         return redirect()->back()
             ->with('success', 'A new sharing link has been generated!');
     }
@@ -200,6 +205,11 @@ class ProfileController extends Controller
         if($token->expires_on->lessThan(now()))
             return redirect()->back()
                 ->with('error', 'Token has expired.');
+
+        // Log the sharelink activation
+        event('security.log', [
+            'Share link activated for user ' . $token->user->name . ' by ' . auth()->user()->name, 'sharelink',
+        ]);
 
         // Add this as user_sharing to the current users session.
         session()->put('user_sharing', $token->user_id);
