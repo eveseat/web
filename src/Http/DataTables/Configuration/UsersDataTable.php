@@ -38,16 +38,15 @@ class UsersDataTable extends DataTable
     public function ajax()
     {
         return datatables()->eloquent($this->query())
-            ->editColumn('name', function ($row) {
-                return sprintf('%s %s',
-                    img('characters', 'portrait', $row->main_character_id, 64, ['class' => 'img-circle eve-icon small-icon'], false),
-                    $row->name);
+            ->editColumn('users.name', function ($row) {
+                $character = $row->main_character;
+                return view('web::configuration.users.partials.character', compact('character'))->render();
             })
-            ->editColumn('characters', function ($row) {
+            ->editColumn('characters.name', function ($row) {
                 return $row->characters->reject(function ($character) use ($row) {
                     return $character->character_id == $row->main_character_id;
                 })->map(function ($character) {
-                    return view('web::configuration.users.partials.character', compact('character'))->render();
+                    return view('web::configuration.users.partials.character-icon-hover', compact('character'))->render();
                 })->join(' ');
             })
             ->editColumn('last_login', function ($row) {
@@ -78,7 +77,7 @@ class UsersDataTable extends DataTable
                         });
                 });
             })
-            ->rawColumns(['name', 'characters', 'roles'])
+            ->rawColumns(['users.name', 'characters.name', 'roles'])
             ->make(true);
     }
 
@@ -101,7 +100,7 @@ class UsersDataTable extends DataTable
      */
     public function query()
     {
-        return User::with('characters', 'main_character', 'roles', 'roles.permissions')
+        return User::with('main_character', 'characters', 'roles', 'roles.permissions')
             ->standard();
     }
 
@@ -111,8 +110,8 @@ class UsersDataTable extends DataTable
     public function getColumns()
     {
         return [
-            ['data' => 'name', 'title' => trans_choice('web::seat.name', 1)],
-            ['data' => 'characters', 'title' => trans_choice('web::seat.character', 0)],
+            ['data' => 'users.name', 'title' => trans_choice('web::seat.name', 1)],
+            ['data' => 'characters.name', 'title' => trans_choice('web::seat.character', 0), 'orderable' => false],
             ['data' => 'last_login', 'title' => trans('web::seat.last_login')],
             ['data' => 'last_login_source', 'title' => trans('web::seat.from')],
             ['data' => 'email', 'title' => trans('web::seat.email'), 'searchable' => false, 'orderable' => false],
