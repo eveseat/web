@@ -39,14 +39,13 @@ class UsersDataTable extends DataTable
     {
         return datatables()->eloquent($this->query())
             ->editColumn('users.name', function ($row) {
-                $character = $row->main_character;
-                return view('web::configuration.users.partials.character', compact('character'))->render();
+                return view('web::partials.character', ['character' => $row->main_character]);
             })
             ->editColumn('characters.name', function ($row) {
                 return $row->characters->reject(function ($character) use ($row) {
                     return $character->character_id == $row->main_character_id;
                 })->map(function ($character) {
-                    return view('web::configuration.users.partials.character-icon-hover', compact('character'))->render();
+                    return view('web::partials.character-icon-hover', compact('character'))->render();
                 })->join(' ');
             })
             ->editColumn('last_login', function ($row) {
@@ -77,7 +76,7 @@ class UsersDataTable extends DataTable
                         });
                 });
             })
-            ->rawColumns(['users.name', 'characters.name', 'roles'])
+            ->rawColumns(['characters.name', 'roles'])
             ->make(true);
     }
 
