@@ -25,7 +25,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Class AddSquadUserUniqueToSquadApplicationsTable
+ * Class AddSquadUserUniqueToSquadApplicationsTable.
  */
 class AddSquadUserUniqueToSquadApplicationsTable extends Migration
 {
