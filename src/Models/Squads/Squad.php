@@ -80,7 +80,7 @@ class Squad extends Model
 
             // kick members which are non longer eligible according to new filters
             $model->members->each(function ($user) use ($model) {
-                if (!$model->isEligible($user))
+                if (! $model->isEligible($user))
                     $model->members()->detach($user->id);
             });
 
