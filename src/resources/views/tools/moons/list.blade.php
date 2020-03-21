@@ -10,14 +10,14 @@
       <h4 class="card-title">Moons</h4>
       <div class="card-tools">
         <div class="input-group input-group-sm">
-          @if(auth()->user()->has('global.moons_reporter_manager', false))
+          @if(auth()->user()->has('moon.create_moon_reports', false))
           @include('web::tools.moons.buttons.import')
           @endif
         </div>
       </div>
     </div>
     <div class="card-body">
-      {!! $dataTable->table() !!}
+      {!! $dataTable->table(['class' => 'table table-hover']) !!}
     </div>
     <div class="card-footer">
       <ul class="list-inline">
