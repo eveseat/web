@@ -8,7 +8,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form method="post" action="{{ route('squads.candidates.store', $squad->id) }}" id="application-form">
+        <form method="post" action="{{ route('squads.applications.store', $squad->id) }}" id="application-form">
           {!! csrf_field() !!}
           <div class="form-group">
             <label for="message" class="col-form-label">{{ trans('web::squads.message') }}</label>
