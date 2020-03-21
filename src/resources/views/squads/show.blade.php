@@ -212,7 +212,15 @@
         </div>
         <div class="card-body">
           @if($squad->is_member || auth()->user()->hasSuperUser())
-            {!! $dataTable->table() !!}
+            <table class="table table-striped table-hover" id="members-table">
+              <thead>
+                <tr>
+                  <th>{{ trans_choice('web::squads.name', 1) }}</th>
+                  <th>{{ trans_choice('web::squads.character', 0) }}</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+            </table>
           @else
             <p class="text-center">You are not member of that squad.</p>
           @endif
@@ -271,7 +279,6 @@
 @endsection
 
 @push('javascript')
-  {!! $dataTable->scripts() !!}
 
   @include('web::includes.javascript.id-to-name')
 
@@ -352,6 +359,26 @@
 
             return false;
         });
+
+    window.LaravelDataTables = window.LaravelDataTables || {};
+
+    if (! $.fn.dataTable.isDataTable('#members-table')) {
+        window.LaravelDataTables["membersTableBuilder"] = $('#members-table').DataTable({
+            dom: 'Bfrtip',
+            processing: true,
+            serverSide: true,
+            order: [[0, 'desc']],
+            ajax: '{{ route('squads.members.index', $squad->id) }}',
+            columns: [
+                {data: "name", name: "name", title: "Name", "orderable": true, "searchable": true},
+                {data: "characters", name: "characters", title: "Characters", "orderable": true, "searchable": true},
+                {defaultContent: "", data: "action", name: "action", title: "Action", "orderable": false, "searchable": false}
+            ],
+            "drawCallback": function() {
+                $("[data-toggle=tooltip]").tooltip();
+            }
+        });
+    }
 
     if (! $.fn.dataTable.isDataTable('#candidates-table')) {
         window.LaravelDataTables["candidatesTableBuilder"] = $('#candidates-table').DataTable({
