@@ -161,8 +161,7 @@ class MoonsDataTable extends DataTable
      */
     public function query()
     {
-        return MapDenormalize::whereIn(
-            'itemID', UniverseMoonContent::groupBy('moon_id')->pluck('moon_id'))
+        return MapDenormalize::has('moon_contents')
             ->with('planet', 'system', 'constellation', 'region', 'sovereignty', 'sovereignty.faction',
                    'sovereignty.alliance', 'sovereignty.corporation', 'moon_contents', 'moon_contents.type');
     }
