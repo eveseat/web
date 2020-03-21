@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\DataTables\Tools;
 
 use Seat\Eveapi\Models\Sde\MapDenormalize;
+use Seat\Eveapi\Models\Universe\UniverseMoonContent;
 use Yajra\DataTables\Services\DataTable;
 
 /**
@@ -160,7 +161,8 @@ class MoonsDataTable extends DataTable
      */
     public function query()
     {
-        return MapDenormalize::moons()
+        return MapDenormalize::whereIn(
+            'itemID', UniverseMoonContent::groupBy('moon_id')->pluck('moon_id'))
             ->with('planet', 'system', 'constellation', 'region', 'sovereignty', 'sovereignty.faction',
                    'sovereignty.alliance', 'sovereignty.corporation', 'moon_contents', 'moon_contents.type');
     }

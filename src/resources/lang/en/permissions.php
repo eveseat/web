@@ -42,6 +42,14 @@ return [
     'global_moons_reporter_manager_label'       => 'Moon Reports Manager',
     'global_moons_reporter_manager_description' => 'The Moon Reports Manager can create and update moon reports.',
 
+    // Moon Reporter Scope
+    'view_moon_reports_label'           => 'View Moon Reports',
+    'view_moon_reports_description'     => 'Displays all moons in eve, and any resources within the moon, if that data is available.',
+    'create_moon_reports_label'         => 'Create new Moon Reports',
+    'create_moon_reports_description'   => 'Allows a user to submit moon probe results.',
+    'manage_moon_reports_label'         => 'Manage Moon Reports',
+    'manage_moon_reports_description'   => 'Allows a user to edit and / or approve submitted moon reports.',
+
     // Character Scope
     'character_asset_label'              => 'Grant access to Character Assets',
     'character_asset_description'        => 'Displays every asset (item) of a character as well as their location and quantity.',
