@@ -148,4 +148,9 @@ Route::prefix('/applications/{id}')->group(function () {
         'as'   => 'squads.applications.reject',
         'uses' => 'ApplicationsController@reject',
     ]);
+
+    Route::delete('/', [
+        'as'   => 'squads.applications.cancel',
+        'uses' => 'ApplicationsController@cancel',
+    ]);
 });
