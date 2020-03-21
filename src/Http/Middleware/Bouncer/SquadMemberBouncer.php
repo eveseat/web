@@ -48,6 +48,11 @@ class SquadMemberBouncer
         if (auth()->user()->hasSuperUser())
             return $next($request);
 
+        $message = sprintf('Request to %s was denied by the bouncer. Authenticated user %s is not member or moderator of squad %s.',
+            $request->path(), auth()->user()->name, $squad->name);
+
+        event('security.log', [$message, 'squads']);
+
         // Redirect away from the original request
         return redirect()->route('auth.unauthorized');
     }

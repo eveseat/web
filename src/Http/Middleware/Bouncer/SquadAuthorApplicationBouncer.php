@@ -47,6 +47,11 @@ class SquadAuthorApplicationBouncer
         if (! is_null($application) && $application->user_id == auth()->user()->id)
             return $next($request);
 
+        $message = sprintf('Request to %s was denied by the bouncer. Authenticated user %s is not application owner.',
+            $request->path(), auth()->user()->name);
+
+        event('security.log', [$message, 'squads']);
+
         // Redirect away from the original request
         return redirect()->route('auth.unauthorized');
     }
