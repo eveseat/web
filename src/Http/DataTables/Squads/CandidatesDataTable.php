@@ -43,7 +43,7 @@ class CandidatesDataTable extends DataTable
                 return $row->user->characters->reject(function ($character) use ($row) {
                     return $character->character_id == $row->main_character_id;
                 })->map(function ($character) {
-                    return view('web::configuration.users.partials.character', compact('character'))->render();
+                    return view('web::partials.character-icon-hover', compact('character'))->render();
                 })->join(' ');
             })
             ->editColumn('user.name', function ($row) {
@@ -66,6 +66,9 @@ class CandidatesDataTable extends DataTable
     {
         return $this->builder()
             ->columns($this->columns())
+            ->parameters([
+                'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); }',
+            ])
             ->addAction();
     }
 
