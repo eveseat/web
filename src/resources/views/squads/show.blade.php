@@ -137,9 +137,17 @@
               </button>
             @else
               @if($squad->is_candidate)
+                <form method="post" action="{{ route('squads.applications.cancel', $squad->applications->where('user_id', auth()->user()->id)->first()->application_id) }}" id="form-cancel">
+                  {!! csrf_field() !!}
+                  {!! method_field('DELETE') !!}
+                </form>
                 <div class="text-right">
                   You have applied to this squad
                   @include('web::partials.date', ['datetime' => $squad->applications->where('user_id', auth()->user()->id)->first()->created_at])
+
+                  <button type="submit" class="btn btn-sm btn-danger" form="form-cancel">
+                    <i class="fas fa-times-circle"></i> {{ trans('web::squads.cancel') }}
+                  </button>
                 </div>
               @endif
               @if(! $squad->is_candidate && $squad->isEligible(auth()->user()))
