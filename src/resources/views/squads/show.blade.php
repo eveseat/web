@@ -211,7 +211,7 @@
           <h3 class="card-title">Members</h3>
         </div>
         <div class="card-body">
-          @if($squad->is_member || auth()->user()->hasSuperUser())
+          @if($squad->is_member || $squad->is_moderator || auth()->user()->hasSuperUser())
             <table class="table table-striped table-hover" id="members-table">
               <thead>
                 <tr>
@@ -386,7 +386,7 @@
             processing: true,
             serverSide: true,
             order: [[0, 'desc']],
-            ajax: '{{ route('squads.candidates.index', $squad->id) }}',
+            ajax: '{{ route('squads.applications.index', $squad->id) }}',
             columns: [
                 {data: 'user.name', name: 'user.name'},
                 {data: 'characters', name: 'characters'},
