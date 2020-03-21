@@ -25,7 +25,6 @@ namespace Seat\Web\Http\Controllers\Squads;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Http\DataTables\Squads\MembersDataTable;
 use Seat\Web\Http\Validation\Squad as SquadValidation;
 use Seat\Web\Models\Squads\Squad;
 
@@ -84,15 +83,14 @@ class SquadsController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Http\DataTables\Squads\MembersDataTable $dataTable
      * @param int $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(MembersDataTable $dataTable, int $id)
+    public function show(int $id)
     {
         $squad = Squad::with('members', 'moderators', 'moderators.main_character')->find($id);
 
-        return $dataTable->render('web::squads.show', compact('squad'));
+        return view('web::squads.show', compact('squad'));
     }
 
     /**
