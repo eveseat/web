@@ -143,7 +143,7 @@ return [
                 'name'       => 'moons reporter',
                 'label'      => 'web::seat.moons_reporter',
                 'icon'       => 'fas fa-moon',
-                'permission' => 'global.moons_reporter',
+                'permission' => 'moon.view_moon_reports',
                 'route'      => 'tools.moons.index',
             ],
         ],
