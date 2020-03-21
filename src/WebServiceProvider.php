@@ -51,6 +51,9 @@ use Seat\Web\Http\Middleware\Bouncer\Bouncer;
 use Seat\Web\Http\Middleware\Bouncer\CharacterBouncer;
 use Seat\Web\Http\Middleware\Bouncer\CorporationBouncer;
 use Seat\Web\Http\Middleware\Bouncer\KeyBouncer;
+use Seat\Web\Http\Middleware\Bouncer\SquadAuthorApplicationBouncer;
+use Seat\Web\Http\Middleware\Bouncer\SquadMemberBouncer;
+use Seat\Web\Http\Middleware\Bouncer\SquadModeratorBouncer;
 use Seat\Web\Http\Middleware\Locale;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
 use Seat\Web\Http\Middleware\Requirements;
@@ -261,6 +264,9 @@ class WebServiceProvider extends AbstractSeatPlugin
         $router->aliasMiddleware('characterbouncer', CharacterBouncer::class);
         $router->aliasMiddleware('corporationbouncer', CorporationBouncer::class);
         $router->aliasMiddleware('keybouncer', KeyBouncer::class);
+        $router->aliasMiddleware('squad.moderator.bouncer', SquadModeratorBouncer::class);
+        $router->aliasMiddleware('squad.member.bouncer', SquadMemberBouncer::class);
+        $router->aliasMiddleware('squad.author.bouncer', SquadAuthorApplicationBouncer::class);
 
     }
 
@@ -402,8 +408,6 @@ class WebServiceProvider extends AbstractSeatPlugin
         $this->registerPermissions(__DIR__ . '/Config/Permissions/people.php', 'people');
         $this->registerPermissions(__DIR__ . '/Config/Permissions/search.php', 'search');
         $this->registerPermissions(__DIR__ . '/Config/Permissions/moon.php', 'moon');
-        
-        //dd($this->app['config']);
 
         // Register any extra services.
         $this->register_services();
