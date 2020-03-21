@@ -43,7 +43,7 @@ class MembersDataTable extends DataTable
                 return $row->characters->reject(function ($character) use ($row) {
                     return $character->character_id == $row->main_character_id;
                 })->map(function ($character) {
-                    return view('web::configuration.users.partials.character', compact('character'))->render();
+                    return view('web::partials.character-icon-hover', compact('character'))->render();
                 })->join(' ');
             })
             ->editColumn('name', function ($row) {
@@ -65,6 +65,9 @@ class MembersDataTable extends DataTable
     {
         return $this->builder()
             ->columns($this->columns())
+            ->parameters([
+                'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); }',
+            ])
             ->addAction();
     }
 
