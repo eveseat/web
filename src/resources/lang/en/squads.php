@@ -41,4 +41,5 @@ return [
     'join'         => 'Join',
     'message'      => 'Message',
     'remove'       => 'Remove',
+    'cancel'       => 'Cancel',
 ];

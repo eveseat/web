@@ -108,4 +108,15 @@ class ApplicationsController extends Controller
 
         return redirect()->back();
     }
+
+    /**
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function cancel(int $id)
+    {
+        $application = SquadApplication::find($id)->delete();
+
+        return redirect()->back();
+    }
 }
