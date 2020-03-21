@@ -172,14 +172,14 @@ Route::prefix('/{id}/applications')
 
         // show squad applications
         Route::get('/', [
-            'as'   => 'squads.candidates.index',
+            'as'   => 'squads.applications.index',
             'uses' => 'ApplicationsController@index',
             'middleware' => ['squad.moderator.bouncer'],
         ]);
 
         // apply to a squad
         Route::post('/', [
-            'as'   => 'squads.candidates.store',
+            'as'   => 'squads.applications.store',
             'uses' => 'ApplicationsController@store',
         ]);
 

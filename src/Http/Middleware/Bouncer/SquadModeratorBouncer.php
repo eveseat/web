@@ -42,7 +42,7 @@ class SquadModeratorBouncer
     public function handle(Request $request, Closure $next)
     {
         $application_routes = ['squads.applications.show', 'squads.applications.approve', 'squads.applications.reject'];
-        $member_routes = ['squads.members.kick'];
+        $member_routes = ['squads.members.kick', 'squads.applications.index'];
 
         if (in_array($request->route()->getName(), $application_routes)) {
             $application = SquadApplication::find($request->route('id'));
