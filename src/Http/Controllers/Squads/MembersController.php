@@ -41,7 +41,7 @@ class MembersController extends Controller
      * @param int $id
      * @return mixed
      */
-    public function show(MembersDataTable $dataTable, int $id)
+    public function index(MembersDataTable $dataTable, int $id)
     {
         $squad = Squad::with('members', 'moderators', 'moderators.main_character')->find($id);
 
