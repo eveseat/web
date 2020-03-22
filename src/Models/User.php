@@ -40,85 +40,85 @@ use Seat\Web\Models\Squads\Squad;
  * Class User.
  * @package Seat\Web\Models
  *
- * @SWG\Definition(
+ * @OA\Schema(
  *     description="User",
  *     title="User",
  *     type="object"
  * )
  *
- * @SWG\Property(
+ * @OA\Property(
+ *     property="id",
  *     type="integer",
  *     format="int64",
  *     minimum=90000000,
- *     description="ID",
- *     property="id"
+ *     description="ID"
  * )
  *
- * @SWG\Property(
+ * @OA\Property(
+ *     property="name",
  *     type="string",
  *     description="Name",
- *     maxLength=255,
- *     property="name"
+ *     maxLength=255
  * )
  *
- * @SWG\Property(
+ * @OA\Property(
+ *     property="email",
  *     type="string",
  *     format="email",
- *     description="E-Mail address",
- *     property="email"
+ *     description="E-Mail address"
  * )
  *
- * @SWG\Property(
+ * @OA\Property(
+ *     property="active",
  *     type="boolean",
- *     description="Account status",
- *     property="active"
+ *     description="Account status"
  * )
  *
- * @SWG\Property(
+ * @OA\Property(
+ *     property="character_owner_hash",
  *     type="string",
  *     description="Unique character/EVE Account hash",
- *     maxLength=255,
- *     property="character_owner_hash"
+ *     maxLength=255
  * )
  *
- * @SWG\Property(
+ * @OA\Property(
+ *     property="last_login",
  *     type="string",
  *     format="date-time",
- *     description="Last login to SeAT time",
- *     property="last_login"
+ *     description="Last login to SeAT time"
  * )
  *
- * @SWG\Property(
+ * @OA\Property(
+ *     property="last_login_source",
  *     type="string",
- *     description="Last IP address used to sign in to SeAT",
- *     property="last_login_source"
+ *     description="Last IP address used to sign in to SeAT"
  * )
  *
- * @SWG\Property(
+ * @OA\Property(
+ *     property="group_id",
  *     type="integer",
  *     minimum=1,
- *     description="Group ID",
- *     property="group_id"
+ *     description="Group ID"
  * )
  *
- * @SWG\Property(
+ * @OA\Property(
+ *     property="associated_character_ids",
  *     type="array",
  *     description="Array of attached character ID",
- *     property="associated_character_ids",
- *     @SWG\Items(type="integer", format="int64", minimum=90000000)
+ *     @OA\Items(type="integer", format="int64", minimum=90000000)
  * )
  *
- * @SWG\Property(
+ * @OA\Property(
+ *     property="main_character_id",
  *     type="integer",
  *     format="int64",
  *     minimum=90000000,
- *     description="The main character ID of this group",
- *     property="main_character_id"
+ *     description="The main character ID of this group"
  * )
  *
- * @SWG\Property(
+ * @OA\Property(
  *     property="token",
- *     ref="#/definitions/RefreshToken"
+ *     ref="#/components/schemas/RefreshToken"
  * )
  */
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
