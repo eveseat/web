@@ -43,18 +43,6 @@ Route::group([
 
     });
 
-    // Email Verification Routes
-    Route::group([
-        'namespace'  => 'Auth',
-        'middleware' => ['requirements'],
-    ], function () {
-
-        Route::group(['prefix' => 'auth/email'], function () {
-
-            include __DIR__ . '/Routes/Auth/Email.php';
-        });
-    });
-
     // All routes from here require *at least* that the
     // user is authenticated. We also run the localization
     // related logic here for translation support.
