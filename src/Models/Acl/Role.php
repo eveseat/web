@@ -31,6 +31,16 @@ use Seat\Web\Models\User;
 /**
  * Class Role.
  * @package Seat\Web\Models\Acl
+ *
+ * @OA\Schema(
+ *     type="object",
+ *     title="Role",
+ *     description="Role",
+ *     @OA\Property(property="id", type="integer", description="Role unique identifier"),
+ *     @OA\Property(property="title", type="string", description="Role name"),
+ *     @OA\Property(property="description", type="string", description="Role description"),
+ *     @OA\Property(property="logo", type="string", format="byte", description="Role logo"),
+ * )
  */
 class Role extends Model
 {
