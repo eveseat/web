@@ -113,6 +113,11 @@ class MembersController extends Controller
         $user = User::find($request->input('user_id'));
         $squad->members()->detach($user->id);
 
+        $message = sprintf('%s has been kicked from squad %s.',
+            $user->name, $squad->name);
+
+        event('security.log', [$message, 'squads']);
+
         return redirect()->back()
             ->with('success', sprintf('%s has been kicked from the Squad.', $user->name));
     }
