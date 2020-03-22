@@ -67,8 +67,8 @@ class ApplicationsController extends Controller
     {
         $request->validate([
             'message' => 'required',
-		]);
-        
+        ]);
+
         $squad = Squad::find($id);
 
         $application = new SquadApplication([
@@ -93,6 +93,12 @@ class ApplicationsController extends Controller
         $application = SquadApplication::with('squad', 'user')->find($id);
 
         $application->squad->members()->save($application->user);
+
+        $message = sprintf('Approved application from %s into squad %s.',
+            $application->user->name, $application->squad->name);
+
+        event('security.log', [$message, 'squads']);
+
         $application->delete();
 
         return redirect()->back();
@@ -104,7 +110,14 @@ class ApplicationsController extends Controller
      */
     public function reject(int $id)
     {
-        $application = SquadApplication::find($id)->delete();
+        $application = SquadApplication::find($id);
+
+        $message = sprintf('Reject application from %s into squad %s.',
+            $application->user->name, $application->squad->name);
+
+        event('security.log', [$message, 'squads']);
+
+        $application->delete();
 
         return redirect()->back();
     }
@@ -115,7 +128,7 @@ class ApplicationsController extends Controller
      */
     public function cancel(int $id)
     {
-        $application = SquadApplication::find($id)->delete();
+        SquadApplication::find($id)->delete();
 
         return redirect()->back();
     }
