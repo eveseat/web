@@ -9,7 +9,7 @@
 @stop
 
 @section('right')
-  <div class="card card-gray card-outline card-outline-tabs">
+  <div class="card card-gray card-outline card-tabs">
     <div class="card-header p-0 border-bottom-0">
       <ul class="nav nav-tabs" role="tablist">
         <li id="nav-permissions" class="nav-item">
