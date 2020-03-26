@@ -23,12 +23,13 @@
           </a>
         </li>
       </ul>
+    </div>
+    <div class="card-body">
       <div class="tab-content p-3">
         @include('web::configuration.access.partials.permissions')
         @include('web::configuration.access.partials.members')
       </div>
-    </div>
-    <div class="card-body">
+
       @include('web::configuration.access.partials.modals.filters')
       @include('web::configuration.access.partials.modals.members')
     </div>
