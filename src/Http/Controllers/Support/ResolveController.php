@@ -325,7 +325,7 @@ class ResolveController extends Controller
      *
      * @return \Illuminate\Support\Collection unresolved collection of ids
      */
-    private function cacheIDsAndReturnUnresolvedIDs(Collection $names, Collection $ids) : Collection
+    private function cacheIDsAndReturnUnresolvedIDs(Collection $names, Collection $ids): Collection
     {
         $names->each(function ($name) {
 

@@ -79,8 +79,8 @@ class EmailVerification extends Notification
             )
             ->action(
                 'Activate Your Account', route('auth.email.confirm', [
-                'token' => $notifiable->activation_token,
-            ]));
+                    'token' => $notifiable->activation_token,
+                ]));
     }
 
     /**
