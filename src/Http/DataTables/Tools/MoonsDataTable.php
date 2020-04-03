@@ -23,7 +23,6 @@
 namespace Seat\Web\Http\DataTables\Tools;
 
 use Seat\Eveapi\Models\Sde\MapDenormalize;
-use Seat\Eveapi\Models\Universe\UniverseMoonContent;
 use Yajra\DataTables\Services\DataTable;
 
 /**
