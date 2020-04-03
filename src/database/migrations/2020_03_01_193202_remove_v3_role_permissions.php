@@ -24,7 +24,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Class RemoveV3RolePermissions
+ * Class RemoveV3RolePermissions.
  */
 class RemoveV3RolePermissions extends Migration
 {

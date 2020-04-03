@@ -66,7 +66,7 @@ return [
     'contract_auction_bid' => 'Vertragsauktionsgebot',
     'contract_auction_bid_corp' => 'Vertragsauktionsgebotskorp',
     'contract_auction_bid_refund' => 'Vertragsauktionsgebotrückzahlung',
-    'contract_auction_sold' => 'Contract Auction Sold', //
+    'contract_auction_sold' => 'Contract Auction Sold',
     'contract_brokers_fee' => 'Vertragsmaklergebühr',
     'contract_brokers_fee_corp' => 'Vertragsmaklergebührenkorp',
     'contract_collateral' => 'Vertragssicherheiten',
