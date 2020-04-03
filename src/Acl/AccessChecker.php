@@ -265,7 +265,10 @@ trait AccessChecker
         foreach ($corporations as $corporation) {
 
             // for each of them, grant access to all corporation members
-            $characters = CharacterInfo::with(['affiliation' => function ($query) use ($corporation) {
+            $characters = CharacterInfo::whereHas('affiliation', function ($query) use ($corporation) {
+                $query->where('corporation_id', $corporation->id);
+            })
+            ->with(['affiliation' => function ($query) use ($corporation) {
                 $query->where('corporation_id', $corporation->id);
             }])->get();
 
