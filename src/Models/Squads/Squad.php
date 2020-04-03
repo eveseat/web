@@ -46,7 +46,7 @@ class Squad extends Model
      * @var array
      */
     protected $appends = [
-        'summary', 'is_candidate', 'is_member', 'is_moderator', 'link',
+        'summary', 'is_candidate', 'is_member', 'is_moderated', 'is_moderator', 'link',
         'applications_count', 'members_count', 'moderators_count',
     ];
 
@@ -80,7 +80,7 @@ class Squad extends Model
 
             // kick members which are non longer eligible according to new filters
             $model->members->each(function ($user) use ($model) {
-                if (!$model->isEligible($user))
+                if (! $model->isEligible($user))
                     $model->members()->detach($user->id);
             });
 
@@ -113,6 +113,14 @@ class Squad extends Model
     public function getIsMemberAttribute(): bool
     {
         return $this->members->where('id', auth()->user()->id)->count() !== 0;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsModeratedAttribute(): bool
+    {
+        return $this->moderators->isNotEmpty();
     }
 
     /**
@@ -238,7 +246,7 @@ class Squad extends Model
      */
     public function scopeModerated($query)
     {
-        return $query->where('is_moderated', true);
+        return $query->has('moderators');
     }
 
     /**

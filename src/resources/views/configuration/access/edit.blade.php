@@ -9,7 +9,7 @@
 @stop
 
 @section('right')
-  <div class="card card-gray card-outline card-outline-tabs">
+  <div class="card card-gray card-outline card-tabs">
     <div class="card-header p-0 border-bottom-0">
       <ul class="nav nav-tabs" role="tablist">
         <li id="nav-permissions" class="nav-item">
@@ -23,12 +23,13 @@
           </a>
         </li>
       </ul>
+    </div>
+    <div class="card-body">
       <div class="tab-content p-3">
         @include('web::configuration.access.partials.permissions')
         @include('web::configuration.access.partials.members')
       </div>
-    </div>
-    <div class="card-body">
+
       @include('web::configuration.access.partials.modals.filters')
       @include('web::configuration.access.partials.modals.members')
     </div>

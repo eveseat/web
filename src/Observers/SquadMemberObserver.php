@@ -27,7 +27,7 @@ use Seat\Web\Models\Squads\SquadRole;
 use Seat\Web\Models\User;
 
 /**
- * Class SquadJoin.
+ * Class SquadMemberObserver.
  *
  * @package Seat\Web\Observers
  */

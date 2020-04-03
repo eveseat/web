@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018, 2019, 2020  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,13 +20,36 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-// Email confirmation routes
-Route::get('/', [
-    'as'   => 'auth.email',
-    'uses' => 'EmailController@getEmailRequired',
-]);
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-Route::get('confirm/{token}', [
-    'as'   => 'auth.email.confirm',
-    'uses' => 'EmailController@confirmEmail',
-]);
+/**
+ * Class DropIsModeratedFromSquadsTable.
+ */
+class DropIsModeratedFromSquadsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('squads', function (Blueprint $table) {
+            $table->dropColumn('is_moderated');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('squads', function (Blueprint $table) {
+            $table->boolean('is_moderated');
+        });
+    }
+}

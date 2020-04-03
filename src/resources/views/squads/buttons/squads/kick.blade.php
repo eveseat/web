@@ -1,5 +1,5 @@
-<div class="float-right">
-    @if($row->id !== auth()->user()->id)
+<div class="text-right">
+    @if($row->id !== auth()->user()->id && ($squad->is_moderator || auth()->user()->hasSuperUser()))
         <form method="post" action="{{ route('squads.members.kick', request()->id) }}">
             {!! csrf_field() !!}
             {!! method_field('DELETE') !!}

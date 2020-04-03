@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Squads;
 
+use Seat\Web\Models\Squads\Squad;
 use Seat\Web\Models\User;
 use Yajra\DataTables\Services\DataTable;
 
@@ -37,13 +38,15 @@ class MembersDataTable extends DataTable
      */
     public function ajax()
     {
+        $squad = Squad::find(request()->route('id'));
+
         return datatables()
             ->eloquent($this->query())
             ->addColumn('characters', function ($row) {
                 return $row->characters->reject(function ($character) use ($row) {
                     return $character->character_id == $row->main_character_id;
                 })->map(function ($character) {
-                    return view('web::configuration.users.partials.character', compact('character'))->render();
+                    return view('web::partials.character-icon-hover', compact('character'))->render();
                 })->join(' ');
             })
             ->editColumn('name', function ($row) {
@@ -51,8 +54,8 @@ class MembersDataTable extends DataTable
                     img('characters', 'portrait', $row->main_character_id, 64, ['class' => 'img-circle eve-icon small-icon'], false),
                     $row->name);
             })
-            ->editColumn('action', function ($row) {
-                return view('web::squads.buttons.squads.kick', compact('row'));
+            ->editColumn('action', function ($row) use ($squad) {
+                return view('web::squads.buttons.squads.kick', compact('row', 'squad'));
             })
             ->rawColumns(['name', 'characters'])
             ->make(true);
@@ -65,6 +68,9 @@ class MembersDataTable extends DataTable
     {
         return $this->builder()
             ->columns($this->columns())
+            ->parameters([
+                'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); }',
+            ])
             ->addAction();
     }
 

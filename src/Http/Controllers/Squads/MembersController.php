@@ -41,7 +41,7 @@ class MembersController extends Controller
      * @param int $id
      * @return mixed
      */
-    public function show(MembersDataTable $dataTable, int $id)
+    public function index(MembersDataTable $dataTable, int $id)
     {
         $squad = Squad::with('members', 'moderators', 'moderators.main_character')->find($id);
 
@@ -112,6 +112,11 @@ class MembersController extends Controller
         $squad = Squad::find($id);
         $user = User::find($request->input('user_id'));
         $squad->members()->detach($user->id);
+
+        $message = sprintf('%s has been kicked from squad %s.',
+            $user->name, $squad->name);
+
+        event('security.log', [$message, 'squads']);
 
         return redirect()->back()
             ->with('success', sprintf('%s has been kicked from the Squad.', $user->name));
