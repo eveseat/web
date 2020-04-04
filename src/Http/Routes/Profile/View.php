@@ -45,12 +45,17 @@ Route::post('/update/main-character', [
     'uses' => 'ProfileController@postChangeCharacter',
 ]);
 
-Route::get('/update/sharinglink', [
-    'as'   => 'profile.update.sharinglink',
-    'uses' => 'ProfileController@getUpdateSharingLink',
+Route::post('/update/sharelink', [
+    'as'   => 'profile.update.sharelink',
+    'uses' => 'ProfileController@postUpdateSharelink',
 ]);
 
-Route::get('/activate/sharinglink/{token}', [
-    'as'   => 'profile.activate.sharinglink',
-    'uses' => 'ProfileController@getActivateSharingLink',
+Route::get('/update/sharelink/{token}/remove', [
+    'as'   => 'profile.update.sharelink.remove',
+    'uses' => 'ProfileController@getRemoveSharelink',
+]);
+
+Route::get('/activate/sharelink/{token}', [
+    'as'   => 'profile.activate.sharelink',
+    'uses' => 'ProfileController@getActivateSharelink',
 ]);

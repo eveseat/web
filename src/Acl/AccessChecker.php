@@ -284,17 +284,11 @@ trait AccessChecker
 
         // if a sharing code is present in the users session, add 
         // all the characters that user owns..
-        $sharing = session()->get('user_sharing', null);
-        $sharing_user = User::find($sharing);
-        if ($sharing) {
-
-            // For each character, assign wildcard permission for that character.
-            $sharing_user_character_ids = $sharing_user->associatedCharacterIds()->toArray();
-
-            foreach ($sharing_user_character_ids as $sharing_user_character_id) {
-
-                $map['char'][$sharing_user_character_id] = ['character.*'];
-            }
+        $sharing = session()->get('user_sharing', []);
+        
+        // For each character, assign wildcard permission for that character.
+        foreach ($sharing as $char) {
+            $map['char'][$char] = ['character.*'];
         }
 
         // Next we move through the roles the user has
@@ -562,7 +556,7 @@ trait AccessChecker
         if (is_null($character))
             return false;
 
-        return optional($character->user)->id === session()->get('user_sharing', null);
+        return in_array(request()->character_id, session()->get('user_sharing', []));
     }
 
     /**

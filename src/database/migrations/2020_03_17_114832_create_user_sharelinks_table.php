@@ -23,7 +23,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateUserSharingLinksTable extends Migration
+class CreateUserShareLinksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -33,11 +33,14 @@ class CreateUserSharingLinksTable extends Migration
     public function up()
     {
 
-        Schema::create('user_sharing_links', function (Blueprint $table) {
+        Schema::create('user_sharelinks', function (Blueprint $table) {
 
-            $table->integer('user_id')->primary();
+            $table->integer('user_id');
+            $table->integer('character_id');
             $table->string('token');
             $table->datetime('expires_on');
+
+            $table->unique(['user_id', 'character_id']);
         });
     }
 
@@ -49,6 +52,6 @@ class CreateUserSharingLinksTable extends Migration
     public function down()
     {
 
-        Schema::drop('user_sharing_links');
+        Schema::drop('user_sharelinks');
     }
 }

@@ -215,8 +215,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function sharing()
+    public function sharelink()
     {
-        return $this->hasOne(UserSharingLink::class);
+        return $this->hasMany(UserSharelink::class);
     }
 }

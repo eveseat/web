@@ -657,10 +657,9 @@ return [
     'view_third_party_access'      => 'View Apps on Eveonline.com',
     'third_party_access'           => 'Check the access third party applications (such as this one) have to ' .
         'your EVE Online account regularly.',
-    'user_sharing'                 => 'User Sharing',
-    'user_sharing_description'     => 'You can generate a sharing link that can be shared with other SeAT users to allow them to view your linked characters information. ' . 
-        'Sharing links are valid for 7 days from when they are created.',
-    'user_sharing_generate_link'   => 'Generate Link',
+    'user_sharelink'               => 'User Sharing',
+    'user_sharelink_description'   => 'You can generate a sharing link that can be shared with other SeAT users to allow them to view your linked characters information.',
+    'user_sharelink_generate'      => 'Generate Link',
 
     // Queue
     'queue_manage'                 => 'Queue Management',

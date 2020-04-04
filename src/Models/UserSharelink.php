@@ -23,24 +23,27 @@
 namespace Seat\Web\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Traits\HasCompositePrimaryKey;
 
 /**
- * Class UserSharingLink.
+ * Class UserSharelink.
  * @package Seat\Web\Models
  */
-class UserSharingLink extends Model
+class UserSharelink extends Model
 {
+    use HasCompositePrimaryKey;
 
     /**
      * @var string
      */
-    protected $primaryKey = 'user_id';
+    protected $primaryKey = ['user_id', 'character_id'];
     
     /**
      * @var array
      */
     protected $fillable = [
-        'user_id', 'token', 'expires_on', ];
+        'user_id', 'character_id', 'token', 'expires_on', ];
 
     /**
      * @var bool
@@ -53,7 +56,7 @@ class UserSharingLink extends Model
     protected $dates = ['expires_on'];
 
     /**
-     * Each login history item belongs to a user.
+     * Each sharelink item belongs to a user.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -61,5 +64,16 @@ class UserSharingLink extends Model
     {
 
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Each sharelink item belongs to a user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function character()
+    {
+
+        return $this->belongsTo(CharacterInfo::class, 'character_id');
     }
 }
