@@ -23,7 +23,6 @@
 namespace Seat\Web\Http\Controllers\Profile;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\Repositories\Character\Info;
