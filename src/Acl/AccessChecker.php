@@ -29,7 +29,6 @@ use Seat\Services\Repositories\Character\Character;
 use Seat\Services\Repositories\Corporation\Corporation;
 use Seat\Web\Exceptions\BouncerException;
 use Seat\Web\Models\Acl\Permission;
-use Seat\Web\Models\User;
 use stdClass;
 
 /**
