@@ -178,7 +178,7 @@ class ProfileController extends Controller
         // Validate our character id is valid for the submitting user
         if (! $request->user_sharelink_character_id === 0) {
             $requested_character = auth()->user()->characters->contains($request->user_sharelink_character_id);
-            if (!$requested_character) {
+            if (! $requested_character) {
                 event('security.log', [
                     auth()->user()->name . ' tried to create invalid sharelink.', 'sharelink',
                 ]);

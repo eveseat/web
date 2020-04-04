@@ -38,7 +38,7 @@ class UserSharelink extends Model
      * @var string
      */
     protected $primaryKey = ['user_id', 'character_id'];
-    
+
     /**
      * @var array
      */

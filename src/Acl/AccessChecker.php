@@ -282,10 +282,10 @@ trait AccessChecker
 
         }
 
-        // if a sharing code is present in the users session, add 
-        // all the characters that user owns..
+        // if a sharing code is present in the users session, add
+        // all the characters that user owns.
         $sharing = session()->get('user_sharing', []);
-        
+
         // For each character, assign wildcard permission for that character.
         foreach ($sharing as $char) {
             $map['char'][$char] = ['character.*'];
