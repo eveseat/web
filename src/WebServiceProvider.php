@@ -129,9 +129,9 @@ class WebServiceProvider extends AbstractSeatPlugin
     {
 
         $this->publishes([
-            __DIR__ . '/resources/css'                                           => public_path('web/css'),
-            __DIR__ . '/resources/img'                                           => public_path('web/img'),
-            __DIR__ . '/resources/js'                                            => public_path('web/js'),
+            __DIR__ . '/resources/css' => public_path('web/css'),
+            __DIR__ . '/resources/img' => public_path('web/img'),
+            __DIR__ . '/resources/js'  => public_path('web/js'),
 
             // Bootstrap pulled from packagist
             base_path('vendor/twbs/bootstrap/dist/css/bootstrap.min.css')                           => public_path('web/css/bootstrap.min.css'),
@@ -148,8 +148,8 @@ class WebServiceProvider extends AbstractSeatPlugin
             base_path('vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js')   => public_path('web/js/adminlte.min.js'),
 
             // Font Awesome pulled from packagist
-            base_path('vendor/components/font-awesome/css/all.min.css')          => public_path('web/css/all.min.css'),
-            base_path('vendor/components/font-awesome/webfonts')                 => public_path('web/webfonts'),
+            base_path('vendor/components/font-awesome/css/all.min.css') => public_path('web/css/all.min.css'),
+            base_path('vendor/components/font-awesome/webfonts')        => public_path('web/webfonts'),
         ]);
     }
 
