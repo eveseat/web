@@ -73,9 +73,9 @@
         <div class="container-fluid">
 
           <!-- Notifications -->
-        @include('web::includes.notifications')
+          @include('web::includes.notifications')
 
-        <!-- Page Content Here -->
+          <!-- Page Content Here -->
           @yield('content')
 
         </div>
