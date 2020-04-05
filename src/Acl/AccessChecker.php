@@ -166,6 +166,10 @@ trait AccessChecker
         if ($this->isCeo() || $this->isOwner())
             return true;
 
+        // if the currently authenticated user has sharing access, grant access
+        if ($this->isValidSharingSession())
+            return true;
+
         $character = is_null(request()->character_id) ? null : CharacterInfo::find(request()->character_id);
 
         $corporation = is_null(request()->corporation_id) ? null : CorporationInfo::find(request()->corporation_id);
@@ -278,6 +282,15 @@ trait AccessChecker
 
             }
 
+        }
+
+        // if a sharing code is present in the users session, add
+        // all the characters that user owns.
+        $sharing = session()->get('user_sharing', []);
+
+        // For each character, assign wildcard permission for that character.
+        foreach ($sharing as $char) {
+            $map['char'][$char] = ['character.*'];
         }
 
         // Next we move through the roles the user has
@@ -526,6 +539,26 @@ trait AccessChecker
             return false;
 
         return in_array($corporation->ceo_id, $this->associatedCharacterIds()->toArray());
+    }
+
+    /**
+     * Determine if the currently authenticated user has a valid sharing session for this user.
+     *
+     * @return bool
+     */
+    private function isValidSharingSession(): bool
+    {
+
+        $character_id = null;
+
+        if (request()->character_id) {
+            $character = CharacterInfo::find(request()->character_id);
+        }
+
+        if (is_null($character))
+            return false;
+
+        return in_array(request()->character_id, session()->get('user_sharing', []));
     }
 
     /**
