@@ -54,8 +54,8 @@ class CharacterLayout
             $view->with('character_name', $character_info->name);
 
         if (! RefreshToken::where('character_id', $this->request->character_id)->exists()) {
-            $deleted_at = RefreshToken::onlyTrashed()->where('character_id', $this->request->character_id)->first();
-            redirect()->back()->with('warning', trans('web::seat.deleted_refresh_token', ['time' => human_diff($deleted_at->deleted_at)]));
+            $token = RefreshToken::onlyTrashed()->where('character_id', $this->request->character_id)->first();
+            redirect()->back()->with('warning', trans('web::seat.deleted_refresh_token', ['time' => human_diff($token->deleted_at)]));
         }
     }
 }

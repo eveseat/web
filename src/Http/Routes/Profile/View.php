@@ -50,12 +50,7 @@ Route::post('/update/sharelink', [
     'uses' => 'ProfileController@postUpdateSharelink',
 ]);
 
-Route::get('/update/sharelink/{token}/remove', [
+Route::delete('/update/sharelink', [
     'as'   => 'profile.update.sharelink.remove',
-    'uses' => 'ProfileController@getRemoveSharelink',
-]);
-
-Route::get('/activate/sharelink/{token}', [
-    'as'   => 'profile.activate.sharelink',
-    'uses' => 'ProfileController@getActivateSharelink',
+    'uses' => 'ProfileController@deleteRemoveSharelink',
 ]);
