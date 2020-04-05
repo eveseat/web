@@ -90,6 +90,7 @@
         rule.removeClass('d-none');
 
         rule.find('.rule-criteria').select2({
+            dropdownParent: $('#filters-modal'),
             ajax: {
                 url: function () {
                     return $('option:selected', $(this).closest('.form-row').find('.rule-type')).data('src');
@@ -146,6 +147,7 @@
                   type.val(rule.name);
 
                   criteria.select2({
+                      dropdownParent: $('#filters-modal'),
                       ajax: {
                           url: function () {
                               return $('option:selected', type).data('src');
@@ -190,6 +192,7 @@
                           type.val(ruleset_rule.name);
 
                           criteria.select2({
+                              dropdownParent: $('#filters-modal'),
                               ajax: {
                                   url: function () {
                                       return $('option:selected', type).data('src');
