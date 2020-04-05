@@ -61,7 +61,7 @@
         <div class="card-footer">
           <div class="float-right">
             <button type="submit" form="squad-form" class="btn btn-success">
-              <i class="fas fa-"></i> Submit
+              <i class="fas fa-check-circle"></i> Submit
             </button>
           </div>
         </div>
