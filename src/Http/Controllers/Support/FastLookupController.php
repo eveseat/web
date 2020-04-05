@@ -61,11 +61,26 @@ class FastLookupController extends Controller
                 });
 
                 $images_array = $characters->map(function ($character) {
-                    return img('characters', 'portrait', $character->character_id, 64, ['class' => 'img-circle eve-icon small-icon'], false);
+                    $attributes = [
+                        'class' => 'img-circle eve-icon small-icon',
+                        'data-link' => route('character.view.sheet', ['character_id' => $character->character_id]),
+                        'data-name' => $character->name,
+                    ];
+
+                    return img('characters', 'portrait', $character->character_id, 64, $attributes, false);
                 })->flatten();
 
-                if ($characters->isEmpty())
-                    $images_array = [img('characters', 'portrait', 0, 64, ['class' => 'img-circle eve-icon small-icon'], false)];
+                if ($characters->isEmpty()) {
+                    $attributes = [
+                        'class' => 'img-circle eve-icon small-icon',
+                        'data-link' => route('character.view.sheet', ['character_id' => $user->main_character_id]),
+                        'data-name' => $user->name,
+                    ];
+
+                    $images_array = [
+                        img('characters', 'portrait', $user->main_character_id, 64, $attributes, false),
+                    ];
+                }
 
                 return [
                     'id' => $user->id,
