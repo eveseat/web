@@ -20,6 +20,7 @@
               <tr>
                 <th>{{ trans_choice('web::seat.type', 1) }}</th>
                 <th>{{ trans_choice('web::seat.location', 1) }}</th>
+                <th>{{ trans_choice('web::seat.name', 1) }}</th>
                 <th>{{ trans('web::seat.state') }} </th>
                 <th>{{ trans_choice('web::seat.offline', 1) }}</th>
                 <th>{{ trans('web::seat.reinforce_week_hour') }}</th>
@@ -37,6 +38,9 @@
                   </td>
                   <td>
                     {{ $structure->system->itemName }}
+                  </td>
+                  <td>
+                    {{ optional($structure->info)->name }}
                   </td>
                   <td>
                     {{ ucfirst(str_replace('_', ' ', $structure->state)) }}
