@@ -549,8 +549,6 @@ trait AccessChecker
     private function isValidSharingSession(): bool
     {
 
-        $character_id = null;
-
         if (request()->character_id) {
             $character = CharacterInfo::find(request()->character_id);
         }

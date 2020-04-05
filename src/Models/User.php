@@ -168,6 +168,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function sharelinks()
+    {
+        return $this->hasMany(UserSharelink::class);
+    }
+
+    /**
      * Return the email address for this user based on the
      * email address setting.
      *
@@ -210,13 +218,5 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function scopeSystem($query)
     {
         return $query->where('name', 'admin');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function sharelink()
-    {
-        return $this->hasMany(UserSharelink::class);
     }
 }

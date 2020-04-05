@@ -12,10 +12,8 @@
     <div class="card-body">
 
       <form role="form" action="{{ route('profile.update.settings') }}" method="post"
-            class="form-horizontal">
+            class="form-horizontal" id="user-settings-form">
         {{ csrf_field() }}
-
-        <div class="box-body">
 
           <legend>{{ trans('web::seat.user_interface') }}</legend>
 
@@ -167,23 +165,16 @@
               </div>
             </div>
           </div>
-
-        </div>
-        <!-- /.box-body -->
-
-        <div class="box-footer">
-          <div class="form-group row">
-            <label class="col-md-4 col-form-label" for="submit"></label>
-            <div class="col-md-4">
-              <button id="submit" type="submit" class="btn btn-primary">
-                {{ trans('web::seat.update') }}
-              </button>
-            </div>
-          </div>
-        </div>
       </form>
-
     </div>
+
+
+    <div class="card-footer">
+      <button id="submit" type="submit" form="user-settings-form" class="btn btn-primary float-right">
+        {{ trans('web::seat.update') }}
+      </button>
+    </div>
+
   </div>
 
 
@@ -254,10 +245,10 @@
     </div>
     <div class="card-body">
       <p>{{ trans('web::seat.user_sharelink_description') }}</p>
-      <form method="post" action="{{ route('profile.update.sharelink') }}">
+      <form method="post" action="{{ route('profile.update.sharelink') }}" class="form-horizontal">
         {{ csrf_field() }}
-        <div class="form-row align-items-center">
-          <div class="col-sm-3">
+        <div class="form-group row align-items-center">
+          <div class="col-md-7">
             <label class="sr-only" for="user_sharelink_character_id">{{ trans_choice('web::seat.character', 1) }}</label>
             <select class="form-control" id="user_sharelink_character_id" name="user_sharelink_character_id">
               <option value="0" selected>All Characters</option>
@@ -266,33 +257,60 @@
               @endforeach
             </select>
           </div>
-          <div class="col-sm-1">
-            <label class="sr-only" for="user_sharelink_expiry">{{ trans('web::seat.expiry') }}</label>
-            <input type="text" class="form-control" id="user_sharelink_expiry" name="user_sharelink_expiry" placeholder="Expiry (days)">
-          </div>
-          <div class="col-auto">
-            <button type="submit" class="btn btn-primary">
-              <i class="fas fa-plus"></i>
-              {{ trans('web::seat.user_sharelink_generate') }}
-            </button>
+          <div class="col-md-5">
+            <div class="input-group">
+              <label class="sr-only" for="user_sharelink_expiry">{{ trans('web::seat.expiry') }}</label>
+              <input type="number" min="1" class="form-control" id="user_sharelink_expiry" name="user_sharelink_expiry" placeholder="Expiry (days)">
+              <span class="input-group-append">
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-plus"></i> {{ trans('web::seat.user_sharelink_generate') }}
+                </button>
+              </span>
+            </div>
           </div>
         </div>
       </form>
-      @if(auth()->user()->sharelink)
-      <h6 class="mt-2">Existing Links</h6>
-      <ul>
-        @foreach(auth()->user()->sharelink as $sharelink)
-        <li>
+      @if(auth()->user()->sharelinks->isNotEmpty())
+      <h5 class="mt-2">Existing Links</h5>
+      @foreach(auth()->user()->sharelinks as $sharelink)
+        <div class="form-group row">
           @if($sharelink->character_id === 0)
-          All Characters: 
+            <label class="col-md-2 col-form-label">All Characters</label>
           @else
-          {{ $sharelink->character->name }}: 
+            <label class="col-md-2 col-form-label">{{ $sharelink->character->name }}</label>
           @endif
-          <i class="fas fa-link"></i>
-          {{ route('profile.activate.sharelink', ['token' => $sharelink->token]) }} (expires {{ $sharelink->expires_on->diffForHumans() }}) <a href="{{ route('profile.update.sharelink.remove', $sharelink->token) }}" class="text-danger">Remove</a>
-        </li>
-        @endforeach
-      </ul>
+          <div class="col-md-5">
+            <input type="text" readonly="readonly" class="form-control" value="{{ route('auth.activate.sharelink', ['token' => $sharelink->token]) }}" />
+          </div>
+          <div class="col-md-2 text-center h-100 my-auto">
+            <div class="align-middle">
+              @if(carbon()->now()->gt($sharelink->expires_on))
+                <span class="text-danger">Expired</span>
+              @else
+                @include('web::partials.date', ['datetime' => $sharelink->expires_on])
+              @endif
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="btn-group btn-group-sm h-100 float-right" role="group">
+              <button type="button" class="btn btn-primary copy-sharelink">
+                <span>
+                  <i class="fas fa-link"></i> Copy
+                </span>
+                <span class="d-none">Copied !</span>
+              </button>
+              <button type="submit" form="form-sharelink-delete-{{ $loop->iteration }}" class="btn btn-danger">
+                <i class="fas fa-trash-alt"></i> Remove
+              </button>
+            </div>
+          </div>
+          <form method="post" action="{{ route('profile.update.sharelink.remove') }}" id="form-sharelink-delete-{{ $loop->iteration }}">
+            {{ csrf_field() }}
+            {{ method_field('DELETE') }}
+            <input type="hidden" name="token" value="{{ $sharelink->token }}" />
+          </form>
+        </div>
+      @endforeach
       @endif
     </div>
   </div>
@@ -366,6 +384,17 @@
             .done(function (data) {
                 body.html(data);
             });
+    });
+
+    $(document).on('click', '.copy-sharelink', function (e) {
+        var button = $(this);
+        var input = button.closest('.form-group').find('input');
+
+        input.select();
+        document.execCommand('copy');
+
+        button.find('span').toggleClass('d-none');
+        setTimeout(function() { button.find('span').toggleClass('d-none'); }, 500);
     });
 
   </script>
