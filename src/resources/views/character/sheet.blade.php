@@ -10,7 +10,7 @@
 
     <div class="col-md-6">
 
-      @if(auth()->user()->has('character.skills'))
+      @if(auth()->user()->has('character.skill'))
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">
