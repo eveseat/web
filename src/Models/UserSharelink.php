@@ -24,7 +24,6 @@ namespace Seat\Web\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Seat\Eveapi\Models\Character\CharacterInfo;
-use Seat\Eveapi\Traits\HasCompositePrimaryKey;
 
 /**
  * Class UserSharelink.
@@ -32,23 +31,27 @@ use Seat\Eveapi\Traits\HasCompositePrimaryKey;
  */
 class UserSharelink extends Model
 {
-    use HasCompositePrimaryKey;
-
     /**
-     * @var string
+     * @var bool
      */
-    protected $primaryKey = ['user_id', 'character_id'];
-
-    /**
-     * @var array
-     */
-    protected $fillable = [
-        'user_id', 'character_id', 'token', 'expires_on', ];
+    public $incrementing = false;
 
     /**
      * @var bool
      */
     public $timestamps = false;
+
+    /**
+     * @var string
+     */
+    protected $primaryKey = 'token';
+
+    /**
+     * @var array
+     */
+    protected $fillable = [
+        'user_id', 'character_id', 'token', 'expires_on',
+    ];
 
     /**
      * @var array

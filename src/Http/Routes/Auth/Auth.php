@@ -35,6 +35,11 @@ Route::get('login/admin/{token}', [
     'uses' => 'AdminLoginController@checkLoginToken',
 ]);
 
+Route::get('/login/sharelink/{token}', [
+    'as' => 'auth.activate.sharelink',
+    'uses' => 'SharelinkController@checkLoginToken',
+]);
+
 Route::any('logout', [
     'as'   => 'auth.logout',
     'uses' => 'LoginController@logout',
