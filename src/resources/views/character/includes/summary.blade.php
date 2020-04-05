@@ -51,7 +51,7 @@
           @endif
       </dd>
 
-      @if(auth()->user()->has('character.skills'))
+      @if(auth()->user()->has('character.skill'))
         <dt>{{ trans_choice('web::seat.skillpoint', 2) }}</dt>
         <dd>{{ number($summary->skills->sum('skillpoints_in_skill'), 0) }}</dd>
       @endif
