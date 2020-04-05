@@ -248,6 +248,55 @@
     </div>
   </div>
 
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">{{ trans('web::seat.user_sharelink') }}</h3>
+    </div>
+    <div class="card-body">
+      <p>{{ trans('web::seat.user_sharelink_description') }}</p>
+      <form method="post" action="{{ route('profile.update.sharelink') }}">
+        {{ csrf_field() }}
+        <div class="form-row align-items-center">
+          <div class="col-sm-3">
+            <label class="sr-only" for="user_sharelink_character_id">{{ trans_choice('web::seat.character', 1) }}</label>
+            <select class="form-control" id="user_sharelink_character_id" name="user_sharelink_character_id">
+              <option value="0" selected>All Characters</option>
+              @foreach($characters as $character)
+              <option value="{{ $character->character_id }}">{{ $character->name }}</option>
+              @endforeach
+            </select>
+          </div>
+          <div class="col-sm-1">
+            <label class="sr-only" for="user_sharelink_expiry">{{ trans('web::seat.expiry') }}</label>
+            <input type="text" class="form-control" id="user_sharelink_expiry" name="user_sharelink_expiry" placeholder="Expiry (days)">
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-plus"></i>
+              {{ trans('web::seat.user_sharelink_generate') }}
+            </button>
+          </div>
+        </div>
+      </form>
+      @if(auth()->user()->sharelink)
+      <h6 class="mt-2">Existing Links</h6>
+      <ul>
+        @foreach(auth()->user()->sharelink as $sharelink)
+        <li>
+          @if($sharelink->character_id === 0)
+          All Characters: 
+          @else
+          {{ $sharelink->character->name }}: 
+          @endif
+          <i class="fas fa-link"></i>
+          {{ route('profile.activate.sharelink', ['token' => $sharelink->token]) }} (expires {{ $sharelink->expires_on->diffForHumans() }}) <a href="{{ route('profile.update.sharelink.remove', $sharelink->token) }}" class="text-danger">Remove</a>
+        </li>
+        @endforeach
+      </ul>
+      @endif
+    </div>
+  </div>
+
   @if(auth()->user()->name != 'admin')
   <div class="card">
     <div class="card-header">
@@ -307,6 +356,7 @@
   <script>
 
     $("select#main_character_id").select2();
+    $("select#user_sharelink_character_id").select2();
 
     $('#scopesModal').on('show.bs.modal', function (e) {
         var body = $(e.target).find('.modal-body');

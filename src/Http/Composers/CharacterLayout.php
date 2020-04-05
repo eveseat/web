@@ -55,7 +55,7 @@ class CharacterLayout
 
         if (! RefreshToken::where('character_id', $this->request->character_id)->exists()) {
             $deleted_at = RefreshToken::onlyTrashed()->where('character_id', $this->request->character_id)->first();
-            redirect()->back()->with('warning', trans('web::seat.deleted_refresh_token', ['time' => human_diff($deleted_at)]));
+            redirect()->back()->with('warning', trans('web::seat.deleted_refresh_token', ['time' => human_diff($deleted_at->deleted_at)]));
         }
     }
 }
