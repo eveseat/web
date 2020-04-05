@@ -31,7 +31,7 @@ use Seat\Services\Settings\Profile;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\EmailUpdate;
 use Seat\Web\Http\Validation\ProfileSettings;
-use Seat\Web\Models\User;
+use Seat\Web\Http\Validation\Sharelink;
 use Seat\Web\Models\UserSharelink;
 
 /**
@@ -166,18 +166,14 @@ class ProfileController extends Controller
     }
 
     /**
+     * @param \Seat\Web\Http\Validation\Sharelink $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postUpdateSharelink(Request $request)
+    public function postUpdateSharelink(Sharelink $request)
     {
-        $request->validate([
-            'user_sharelink_character_id' => 'integer|required',
-            'user_sharelink_expiry'       => 'integer|required',
-        ]);
-
         // Validate our character id is valid for the submitting user
-        if (! $request->user_sharelink_character_id === 0) {
-            $requested_character = auth()->user()->characters->contains($request->user_sharelink_character_id);
+        if ((int) $request->input('user_sharelink_character_id') !== 0) {
+            $requested_character = auth()->user()->characters->contains((int) $request->input('user_sharelink_character_id'));
             if (! $requested_character) {
                 event('security.log', [
                     auth()->user()->name . ' tried to create invalid sharelink.', 'sharelink',
@@ -187,15 +183,22 @@ class ProfileController extends Controller
             }
         }
 
-        // Generate a random 12 character string to use as the sharelink.
-        $token = Str::random(12);
-        UserSharelink::updateOrCreate([
-            'user_id'      => auth()->user()->id,
-            'character_id' => $request->user_sharelink_character_id,
-        ], [
-            'token'        => $token,
-            'expires_on'   => now()->addDays($request->user_sharelink_expiry),
-        ]);
+        // Generate a random 32 character string to use as the sharelink.
+        // Concat both user_id and character_id as determinant and encode the result.
+        $token = base64_encode(
+            sprintf('%s.%s.%s',
+                auth()->user()->id, Str::random(32), (int) $request->input('user_sharelink_character_id')));
+
+        UserSharelink::updateOrCreate(
+            [
+                'token' => $token,
+            ],
+            [
+                'user_id' => auth()->user()->id,
+                'character_id' => (int) $request->input('user_sharelink_character_id'),
+                'expires_on' => now()->addDays((int) $request->input('user_sharelink_expiry')),
+            ]
+        );
 
         // Log the new sharelink creation
         event('security.log', [
@@ -209,11 +212,10 @@ class ProfileController extends Controller
     /**
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function getRemoveSharelink(Request $request)
+    public function deleteRemoveSharelink(Request $request)
     {
-
         // Check user is authorised to remove the sharelink.
-        $token = UserSharelink::where('token', $request->token)->first();
+        $token = UserSharelink::find($request->input('token'));
 
         if(! $token || $token->user_id != auth()->user()->id) {
 
@@ -230,49 +232,5 @@ class ProfileController extends Controller
 
         return redirect()->back()
             ->with('success', 'Sharelink has been removed!');
-    }
-
-    /**
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function getActivateSharelink($token)
-    {
-
-        // Fetch token from DB, if we can.
-        $token = UserSharelink::where('token', $token)->first();
-
-        // Is this a valid sharing link?
-        if(! $token)
-            abort(500);
-
-        // Is token still valid?
-        if($token->expires_on->lessThan(now()))
-            return redirect()->back()
-                ->with('error', 'Token has expired.');
-
-        // Log the sharelink activation
-        event('security.log', [
-            'Share link activated for user ' . $token->user->name . ' by ' . auth()->user()->name, 'sharelink',
-        ]);
-
-        // Add this as user_sharing to the current users session.
-        if ($token->character_id === 0) {
-            // Fetch the users characters from DB
-            $user = User::find($token->user_id);
-
-            if(! $user)
-                return redirect()->back()
-                    ->with('error', 'Invalid token, user not found.');
-
-            foreach($user->characters as $character) {
-                session()->push('user_sharing', $character->character_id);
-            }
-        }
-        else {
-            session()->push('user_sharing', $token->character_id);
-        }
-
-        return redirect()->back()
-            ->with('success', 'You have now been granted access to the requested users characters.' . var_dump(session()->get('user_sharing')));
     }
 }

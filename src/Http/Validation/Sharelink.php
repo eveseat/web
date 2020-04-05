@@ -20,42 +20,25 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace Seat\Web\Http\Validation;
+
+use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class CreateUserShareLinksTable.
+ * Class Sharelink.
+ *
+ * @package Seat\Web\Http\Validation
  */
-class CreateUserShareLinksTable extends Migration
+class Sharelink extends FormRequest
 {
     /**
-     * Run the migrations.
-     *
-     * @return void
+     * @return array
      */
-    public function up()
+    public function rules()
     {
-
-        Schema::create('user_sharelinks', function (Blueprint $table) {
-
-            $table->string('token');
-            $table->integer('user_id')->unsigned();
-            $table->bigInteger('character_id');
-            $table->datetime('expires_on');
-
-            $table->primary(['token']);
-        });
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-
-        Schema::drop('user_sharelinks');
+        return [
+            'user_sharelink_character_id' => 'integer|min:0|required',
+            'user_sharelink_expiry'       => 'integer|min:1|required',
+        ];
     }
 }
