@@ -25,7 +25,7 @@
       </ul>
     </div>
     <div class="card-body">
-      <div class="tab-content p-3">
+      <div class="tab-content">
         @include('web::configuration.access.partials.permissions')
         @include('web::configuration.access.partials.members')
       </div>

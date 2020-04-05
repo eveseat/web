@@ -31,18 +31,31 @@
       })
       .on('select2:select', function (e) {
         var entity = e.params.data, character;
-        var row = $('<tr><td></td><td></td><td><button type="button" class="btn btn-xs btn-danger pull-right"><i class="fas fa-trash"></i> Remove</button></td></tr>');
+        var row = $('<tr><td></td><td></td><td><button type="button" class="btn btn-xs btn-danger float-right"><i class="fas fa-trash"></i> Remove</button></td></tr>');
 
-        character = $('<a></a>');
-        character.attr('href', entity.href);
-        character.attr('data-entityid', entity.character_id);
+        character = $('<a>');
+        character.attr({
+            href: entity.href,
+            target: '_blank',
+            'data-entityid': entity.character_id
+        });
         character.html(entity.img[0] + ' ' + entity.text);
 
         row.attr('data-groupid', entity.id);
         row.find('td:eq(0)').append(character);
 
         for (var i = 1; i < entity.img.length; i++) {
-            row.find('td:eq(1)').append(entity.img[i]).append(' ');
+            character = $('<a>');
+            character.attr({
+                href: $(entity.img[i]).data('link'),
+                target: '_blank',
+                title: $(entity.img[i]).data('name'),
+                'data-toggle': 'tooltip'
+            });
+            character.append(entity.img[i]);
+            character.tooltip();
+
+            row.find('td:eq(1)').append(character).append(' ');
         }
 
         row.find('button').attr('data-groupid', entity.id);
@@ -73,6 +86,7 @@
             // we only append the member if it does not already exists
             if ($(document).find('#tab-members table tbody tr button[data-groupid="' + row.data('groupid') + '"]').length < 1) {
                 members.ids.push(row.data('groupid'));
+                row.addClass('table-warning');
                 members.rows.push(row);
             }
         });
