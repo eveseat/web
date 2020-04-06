@@ -285,6 +285,8 @@
   @include('web::includes.javascript.id-to-name')
 
   <script>
+    window.LaravelDataTables = window.LaravelDataTables || {};
+
     ids_to_names();
 
     $('#squad-moderator')
@@ -337,7 +339,6 @@
             e.preventDefault();
 
             var button = $(this).find('.btn-success');
-            var table = $(this).data('table');
 
             button.attr('disabled', true);
             button.find('i').remove();
@@ -356,13 +357,18 @@
                 button.prepend('<i class="fas fa-plus">');
                 button.removeAttr('disabled');
 
-                window.LaravelDataTables[table].ajax.reload();
+                switch (e.currentTarget.id) {
+                    case 'squad-member-form':
+                        window.LaravelDataTables.membersTableBuilder.ajax.reload();
+                        break;
+                    case 'squad-role-form':
+                        window.LaravelDataTables.rolesTableBuilder.ajax.reload();
+                        break;
+                }
             });
 
             return false;
         });
-
-    window.LaravelDataTables = window.LaravelDataTables || {};
 
     if (! $.fn.dataTable.isDataTable('#members-table')) {
         window.LaravelDataTables["membersTableBuilder"] = $('#members-table').DataTable({
