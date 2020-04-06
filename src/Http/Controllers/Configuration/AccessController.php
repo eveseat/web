@@ -29,6 +29,7 @@ use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Services\Repositories\Corporation\Corporation;
 use Seat\Web\Acl\AccessManager;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Configuration\RolesDataTable;
 use Seat\Web\Models\Acl\Permission;
 use Seat\Web\Models\Acl\Role;
 
@@ -41,14 +42,14 @@ class AccessController extends Controller
     use AccessManager, UserRespository, Character, Corporation;
 
     /**
+     * @param \Seat\Web\Http\DataTables\Configuration\RolesDataTable $data_table
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(RolesDataTable $data_table)
     {
+        $nb_roles = $data_table->query()->count();
 
-        $roles = $this->getCompleteRole();
-
-        return view('web::configuration.access.list', compact('roles'));
+        return $data_table->render('web::configuration.access.list', compact('nb_roles'));
     }
 
     /**

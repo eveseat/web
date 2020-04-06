@@ -46,57 +46,16 @@
     </div>
     <div class="card-body">
 
-      <table class="table table-hover table-striped table-condensed">
-        <thead>
-          <tr>
-            <th>{{ trans_choice('web::seat.name', 2) }}</th>
-            <th>{{ trans_choice('web::seat.member', 2) }}</th>
-            <th>{{ trans_choice('web::seat.permission', 2) }}</th>
-            <th>{{ trans_choice('web::seat.filter', 2) }}</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-
-          @foreach($roles as $role)
-
-            <tr>
-              <td>{{ $role->title }}</td>
-              <td>{{ $role->users->filter(function ($user) { return $user->name !== 'admin'; })->count() }}</td>
-              <td>{{ $role->permissions->count() }}</td>
-              <td>{{ $role->permissions->filter(function ($permission) { return ! is_null($permission->pivot->filters); })->count() }}</td>
-              <td>
-                <form method="post" action="{{ route('configuration.access.roles.delete', [$role->id]) }}">
-                  {{ csrf_field() }}
-                  {{ method_field('DELETE') }}
-                  <div class="btn-group btn-group-sm float-right">
-                    <a href="{{ route('configuration.access.roles.edit', [$role->id]) }}" type="button"
-                       class="btn btn-warning">
-                      <i class="fas fa-pencil-alt"></i>
-                      {{ trans('web::seat.edit') }}
-                    </a>
-                    @if($role->title !== 'Superuser')
-                    <button type="submit" class="btn btn-danger">
-                      <i class="fas fa-trash-alt"></i>
-                      {{ trans('web::seat.delete') }}
-                    </button>
-                    @endif
-                  </div>
-                </form>
-              </td>
-            </tr>
-
-          @endforeach
-
-        </tbody>
-      </table>
+      {!! $dataTable->table(['class' => 'table table-hover table-striped table-condensed']) !!}
 
     </div>
     <div class="card-footer">
-      <i class="float-right text-muted">{{ count($roles) }} {{ trans_choice('web::seat.role', count($roles)) }}</i>
+      <i class="float-right text-muted">{{ $nb_roles }} {{ trans_choice('web::seat.role', $nb_roles) }}</i>
     </div>
   </div>
 
 @stop
 
-
+@push('javascript')
+  {!! $dataTable->scripts() !!}
+@endpush
