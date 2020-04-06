@@ -97,7 +97,7 @@ class AccessController extends Controller
         $request->validate([
             'title' => 'string|required',
             'description' => 'string|nullable',
-            'permissions' => 'array|required_with:filters',
+            'permissions' => 'array',
             'filters' => 'array',
             'logo' => 'mimes:jpeg,jpg,png|max:2000',
             'members' => 'json',
