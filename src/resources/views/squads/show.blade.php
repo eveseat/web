@@ -68,13 +68,15 @@
               @endswitch
             </li>
             <li class="list-group-item flex-fill border-0">
-              Candidates <span class="badge badge-pill badge-primary">{{ $squad->applications_count }}</span>
-            </li>
-            <li class="list-group-item flex-fill border-0">
               Members <span class="badge badge-pill badge-light">{{ $squad->members_count }}</span>
             </li>
             <li class="list-group-item flex-fill border-0">
               Moderators <span class="badge badge-pill badge-warning">{{ $squad->moderators_count }}</span>
+            </li>
+            <li class="list-group-item flex-fill border-0">
+              @if($squad->type == 'manual')
+                Candidates <span class="badge badge-pill badge-primary">{{ $squad->applications_count }}</span>
+              @endif
             </li>
           </ul>
 
@@ -150,7 +152,7 @@
                   </button>
                 </div>
               @endif
-              @if(! $squad->is_candidate && $squad->isEligible(auth()->user()))
+              @if(! $squad->is_candidate && $squad->type == 'manual' && $squad->isEligible(auth()->user()))
                 <button data-toggle="modal" data-target="#application-create" class="btn btn-sm btn-success float-right">
                   <i class="fas fa-sign-in-alt"></i> {{ trans('web::squads.join') }}
                 </button>
@@ -249,7 +251,7 @@
     </div>
   </div>
 
-  @if($squad->is_moderator || auth()->user()->hasSuperUser())
+  @if($squad->type == 'manual' && ($squad->is_moderator || auth()->user()->hasSuperUser()))
     <div class="row">
       <div class="col-12">
         <div class="card">

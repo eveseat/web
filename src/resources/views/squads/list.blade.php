@@ -81,20 +81,28 @@
                                                         Member
                                                     </li>
                                                     <li class="list-group-item">
-                                                        ${data.is_candidate ? '<i class="fas fa-check text-success"></i>' : '<i class="fas fa-times text-danger"></i>'}
-                                                        Candidate
+                                                        ${data.type === 'manual' ? (data.is_candidate ? '<i class="fas fa-check text-success"></i> Candidate' : '<i class="fas fa-times text-danger"></i> Candidate') : ''}
                                                     </li>
                                                 </ul>
                                                 <div class="row mt-3">
-                                                    <div class="col-4 text-center">
-                                                        <span class="badge badge-pill badge-primary" data-toggle="tooltip" data-placement="top" title="Candidates">${data.applications_count}</span>
-                                                    </div>
-                                                    <div class="col-4 text-center">
+                                                    ${data.type === 'manual' ?
+                                                    `<div class="col-4 text-center">
                                                         <span class="badge badge-pill badge-light" data-toggle="tooltip" data-placement="top" title="Members">${data.members_count}</span>
                                                     </div>
                                                     <div class="col-4 text-center">
                                                         <span class="badge badge-pill badge-warning" data-toggle="tooltip" data-placement="top" title="Moderators">${data.moderators_count}</span>
                                                     </div>
+                                                    <div class="col-4 text-center">
+                                                        <span class="badge badge-pill badge-primary" data-toggle="tooltip" data-placement="top" title="Candidates">${data.applications_count}</span>
+                                                    </div>`
+                                                    :
+                                                   `<div class="col-6 text-center">
+                                                        <span class="badge badge-pill badge-light" data-toggle="tooltip" data-placement="top" title="Members">${data.members_count}</span>
+                                                    </div>
+                                                    <div class="col-6 text-center">
+                                                        <span class="badge badge-pill badge-warning" data-toggle="tooltip" data-placement="top" title="Moderators">${data.moderators_count}</span>
+                                                    </div>`
+                                                    }
                                                 </div>
                                             </div>
                                             <div class="card-footer">
