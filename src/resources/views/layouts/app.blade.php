@@ -26,6 +26,10 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <!-- SeAT CSS -->
     <link rel="stylesheet" href="{{ asset('web/css/seat.css') }}">
+    <!-- SeAT Skins CSS -->
+    @if(setting('skin') && file_exists(public_path('web/css/skins/' . setting('skin') . '.css')))
+      <link rel="stylesheet" href="{{ asset('web/css/skins/' . setting('skin') . '.css') }}" />
+    @endif
     <!-- Custom layout CSS -->
     @if(file_exists(public_path('custom-layout.css')))
       <link rel="stylesheet" href="{{ asset('custom-layout.css') }}"/>
