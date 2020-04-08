@@ -32,7 +32,9 @@ use Illuminate\Support\Facades\Validator;
 use Laravel\Horizon\Horizon;
 use Seat\Eveapi\Models\Assets\CharacterAsset;
 use Seat\Eveapi\Models\Character\CharacterAffiliation;
+use Seat\Eveapi\Models\Character\CharacterRole;
 use Seat\Eveapi\Models\Character\CharacterSkill;
+use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Events\Attempt;
 use Seat\Web\Events\Login;
 use Seat\Web\Events\Logout;
@@ -61,7 +63,9 @@ use Seat\Web\Models\Squads\SquadMember;
 use Seat\Web\Models\Squads\SquadRole;
 use Seat\Web\Observers\CharacterAffiliationObserver;
 use Seat\Web\Observers\CharacterAssetObserver;
+use Seat\Web\Observers\CharacterRoleObserver;
 use Seat\Web\Observers\CharacterSkillObserver;
+use Seat\Web\Observers\RefreshTokenObserver;
 use Seat\Web\Observers\SquadMemberObserver;
 use Seat\Web\Observers\SquadRoleObserver;
 
@@ -282,6 +286,10 @@ class WebServiceProvider extends AbstractSeatPlugin
 
         // Custom Events
         $this->app->events->listen('security.log', SecLog::class);
+
+        // Characters / Corporations first auth - Jobs Events
+        CharacterRole::observe(CharacterRoleObserver::class);
+        RefreshToken::observe(RefreshTokenObserver::class);
 
         // Squads Events
         CharacterAffiliation::observe(CharacterAffiliationObserver::class);
