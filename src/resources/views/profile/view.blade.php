@@ -139,7 +139,7 @@
                 </select>
               </div>
               <p class="form-text text-muted mb-0">
-                {{ trans('web::seat.current_format') }}: {{ number_format(10000000.00) }}
+                {{ trans('web::seat.current_format') }}: {{ number_format(10000000.00, 2, setting('decimal_seperator'), setting('thousand_seperator')) }}
               </p>
             </div>
           </div>
