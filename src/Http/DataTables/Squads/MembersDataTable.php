@@ -57,6 +57,11 @@ class MembersDataTable extends DataTable
             ->editColumn('action', function ($row) use ($squad) {
                 return view('web::squads.buttons.squads.kick', compact('row', 'squad'));
             })
+            ->filterColumn('characters', function ($query, $keyword) {
+                $query->whereHas('characters', function ($sub_query) use ($keyword) {
+                    $sub_query->whereRaw('name LIKE ?', ["%{$keyword}%"]);
+                });
+            })
             ->rawColumns(['name', 'characters'])
             ->make(true);
     }
@@ -93,7 +98,7 @@ class MembersDataTable extends DataTable
     {
         return [
             ['data' => 'name', 'title' => trans_choice('web::squads.name', 1)],
-            ['data' => 'characters', 'title' => trans_choice('web::squads.character', 0)],
+            ['data' => 'characters', 'title' => trans_choice('web::squads.character', 0), 'orderable' => false],
         ];
     }
 }

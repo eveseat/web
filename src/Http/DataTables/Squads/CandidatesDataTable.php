@@ -55,6 +55,11 @@ class CandidatesDataTable extends DataTable
             ->editColumn('action', function ($row) {
                 return view('web::squads.buttons.application.action', compact('row'));
             })
+            ->filterColumn('characters', function ($query, $keyword) {
+                $query->whereHas('user.characters', function ($sub_query) use ($keyword) {
+                    $sub_query->whereRaw('name LIKE ?', ["%{$keyword}%"]);
+                });
+            })
             ->rawColumns(['characters'])
             ->make(true);
     }
@@ -77,8 +82,9 @@ class CandidatesDataTable extends DataTable
      */
     public function query()
     {
-        return SquadApplication::with('user')
-            ->where('squad_id', $this->request->id);
+        return SquadApplication::with('user', 'user.characters')
+            ->where('squad_id', $this->request->id)
+            ->select('squad_applications.created_at', 'user_id', 'application_id');
     }
 
     /**
@@ -88,7 +94,7 @@ class CandidatesDataTable extends DataTable
     {
         return [
             ['data' => 'user.name', 'title' => trans_choice('web::squads.name', 1)],
-            ['data' => 'characters', 'title' => trans_choice('web::squads.character', 0)],
+            ['data' => 'characters', 'title' => trans_choice('web::squads.character', 0), 'orderable' => false],
             ['data' => 'created_at', 'title' => trans('web::squads.applied_at')],
         ];
     }
