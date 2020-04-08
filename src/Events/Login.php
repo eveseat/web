@@ -25,9 +25,6 @@ namespace Seat\Web\Events;
 use DateTime;
 use Illuminate\Auth\Events\Login as LoginEvent;
 use Illuminate\Support\Facades\Request;
-use Seat\Console\Bus\CharacterTokenShouldUpdate;
-use Seat\Console\Bus\CorporationTokenShouldUpdate;
-use Seat\Eveapi\Models\Character\CharacterRole;
 use Seat\Web\Models\UserLoginHistory;
 
 /**
@@ -61,15 +58,5 @@ class Login
 
         $message = 'User logged in from ' . Request::getClientIp();
         event('security.log', [$message, 'authentication']);
-
-        foreach ($event->user->refresh_tokens as $token) {
-
-            // Update Character Information
-            (new CharacterTokenShouldUpdate($token))->fire();
-
-            // Update Corporation Information if user is Director (otherwise, keep normal flow)
-            if (CharacterRole::where('character_id', $token->character_id)->where('role', 'Director')->exists())
-                (new CorporationTokenShouldUpdate($token->affiliation->corporation_id, $token))->fire();
-        }
     }
 }
