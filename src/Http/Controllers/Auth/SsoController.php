@@ -142,14 +142,14 @@ class SsoController extends Controller
         ]);
 
         // Generate a new bucket User and use the authenticating character as main.
-        $user = new User();
-        $user->main_character_id = $eve_user->id;
-        $user->name = $eve_user->name;
-        $user->active = true;
-        $user->save();
+        $user = User::firstOrCreate([
+            'main_character_id' => $eve_user->id,
+        ], [
+            'name' => $eve_user->name,
+            'active' => true,
+        ]);
 
-        return User::where('main_character_id', $eve_user->id)
-            ->first();
+        return $user;
     }
 
     /**
