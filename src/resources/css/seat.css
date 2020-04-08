@@ -1,7 +1,3 @@
-img.eve-icon {
-
-}
-
 img.eve-icon.small-icon {
     margin-top: -3px;
     width: 16px;
@@ -114,6 +110,14 @@ ul.dropdown-menu li.user-character.new-character a h3 {
  */
 table.dataTable tr.dtrg-group td {
     background-color: #f8f9fa;
+}
+
+table.dataTable tr.dtrg-group + tr.shown {
+    background-color: #d4d4d4;
+}
+
+table.dataTable tr.shown + tr {
+    background-color: #e5e5e5;
 }
 
 table.dataTable tr.dtrg-group.dtrg-level-0 td {

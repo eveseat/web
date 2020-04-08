@@ -40,13 +40,13 @@
           <div class="form-group row">
             <label class="col-md-4 col-form-label" for="skin">{{ trans('web::seat.seat_skin') }}</label>
             <div class="col-md-6">
-              <select id="skin" name="skin" class="form-control" style="width: 100%;">
+              <select id="skin" name="skin" class="form-control w-100">
                 @foreach($skins as $skin)
-                  <option value="{{ $skin }}"
-                          @if(setting('skin') == $skin)
-                          selected
-                      @endif>
-                    {{ str_replace('skin-', '', $skin) }}</option>
+                  @if(setting('skin') == $skin)
+                    <option value="{{ $skin }}" selected>{{ ucwords($skin) }}</option>
+                  @else
+                    <option value="{{ $skin }}">{{ ucwords($skin) }}</option>
+                  @endif
                 @endforeach
               </select>
             </div>
@@ -56,7 +56,7 @@
           <div class="form-group row">
             <label class="col-md-4 col-form-label" for="language">{{ trans('web::seat.language') }}</label>
             <div class="col-md-6">
-              <select id="language" name="language" class="form-control" style="width: 100%;">
+              <select id="language" name="language" class="form-control w-100">
                 @foreach($languages as $language)
                   <option value="{{ $language['short'] }}"
                           @if(setting('language') == $language['short'])
@@ -72,7 +72,7 @@
           <div class="form-group row">
             <label class="col-md-4 col-form-label" for="sidebar">{{ trans('web::seat.sidebar_size') }}</label>
             <div class="col-md-6">
-              <select id="sidebar" name="sidebar" class="form-control" style="width: 100%;">
+              <select id="sidebar" name="sidebar" class="form-control w-100">
                 @foreach($sidebar as $style)
                   <option value="{{ $style }}"
                           @if(setting('sidebar') == $style)
@@ -88,7 +88,7 @@
           <div class="form-group row">
             <label class="col-md-4 col-form-label" for="sidebar">{{ trans('web::seat.mail_as_threads') }}</label>
             <div class="col-md-6">
-              <select id="sidebar" name="mail_threads" class="form-control" style="width: 100%;">
+              <select id="sidebar" name="mail_threads" class="form-control w-100">
                 <option value="yes"
                         @if(setting('mail_threads') == "yes") selected @endif>
                   {{ trans('web::seat.yes') }}
@@ -109,7 +109,7 @@
                    for="thousand_seperator">{{ trans('web::seat.thousands_seperator') }}</label>
             <div class="col-md-6">
               <div class="form-inline input-group">
-                <select id="thousand_seperator" name="thousand_seperator" class="form-control" style="width: 100%;">
+                <select id="thousand_seperator" name="thousand_seperator" class="form-control w-100">
                   @foreach($thousand as $seperator)
                     <option value="{{ $seperator }}" @if(setting('thousand_seperator') == $seperator) selected @endif>
                       @if($seperator == ' ')
@@ -130,7 +130,7 @@
                    for="decimal_seperator">{{ trans('web::seat.decimal_seperator') }}</label>
             <div class="col-md-6">
               <div class="form-inline input-group">
-                <select id="decimal_seperator" name="decimal_seperator" class="form-control" style="width: 100%;">
+                <select id="decimal_seperator" name="decimal_seperator" class="form-control w-100">
                   @foreach($decimal as $seperator)
                     <option value="{{ $seperator }}" @if(setting('decimal_seperator') == $seperator) selected @endif>
                       {{ $seperator }}
@@ -139,7 +139,7 @@
                 </select>
               </div>
               <p class="form-text text-muted mb-0">
-                {{ trans('web::seat.current_format') }}: {{ number_format(10000000.00) }}
+                {{ trans('web::seat.current_format') }}: {{ number_format(10000000.00, 2, setting('decimal_seperator'), setting('thousand_seperator')) }}
               </p>
             </div>
           </div>
@@ -152,7 +152,7 @@
                    for="email_notifications">{{ trans('web::seat.email_notifications') }}</label>
             <div class="col-md-6">
               <div class="form-inline input-group">
-                <select id="email_notifications" name="email_notifications" class="form-control" style="width: 100%;">
+                <select id="email_notifications" name="email_notifications" class="form-control w-100">
                   <option value="yes"
                           @if(setting('email_notifications') == "yes") selected @endif>
                     {{ trans('web::seat.yes') }}

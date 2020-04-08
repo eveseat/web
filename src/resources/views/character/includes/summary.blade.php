@@ -77,11 +77,11 @@
       <dd>
         @if($summary->security_status < 0)
           <span class="text-danger">
-            {{ number($summary->security_status, 12) }}
+            {{ number($summary->security_status, 2) }}
           </span>
         @else
           <span class="text-success">
-            {{ number($summary->security_status, 12) }}
+            {{ number($summary->security_status, 2) }}
           </span>
         @endif
       </dd>

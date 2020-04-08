@@ -22,7 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
-use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\Repositories\Character\Assets;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\User;
@@ -42,34 +42,29 @@ class AssetsController extends Controller
      */
     public function getAssetsView(int $character_id)
     {
+        $token = RefreshToken::where('character_id', $character_id)->first();
+        $characters = collect();
+        if ($token) {
+            $characters = User::with('characters')->find($token->user_id)->characters;
+        }
 
-        return view('web::character.assets');
+        return view('web::character.assets', compact('characters'));
     }
 
     /**
      * @param int $character_id
+     * @return mixed
      * @throws \Exception
      */
     public function getCharacterAssets(int $character_id)
     {
-        if (! request()->has('all_linked_characters'))
-            return abort(500);
-
-        $character_ids = collect($character_id);
-
-        if (request('all_linked_characters') === 'true')
-            if(CharacterInfo::find($character_id)->refresh_token) {
-                $character_ids = User::find(CharacterInfo::find($character_id)->refresh_token->user_id)
-                    ->characters
-                    ->pluck('character_id');
-            }
+        $character_ids = collect(request()->get('characters', [$character_id]));
 
         $assets = $this->getCharacterAssetsBuilder($character_ids);
 
         return DataTables::of($assets)
             ->editColumn('quantity', function ($row) {
-                if ($row->content->count() < 1)
-                    return number($row->quantity, 0);
+                return $row->content->count() < 1 ? number($row->quantity, 0) : null;
             })
             ->editColumn('item', function ($row) {
                 return view('web::character.partials.asset-type', compact('row'));
@@ -85,6 +80,9 @@ class AssetsController extends Controller
             })
             ->editColumn('content', function ($row) {
                 return view('web::character.partials.content', compact('row'));
+            })
+            ->editColumn('name', function ($row) {
+                return $row->name ?: '';
             })
             ->rawColumns(['item', 'volume', 'content'])
             ->make(true);
