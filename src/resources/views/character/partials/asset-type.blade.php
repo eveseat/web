@@ -1,5 +1,5 @@
-@if(request('all_linked_characters') === "true")
-  {!! img('characters', 'portrait', $row->character_id, 32, ['class' => 'img-circle eve-icon small-icon'],false) !!}
+@if($row->character_id != request()->route()->parameter('character_id'))
+  @include('web::partials.character-icon-hover', ['character' => $row->character])
 @endif
 
 @if($row->type)

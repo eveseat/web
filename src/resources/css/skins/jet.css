@@ -115,6 +115,18 @@ a:hover {
     color: #fbf1c7;
 }
 
+table.dataTable tr.dtrg-group td {
+    background-color: #504945;
+}
+
+table.dataTable tr.dtrg-group + tr.shown {
+    background-color: #665c54;
+}
+
+table.dataTable tr.shown + tr {
+    background-color: #3c3836;
+}
+
 .main-header {
     border-color: #282828;
 }
