@@ -400,7 +400,10 @@
                 {data: 'characters', name: 'characters'},
                 {data: 'created_at', name: 'created_at'},
                 {defaultContent: "", data: "action", name: "action", title: "Action", "orderable": false, "searchable": false}
-            ]
+            ],
+            "drawCallback": function() {
+                $("[data-toggle=tooltip]").tooltip();
+            }
         });
     }
 
