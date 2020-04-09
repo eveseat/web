@@ -13,7 +13,7 @@
     <tr>
       <td>{{ number_format($item->quantity, 0) }}</td>
       <td>
-        @include('web::partials.type', ['type_id' => $item->type_id, 'type_name' => $item->type->typeName])
+        @include('web::partials.type', ['type_id' => $item->type_id, 'type_name' => $item->type->typeName, 'variation' => $item->type->group->categoryID == 9 ? 'bpc' : 'icon'])
       </td>
     </tr>
 

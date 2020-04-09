@@ -12,7 +12,7 @@
   <tbody>
   @foreach($rows as $row)
     <tr>
-      <td class="w-50">@include('web::partials.type', ['type_id' => $row->type->typeID, 'type_name' => $row->type->typeName])</td>
+      <td class="w-50">@include('web::partials.type', ['type_id' => $row->type->typeID, 'type_name' => $row->type->typeName, 'variation' => $row->type->group->categoryID == 9 ? 'bpc' : 'icon'])</td>
       <td class="w-25">{{ number($row->quantity) }}</td>
       <td class="w-25">{{ number($row->type->price->average_price) }}</td>
     </tr>
