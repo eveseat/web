@@ -114,7 +114,16 @@ class SearchController extends Controller
                 return view('web::partials.date', ['datetime' => $row->timestamp]);
             })
             ->editColumn('sender.name', function ($row) {
-                return view('web::partials.character', ['character' => $row->sender]);
+                switch ($row->sender->category) {
+                    case 'character':
+                        return view('web::partials.character', ['character' => $row->sender]);
+                    case 'corporation':
+                        return view('web::partials.corporation', ['corporation' => $row->sender]);
+                    case 'alliance':
+                        return view('web::partials.alliance', ['alliance' => $row->sender]);
+                }
+
+                return '';
             })
             ->editColumn('subject', function ($row) {
                 return view('web::character.partials.mail_title', compact('row'));

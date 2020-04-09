@@ -7,7 +7,17 @@
   </li>
   <li>
     <b>{{ trans('web::mail.author') }}: </b>
-    @include('web::partials.character', ['character' => $mail->sender])
+    @switch($row->sender->category)
+      @case('character')
+        @include('web::partials.character', ['character' => $row->sender])
+        @break
+      @case('corporation')
+        @include('web::partials.corporation', ['corporation' => $row->sender])
+        @break
+      @case('alliance')
+        @include('web::partials.alliance', ['alliance' => $row->sender])
+        @break
+    @endswitch
   </li>
   @if($mail->recipients->where('recipient_type', 'character')->isNotEmpty())
   <li>
