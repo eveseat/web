@@ -58,7 +58,11 @@ abstract class AbstractMarketDataTable extends DataTable
                 return number($row->price * $row->volume_total);
             })
             ->editColumn('type.typeName', function ($row) {
-                return view('web::partials.type', ['type_id' => $row->type->typeID, 'type_name' => $row->type->typeName]);
+                return view('web::partials.type', [
+                    'type_id' => $row->type->typeID,
+                    'type_name' => $row->type->typeName,
+                    'variation' => $row->type->group->categoryID == 9 ? 'bpc' : 'icon',
+                ]);
             })
             ->filterColumn('is_buy_order', function ($query, $keyword) {
                 if (strpos('SELL', strtoupper($keyword)) !== false)
