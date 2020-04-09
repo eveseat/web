@@ -26,9 +26,9 @@
       serverSide  : true,
       ajax        : '{{ route('support.search.skills.data') }}',
       columns     : [
-        {data: 'character.name', name: 'character.name'},
-        {data: 'character.affiliation.corporation.name', name: 'character.affiliation.corporation.name'},
-        {data: 'character.affiliation.alliance.name', name: 'character.affiliation.alliance.name'},
+        {data: 'character.name', name: 'character.name', 'searchable': false},
+        {data: 'character.affiliation.corporation.name', name: 'character.affiliation.corporation.name', 'searchable': false},
+        {data: 'character.affiliation.alliance.name', name: 'character.affiliation.alliance.name', 'searchable': false},
         {data: 'type.group.groupName', name: 'type.group.groupName'},
         {data: 'type.typeName', name: 'type.typeName'},
         {data: 'trained_skill_level', name: 'trained_skill_level'}
