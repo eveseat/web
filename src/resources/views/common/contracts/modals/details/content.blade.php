@@ -201,7 +201,7 @@
     @foreach($contract->lines as $line)
       <tr>
         <td>{{ $line->type->group->groupName }}</td>
-        <td>@include('web::partials.type', ['type_id' => $line->type->typeID, 'type_name' => $line->type->typeName])</td>
+        <td>@include('web::partials.type', ['type_id' => $line->type->typeID, 'type_name' => $line->type->typeName, 'variation' => $line->type->group->categoryID == 9 ? 'bpc' : 'icon'])</td>
         <td>{{ number($line->quantity, 0) }}</td>
         <td>{{ number($line->type->volume * $line->quantity) }}</td>
       </tr>

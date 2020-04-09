@@ -40,7 +40,11 @@ abstract class AbstractFittingDataTable extends DataTable
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('ship.typeName', function ($row) {
-                return view('web::partials.type', ['type_id' => $row->ship->typeID, 'type_name' => $row->ship->typeName]);
+                return view('web::partials.type', [
+                    'type_id' => $row->ship->typeID,
+                    'type_name' => $row->ship->typeName,
+                    'variation' => $row->ship->group->categoryID == 9 ? 'bpc' : 'icon',
+                ]);
             })
             ->addColumn('items', function ($row) {
                 return $row->items->count();

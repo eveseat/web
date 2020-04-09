@@ -74,9 +74,9 @@
 
                 <td>
                   @if($asset->name != $asset->type->typeName)
-                    @include('web::partials.type', ['type_id' => $asset->type_id, 'type_name' => sprintf('%s (%s)', $asset->name, $asset->type->typeName)])
+                    @include('web::partials.type', ['type_id' => $asset->type_id, 'type_name' => sprintf('%s (%s)', $asset->name, $asset->type->typeName), 'variation' => $asset->type->group->categoryID == 9 ? 'bpc' : 'icon'])
                   @else
-                    @include('web::partials.type', ['type_id' => $asset->type_id, 'type_name' => $asset->type->typeName])
+                    @include('web::partials.type', ['type_id' => $asset->type_id, 'type_name' => $asset->type->typeName, 'variation' => $asset->type->group->categoryID == 9 ? 'bpc' : 'icon'])
                   @endif
                   @if(! $asset->is_singleton)
                     <span class="text-red">(packaged)</span>

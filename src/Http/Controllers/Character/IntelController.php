@@ -405,7 +405,11 @@ class IntelController extends Controller
                 return number_format($row->unit_price, 2);
             })
             ->editColumn('type.typeName', function ($row) {
-                return view('web::partials.type', ['type_id' => $row->type->typeID, 'type_name' => $row->type->typeName]);
+                return view('web::partials.type', [
+                    'type_id' => $row->type->typeID,
+                    'type_name' => $row->type->typeName,
+                    'variation' => $row->type->group->categoryID == 9 ? 'bpc' : 'icon',
+                ]);
             })
             ->editColumn('location.name', function ($row) {
                 return $row->location->name;

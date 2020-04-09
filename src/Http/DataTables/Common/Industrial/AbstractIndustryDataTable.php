@@ -90,7 +90,11 @@ abstract class AbstractIndustryDataTable extends DataTable
                 ]);
             })
             ->editColumn('product.typeName', function ($row) {
-                return view('web::partials.type', ['type_id' => $row->product->typeID, 'type_name' => $row->product->typeName]);
+                return view('web::partials.type', [
+                    'type_id' => $row->product->typeID,
+                    'type_name' => $row->product->typeName,
+                    'variation' => $row->product->group->categoryID == 9 ? 'bpc' : 'icon'
+                ]);
             })
             ->rawColumns(['runs', 'activity.activityName'])
             ->make(true);

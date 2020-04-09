@@ -14,7 +14,7 @@
     <tr>
       <td>{{ $asset->quantity }}</td>
       <td>
-        @include('web::partials.type', ['type_id' => $asset->typeID, 'type_name' => $asset->typeName])
+        @include('web::partials.type', ['type_id' => $asset->typeID, 'type_name' => $asset->typeName, 'variation' => $asset->type->group->categoryID == 9 ? 'bpc' : 'icon'])
       </td>
       <td>{{ number_metric($asset->quantity * $asset->volume) }} m&sup3;</td>
       <td>{{ $asset->groupName }}</td>
