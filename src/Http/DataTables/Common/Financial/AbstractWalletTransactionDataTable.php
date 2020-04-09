@@ -55,7 +55,11 @@ abstract class AbstractWalletTransactionDataTable extends DataTable
                 return number($row->quantity * $row->unit_price);
             })
             ->editColumn('type.typeName', function ($row) {
-                return view('web::partials.type', ['type_id' => $row->type->typeID, 'type_name' => $row->type->typeName]);
+                return view('web::partials.type', [
+                    'type_id' => $row->type->typeID,
+                    'type_name' => $row->type->typeName,
+                    'variation' => $row->type->group->categoryID == 9 ? 'bpc' : 'icon',
+                ]);
             })
             ->editColumn('location.name', function ($row) {
                 return $row->location->name;

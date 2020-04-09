@@ -184,7 +184,11 @@ class SearchController extends Controller
                 return view('web::partials.alliance', ['alliance' => $row->character->affiliation->alliance]);
             })
             ->editColumn('type.typeName', function ($row) {
-                return view('web::partials.type', ['type_id' => $row->type->typeID, 'type_name' => $row->type->typeName]);
+                return view('web::partials.type', [
+                    'type_id' => $row->type->typeID,
+                    'type_name' => $row->type->typeName,
+                    'variation' => $row->type->group->categoryID == 9 ? 'bpc' : 'icon',
+                ]);
             })
             ->addColumn('location_name', function ($row) {
                 return $row->location->name ?: ($row->location->stationName ?: $row->location->itemName);
