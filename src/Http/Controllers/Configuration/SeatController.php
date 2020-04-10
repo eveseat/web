@@ -81,6 +81,7 @@ class SeatController extends Controller
         setting(['admin_contact', $request->admin_contact], true);
         setting(['allow_tracking', $request->allow_tracking], true);
         setting(['cleanup_data', $request->cleanup_data], true);
+        setting(['market_prices_region_id', $request->market_prices_region], true);
 
         return redirect()->back()
             ->with('success', 'SeAT settings updated!');
