@@ -93,7 +93,7 @@ abstract class AbstractIndustryDataTable extends DataTable
                 return view('web::partials.type', [
                     'type_id' => $row->product->typeID,
                     'type_name' => $row->product->typeName,
-                    'variation' => $row->product->group->categoryID == 9 ? 'bpc' : 'icon'
+                    'variation' => $row->product->group->categoryID == 9 ? 'bpc' : 'icon',
                 ]);
             })
             ->rawColumns(['runs', 'activity.activityName'])
