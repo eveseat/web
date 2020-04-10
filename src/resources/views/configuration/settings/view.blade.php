@@ -31,6 +31,17 @@
             </div>
           </div>
 
+          <legend>{{ trans_choice('web::settings.jobs', 0) }}</legend>
+
+          <!-- Text input -->
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label" for="market_prices_region">{{ trans('web::settings.market_prices_region') }}</label>
+            <div class="col-md-6">
+              <select id="market_prices_region" name="market_prices_region" class="form-control" style="width: 100%;"></select>
+              <p class="form-text text-muted mb-0">{{ trans('web::settings.market_prices_region_help') }}</p>
+            </div>
+          </div>
+
           <legend>{{ trans('web::seat.maintenance') }}</legend>
 
           <!-- Text input-->
@@ -210,6 +221,29 @@
 @push('javascript')
 <script type="text/javascript">
   $(document).ready(function () {
+    var market_prices_region = $('#market_prices_region');
+    market_prices_region.select2({
+        ajax: {
+            url: '{{ route('fastlookup.regions') }}',
+            dataType: 'json'
+        }
+    });
+
+    $.ajax({
+        type: 'get',
+        url: '{{ route('fastlookup.regions') }}?_type=find&q={{ setting('market_prices_region_id', true) ?: 0 }}'
+    }).then(function (data) {
+        var option = new Option(data.text, data.id, true, true);
+        market_prices_region.append(option).trigger('change');
+
+        market_prices_region.trigger({
+            type: 'select2:select',
+            params: {
+                data: data
+            }
+        });
+    });
+
     var installedPackages = {
       "vendor": ["Vendor"],
       "name": ["Package Name"],
