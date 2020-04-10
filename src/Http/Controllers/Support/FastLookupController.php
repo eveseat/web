@@ -28,6 +28,7 @@ use Seat\Eveapi\Models\Alliances\Alliance;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Sde\InvType;
+use Seat\Eveapi\Models\Sde\MapDenormalize;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\User;
 
@@ -327,6 +328,42 @@ class FastLookupController extends Controller
 
         return response()->json([
             'results' => $skills,
+        ]);
+    }
+
+    /***
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getRegions(Request $request)
+    {
+        if ($request->query('_type', 'query') == 'find') {
+            $region = MapDenormalize::find($request->query('q', 0));
+
+            if (is_null($region)) {
+                return response()->json();
+            }
+
+            return response()->json([
+                'id'   => $region->itemID,
+                'text' => $region->itemName,
+            ]);
+        }
+
+        $regions = MapDenormalize::where('typeID', 3)
+            ->whereRaw('itemName LIKE ?', ["%{$request->query('q', '')}%"])
+            ->select('itemID', 'itemName')
+            ->orderBy('itemName')
+            ->get()
+            ->map(function ($region) {
+                return [
+                    'id'   => $region->itemID,
+                    'text' => $region->itemName,
+                ];
+            });
+
+        return response()->json([
+            'results' => $regions,
         ]);
     }
 }
