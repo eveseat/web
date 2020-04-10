@@ -215,14 +215,15 @@ class DropGroupsTable extends Migration
             'updated_at'        => carbon(),
         ]);
 
-        $id = 0;
-        DB::table('users')->get()->each(function ($user) use (&$id) {
-            //$id++;
-            DB::table('users')
-                ->where('main_character_id', $user->main_character_id)
-                ->update([
-                    'id' => ++$id,
-                ]);
+        DB::table('users')
+            ->whereNull('id')
+            ->get()
+            ->each(function ($user, $key) {
+                DB::table('users')
+                    ->where('main_character_id', $user->main_character_id)
+                    ->update([
+                        'id' => ($key + 2),
+                    ]);
         });
 
         // switch id field from simple integer to auto-increment field
