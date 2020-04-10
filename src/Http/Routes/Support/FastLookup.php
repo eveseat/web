@@ -60,3 +60,8 @@ Route::get('/skills', [
     'as'   => 'fastlookup.skills',
     'uses' => 'FastLookupController@getSkills',
 ]);
+
+Route::get('/regions', [
+    'as'   => 'fastlookup.regions',
+    'uses' => 'FastLookupController@getRegions',
+]);
