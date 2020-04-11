@@ -24,6 +24,7 @@ namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Industrial\BlueprintDataTable;
+use Seat\Web\Http\DataTables\Scopes\CorporationAssetDivisionsScope;
 use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 use Seat\Web\Http\DataTables\Scopes\Filters\BlueprintTypeScope;
 
@@ -41,7 +42,19 @@ class BlueprintController extends Controller
      */
     public function index(int $corporation_id, BlueprintDataTable $dataTable)
     {
+        $division_ids = [];
+        $division_permissions = [
+            'asset_first_division', 'asset_second_division', 'asset_third_division', 'asset_fourth_division',
+            'asset_fifth_division', 'asset_sixth_division', 'asset_seventh_division',
+        ];
+
+        foreach ($division_permissions as $key => $permission) {
+            if (auth()->user()->has(sprintf('corporation.%s', $permission)))
+                array_push($division_ids, ($key + 1));
+        }
+
         return $dataTable->addScope(new CorporationScope([$corporation_id]))
+            ->addScope(new CorporationAssetDivisionsScope($division_ids))
             ->addScope(new BlueprintTypeScope(request()->input('filters.type')))
             ->render('web::corporation.blueprint');
     }
