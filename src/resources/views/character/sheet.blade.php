@@ -92,6 +92,107 @@
         </div>
       @endif
 
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">{{ trans('web::seat.jump_fatigue') }}
+              &amp; {{ trans_choice('web::seat.jump_clones', 0) }}</h3>
+          </div>
+          <div class="card-body">
+
+            <dl>
+              <dt>{{ trans('web::seat.jump_fatigue') }}</dt>
+              <dd>
+
+                @if(!is_null($fatigue) && carbon($fatigue->jump_fatigue_expire_date)->gt(carbon(null)))
+                  {{ $fatigue->jump_fatigue_expire_date }}
+                  <span class="float-right">Ends approx {{ human_diff($fatigue->jump_fatigue_expire_date) }}</span>
+                @else
+                  None
+                @endif
+
+              </dd>
+
+              <dt>{{ trans('web::seat.jump_act_timer') }}</dt>
+              <dd>
+                @if(!is_null($last_jump) && carbon($last_jump->last_clone_jump_date)->gt(carbon(null)))
+                  {{ $last_jump->last_clone_jump_date }}
+                  <span class="float-right">Ends approx {{ human_diff($last_jump->last_clone_jump_date) }}</span>
+                @else
+                  {{ trans('web::seat.none') }}
+                @endif
+              </dd>
+
+              <dt>{{ trans_choice('web::seat.jump_clones', 0) }}</dt>
+              <dd>
+
+                @if(count($jump_clones) > 0)
+
+                  <ul>
+
+                    @foreach($jump_clones as $clone)
+                      <li>
+                        @if(! is_null($clone->name) && ! empty($clone->name))
+                          ({{ $clone->name }})
+                        @endif
+
+                        @if(! is_null($clone->location))
+                          Located at <b>{{ $clone->location->name }}</b>
+                        @else
+                          Location is unknown
+                        @endif
+                      </li>
+                    @endforeach
+
+                  </ul>
+
+                @else
+                  {{ trans('web::seat.no_jump_clones') }}
+                @endif
+
+              </dd>
+
+            </dl>
+
+          </div>
+          <div class="card-footer">
+            {{ count($jump_clones) }} {{ trans_choice('web::seat.jump_clones', count($jump_clones)) }}
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">{{ trans_choice('web::seat.attribute', 2) }}</h3>
+          </div>
+          <div class="card-body">
+
+            <div class="row">
+
+              <div class="col-md-6">
+                <ul class="list-unstyled">
+                  <li>Charisma: {{ is_null($attributes) ? 0 : $attributes->charisma }}</li>
+                  <li>Intelligence: {{ is_null($attributes) ? 0 : $attributes->intelligence }}</li>
+                  <li>Memory: {{ is_null($attributes) ? 0 : $attributes->memory }}</li>
+                  <li>Perception: {{ is_null($attributes) ? 0 : $attributes->perception }}</li>
+                  <li>Willpower: {{ is_null($attributes) ? 0 : $attributes->willpower }}</li>
+                </ul>
+              </div>
+
+              <div class="col-md-6">
+                <dl>
+                  <dt>{{ trans('web::seat.bonus_remaps') }}</dt>
+                  <dd>{{ is_null($attributes) ? 0 : $attributes->bonus_remaps }}</dd>
+                  <dt>{{ trans('web::seat.last_remap_date') }}</dt>
+                  <dd>{{ is_null($attributes) ? carbon() : $attributes->last_remap_date }}</dd>
+                  <dt>{{ trans('web::seat.accrued_remap_cooldown_date') }}</dt>
+                  <dd>{{ is_null($attributes) ? carbon() : $attributes->accrued_remap_cooldown_date }}</dd>
+                </dl>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
     </div>
 
     <div class="col-md-6">
@@ -112,7 +213,7 @@
             </div>
           @endif
         </div>
-        <div class="card-body">
+        <div class="card-body overflow-auto" style="max-height: 200px;">
 
           @if(count($employment) > 0)
             <ul class="list-unstyled">
@@ -120,7 +221,7 @@
               @foreach($employment as $history)
 
                 <li>
-                  {!! img('corporations', 'logo', $history->corporation_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
+                  {!! img('corporations', 'logo', $history->corporation_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
                   <b><span class="id-to-name"
                            data-id="{{ $history->corporation_id }}">{{ trans('web::seat.unknown') }}</span></b>
                   on {{ carbon($history->start_date)->toDateString() }}
@@ -142,146 +243,32 @@
         </div>
       </div>
 
-    </div>
-
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="card">
-      <div class="card-header">
-        <h3 class="card-title">{{ trans('web::seat.jump_fatigue') }}
-          &amp; {{ trans_choice('web::seat.jump_clones', 0) }}</h3>
-      </div>
-      <div class="card-body">
-
-        <dl>
-          <dt>{{ trans('web::seat.jump_fatigue') }}</dt>
-          <dd>
-
-            @if(!is_null($fatigue) && carbon($fatigue->jump_fatigue_expire_date)->gt(carbon(null)))
-              {{ $fatigue->jump_fatigue_expire_date }}
-              <span class="float-right">Ends approx {{ human_diff($fatigue->jump_fatigue_expire_date) }}</span>
-            @else
-              None
-            @endif
-
-          </dd>
-
-          <dt>{{ trans('web::seat.jump_act_timer') }}</dt>
-          <dd>
-            @if(!is_null($last_jump) && carbon($last_jump->last_clone_jump_date)->gt(carbon(null)))
-              {{ $last_jump->last_clone_jump_date }}
-              <span class="float-right">Ends approx {{ human_diff($last_jump->last_clone_jump_date) }}</span>
-            @else
-              {{ trans('web::seat.none') }}
-            @endif
-          </dd>
-
-          <dt>{{ trans_choice('web::seat.jump_clones', 0) }}</dt>
-          <dd>
-
-            @if(count($jump_clones) > 0)
-
-              <ul>
-
-                @foreach($jump_clones as $clone)
-                  <li>
-                    @if(! is_null($clone->name) && ! empty($clone->name))
-                      ({{ $clone->name }})
-                    @endif
-
-                    @if(! is_null($clone->location))
-                      Located at <b>{{ $clone->location->name }}</b>
-                    @else
-                      Location is unknown
-                    @endif
-                  </li>
-                @endforeach
-
-              </ul>
-
-            @else
-              {{ trans('web::seat.no_jump_clones') }}
-            @endif
-
-          </dd>
-
-        </dl>
-
-      </div>
-      <div class="card-footer">
-        {{ count($jump_clones) }} {{ trans_choice('web::seat.jump_clones', count($jump_clones)) }}
-      </div>
-    </div>
-    </div>
-    <div class="col-md-6">
-      <div class="card">
-      <div class="card-header">
-        <h3 class="card-title">{{ trans_choice('web::seat.implants', 0) }}</h3>
-      </div>
-      <div class="card-body">
-
-        @if(count($implants) > 0)
-
-          <ul>
-
-            @foreach($implants as $implant)
-              <li>{{ $implant->type->typeName }}</li>
-            @endforeach
-
-          </ul>
-
-        @else
-          {{ trans('web::seat.no_implants') }}
-        @endif
-
-      </div>
-      <div class="card-footer">
-        {{ count($implants) }} {{ trans_choice('web::seat.implants', count($implants)) }}
-      </div>
-    </div>
-    </div>
-  </div>
-  <div class="row">
-
-    <!-- character attributes -->
-    <div class="col-md-6">
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">{{ trans_choice('web::seat.attribute', 2) }}</h3>
+          <h3 class="card-title">{{ trans_choice('web::seat.implants', 0) }}</h3>
         </div>
         <div class="card-body">
 
-          <div class="row">
+          @if(count($implants) > 0)
 
-            <div class="col-md-6">
-              <ul class="list-unstyled">
-                <li>Charisma: {{ is_null($attributes) ? 0 : $attributes->charisma }}</li>
-                <li>Intelligence: {{ is_null($attributes) ? 0 : $attributes->intelligence }}</li>
-                <li>Memory: {{ is_null($attributes) ? 0 : $attributes->memory }}</li>
-                <li>Perception: {{ is_null($attributes) ? 0 : $attributes->perception }}</li>
-                <li>Willpower: {{ is_null($attributes) ? 0 : $attributes->willpower }}</li>
-              </ul>
-            </div>
+            <ul>
 
-            <div class="col-md-6">
-              <dl>
-                <dt>{{ trans('web::seat.bonus_remaps') }}</dt>
-                <dd>{{ is_null($attributes) ? 0 : $attributes->bonus_remaps }}</dd>
-                <dt>{{ trans('web::seat.last_remap_date') }}</dt>
-                <dd>{{ is_null($attributes) ? carbon() : $attributes->last_remap_date }}</dd>
-                <dt>{{ trans('web::seat.accrued_remap_cooldown_date') }}</dt>
-                <dd>{{ is_null($attributes) ? carbon() : $attributes->accrued_remap_cooldown_date }}</dd>
-              </dl>
-            </div>
+              @foreach($implants as $implant)
+                <li>{{ $implant->type->typeName }}</li>
+              @endforeach
 
-          </div>
+            </ul>
+
+          @else
+            {{ trans('web::seat.no_implants') }}
+          @endif
 
         </div>
+        <div class="card-footer">
+          {{ count($implants) }} {{ trans_choice('web::seat.implants', count($implants)) }}
+        </div>
       </div>
-    </div>
 
-    <div class="col-md-6">
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">{{ trans_choice('web::seat.corporation_titles', 0) }}</h3>
@@ -301,6 +288,7 @@
           {{ count($titles) }} {{ trans_choice('web::seat.corporation_titles', count($titles)) }}
         </div>
       </div>
+
     </div>
 
   </div>
