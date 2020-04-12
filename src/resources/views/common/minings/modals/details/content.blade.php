@@ -40,9 +40,9 @@
         <td>
           @include('web::partials.type', ['type_id' => $material->type->typeID, 'type_name' => $material->type->typeName])
         </td>
-        <td>{{ number_format($entries->sum('quantity') * $material->quantity / 100, 0) }}</td>
-        <td>{{ number_format($entries->sum('quantity') * $material->quantity * $material->type->volume / 100, 2) }}</td>
-        <td>{{ number_format($entries->sum('quantity') * $material->quantity * $material->type->price->average_price / 100, 2) }}</td>
+        <td>{{ number_format(intdiv($entries->sum('quantity'), 100) * $material->quantity * 0.80) }}</td>
+        <td>{{ number_format(intdiv($entries->sum('quantity'), 100) * $material->quantity * 0.80 * $material->type->volume, 2) }}</td>
+        <td>{{ number_format(intdiv($entries->sum('quantity'), 100) * $material->quantity * 0.80 * $material->type->price->average, 2) }}</td>
       </tr>
     @endforeach
   </tbody>
@@ -65,7 +65,7 @@
         <td>{{ $entry->time }}</td>
         <td>{{ number_format($entry->quantity, 0) }}</td>
         <td>{{ number_format($entry->quantity * $entry->type->volume, 2) }}</td>
-        <td>{{ number_format($entry->quantity * $entry->type->price->average_price, 2) }}</td>
+        <td>{{ number_format($entry->quantity * $entry->type->price->average, 2) }}</td>
       </tr>
     @endforeach
   </tbody>
