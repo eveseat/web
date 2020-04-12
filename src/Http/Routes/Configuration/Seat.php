@@ -30,6 +30,11 @@ Route::get('/about', [
     'uses' => 'SeatController@getAbout',
 ]);
 
+Route::post('/update/customlink', [
+    'as'   => 'seat.update.customlink',
+    'uses' => 'SeatController@postUpdateCustomlink',
+]);
+
 Route::post('/update/settings', [
     'as'   => 'seat.update.settings',
     'uses' => 'SeatController@postUpdateSettings',

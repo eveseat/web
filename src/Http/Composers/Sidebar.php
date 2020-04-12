@@ -51,8 +51,28 @@ class Sidebar extends AbstractMenu
     public function compose(View $view)
     {
 
-        // Grab the menu and sort it.
+        // Grab the menu.
         $menu = config('package.sidebar');
+
+        // Grab any custom links.
+        if (! is_null(setting('customlinks', true))) {
+            $custommenu = setting('customlinks', true);
+
+            foreach($custommenu as $node) {
+
+                // Build our menu node
+                $node_name = preg_replace('/\s+/', '', strtolower($node['name']));
+                $menu[$node_name] = [
+                    'name'          => $node['name'],
+                    'icon'          => $node['icon'],
+                    'route_segment' => 'custom',
+                    'route'         => $node['url'],
+                    'newtab'        => $node['newtab'],
+                ];
+            }
+        }
+
+        // Sort the menu.
         ksort($menu);
 
         // Return the sidebar with the loaded packages menus
