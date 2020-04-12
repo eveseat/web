@@ -50,7 +50,7 @@ abstract class AbstractFittingDataTable extends DataTable
                 return $row->items->count();
             })
             ->addColumn('hull_estimated_value', function ($row) {
-                return number($row->ship->price->average_price);
+                return number($row->ship->price->average);
             })
             ->addColumn('fitting_estimated_value', function ($row) {
                 return number($row->fitting_estimated_price);
