@@ -45,8 +45,7 @@
 
                 @foreach($message->recipients->where('recipient_type', 'corporation') as $recipient)
 
-                  {!! img('corporations', 'logo', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                  <span class="id-to-name" data-id="{{ $recipient->recipient_id }}">{{ trans('web::seat.unknown') }}</span>
+                  @include('web::partials.corporation', ['corporation' => $recipient->entity])
 
                 @endforeach
               </li>
@@ -58,8 +57,7 @@
 
                 @foreach($message->recipients->where('recipient_type', 'character') as $recipient)
 
-                  {!! img('characters', 'portrait', $recipient->recipient_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                  <span class="id-to-name" data-id="{{ $recipient->recipient_id }}">{{ trans('web::seat.unknown') }}</span>
+                  @include('web::partials.character', ['character' => $recipient->entity])
 
                 @endforeach
 
