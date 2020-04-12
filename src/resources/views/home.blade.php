@@ -60,7 +60,7 @@
       <div class="info-box">
         <span class="info-box-icon bg-purple elevation-1"><i class="far fa-gem"></i></span>
         <div class="info-box-content">
-          <span class="info-box-text">{{ trans('web::seat.total_character_mined_isk') }}</span>
+          <span class="info-box-text">{{ trans('web::seat.total_character_mined_isk') }} <small class="text-muted">({{ trans('web::seat.current_month') }})</small></span>
           <span class="info-box-number">
             {{ number_format($total_character_mining) }}
           </span>
@@ -92,7 +92,7 @@
       <div class="info-box">
         <span class="info-box-icon bg-red elevation-1"><i class="fa fa-space-shuttle"></i></span>
         <div class="info-box-content">
-          <span class="info-box-text">{{ trans('web::seat.total_killmails') }}</span>
+          <span class="info-box-text">{{ trans('web::seat.total_killmails') }} <small class="text-muted">({{ trans('web::seat.current_month') }})</small></span>
           <span class="info-box-number">
             {{ $total_character_killmails }}
           </span>

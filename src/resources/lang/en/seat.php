@@ -225,6 +225,7 @@ return [
     'main_char_skills_coverage'   => 'Skills Coverage (in percent)',
     'concurrent_player_count'     => 'Concurrent Player Count',
     'esi_response_time'           => 'ESI Response Times',
+    'current_month'               => 'this month',
 
     // Api Keys
     'api_key_add'                 => 'Add a New API Key',
