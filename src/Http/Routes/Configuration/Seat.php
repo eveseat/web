@@ -32,7 +32,7 @@ Route::get('/about', [
 
 Route::post('/update/customlink', [
     'as'   => 'seat.update.customlink',
-    'uses' => 'SeatController@postUpdateCustomlink',
+    'uses' => 'SeatController@postUpdateCustomLinks',
 ]);
 
 Route::post('/update/settings', [

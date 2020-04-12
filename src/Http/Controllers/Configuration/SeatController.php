@@ -59,20 +59,9 @@ class SeatController extends Controller
             $warn_sso = false;
 
         // Retrieve custom links
-        $customlinks = [];
-        $customlinksetting = setting('customlinks', true);
-        if(! is_null($customlinksetting)) {
-            foreach($customlinksetting as $node) {
-                $customlinks[] = [
-                    'name'   => $node['name'],
-                    'url'    => $node['url'],
-                    'icon'   => $node['icon'],
-                    'newtab' => $node['newtab'],
-                ];
-            }
-        }
+        $custom_links = setting('customlinks', true) ?: collect();
 
-        return view('web::configuration.settings.view', compact('packages', 'warn_sso', 'customlinks'));
+        return view('web::configuration.settings.view', compact('packages', 'warn_sso', 'custom_links'));
     }
 
     /**
@@ -108,28 +97,29 @@ class SeatController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Seat\Services\Exceptions\SettingException
      */
-    public function postUpdateCustomlink(Customlink $request)
+    public function postUpdateCustomLinks(Customlink $request)
     {
 
         // Retrieve the form data.
         $names = $request->input('customlink-name', []);
         $urls = $request->input('customlink-url', []);
         $icons = $request->input('customlink-icon', []);
-        $newtabs = $request->input('customlink-newtab', []);
+        $new_tabs = $request->input('customlink-newtab', []);
 
         // Process the form data.
-        $customlinks = [];
+        $custom_links = collect();
+
         foreach($names as $key => $name) {
-            $customlinks[] = [
-                'name'   => $name,
-                'url'    => $urls[$key],
-                'icon'   => $icons[$key],
-                'newtab' => (bool) $newtabs[$key],
-            ];
+            $custom_links->push((object) [
+                'name'    => $name,
+                'url'     => $urls[$key],
+                'icon'    => $icons[$key],
+                'new_tab' => (bool) $new_tabs[$key],
+            ]);
         }
 
         // Update the setting
-        setting(['customlinks', $customlinks], true);
+        setting(['customlinks', $custom_links], true);
 
         return redirect()->back()
             ->with('success', 'Menu links updated!');
