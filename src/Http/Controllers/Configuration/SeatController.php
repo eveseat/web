@@ -112,9 +112,9 @@ class SeatController extends Controller
     {
 
         // Retrieve the form data.
-        $names   = $request->input('customlink-name', []);
-        $urls    = $request->input('customlink-url', []);
-        $icons   = $request->input('customlink-icon', []);
+        $names = $request->input('customlink-name', []);
+        $urls = $request->input('customlink-url', []);
+        $icons = $request->input('customlink-icon', []);
         $newtabs = $request->input('customlink-newtab', []);
 
         // Process the form data.
@@ -127,7 +127,7 @@ class SeatController extends Controller
                 'newtab' => (bool) $newtabs[$key],
             ];
         }
-        
+
         // Update the setting
         setting(['customlinks', $customlinks], true);
 
