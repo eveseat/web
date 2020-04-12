@@ -409,7 +409,7 @@ return [
     'tracking_help'                => 'Before disabling the usage tracking, please refer to the below' .
         ' document first.',
     'customlink'                   => 'Custom Links',
-    'customlink_description'       => 'You can add custom links to the SeAT sidebar menu here. You can optionally specify an ' . 
+    'customlink_description'       => 'You can add custom links to the SeAT sidebar menu here. You can optionally specify an ' .
         'icon to use from the Font Awesome free icons (eg. "fas fa-link").',
 
     // SSO Settings
