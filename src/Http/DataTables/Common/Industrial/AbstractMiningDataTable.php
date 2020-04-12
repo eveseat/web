@@ -57,7 +57,7 @@ abstract class AbstractMiningDataTable extends DataTable
                 return number($row->type->volume * $row->quantity);
             })
             ->addColumn('estimated_value', function ($row) {
-                return number($row->type->price->average_price * $row->quantity);
+                return number($row->type->price->average * $row->quantity);
             })
             ->filterColumn('volume', function ($query, $keyword) {
                 return $query->whereHas('type', function ($sub_query) use ($keyword) {
@@ -66,7 +66,7 @@ abstract class AbstractMiningDataTable extends DataTable
             })
             ->filterColumn('estimated_value', function ($query, $keyword) {
                 return $query->whereHas('type.price', function ($sub_query) use ($keyword) {
-                    return $sub_query->whereRaw('(average_price * quantity) LIKE ?', ["%$keyword%"]);
+                    return $sub_query->whereRaw('(average * quantity) LIKE ?', ["%$keyword%"]);
                 });
             });
     }
