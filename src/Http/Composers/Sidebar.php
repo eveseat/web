@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\Composers;
 
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Str;
 
 /**
  * Class User.
@@ -55,21 +56,20 @@ class Sidebar extends AbstractMenu
         $menu = config('package.sidebar');
 
         // Grab any custom links.
-        if (! is_null(setting('customlinks', true))) {
-            $custommenu = setting('customlinks', true);
+        $custom_links = setting('customlinks', true) ?: [];
 
-            foreach($custommenu as $node) {
+        foreach($custom_links as $node) {
 
-                // Build our menu node
-                $node_name = preg_replace('/\s+/', '', strtolower($node['name']));
-                $menu[$node_name] = [
-                    'name'          => $node['name'],
-                    'icon'          => $node['icon'],
-                    'route_segment' => 'custom',
-                    'route'         => $node['url'],
-                    'newtab'        => $node['newtab'],
-                ];
-            }
+            // Build our menu node
+            $node_name = Str::slug(preg_replace('/\s+/', '', strtolower($node->name)));
+
+            $menu[$node_name] = [
+                'name'          => $node->name,
+                'icon'          => $node->icon,
+                'route_segment' => 'custom',
+                'route'         => $node->url,
+                'new_tab'       => $node->new_tab,
+            ];
         }
 
         // Sort the menu.

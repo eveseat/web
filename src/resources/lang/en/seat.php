@@ -411,7 +411,8 @@ return [
         ' document first.',
     'customlink'                   => 'Custom Links',
     'customlink_description'       => 'You can add custom links to the SeAT sidebar menu here. You can optionally specify an ' .
-        'icon to use from the Font Awesome free icons (eg. "fas fa-link").',
+        'icon to use from the :fa-link free icons (eg. :icon).',
+    'new_tab_question_mark'        => 'New tab ?',
 
     // SSO Settings
     'sso_scopes'                   => 'SSO Scopes',

@@ -174,7 +174,7 @@
           @elseif($entry['route_segment'] === 'custom')
 
           <li class="nav-item">
-              <a href="{{ $entry['route'] }}" class="nav-link" @if ($entry['newtab'] == true) target="_blank" @endif>
+              <a href="{{ $entry['route'] }}" class="nav-link" @if ($entry['new_tab'] == true) target="_blank" @endif>
                 <i class="nav-icon {{ ($entry['icon'] != '') ? $entry['icon'] : 'fas fa-link' }}"></i>
                 <p>{{ $entry['name'] }}</p>
               </a>
