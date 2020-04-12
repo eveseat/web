@@ -7,15 +7,15 @@
   </li>
   <li>
     <b>{{ trans('web::mail.author') }}: </b>
-    @switch($row->sender->category)
+    @switch($mail->sender->category)
       @case('character')
-        @include('web::partials.character', ['character' => $row->sender])
+        @include('web::partials.character', ['character' => $mail->sender])
         @break
       @case('corporation')
-        @include('web::partials.corporation', ['corporation' => $row->sender])
+        @include('web::partials.corporation', ['corporation' => $mail->sender])
         @break
       @case('alliance')
-        @include('web::partials.alliance', ['alliance' => $row->sender])
+        @include('web::partials.alliance', ['alliance' => $mail->sender])
         @break
     @endswitch
   </li>
