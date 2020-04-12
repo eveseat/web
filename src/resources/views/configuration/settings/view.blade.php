@@ -139,44 +139,50 @@
       <h3 class="card-title">{{ trans('web::seat.customlink') }}</h3>
     </div>
     <div class="card-body">
-      <p>{{ trans('web::seat.customlink_description') }}</p>
+      <p>{!! trans('web::seat.customlink_description', ['fa-link' => '<a href="https://fontawesome.com/icons?d=gallery" target="_blank">Font Awesome</a>', 'icon' => '<code>fas fa-link</code>']) !!}</p>
 
       <form role="form" action="{{ route('seat.update.customlink') }}" method="post">
         {{ csrf_field() }}
         <div class="row">
-          <span class="col-md-4">Name</span>
-          <span class="col">URL</span>
-          <span class="col-md-2">Icon</span>
-          <span class="col-md-2">New tab?</span>
+          <div class="col-md-4">{{ trans_choice('web::seat.name', 1) }}</div>
+          <div class="col">{{ strtoupper(trans('web::seat.url')) }}</div>
+          <div class="col-md-2">Icon</div>
+          <div class="col-md-2">{{ trans('web::seat.new_tab_question_mark') }}</div>
         </div>
         <div id="customlinks">
 
-          @foreach($customlinks as $node)
+          @foreach($custom_links as $node)
 
-          <div class="form-row align-items-center my-1" id="customlink{{ $loop->index }}">
+          <div class="form-row align-items-center my-3" id="customlink{{ $loop->index }}">
             <div class="col-md-4">
-              <input type="text" class="form-control" name="customlink-name[]" value="{{ $node['name'] }}" />
+              <input type="text" class="form-control" name="customlink-name[]" value="{{ $node->name }}" />
             </div>
             <div class="col">
-              <input type="text" class="form-control" name="customlink-url[]" value="{{ $node['url'] }}" />
+              <input type="text" class="form-control" name="customlink-url[]" value="{{ $node->url }}" />
             </div>
             <div class="col-md-2">
-              <input type="text" class="form-control" name="customlink-icon[]" value="{{ $node['icon'] }}" />
+              <input type="text" class="form-control" name="customlink-icon[]" value="{{ $node->icon }}" />
             </div>
             <div class="col-md-2 form-inline">
               <select class="form-control" name="customlink-newtab[]">
-                <option value="1" {{ ($node['newtab'] === false) ? '' : 'selected="selected"' }}>Yes</option>
-                <option value="0" {{ ($node['newtab'] === false) ? 'selected="selected"' : '' }}>No</option>
+                <option value="1" {{ ($node->new_tab === false) ? '' : 'selected="selected"' }}>Yes</option>
+                <option value="0" {{ ($node->new_tab === false) ? 'selected="selected"' : '' }}>No</option>
               </select>
-              <button type="button" class="btn btn-danger btn-md ml-2" id="customlink-remove-btn" onclick="customlink_remove(this)"><i class="fas fa-trash"></i></button>
+              <button type="button" class="btn btn-danger btn-md ml-2" id="customlink-remove-btn" onclick="customlink_remove(this)">
+                <i class="fas fa-trash-alt"></i>
+              </button>
             </div>
           </div>
 
           @endforeach
         </div>
 
-        <button type="button" class="btn btn-link" id="customlink-add-btn"><i class="fas fa-plus"></i> Add new link</button>
-        <button type="submit" class="btn btn-primary">Update</button>
+        <div class="float-right">
+          <button type="button" class="btn btn-link" id="customlink-add-btn"><i class="fas fa-plus"></i> Add new link</button>
+          <button type="submit" class="btn btn-success">
+            <i class="fas fa-check"></i> Update
+          </button>
+        </div>
       </form>
     </div>
   </div>
@@ -267,8 +273,6 @@
 
 @push('javascript')
 <script type="text/javascript">
-
-  var cloneIndex = $("#customlinks").length;
   var customlink_template = '<div class="col-md-4">' +
     '<input type="text" class="form-control" name="customlink-name[]" />' +
     '</div>' +
@@ -283,16 +287,15 @@
     '<option value="1" selected="selected">Yes</option>' +
     '<option value="0">No</option>' +
     '</select>' +
-    '<button type="button" class="btn btn-danger btn-md ml-2" id="customlink-remove-btn" onclick="customlink_remove(this)"><i class="fas fa-trash"></i></button>' +
+    '<button type="button" class="btn btn-danger btn-md ml-2" id="customlink-remove-btn" onclick="customlink_remove(this)">' +
+    '<i class="fas fa-trash-alt"></i></button>' +
     '</div>';
 
   $('#customlink-add-btn').on('click', function() {
-    cloneIndex++;
-    var div1 = document.createElement('div');
-    div1.id = 'customlink' + cloneIndex;
-    div1.className += 'form-row align-items-center my-1';
-    div1.innerHTML = customlink_template;
-    document.getElementById('customlinks').appendChild(div1);
+    var menu_node = document.createElement('div');
+    menu_node.className += 'form-row align-items-center my-3';
+    menu_node.innerHTML = customlink_template;
+    document.getElementById('customlinks').appendChild(menu_node);
   });
 
   function customlink_remove(ele) {
