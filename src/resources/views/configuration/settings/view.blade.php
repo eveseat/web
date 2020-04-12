@@ -134,6 +134,53 @@
     </div>
   </div>
 
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">{{ trans('web::seat.customlink') }}</h3>
+    </div>
+    <div class="card-body">
+      <p>{{ trans('web::seat.customlink_description') }}</p>
+
+      <form role="form" action="{{ route('seat.update.customlink') }}" method="post">
+        {{ csrf_field() }}
+        <div class="row">
+          <span class="col-md-4">Name</span>
+          <span class="col">URL</span>
+          <span class="col-md-2">Icon</span>
+          <span class="col-md-2">New tab?</span>
+        </div>
+        <div id="customlinks">
+
+          @foreach($customlinks as $node)
+
+          <div class="form-row align-items-center my-1" id="customlink{{ $loop->index }}">
+            <div class="col-md-4">
+              <input type="text" class="form-control" name="customlink-name[]" value="{{ $node['name'] }}" />
+            </div>
+            <div class="col">
+              <input type="text" class="form-control" name="customlink-url[]" value="{{ $node['url'] }}" />
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control" name="customlink-icon[]" value="{{ $node['icon'] }}" />
+            </div>
+            <div class="col-md-2 form-inline">
+              <select class="form-control" name="customlink-newtab[]">
+                <option value="1" {{ ($node['newtab'] === false) ? '' : 'selected="selected"' }}>Yes</option>
+                <option value="0" {{ ($node['newtab'] === false) ? 'selected="selected"' : '' }}>No</option>
+              </select>
+              <button type="button" class="btn btn-danger btn-md ml-2" id="customlink-remove-btn" onclick="customlink_remove(this)"><i class="fas fa-trash"></i></button>
+            </div>
+          </div>
+
+          @endforeach
+        </div>
+
+        <button type="button" class="btn btn-link" id="customlink-add-btn"><i class="fas fa-plus"></i> Add new link</button>
+        <button type="submit" class="btn btn-primary">Update</button>
+      </form>
+    </div>
+  </div>
+
 @stop
 
 @section('right')
@@ -220,6 +267,38 @@
 
 @push('javascript')
 <script type="text/javascript">
+
+  var cloneIndex = $("#customlinks").length;
+  var customlink_template = '<div class="col-md-4">' +
+    '<input type="text" class="form-control" name="customlink-name[]" />' +
+    '</div>' +
+    '<div class="col">' +
+    '<input type="text" class="form-control" name="customlink-url[]" />' +
+    '</div>' +
+    '<div class="col-md-2">' +
+    '<input type="text" class="form-control" name="customlink-icon[]" />' +
+    '</div>'+
+    '<div class="col-md-2 form-inline">' +
+    '<select class="form-control" name="customlink-newtab[]">' +
+    '<option value="1" selected="selected">Yes</option>' +
+    '<option value="0">No</option>' +
+    '</select>' +
+    '<button type="button" class="btn btn-danger btn-md ml-2" id="customlink-remove-btn" onclick="customlink_remove(this)"><i class="fas fa-trash"></i></button>' +
+    '</div>';
+
+  $('#customlink-add-btn').on('click', function() {
+    cloneIndex++;
+    var div1 = document.createElement('div');
+    div1.id = 'customlink' + cloneIndex;
+    div1.className += 'form-row align-items-center my-1';
+    div1.innerHTML = customlink_template;
+    document.getElementById('customlinks').appendChild(div1);
+  });
+
+  function customlink_remove(ele) {
+    $(ele).parent().parent().remove();
+  }
+
   $(document).ready(function () {
     var market_prices_region = $('#market_prices_region');
     market_prices_region.select2({
