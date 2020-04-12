@@ -29,6 +29,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Parsedown;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\Validation\Customlink;
 use Seat\Web\Http\Validation\PackageChangelog;
 use Seat\Web\Http\Validation\PackageVersionCheck;
 use Seat\Web\Http\Validation\SeatSettings;
@@ -57,7 +58,21 @@ class SeatController extends Controller
         else
             $warn_sso = false;
 
-        return view('web::configuration.settings.view', compact('packages', 'warn_sso'));
+        // Retrieve custom links
+        $customlinks = [];
+        $customlinksetting = setting('customlinks', true);
+        if(! is_null($customlinksetting)) {
+            foreach($customlinksetting as $node) {
+                $customlinks[] = [
+                    'name'   => $node['name'],
+                    'url'    => $node['url'],
+                    'icon'   => $node['icon'],
+                    'newtab' => $node['newtab'],
+                ];
+            }
+        }
+
+        return view('web::configuration.settings.view', compact('packages', 'warn_sso', 'customlinks'));
     }
 
     /**
@@ -85,6 +100,39 @@ class SeatController extends Controller
 
         return redirect()->back()
             ->with('success', 'SeAT settings updated!');
+    }
+
+    /**
+     * @param \Seat\Web\Http\Validation\Customlink $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Seat\Services\Exceptions\SettingException
+     */
+    public function postUpdateCustomlink(Customlink $request)
+    {
+
+        // Retrieve the form data.
+        $names   = $request->input('customlink-name', []);
+        $urls    = $request->input('customlink-url', []);
+        $icons   = $request->input('customlink-icon', []);
+        $newtabs = $request->input('customlink-newtab', []);
+
+        // Process the form data.
+        $customlinks = [];
+        foreach($names as $key => $name) {
+            $customlinks[] = [
+                'name'   => $name,
+                'url'    => $urls[$key],
+                'icon'   => $icons[$key],
+                'newtab' => (bool) $newtabs[$key],
+            ];
+        }
+        
+        // Update the setting
+        setting(['customlinks', $customlinks], true);
+
+        return redirect()->back()
+            ->with('success', 'Menu links updated!');
     }
 
     /**
