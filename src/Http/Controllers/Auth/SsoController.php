@@ -159,15 +159,27 @@ class SsoController extends Controller
     public function updateRefreshToken(SocialiteUser $eve_user, User $seat_user): void
     {
 
+        $existing_token = RefreshToken::withTrashed()->where('character_id', $eve_user->id)
+            ->where('character_owner_hash', '<>', $eve_user->character_owner_hash)
+            ->first();
+
+        if (! is_null($existing_token)) {
+            event('security.log', [
+                sprintf('Owner has been changed for character %s (previously %s - now %s)',
+                    $eve_user->name, $existing_token->user->name, $seat_user->name),
+                'authentication',
+            ]);
+        }
+
         RefreshToken::withTrashed()->firstOrNew([
             'character_id'         => $eve_user->id,
-            'character_owner_hash' => $eve_user->character_owner_hash,
         ])->fill([
-            'user_id'       => $seat_user->id,
-            'refresh_token' => $eve_user->refreshToken,
-            'scopes'        => $eve_user->scopes,
-            'token'         => $eve_user->token,
-            'expires_on'    => $eve_user->expires_on,
+            'user_id'              => $seat_user->id,
+            'refresh_token'        => $eve_user->refreshToken,
+            'scopes'               => $eve_user->scopes,
+            'token'                => $eve_user->token,
+            'character_owner_hash' => $eve_user->character_owner_hash,
+            'expires_on'           => $eve_user->expires_on,
         ])->save();
 
         // restore soft deleted token if any
