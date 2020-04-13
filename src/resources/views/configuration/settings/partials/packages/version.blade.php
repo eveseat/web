@@ -1,5 +1,5 @@
 <dt>
-  <i class="fa fa-question-circle text-orange version-check"
+  <i class="fas fa-question-circle text-orange version-check"
      data-vendor="{{ app()->getProvider($package)->getPackagistVendorName() }}"
      data-name="{{ app()->getProvider($package)->getPackagistPackageName() }}"
      data-version="{{ app()->getProvider($package)->getVersion() }}"
