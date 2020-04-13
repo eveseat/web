@@ -193,7 +193,7 @@
   <div class="card">
     <div class="card-header d-flex p-0">
       <h3 class="card-title p-3">
-        <i class="fa fa-code-fork"></i>
+        <i class="fas fa-code-fork"></i>
         {{ trans('web::seat.module_versions') }}
       </h3>
       <ul class="nav nav-pills ml-auto p-2">
@@ -205,7 +205,7 @@
         </li>
         <li class="nav-item">
           <a href="#" data-toggle="tooltip" title="Click to copy packages versions" id="copy-versions" class="nav-link">
-            <i class="fa fa-copy"></i>
+            <i class="fas fa-copy"></i>
           </a>
         </li>
       </ul>
@@ -232,13 +232,13 @@
         </div>
         <div class="row text-center">
           <div class="col-md-4">
-            <i class="fa fa-question-circle text-orange"></i> Checking packages (<span id="checking-packages">{{ $packages->core->count() + $packages->plugins->count() }}</span>)
+            <i class="fas fa-question-circle text-orange"></i> Checking packages (<span id="checking-packages">{{ $packages->core->count() + $packages->plugins->count() }}</span>)
           </div>
           <div class="col-md-4">
-            <i class="fa fa-check-circle text-green"></i> Updated packages (<span id="updated-packages">0</span>)
+            <i class="fas fa-check-circle text-green"></i> Updated packages (<span id="updated-packages">0</span>)
           </div>
           <div class="col-md-4">
-            <i class="fa fa-times-circle text-red"></i> Outdated packages (<span id="outdated-packages">0</span>)
+            <i class="fas fa-times-circle text-red"></i> Outdated packages (<span id="outdated-packages">0</span>)
           </div>
         </div>
       </div>
@@ -255,7 +255,7 @@
 
         <dt>
           <i id="live-sde-status" 
-            class="fa fa-question-circle text-orange version-check"
+            class="fas fa-question-circle text-orange version-check"
             data-vendor="ccp"
             data-name="eve_online_sde"
             data-version="{{ setting('installed_sde', true) }}"
@@ -475,6 +475,7 @@
 
           // load modal content
           changelogModal.find('.modal-body').html(body);
+          changelogModal.find('.overlay').remove();
         },
         error: function(xhr) { // if error occured
           alert("Error occured. please try again");
