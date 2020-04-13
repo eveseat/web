@@ -45,20 +45,20 @@ abstract class AbstractAssetDataTable extends DataTable
 
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
-            ->editColumn('type.typeName', function($row) {
+            ->editColumn('type.typeName', function ($row) {
                 return view('web::partials.type', [
                     'type_id'   => $row->type->typeID,
                     'type_name' => $row->name ? sprintf('%s (%s)', $row->name, $row->type->typeName) : $row->type->typeName,
                     'variation' => $row->type->group->categoryID == 9 ? 'bpc' : 'icon',
                 ]);
             })
-            ->editColumn('quantity', function($row) {
+            ->editColumn('quantity', function ($row) {
                 return number_format($row->quantity);
             })
-            ->editColumn('type.volume', function($row) {
+            ->editColumn('type.volume', function ($row) {
                 return number_metric($row->quantity * $row->type->volume) . 'm&sup3';
             })
-            ->editColumn('location_flag', function($row) use ($divisions) {
+            ->editColumn('location_flag', function ($row) use ($divisions) {
                 switch ($row->location_flag) {
                     case 'CorpSAG1':
                         return $divisions->where('division', 1)->first()->name;

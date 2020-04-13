@@ -49,7 +49,7 @@ class AssetDataTable extends AbstractAssetDataTable
         // capitals fitting flags
         'SpecializedFuelBay', 'ShipHangar',
         // structure fitting flags
-        'FighterTube0', 'FighterTube1', 'FighterTube2', 'FighterTube3', 'FighterTube4', 'FighterTube5','FighterTube6', 'FighterTube7',
+        'FighterTube0', 'FighterTube1', 'FighterTube2', 'FighterTube3', 'FighterTube4', 'FighterTube5', 'FighterTube6', 'FighterTube7',
         'ServiceSlot0', 'ServiceSlot1', 'ServiceSlot2', 'ServiceSlot3', 'ServiceSlot4', 'ServiceSlot5', 'ServiceSlot6', 'ServiceSlot7',
         'StructureFuel',
         // office elements
