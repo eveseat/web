@@ -17,6 +17,8 @@
     </div><!-- /.box-body -->
   </div>
 
+  @include('web::common.assets.modals.fitting.fitting')
+
 @stop
 
 @push('javascript')
