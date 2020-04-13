@@ -60,7 +60,10 @@ class AssetDataTable extends AbstractAssetDataTable
     public function query()
     {
         return CorporationAsset::with('type', 'type.group', 'station', 'container', 'container.station', 'container.container')
-            ->whereNotIn('location_flag', self::IGNORED_FLAGS); // fitted items will be rendered using fitting modal
+            ->whereDoesntHave('container', function ($container) {
+                $container->where('location_flag', 'AssetSafety'); // exclude content from asset safety - we show their container
+            })
+            ->whereNotIn('location_flag', self::IGNORED_FLAGS);
     }
 
     /**

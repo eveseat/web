@@ -18,6 +18,7 @@
   </div>
 
   @include('web::common.assets.modals.fitting.fitting')
+  @include('web::common.assets.modals.container.container')
 
 @stop
 
