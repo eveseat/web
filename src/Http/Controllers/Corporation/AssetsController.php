@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Eveapi\Models\Assets\CorporationAsset;
+use Seat\Eveapi\Models\Corporation\CorporationDivision;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Intel\AssetDataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationAssetDivisionsScope;
@@ -53,7 +54,7 @@ class AssetsController extends Controller
         }
 
         return $dataTable->addScope(new CorporationScope([$corporation_id]))
-            //->addScope(new CorporationAssetDivisionsScope($division_ids)) // TODO : implement the cargo modal
+            ->addScope(new CorporationAssetDivisionsScope($division_ids))
             ->render('web::corporation.assets');
     }
 
@@ -67,5 +68,18 @@ class AssetsController extends Controller
         $asset = CorporationAsset::find($item_id);
 
         return view('web::common.assets.modals.fitting.content', compact('asset'));
+    }
+
+    /**
+     * @param int $corporation_id
+     * @param int $item_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getContainer(int $corporation_id, int $item_id)
+    {
+        $asset = CorporationAsset::find($item_id);
+        $divisions = CorporationDivision::where('corporation_id', $corporation_id)->where('type', 'hangar')->get();
+
+        return view('web::common.assets.modals.container.content', compact('asset', 'divisions'));
     }
 }
