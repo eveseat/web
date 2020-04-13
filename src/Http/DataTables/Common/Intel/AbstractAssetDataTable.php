@@ -53,7 +53,7 @@ abstract class AbstractAssetDataTable extends DataTable
                 ]);
             })
             ->editColumn('quantity', function ($row) {
-                return number_format($row->quantity);
+                return number($row->quantity, 0);
             })
             ->editColumn('type.volume', function ($row) {
                 return number_metric($row->quantity * $row->type->volume) . 'm&sup3';
@@ -85,7 +85,7 @@ abstract class AbstractAssetDataTable extends DataTable
                     if (in_array($row->type->group->categoryID, [6, 65]))
                         return view('web::common.assets.buttons.fitting', compact('row'));
 
-                    return view('web::common.assets.buttons.cargo');
+                    return view('web::common.assets.buttons.cargo', compact('row'));
                 }
 
                 return '';
