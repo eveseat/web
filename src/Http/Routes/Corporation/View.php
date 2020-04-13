@@ -42,6 +42,12 @@ Route::get('/{corporation_id}/assets/{item_id}/fitting', [
     'uses'       => 'AssetsController@getFitting',
 ]);
 
+Route::get('/{corporation_id}/assets/{item_id}/container', [
+    'as'         => 'corporation.view.assets.container',
+    'middleware' => 'corporationbouncer:asset',
+    'uses'       => 'AssetsController@getContainer',
+]);
+
 Route::get('/{corporation_id}/bookmarks', [
     'as'         => 'corporation.view.bookmarks',
     'middleware' => 'corporationbouncer:bookmark',
