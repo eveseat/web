@@ -41,14 +41,19 @@ class AssetsController extends Controller
      */
     public function getAssets(int $corporation_id, AssetDataTable $dataTable)
     {
+        $division_ids = [];
+        $division_permissions = [
+            'asset_first_division', 'asset_second_division', 'asset_third_division', 'asset_fourth_division',
+            'asset_fifth_division', 'asset_sixth_division', 'asset_seventh_division',
+        ];
 
-        //$divisions = $this->getCorporationDivisions($corporation_id);
-        //$assets = $this->getCorporationAssets($corporation_id);
-
-        //return view('web::corporation.assets', compact('divisions', 'assets'));
+        foreach ($division_permissions as $key => $permission) {
+            if (auth()->user()->has(sprintf('corporation.%s', $permission)))
+                array_push($division_ids, ($key + 1));
+        }
 
         return $dataTable->addScope(new CorporationScope([$corporation_id]))
-            ->addScope(new CorporationAssetDivisionsScope([]))
+            //->addScope(new CorporationAssetDivisionsScope($division_ids)) // TODO : implement the cargo modal
             ->render('web::corporation.assets');
     }
 
