@@ -38,8 +38,6 @@ class AssetDataTable extends AbstractAssetDataTable
         // generic fitting flags
         'Cargo',
         'DroneBay',
-        'FighterBay',
-        'FleetHangar',
         'HiSlot0', 'HiSlot1', 'HiSlot2', 'HiSlot3', 'HiSlot4', 'HiSlot5', 'HiSlot6', 'HiSlot7',
         'MedSlot0', 'MedSlot1', 'MedSlot2', 'MedSlot3', 'MedSlot4', 'MedSlot5', 'MedSlot6', 'MedSlot7',
         'LoSlot0', 'LoSlot1', 'LoSlot2', 'LoSlot3', 'LoSlot4', 'LoSlot5', 'LoSlot6', 'LoSlot7',
@@ -47,7 +45,7 @@ class AssetDataTable extends AbstractAssetDataTable
         // tech 3 fitting flags
         'SubSystemSlot0', 'SubSystemSlot1', 'SubSystemSlot2', 'SubSystemSlot3', 'SubSystemSlot4', 'SubSystemSlot5', 'SubSystemSlot6', 'SubSystemSlot7',
         // capitals fitting flags
-        'SpecializedFuelBay', 'ShipHangar',
+        'FighterBay', 'FleetHangar', 'SpecializedFuelBay', 'ShipHangar',
         // structure fitting flags
         'FighterTube0', 'FighterTube1', 'FighterTube2', 'FighterTube3', 'FighterTube4', 'FighterTube5', 'FighterTube6', 'FighterTube7',
         'ServiceSlot0', 'ServiceSlot1', 'ServiceSlot2', 'ServiceSlot3', 'ServiceSlot4', 'ServiceSlot5', 'ServiceSlot6', 'ServiceSlot7',

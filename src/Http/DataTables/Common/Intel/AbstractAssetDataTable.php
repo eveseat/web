@@ -81,7 +81,7 @@ abstract class AbstractAssetDataTable extends DataTable
             ->editColumn('action', function ($row) {
                 if ($row->content->isNotEmpty()) {
                     if ($row->type->group->categoryID == 6)
-                        return view('web::common.assets.buttons.fitting');
+                        return view('web::common.assets.buttons.fitting', compact('row'));
 
                     return view('web::common.assets.buttons.cargo');
                 }
