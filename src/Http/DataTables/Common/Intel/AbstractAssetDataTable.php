@@ -91,6 +91,45 @@ abstract class AbstractAssetDataTable extends DataTable
                 return '';
             })
             ->addColumn('station', $this->getStationColumn())
+            ->filterColumn('station', function ($query, $keyword) {
+                //
+                // first level of search - the item is a root level
+                //
+                $query->whereHas('station', function ($station) use ($keyword) {
+                    $station->whereRaw('name LIKE ?', ["%{$keyword}%"]);
+                })->orWhereHas('structure', function ($structure) use ($keyword) {
+                    $structure->whereRaw('name LIKE ?', ["%{$keyword}%"]);
+                });
+                //
+                // second level of search - the item is inside a division
+                //
+                $query->orWhereHas('container', function ($container) use ($keyword) {
+                    $container->whereRaw('name LIKE ?', ["%{$keyword}%"]);
+                })->orWhereHas('container.station', function ($station) use ($keyword) {
+                    $station->whereRaw('name LIKE ?', ["%{$keyword}%"]);
+                })->orWhereHas('container.structure', function ($structure) use ($keyword) {
+                    $structure->whereRaw('name LIKE ?', ["%{$keyword}%"]);
+                });
+                //
+                // last level of search - the item is inside a container
+                //
+                $query->orWhereHas('container.container', function ($container) use ($keyword) {
+                    $container->whereRaw('name LIKE ?', ["%{$keyword}%"]);
+                })->orWhereHas('container.container.station', function ($station) use ($keyword) {
+                    $station->whereRaw('name LIKE ?', ["%{$keyword}%"]);
+                })->orWhereHas('container.container.structure', function ($structure) use ($keyword) {
+                    $structure->whereRaw('name LIKE ?', ["%{$keyword}%"]);
+                });
+            })
+            ->filterColumn('type.typeName', function ($query, $keyword) {
+                $query->whereHas('type', function ($item) use ($keyword) {
+                    $item->whereRaw('typeName LIKE ?', ["%{$keyword}%"]);
+                })->orWhereHas('content.type', function ($content) use ($keyword) {
+                    $content->whereRaw('typeName LIKE ?', ["%{$keyword}%"]);
+                })->orWhereHas('content.content.type', function ($content) use ($keyword) {
+                    $content->whereRaw('typeName LIKE ?', ["%$keyword%"]);
+                });
+            })
             ->setRowClass(function ($row) {
                 if (in_array('AssetSafety', [$row->location_flag, $row->container->location_flag, $row->container->container->location_flag]))
                     return 'table-danger';
@@ -135,7 +174,7 @@ abstract class AbstractAssetDataTable extends DataTable
             ['data' => 'type.volume', 'title' => trans('web::seat.volume')],
             ['data' => 'type.group.groupName', 'title' => trans_choice('web::seat.group', 1)],
             ['data' => 'location_flag', 'title' => trans_choice('web::assets.division', 1)],
-            ['data' => 'station', 'title' => trans('web::assets.station_or_structure'), 'searchable' => false, 'orderable' => false],
+            ['data' => 'station', 'title' => trans('web::assets.station_or_structure'), 'orderable' => false],
             ['data' => 'name', 'visible' => false],
         ];
     }
