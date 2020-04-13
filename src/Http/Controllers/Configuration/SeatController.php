@@ -144,7 +144,7 @@ class SeatController extends Controller
 
                 $json_array = json_decode($response->getBody());
 
-                return str_replace('-', '--', $json_array->version);
+                return $json_array->version;
 
             } catch (RequestException $e) {
 

@@ -256,7 +256,7 @@
         <dt>
           <i id="live-sde-status" 
             class="fa fa-question-circle text-orange version-check"
-            data-vendor="thirdparty"
+            data-vendor="ccp"
             data-name="eve_online_sde"
             data-version="{{ setting('installed_sde', true) }}"
             data-toggle="tooltip"
@@ -266,6 +266,7 @@
             <li>{{ trans('web::seat.installed') }}: <b>{{ setting('installed_sde', true) }}</b></li>
             <li id="live-sde-version">{{ trans('web::seat.current') }}: <img
                       src="https://img.shields.io/badge/version-loading...-blue.svg?style=flat-square"></li>
+            <li>{{ trans('web::seat.url') }}: <a href="https://www.fuzzwork.co.uk/dump" target="_blank">https://www.fuzzwork.co.uk/dump</a></li>
           </ul>
         </dd>
 
@@ -346,13 +347,15 @@
       if (data != null) {
         live_sde = data.version;
       }
-      $('#live-sde-version img').attr('src', 'https://img.shields.io/badge/version-' + live_sde + '-blue.svg?style=flat-square');
+      $('#live-sde-version img').attr('src', 'https://img.shields.io/badge/version-' + live_sde.replace(/-/g, '--') + '-blue.svg?style=flat-square');
       if (live_sde != "error") {
         var liveSdeStatus = $('#live-sde-status');
-        var liveSdeOutdated = (live_sde != liveSdeStatus.attr('data-version')) ? true : false;
+        var liveSdeOutdated = (live_sde != liveSdeStatus.attr('data-version'));
+
         // remove pending state from the status
         liveSdeStatus.removeClass('fa-question-circle');
         liveSdeStatus.removeClass('text-orange');
+
         // update state according to result
         liveSdeStatus.addClass(liveSdeOutdated ? 'fa-times-circle' : 'fa-check-circle');
         liveSdeStatus.addClass(liveSdeOutdated ? 'text-red' : 'text-green');
@@ -417,7 +420,7 @@
       installedPackages.version.push(toCheckPackage.attr('data-version'));
 
       // skip third party checks
-      if (toCheckPackage.attr('data-vendor') == 'thirdparty')
+      if (toCheckPackage.attr('data-vendor') == 'ccp')
         return false;
 
       // send a request to check if or not a package is up-to-date
