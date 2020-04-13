@@ -63,6 +63,9 @@ class AssetStationColumn implements IColumn
                 return $row->container->station->name;
         }
 
+        if ($row->location_type == 'solar_system')
+            return $row->name;
+
         return '';
     }
 
