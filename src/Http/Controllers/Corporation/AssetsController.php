@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
+use Seat\Eveapi\Models\Assets\CorporationAsset;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Intel\AssetDataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationAssetDivisionsScope;
@@ -49,5 +50,17 @@ class AssetsController extends Controller
         return $dataTable->addScope(new CorporationScope([$corporation_id]))
             ->addScope(new CorporationAssetDivisionsScope([]))
             ->render('web::corporation.assets');
+    }
+
+    /**
+     * @param int $corporation_id
+     * @param int $item_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getFitting(int $corporation_id, int $item_id)
+    {
+        $asset = CorporationAsset::find($item_id);
+
+        return view('web::common.assets.modals.fitting.content', compact('asset'));
     }
 }
