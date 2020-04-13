@@ -255,7 +255,7 @@
 
         <dt>
           <i id="live-sde-status" 
-            class="fa fa-question-circle text-orange"
+            class="fa fa-question-circle text-orange version-check"
             data-vendor="thirdparty"
             data-name="eve_online_sde"
             data-version="{{ setting('installed_sde', true) }}"
@@ -415,6 +415,10 @@
       installedPackages.vendor.push(toCheckPackage.attr('data-vendor'));
       installedPackages.name.push(toCheckPackage.attr('data-name'));
       installedPackages.version.push(toCheckPackage.attr('data-version'));
+
+      // skip third party checks
+      if (toCheckPackage.attr('data-vendor') == 'thirdparty')
+        return false;
 
       // send a request to check if or not a package is up-to-date
       $.ajax({
