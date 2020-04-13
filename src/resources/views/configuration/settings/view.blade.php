@@ -253,7 +253,14 @@
 
       <dl>
 
-        <dt>Eve Online SDE</dt>
+        <dt>
+          <i id="live-sde-status" 
+            class="fa fa-question-circle text-orange"
+            data-vendor="thirdparty"
+            data-name="eve_online_sde"
+            data-version="{{ setting('installed_sde', true) }}"
+            data-toggle="tooltip"
+            title="Checking package status..."></i> Eve Online SDE</dt>
         <dd>
           <ul>
             <li>{{ trans('web::seat.installed') }}: <b>{{ setting('installed_sde', true) }}</b></li>
@@ -340,6 +347,18 @@
         live_sde = data.version;
       }
       $('#live-sde-version img').attr('src', 'https://img.shields.io/badge/version-' + live_sde + '-blue.svg?style=flat-square');
+      if (live_sde != "error") {
+        var liveSdeStatus = $('#live-sde-status');
+        var liveSdeOutdated = (live_sde != liveSdeStatus.attr('data-version')) ? true : false;
+        // remove pending state from the status
+        liveSdeStatus.removeClass('fa-question-circle');
+        liveSdeStatus.removeClass('text-orange');
+        // update state according to result
+        liveSdeStatus.addClass(liveSdeOutdated ? 'fa-times-circle' : 'fa-check-circle');
+        liveSdeStatus.addClass(liveSdeOutdated ? 'text-red' : 'text-green');
+        liveSdeStatus.attr('title', liveSdeOutdated ? 'At least one new version has been released !' : 'The package is up-to-date.');
+        liveSdeStatus.attr('data-original-title', liveSdeOutdated ? 'At least one new version has been released !' : 'The package is up-to-date.');
+      }
     });
 
     copyVersions.on('click', function() {
