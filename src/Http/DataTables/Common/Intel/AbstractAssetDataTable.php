@@ -74,13 +74,15 @@ abstract class AbstractAssetDataTable extends DataTable
                         return $divisions->where('division', 6)->first()->name;
                     case 'CorpSAG7':
                         return $divisions->where('division', 7)->first()->name;
+                    case 'CorpDeliveries':
+                        return 'Delivery Hangar';
                     default:
-                        return '';
+                        return ($row->location_flag == 'AutoFit' && $row->location_type == 'solar_system') ? 'In Space' : '';
                 }
             })
             ->editColumn('action', function ($row) {
                 if ($row->content->isNotEmpty()) {
-                    if ($row->type->group->categoryID == 6)
+                    if (in_array($row->type->group->categoryID, [6, 65]))
                         return view('web::common.assets.buttons.fitting', compact('row'));
 
                     return view('web::common.assets.buttons.cargo');
@@ -89,6 +91,15 @@ abstract class AbstractAssetDataTable extends DataTable
                 return '';
             })
             ->addColumn('station', $this->getStationColumn())
+            ->setRowClass(function ($row) {
+                if (in_array('AssetSafety', [$row->location_flag, $row->container->location_flag, $row->container->container->location_flag]))
+                    return 'table-danger';
+
+                if (in_array('CorpDeliveries', [$row->location_flag, $row->container->location_flag, $row->container->container->location_flag]))
+                    return 'table-warning';
+
+                return '';
+            })
             ->rawColumns(['type.volume'])
             ->make(true);
     }
