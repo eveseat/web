@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of SeAT
  *
  * Copyright (C) 2015 to 2020 Leon Jacobs
