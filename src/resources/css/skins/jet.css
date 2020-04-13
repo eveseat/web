@@ -902,18 +902,18 @@ a.text-muted:hover {
     border-left-color: #cc241d;
 }
 
-.table-success {
+.table-success, .table-success > td, .table-success > th {
     background-color: #505023;
 }
 
-.table-info {
+.table-info, .table-info > td, .table-info > th {
     background-color: #3f513f;
 }
 
-.table-warning {
+.table-warning, .table-warning > td, .table-warning > th {
     background-color: #675126;
 }
 
-.table-danger {
+.table-danger, .table-danger > td, .table-danger > th {
     background-color: #632624;
 }
