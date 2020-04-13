@@ -465,7 +465,7 @@
         method: 'POST',
         data: changelogMetadata.data(),
         beforeSend: function () {
-          changelogModal.find('.modal-body').html('<i class="fa fa-refresh fa-spin loader"></i>');
+          changelogModal.find('.modal-content').append('<div class="overlay dark d-flex justify-content-center align-items-center"><i class="fas fa-2x fa-sync-alt fa-spin"></i> Loading...</div>');
         },
         success: function (data) {
           var body = $(data);
