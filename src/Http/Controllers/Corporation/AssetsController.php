@@ -22,9 +22,10 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
-use Seat\Services\Repositories\Corporation\Assets;
-use Seat\Services\Repositories\Corporation\Divisions;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Corporation\Intel\AssetDataTable;
+use Seat\Web\Http\DataTables\Scopes\CorporationAssetDivisionsScope;
+use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 
 /**
  * Class AssetsController.
@@ -32,31 +33,21 @@ use Seat\Web\Http\Controllers\Controller;
  */
 class AssetsController extends Controller
 {
-    use Assets, Divisions;
-
     /**
      * @param int $corporation_id
+     * @param \Seat\Web\Http\DataTables\Corporation\Intel\AssetDataTable $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getAssets(int $corporation_id)
+    public function getAssets(int $corporation_id, AssetDataTable $dataTable)
     {
 
-        $divisions = $this->getCorporationDivisions($corporation_id);
-        $assets = $this->getCorporationAssets($corporation_id);
+        //$divisions = $this->getCorporationDivisions($corporation_id);
+        //$assets = $this->getCorporationAssets($corporation_id);
 
-        return view('web::corporation.assets', compact('divisions', 'assets'));
-    }
+        //return view('web::corporation.assets', compact('divisions', 'assets'));
 
-    /**
-     * @param int $corporation_id
-     * @param int $item_id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getAssetsContents(int $corporation_id, int $item_id)
-    {
-
-        $contents = $this->getCorporationAssetContents($corporation_id, $item_id);
-
-        return view('web::partials.assetscontents', compact('contents'));
+        return $dataTable->addScope(new CorporationScope([$corporation_id]))
+            ->addScope(new CorporationAssetDivisionsScope([]))
+            ->render('web::corporation.assets');
     }
 }
