@@ -150,6 +150,7 @@ abstract class AbstractAssetDataTable extends DataTable
     {
         return $this->builder()
             ->columns($this->getColumns())
+            ->orderBy(0, 'asc')
             ->addAction();
     }
 
