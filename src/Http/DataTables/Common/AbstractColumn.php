@@ -22,15 +22,31 @@
 
 namespace Seat\Web\Http\DataTables\Common;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 
 /**
- * Interface Column.
+ * Class AbstractColumn.
  *
  * @package Seat\Web\Http\DataTables\Common
  */
-interface IColumn
+abstract class AbstractColumn implements IColumn
 {
+    /**
+     * @var \Yajra\DataTables\Services\DataTable
+     */
+    private $table;
+
+    /**
+     * AbstractColumn constructor.
+     *
+     * @param \Yajra\DataTables\Services\DataTable $table
+     */
+    public function __construct($table)
+    {
+        $this->table = $table;
+    }
+
     /**
      * Handle a column business flow.
      *
@@ -38,15 +54,13 @@ interface IColumn
      * @param string $keyword
      * @return string|void
      */
-    public function __invoke($row, string $keyword = '');
+    public function __invoke($row, $keyword = '')
+    {
+        if (is_a($row, EloquentBuilder::class) || is_a($row, QueryBuilder::class))
+            return $this->search($row, $keyword);
 
-    /**
-     * Draw a column cell.
-     *
-     * @param \Illuminate\Database\Eloquent\Model $row
-     * @return string;
-     */
-    public function draw(Model $row);
+        return $this->draw($row);
+    }
 
     /**
      * Search in a column cell.
@@ -55,5 +69,8 @@ interface IColumn
      * @param string $keyword
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
      */
-    public function search($query, string $keyword);
+    public function search($query, string $keyword)
+    {
+        return $query;
+    }
 }
