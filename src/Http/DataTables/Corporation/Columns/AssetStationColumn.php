@@ -22,23 +22,24 @@
 
 namespace Seat\Web\Http\DataTables\Corporation\Columns;
 
+use Illuminate\Database\Eloquent\Model;
 use Seat\Eveapi\Models\Assets\CorporationAsset;
-use Seat\Web\Http\DataTables\Common\IColumn;
+use Seat\Web\Http\DataTables\Common\AbstractColumn;
 
 /**
  * Class AssetStationColumn.
  *
  * @package Seat\Web\Http\DataTables\Corporation\Columns
  */
-class AssetStationColumn implements IColumn
+class AssetStationColumn extends AbstractColumn
 {
     /**
-     * Define the station column of a DataTable.
+     * Draw a column cell.
      *
-     * @param $row
-     * @return string
+     * @param \Illuminate\Database\Eloquent\Model $row
+     * @return string;
      */
-    public function __invoke($row)
+    public function draw(Model $row)
     {
         if ($row->location_type == 'station')
             return $row->station->name;
@@ -67,6 +68,47 @@ class AssetStationColumn implements IColumn
             return $row->name;
 
         return '';
+    }
+
+    /**
+     * Search in a column cell.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder $query
+     * @param string $keyword
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public function search($query, string $keyword)
+    {
+        //
+        // first level of search - the item is a root level
+        //
+        $query->whereHas('station', function ($station) use ($keyword) {
+            $station->whereRaw('name LIKE ?', ["%{$keyword}%"]);
+        })->orWhereHas('structure', function ($structure) use ($keyword) {
+            $structure->whereRaw('name LIKE ?', ["%{$keyword}%"]);
+        });
+        //
+        // second level of search - the item is inside a division
+        //
+        $query->orWhereHas('container', function ($container) use ($keyword) {
+            $container->whereRaw('name LIKE ?', ["%{$keyword}%"]);
+        })->orWhereHas('container.station', function ($station) use ($keyword) {
+            $station->whereRaw('name LIKE ?', ["%{$keyword}%"]);
+        })->orWhereHas('container.structure', function ($structure) use ($keyword) {
+            $structure->whereRaw('name LIKE ?', ["%{$keyword}%"]);
+        });
+        //
+        // last level of search - the item is inside a container
+        //
+        $query->orWhereHas('container.container', function ($container) use ($keyword) {
+            $container->whereRaw('name LIKE ?', ["%{$keyword}%"]);
+        })->orWhereHas('container.container.station', function ($station) use ($keyword) {
+            $station->whereRaw('name LIKE ?', ["%{$keyword}%"]);
+        })->orWhereHas('container.container.structure', function ($structure) use ($keyword) {
+            $structure->whereRaw('name LIKE ?', ["%{$keyword}%"]);
+        });
+
+        return $query;
     }
 
     /**

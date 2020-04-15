@@ -23,8 +23,10 @@
 namespace Seat\Web\Http\DataTables\Corporation\Intel;
 
 use Seat\Eveapi\Models\Assets\CorporationAsset;
+use Seat\Eveapi\Models\Corporation\CorporationDivision;
 use Seat\Web\Http\DataTables\Common\IColumn;
 use Seat\Web\Http\DataTables\Common\Intel\AbstractAssetDataTable;
+use Seat\Web\Http\DataTables\Corporation\Columns\AssetLocationFlagColumn;
 use Seat\Web\Http\DataTables\Corporation\Columns\AssetStationColumn;
 
 /**
@@ -67,10 +69,32 @@ class AssetDataTable extends AbstractAssetDataTable
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getDivisions()
+    {
+        $divisions = CorporationDivision::where('type', 'hangar')
+            ->where('corporation_id', request()->route()->parameter('corporation_id'))
+            ->get();
+
+        return $divisions;
+    }
+
+    /**
+     * @param \Seat\Web\Http\DataTables\Corporation\Intel\AssetDataTable $table
      * @return \Seat\Web\Http\DataTables\Common\IColumn
      */
-    protected function getStationColumn(): IColumn
+    protected function getLocationFlagColumn($table): IColumn
     {
-        return new AssetStationColumn();
+        return new AssetLocationFlagColumn($table);
+    }
+
+    /**
+     * @param \Seat\Web\Http\DataTables\Corporation\Intel\AssetDataTable $table
+     * @return \Seat\Web\Http\DataTables\Common\IColumn
+     */
+    protected function getStationColumn($table): IColumn
+    {
+        return new AssetStationColumn($table);
     }
 }

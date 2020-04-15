@@ -22,7 +22,6 @@
 
 namespace Seat\Web\Http\DataTables\Common\Intel;
 
-use Seat\Eveapi\Models\Corporation\CorporationDivision;
 use Seat\Web\Http\DataTables\Common\IColumn;
 use Yajra\DataTables\Services\DataTable;
 
@@ -39,9 +38,8 @@ abstract class AbstractAssetDataTable extends DataTable
      */
     public function ajax()
     {
-        $divisions = CorporationDivision::where('type', 'hangar')
-            ->where('corporation_id', request()->route()->parameter('corporation_id', 0))
-            ->get();
+        $location_column = $this->getLocationFlagColumn($this);
+        $station_column = $this->getStationColumn($this);
 
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -58,28 +56,7 @@ abstract class AbstractAssetDataTable extends DataTable
             ->editColumn('type.volume', function ($row) {
                 return number_metric($row->quantity * $row->type->volume) . 'm&sup3';
             })
-            ->editColumn('location_flag', function ($row) use ($divisions) {
-                switch ($row->location_flag) {
-                    case 'CorpSAG1':
-                        return $divisions->where('division', 1)->first()->name;
-                    case 'CorpSAG2':
-                        return $divisions->where('division', 2)->first()->name;
-                    case 'CorpSAG3':
-                        return $divisions->where('division', 3)->first()->name;
-                    case 'CorpSAG4':
-                        return $divisions->where('division', 4)->first()->name;
-                    case 'CorpSAG5':
-                        return $divisions->where('division', 5)->first()->name;
-                    case 'CorpSAG6':
-                        return $divisions->where('division', 6)->first()->name;
-                    case 'CorpSAG7':
-                        return $divisions->where('division', 7)->first()->name;
-                    case 'CorpDeliveries':
-                        return 'Delivery Hangar';
-                    default:
-                        return ($row->location_flag == 'AutoFit' && $row->location_type == 'solar_system') ? 'In Space' : '';
-                }
-            })
+            ->editColumn('location_flag', $location_column)
             ->editColumn('action', function ($row) {
                 if ($row->content->isNotEmpty()) {
                     if (in_array($row->type->group->categoryID, [6, 65]))
@@ -90,37 +67,9 @@ abstract class AbstractAssetDataTable extends DataTable
 
                 return '';
             })
-            ->addColumn('station', $this->getStationColumn())
-            ->filterColumn('station', function ($query, $keyword) {
-                //
-                // first level of search - the item is a root level
-                //
-                $query->whereHas('station', function ($station) use ($keyword) {
-                    $station->whereRaw('name LIKE ?', ["%{$keyword}%"]);
-                })->orWhereHas('structure', function ($structure) use ($keyword) {
-                    $structure->whereRaw('name LIKE ?', ["%{$keyword}%"]);
-                });
-                //
-                // second level of search - the item is inside a division
-                //
-                $query->orWhereHas('container', function ($container) use ($keyword) {
-                    $container->whereRaw('name LIKE ?', ["%{$keyword}%"]);
-                })->orWhereHas('container.station', function ($station) use ($keyword) {
-                    $station->whereRaw('name LIKE ?', ["%{$keyword}%"]);
-                })->orWhereHas('container.structure', function ($structure) use ($keyword) {
-                    $structure->whereRaw('name LIKE ?', ["%{$keyword}%"]);
-                });
-                //
-                // last level of search - the item is inside a container
-                //
-                $query->orWhereHas('container.container', function ($container) use ($keyword) {
-                    $container->whereRaw('name LIKE ?', ["%{$keyword}%"]);
-                })->orWhereHas('container.container.station', function ($station) use ($keyword) {
-                    $station->whereRaw('name LIKE ?', ["%{$keyword}%"]);
-                })->orWhereHas('container.container.structure', function ($structure) use ($keyword) {
-                    $structure->whereRaw('name LIKE ?', ["%{$keyword}%"]);
-                });
-            })
+            ->addColumn('station', $station_column)
+            ->filterColumn('location_flag', $location_column)
+            ->filterColumn('station', $station_column)
             ->filterColumn('type.typeName', function ($query, $keyword) {
                 $query->whereHas('type', function ($item) use ($keyword) {
                     $item->whereRaw('typeName LIKE ?', ["%{$keyword}%"]);
@@ -160,9 +109,16 @@ abstract class AbstractAssetDataTable extends DataTable
     abstract public function query();
 
     /**
+     * @param self $table
      * @return \Seat\Web\Http\DataTables\Common\IColumn
      */
-    abstract protected function getStationColumn(): IColumn;
+    abstract protected function getLocationFlagColumn($table): IColumn;
+
+    /**
+     * @param self $table
+     * @return \Seat\Web\Http\DataTables\Common\IColumn
+     */
+    abstract protected function getStationColumn($table): IColumn;
 
     /**
      * @return array
