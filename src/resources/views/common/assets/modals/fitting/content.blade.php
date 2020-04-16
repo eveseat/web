@@ -32,43 +32,43 @@
 </div>
 
 @include('web::common.assets.modals.fitting.slots', [
-  'title' => 'Sub-Systems Slots',
-  'rows' => $asset->content->filter(function ($item) { return strpos($item->location_flag, 'SubSystemSlot') !== false; }),
+    'title' => 'Sub-Systems Slots',
+    'rows'  => $asset->content->filter(function ($item) { return strpos($item->location_flag, 'SubSystemSlot') !== false; }),
 ])
 
 @include('web::common.assets.modals.fitting.slots', [
-  'title' => 'High Slots',
-  'rows' => $asset->content->filter(function ($item) { return strpos($item->location_flag, 'HiSlot') !== false; }),
+    'title' => 'High Slots',
+    'rows'  => $asset->content->filter(function ($item) { return strpos($item->location_flag, 'HiSlot') !== false; }),
 ])
 
 @include('web::common.assets.modals.fitting.slots', [
-  'title' => 'Medium Slots',
-  'rows' => $asset->content->filter(function ($item) { return strpos($item->location_flag, 'MedSlot') !== false; }),
+    'title' => 'Medium Slots',
+    'rows'  => $asset->content->filter(function ($item) { return strpos($item->location_flag, 'MedSlot') !== false; }),
 ])
 
 @include('web::common.assets.modals.fitting.slots', [
-  'title' => 'Low Slots',
-  'rows' => $asset->content->filter(function ($item) { return strpos($item->location_flag, 'LoSlot') !== false; }),
+    'title' => 'Low Slots',
+    'rows'  => $asset->content->filter(function ($item) { return strpos($item->location_flag, 'LoSlot') !== false; }),
 ])
 
 @include('web::common.assets.modals.fitting.slots', [
-  'title' => 'Rigs Slots',
-  'rows' => $asset->content->filter(function ($item) { return strpos($item->location_flag, 'RigSlot') !== false; }),
+    'title' => 'Rigs Slots',
+    'rows'  => $asset->content->filter(function ($item) { return strpos($item->location_flag, 'RigSlot') !== false; }),
 ])
 
 @include('web::common.assets.modals.fitting.slots', [
     'title' => 'Fleet Hangar',
-    'rows' => $asset->content->where('location_flag', 'FleetHangar'),
+    'rows'  => $asset->content->where('location_flag', 'FleetHangar'),
 ])
 
 @include('web::common.assets.modals.fitting.slots', [
     'title' => 'Services',
-    'rows'  =>$asset->content->filter(function ($item) { return strpos($item->location_flag, 'ServiceSlot') !== false; }),
+    'rows'  => $asset->content->filter(function ($item) { return strpos($item->location_flag, 'ServiceSlot') !== false; }),
 ])
 
 @include('web::common.assets.modals.fitting.slots', [
-  'title' => 'Fighters Bay',
-  'rows' => $asset->content->where('location_flag', 'FighterBay'),
+    'title' => 'Fighters Bay',
+    'rows'  => $asset->content->where('location_flag', 'FighterBay'),
 ])
 
 @include('web::common.assets.modals.fitting.slots', [
@@ -77,13 +77,13 @@
 ])
 
 @include('web::common.assets.modals.fitting.slots', [
-  'title' => 'Drones Bay',
-  'rows' => $asset->content->where('location_flag', 'DroneBay'),
+    'title' => 'Drones Bay',
+    'rows'  => $asset->content->where('location_flag', 'DroneBay'),
 ])
 
 @include('web::common.assets.modals.fitting.slots', [
-  'title' => 'Cargo',
-  'rows' => $asset->content->where('location_flag', 'Cargo'),
+    'title' => 'Cargo',
+    'rows'  => $asset->content->where('location_flag', 'Cargo'),
 ])
 
 @include('web::common.assets.modals.fitting.slots', [
