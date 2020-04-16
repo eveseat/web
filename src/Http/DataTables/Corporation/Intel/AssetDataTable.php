@@ -44,6 +44,10 @@ class AssetDataTable extends AbstractAssetDataTable
         'MedSlot0', 'MedSlot1', 'MedSlot2', 'MedSlot3', 'MedSlot4', 'MedSlot5', 'MedSlot6', 'MedSlot7',
         'LoSlot0', 'LoSlot1', 'LoSlot2', 'LoSlot3', 'LoSlot4', 'LoSlot5', 'LoSlot6', 'LoSlot7',
         'RigSlot0', 'RigSlot1', 'RigSlot2', 'RigSlot3', 'RigSlot4', 'RigSlot5', 'RigSlot6', 'RigSlot7',
+        // industrial fitting flags
+        'SpecializedAmmoHold', 'SpecializedMineralHold', 'SpecializedOreHold', 'SpecializedPlanetaryCommoditiesHold',
+        // battleship fitting flags
+        'FrigateEscapeBay',
         // tech 3 fitting flags
         'SubSystemSlot0', 'SubSystemSlot1', 'SubSystemSlot2', 'SubSystemSlot3', 'SubSystemSlot4', 'SubSystemSlot5', 'SubSystemSlot6', 'SubSystemSlot7',
         // capitals fitting flags
@@ -63,7 +67,10 @@ class AssetDataTable extends AbstractAssetDataTable
     {
         return CorporationAsset::with('type', 'type.group', 'station', 'container', 'container.station', 'container.container')
             ->whereDoesntHave('container', function ($container) {
-                $container->where('location_flag', 'AssetSafety'); // exclude content from asset safety - we show their container
+                $container->whereIn('location_flag', ['AssetSafety', 'FleetHangar']); // exclude content from asset safety - we show their container
+            })
+            ->whereDoesntHave('container.container', function ($container) {
+                $container->where('location_flag', 'AssetSafety');
             })
             ->whereNotIn('location_flag', self::IGNORED_FLAGS);
     }

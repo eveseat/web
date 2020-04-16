@@ -55,7 +55,7 @@ class AssetsController extends Controller
 
         return $dataTable->addScope(new CorporationScope([$corporation_id]))
             ->addScope(new CorporationAssetDivisionsScope($division_ids))
-            ->render('web::corporation.assets');
+            ->render('web::corporation.assets.assets');
     }
 
     /**
@@ -80,6 +80,6 @@ class AssetsController extends Controller
         $asset = CorporationAsset::find($item_id);
         $divisions = CorporationDivision::where('corporation_id', $corporation_id)->where('type', 'hangar')->get();
 
-        return view('web::common.assets.modals.container.content', compact('asset', 'divisions'));
+        return view('web::corporation.assets.modals.container.content', compact('asset', 'divisions'));
     }
 }
