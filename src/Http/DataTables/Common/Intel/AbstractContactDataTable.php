@@ -55,6 +55,18 @@ abstract class AbstractContactDataTable extends DataTable
                         return '';
                 }
             })
+            ->editColumn('entity.affiliation.corporation.name', function ($row) {
+                if ($row->entity->affiliation->corporation->entity_id)
+                    return view('web::partials.corporation', ['corporation' => $row->entity->affiliation->corporation]);
+
+                return '';
+            })
+            ->editColumn('entity.affiliation.alliance.name', function ($row) {
+                if ($row->entity->affiliation->alliance->entity_id)
+                    return view('web::partials.alliance', ['alliance' => $row->entity->affiliation->alliance]);
+
+                return '';
+            })
             ->addColumn('labels', function ($row) {
                 return $row->labels->implode('name', ', ');
             })
@@ -99,10 +111,12 @@ abstract class AbstractContactDataTable extends DataTable
     public function getColumns()
     {
         return [
-            'entity.name',
-            'contact_type',
-            'standing',
-            'labels',
+            ['data' => 'entity.name', 'title' => trans_choice('web::seat.name', 1)],
+            ['data' => 'entity.affiliation.corporation.name', 'title' => trans_choice('web::seat.corporation', 1), 'orderable' => false],
+            ['data' => 'entity.affiliation.alliance.name', 'title' => trans('web::seat.alliance'), 'orderable' => false],
+            ['data' => 'contact_type', 'title' => trans_choice('web::seat.type', 1)],
+            ['data' => 'standing', 'title' => trans_choice('web::seat.standings', 1)],
+            ['data' => 'labels', 'title' => trans('web::seat.labels')],
         ];
     }
 }

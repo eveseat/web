@@ -37,7 +37,7 @@ class ContactDataTable extends AbstractContactDataTable
      */
     public function query()
     {
-        return CharacterContact::with('labels', 'entity');
+        return CharacterContact::with('labels', 'entity', 'entity.affiliation.corporation', 'entity.affiliation.alliance');
     }
 
     /**
