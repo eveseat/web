@@ -200,7 +200,7 @@ class SearchController extends Controller
                 ]);
             })
             ->addColumn('location_name', function ($row) {
-                return $row->location->name ?: ($row->location->stationName ?: $row->location->itemName);
+                return $row->station->name ?: ($row->structure->name ?: $row->container->name);
             })
             ->filterColumn('asset_name', function ($query, $search) {
                 return $query->whereRaw('character_assets.name LIKE ?', ["%$search%"]);
