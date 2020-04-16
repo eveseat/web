@@ -1,7 +1,7 @@
 <h4>Location</h4>
 
 <div class="row">
-  <div class="col-3">
+  <div class="col-4">
     <dl>
       <dt>Solar System</dt>
       <dd>
@@ -13,48 +13,13 @@
       </dd>
     </dl>
   </div>
-  <div class="col-3">
+  <div class="col-4">
     <dl>
       <dt>Structure</dt>
       <dd>{{ ($asset->location_flag == 'AssetSafety' || $asset->location_type == 'station') ? $asset->station->name : $asset->container->container->name }}</dd>
     </dl>
   </div>
-  <div class="col-3">
-    <dl>
-      <dt>Division</dt>
-      <dd>
-        @switch($asset->location_flag)
-          @case('CorpSAG1')
-            {{ $divisions->where('division', 1)->first()->name }}
-            @break
-          @case('CorpSAG2'):
-            {{ $divisions->where('division', 2)->first()->name }}
-            @break
-          @case('CorpSAG3'):
-            {{ $divisions->where('division', 3)->first()->name }}
-            @break
-          @case('CorpSAG4'):
-            {{ $divisions->where('division', 4)->first()->name }}
-            @break
-          @case('CorpSAG5'):
-            {{ $divisions->where('division', 5)->first()->name }}
-            @break
-          @case('CorpSAG6'):
-            {{ $divisions->where('division', 6)->first()->name }}
-            @break
-          @case('CorpSAG7'):
-            {{ $divisions->where('division', 7)->first()->name }}
-            @break
-          @case('CorpDeliveries')
-            Delivery Hangar
-            @break
-          @default
-            {{ trans('web::seat.unknown') }}
-        @endswitch
-      </dd>
-    </dl>
-  </div>
-  <div class="col-3">
+  <div class="col-4">
     <dl>
       <dt>Container</dt>
       <dd>{{ $asset->location_flag == 'AssetSafety' ? 'Asset Safety' : $asset->name }}</dd>
@@ -89,7 +54,11 @@
         <td>{{ $item->type->group->groupName }}</td>
         <td>
           @if($item->content->isNotEmpty())
-            @include('web::common.assets.buttons.fitting', ['row' => $item])
+            @if(in_array($item->type->group->categoryID, [6, 65]))
+              @include('web::common.assets.buttons.fitting', ['row' => $item])
+            @else
+              @include('web::common.assets.buttons.cargo', ['row' => $item])
+            @endif
           @endif
         </td>
       </tr>

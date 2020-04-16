@@ -42,10 +42,16 @@ Route::get('/{character_id}/assets', [
     'uses'       => 'AssetsController@getAssetsView',
 ]);
 
-Route::get('/{character_id}/assets/details', [
-    'as'         => 'character.view.assets.details',
+Route::get('/{character_id}/assets/{item_id}/fitting', [
+    'as'         => 'character.view.assets.fitting',
     'middleware' => 'characterbouncer:asset',
-    'uses'       => 'AssetsController@getCharacterAssets',
+    'uses'       => 'AssetsController@getFitting',
+]);
+
+Route::get('/{character_id}/assets/{item_id}/container', [
+    'as'         => 'character.view.assets.container',
+    'middleware' => 'characterbouncer:asset',
+    'uses'       => 'AssetsController@getContainer',
 ]);
 
 Route::get('/{character_id}/bookmarks', [
@@ -250,6 +256,12 @@ Route::get('/{character_id}/sheet', [
     'as'         => 'character.view.sheet',
     'middleware' => 'characterbouncer:sheet',
     'uses'       => 'SheetController@show',
+]);
+
+Route::get('/{character_id}/ship', [
+    'as'         => 'character.view.ship',
+    'middleware' => 'characterbouncer:asset',
+    'uses'       => 'CharacterController@getShip',
 ]);
 
 Route::get('/{character_id}/skills', [
