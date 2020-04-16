@@ -22,7 +22,10 @@
 
 namespace Seat\Web\Http\DataTables\Character\Intel;
 
-use Seat\Eveapi\Models\Wallet\CharacterWalletTransaction;
+use Seat\Eveapi\Models\Assets\CharacterAsset;
+use Seat\Web\Http\DataTables\Character\Columns\AssetLocationFlagColumn;
+use Seat\Web\Http\DataTables\Character\Columns\AssetStationColumn;
+use Seat\Web\Http\DataTables\Common\IColumn;
 use Seat\Web\Http\DataTables\Common\Intel\AbstractAssetDataTable;
 
 /**
@@ -32,11 +35,68 @@ use Seat\Web\Http\DataTables\Common\Intel\AbstractAssetDataTable;
  */
 class AssetDataTable extends AbstractAssetDataTable
 {
+    const IGNORED_FLAGS = [
+        // generic fitting flags
+        'Cargo',
+        'DroneBay',
+        'HiSlot0', 'HiSlot1', 'HiSlot2', 'HiSlot3', 'HiSlot4', 'HiSlot5', 'HiSlot6', 'HiSlot7',
+        'MedSlot0', 'MedSlot1', 'MedSlot2', 'MedSlot3', 'MedSlot4', 'MedSlot5', 'MedSlot6', 'MedSlot7',
+        'LoSlot0', 'LoSlot1', 'LoSlot2', 'LoSlot3', 'LoSlot4', 'LoSlot5', 'LoSlot6', 'LoSlot7',
+        'RigSlot0', 'RigSlot1', 'RigSlot2', 'RigSlot3', 'RigSlot4', 'RigSlot5', 'RigSlot6', 'RigSlot7',
+        // industrial fitting flags
+        'SpecializedAmmoHold', 'SpecializedMineralHold', 'SpecializedOreHold', 'SpecializedPlanetaryCommoditiesHold',
+        // battleship fitting flags
+        'FrigateEscapeBay',
+        // tech 3 fitting flags
+        'SubSystemSlot0', 'SubSystemSlot1', 'SubSystemSlot2', 'SubSystemSlot3', 'SubSystemSlot4', 'SubSystemSlot5', 'SubSystemSlot6', 'SubSystemSlot7',
+        // capitals fitting flags
+        'FighterBay', 'FleetHangar', 'SpecializedFuelBay', 'ShipHangar',
+        // Loaded fighters fitting flags
+        'FighterTube0', 'FighterTube1', 'FighterTube2', 'FighterTube3', 'FighterTube4', 'FighterTube5', 'FighterTube6', 'FighterTube7',
+    ];
+
+    /**
+     * @return \Yajra\DataTables\Html\Builder
+     */
+    public function html()
+    {
+        return parent::html()
+            ->removeColumn('location_flag')
+            ->ajax([
+                'data' => 'function(d) { d.characters = $("#dt-character-selector").val(); }',
+            ]);
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query()
     {
-        return CharacterWalletTransaction::query();
+        return CharacterAsset::with('type', 'type.group', 'station', 'container', 'container.station')
+            ->whereDoesntHave('container', function ($container) {
+                $container->whereIn('location_flag', ['AssetSafety', 'FleetHangar']); // exclude content from asset safety - we show their container
+            })
+            ->whereDoesntHave('container.container', function ($container) {
+                $container->where('location_flag', 'AssetSafety');
+            })
+            ->whereNotIn('location_flag', self::IGNORED_FLAGS);
+    }
+
+    /**
+     * @param \Seat\Web\Http\DataTables\Common\Intel\AbstractAssetDataTable $table
+     * @return \Seat\Web\Http\DataTables\Common\IColumn
+     */
+    protected function getLocationFlagColumn($table): IColumn
+    {
+        return new AssetLocationFlagColumn($table);
+    }
+
+    /**
+     * @param \Seat\Web\Http\DataTables\Common\Intel\AbstractAssetDataTable $table
+     * @return \Seat\Web\Http\DataTables\Common\IColumn
+     */
+    protected function getStationColumn($table): IColumn
+    {
+        return new AssetStationColumn($table);
     }
 }
