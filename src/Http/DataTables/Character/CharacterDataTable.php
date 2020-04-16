@@ -43,16 +43,16 @@ class CharacterDataTable extends DataTable
             ->editColumn('name', function ($row) {
                 return view('web::partials.character', ['character' => $row]);
             })
-            ->editColumn('corporation.name', function ($row) {
+            ->editColumn('affiliation.corporation.name', function ($row) {
                 return view('web::partials.corporation', ['corporation' => $row->affiliation->corporation]);
             })
-            ->editColumn('alliance.name', function ($row) {
+            ->editColumn('affiliation.alliance.name', function ($row) {
                 if (! is_null($row->affiliation->alliance_id))
                     return view('web::partials.alliance', ['alliance' => $row->affiliation->alliance]);
 
                 return '';
             })
-            ->editColumn('faction.name', function ($row) {
+            ->editColumn('affiliation.faction.name', function ($row) {
                 if (! is_null($row->affiliation->faction_id))
                     return view('web::partials.faction', ['faction' => $row->affiliation->faction]);
 
