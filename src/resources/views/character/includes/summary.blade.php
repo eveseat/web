@@ -65,7 +65,12 @@
 
       @if (! is_null($summary->ship) && ! is_null($summary->ship->type))
       <dt>{{ trans('web::seat.current_ship') }}</dt>
-      <dd>{{ $summary->ship->type->typeName }} called <i>{{ $summary->ship->ship_name }}</i></dd>
+      <dd>
+        @if(auth()->user()->has('character.asset'))
+          <a href="#" data-toggle="modal" data-target="#ship-detail" data-url="{{ route('character.view.ship', ['character_id' => $summary->character_id]) }}"><i class="fas fa-wrench"></i></a>
+        @endif
+        {{ $summary->ship->type->typeName }} called <i>{{ $summary->ship->ship_name }}</i>
+      </dd>
       @endif
 
       @if (! is_null($summary->location))
@@ -116,6 +121,8 @@
     </span>
   </div>
 </div>
+
+@include('web::character.includes.modals.fitting.fitting')
 
 @push('javascript')
 @include('web::includes.javascript.id-to-name')
