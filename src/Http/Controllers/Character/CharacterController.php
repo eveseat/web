@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\Controllers\Character;
 
 use Illuminate\Support\Arr;
+use Seat\Eveapi\Models\Location\CharacterShip;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\CharacterDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
@@ -88,5 +89,16 @@ class CharacterController extends Controller
 
         // Redirect away from the original request
         return redirect()->route('auth.unauthorized');
+    }
+
+    /**
+     * @param int $corporation_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getShip(int $character_id)
+    {
+        $ship = CharacterShip::find($character_id);
+
+        return view('web::character.includes.modals.fitting.content', compact('ship'));
     }
 }
