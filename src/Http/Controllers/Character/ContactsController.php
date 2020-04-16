@@ -25,7 +25,7 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Intel\ContactDataTable;
-use Seat\Web\Http\DataTables\Scopes\CharacterScope;
+use Seat\Web\Http\DataTables\Scopes\CharacterContactScope;
 use Seat\Web\Http\DataTables\Scopes\Filters\ContactCategoryScope;
 use Seat\Web\Http\DataTables\Scopes\Filters\ContactStandingLevelScope;
 use Seat\Web\Models\User;
@@ -51,7 +51,7 @@ class ContactsController extends Controller
         }
 
         return $dataTable
-            ->addScope(new CharacterScope('character.contact', $character_id, request()->input('characters', [])))
+            ->addScope(new CharacterContactScope('character.contact', $character_id, request()->input('characters', [])))
             ->addScope(new ContactCategoryScope(request()->input('filters.category')))
             ->addScope(new ContactStandingLevelScope(request()->input('filters.standing')))
             ->render('web::character.contacts', compact('characters'));
