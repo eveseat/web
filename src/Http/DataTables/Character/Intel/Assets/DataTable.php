@@ -20,20 +20,20 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\DataTables\Character\Intel;
+namespace Seat\Web\Http\DataTables\Character\Intel\Assets;
 
 use Seat\Eveapi\Models\Assets\CharacterAsset;
-use Seat\Web\Http\DataTables\Character\Columns\AssetLocationFlagColumn;
-use Seat\Web\Http\DataTables\Character\Columns\AssetStationColumn;
+use Seat\Web\Http\DataTables\Character\Intel\Assets\Columns\LocationFlag;
+use Seat\Web\Http\DataTables\Character\Intel\Assets\Columns\Station;
 use Seat\Web\Http\DataTables\Common\IColumn;
 use Seat\Web\Http\DataTables\Common\Intel\AbstractAssetDataTable;
 
 /**
- * Class AssetDataTable.
+ * Class DataTable.
  *
- * @package Seat\Web\Http\DataTables\Character\Intel
+ * @package Seat\Web\Http\DataTables\Character\Intel\Assets
  */
-class AssetDataTable extends AbstractAssetDataTable
+class DataTable extends AbstractAssetDataTable
 {
     const IGNORED_FLAGS = [
         // generic fitting flags
@@ -88,7 +88,7 @@ class AssetDataTable extends AbstractAssetDataTable
      */
     protected function getLocationFlagColumn($table): IColumn
     {
-        return new AssetLocationFlagColumn($table);
+        return new LocationFlag($table);
     }
 
     /**
@@ -97,6 +97,6 @@ class AssetDataTable extends AbstractAssetDataTable
      */
     protected function getStationColumn($table): IColumn
     {
-        return new AssetStationColumn($table);
+        return new Station($table);
     }
 }

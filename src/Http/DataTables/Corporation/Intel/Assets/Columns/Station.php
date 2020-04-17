@@ -20,18 +20,18 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\DataTables\Corporation\Columns;
+namespace Seat\Web\Http\DataTables\Corporation\Intel\Assets\Columns;
 
 use Illuminate\Database\Eloquent\Model;
 use Seat\Eveapi\Models\Assets\CorporationAsset;
 use Seat\Web\Http\DataTables\Common\AbstractColumn;
 
 /**
- * Class AssetStationColumn.
+ * Class Station.
  *
- * @package Seat\Web\Http\DataTables\Corporation\Columns
+ * @package Seat\Web\Http\DataTables\Corporation\Intel\Assets\Columns
  */
-class AssetStationColumn extends AbstractColumn
+class Station extends AbstractColumn
 {
     /**
      * Draw a column cell.

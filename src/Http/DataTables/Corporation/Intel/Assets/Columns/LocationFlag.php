@@ -20,17 +20,17 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\DataTables\Corporation\Columns;
+namespace Seat\Web\Http\DataTables\Corporation\Intel\Assets\Columns;
 
 use Illuminate\Database\Eloquent\Model;
 use Seat\Web\Http\DataTables\Common\AbstractColumn;
 
 /**
- * Class AssetLocationFlagColumn.
+ * Class LocationFlag.
  *
- * @package Seat\Web\Http\DataTables\Corporation\Columns
+ * @package Seat\Web\Http\DataTables\Corporation\Intel\Assets\Columns
  */
-class AssetLocationFlagColumn extends AbstractColumn
+class LocationFlag extends AbstractColumn
 {
     /**
      * @var \Seat\Web\Http\DataTables\Common\Intel\AbstractAssetDataTable
@@ -40,7 +40,7 @@ class AssetLocationFlagColumn extends AbstractColumn
     /**
      * AssetLocationFlagColumn constructor.
      *
-     * @param \Seat\Web\Http\DataTables\Corporation\Intel\AssetDataTable $table
+     * @param \Seat\Web\Http\DataTables\Corporation\Intel\Assets\DataTable $table
      */
     public function __construct($table)
     {
