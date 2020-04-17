@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * This file is part of SeAT
  *
  * Copyright (C) 2015 to 2020 Leon Jacobs
@@ -20,21 +20,21 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\DataTables\Corporation\Intel;
+namespace Seat\Web\Http\DataTables\Corporation\Intel\Assets;
 
 use Seat\Eveapi\Models\Assets\CorporationAsset;
 use Seat\Eveapi\Models\Corporation\CorporationDivision;
 use Seat\Web\Http\DataTables\Common\IColumn;
 use Seat\Web\Http\DataTables\Common\Intel\AbstractAssetDataTable;
-use Seat\Web\Http\DataTables\Corporation\Columns\AssetLocationFlagColumn;
-use Seat\Web\Http\DataTables\Corporation\Columns\AssetStationColumn;
+use Seat\Web\Http\DataTables\Corporation\Intel\Assets\Columns\LocationFlag;
+use Seat\Web\Http\DataTables\Corporation\Intel\Assets\Columns\Station;
 
 /**
- * Class AssetDataTable.
+ * Class DataTable.
  *
- * @package Seat\Web\Http\DataTables\Corporation\Intel
+ * @package Seat\Web\Http\DataTables\Corporation\Intel\Assets
  */
-class AssetDataTable extends AbstractAssetDataTable
+class DataTable extends AbstractAssetDataTable
 {
     const IGNORED_FLAGS = [
         // generic fitting flags
@@ -88,20 +88,20 @@ class AssetDataTable extends AbstractAssetDataTable
     }
 
     /**
-     * @param \Seat\Web\Http\DataTables\Corporation\Intel\AssetDataTable $table
+     * @param \Seat\Web\Http\DataTables\Corporation\Intel\Assets\DataTable $table
      * @return \Seat\Web\Http\DataTables\Common\IColumn
      */
     protected function getLocationFlagColumn($table): IColumn
     {
-        return new AssetLocationFlagColumn($table);
+        return new LocationFlag($table);
     }
 
     /**
-     * @param \Seat\Web\Http\DataTables\Corporation\Intel\AssetDataTable $table
+     * @param \Seat\Web\Http\DataTables\Corporation\Intel\Assets\DataTable $table
      * @return \Seat\Web\Http\DataTables\Common\IColumn
      */
     protected function getStationColumn($table): IColumn
     {
-        return new AssetStationColumn($table);
+        return new Station($table);
     }
 }

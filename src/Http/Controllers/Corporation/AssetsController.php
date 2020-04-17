@@ -25,7 +25,7 @@ namespace Seat\Web\Http\Controllers\Corporation;
 use Seat\Eveapi\Models\Assets\CorporationAsset;
 use Seat\Eveapi\Models\Corporation\CorporationDivision;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Http\DataTables\Corporation\Intel\AssetDataTable;
+use Seat\Web\Http\DataTables\Corporation\Intel\Assets\DataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationAssetDivisionsScope;
 use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 
@@ -37,10 +37,10 @@ class AssetsController extends Controller
 {
     /**
      * @param int $corporation_id
-     * @param \Seat\Web\Http\DataTables\Corporation\Intel\AssetDataTable $dataTable
+     * @param \Seat\Web\Http\DataTables\Corporation\Intel\Assets\DataTable $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getAssets(int $corporation_id, AssetDataTable $dataTable)
+    public function getAssets(int $corporation_id, DataTable $dataTable)
     {
         $division_ids = [];
         $division_permissions = [
