@@ -20,14 +20,26 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-return [
-    'start'               => 'Start',
-    'end'                 => 'End',
-    'location'            => 'Location',
-    'activity'            => 'Activity',
-    'runs'                => 'Runs',
-    'blueprint'           => 'Blueprint',
-    'product'             => 'Product',
-    'material_efficiency' => 'Material Efficiency',
-    'time_efficiency'     => 'Time Efficiency',
-];
+namespace Seat\Web\Http\DataTables\Character\Industrial\Blueprints\Columns;
+
+use Illuminate\Database\Eloquent\Model;
+use Seat\Web\Http\DataTables\Common\AbstractColumn;
+
+/**
+ * Class LocationFlag.
+ *
+ * @package Seat\Web\Http\DataTables\Character\Industrial\Blueprints\Columns
+ */
+class LocationFlag extends AbstractColumn
+{
+    /**
+     * Draw a column cell.
+     *
+     * @param \Illuminate\Database\Eloquent\Model $row
+     * @return string;
+     */
+    public function draw(Model $row)
+    {
+        return preg_replace('([A-Z])', ' $0', $row->location_flag);
+    }
+}

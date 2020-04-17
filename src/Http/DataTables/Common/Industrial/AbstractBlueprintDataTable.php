@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Common\Industrial;
 
+use Seat\Web\Http\DataTables\Common\IColumn;
 use Yajra\DataTables\Services\DataTable;
 
 /**
@@ -37,26 +38,9 @@ abstract class AbstractBlueprintDataTable extends DataTable
      */
     public function ajax()
     {
-        return $this->ajaxDataResponse()
-            ->make(true);
-    }
+        $station_column = $this->getStationColumn($this);
+        $location_column = $this->getLocationFlagColumn($this);
 
-    /**
-     * @return \Yajra\DataTables\Html\Builder
-     */
-    public function html()
-    {
-        return $this->builder()
-            ->postAjax()
-            ->columns($this->getColumns())
-            ->addTableClass('table-striped table-hover');
-    }
-
-    /**
-     * @return \Yajra\DataTables\DataTableAbstract|\Yajra\DataTables\EloquentDataTable
-     */
-    public function ajaxDataResponse()
-    {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('type.typeName', function ($row) {
@@ -66,9 +50,7 @@ abstract class AbstractBlueprintDataTable extends DataTable
                     'variation' => $row->quantity == -1 ? 'bp' : 'bpc',
                 ]);
             })
-            ->editColumn('location_flag', function ($row) {
-                return preg_replace('([A-Z])', ' $0', $row->location_flag);
-            })
+            ->editColumn('location_flag', $location_column)
             ->editColumn('quantity', function ($row) {
                 if ($row->quantity < 0)
                     return 1;
@@ -81,7 +63,32 @@ abstract class AbstractBlueprintDataTable extends DataTable
 
                 return $row->runs;
             })
-            ->rawColumns(['runs']);
+            ->addColumn('station', $station_column)
+            ->filterColumn('location_flag', $location_column)
+            ->filterColumn('station', $station_column)
+            ->setRowClass(function ($row) {
+                if (in_array('AssetSafety', [$row->location_flag]))
+                    return 'table-danger';
+
+                if (in_array('CorpDeliveries', [$row->location_flag]))
+                    return 'table-warning';
+
+                return '';
+            })
+            ->rawColumns(['runs'])
+            ->make(true);
+    }
+
+    /**
+     * @return \Yajra\DataTables\Html\Builder
+     */
+    public function html()
+    {
+        return $this->builder()
+            ->postAjax()
+            ->columns($this->getColumns())
+            ->orderBy(0, 'asc')
+            ->addTableClass('table-striped table-hover');
     }
 
     /**
@@ -90,17 +97,30 @@ abstract class AbstractBlueprintDataTable extends DataTable
     abstract public function query();
 
     /**
+     * @param self $table
+     * @return \Seat\Web\Http\DataTables\Common\IColumn
+     */
+    abstract protected function getLocationFlagColumn($table): IColumn;
+
+    /**
+     * @param self $table
+     * @return \Seat\Web\Http\DataTables\Common\IColumn
+     */
+    abstract protected function getStationColumn($table): IColumn;
+
+    /**
      * @return array
      */
     public function getColumns()
     {
         return [
-            'type.typeName',
-            'location_flag',
-            'quantity',
-            'time_efficiency',
-            'material_efficiency',
-            'runs',
+            ['data' => 'type.typeName', 'title' => trans_choice('web::seat.type', 1)],
+            ['data' => 'location_flag', 'title' => trans_choice('web::assets.division', 1)],
+            ['data' => 'quantity', 'title' => trans('web::seat.quantity')],
+            ['data' => 'time_efficiency', 'title' => trans('web::industry.time_efficiency')],
+            ['data' => 'material_efficiency', 'title' => trans('web::industry.material_efficiency')],
+            ['data' => 'runs', 'title' => trans('web::industry.runs')],
+            ['data' => 'station', 'title' => trans('web::assets.station_or_structure'), 'orderable' => false],
         ];
     }
 }

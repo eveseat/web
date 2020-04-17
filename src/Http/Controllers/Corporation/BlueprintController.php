@@ -23,7 +23,7 @@
 namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Http\DataTables\Corporation\Industrial\BlueprintDataTable;
+use Seat\Web\Http\DataTables\Corporation\Industrial\Blueprints\DataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationAssetDivisionsScope;
 use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 use Seat\Web\Http\DataTables\Scopes\Filters\BlueprintTypeScope;
@@ -37,10 +37,10 @@ class BlueprintController extends Controller
 {
     /**
      * @param int $corporation_id
-     * @param \Seat\Web\Http\DataTables\Corporation\Industrial\BlueprintDataTable $dataTable
+     * @param \Seat\Web\Http\DataTables\Corporation\Industrial\Blueprints\DataTable $dataTable
      * @return mixed
      */
-    public function index(int $corporation_id, BlueprintDataTable $dataTable)
+    public function index(int $corporation_id, DataTable $dataTable)
     {
         $division_ids = [];
         $division_permissions = [
