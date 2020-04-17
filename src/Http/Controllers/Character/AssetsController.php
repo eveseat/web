@@ -26,7 +26,7 @@ use Seat\Eveapi\Models\Assets\CharacterAsset;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\Repositories\Character\Assets;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Http\DataTables\Character\Intel\AssetDataTable;
+use Seat\Web\Http\DataTables\Character\Intel\Assets\DataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 use Seat\Web\Models\User;
 
@@ -42,7 +42,7 @@ class AssetsController extends Controller
      * @param int $character_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getAssetsView(int $character_id, AssetDataTable $dataTable)
+    public function getAssetsView(int $character_id, DataTable $dataTable)
     {
         $token = RefreshToken::where('character_id', $character_id)->first();
         $characters = collect();
