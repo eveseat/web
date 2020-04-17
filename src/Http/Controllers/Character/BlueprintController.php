@@ -24,7 +24,7 @@ namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Http\DataTables\Character\Industrial\BlueprintDataTable;
+use Seat\Web\Http\DataTables\Character\Industrial\Blueprints\DataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 use Seat\Web\Http\DataTables\Scopes\Filters\BlueprintTypeScope;
 use Seat\Web\Models\User;
@@ -38,10 +38,10 @@ class BlueprintController extends Controller
 {
     /**
      * @param int $character_id
-     * @param \Seat\Web\Http\DataTables\Character\Industrial\BlueprintDataTable $dataTable
+     * @param \Seat\Web\Http\DataTables\Character\Industrial\Blueprints\DataTable $dataTable
      * @return mixed
      */
-    public function index(int $character_id, BlueprintDataTable $dataTable)
+    public function index(int $character_id, DataTable $dataTable)
     {
         $token = RefreshToken::where('character_id', $character_id)->first();
         $characters = collect();
