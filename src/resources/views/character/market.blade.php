@@ -11,7 +11,7 @@
       <h3 class="card-title">{{ trans('web::seat.market') }}</h3>
       <div class="card-tools">
         <div class="input-group input-group-sm">
-          <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.market']) }}"
+          <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character->character_id, 'job_name' => 'character.market']) }}"
              class="btn btn-sm btn-light">
             <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_market') }}"></i>
           </a>
@@ -22,7 +22,7 @@
       <div class="mb-3">
         <select multiple="multiple" id="dt-character-selector" class="form-control" style="width: 100%;">
           @foreach($characters as $character)
-            @if($character->character_id == $request->character_id)
+            @if($character->character_id == $request->character->character_id)
               <option selected="selected" value="{{ $character->character_id }}">{{ $character->name }}</option>
             @else
               <option value="{{ $character->character_id }}">{{ $character->name }}</option>

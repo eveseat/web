@@ -1,5 +1,5 @@
 @if(is_a($row, \Seat\Eveapi\Models\Assets\CharacterAsset::class))
-    <button class="btn btn-sm btn-link" data-dismiss="modal" data-toggle="modal" data-target="#fitting-detail" data-url="{{ route('character.view.assets.fitting', ['character_id' => $row->character_id, 'item_id' => $row->item_id]) }}">
+    <button class="btn btn-sm btn-link" data-dismiss="modal" data-toggle="modal" data-target="#fitting-detail" data-url="{{ route('character.view.assets.fitting', ['character' => $row->character, 'item_id' => $row->item_id]) }}">
         <i class="fas fa-wrench"></i>
     </button>
 @endif

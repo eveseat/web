@@ -2,41 +2,37 @@
   <div class="card-header">
     <h3 class="card-title">{{ trans('web::seat.summary') }}</h3>
     <div class="card-tools">
-      <span class="badge badge-secondary">{{ $characters->count() }}</span>
+      <span class="badge badge-secondary">{{ $character->refresh_token->user->characters->count() }}</span>
     </div>
   </div>
   <div class="card-body box-profile">
 
     <div class="text-center">
 
-      {!! img('characters', 'portrait', $summary->character_id, 128, ['class' => 'profile-user-img img-fluid img-circle']) !!}
+      {!! img('characters', 'portrait', $character->character_id, 128, ['class' => 'profile-user-img img-fluid img-circle']) !!}
 
     </div>
     <h3 class="profile-username text-center">
-      {{ $summary->name }}
+      {{ $character->name }}
     </h3>
 
     <p class="text-muted text-center">
-      @include('web::partials.corporation', ['corporation' => $summary->affiliation->corporation])
+      @include('web::partials.corporation', ['corporation' => $character->affiliation->corporation])
     </p>
 
     <ul class="list-group list-group-unbordered mb-3">
-      @foreach($characters as $character)
+      @foreach($character->refresh_token->user->characters->where('character_id', '<>', $character->character_id) as $character_row)
 
-        @if($character->name != $summary->name)
+        <li class="list-group-item">
 
-          <li class="list-group-item">
+          <a href="{{ route(\Illuminate\Support\Facades\Route::currentRouteName(),
+           array_merge(request()->route()->parameters, ['character' => $character_row])) }}">
+            {!! img('characters', 'portrait', $character_row->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+            {{ $character_row->name }}
+          </a>
 
-            <a href="{{ route(\Illuminate\Support\Facades\Route::currentRouteName(),
-             array_merge(request()->route()->parameters, ['character_id' => $character->character_id])) }}">
-              {!! img('characters', 'portrait', $character->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-              {{ $character->name }}
-            </a>
-
-            <span class="id-to-name text-muted float-right" data-id="{{ $character->affiliation->corporation_id }}">{{ $character->affiliation->corporation->name }}</span>
-          </li>
-
-        @endif
+          <span class="id-to-name text-muted float-right" data-id="{{ $character_row->affiliation->corporation_id }}">{{ $character_row->affiliation->corporation->name }}</span>
+        </li>
 
       @endforeach
 
@@ -46,47 +42,47 @@
 
       <dt>{{ trans('web::seat.joined_curr_corp') }}</dt>
       <dd>
-          @if(!is_null($summary->current_corporation))
-            {{ human_diff($summary->current_corporation->start_date) }}
+          @if(!is_null($character->current_corporation))
+            {{ human_diff($character->current_corporation->start_date) }}
           @endif
       </dd>
 
-      @if(auth()->user()->has('character.skill'))
+      @can('character.skill', $character)
         <dt>{{ trans_choice('web::seat.skillpoint', 2) }}</dt>
-        <dd>{{ number($summary->skills->sum('skillpoints_in_skill'), 0) }}</dd>
-      @endif
+        <dd>{{ number($character->skills->sum('skillpoints_in_skill'), 0) }}</dd>
+      @endcan
 
-      @if(auth()->user()->has('character.journal') || auth()->user()->has('character.transactions'))
-      @if(! is_null($summary->balance))
-      <dt>{{ trans('web::seat.account_balance') }}</dt>
-      <dd>{{ number($summary->balance->balance) }}</dd>
-      @endif
-      @endif
-
-      @if (! is_null($summary->ship) && ! is_null($summary->ship->type))
-      <dt>{{ trans('web::seat.current_ship') }}</dt>
-      <dd>
-        @if(auth()->user()->has('character.asset'))
-          <a href="#" data-toggle="modal" data-target="#ship-detail" data-url="{{ route('character.view.ship', ['character_id' => $summary->character_id]) }}"><i class="fas fa-wrench"></i></a>
+      @canany(['character.journal', 'character.transactions'], $character)
+        @if(! is_null($character->balance))
+          <dt>{{ trans('web::seat.account_balance') }}</dt>
+          <dd>{{ number($character->balance->balance) }}</dd>
         @endif
-        {{ $summary->ship->type->typeName }} called <i>{{ $summary->ship->ship_name }}</i>
-      </dd>
+      @endcanany
+
+      @if (! is_null($character->ship) && ! is_null($character->ship->type))
+        <dt>{{ trans('web::seat.current_ship') }}</dt>
+        <dd>
+          @can('character.asset', $character)
+            <a href="#" data-toggle="modal" data-target="#ship-detail" data-url="{{ route('character.view.ship', ['character' => $character]) }}"><i class="fas fa-wrench"></i></a>
+          @endcan
+          {{ $character->ship->type->typeName }} called <i>{{ $character->ship->ship_name }}</i>
+        </dd>
       @endif
 
-      @if (! is_null($summary->location))
+      @if (! is_null($character->location))
       <dt>{{ trans('web::seat.last_location') }}</dt>
-      <dd>@include('web::partials.location', ['location' => $summary->location])</dd>
+      <dd>@include('web::partials.location', ['location' => $character->location])</dd>
       @endif
 
       <dt>{{ trans('web::seat.security_status') }}</dt>
       <dd>
-        @if($summary->security_status < 0)
+        @if($character->security_status < 0)
           <span class="text-danger">
-            {{ number($summary->security_status, 2) }}
+            {{ number($character->security_status, 2) }}
           </span>
         @else
           <span class="text-success">
-            {{ number($summary->security_status, 2) }}
+            {{ number($character->security_status, 2) }}
           </span>
         @endif
       </dd>
@@ -95,27 +91,27 @@
   </div>
   <div class="card-footer">
     <span class="text-center center-block">
-      <a href="http://eveskillboard.com/pilot/{{ $summary->name }}"
+      <a href="http://eveskillboard.com/pilot/{{ $character->name }}"
          target="_blank">
         <img src="{{ asset('web/img/eveskillboard.png') }}">
       </a>
-      <a href="https://forums.eveonline.com/u/{{ str_replace(' ', '_', $summary->name) }}/summary"
+      <a href="https://forums.eveonline.com/u/{{ str_replace(' ', '_', $character->name) }}/summary"
          target="_blank">
         <img src="{{ asset('web/img/evelogo.png') }}">
       </a>
-      <a href="http://eve-search.com/search/author/{{ $summary->name }}"
+      <a href="http://eve-search.com/search/author/{{ $character->name }}"
          target="_blank">
         <img src="{{ asset('web/img/evesearch.png') }}">
       </a>
-      <a href="http://evewho.com/pilot/{{ $summary->name }}"
+      <a href="http://evewho.com/pilot/{{ $character->name }}"
          target="_blank">
         <img src="{{ asset('web/img/evewho.png') }}">
       </a>
-      <a href="https://zkillboard.com/character/{{ $summary->name }}"
+      <a href="https://zkillboard.com/character/{{ $character->name }}"
          target="_blank">
         <img src="{{ asset('web/img/zkillboard.png') }}">
       </a>
-      <a href="http://eve-prism.com/?view=character&name={{ $summary->name }}" target="_blank">
+      <a href="http://eve-prism.com/?view=character&name={{ $character->name }}" target="_blank">
         <img src="{{ asset('web/img/eve-prism.png') }}" />
       </a>
     </span>
@@ -125,5 +121,5 @@
 @include('web::character.includes.modals.fitting.fitting')
 
 @push('javascript')
-@include('web::includes.javascript.id-to-name')
+  @include('web::includes.javascript.id-to-name')
 @endpush

@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Industrial\Blueprints\DataTable;
@@ -37,19 +38,19 @@ use Seat\Web\Models\User;
 class BlueprintController extends Controller
 {
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @param \Seat\Web\Http\DataTables\Character\Industrial\Blueprints\DataTable $dataTable
      * @return mixed
      */
-    public function index(int $character_id, DataTable $dataTable)
+    public function index(CharacterInfo $character, DataTable $dataTable)
     {
-        $token = RefreshToken::where('character_id', $character_id)->first();
+        $token = RefreshToken::where('character_id', $character->character_id)->first();
         $characters = collect();
         if ($token) {
             $characters = User::with('characters')->find($token->user_id)->characters;
         }
 
-        return $dataTable->addScope(new CharacterScope('character.blueprint', $character_id, request()->input('characters')))
+        return $dataTable->addScope(new CharacterScope('character.blueprint', $character->character_id, request()->input('characters')))
             ->addScope(new BlueprintTypeScope(request()->input('filters.type')))
             ->render('web::character.blueprint', compact('characters'));
     }

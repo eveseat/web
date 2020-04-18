@@ -27,6 +27,7 @@ use Illuminate\Auth\Events\Login as LoginEvent;
 use Illuminate\Auth\Events\Logout as LogoutEvent;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Horizon\Horizon;
 use Seat\Eveapi\Models\Assets\CharacterAsset;
@@ -41,7 +42,6 @@ use Seat\Web\Events\Logout;
 use Seat\Web\Events\SecLog;
 use Seat\Web\Http\Composers\CharacterLayout;
 use Seat\Web\Http\Composers\CharacterMenu;
-use Seat\Web\Http\Composers\CharacterSummary;
 use Seat\Web\Http\Composers\CorporationLayout;
 use Seat\Web\Http\Composers\CorporationMenu;
 use Seat\Web\Http\Composers\CorporationSummary;
@@ -115,6 +115,9 @@ class WebServiceProvider extends AbstractSeatPlugin
 
         // Configure API
         $this->configure_api();
+
+        // Register policies
+        $this->register_policies();
     }
 
     /**
@@ -188,14 +191,6 @@ class WebServiceProvider extends AbstractSeatPlugin
         // Sidebar menu view composer
         $this->app['view']->composer(
             'web::includes.sidebar', Sidebar::class);
-
-        // Character info composer
-        $this->app['view']->composer([
-            'web::character.includes.summary',
-            'web::character.includes.menu',
-            'web::character.intel.includes.menu',
-            'web::character.wallet.includes.menu',
-        ], CharacterSummary::class);
 
         // Character menu composer
         $this->app['view']->composer([
@@ -464,6 +459,23 @@ class WebServiceProvider extends AbstractSeatPlugin
                 __DIR__ . '/Models',
             ])),
         ]);
+    }
+
+    /**
+     * Register all gates
+     */
+    private function register_policies()
+    {
+        $permissions = config('seat.permissions', []);
+
+        foreach ($permissions as $scope => $scope_permissions) {
+            foreach ($scope_permissions as $permission => $definition) {
+                $ability = sprintf('%s.%s', $scope, $permission);
+
+                if (array_key_exists('gate', $definition))
+                    Gate::define($ability, $definition['gate']);
+            }
+        }
     }
 
     /**

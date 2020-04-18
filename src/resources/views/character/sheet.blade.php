@@ -10,22 +10,20 @@
 
     <div class="col-md-6">
 
-      @if(auth()->user()->has('character.skill'))
+      @can('character.skill', $character)
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">
               {{ trans('web::seat.skills_summary') }}
             </h3>
-            @if(auth()->user()->has('character.jobs'))
-              <div class="card-tools">
-                <div class="input-group input-group-sm">
-                  <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.skillqueue']) }}"
-                     class="btn btn-sm btn-light">
-                    <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_skill_queue') }}"></i>
-                  </a>
-                </div>
+            <div class="card-tools">
+              <div class="input-group input-group-sm">
+                <a href="{{ route('tools.jobs.dispatch', ['character_id' => $character->character_id, 'job_name' => 'character.skillqueue']) }}"
+                   class="btn btn-sm btn-light">
+                  <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_skill_queue') }}"></i>
+                </a>
               </div>
-            @endif
+            </div>
           </div>
           <div class="card-body">
 
@@ -33,9 +31,9 @@
 
               <dt>{{ trans('web::seat.curr_training') }}</dt>
               <dd>
-                @if($skill_queue->where('finish_date', '>', carbon())->count() > 0)
-                  {{ $skill_queue->where('finish_date', '>', carbon())->first()->type->typeName }} to level
-                  <b>{{ $skill_queue->where('finish_date', '>', carbon())->first()->finished_level }}</b>
+                @if($character->skill_queue->where('finish_date', '>', carbon())->isNotEmpty())
+                  {{ $character->skill_queue->where('finish_date', '>', carbon())->sortByDesc('record_id')->first()->type->typeName }} to level
+                  <b>{{ $character->skill_queue->where('finish_date', '>', carbon())->sortByDesc('record_id')->first()->finished_level }}</b>
                 @else
                   {{ trans('web::seat.no_skill_training') }}
                 @endif
@@ -43,10 +41,10 @@
 
               <dt>{{ trans('web::seat.skill_training_end') }}</dt>
               <dd>
-                @if($skill_queue->where('finish_date', '>', carbon())->count() > 0)
-                  {{ human_diff(carbon($skill_queue->where('finish_date', '>', carbon())->first()->finish_date)) }}
-                  on {{ carbon($skill_queue->where('finish_date', '>', carbon())->first()->finish_date)->toDateString() }}
-                  at {{ carbon($skill_queue->where('finish_date', '>', carbon())->first()->finish_date)->toTimeString() }}
+                @if($character->skill_queue->where('finish_date', '>', carbon())->isNotEmpty())
+                  {{ human_diff(carbon($character->skill_queue->where('finish_date', '>', carbon())->sortByDesc('record_id')->first()->finish_date)) }}
+                  on {{ carbon($character->skill_queue->where('finish_date', '>', carbon())->sortByDesc('record_id')->first()->finish_date)->toDateString() }}
+                  at {{ carbon($character->skill_queue->where('finish_date', '>', carbon())->sortByDesc('record_id')->first()->finish_date)->toTimeString() }}
                 @else
                   {{ trans('web::seat.no_skill_training') }}
                 @endif
@@ -54,10 +52,10 @@
 
               <dt>{{ trans('web::seat.skill_queue') }}</dt>
               <dd>
-                @if($skill_queue && count($skill_queue) > 0)
+                @if($character->skill_queue->isNotEmpty())
                   <ol class="skill-list">
 
-                    @foreach($skill_queue->where('finish_date', '>', carbon())->slice(1)->all() as $skill)
+                    @foreach($character->skill_queue->where('finish_date', '>', carbon())->sortByDesc('record_id')->slice(1)->all() as $skill)
 
                       <li>
                         <span class="col-md-8" data-toggle="tooltip" title=""
@@ -87,10 +85,10 @@
 
           </div>
           <div class="card-footer">
-            {{ count($skill_queue) }} {{ trans_choice('web::seat.skill', count($skill_queue)) }}
+            {{ $character->skill_queue->count() }} {{ trans_choice('web::seat.skill', $character->skill_queue->count()) }}
           </div>
         </div>
-      @endif
+      @endcan
 
         <div class="card">
           <div class="card-header">
@@ -103,9 +101,9 @@
               <dt>{{ trans('web::seat.jump_fatigue') }}</dt>
               <dd>
 
-                @if(!is_null($fatigue) && carbon($fatigue->jump_fatigue_expire_date)->gt(carbon(null)))
-                  {{ $fatigue->jump_fatigue_expire_date }}
-                  <span class="float-right">Ends approx {{ human_diff($fatigue->jump_fatigue_expire_date) }}</span>
+                @if(carbon($character->fatigue->jump_fatigue_expire_date)->gt(carbon(null)))
+                  {{ $character->fatigue->jump_fatigue_expire_date }}
+                  <span class="float-right">Ends approx {{ human_diff($character->fatigue->jump_fatigue_expire_date) }}</span>
                 @else
                   None
                 @endif
@@ -114,9 +112,9 @@
 
               <dt>{{ trans('web::seat.jump_act_timer') }}</dt>
               <dd>
-                @if(!is_null($last_jump) && carbon($last_jump->last_clone_jump_date)->gt(carbon(null)))
-                  {{ $last_jump->last_clone_jump_date }}
-                  <span class="float-right">Ends approx {{ human_diff($last_jump->last_clone_jump_date) }}</span>
+                @if(carbon($character->clone->last_clone_jump_date)->gt(carbon(null)))
+                  {{ $character->clone->last_clone_jump_date }}
+                  <span class="float-right">Ends approx {{ human_diff($character->clone->last_clone_jump_date) }}</span>
                 @else
                   {{ trans('web::seat.none') }}
                 @endif
@@ -125,11 +123,11 @@
               <dt>{{ trans_choice('web::seat.jump_clones', 0) }}</dt>
               <dd>
 
-                @if(count($jump_clones) > 0)
+                @if($character->jump_clones->isNotEmpty())
 
                   <ul>
 
-                    @foreach($jump_clones as $clone)
+                    @foreach($character->jump_clones as $clone)
                       <li>
                         @if(! is_null($clone->name) && ! empty($clone->name))
                           ({{ $clone->name }})
@@ -155,7 +153,7 @@
 
           </div>
           <div class="card-footer">
-            {{ count($jump_clones) }} {{ trans_choice('web::seat.jump_clones', count($jump_clones)) }}
+            {{ $character->jump_clones->count() }} {{ trans_choice('web::seat.jump_clones', $character->jump_clones->count()) }}
           </div>
         </div>
 
@@ -169,22 +167,22 @@
 
               <div class="col-md-6">
                 <ul class="list-unstyled">
-                  <li>Charisma: {{ is_null($attributes) ? 0 : $attributes->charisma }}</li>
-                  <li>Intelligence: {{ is_null($attributes) ? 0 : $attributes->intelligence }}</li>
-                  <li>Memory: {{ is_null($attributes) ? 0 : $attributes->memory }}</li>
-                  <li>Perception: {{ is_null($attributes) ? 0 : $attributes->perception }}</li>
-                  <li>Willpower: {{ is_null($attributes) ? 0 : $attributes->willpower }}</li>
+                  <li>Charisma: {{ $character->pilot_attributes->charisma ?:! 0 }}</li>
+                  <li>Intelligence: {{ $character->pilot_attributes->intelligence ?: 0 }}</li>
+                  <li>Memory: {{ $character->pilot_attributes->memory ?: 0 }}</li>
+                  <li>Perception: {{ $character->pilot_attributes->perception ?: 0 }}</li>
+                  <li>Willpower: {{ $character->pilot_attributes->willpower ?: 0 }}</li>
                 </ul>
               </div>
 
               <div class="col-md-6">
                 <dl>
                   <dt>{{ trans('web::seat.bonus_remaps') }}</dt>
-                  <dd>{{ is_null($attributes) ? 0 : $attributes->bonus_remaps }}</dd>
+                  <dd>{{ $character->pilot_attributes->bonus_remaps ?: 0 }}</dd>
                   <dt>{{ trans('web::seat.last_remap_date') }}</dt>
-                  <dd>{{ is_null($attributes) ? carbon() : $attributes->last_remap_date }}</dd>
+                  <dd>{{ $character->pilot_attributes->last_remap_date ?: carbon() }}</dd>
                   <dt>{{ trans('web::seat.accrued_remap_cooldown_date') }}</dt>
-                  <dd>{{ is_null($attributes) ? carbon() : $attributes->accrued_remap_cooldown_date }}</dd>
+                  <dd>{{ $character->pilot_attributes->accrued_remap_cooldown_date ?: carbon() }}</dd>
                 </dl>
               </div>
 
@@ -202,23 +200,21 @@
           <h3 class="card-title">
             {{ trans('web::seat.employment_history') }}
           </h3>
-          @if(auth()->user()->has('character.jobs'))
-            <div class="card-tools">
-              <div class="input-group input-group-sm">
-                <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.corphistory']) }}"
-                   class="btn btn-sm btn-light">
-                  <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_corp_history') }}"></i>
-                </a>
-              </div>
+          <div class="card-tools">
+            <div class="input-group input-group-sm">
+              <a href="{{ route('tools.jobs.dispatch', ['character_id' => $character->character_id, 'job_name' => 'character.corphistory']) }}"
+                 class="btn btn-sm btn-light">
+                <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_corp_history') }}"></i>
+              </a>
             </div>
-          @endif
+          </div>
         </div>
         <div class="card-body overflow-auto" style="max-height: 200px;">
 
-          @if(count($employment) > 0)
+          @if($character->corporation_history->isNotEmpty())
             <ul class="list-unstyled">
 
-              @foreach($employment as $history)
+              @foreach($character->corporation_history as $history)
 
                 <li>
                   {!! img('corporations', 'logo', $history->corporation_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
@@ -239,7 +235,7 @@
 
         </div>
         <div class="card-footer">
-          {{ count($employment) }} {{ trans_choice('web::seat.corporation', count($employment)) }}
+          {{ $character->corporation_history->count() }} {{ trans_choice('web::seat.corporation', $character->corporation_history->count()) }}
         </div>
       </div>
 
@@ -249,11 +245,11 @@
         </div>
         <div class="card-body">
 
-          @if(count($implants) > 0)
+          @if($character->implants->isNotEmpty())
 
             <ul>
 
-              @foreach($implants as $implant)
+              @foreach($character->implants as $implant)
                 <li>{{ $implant->type->typeName }}</li>
               @endforeach
 
@@ -265,7 +261,7 @@
 
         </div>
         <div class="card-footer">
-          {{ count($implants) }} {{ trans_choice('web::seat.implants', count($implants)) }}
+          {{ $character->implants->count() }} {{ trans_choice('web::seat.implants', $character->implants->count()) }}
         </div>
       </div>
 
@@ -274,9 +270,9 @@
           <h3 class="card-title">{{ trans_choice('web::seat.corporation_titles', 0) }}</h3>
         </div>
         <div class="card-body">
-          @if(count($titles) > 0)
+          @if($character->titles->isNotEmpty())
             <ul class="list-unstyled">
-              @foreach($titles as $title)
+              @foreach($character->titles as $title)
                 <li>{!! clean_ccp_html($title->name) !!}</li>
               @endforeach
             </ul>
@@ -285,7 +281,7 @@
           @endif
         </div>
         <div class="card-footer">
-          {{ count($titles) }} {{ trans_choice('web::seat.corporation_titles', count($titles)) }}
+          {{ $character->titles->count() }} {{ trans_choice('web::seat.corporation_titles', $character->titles->count()) }}
         </div>
       </div>
 

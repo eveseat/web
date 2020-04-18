@@ -34,10 +34,7 @@
 
       <dt>{{ trans('web::seat.ceo') }}</dt>
       <dd>
-        <a href="{{ route('character.view.sheet', ['character_id' => $sheet->ceo_id]) }}">
-          {!! img('characters', 'portrait', $sheet->ceo_id, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-          <span class="id-to-name" data-id="{{ $sheet->ceo_id }}">{{ trans('web::seat.unknown') }}</span>
-        </a>
+        @include('web::partials.character', ['character' => $sheet->ceo])
       </dd>
 
       <dt>{{ trans('web::seat.home_station') }}</dt>

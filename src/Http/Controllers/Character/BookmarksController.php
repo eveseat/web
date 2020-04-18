@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Intel\BookmarkDataTable;
@@ -36,20 +37,20 @@ use Seat\Web\Models\User;
 class BookmarksController extends Controller
 {
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @param \Seat\Web\Http\DataTables\Character\Intel\BookmarkDataTable $dataTable
      * @return mixed
      */
-    public function index(int $character_id, BookmarkDataTable $dataTable)
+    public function index(CharacterInfo $character, BookmarkDataTable $dataTable)
     {
-        $token = RefreshToken::where('character_id', $character_id)->first();
+        $token = RefreshToken::where('character_id', $character->character_id)->first();
         $characters = collect();
         if ($token) {
             $characters = User::with('characters')->find($token->user_id)->characters;
         }
 
         return $dataTable
-            ->addScope(new BookmarkCharacterScope('character.bookmark', $character_id, request()->input('characters')))
+            ->addScope(new BookmarkCharacterScope('character.bookmark', $character->character_id, request()->input('characters')))
             ->render('web::character.bookmarks', compact('characters'));
     }
 }

@@ -22,7 +22,7 @@
             <h3 class="card-title">{{ trans('web::seat.main_char_skills_coverage') }}</h3>
             <div class="card-tools">
               <div class="input-group input-group-sm">
-                <a href="{{ route('character.export.skills', [request()->character_id]) }}" class="btn btn-sm btn-light">
+                <a href="{{ route('character.export.skills', ['character' => request()->character]) }}" class="btn btn-sm btn-light">
                   <i class="fas fa-file-export"></i>
                   Export Skills (Pyfa Format)
                 </a>
@@ -46,16 +46,14 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">{{ $skill_group->groupName }}</h3>
-                @if(auth()->user()->has('character.jobs'))
-                  <div class="card-tools">
-                    <div class="input-group input-group-sm">
-                      <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.skills']) }}"
-                         class="btn btn-sm btn-light">
-                        <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_skills') }}"></i>
-                      </a>
-                    </div>
+                <div class="card-tools">
+                  <div class="input-group input-group-sm">
+                    <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character->character_id, 'job_name' => 'character.skills']) }}"
+                       class="btn btn-sm btn-light">
+                      <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_skills') }}"></i>
+                    </a>
                   </div>
-                @endif
+                </div>
               </div>
               <div class="card-body p-0">
                 <table class="table table-striped table-hover table-condensed table-sm">
@@ -102,14 +100,14 @@
 
 @push('javascript')
   <script>
-    $.get("{{ route('character.view.skills.graph.level', ['character_id' => $request->character_id]) }}", function (data) {
+    $.get("{{ route('character.view.skills.graph.level', ['character' => $request->character]) }}", function (data) {
       new Chart($("canvas#skills-level"), {
         type: 'pie',
         data: data
       });
     });
 
-    $.get("{{ route('character.view.skills.graph.coverage', ['character_id' => $request->character_id]) }}", function (data) {
+    $.get("{{ route('character.view.skills.graph.coverage', ['character' => $request->character]) }}", function (data) {
       new Chart($('canvas#skills-coverage'), {
         type   : 'radar',
         data   : data,

@@ -16,7 +16,7 @@
         {!! img('characters', 'portrait', $user->main_character_id, 64, ['class' => 'img-circle elevation-2', 'alt' => 'User Image'], false) !!}
       </div>
       <div class="info">
-        <a href="{{ route('character.view.sheet', ['character_id' => $user->main_character_id]) }}" class="d-block">
+        <a href="{{ route('character.view.sheet', ['character' => $user->main_character]) }}" class="d-block">
           {{ $user->name }}
         </a>
       </div>

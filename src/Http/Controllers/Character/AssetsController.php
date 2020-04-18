@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Eveapi\Models\Assets\CharacterAsset;
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\Repositories\Character\Assets;
 use Seat\Web\Http\Controllers\Controller;
@@ -39,27 +40,27 @@ class AssetsController extends Controller
     use Assets;
 
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getAssetsView(int $character_id, DataTable $dataTable)
+    public function getAssetsView(CharacterInfo $character, DataTable $dataTable)
     {
-        $token = RefreshToken::where('character_id', $character_id)->first();
+        $token = RefreshToken::where('character_id', $character->character_id)->first();
         $characters = collect();
         if ($token) {
             $characters = User::with('characters')->find($token->user_id)->characters;
         }
 
-        return $dataTable->addScope(new CharacterScope('character.asset', $character_id, request()->input('characters')))
+        return $dataTable->addScope(new CharacterScope('character.asset', $character->character_id, request()->input('characters')))
             ->render('web::character.assets.assets', compact('characters'));
     }
 
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @param int $item_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getFitting(int $character_id, int $item_id)
+    public function getFitting(CharacterInfo $character, int $item_id)
     {
         $asset = CharacterAsset::find($item_id);
 
@@ -67,11 +68,11 @@ class AssetsController extends Controller
     }
 
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @param int $item_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getContainer(int $character_id, int $item_id)
+    public function getContainer(CharacterInfo $character, int $item_id)
     {
         $asset = CharacterAsset::find($item_id);
 

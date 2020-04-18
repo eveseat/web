@@ -24,6 +24,8 @@ namespace Seat\Web\Http\Composers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Gate;
+use Seat\Eveapi\Models\Character\CharacterInfo;
 
 /**
  * Class CharacterMenu.
@@ -32,11 +34,16 @@ use Illuminate\Support\Arr;
 class CharacterMenu extends AbstractMenu
 {
     /**
-     * Create a new sidebar composer.
+     * @var \Seat\Eveapi\Models\Character\CharacterInfo
+     */
+    private $character;
+
+    /**
+     * CharacterMenu constructor.
      */
     public function __construct()
     {
-
+        $this->character = request()->character;
     }
 
     /**
@@ -87,5 +94,19 @@ class CharacterMenu extends AbstractMenu
         }));
 
         $view->with('menu', $menu);
+    }
+
+    public function load_plugin_menu(string $package_name, array $menu_data, bool $require_affiliation = false): ?array
+    {
+        $this->validate_menu($package_name, $menu_data);
+
+        if (isset($menu_data['permission'])) {
+            $permissions  = is_array($menu_data['permission']) ? $menu_data['permission'] : [$menu_data['permission']];
+
+            if (! Gate::any($permissions, $this->character))
+                return null;
+        }
+
+        return $menu_data;
     }
 }

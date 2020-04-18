@@ -37,6 +37,11 @@ use Seat\Services\Repositories\Character\Skills;
 use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Web\Http\Controllers\Controller;
 
+/**
+ * Class SheetController.
+ *
+ * @package Seat\Web\Http\Controllers\Character
+ */
 class SheetController extends Controller
 {
     use Character;
@@ -46,10 +51,10 @@ class SheetController extends Controller
     use UserRespository;
 
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function show(int $character_id)
+    public function show(CharacterInfo $character)
     {
 
         // TODO: Revert to repository pattern.
@@ -58,21 +63,10 @@ class SheetController extends Controller
         // If not, redirect back with an error.
 
         // TODO : queue a job which will pull public data for this toon
-        if (! $character_info = CharacterInfo::find($character_id))
+        if (! $character)
             return redirect()->back()
                 ->with('error', trans('web::seat.unknown_character'));
 
-        $attributes = CharacterAttribute::find($character_id);
-        $fatigue = CharacterFatigue::find($character_id);
-        $employment = CharacterCorporationHistory::where('character_id', $character_id)->orderBy('record_id', 'desc')->get();
-        $implants = CharacterImplant::where('character_id', $character_id)->get();
-        $last_jump = CharacterClone::find($character_id);
-        $jump_clones = CharacterJumpClone::where('character_id', $character_id)->get();
-        $skill_queue = CharacterSkillQueue::where('character_id', $character_id)->orderBy('queue_position')->get();
-        $titles = CharacterInfo::with('titles')->find($character_id)->titles;
-
-        return view('web::character.sheet',
-            compact('attributes', 'fatigue', 'character_info', 'employment',
-                'implants', 'last_jump', 'jump_clones', 'skill_queue', 'titles'));
+        return view('web::character.sheet', compact('character'));
     }
 }

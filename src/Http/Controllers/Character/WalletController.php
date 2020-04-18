@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\Repositories\Character\Wallet;
 use Seat\Web\Http\Controllers\Controller;
@@ -39,50 +40,50 @@ class WalletController extends Controller
     use Wallet;
 
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @param \Seat\Web\Http\DataTables\Character\Financial\WalletJournalDataTable $dataTable
      * @return mixed
      */
-    public function journal(int $character_id, WalletJournalDataTable $dataTable)
+    public function journal(CharacterInfo $character, WalletJournalDataTable $dataTable)
     {
-        $token = RefreshToken::where('character_id', $character_id)->first();
+        $token = RefreshToken::where('character_id', $character->character_id)->first();
         $characters = collect();
         if ($token) {
             $characters = User::with('characters')->find($token->user_id)->characters;
         }
 
         return $dataTable
-            ->addScope(new CharacterScope('character.journal', $character_id, request()->input('characters', [])))
+            ->addScope(new CharacterScope('character.journal', $character->character_id, request()->input('characters', [])))
             ->render('web::character.wallet.journal.journal', compact('characters'));
     }
 
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @param \Seat\Web\Http\DataTables\Character\Financial\WalletTransactionDataTable $dataTable
      * @return mixed
      */
-    public function transactions(int $character_id, WalletTransactionDataTable $dataTable)
+    public function transactions(CharacterInfo $character, WalletTransactionDataTable $dataTable)
     {
-        $token = RefreshToken::where('character_id', $character_id)->first();
+        $token = RefreshToken::where('character_id', $character->character_id)->first();
         $characters = collect();
         if ($token) {
             $characters = User::with('characters')->find($token->user_id)->characters;
         }
 
         return $dataTable
-            ->addScope(new CharacterScope('character.transaction', $character_id, request()->input('characters')))
+            ->addScope(new CharacterScope('character.transaction', $character->character_id, request()->input('characters')))
             ->render('web::character.wallet.transactions.transactions', compact('characters'));
     }
 
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getJournalGraphBalance(int $character_id)
+    public function getJournalGraphBalance(CharacterInfo $character)
     {
 
-        $data = $this->getCharacterWalletJournal(collect($character_id))
+        $data = $this->getCharacterWalletJournal(collect($character->character_id))
             ->orderBy('date', 'desc')
             ->take(150)
             ->get();
