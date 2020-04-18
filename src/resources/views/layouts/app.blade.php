@@ -126,23 +126,25 @@
   <script src="{{ asset('web/js/seat.js') }}"></script>
 
   {{-- This script is here as we need Laravel to generate the route --}}
-  <script>
-    // Periodic Queue Status Updates
-    (function worker() {
-      $.ajax({
-        type    : "get",
-        url     : "{{ route('queue.status.short') }}",
-        success : function (data) {
-          $("span#queue_count").text(data.queue_count);
-          $("span#error_count").text(data.error_count);
-        },
-        complete: function () {
-          // Schedule the next request when the current one's complete
-          setTimeout(worker, {{ config('web.config.queue_status_update_time') }});
-        }
-      });
-    })();
-  </script>
+  @if(auth()->user()->has('global.queue_manager', false))
+    <script>
+      // Periodic Queue Status Updates
+      (function worker() {
+        $.ajax({
+          type    : "get",
+          url     : "{{ route('queue.status.short') }}",
+          success : function (data) {
+            $("span#queue_count").text(data.queue_count);
+            $("span#error_count").text(data.error_count);
+          },
+          complete: function () {
+            // Schedule the next request when the current one's complete
+            setTimeout(worker, {{ config('web.config.queue_status_update_time') }});
+          }
+        });
+      })();
+    </script>
+  @endif
 
   <!-- view specific scripts -->
   @stack('javascript')
