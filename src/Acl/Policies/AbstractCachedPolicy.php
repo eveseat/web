@@ -34,7 +34,7 @@ use Seat\Web\Models\User;
 abstract class AbstractCachedPolicy
 {
     // cache active permissions for 10 seconds
-    const CACHE_DURATION = 600;
+    const CACHE_DURATION = 10;
 
     /**
      * @param \Seat\Web\Models\User $user
@@ -45,7 +45,6 @@ abstract class AbstractCachedPolicy
         $cache_key = sprintf('users:%d:acl', $user->id);
 
         return Cache::store('redis')->remember($cache_key, self::CACHE_DURATION, function () use ($user) {
-            logger()->debug('Gate miss data from cache !');
             return $user->roles()->with('permissions')->get()->pluck('permissions')->flatten();
         });
     }
