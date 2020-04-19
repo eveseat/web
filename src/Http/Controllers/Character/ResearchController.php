@@ -23,11 +23,9 @@
 namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Eveapi\Models\Character\CharacterInfo;
-use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Industrial\ResearchDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
-use Seat\Web\Models\User;
 
 /**
  * Class ResearchController.
@@ -43,14 +41,8 @@ class ResearchController extends Controller
      */
     public function index(CharacterInfo $character, ResearchDataTable $dataTable)
     {
-        $token = RefreshToken::where('character_id', $character->character_id)->first();
-        $characters = collect();
-        if ($token) {
-            $characters = User::with('characters')->find($token->user_id)->characters;
-        }
-
         return $dataTable
             ->addScope(new CharacterScope('character.research', $character->character_id, request()->input('characters', [])))
-            ->render('web::character.research', compact('characters'));
+            ->render('web::character.research', compact('character'));
     }
 }

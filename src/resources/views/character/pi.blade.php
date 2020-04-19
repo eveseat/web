@@ -13,7 +13,7 @@
       </h3>
       <div class="card-tools">
         <div class="input-group input-group-sm">
-          <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character_id, 'job_name' => 'character.pi']) }}"
+          <a href="{{ route('tools.jobs.dispatch', ['character_id' => $character->character_id, 'job_name' => 'character.pi']) }}"
              class="btn btn-sm btn-light">
             <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_pi') }}"></i>
           </a>
@@ -34,7 +34,7 @@
         </thead>
         <tbody>
 
-          @foreach($colonies as $colony)
+          @foreach($character->colonies as $colony)
 
             <tr>
               <td data-order="{{ $colony->last_update }}">
@@ -42,9 +42,9 @@
                   {{ human_diff($colony->last_update) }}
                 </span>
               </td>
-              <td>{{ $colony->itemName }}</td>
+              <td>{{ $colony->system->itemName }}</td>
               <td>
-                @include('web::partials.type', ['type_id' => $colony->typeID, 'type_name' => $colony->planet_type])
+                @include('web::partials.type', ['type_id' => $colony->planet->type->typeID, 'type_name' => ucwords($colony->planet_type)])
               </td>
               <td>{{ $colony->upgrade_level }}</td>
               <td>{{ $colony->num_pins }}</td>
@@ -76,25 +76,27 @@
         </thead>
         <tbody>
 
-          @foreach($extractors as $extractor)
+          @foreach($character->colonies as $colony)
+            @foreach($colony->extractors as $extractor)
 
-            <tr>
-              <td>
-                @include('web::partials.type', ['type_id' => $extractor['typeID'], 'type_name' => ucfirst($extractor['planet_type'])])
-              </td>
-              <td>{{ $extractor['itemName'] . " " . $extractor['celestialIndex'] }}</td>
-              <td>
-                @include('web::partials.type', ['type_id' => $extractor['product_type_id'], 'type_name' => ucfirst($extractor['typeName'])])
-              </td>
-              <td>
-                <div class="countdown-progressbar" data-expiry-time="{{$extractor['expiry_time']}}"
-                     data-install-time="{{$extractor['install_time']}}"></div>
-              </td>
-              <td>
-                <div class="countdown" data-expiry-time="{{$extractor['expiry_time']}}">{{$extractor['expiry_time']}}</div>
-              </td>
-            </tr>
+              <tr>
+                <td>
+                  @include('web::partials.type', ['type_id' => $colony->planet->type->typeID, 'type_name' => ucwords($colony->planet_type)])
+                </td>
+                <td>{{ $colony->planet->itemName }}</td>
+                <td>
+                  @include('web::partials.type', ['type_id' => $extractor->product->typeID, 'type_name' => $extractor->product->typeName])
+                </td>
+                <td>
+                  <div class="countdown-progressbar" data-expiry-time="{{ $extractor->pin->expiry_time }}"
+                       data-install-time="{{ $extractor->pin->install_time }}"></div>
+                </td>
+                <td>
+                  <div class="countdown" data-expiry-time="{{ $extractor->pin->expiry_time }}">{{ $extractor->pin->expiry_time }}</div>
+                </td>
+              </tr>
 
+            @endforeach
           @endforeach
 
         </tbody>

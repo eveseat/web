@@ -23,13 +23,11 @@
 namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Eveapi\Models\Character\CharacterInfo;
-use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\Repositories\Character\Wallet;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Financial\WalletJournalDataTable;
 use Seat\Web\Http\DataTables\Character\Financial\WalletTransactionDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
-use Seat\Web\Models\User;
 
 /**
  * Class WalletController.
@@ -46,15 +44,9 @@ class WalletController extends Controller
      */
     public function journal(CharacterInfo $character, WalletJournalDataTable $dataTable)
     {
-        $token = RefreshToken::where('character_id', $character->character_id)->first();
-        $characters = collect();
-        if ($token) {
-            $characters = User::with('characters')->find($token->user_id)->characters;
-        }
-
         return $dataTable
             ->addScope(new CharacterScope('character.journal', $character->character_id, request()->input('characters', [])))
-            ->render('web::character.wallet.journal.journal', compact('characters'));
+            ->render('web::character.wallet.journal.journal', compact('character'));
     }
 
     /**
@@ -64,15 +56,9 @@ class WalletController extends Controller
      */
     public function transactions(CharacterInfo $character, WalletTransactionDataTable $dataTable)
     {
-        $token = RefreshToken::where('character_id', $character->character_id)->first();
-        $characters = collect();
-        if ($token) {
-            $characters = User::with('characters')->find($token->user_id)->characters;
-        }
-
         return $dataTable
             ->addScope(new CharacterScope('character.transaction', $character->character_id, request()->input('characters')))
-            ->render('web::character.wallet.transactions.transactions', compact('characters'));
+            ->render('web::character.wallet.transactions.transactions', compact('character'));
     }
 
     /**

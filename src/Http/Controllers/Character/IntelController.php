@@ -23,7 +23,6 @@
 namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Eveapi\Models\Character\CharacterInfo;
-use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\Repositories\Character\Intel;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Intel\NoteDataTable;
@@ -49,14 +48,7 @@ class IntelController extends Controller
      */
     public function getIntelSummary(CharacterInfo $character)
     {
-
-        $token = RefreshToken::where('character_id', $character->character_id)->first();
-        $characters = collect();
-        if ($token) {
-            $characters = User::with('characters')->find($token->user_id)->characters;
-        }
-
-        return view('web::character.intel.summary', compact('characters'));
+        return view('web::character.intel.summary', compact('character'));
     }
 
     /**

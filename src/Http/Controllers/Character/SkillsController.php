@@ -42,12 +42,8 @@ class SkillsController extends Controller
      */
     public function getSkills(CharacterInfo $character)
     {
-
-        $skills = $this->getCharacterSkillsInformation($character->character_id);
-        $skill_groups = $this->getEveSkillsGroups();
-
         return view('web::character.skills',
-            compact('skills', 'skill_groups'));
+            compact('character'));
     }
 
     /**

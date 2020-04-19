@@ -25,7 +25,6 @@ namespace Seat\Web\Http\Controllers\Character;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Gate;
 use Seat\Eveapi\Models\Character\CharacterInfo;
-use Seat\Eveapi\Models\Location\CharacterShip;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\CharacterDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
@@ -95,7 +94,7 @@ class CharacterController extends Controller
      */
     public function getShip(CharacterInfo $character)
     {
-        $ship = CharacterShip::find($character->character_id);
+        $ship = $character->ship;
 
         return view('web::character.includes.modals.fitting.content', compact('ship'));
     }

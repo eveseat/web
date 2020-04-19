@@ -24,11 +24,9 @@ namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Fittings\CharacterFitting;
-use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Military\FittingDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
-use Seat\Web\Models\User;
 
 /**
  * Class FittingController.
@@ -43,15 +41,9 @@ class FittingController extends Controller
      */
     public function index(CharacterInfo $character, FittingDataTable $dataTable)
     {
-        $token = RefreshToken::where('character_id', $character->character_id)->first();
-        $characters = collect();
-        if ($token) {
-            $characters = User::with('characters')->find($token->user_id)->characters;
-        }
-
         return $dataTable
             ->addScope(new CharacterScope('character.fitting', $character->character_id, request()->input('characters')))
-            ->render('web::character.fittings', compact('characters'));
+            ->render('web::character.fittings', compact('character'));
     }
 
     /**

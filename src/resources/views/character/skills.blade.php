@@ -37,7 +37,7 @@
     </div>
   </div>
 
-  @foreach($skill_groups->chunk(2) as $skill_group_row)
+  @foreach($character->skills->groupBy('type.groupID')->chunk(2) as $skill_group_row)
     <div class="row">
       <div class="col-md-12 mt-3">
         <div class="card-deck">
@@ -45,10 +45,10 @@
           @foreach($skill_group_row as $skill_group)
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">{{ $skill_group->groupName }}</h3>
+                <h3 class="card-title">{{ $skill_group->first()->type->group->groupName }}</h3>
                 <div class="card-tools">
                   <div class="input-group input-group-sm">
-                    <a href="{{ route('tools.jobs.dispatch', ['character_id' => $request->character->character_id, 'job_name' => 'character.skills']) }}"
+                    <a href="{{ route('tools.jobs.dispatch', ['character_id' => $character->character_id, 'job_name' => 'character.skills']) }}"
                        class="btn btn-sm btn-light">
                       <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_skills') }}"></i>
                     </a>
@@ -57,9 +57,9 @@
               </div>
               <div class="card-body p-0">
                 <table class="table table-striped table-hover table-condensed table-sm">
-                  @foreach($skills->where('groupID', $skill_group->groupID) as $skill)
+                  @foreach($skill_group as $skill)
                     <tr>
-                      <td><i class="fa fa-book"></i> {{ $skill->typeName }}</td>
+                      <td><i class="fa fa-book"></i> {{ $skill->type->typeName }}</td>
                       <td class="text-right">
                         @if($skill->trained_skill_level == 0)
                           <i class="fa fa-star-o"></i>
@@ -82,10 +82,10 @@
               </div>
               <div class="card-footer">
                 <div class="float-left">
-                  <i class="text-muted">{{ count($skills->where('groupID', $skill_group->groupID)) }} skills</i>
+                  <i class="text-muted">{{ $skill_group->count() }} skills</i>
                 </div>
                 <div class="float-right">
-                  <i class="text-muted">{{ number_format($skills->where('groupID', $skill_group->groupID)->sum('skillpoints_in_skill'), 0) }} skillpoints</i>
+                  <i class="text-muted">{{ number_format($skill_group->sum('skillpoints_in_skill'), 0) }} skillpoints</i>
                 </div>
               </div>
             </div>
@@ -100,14 +100,14 @@
 
 @push('javascript')
   <script>
-    $.get("{{ route('character.view.skills.graph.level', ['character' => $request->character]) }}", function (data) {
+    $.get("{{ route('character.view.skills.graph.level', ['character' => $character]) }}", function (data) {
       new Chart($("canvas#skills-level"), {
         type: 'pie',
         data: data
       });
     });
 
-    $.get("{{ route('character.view.skills.graph.coverage', ['character' => $request->character]) }}", function (data) {
+    $.get("{{ route('character.view.skills.graph.coverage', ['character' => $character]) }}", function (data) {
       new Chart($('canvas#skills-coverage'), {
         type   : 'radar',
         data   : data,

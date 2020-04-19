@@ -23,11 +23,9 @@
 namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Eveapi\Models\Character\CharacterInfo;
-use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Intel\NotificationDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
-use Seat\Web\Models\User;
 
 /**
  * Class NotificationsController.
@@ -43,14 +41,8 @@ class NotificationsController extends Controller
      */
     public function index(CharacterInfo $character, NotificationDataTable $dataTable)
     {
-        $token = RefreshToken::where('character_id', $character->character_id)->first();
-        $characters = collect();
-        if ($token) {
-            $characters = User::with('characters')->find($token->user_id)->characters;
-        }
-
         return $dataTable
             ->addScope(new CharacterScope('character.notification', $character->character_id, request()->input('characters', [])))
-            ->render('web::character.notifications', compact('characters'));
+            ->render('web::character.notifications', compact('character'));
     }
 }

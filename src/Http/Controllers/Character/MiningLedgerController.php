@@ -24,11 +24,9 @@ namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Industry\CharacterMining;
-use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Industrial\MiningDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
-use Seat\Web\Models\User;
 
 /**
  * Class MiningLedgerController.
@@ -44,15 +42,9 @@ class MiningLedgerController extends Controller
      */
     public function index(CharacterInfo $character, MiningDataTable $dataTable)
     {
-        $token = RefreshToken::where('character_id', $character->character_id)->first();
-        $characters = collect();
-        if ($token) {
-            $characters = User::with('characters')->find($token->user_id)->characters;
-        }
-
         return $dataTable
             ->addScope(new CharacterScope('character.mining', $character->character_id, request()->input('characters', [])))
-            ->render('web::character.mining-ledger', compact('characters'));
+            ->render('web::character.mining-ledger', compact('character'));
     }
 
     public function show(int $character_id)

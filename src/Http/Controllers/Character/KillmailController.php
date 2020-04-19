@@ -23,11 +23,9 @@
 namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Eveapi\Models\Character\CharacterInfo;
-use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Military\KillMailDataTable;
 use Seat\Web\Http\DataTables\Scopes\KillMailCharacterScope;
-use Seat\Web\Models\User;
 
 /**
  * Class KillmailController.
@@ -42,15 +40,9 @@ class KillmailController extends Controller
      */
     public function index(CharacterInfo $character, KillMailDataTable $dataTable)
     {
-        $token = RefreshToken::where('character_id', $character->character_id)->first();
-        $characters = collect();
-        if ($token) {
-            $characters = User::with('characters')->find($token->user_id)->characters;
-        }
-
         return $dataTable
             ->addScope(new KillMailCharacterScope('character.killmail', $character->character_id, request()->input('characters', [])))
-            ->render('web::character.killmails', compact('characters'));
+            ->render('web::character.killmails', compact('character'));
 
     }
 }

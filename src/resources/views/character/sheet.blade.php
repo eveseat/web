@@ -214,7 +214,7 @@
           @if($character->corporation_history->isNotEmpty())
             <ul class="list-unstyled">
 
-              @foreach($character->corporation_history as $history)
+              @foreach($character->corporation_history->sortByDesc('start_date') as $history)
 
                 <li>
                   {!! img('corporations', 'logo', $history->corporation_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}

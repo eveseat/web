@@ -23,13 +23,11 @@
 namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Eveapi\Models\Character\CharacterInfo;
-use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Industrial\IndustryDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 use Seat\Web\Http\DataTables\Scopes\Filters\IndustryActivityScope;
 use Seat\Web\Http\DataTables\Scopes\Filters\IndustryStatusScope;
-use Seat\Web\Models\User;
 
 /**
  * Class IndustryController.
@@ -44,16 +42,10 @@ class IndustryController extends Controller
      */
     public function index(CharacterInfo $character, IndustryDataTable $dataTable)
     {
-        $token = RefreshToken::where('character_id', $character->character_id)->first();
-        $characters = collect();
-        if ($token) {
-            $characters = User::with('characters')->find($token->user_id)->characters;
-        }
-
         return $dataTable
             ->addScope(new CharacterScope('character.industry', $character->character_id, request()->input('characters', [])))
             ->addScope(new IndustryStatusScope(request()->input('filters.status')))
             ->addScope(new IndustryActivityScope(request()->input('filters.activity')))
-            ->render('web::character.industry', compact('characters'));
+            ->render('web::character.industry', compact('character'));
     }
 }

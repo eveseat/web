@@ -23,23 +23,16 @@
 namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Eveapi\Models\Character\CharacterInfo;
-use Seat\Services\Repositories\Character\Pi;
 use Seat\Web\Http\Controllers\Controller;
 
 class PiController extends Controller
 {
-    use Pi;
-
     /**
      * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getPi(CharacterInfo $character)
     {
-
-        $colonies = $this->getCharacterPlanetaryColonies($character->character_id);
-        $extractors = $this->getCharacterPlanetaryExtractors($character->character_id);
-
-        return view('web::character.pi', compact('colonies', 'extractors'));
+        return view('web::character.pi', compact('character'));
     }
 }

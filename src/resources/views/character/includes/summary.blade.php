@@ -21,17 +21,17 @@
     </p>
 
     <ul class="list-group list-group-unbordered mb-3">
-      @foreach($character->refresh_token->user->characters->where('character_id', '<>', $character->character_id) as $character_row)
+      @foreach($character->refresh_token->user->characters->where('character_id', '<>', $character->character_id)->sortBy('name') as $character_info)
 
         <li class="list-group-item">
 
           <a href="{{ route(\Illuminate\Support\Facades\Route::currentRouteName(),
-           array_merge(request()->route()->parameters, ['character' => $character_row])) }}">
-            {!! img('characters', 'portrait', $character_row->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-            {{ $character_row->name }}
+           array_merge(request()->route()->parameters, ['character' => $character_info])) }}">
+            {!! img('characters', 'portrait', $character_info->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+            {{ $character_info->name }}
           </a>
 
-          <span class="id-to-name text-muted float-right" data-id="{{ $character_row->affiliation->corporation_id }}">{{ $character_row->affiliation->corporation->name }}</span>
+          <span class="id-to-name text-muted float-right" data-id="{{ $character_info->affiliation->corporation_id }}">{{ $character_info->affiliation->corporation->name }}</span>
         </li>
 
       @endforeach

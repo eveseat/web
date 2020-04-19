@@ -22,19 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
-use Seat\Eveapi\Models\Character\CharacterCorporationHistory;
-use Seat\Eveapi\Models\Character\CharacterFatigue;
 use Seat\Eveapi\Models\Character\CharacterInfo;
-use Seat\Eveapi\Models\Clones\CharacterClone;
-use Seat\Eveapi\Models\Clones\CharacterImplant;
-use Seat\Eveapi\Models\Clones\CharacterJumpClone;
-use Seat\Eveapi\Models\Skills\CharacterAttribute;
-use Seat\Eveapi\Models\Skills\CharacterSkillQueue;
-use Seat\Services\Repositories\Character\Character;
-use Seat\Services\Repositories\Character\Implants;
-use Seat\Services\Repositories\Character\JumpClone;
-use Seat\Services\Repositories\Character\Skills;
-use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Web\Http\Controllers\Controller;
 
 /**
@@ -44,29 +32,12 @@ use Seat\Web\Http\Controllers\Controller;
  */
 class SheetController extends Controller
 {
-    use Character;
-    use Implants;
-    use JumpClone;
-    use Skills;
-    use UserRespository;
-
     /**
      * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function show(CharacterInfo $character)
     {
-
-        // TODO: Revert to repository pattern.
-
-        // Ensure we've the public information for this character
-        // If not, redirect back with an error.
-
-        // TODO : queue a job which will pull public data for this toon
-        if (! $character)
-            return redirect()->back()
-                ->with('error', trans('web::seat.unknown_character'));
-
         return view('web::character.sheet', compact('character'));
     }
 }

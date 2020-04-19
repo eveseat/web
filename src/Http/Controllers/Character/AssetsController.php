@@ -24,12 +24,9 @@ namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Eveapi\Models\Assets\CharacterAsset;
 use Seat\Eveapi\Models\Character\CharacterInfo;
-use Seat\Eveapi\Models\RefreshToken;
-use Seat\Services\Repositories\Character\Assets;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Intel\Assets\DataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
-use Seat\Web\Models\User;
 
 /**
  * Class AssetsController.
@@ -37,22 +34,14 @@ use Seat\Web\Models\User;
  */
 class AssetsController extends Controller
 {
-    use Assets;
-
     /**
      * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getAssetsView(CharacterInfo $character, DataTable $dataTable)
     {
-        $token = RefreshToken::where('character_id', $character->character_id)->first();
-        $characters = collect();
-        if ($token) {
-            $characters = User::with('characters')->find($token->user_id)->characters;
-        }
-
         return $dataTable->addScope(new CharacterScope('character.asset', $character->character_id, request()->input('characters')))
-            ->render('web::character.assets.assets', compact('characters'));
+            ->render('web::character.assets.assets', compact('character'));
     }
 
     /**
