@@ -27,11 +27,11 @@ use Illuminate\Support\Facades\Cache;
 use Seat\Web\Models\User;
 
 /**
- * Class AbstractCachedPolicy.
+ * Class AbstractPolicy.
  *
  * @package Seat\Web\Acl\Policies
  */
-abstract class AbstractCachedPolicy
+abstract class AbstractPolicy
 {
     // cache active permissions for 10 seconds
     const CACHE_DURATION = 10;

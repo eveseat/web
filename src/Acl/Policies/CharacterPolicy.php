@@ -26,14 +26,13 @@ use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Web\Models\Acl\Permission;
 use Seat\Web\Models\User;
-use stdClass;
 
 /**
  * Class CharacterPolicy.
  *
  * @package Seat\Web\Acl\Policies
  */
-class CharacterPolicy extends AbstractCachedPolicy
+class CharacterPolicy extends AbstractEntityPolicy
 {
     /**
      * @param string $method
@@ -67,14 +66,11 @@ class CharacterPolicy extends AbstractCachedPolicy
                     return false;
 
                 // in case no filters is available, return true as the permission is not limited
-                if (is_null($permission->pivot->filters))
+                if (! $permission->hasFilters())
                     return true;
 
-                // extract filters from the relation
-                $filters = json_decode($permission->pivot->filters);
-
                 // return true in case this permission filter match
-                return $this->isGrantedByFilters($permission, $filters, $character);
+                return $this->isGrantedByFilters($permission, $character);
             });
 
             // if we have at least one valid permission - grant access
@@ -144,12 +140,13 @@ class CharacterPolicy extends AbstractCachedPolicy
 
     /**
      * @param \Seat\Web\Models\Acl\Permission $permission
-     * @param \stdClass $filters
      * @param $character
      * @return bool
      */
-    private function isGrantedByFilters(Permission $permission, stdClass $filters, CharacterInfo $character): bool
+    private function isGrantedByFilters(Permission $permission, CharacterInfo $character): bool
     {
+        $filters = json_decode($permission->pivot->filters);
+
         // determine if the requested character is include in the permission filters
         if ($this->isGrantedByFilter($filters, 'character', $character->character_id))
             return true;
@@ -162,21 +159,5 @@ class CharacterPolicy extends AbstractCachedPolicy
             return $this->isGrantedByFilter($filters, 'alliance', $character->affiliation->alliance_id);
 
         return false;
-    }
-
-    /**
-     * Determine if the requested entity is granted by the specified permission filter.
-     *
-     * @param stdClass $filters
-     * @param string $entity_type
-     * @param int $entity_id
-     * @return bool
-     */
-    private function isGrantedByFilter(stdClass $filters, string $entity_type, int $entity_id): bool
-    {
-        if (! property_exists($filters, $entity_type))
-            return false;
-
-        return collect($filters->$entity_type)->contains('id', $entity_id);
     }
 }

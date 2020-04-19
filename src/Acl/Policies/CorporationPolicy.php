@@ -27,14 +27,13 @@ use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Web\Acl\EsiRolesMap;
 use Seat\Web\Models\Acl\Permission;
 use Seat\Web\Models\User;
-use stdClass;
 
 /**
  * Class CorporationPolicy.
  *
  * @package Seat\Web\Acl\Policies
  */
-class CorporationPolicy extends AbstractCachedPolicy
+class CorporationPolicy extends AbstractEntityPolicy
 {
     /**
      * @param string $method
@@ -71,14 +70,11 @@ class CorporationPolicy extends AbstractCachedPolicy
                     return false;
 
                 // in case no filters is available, return true as the permission is not limited
-                if (is_null($permission->pivot->filters))
+                if (! $permission->hasFilters())
                     return true;
 
-                // extract filters from the relation
-                $filters = json_decode($permission->pivot->filters);
-
                 // return true in case this permission filter match
-                return $this->isGrantedByFilters($permission, $filters, $corporation);
+                return $this->isGrantedByFilters($permission, $corporation);
             });
 
             // if we have at least one valid permission - grant access
@@ -110,40 +106,6 @@ class CorporationPolicy extends AbstractCachedPolicy
     {
         // if user own the corporation CEO, return true.
         return in_array($corporation->ceo_id, $user->associatedCharacterIds()->toArray());
-    }
-
-    /**
-     * @param \Seat\Web\Models\Acl\Permission $permission
-     * @param \stdClass $filters
-     * @param $entity
-     * @return bool
-     */
-    private function isGrantedByFilters(Permission $permission, stdClass $filters, CorporationInfo $corporation): bool
-    {
-        // determine if the requested entity is related to a corporation or alliance include in the permission filters
-        if ($this->isGrantedByFilter($filters, 'corporation', $corporation->corporation_id))
-            return true;
-
-        if (! is_null($corporation->alliance_id))
-            return $this->isGrantedByFilter($filters, 'alliance', $corporation->alliance_id);
-
-        return false;
-    }
-
-    /**
-     * Determine if the requested entity is granted by the specified permission filter.
-     *
-     * @param stdClass $filters
-     * @param string $entity_type
-     * @param int $entity_id
-     * @return bool
-     */
-    private function isGrantedByFilter(stdClass $filters, string $entity_type, int $entity_id): bool
-    {
-        if (! property_exists($filters, $entity_type))
-            return false;
-
-        return collect($filters->$entity_type)->contains('id', $entity_id);
     }
 
     /**
@@ -184,5 +146,24 @@ class CorporationPolicy extends AbstractCachedPolicy
                 return $character->affiliation->corporation_id === $corporation->corporation_id;
             })->pluck('corporation_roles')->flatten()->where('scope', 'roles')->unique('role')->pluck('role')->toArray();
         });
+    }
+
+    /**
+     * @param \Seat\Web\Models\Acl\Permission $permission
+     * @param $entity
+     * @return bool
+     */
+    private function isGrantedByFilters(Permission $permission, CorporationInfo $corporation): bool
+    {
+        $filters = json_decode($permission->pivot->filters);
+
+        // determine if the requested entity is related to a corporation or alliance include in the permission filters
+        if ($this->isGrantedByFilter($filters, 'corporation', $corporation->corporation_id))
+            return true;
+
+        if (! is_null($corporation->alliance_id))
+            return $this->isGrantedByFilter($filters, 'alliance', $corporation->alliance_id);
+
+        return false;
     }
 }

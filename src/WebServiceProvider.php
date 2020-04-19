@@ -462,8 +462,23 @@ class WebServiceProvider extends AbstractSeatPlugin
             foreach ($scope_permissions as $permission => $definition) {
                 $ability = sprintf('%s.%s', $scope, $permission);
 
+                // init default policy to GlobalPolicy.
+                $policy = 'Seat\Web\Acl\Policies\GlobalPolicy';
+
+                // in case the requested scope is character, set the CharacterPolicy as default.
+                if ($scope == 'character')
+                    $policy = 'Seat\Web\Acl\Policies\CharacterPolicy';
+
+                // in case the requested scope is corporation, set the CorporationPolicy as default.
+                if ($scope == 'corporation')
+                    $policy = 'Seat\Web\Acl\Policies\CorporationPolicy';
+
+                // in case a custom gate has been defined in the permission file, use it.
                 if (array_key_exists('gate', $definition))
-                    Gate::define($ability, $definition['gate']);
+                    $policy = $definition['gate'];
+
+                // register a gate using permission and policy
+                Gate::define($ability, sprintf('%s@%s', $policy, $permission));
             }
         }
     }
