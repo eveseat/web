@@ -96,6 +96,13 @@ class CharacterMenu extends AbstractMenu
         $view->with('menu', $menu);
     }
 
+    /**
+     * @param string $package_name
+     * @param array $menu_data
+     * @param bool $require_affiliation
+     * @return array|null
+     * @throws \Seat\Web\Exceptions\PackageMenuBuilderException
+     */
     public function load_plugin_menu(string $package_name, array $menu_data, bool $require_affiliation = false): ?array
     {
         $this->validate_menu($package_name, $menu_data);

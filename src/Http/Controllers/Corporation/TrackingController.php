@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Sde\SolarSystem;
 use Seat\Eveapi\Models\Sde\StaStation;
 use Seat\Eveapi\Models\Universe\UniverseStructure;
@@ -34,28 +35,26 @@ class TrackingController extends Controller
     use Members;
 
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getTracking(int $corporation_id)
+    public function getTracking(CorporationInfo $corporation)
     {
-
-        return view('web::corporation.tracking');
+        return view('web::corporation.tracking', compact('corporation'));
     }
 
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      *
      * @return mixed
      * @throws \Exception
      */
-    public function getMemberTracking(int $corporation_id)
+    public function getMemberTracking(CorporationInfo $corporation)
     {
-
         $selected_status = collect(request('selected_refresh_token_status'));
 
-        $tracking = $this->getCorporationMemberTracking($corporation_id);
+        $tracking = $this->getCorporationMemberTracking($corporation->corporation_id);
 
         if($selected_status->contains('valid_token'))
             $tracking->has('refresh_token');
@@ -112,6 +111,5 @@ class TrackingController extends Controller
             })
             ->rawColumns(['refresh_token_status', 'location'])
             ->make(true);
-
     }
 }

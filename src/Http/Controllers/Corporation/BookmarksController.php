@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Intel\BookmarkDataTable;
 use Seat\Web\Http\DataTables\Scopes\BookmarkCorporationScope;
@@ -34,14 +35,14 @@ use Seat\Web\Http\DataTables\Scopes\BookmarkCorporationScope;
 class BookmarksController extends Controller
 {
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      * @param \Seat\Web\Http\DataTables\Corporation\Intel\BookmarkDataTable $dataTable
      * @return mixed
      */
-    public function index(int $corporation_id, BookmarkDataTable $dataTable)
+    public function index(CorporationInfo $corporation, BookmarkDataTable $dataTable)
     {
         return $dataTable
-            ->addScope(new BookmarkCorporationScope([$corporation_id]))
-            ->render('web::corporation.bookmarks');
+            ->addScope(new BookmarkCorporationScope([$corporation->corporation_id]))
+            ->render('web::corporation.bookmarks', compact('corporation'));
     }
 }

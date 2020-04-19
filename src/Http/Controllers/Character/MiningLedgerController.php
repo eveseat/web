@@ -47,15 +47,19 @@ class MiningLedgerController extends Controller
             ->render('web::character.mining-ledger', compact('character'));
     }
 
-    public function show(int $character_id)
+    /**
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show(CharacterInfo $character)
     {
-        $entries = CharacterMining::where('character_id', $character_id)
+        $entries = CharacterMining::where('character_id', $character->character_id)
                                   ->where('date', request()->query('date'))
                                   ->where('solar_system_id', request()->query('solar_system_id'))
                                   ->where('type_id', request()->query('type_id'))
                                   ->orderBy('time', 'desc')
                                   ->get();
 
-        return view('web::common.minings.modals.details.content', compact('entries'));
+        return view('web::common.minings.modals.details.content', compact('character', 'entries'));
     }
 }

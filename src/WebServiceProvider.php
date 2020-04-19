@@ -44,7 +44,6 @@ use Seat\Web\Http\Composers\CharacterLayout;
 use Seat\Web\Http\Composers\CharacterMenu;
 use Seat\Web\Http\Composers\CorporationLayout;
 use Seat\Web\Http\Composers\CorporationMenu;
-use Seat\Web\Http\Composers\CorporationSummary;
 use Seat\Web\Http\Composers\Esi;
 use Seat\Web\Http\Composers\Sidebar;
 use Seat\Web\Http\Composers\User;
@@ -201,15 +200,6 @@ class WebServiceProvider extends AbstractSeatPlugin
         $this->app['view']->composer([
             'web::character.layouts.view',
         ], CharacterLayout::class);
-
-        // Corporation info composer
-        $this->app['view']->composer([
-            'web::corporation.includes.summary',
-            'web::corporation.includes.menu',
-            'web::corporation.security.includes.menu',
-            'web::corporation.ledger.includes.menu',
-            'web::corporation.wallet.includes.menu',
-        ], CorporationSummary::class);
 
         // Corporation menu composer
         $this->app['view']->composer([

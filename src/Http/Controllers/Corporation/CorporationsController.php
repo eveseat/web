@@ -23,6 +23,9 @@
 namespace Seat\Web\Http\Controllers\Corporation;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Gate;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
+use Seat\Web\Acl\Policies\CorporationPolicy;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\CorporationDataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationScope;
@@ -46,15 +49,15 @@ class CorporationsController extends Controller
     }
 
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function show(int $corporation_id)
+    public function show(CorporationInfo $corporation)
     {
         // by default, redirect user to corporation sheet
-        if (auth()->user()->has('corporation.summary'))
+        if (Gate::allows('corporation.summary', $corporation))
             return redirect()->route('corporation.view.summary', [
-                'corporation_id' => $corporation_id,
+                'corporation' => $corporation,
             ]);
 
         // collect all registered routes for corporation scope and sort them alphabetically
@@ -66,16 +69,13 @@ class CorporationsController extends Controller
         foreach ($configured_routes as $menu) {
             $permissions = $menu['permission'];
 
-            if (! is_array($permissions))
-                $permissions = [$permissions];
-
-            foreach ($permissions as $permission) {
-                if (auth()->user()->has($permission))
-                    return redirect()->route($menu['route'], [
-                        'corporation_id' => $corporation_id,
-                    ]);
+            if (Gate::any(is_array($permissions) ? $permissions : [$permissions], $corporation)) {
+                return redirect()->route($menu['route'], [
+                    'corporation' => $corporation,
+                ]);
             }
         }
+
         $message = sprintf('Request to %s was denied by the corporationbouncer.', request()->path());
 
         event('security.log', [$message, 'authorization']);

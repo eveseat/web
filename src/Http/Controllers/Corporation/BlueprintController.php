@@ -22,6 +22,8 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
+use Illuminate\Support\Facades\Gate;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Industrial\Blueprints\DataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationAssetDivisionsScope;
@@ -36,11 +38,11 @@ use Seat\Web\Http\DataTables\Scopes\Filters\BlueprintTypeScope;
 class BlueprintController extends Controller
 {
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      * @param \Seat\Web\Http\DataTables\Corporation\Industrial\Blueprints\DataTable $dataTable
      * @return mixed
      */
-    public function index(int $corporation_id, DataTable $dataTable)
+    public function index(CorporationInfo $corporation, DataTable $dataTable)
     {
         $division_ids = [];
         $division_permissions = [
@@ -49,13 +51,15 @@ class BlueprintController extends Controller
         ];
 
         foreach ($division_permissions as $key => $permission) {
-            if (auth()->user()->has(sprintf('corporation.%s', $permission)))
+            $ability = sprintf('corporation.%s', $permission);
+
+            if (Gate::allows($ability, $corporation))
                 array_push($division_ids, ($key + 1));
         }
 
-        return $dataTable->addScope(new CorporationScope([$corporation_id]))
+        return $dataTable->addScope(new CorporationScope([$corporation->corporation_id]))
             ->addScope(new CorporationAssetDivisionsScope($division_ids))
             ->addScope(new BlueprintTypeScope(request()->input('filters.type')))
-            ->render('web::corporation.blueprint');
+            ->render('web::corporation.blueprint', compact('corporation'));
     }
 }

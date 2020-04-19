@@ -22,6 +22,8 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
+use Illuminate\Support\Facades\Gate;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Financial\MarketDataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationMarketDivisionsScope;
@@ -36,13 +38,12 @@ use Seat\Web\Http\DataTables\Scopes\Filters\MarketStatusScope;
 class MarketController extends Controller
 {
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      * @param \Seat\Web\Http\DataTables\Corporation\Financial\MarketDataTable $dataTable
      * @return mixed
      */
-    public function index(int $corporation_id, MarketDataTable $dataTable)
+    public function index(CorporationInfo $corporation, MarketDataTable $dataTable)
     {
-
         $division_ids = [];
         $division_permissions = [
             'wallet_first_division', 'wallet_second_division', 'wallet_third_division', 'wallet_fourth_division',
@@ -50,14 +51,16 @@ class MarketController extends Controller
         ];
 
         foreach ($division_permissions as $key => $permission) {
-            if (auth()->user()->has(sprintf('corporation.%s', $permission)))
+            $ability = sprintf('corporation.%s', $permission);
+
+            if (Gate::allows($ability, $corporation))
                 array_push($division_ids, ($key + 1));
         }
 
-        return $dataTable->addScope(new CorporationScope([$corporation_id]))
+        return $dataTable->addScope(new CorporationScope([$corporation->corporation_id]))
             ->addScope(new MarketStatusScope(request()->input('filters.status')))
             ->addScope(new MarketOrderTypeScope(request()->input('filters.type')))
             ->addScope(new CorporationMarketDivisionsScope($division_ids))
-            ->render('web::corporation.market');
+            ->render('web::corporation.market', compact('corporation'));
     }
 }

@@ -22,18 +22,19 @@
 
 namespace Seat\Web\Acl\Policies;
 
-use Seat\Eveapi\Models\Character\CharacterInfo;
+use Illuminate\Support\Facades\Cache;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
+use Seat\Web\Acl\EsiRolesMap;
 use Seat\Web\Models\Acl\Permission;
 use Seat\Web\Models\User;
 use stdClass;
 
 /**
- * Class CharacterPolicy.
+ * Class CorporationPolicy.
  *
  * @package Seat\Web\Acl\Policies
  */
-class CharacterPolicy extends AbstractCachedPolicy
+class CorporationPolicy extends AbstractCachedPolicy
 {
     /**
      * @param string $method
@@ -42,28 +43,31 @@ class CharacterPolicy extends AbstractCachedPolicy
      */
     public function __call($method, $args)
     {
-        // we need two arguments to our Gate (User and CharacterInfo)
         if (count($args) < 2)
             return false;
 
-        $user       = $args[0];
-        $character  = $args[1];
-        $ability    = sprintf('character.%s', $method);
+        $user        = $args[0];
+        $corporation = $args[1];
+        $ability     = sprintf('corporation.%s', $method);
 
-        return $this->userHasPermission($user, $ability, function () use ($user, $character, $ability) {
+        return $this->userHasPermission($user, $ability, function () use ($user, $corporation, $ability) {
 
-            // in case the user is owning requested character or is the CEO of it
-            if ($this->isOwner($user, $character) || $this->isValidSharingSession($character) || $this->isCeo($user, $character))
+            // in case the user is corporation CEO
+            if ($this->isCeo($user, $corporation))
+                return true;
+
+            // in case the user is owning a role in-game mapped to this ability
+            if ($this->hasDelegatedPermission($user, $corporation, $ability))
                 return true;
 
             // retrieve defined authorization for the requested user
             $acl = $this->permissionsFrom($user);
 
             // filter out roles without required permission
-            $permissions = $acl->filter(function ($permission) use ($character, $ability) {
+            $permissions = $acl->filter(function ($permission) use ($corporation, $ability) {
 
                 // exclude all permissions which does not match with the requested permission
-                if ($permission->title !== $ability)
+                if ($permission->title != $ability)
                     return false;
 
                 // in case no filters is available, return true as the permission is not limited
@@ -74,7 +78,7 @@ class CharacterPolicy extends AbstractCachedPolicy
                 $filters = json_decode($permission->pivot->filters);
 
                 // return true in case this permission filter match
-                return $this->isGrantedByFilters($permission, $filters, $character);
+                return $this->isGrantedByFilters($permission, $filters, $corporation);
             });
 
             // if we have at least one valid permission - grant access
@@ -83,7 +87,7 @@ class CharacterPolicy extends AbstractCachedPolicy
 
             // deny access
             return false;
-        }, $character->character_id);
+        }, $corporation->corporation_id);
     }
 
     /**
@@ -102,64 +106,26 @@ class CharacterPolicy extends AbstractCachedPolicy
      * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @return bool
      */
-    private function isCeo(User $user, CharacterInfo $character)
+    private function isCeo(User $user, CorporationInfo $corporation)
     {
-        // retrieve corporation to which the character is assigned
-        $corporation_id = $character->affiliation->corporation_id;
-
-        // in case we were not able to find the corporation ID - assume the user is not CEO of this character
-        if (is_null($corporation_id))
-            return false;
-
-        // attempt to retrieve information related to the corporation
-        $corporation = CorporationInfo::find($corporation_id);
-
-        // in case we were not able to find information from this corporation
-        // assume the user is not CEO of this character
-        if (is_null($corporation))
-            return false;
-
         // if user own the corporation CEO, return true.
         return in_array($corporation->ceo_id, $user->associatedCharacterIds()->toArray());
     }
 
     /**
-     * @param \Seat\Web\Models\User $user
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
-     * @return bool
-     */
-    private function isOwner(User $user, CharacterInfo $character)
-    {
-        return in_array($character->character_id, $user->associatedCharacterIds()->toArray());
-    }
-
-    /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
-     * @return bool
-     */
-    private function isValidSharingSession(CharacterInfo $character)
-    {
-        return in_array($character->character_id, session()->get('user_sharing', []));
-    }
-
-    /**
      * @param \Seat\Web\Models\Acl\Permission $permission
      * @param \stdClass $filters
-     * @param $character
+     * @param $entity
      * @return bool
      */
-    private function isGrantedByFilters(Permission $permission, stdClass $filters, CharacterInfo $character): bool
+    private function isGrantedByFilters(Permission $permission, stdClass $filters, CorporationInfo $corporation): bool
     {
-        // determine if the requested character is include in the permission filters
-        if ($this->isGrantedByFilter($filters, 'character', $character->character_id))
-            return true;
-
         // determine if the requested entity is related to a corporation or alliance include in the permission filters
-        if ($this->isGrantedByFilter($filters, 'corporation', $character->affiliation->corporation_id))
+        if ($this->isGrantedByFilter($filters, 'corporation', $corporation->corporation_id))
             return true;
 
-        if (! is_null($character->affiliation->alliance_id))
-            return $this->isGrantedByFilter($filters, 'alliance', $character->affiliation->alliance_id);
+        if (! is_null($corporation->alliance_id))
+            return $this->isGrantedByFilter($filters, 'alliance', $corporation->alliance_id);
 
         return false;
     }
@@ -178,5 +144,45 @@ class CharacterPolicy extends AbstractCachedPolicy
             return false;
 
         return collect($filters->$entity_type)->contains('id', $entity_id);
+    }
+
+    /**
+     * Return true in case the requested ability is mapped to a role owned by the user inside this corporation.
+     *
+     * @param \Seat\Web\Models\User $user
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
+     * @param string $ability
+     * @return bool
+     */
+    private function hasDelegatedPermission(User $user, CorporationInfo $corporation, string $ability): bool
+    {
+        $roles = $this->corporationRolesFrom($user, $corporation);
+
+        foreach ($roles as $name) {
+            $element = EsiRolesMap::map()->get($name);
+
+            if (! is_null($element) && in_array($ability, $element->permissions()))
+                return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Return a list of all roles owned by user inside the corporation.
+     *
+     * @param \Seat\Web\Models\User $user
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
+     * @return array
+     */
+    private function corporationRolesFrom(User $user, CorporationInfo $corporation): array
+    {
+        $cache_key = sprintf('users:%d:acl:corporation_roles:%d', $user->id, $corporation->corporation_id);
+
+        return Cache::store('redis')->remember($cache_key, self::CACHE_DURATION, function () use ($user, $corporation) {
+            return $user->characters->filter(function ($character) use ($corporation) {
+                return $character->affiliation->corporation_id === $corporation->corporation_id;
+            })->pluck('corporation_roles')->flatten()->where('scope', 'roles')->unique('role')->pluck('role')->toArray();
+        });
     }
 }

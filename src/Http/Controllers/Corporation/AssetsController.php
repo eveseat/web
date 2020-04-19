@@ -22,8 +22,10 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
+use Illuminate\Support\Facades\Gate;
 use Seat\Eveapi\Models\Assets\CorporationAsset;
 use Seat\Eveapi\Models\Corporation\CorporationDivision;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Intel\Assets\DataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationAssetDivisionsScope;
@@ -36,11 +38,11 @@ use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 class AssetsController extends Controller
 {
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      * @param \Seat\Web\Http\DataTables\Corporation\Intel\Assets\DataTable $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getAssets(int $corporation_id, DataTable $dataTable)
+    public function getAssets(CorporationInfo $corporation, DataTable $dataTable)
     {
         $division_ids = [];
         $division_permissions = [
@@ -49,21 +51,23 @@ class AssetsController extends Controller
         ];
 
         foreach ($division_permissions as $key => $permission) {
-            if (auth()->user()->has(sprintf('corporation.%s', $permission)))
+            $ability = sprintf('corporation.%s', $permission);
+
+            if (Gate::allows($ability, $corporation))
                 array_push($division_ids, ($key + 1));
         }
 
-        return $dataTable->addScope(new CorporationScope([$corporation_id]))
+        return $dataTable->addScope(new CorporationScope([$corporation->corporation_id]))
             ->addScope(new CorporationAssetDivisionsScope($division_ids))
-            ->render('web::corporation.assets.assets');
+            ->render('web::corporation.assets.assets', compact('corporation'));
     }
 
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      * @param int $item_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getFitting(int $corporation_id, int $item_id)
+    public function getFitting(CorporationInfo $corporation, int $item_id)
     {
         $asset = CorporationAsset::find($item_id);
 
@@ -71,14 +75,14 @@ class AssetsController extends Controller
     }
 
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      * @param int $item_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getContainer(int $corporation_id, int $item_id)
+    public function getContainer(CorporationInfo $corporation, int $item_id)
     {
         $asset = CorporationAsset::find($item_id);
-        $divisions = CorporationDivision::where('corporation_id', $corporation_id)->where('type', 'hangar')->get();
+        $divisions = CorporationDivision::where('corporation_id', $corporation->corporation_id)->where('type', 'hangar')->get();
 
         return view('web::corporation.assets.modals.container.content', compact('asset', 'divisions'));
     }

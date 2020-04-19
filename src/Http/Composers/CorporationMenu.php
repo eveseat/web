@@ -24,6 +24,7 @@ namespace Seat\Web\Http\Composers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class CorporationMenu.
@@ -32,11 +33,16 @@ use Illuminate\Support\Arr;
 class CorporationMenu extends AbstractMenu
 {
     /**
+     * @var \Seat\Eveapi\Models\Corporation\CorporationInfo
+     */
+    private $corporation;
+
+    /**
      * Create a new sidebar composer.
      */
     public function __construct()
     {
-
+        $this->corporation = request()->corporation;
     }
 
     /**
@@ -83,5 +89,26 @@ class CorporationMenu extends AbstractMenu
         }));
 
         $view->with('menu', $menu);
+    }
+
+    /**
+     * @param string $package_name
+     * @param array $menu_data
+     * @param bool $require_affiliation
+     * @return array|null
+     * @throws \Seat\Web\Exceptions\PackageMenuBuilderException
+     */
+    public function load_plugin_menu(string $package_name, array $menu_data, bool $require_affiliation = false): ?array
+    {
+        $this->validate_menu($package_name, $menu_data);
+
+        if (isset($menu_data['permission'])) {
+            $permissions  = is_array($menu_data['permission']) ? $menu_data['permission'] : [$menu_data['permission']];
+
+            if (! Gate::any($permissions, $this->corporation))
+                return null;
+        }
+
+        return $menu_data;
     }
 }

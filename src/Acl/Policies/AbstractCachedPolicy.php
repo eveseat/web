@@ -46,7 +46,7 @@ abstract class AbstractCachedPolicy
 
         return Cache::store('redis')->remember($cache_key, self::CACHE_DURATION, function () use ($user) {
             logger()->debug('Gate miss data from cache !');
-            return $user->roles()->with('permissions')->get();
+            return $user->roles()->with('permissions')->get()->pluck('permissions')->flatten();
         });
     }
 

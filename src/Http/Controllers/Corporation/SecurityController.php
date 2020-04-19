@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Corporation\Corporation;
 use Seat\Services\Repositories\Corporation\Security;
 use Seat\Web\Http\Controllers\Controller;
@@ -38,38 +39,35 @@ class SecurityController extends Controller
     use Security;
 
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getRoles(int $corporation_id)
+    public function getRoles(CorporationInfo $corporation)
     {
+        $security = $this->getCorporationMemberRoles($corporation->corporation_id);
 
-        $security = $this->getCorporationMemberRoles($corporation_id);
-
-        return view('web::corporation.security.roles', compact('security'));
+        return view('web::corporation.security.roles', compact('security', 'corporation'));
     }
 
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getTitles(int $corporation_id)
+    public function getTitles(CorporationInfo $corporation)
     {
+        $titles = $this->getCorporationMemberSecurityTitles($corporation->corporation_id);
 
-        $titles = $this->getCorporationMemberSecurityTitles($corporation_id);
-
-        return view('web::corporation.security.titles', compact('titles'));
+        return view('web::corporation.security.titles', compact('titles', 'corporation'));
     }
 
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      * @param \Seat\Web\Http\DataTables\Corporation\Intel\LogDataTable $dataTable
      * @return mixed
      */
-    public function getLogs(int $corporation_id, LogDataTable $dataTable)
+    public function getLogs(CorporationInfo $corporation, LogDataTable $dataTable)
     {
-
-        return $dataTable->addScope(new CorporationScope([$corporation_id]))
-            ->render('web::corporation.security.logs');
+        return $dataTable->addScope(new CorporationScope([$corporation->corporation_id]))
+            ->render('web::corporation.security.logs', compact('corporation'));
     }
 }

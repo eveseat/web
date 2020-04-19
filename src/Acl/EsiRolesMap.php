@@ -43,8 +43,50 @@ class EsiRolesMap
             'corporation.journal',
             'corporation.transaction',
         ],
+        'Account_Take_1'    => [
+            'corporation.wallet_first_division',
+        ],
+        'Account_Take_2'    => [
+            'corporation.wallet_second_division',
+        ],
+        'Account_Take_3'    => [
+            'corporation.wallet_third_division',
+        ],
+        'Account_Take_4'    => [
+            'corporation.wallet_fourth_division',
+        ],
+        'Account_Take_5'    => [
+            'corporation.wallet_fifth_division',
+        ],
+        'Account_Take_6'    => [
+            'corporation.wallet_sixth_division',
+        ],
+        'Account_Take_7'    => [
+            'corporation.wallet_seventh_division',
+        ],
         'Auditor'           => [
             'corporation.summary',
+        ],
+        'Container_Take_1'  => [
+            'asset_first_division',
+        ],
+        'Container_Take_2'  => [
+            'asset_first_division',
+        ],
+        'Container_Take_3'  => [
+            'asset_third_division',
+        ],
+        'Container_Take_4'  => [
+            'asset_fourth_division',
+        ],
+        'Container_Take_5'  => [
+            'asset_fifth_division',
+        ],
+        'Container_Take_6'  => [
+            'asset_sixth_division',
+        ],
+        'Container_Take_7'  => [
+            'asset_seventh_division',
         ],
         'Contract_Manager'  => [
             'corporation.summary',

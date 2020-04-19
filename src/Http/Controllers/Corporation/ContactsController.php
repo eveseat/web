@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Intel\ContactDataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationScope;
@@ -36,16 +37,16 @@ use Seat\Web\Http\DataTables\Scopes\Filters\ContactStandingLevelScope;
 class ContactsController extends Controller
 {
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      * @param \Seat\Web\Http\DataTables\Corporation\Intel\ContactDataTable $dataTable
      * @return mixed
      */
-    public function index(int $corporation_id, ContactDataTable $dataTable)
+        public function index(CorporationInfo $corporation, ContactDataTable $dataTable)
     {
 
-        return $dataTable->addScope(new CorporationScope([$corporation_id]))
+        return $dataTable->addScope(new CorporationScope([$corporation->corporation_id]))
             ->addScope(new ContactCategoryScope(request()->input('filters.category')))
             ->addScope(new ContactStandingLevelScope(request()->input('filters.standing')))
-            ->render('web::corporation.contacts');
+            ->render('web::corporation.contacts', compact('corporation'));
     }
 }
