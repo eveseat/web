@@ -49,8 +49,6 @@ use Seat\Web\Http\Composers\Sidebar;
 use Seat\Web\Http\Composers\User;
 use Seat\Web\Http\Middleware\Authenticate;
 use Seat\Web\Http\Middleware\Bouncer\Bouncer;
-use Seat\Web\Http\Middleware\Bouncer\CharacterBouncer;
-use Seat\Web\Http\Middleware\Bouncer\CorporationBouncer;
 use Seat\Web\Http\Middleware\Bouncer\KeyBouncer;
 use Seat\Web\Http\Middleware\Bouncer\SquadAuthorApplicationBouncer;
 use Seat\Web\Http\Middleware\Bouncer\SquadMemberBouncer;
@@ -248,8 +246,6 @@ class WebServiceProvider extends AbstractSeatPlugin
         // AccessChecker and ensuring that every request
         // that comes in is authorized
         $router->aliasMiddleware('bouncer', Bouncer::class);
-        $router->aliasMiddleware('characterbouncer', CharacterBouncer::class);
-        $router->aliasMiddleware('corporationbouncer', CorporationBouncer::class);
         $router->aliasMiddleware('keybouncer', KeyBouncer::class);
         $router->aliasMiddleware('squad.moderator.bouncer', SquadModeratorBouncer::class);
         $router->aliasMiddleware('squad.member.bouncer', SquadMemberBouncer::class);
