@@ -38,6 +38,35 @@ abstract class AbstractPolicy
 
     /**
      * @param \Seat\Web\Models\User $user
+     * @param string $ability
+     * @return bool|void
+     */
+    public function before(User $user, $ability)
+    {
+        if ($user->hasSuperUser())
+            return true;
+    }
+
+    /**
+     * @param \Seat\Web\Models\User $user
+     * @param $ability
+     * @param $result
+     * @param $arguments
+     * @return \Illuminate\Http\RedirectResponse|void
+     */
+    public function after(User $user, $ability, $result, $arguments)
+    {
+        if (! $result) {
+            $message = sprintf('Request to %s was denied. The permission required is %s', request()->path(), $ability);
+
+            event('security.log', [$message, 'authorization']);
+
+            return redirect()->route('auth.unauthorized');
+        }
+    }
+
+    /**
+     * @param \Seat\Web\Models\User $user
      * @return \Illuminate\Support\Collection
      */
     protected function permissionsFrom(User $user)

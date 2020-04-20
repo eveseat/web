@@ -88,17 +88,6 @@ class CorporationPolicy extends AbstractEntityPolicy
 
     /**
      * @param \Seat\Web\Models\User $user
-     * @param string $ability
-     * @return bool|void
-     */
-    public function before(User $user, $ability)
-    {
-        if ($user->hasSuperUser())
-            return true;
-    }
-
-    /**
-     * @param \Seat\Web\Models\User $user
      * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @return bool
      */
