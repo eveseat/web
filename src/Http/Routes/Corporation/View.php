@@ -128,7 +128,7 @@ Route::group(['prefix' => '{corporation}/ledger', 'middleware' => 'can:corporati
         ->name('corporation.view.ledger.bounty_prizes')
         ->uses('LedgerController@getBountyPrizesByMonth');
 
-    Route::get('planetaryinteraction/{year?}/{month?}')
+    Route::get('planetary-interaction/{year?}/{month?}')
         ->name('corporation.view.ledger.planetary_interaction')
         ->uses('LedgerController@getPlanetaryInteractionByMonth');
 
