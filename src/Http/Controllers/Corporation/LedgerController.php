@@ -65,7 +65,7 @@ class LedgerController extends Controller
         $entries = $this->getCorporationLedgerBountyPrizeByMonth($corporation->corporation_id, $year, $month);
 
         return view('web::corporation.ledger.bounty_prizes',
-            compact('periods', 'entries', 'corporation_id', 'month', 'year', 'corporation'));
+            compact('periods', 'entries', 'corporation', 'month', 'year', 'corporation'));
     }
 
     /**
@@ -83,7 +83,7 @@ class LedgerController extends Controller
         $entries = $this->getCorporationLedgerPITotalsByMonth($corporation->corporation_id, $year, $month);
 
         return view('web::corporation.ledger.planetary_interaction',
-            compact('periods', 'entries', 'corporation_id', 'month', 'year', 'corporation'));
+            compact('periods', 'entries', 'corporation', 'month', 'year', 'corporation'));
     }
 
     /**
@@ -101,7 +101,7 @@ class LedgerController extends Controller
         $entries = $this->getCorporationLedgerOfficesRentalsByMonth($corporation->corporation_id, $year, $month);
 
         return view('web::corporation.ledger.offices_rentals',
-            compact('periods', 'entries', 'corporation_id', 'month', 'year', 'corporation'));
+            compact('periods', 'entries', 'corporation', 'month', 'year', 'corporation'));
     }
 
     /**
@@ -119,7 +119,7 @@ class LedgerController extends Controller
         $entries = $this->getCorporationLedgerIndustryFacilityByMonth($corporation->corporation_id, $year, $month);
 
         return view('web::corporation.ledger.industry_facility',
-            compact('periods', 'entries', 'corporation_id', 'month', 'year', 'corporation'));
+            compact('periods', 'entries', 'corporation', 'month', 'year', 'corporation'));
     }
 
     /**
@@ -137,7 +137,7 @@ class LedgerController extends Controller
         $entries = $this->getCorporationLedgerReprocessingByMonth($corporation->corporation_id, $year, $month);
 
         return view('web::corporation.ledger.reprocessing',
-            compact('periods', 'entries', 'corporation_id', 'month', 'year', 'corporation'));
+            compact('periods', 'entries', 'corporation', 'month', 'year', 'corporation'));
     }
 
     /**
@@ -155,7 +155,7 @@ class LedgerController extends Controller
         $entries = $this->getCorporationLedgerJumpClonesByMonth($corporation->corporation_id, $year, $month);
 
         return view('web::corporation.ledger.jump_clones',
-            compact('periods', 'entries', 'corporation_id', 'month', 'year', 'corporation'));
+            compact('periods', 'entries', 'corporation', 'month', 'year', 'corporation'));
     }
 
     /**
@@ -173,6 +173,6 @@ class LedgerController extends Controller
         $entries = $this->getCorporationLedgerJumpBridgesByMonth($corporation->corporation_id, $year, $month);
 
         return view('web::corporation.ledger.jump_bridges',
-            compact('periods', 'entries', 'corporation_id', 'month', 'year', 'corporation'));
+            compact('periods', 'entries', 'corporation', 'month', 'year', 'corporation'));
     }
 }
