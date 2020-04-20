@@ -3,9 +3,6 @@
 @section('title', trans('web::seat.mail_timeline'))
 @section('page_header', trans('web::seat.mail_timeline'))
 
-@inject('CharacterInfo', 'Seat\Eveapi\Models\Character\CharacterInfo')
-@inject('CorporationInfo', 'Seat\Eveapi\Models\Corporation\CorporationInfo')
-
 @section('full')
 
   {!! $messages->render() !!}
