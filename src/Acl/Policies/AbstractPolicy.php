@@ -43,7 +43,7 @@ abstract class AbstractPolicy
      */
     public function before(User $user, $ability)
     {
-        if ($user->hasSuperUser())
+        if ($user->isAdmin())
             return true;
     }
 

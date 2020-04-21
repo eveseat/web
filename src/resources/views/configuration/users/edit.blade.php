@@ -147,7 +147,7 @@
                       @endif
                     </td>
                     <td>
-                      <span class="badge badge-{{ $permission->title == 'global.superuser' ? 'danger' : 'info' }}">
+                      <span class="badge badge-{{ $user->isAdmin() ? 'danger' : 'info' }}">
                         {{ Str::studly($permission->title) }}
                       </span>
                     </td>
