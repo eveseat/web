@@ -42,7 +42,7 @@ class SquadModeratorBouncer
     public function handle(Request $request, Closure $next)
     {
         $application_routes = ['squads.applications.show', 'squads.applications.approve', 'squads.applications.reject'];
-        $member_routes = ['squads.members.kick', 'squads.applications.index'];
+        $member_routes = ['squads.members.kick', 'squads.applications.index', 'squads.members.lookup'];
 
         if (in_array($request->route()->getName(), $application_routes)) {
             $application = SquadApplication::find($request->route('id'));
@@ -62,7 +62,7 @@ class SquadModeratorBouncer
             return $next($request);
 
         $message = sprintf('Request to %s was denied by the bouncer. Authenticated user %s is not moderator from squad %s.',
-            $request->path(), auth()->user()->name, $squad->name);
+            $request->path(), auth()->user()->name, $squad->name ?? '');
 
         event('security.log', [$message, 'squads']);
 
