@@ -80,6 +80,10 @@ class ApplicationsController extends Controller
 
         $application->save();
 
+        if ($squad->moderators_count == 0) {
+            $this->approve($application->application_id);
+        }
+
         return redirect()->back();
     }
 
