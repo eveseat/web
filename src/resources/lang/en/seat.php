@@ -92,6 +92,7 @@ return [
     'read'                  => 'Read',
     'level'                 => 'Level',
     'token'                 => 'Token',
+    'set_default'           => 'Set Default',
 
     // Requirements
     'requirements'          => 'Requirements',
@@ -416,6 +417,8 @@ return [
 
     // SSO Settings
     'sso_scopes'                   => 'SSO Scopes',
+    'sso_scopes_profile_name'      => 'Profile Name',
+    'sso_scopes_profile_name_help' => 'You may use alpha-numeric characters along with hypens and underscores.',
     'available_scopes'             => 'Available SSO Scopes',
     'enable_all'                   => 'Enable All',
     'remove_all'                   => 'Remove All',

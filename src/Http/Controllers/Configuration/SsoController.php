@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Configuration;
 
+use Illuminate\Http\Request;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\SsoScopes;
 
@@ -34,10 +35,23 @@ class SsoController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getConfigurationHome()
+    public function getConfigurationHome(Request $request)
     {
 
-        return view('web::configuration.sso.view');
+        $sso_scopes = collect(setting('sso_scopes', true));
+
+        $selected_profile = $request->input('profile', null);
+        if(! is_null($selected_profile)) {
+            $selected_profile = $sso_scopes->first(function ($item) use ($selected_profile) {
+                return $item->id == $selected_profile;
+            });
+        } else {
+            $selected_profile = $sso_scopes->first(function ($item) {
+                return $item->name == 'default';
+            });
+        }
+
+        return view('web::configuration.sso.view', compact('selected_profile'));
     }
 
     /**
@@ -49,7 +63,26 @@ class SsoController extends Controller
     public function postUpdateScopes(SsoScopes $request)
     {
 
-        setting(['sso_scopes', $request->input('scopes')], true);
+        $scopes = collect(setting('sso_scopes', true));
+
+        // default profile cannot be renamed
+        $default_profile = $scopes->first(function ($item) {
+            return $item->name == "default";
+        });
+
+        if($default_profile->id == $request->input('profile_id') && $request->input('profile_name') != "default")
+            return redirect()->back()->with('error', 'Cannot rename default profile.');
+
+        $scopes->transform(function ($item, $key) use ($request) {
+            if($item->id == $request->input('profile_id')) {
+                $item->name   = $request->input('profile_name');
+                $item->scopes = $request->input('scopes');
+            }
+
+            return $item;
+        });
+
+        setting(['sso_scopes', $scopes], true);
 
         return redirect()->back()->with('success', trans('web::seat.updated'));
     }
@@ -58,10 +91,20 @@ class SsoController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Seat\Services\Exceptions\SettingException
      */
-    public function getEnableAll()
+    public function getAddProfile()
     {
 
-        setting(['sso_scopes', config('eveapi.scopes')], true);
+        // Get new id
+        $scopes = collect(setting('sso_scopes', true));
+        $newid = $scopes->pluck('id')->max() + 1;
+
+        $scopes->push((object) [
+            'id' => $newid,
+            'name' => 'new-profile-' . $newid,
+            'scopes' => [],
+        ]);
+
+        setting(['sso_scopes', $scopes], true);
 
         return redirect()->back()->with('success', trans('web::seat.updated'));
     }
@@ -70,10 +113,26 @@ class SsoController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Seat\Services\Exceptions\SettingException
      */
-    public function getRemoveAll()
+    public function getDeleteProfile(int $id)
     {
 
-        setting(['sso_scopes', []], true);
+        $scopes = collect(setting('sso_scopes', true));
+
+        // default profile cannot be removed
+        $default_profile = $scopes->first(function ($item) {
+            return $item->name == "default";
+        });
+
+        if($default_profile->id == $id)
+            return redirect()->back()->with('error', 'Cannot remove default profile.');
+
+        $deleteKey = $scopes->search(function($item, $key) use ($id) {
+            return $item->id == $id;
+        });
+
+        $scopes = $scopes->except($deleteKey);
+
+        setting(['sso_scopes', $scopes], true);
 
         return redirect()->back()->with('success', trans('web::seat.updated'));
     }

@@ -43,14 +43,36 @@ class SsoController extends Controller
      * Redirect the user to the Eve Online authentication page.
      *
      * @param \Laravel\Socialite\Contracts\Factory $social
+     * @param string $profile
      * @return mixed
      * @throws \Seat\Services\Exceptions\SettingException
      */
-    public function redirectToProvider(Socialite $social)
+    public function redirectToProvider($profile = null, Socialite $social)
     {
 
+        $scopes_setting = collect(setting('sso_scopes', true));
+
+        if(! is_null($profile)) {
+            $scopes = $scopes_setting->first(function ($item) use ($profile) {
+                return $item->name == $profile;
+            });
+
+            // Invalid profile name?
+            if(is_null($scopes))
+                abort(400);
+        } else {
+            // Get the scopes that are marked as the default.
+            $scopes = $scopes_setting->first(function ($item) {
+                return $item->name == "default";
+            });
+        }
+
+        // Store the scopes we are sending to CCP in the session so we can
+        // validate the JWT response contains the right scopes.
+        session()->put('scopes', $scopes->scopes);
+
         return $social->driver('eveonline')
-            ->scopes(setting('sso_scopes', true))
+            ->scopes($scopes->scopes)
             ->redirect();
     }
 
