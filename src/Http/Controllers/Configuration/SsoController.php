@@ -67,15 +67,15 @@ class SsoController extends Controller
 
         // default profile cannot be renamed
         $default_profile = $scopes->first(function ($item) {
-            return $item->name == "default";
+            return $item->name == 'default';
         });
 
-        if($default_profile->id == $request->input('profile_id') && $request->input('profile_name') != "default")
+        if($default_profile->id == $request->input('profile_id') && $request->input('profile_name') != 'default')
             return redirect()->back()->with('error', 'Cannot rename default profile.');
 
         $scopes->transform(function ($item, $key) use ($request) {
             if($item->id == $request->input('profile_id')) {
-                $item->name   = $request->input('profile_name');
+                $item->name = $request->input('profile_name');
                 $item->scopes = $request->input('scopes');
             }
 
@@ -120,13 +120,13 @@ class SsoController extends Controller
 
         // default profile cannot be removed
         $default_profile = $scopes->first(function ($item) {
-            return $item->name == "default";
+            return $item->name == 'default';
         });
 
         if($default_profile->id == $id)
             return redirect()->back()->with('error', 'Cannot remove default profile.');
 
-        $deleteKey = $scopes->search(function($item, $key) use ($id) {
+        $deleteKey = $scopes->search(function ($item, $key) use ($id) {
             return $item->id == $id;
         });
 
