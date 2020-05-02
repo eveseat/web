@@ -52,6 +52,11 @@ class SsoController extends Controller
 
         $scopes_setting = collect(setting('sso_scopes', true));
 
+        // Get the scopes that are marked as the default.
+        $scopes = $scopes_setting->first(function ($item) {
+            return $item->name == 'default';
+        });
+
         if(! is_null($profile)) {
             $scopes = $scopes_setting->first(function ($item) use ($profile) {
                 return $item->name == $profile;
@@ -60,11 +65,6 @@ class SsoController extends Controller
             // Invalid profile name?
             if(is_null($scopes))
                 abort(400);
-        } else {
-            // Get the scopes that are marked as the default.
-            $scopes = $scopes_setting->first(function ($item) {
-                return $item->name == 'default';
-            });
         }
 
         // Store the scopes we are sending to CCP in the session so we can

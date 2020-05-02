@@ -40,14 +40,13 @@ class SsoController extends Controller
 
         $sso_scopes = collect(setting('sso_scopes', true));
 
-        $selected_profile = $request->input('profile', null);
-        if(! is_null($selected_profile)) {
-            $selected_profile = $sso_scopes->first(function ($item) use ($selected_profile) {
-                return $item->id == $selected_profile;
-            });
-        } else {
-            $selected_profile = $sso_scopes->first(function ($item) {
-                return $item->name == 'default';
+        $selected_profile = $sso_scopes->first(function ($item) {
+            return $item->name == 'default';
+        });
+
+        if(! is_null($request->input('profile', null))) {
+            $selected_profile = $sso_scopes->first(function ($item) use ($request) {
+                return $item->id == $request->input('profile');
             });
         }
 
