@@ -37,6 +37,9 @@
       </h3>
       <div class="card-tools">
         <div class="input-group input-group-sm btn-group btn-group-sm">
+          <a href="{{ route('configuration.sso.set_default_profile', $selected_profile->id) }}" id="set_default" class="btn btn-sm btn-info">
+            {{ trans('web::seat.set_default') }}
+          </a>
           <button role="button" id="enable_all" class="btn btn-sm btn-primary">
             {{ trans('web::seat.enable_all') }}
           </button>
@@ -57,7 +60,7 @@
           <div class="col-12">
             <div class="form-group">
               <label for="profile_name">{{ trans('web::seat.sso_scopes_profile_name') }}</label>
-              <input type="text" name="profile_name" id="profile_name" class="form-control" value="{{ $selected_profile->name }}" {{ ($selected_profile->name == "default") ? 'readonly' : '' }} />
+              <input type="text" name="profile_name" id="profile_name" class="form-control" value="{{ $selected_profile->name }}" />
               <small class="form-text text-muted">{{ trans('web::seat.sso_scopes_profile_name_help') }}</small>
             </div>
           </div>

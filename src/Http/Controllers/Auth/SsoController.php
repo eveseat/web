@@ -54,7 +54,7 @@ class SsoController extends Controller
 
         // Get the scopes that are marked as the default.
         $scopes = $scopes_setting->first(function ($item) {
-            return $item->name == 'default';
+            return $item->default == true;
         });
 
         if(! is_null($profile)) {

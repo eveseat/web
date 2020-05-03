@@ -41,7 +41,7 @@ class SsoController extends Controller
         $sso_scopes = collect(setting('sso_scopes', true));
 
         $selected_profile = $sso_scopes->first(function ($item) {
-            return $item->name == 'default';
+            return $item->default == true;
         });
 
         if(! is_null($request->input('profile', null))) {
@@ -64,18 +64,42 @@ class SsoController extends Controller
 
         $scopes = collect(setting('sso_scopes', true));
 
-        // default profile cannot be renamed
-        $default_profile = $scopes->first(function ($item) {
-            return $item->name == 'default';
-        });
-
-        if($default_profile->id == $request->input('profile_id') && $request->input('profile_name') != 'default')
-            return redirect()->back()->with('error', 'Cannot rename default profile.');
-
         $scopes->transform(function ($item, $key) use ($request) {
             if($item->id == $request->input('profile_id')) {
                 $item->name = $request->input('profile_name');
                 $item->scopes = $request->input('scopes');
+            }
+
+            return $item;
+        });
+
+        setting(['sso_scopes', $scopes], true);
+
+        return redirect()->back()->with('success', trans('web::seat.updated'));
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Seat\Services\Exceptions\SettingException
+     */
+    public function getSetDefaultProfile(int $id)
+    {
+
+        $scopes = collect(setting('sso_scopes', true));
+
+        // Given id must exist
+        $exists = $scopes->search(function ($item) use ($id) {
+            return $item->id == $id;
+        });
+
+        if($exists === false)
+            return redirect()->back()->with('error', 'Given id does not exist.');
+
+        $scopes->transform(function ($item, $key) use ($id) {
+            if($item->id == $id) {
+                $item->default = true;
+            } else {
+                $item->default = false;
             }
 
             return $item;
@@ -101,6 +125,7 @@ class SsoController extends Controller
             'id' => $newid,
             'name' => 'new-profile-' . $newid,
             'scopes' => [],
+            'default' => false,
         ]);
 
         setting(['sso_scopes', $scopes], true);
@@ -119,7 +144,7 @@ class SsoController extends Controller
 
         // default profile cannot be removed
         $default_profile = $scopes->first(function ($item) {
-            return $item->name == 'default';
+            return $item->default == true;
         });
 
         if($default_profile->id == $id)

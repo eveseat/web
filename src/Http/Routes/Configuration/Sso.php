@@ -30,6 +30,11 @@ Route::post('/update-scopes', [
     'uses' => 'SsoController@postUpdateScopes',
 ]);
 
+Route::get('/set-default-profile/{id}', [
+    'as'   => 'configuration.sso.set_default_profile',
+    'uses' => 'SsoController@getSetDefaultProfile',
+]);
+
 Route::get('/add-profile', [
     'as'   => 'configuration.sso.add_profile',
     'uses' => 'SsoController@getAddProfile',
