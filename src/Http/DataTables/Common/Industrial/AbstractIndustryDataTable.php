@@ -45,6 +45,9 @@ abstract class AbstractIndustryDataTable extends DataTable
             ->editColumn('end_date', function ($row) {
                 return view('web::partials.date', ['datetime' => $row->end_date]);
             })
+            ->addColumn('progress', function ($row) {
+                return view('web::common.industries.partials.progress', compact('row'));
+            })
             ->editColumn('runs', function ($row) {
                 switch ($row->status) {
                     case 'active':
@@ -110,7 +113,13 @@ abstract class AbstractIndustryDataTable extends DataTable
             ->columns($this->getColumns())
             ->addTableClass('table-striped table-hover')
             ->parameters([
-                'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); }',
+                'drawCallback' => 'function() { 
+                    $("[data-toggle=tooltip]").tooltip();
+                    updateProgressBar();
+                    setInterval(function () { //this is to update every 15 seconds
+                      updateProgressBar();
+                    }, 15000);
+                }',
             ]);
     }
 
@@ -127,6 +136,7 @@ abstract class AbstractIndustryDataTable extends DataTable
         return [
             ['data' => 'start_date', 'title' => trans('web::industry.start')],
             ['data' => 'end_date', 'title' => trans('web::industry.end')],
+            ['data' => 'progress', 'title' => trans('web::seat.progress')],
             ['data' => 'location.name', 'title' => trans('web::industry.location')],
             ['data' => 'activity.activityName', 'title' => trans('web::industry.activity')],
             ['data' => 'runs', 'title' => trans('web::industry.runs')],
