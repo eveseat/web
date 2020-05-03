@@ -64,6 +64,19 @@ class ApplicationsController extends Controller
      */
     public function store(Request $request, Squad $squad)
     {
+        // in case the squad is manual and does not contain any moderator
+        // applications are self-approved.
+        if ($squad->type == 'manual' && $squad->moderators->isEmpty()) {
+            $squad->members()->save(auth()->user());
+
+            $message = sprintf('Approved application from %s into squad %s.',
+                auth()->user()->name, $squad->name);
+
+            event('security.log', [$message, 'squads']);
+
+            return redirect()->back();
+        }
+
         $request->validate([
             'message' => 'required',
         ]);
@@ -95,8 +108,6 @@ class ApplicationsController extends Controller
         $application = SquadApplication::with('squad', 'user')->find($id);
 
         $squad->members()->save($application->user);
-
-        //$application->squad->members()->save($application->user);
 
         $message = sprintf('Approved application from %s into squad %s.',
             $application->user->name, $application->squad->name);

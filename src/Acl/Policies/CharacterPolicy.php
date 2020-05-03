@@ -45,9 +45,9 @@ class CharacterPolicy extends AbstractEntityPolicy
         if (count($args) < 2)
             return false;
 
-        $user       = $args[0];
-        $character  = $args[1];
-        $ability    = sprintf('character.%s', $method);
+        $user = $args[0];
+        $character = $args[1];
+        $ability = sprintf('character.%s', $method);
 
         return $this->userHasPermission($user, $ability, function () use ($user, $character, $ability) {
 

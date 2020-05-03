@@ -155,9 +155,18 @@
                 </div>
               @endif
               @if(! $squad->is_candidate && $squad->type == 'manual' && $squad->isEligible(auth()->user()))
-                <button data-toggle="modal" data-target="#application-create" class="btn btn-sm btn-success float-right">
-                  <i class="fas fa-sign-in-alt"></i> {{ trans('web::squads.join') }}
-                </button>
+                @if($squad->moderators->isEmpty())
+                  <form method="post" action="{{ route('squads.applications.store', $squad) }}">
+                    {!! csrf_field() !!}
+                    <button type="submit" class="btn btn-sm btn-success float-right">
+                      <i class="fas fa-sign-in-alt"></i> {{ trans('web::squads.join') }}
+                    </button>
+                  </form>
+                @else
+                  <button data-toggle="modal" data-target="#application-create" class="btn btn-sm btn-success float-right">
+                    <i class="fas fa-sign-in-alt"></i> {{ trans('web::squads.join') }}
+                  </button>
+                @endif
               @endif
             @endif
           </div>
@@ -255,27 +264,29 @@
   </div>
 
   @can('squads.manage_candidates', $squad)
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Candidates</h3>
-          </div>
-          <div class="card-body">
-            <table class="table table-striped table-hover" id="candidates-table">
-              <thead>
-                <tr>
-                  <th>{{ trans_choice('web::squads.name', 1) }}</th>
-                  <th>{{ trans_choice('web::squads.character', 0) }}</th>
-                  <th>{{ trans('web::squads.applied_at') }}</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-            </table>
+    @if($squad->type == 'manual' && $squad->moderators->isNotEmpty())
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Candidates</h3>
+            </div>
+            <div class="card-body">
+              <table class="table table-striped table-hover" id="candidates-table">
+                <thead>
+                  <tr>
+                    <th>{{ trans_choice('web::squads.name', 1) }}</th>
+                    <th>{{ trans_choice('web::squads.character', 0) }}</th>
+                    <th>{{ trans('web::squads.applied_at') }}</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    @endif
   @endcan
 
   @include('web::squads.modals.applications.create.application')

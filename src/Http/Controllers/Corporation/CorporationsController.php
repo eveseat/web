@@ -25,7 +25,6 @@ namespace Seat\Web\Http\Controllers\Corporation;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Gate;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
-use Seat\Web\Acl\Policies\CorporationPolicy;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\CorporationDataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationScope;

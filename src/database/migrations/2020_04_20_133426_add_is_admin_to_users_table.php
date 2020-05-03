@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Class AddIsAdminToUsersTable
+ * Class AddIsAdminToUsersTable.
  */
 class AddIsAdminToUsersTable extends Migration
 {

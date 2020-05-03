@@ -45,9 +45,9 @@ class CorporationPolicy extends AbstractEntityPolicy
         if (count($args) < 2)
             return false;
 
-        $user        = $args[0];
+        $user = $args[0];
         $corporation = $args[1];
-        $ability     = sprintf('corporation.%s', $method);
+        $ability = sprintf('corporation.%s', $method);
 
         return $this->userHasPermission($user, $ability, function () use ($user, $corporation, $ability) {
 

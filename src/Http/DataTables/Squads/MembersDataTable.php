@@ -22,7 +22,6 @@
 
 namespace Seat\Web\Http\DataTables\Squads;
 
-use Seat\Web\Models\Squads\Squad;
 use Seat\Web\Models\User;
 use Yajra\DataTables\Services\DataTable;
 

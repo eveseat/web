@@ -41,7 +41,7 @@ class ContactsController extends Controller
      * @param \Seat\Web\Http\DataTables\Corporation\Intel\ContactDataTable $dataTable
      * @return mixed
      */
-        public function index(CorporationInfo $corporation, ContactDataTable $dataTable)
+    public function index(CorporationInfo $corporation, ContactDataTable $dataTable)
     {
 
         return $dataTable->addScope(new CorporationScope([$corporation->corporation_id]))

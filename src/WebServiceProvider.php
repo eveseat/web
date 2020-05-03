@@ -428,7 +428,7 @@ class WebServiceProvider extends AbstractSeatPlugin
     }
 
     /**
-     * Register all gates
+     * Register all gates.
      */
     private function register_policies()
     {
