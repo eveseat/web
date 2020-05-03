@@ -37,24 +37,22 @@ class RolesController extends Controller
 {
     /**
      * @param \Seat\Web\Http\DataTables\Squads\RolesDataTable $dataTable
-     * @param int $id
+     * @param \Seat\Web\Models\Squads\Squad $squad
      * @return mixed
      */
-    public function show(RolesDataTable $dataTable, int $id)
+    public function show(RolesDataTable $dataTable, Squad $squad)
     {
-        $squad = Squad::with('members', 'moderators', 'moderators.main_character')->find($id);
-
         return $dataTable->render('web::squads.show', compact('squad'));
     }
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param \Seat\Web\Models\Squads\Squad $squad
      * @return \Illuminate\Http\JsonResponse
      */
-    public function lookup(Request $request, int $id)
+    public function lookup(Request $request, Squad $squad)
     {
-        $roles = Role::whereNotIn('id', Squad::find($id)->roles->pluck('id'))
+        $roles = Role::whereNotIn('id', $squad->roles->pluck('id'))
             ->where('title', 'like', ["%{$request->query('q', '')}%"])
             ->orderBy('title')
             ->get()
@@ -72,17 +70,16 @@ class RolesController extends Controller
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param \Seat\Web\Models\Squads\Squad $squad
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request, int $id)
+    public function store(Request $request, Squad $squad)
     {
         $request->validate([
             'role_id' => 'required|exists:roles,id',
         ]);
 
         $role = Role::find($request->input('role_id'));
-        $squad = Squad::find($id);
         $squad->roles()->save($role);
 
         return redirect()->back()
@@ -91,17 +88,16 @@ class RolesController extends Controller
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param \Seat\Web\Models\Squads\Squad $squad
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Request $request, int $id)
+    public function destroy(Request $request, Squad $squad)
     {
         $request->validate([
             'role_id' => 'required|exists:roles,id',
         ]);
 
         $role = Role::find($request->input('role_id'));
-        $squad = Squad::find($id);
 
         $squad->roles()->detach($role->id);
 

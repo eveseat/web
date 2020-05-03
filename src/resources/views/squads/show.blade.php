@@ -13,14 +13,16 @@
             Summary
             @can('squads.edit', $squad)
               <div class="btn-group float-right" role="group">
-                <a href="{{ route('squads.edit', $squad->id) }}" class="btn btn-sm btn-warning">
+                <a href="{{ route('squads.edit', $squad) }}" class="btn btn-sm btn-warning">
                   <i class="fas fa-edit"></i>
                   Edit
                 </a>
-                <button type="submit" class="btn btn-sm btn-danger" form="delete-squad">
-                  <i class="fas fa-trash-alt"></i>
-                  Delete
-                </button>
+                @can('squads.create')
+                  <button type="submit" class="btn btn-sm btn-danger" form="delete-squad">
+                    <i class="fas fa-trash-alt"></i>
+                    Delete
+                  </button>
+                @endcan
               </div>
             @endcan
           </h3>
@@ -90,7 +92,7 @@
                 <div class="col-2">
                   @include('web::partials.character', ['character' => $moderator->main_character])
                   @can('squads.manage_moderators', $squad)
-                    <form method="post" action="{{ route('squads.moderators.destroy', ['id' => $squad->id, 'user_id' => $moderator->id]) }}" class="float-right">
+                    <form method="post" action="{{ route('squads.moderators.destroy', ['squad' => $squad, 'user' => $moderator]) }}" class="float-right">
                       {!! csrf_field() !!}
                       {!! method_field('DELETE') !!}
                       <button type="submit" class="btn btn-sm btn-danger">
@@ -105,7 +107,7 @@
           @endforeach
 
           @can('squads.manage_moderators', $squad)
-            <form method="post" action="{{ route('squads.moderators.store', $squad->id) }}" class="mt-3">
+            <form method="post" action="{{ route('squads.moderators.store', $squad) }}" class="mt-3">
               {!! csrf_field() !!}
               <div class="row justify-content-end">
                 <div class="col-4">
@@ -121,7 +123,7 @@
                 </div>
               </div>
             </form>
-            <form method="post" action="{{ route('squads.destroy', $squad->id) }}" id="delete-squad">
+            <form method="post" action="{{ route('squads.destroy', $squad) }}" id="delete-squad">
               {!! csrf_field() !!}
               {!! method_field('DELETE') !!}
             </form>
@@ -130,7 +132,7 @@
         @if($squad->type != 'auto' && auth()->user()->name !== 'admin')
           <div class="card-footer">
             @if($squad->is_member)
-              <form method="post" action="{{ route('squads.members.leave', $squad->id) }}" id="form-leave">
+              <form method="post" action="{{ route('squads.members.leave', $squad) }}" id="form-leave">
                 {!! csrf_field() !!}
                 {!! method_field('DELETE') !!}
               </form>
@@ -139,7 +141,7 @@
               </button>
             @else
               @if($squad->is_candidate)
-                <form method="post" action="{{ route('squads.applications.cancel', $squad->applications->where('user_id', auth()->user()->id)->first()->application_id) }}" id="form-cancel">
+                <form method="post" action="{{ route('squads.applications.cancel', $squad) }}" id="form-cancel">
                   {!! csrf_field() !!}
                   {!! method_field('DELETE') !!}
                 </form>
@@ -184,7 +186,7 @@
             </table>
           </div>
           <div class="card-footer">
-            <form method="post" action="{{ route('squads.roles.store', $squad->id) }}" data-table="rolesTableBuilder" id="squad-role-form">
+            <form method="post" action="{{ route('squads.roles.store', $squad) }}" data-table="rolesTableBuilder" id="squad-role-form">
               {!! csrf_field() !!}
               <div class="row justify-content-end">
                 <div class="col-4">
@@ -230,7 +232,7 @@
         </div>
         @can('squads.manage_members', $squad)
           <div class="card-footer">
-            <form method="post" action="{{ route('squads.members.store', $squad->id) }}" data-table="dataTableBuilder" id="squad-member-form">
+            <form method="post" action="{{ route('squads.members.store', $squad) }}" data-table="dataTableBuilder" id="squad-member-form">
               {!! csrf_field() !!}
               <div class="row justify-content-end">
                 <div class="col-4">
@@ -294,7 +296,7 @@
         .select2({
             placeholder: 'Select a moderator to add to this Squad',
             ajax: {
-                url: '{{ route('squads.moderators.lookup', $squad->id) }}',
+                url: '{{ route('squads.moderators.lookup', $squad) }}',
                 dataType: 'json',
                 cache: true,
                 processResults: function (data, params) {
@@ -309,7 +311,7 @@
       .select2({
           placeholder: 'Select a role to add to this Squad',
           ajax: {
-              url: '{{ route('squads.roles.lookup', $squad->id) }}',
+              url: '{{ route('squads.roles.lookup', $squad) }}',
               dataType: 'json',
               cache: true,
               processResults: function (data, params) {
@@ -324,7 +326,7 @@
         .select2({
             placeholder: 'Select an user to add to this Squad',
             ajax: {
-                url: '{{ route('squads.members.lookup', $squad->id) }}',
+                url: '{{ route('squads.members.lookup', $squad) }}',
                 dataType: 'json',
                 cache: true,
                 processResults: function (data, params) {
@@ -377,7 +379,7 @@
             processing: true,
             serverSide: true,
             order: [[0, 'desc']],
-            ajax: '{{ route('squads.members.index', $squad->id) }}',
+            ajax: '{{ route('squads.members.index', $squad) }}',
             columns: [
                 {data: "name", name: "name", title: "Name", "orderable": true, "searchable": true},
                 {data: "characters", name: "characters", title: "Characters", "orderable": true, "searchable": true},
@@ -395,7 +397,7 @@
             processing: true,
             serverSide: true,
             order: [[0, 'desc']],
-            ajax: '{{ route('squads.applications.index', $squad->id) }}',
+            ajax: '{{ route('squads.applications.index', $squad) }}',
             columns: [
                 {data: 'user.name', name: 'user.name'},
                 {data: 'characters', name: 'characters'},
@@ -414,7 +416,7 @@
             processing: true,
             serverSide: true,
             order: [[0, 'desc']],
-            ajax: '{{ route('squads.roles.show', $squad->id) }}',
+            ajax: '{{ route('squads.roles.show', $squad) }}',
             columns: [
                 {data: 'title', name: 'title'},
                 {data: 'description', name: 'description'},

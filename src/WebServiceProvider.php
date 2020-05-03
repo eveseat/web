@@ -437,6 +437,7 @@ class WebServiceProvider extends AbstractSeatPlugin
         Gate::define('global.superuser', 'Seat\Web\Acl\Policies\GlobalPolicy@superuser');
         Gate::define('squads.create', 'Seat\Web\Acl\Policies\SquadPolicy@create');
         Gate::define('squads.edit', 'Seat\Web\Acl\Policies\SquadPolicy@edit');
+        Gate::define('squads.delete', 'Seat\Web\Acl\Policies\SquadPolicy@delete');
         Gate::define('squads.kick', 'Seat\Web\Acl\Policies\SquadPolicy@kick');
         Gate::define('squads.manage_candidates', 'Seat\Web\Acl\Policies\SquadPolicy@manage_candidates');
         Gate::define('squads.manage_members', 'Seat\Web\Acl\Policies\SquadPolicy@manage_members');

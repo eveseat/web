@@ -20,9 +20,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-// list all squads
-use Illuminate\Support\Facades\Route;
-
 Route::get('/', [
     'as'   => 'squads.index',
     'uses' => 'SquadsController@index',
@@ -84,10 +81,10 @@ Route::prefix('/{squad}/members')->group(function () {
         ->middleware('can:squads.manage_members,squad');
 
     // remove member from a squad
-    Route::delete('/')
+    Route::delete('/{user}')
         ->name('squads.members.kick')
         ->uses('MembersController@destroy')
-        ->middleware('can:squads.kick,squad');
+        ->middleware('can:squads.kick,squad,user');
 
     // show squad members
     Route::get('/')
@@ -96,7 +93,7 @@ Route::prefix('/{squad}/members')->group(function () {
         ->middleware('can:squads.show_members,squad');
 
     // leave a squad
-    Route::delete('/leave')
+    Route::delete('/')
         ->name('squads.members.leave')
         ->uses('MembersController@leave');
 });
@@ -116,7 +113,7 @@ Route::prefix('/{squad}/moderators')
             ->uses('ModeratorsController@store');
 
         // remove moderator from a squad
-        Route::delete('/')
+        Route::delete('/{user}')
             ->name('squads.moderators.destroy')
             ->uses('ModeratorsController@destroy');
     });

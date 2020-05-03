@@ -38,26 +38,24 @@ class MembersController extends Controller
 {
     /**
      * @param \Seat\Web\Http\DataTables\Squads\MembersDataTable $dataTable
-     * @param int $id
+     * @param \Seat\Web\Models\Squads\Squad $squad
      * @return mixed
      */
-    public function index(MembersDataTable $dataTable, int $id)
+    public function index(MembersDataTable $dataTable, Squad $squad)
     {
-        $squad = Squad::with('members', 'moderators', 'moderators.main_character')->find($id);
-
         return $dataTable->render('web::squads.show', compact('squad'));
     }
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param \Seat\Web\Models\Squads\Squad $squad
      * @return \Illuminate\Http\JsonResponse
      */
-    public function lookup(Request $request, int $id)
+    public function lookup(Request $request, Squad $squad)
     {
         $users = User::standard()
-            ->whereDoesntHave('squads', function (Builder $query) use ($id) {
-                $query->where('id', $id);
+            ->whereDoesntHave('squads', function (Builder $query) use ($squad) {
+                $query->where('id', $squad->id);
             })
             ->where(function ($query) use ($request) {
                 $query->where('name', 'like', ["%{$request->query('q', '')}%"]);
@@ -81,16 +79,15 @@ class MembersController extends Controller
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param \Seat\Web\Models\Squads\Squad $squad
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request, int $id)
+    public function store(Request $request, Squad $squad)
     {
         $request->validate([
             'user_id' => 'required|exists:users,id',
         ]);
 
-        $squad = Squad::find($id);
         $user = User::find($request->input('user_id'));
         $squad->members()->attach($user);
 
@@ -99,18 +96,11 @@ class MembersController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param \Seat\Web\Models\Squads\Squad $squad
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Request $request, int $id)
+    public function destroy(Squad $squad, User $user)
     {
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
-        ]);
-
-        $squad = Squad::find($id);
-        $user = User::find($request->input('user_id'));
         $squad->members()->detach($user->id);
 
         $message = sprintf('%s has been kicked from squad %s.',
@@ -123,12 +113,11 @@ class MembersController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param Squad $squad
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function leave(int $id)
+    public function leave(Squad $squad)
     {
-        $squad = Squad::find($id);
         $squad->members()->detach(auth()->user()->id);
 
         return redirect()->route('squads.index');
