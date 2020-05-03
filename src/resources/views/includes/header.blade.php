@@ -40,7 +40,7 @@
   @endif
 
   <!-- Queue information -->
-  @if(auth()->user()->has('global.queue_manager', false))
+  @can('global.queue_manager')
     <li class="nav-item dropdown">
       <a href="{{ route('horizon.index') }}" class="nav-link" data-widget="dropdown" data-placement="bottom"
          title="{{ trans('web::seat.queued') }}">
@@ -55,7 +55,7 @@
         <span class="badge badge-danger navbar-badge" id="error_count">0</span>
       </a>
     </li>
-  @endif
+  @endcan
 
     <!-- User Account Menu -->
     <li class="nav-item dropdown">

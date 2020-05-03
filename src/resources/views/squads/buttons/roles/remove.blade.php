@@ -1,5 +1,5 @@
 <div class="float-right">
-    @if(auth()->user()->hasSuperUser())
+    @can('manage_roles', $squad)
         <form method="post" action="{{ route('squads.roles.destroy', request()->id) }}">
             {!! csrf_field() !!}
             {!! method_field('DELETE') !!}
@@ -8,5 +8,5 @@
               <i class="fas fa-trash-alt"></i> {{ trans('web::squads.remove') }}
             </button>
         </form>
-    @endif
+    @endcan
 </div>

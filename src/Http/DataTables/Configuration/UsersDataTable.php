@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Configuration;
 
+use Illuminate\Support\Facades\Gate;
 use Seat\Web\Models\User;
 use Yajra\DataTables\Services\DataTable;
 
@@ -55,7 +56,7 @@ class UsersDataTable extends DataTable
                 return $row->last_login_source ?: '';
             })
             ->editColumn('roles', function ($row) {
-                if ($row->hasSuperUser())
+                if (Gate::allows('global.superuser'))
                     return sprintf('<span class="badge badge-danger">%d</span>', $row->roles->count());
 
                 return sprintf('<span class="badge badge-info">%d</span>', $row->roles->count());

@@ -62,7 +62,7 @@ class CorporationPolicy extends AbstractEntityPolicy
             // retrieve defined authorization for the requested user
             $acl = $this->permissionsFrom($user);
 
-            // filter out roles without required permission
+            // filter out permissions which don't match with required one
             $permissions = $acl->filter(function ($permission) use ($corporation, $ability) {
 
                 // exclude all permissions which does not match with the requested permission
@@ -78,11 +78,7 @@ class CorporationPolicy extends AbstractEntityPolicy
             });
 
             // if we have at least one valid permission - grant access
-            if ($permissions->isNotEmpty())
-                return true;
-
-            // deny access
-            return false;
+            return $permissions->isNotEmpty();
         }, $corporation->corporation_id);
     }
 

@@ -68,7 +68,7 @@
                   @if(array_key_exists('permission', $item))
 
                     {{-- permision is required. check it --}}
-                    @if(auth()->user()->has($item['permission'], false))
+                    @canany(is_array($item['permission']) ? $item['permission'] : [$item['permission']])
 
                       <li class="nav-item">
                         <a href="{{ isset($item['route']) ? route($item['route']) : '#' }}" class="nav-link {{ isset($item['route']) ? (Request::url() === route($item['route']) ? 'active' : null) : null }}">
@@ -114,7 +114,7 @@
 
                       </li>
 
-                    @endif
+                    @endcanany
 
                     {{-- TODO: Get rid of this copy pasta by using a partial or something. --}}
                   @else

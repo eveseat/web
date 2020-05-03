@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\DataTables\Scopes;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\Contracts\DataTableScope;
 
 /**
@@ -72,7 +73,7 @@ class CharacterContactScope implements DataTableScope
         $map = Arr::get(auth()->user()->getAffiliationMap(), 'char');
 
         // in case user is super, apply filter over all requested characters
-        if (auth()->user()->hasSuperUser()) {
+        if (Gate::allows('global.superuser')) {
             $character_ids = $this->character_ids;
         }
 

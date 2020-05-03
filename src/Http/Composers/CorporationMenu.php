@@ -92,23 +92,13 @@ class CorporationMenu extends AbstractMenu
     }
 
     /**
-     * @param string $package_name
-     * @param array $menu_data
-     * @param bool $require_affiliation
-     * @return array|null
-     * @throws \Seat\Web\Exceptions\PackageMenuBuilderException
+     * Return true if the current user can see menu entry.
+     *
+     * @param array $permissions
+     * @return bool
      */
-    public function load_plugin_menu(string $package_name, array $menu_data, bool $require_affiliation = false): ?array
+    protected function userHasPermission(array $permissions): bool
     {
-        $this->validate_menu($package_name, $menu_data);
-
-        if (isset($menu_data['permission'])) {
-            $permissions  = is_array($menu_data['permission']) ? $menu_data['permission'] : [$menu_data['permission']];
-
-            if (! Gate::any($permissions, $this->corporation))
-                return null;
-        }
-
-        return $menu_data;
+        return Gate::any($permissions, $this->corporation);
     }
 }

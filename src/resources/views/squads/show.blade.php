@@ -11,7 +11,7 @@
         <div class="card-body">
           <h3>
             Summary
-            @if(auth()->user()->hasSuperUser())
+            @can('squads.edit', $squad)
               <div class="btn-group float-right" role="group">
                 <a href="{{ route('squads.edit', $squad->id) }}" class="btn btn-sm btn-warning">
                   <i class="fas fa-edit"></i>
@@ -22,7 +22,7 @@
                   Delete
                 </button>
               </div>
-            @endif
+            @endcan
           </h3>
 
           <hr/>
@@ -89,7 +89,7 @@
               @foreach($row as $moderator)
                 <div class="col-2">
                   @include('web::partials.character', ['character' => $moderator->main_character])
-                  @if(auth()->user()->hasSuperUser())
+                  @can('squads.manage_moderators', $squad)
                     <form method="post" action="{{ route('squads.moderators.destroy', ['id' => $squad->id, 'user_id' => $moderator->id]) }}" class="float-right">
                       {!! csrf_field() !!}
                       {!! method_field('DELETE') !!}
@@ -98,13 +98,13 @@
                         Remove
                       </button>
                     </form>
-                  @endif
+                  @endcan
                 </div>
               @endforeach
             </div>
           @endforeach
 
-          @if(auth()->user()->hasSuperUser())
+          @can('squads.manage_moderators', $squad)
             <form method="post" action="{{ route('squads.moderators.store', $squad->id) }}" class="mt-3">
               {!! csrf_field() !!}
               <div class="row justify-content-end">
@@ -125,7 +125,7 @@
               {!! csrf_field() !!}
               {!! method_field('DELETE') !!}
             </form>
-          @endif
+          @endcan
         </div>
         @if($squad->type != 'auto' && auth()->user()->name !== 'admin')
           <div class="card-footer">
@@ -164,7 +164,7 @@
     </div>
   </div>
 
-  @if(auth()->user()->hasSuperUser())
+  @can('squads.manage_roles', $squad)
     <div class="row">
       <div class="col-12">
         <div class="card">
@@ -204,7 +204,7 @@
         </div>
       </div>
     </div>
-  @endif
+  @endcan
 
   <div class="row">
     <div class="col-12">
@@ -213,7 +213,7 @@
           <h3 class="card-title">Members</h3>
         </div>
         <div class="card-body">
-          @if($squad->is_member || $squad->is_moderator || auth()->user()->hasSuperUser())
+          @can('squads.show_members', $squad)
             <table class="table table-striped table-hover" id="members-table">
               <thead>
                 <tr>
@@ -223,11 +223,12 @@
                 </tr>
               </thead>
             </table>
-          @else
+          @endcan
+          @cannot('squads.show_members', $squad)
             <p class="text-center">You are not member of that squad.</p>
-          @endif
+          @endcannot
         </div>
-        @if(auth()->user()->hasSuperUser() || $squad->is_moderator)
+        @can('squads.manage_members', $squad)
           <div class="card-footer">
             <form method="post" action="{{ route('squads.members.store', $squad->id) }}" data-table="dataTableBuilder" id="squad-member-form">
               {!! csrf_field() !!}
@@ -246,12 +247,12 @@
               </div>
             </form>
           </div>
-        @endif
+        @endcan
       </div>
     </div>
   </div>
 
-  @if($squad->type == 'manual' && ($squad->is_moderator || auth()->user()->hasSuperUser()))
+  @can('squads.manage_candidates', $squad)
     <div class="row">
       <div class="col-12">
         <div class="card">
@@ -273,7 +274,7 @@
         </div>
       </div>
     </div>
-  @endif
+  @endcan
 
   @include('web::squads.modals.applications.create.application')
   @include('web::squads.modals.applications.read.application')

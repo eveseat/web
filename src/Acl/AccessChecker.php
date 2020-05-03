@@ -87,13 +87,13 @@ trait AccessChecker
     }
 
     /**
-     * Determine of the current user has the
+     * Determine if the current user has the
      * superuser permission.
      */
     public function hasSuperUser()
     {
 
-        return in_array('global.superuser', $this->getAllPermissions());
+        return auth()->user()->isAdmin();
     }
 
     /**

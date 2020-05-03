@@ -60,8 +60,6 @@ abstract class AbstractPolicy
             $message = sprintf('Request to %s was denied. The permission required is %s', request()->path(), $ability);
 
             event('security.log', [$message, 'authorization']);
-
-            return redirect()->route('auth.unauthorized');
         }
     }
 

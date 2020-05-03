@@ -42,7 +42,7 @@ class CharacterController extends Controller
      */
     public function index(CharacterDataTable $dataTable)
     {
-        if (auth()->user()->hasSuperUser())
+        if (Gate::allows('global.superuser'))
             return $dataTable->render('web::character.list');
 
         $allowed_characters = array_keys(Arr::get(auth()->user()->getAffiliationMap(), 'char'));

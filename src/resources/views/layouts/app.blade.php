@@ -126,7 +126,7 @@
   <script src="{{ asset('web/js/seat.js') }}"></script>
 
   {{-- This script is here as we need Laravel to generate the route --}}
-  @if(auth()->user()->has('global.queue_manager', false))
+  @can('global.queue_manager')
     <script>
       // Periodic Queue Status Updates
       (function worker() {
@@ -144,7 +144,7 @@
         });
       })();
     </script>
-  @endif
+  @endcan
 
   <!-- view specific scripts -->
   @stack('javascript')

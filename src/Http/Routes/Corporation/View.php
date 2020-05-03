@@ -98,13 +98,6 @@ Route::get('/{corporation}/extractions')
     ->uses('ExtractionController@getExtractions')
     ->middleware('can:corporation.extraction,corporation');
 
-// TODO : relocate
-Route::post('/extractions/report', [
-    'as'         => 'corporation.view.extractions.probe-report',
-    'middleware' => 'corporationbouncer:extraction',
-    'uses'       => 'ExtractionController@postProbeReport',
-]);
-
 Route::group(['prefix' => '{corporation}/security', 'middleware' => 'can:corporation.security,corporation'], function () {
     Route::get('roles')
         ->name('corporation.view.security.roles')

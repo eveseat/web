@@ -48,11 +48,6 @@ use Seat\Web\Http\Composers\Esi;
 use Seat\Web\Http\Composers\Sidebar;
 use Seat\Web\Http\Composers\User;
 use Seat\Web\Http\Middleware\Authenticate;
-use Seat\Web\Http\Middleware\Bouncer\Bouncer;
-use Seat\Web\Http\Middleware\Bouncer\KeyBouncer;
-use Seat\Web\Http\Middleware\Bouncer\SquadAuthorApplicationBouncer;
-use Seat\Web\Http\Middleware\Bouncer\SquadMemberBouncer;
-use Seat\Web\Http\Middleware\Bouncer\SquadModeratorBouncer;
 use Seat\Web\Http\Middleware\Locale;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
 use Seat\Web\Http\Middleware\Requirements;
@@ -79,6 +74,8 @@ class WebServiceProvider extends AbstractSeatPlugin
      */
     public function boot(Router $router)
     {
+        // Register policies
+        $this->register_policies();
 
         // Include the Routes
         $this->add_routes();
@@ -112,9 +109,6 @@ class WebServiceProvider extends AbstractSeatPlugin
 
         // Configure API
         $this->configure_api();
-
-        // Register policies
-        $this->register_policies();
     }
 
     /**
@@ -241,16 +235,6 @@ class WebServiceProvider extends AbstractSeatPlugin
         // Registration Middleware checks of the app is
         // allowing new user registration to occur.
         $router->aliasMiddleware('registration.status', RegistrationAllowed::class);
-
-        // The Bouncer is responsible for checking hes
-        // AccessChecker and ensuring that every request
-        // that comes in is authorized
-        $router->aliasMiddleware('bouncer', Bouncer::class);
-        $router->aliasMiddleware('keybouncer', KeyBouncer::class);
-        $router->aliasMiddleware('squad.moderator.bouncer', SquadModeratorBouncer::class);
-        $router->aliasMiddleware('squad.member.bouncer', SquadMemberBouncer::class);
-        $router->aliasMiddleware('squad.author.bouncer', SquadAuthorApplicationBouncer::class);
-
     }
 
     /**
@@ -299,12 +283,8 @@ class WebServiceProvider extends AbstractSeatPlugin
     {
 
         // Require the queue_manager role to view the dashboard
-        Horizon::auth(function ($request) {
-
-            if (is_null($request->user()))
-                return false;
-
-            return $request->user()->has('queue_manager', false);
+        Horizon::auth(function () {
+            return Gate::allows('global.queue_manager');
         });
 
         // attempt to parse the QUEUE_BALANCING variable into a boolean
@@ -453,6 +433,16 @@ class WebServiceProvider extends AbstractSeatPlugin
     private function register_policies()
     {
         $permissions = config('seat.permissions', []);
+
+        Gate::define('global.superuser', 'Seat\Web\Acl\Policies\GlobalPolicy@superuser');
+        Gate::define('squads.create', 'Seat\Web\Acl\Policies\SquadPolicy@create');
+        Gate::define('squads.edit', 'Seat\Web\Acl\Policies\SquadPolicy@edit');
+        Gate::define('squads.kick', 'Seat\Web\Acl\Policies\SquadPolicy@kick');
+        Gate::define('squads.manage_candidates', 'Seat\Web\Acl\Policies\SquadPolicy@manage_candidates');
+        Gate::define('squads.manage_members', 'Seat\Web\Acl\Policies\SquadPolicy@manage_members');
+        Gate::define('squads.manage_moderators', 'Seat\Web\Acl\Policies\SquadPolicy@manage_moderators');
+        Gate::define('squads.manage_roles', 'Seat\Web\Acl\Policies\SquadPolicy@manage_roles');
+        Gate::define('squads.show_members', 'Seat\Web\Acl\Policies\SquadPolicy@show_members');
 
         foreach ($permissions as $scope => $scope_permissions) {
             foreach ($scope_permissions as $permission => $definition) {
