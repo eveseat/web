@@ -12,15 +12,15 @@
 
   <div class="login-box-body">
     <p class="login-box-msg">
-      {{ trans('web::seat.login_welcome') }}
+      {!! $signin_message !!}
     </p>
 
     <!-- SSO Button! -->
-    <div class="box-body text-center">
+    <!-- <div class="box-body text-center">
       <a href="{{ route('auth.eve') }}">
         <img src="{{ asset('web/img/evesso.png') }}">
       </a>
-    </div>
+    </div> -->
     <!-- /.box-footer -->
 
   </div>

@@ -150,9 +150,90 @@
     </div>
   </div>
 
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">
+        {{ trans('web::seat.custom_signin_page') }}
+      </h3>
+    </div>
+
+    <div class="card-body">
+      <p>{{ trans('web::seat.custom_signin_page_desc') }}</p>
+      <form method="post" action="{{ route('configuration.sso.update_custom_signin') }}" enctype="multipart/form-data" id="customise-login-form">
+        {{ csrf_field() }}
+        <input type="hidden" name="message" value="" />
+        <div id="login_page_content"></div>
+        <div class="float-right mt-2">
+            <button type="submit" form="customise-login-form" class="btn btn-success">
+              <i class="fas fa-save"></i> Save
+            </button>
+          </div>
+      </form>
+    </div>
+  </div>
+
 @stop
 
+@push('head')
+  <link href="{{ asset('web/css/quill.snow.css') }}" rel="stylesheet" />
+@endpush
+
 @push('javascript')
+
+<script src="{{ asset('web/js/quill.min.js') }}"></script>
+
+  <script>
+    Quill.prototype.getHtml = function () {
+        var html = this.container.querySelector('.ql-editor').innerHTML;
+        html = html.replace(/<p>(<br>|<br\/>|<br\s\/>|\s+|)<\/p>/gmi, "");
+        return html;
+    };
+
+    var editor = new Quill('#login_page_content', {
+        modules: {
+            toolbar: {
+                container: 
+                [
+                  [{'header': ['1', '2', '3', '4', '5', '6', false]}, {'color': []}],
+                  ['bold', 'italic', 'underline', 'strike'],
+                  [{'list': 'ordered'}, {'list': 'bullet'}],
+                  [{'align': []}, {'indent': '-1'}, {'indent': '+1'}],
+                  ['link'],
+                  ['image'],
+                  ['clean'],
+                  [{ 'placeholder': [
+                    @foreach(setting('sso_scopes', true) as $scope)
+                      '[[{{ $scope->name }}]]'{{ $loop->last ? '' : ',' }} 
+                    @endforeach
+                  ] }]
+                ],
+                handlers: {
+                  "placeholder": function (value) { 
+                    if (value) {
+                      const cursorPosition = this.quill.getSelection().index;
+                      this.quill.insertText(cursorPosition, value);
+                      this.quill.setSelection(cursorPosition + value.length);
+                    }
+                  }
+                }
+            }
+        },
+        placeholder: 'Compose login page...',
+        theme: 'snow'
+    });
+
+    editor.setContents(editor.clipboard.convert('{!! addslashes($custom_signin_message) !!}'), 'silent');
+
+    // We need to manually supply the HTML content of our custom dropdown list
+    const placeholderPickerItems = Array.prototype.slice.call(document.querySelectorAll('.ql-placeholder .ql-picker-item'));
+    placeholderPickerItems.forEach(item => item.textContent = item.dataset.value);
+    document.querySelector('.ql-placeholder .ql-picker-label').innerHTML
+        = 'Insert login button' + document.querySelector('.ql-placeholder .ql-picker-label').innerHTML;
+
+    $('#customise-login-form').on('submit', function () {
+        $('input[name="message"]').val(editor.getHtml());
+    });
+  </script>
 
   @include('web::includes.javascript.id-to-name')
 

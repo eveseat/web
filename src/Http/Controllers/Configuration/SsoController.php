@@ -24,6 +24,7 @@ namespace Seat\Web\Http\Controllers\Configuration;
 
 use Illuminate\Http\Request;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\Validation\CustomSignin;
 use Seat\Web\Http\Validation\SsoScopes;
 
 /**
@@ -50,7 +51,9 @@ class SsoController extends Controller
             });
         }
 
-        return view('web::configuration.sso.view', compact('selected_profile'));
+        $custom_signin_message = setting('custom_signin_message', true);
+
+        return view('web::configuration.sso.view', compact('selected_profile', 'custom_signin_message'));
     }
 
     /**
@@ -157,6 +160,22 @@ class SsoController extends Controller
         $scopes = $scopes->except($deleteKey);
 
         setting(['sso_scopes', $scopes], true);
+
+        return redirect()->back()->with('success', trans('web::seat.updated'));
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Seat\Services\Exceptions\SettingException
+     */
+    public function postUpdateCustomSignin(CustomSignin $request)
+    {
+
+        $custom_signin_message = $request->input('message', '');
+
+        setting(['custom_signin_message', $custom_signin_message], true);
 
         return redirect()->back()->with('success', trans('web::seat.updated'));
     }

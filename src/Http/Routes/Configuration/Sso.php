@@ -44,3 +44,8 @@ Route::get('/delete-profile/{id}', [
     'as'   => 'configuration.sso.delete_profile',
     'uses' => 'SsoController@getDeleteProfile',
 ]);
+
+Route::post('/update-custom-signin', [
+    'as'   => 'configuration.sso.update_custom_signin',
+    'uses' => 'SsoController@postUpdateCustomSignin',
+]);

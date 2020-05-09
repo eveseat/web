@@ -435,6 +435,9 @@ return [
     'callback_maybe_wrong'         => 'Callback URL set but might be incorrect. Currently set as :current ' .
         'and should maybe be :suggested',
     'client_callback_not_ok'       => 'Callback URL not set. Check .env and set as :url',
+    'custom_signin_page'           => 'Customise Sign In page',
+    'custom_signin_page_desc'      => 'You can customise the message on the sign in page and insert links to your custom SSO scope ' .
+        'profiles as well. Leave blank to use the default. If you enter something below, you must ensure at least one button is shown.',
 
     // Updaters
     'update_dispatched'            => 'Update job has successfully been dispatched. Please check back again ' .
