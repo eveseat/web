@@ -27,12 +27,12 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\Models\UserSetting;
 use Seat\Services\Settings\Profile;
-use Seat\Web\Acl\AccessChecker;
 use Seat\Web\Models\Acl\Role;
 use Seat\Web\Models\Squads\Squad;
 
@@ -42,7 +42,7 @@ use Seat\Web\Models\Squads\Squad;
  */
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
-    use Authenticatable, CanResetPassword, AccessChecker, Notifiable;
+    use Authenticatable, Authorizable, CanResetPassword, Notifiable;
 
     /**
      * @var bool

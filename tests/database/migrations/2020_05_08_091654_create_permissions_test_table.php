@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
+ * Copyright (C) 2015 to 2020 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,9 +22,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
-class CreateCharacterInfosTestTable extends Migration
+class CreatePermissionsTestTable extends Migration
 {
     /**
      * Run the migrations.
@@ -33,22 +32,9 @@ class CreateCharacterInfosTestTable extends Migration
      */
     public function up()
     {
-
-        Schema::create('character_infos', function (Blueprint $table) {
-
-            $table->bigInteger('character_id')->primary();
-
-            $table->string('name');
-            $table->text('description')->nullable();
-            $table->string('birthday');
-            $table->string('gender');
-            $table->integer('race_id');
-            $table->integer('bloodline_id');
-            $table->integer('ancestry_id')->nullable();
-            $table->float('security_status')->nullable();
-
-            $table->timestamps();
-
+        Schema::create('permissions', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('title');
         });
     }
 
@@ -59,7 +45,6 @@ class CreateCharacterInfosTestTable extends Migration
      */
     public function down()
     {
-
-        Schema::dropIfExists('character_infos');
+        Schema::drop('permissions');
     }
 }

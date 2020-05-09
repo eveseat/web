@@ -20,18 +20,35 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-use Faker\Generator;
-use Seat\Web\Models\User;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
-$factory->define(User::class, function (Generator $faker) {
-    return [
-        'id'                   => $faker->numberBetween(2, 10),
-        'name'                 => $faker->name,
-        'active'               => $faker->boolean,
-        'admin'                => false,
-        'last_login'           => $faker->dateTime(),
-        'last_login_source'    => $faker->ipv4,
-        'remember_token'       => $faker->sha256,
-        'main_character_id'    => $faker->unique()->numberBetween(90000000, 90001000),
-    ];
-});
+class CreateCharacterAffiliationsTestTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('character_affiliations', function (Blueprint $table) {
+            $table->bigInteger('character_id')->primary();
+            $table->bigInteger('corporation_id');
+            $table->bigInteger('alliance_id')->nullable();
+            $table->bigInteger('faction_id')->nullable();
+
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop('character_affiliations');
+    }
+}

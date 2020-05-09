@@ -21,17 +21,11 @@
  */
 
 use Faker\Generator;
-use Seat\Web\Models\User;
+use Seat\Web\Models\Acl\Role;
 
-$factory->define(User::class, function (Generator $faker) {
+$factory->define(Role::class, function (Generator $faker) {
     return [
-        'id'                   => $faker->numberBetween(2, 10),
-        'name'                 => $faker->name,
-        'active'               => $faker->boolean,
-        'admin'                => false,
-        'last_login'           => $faker->dateTime(),
-        'last_login_source'    => $faker->ipv4,
-        'remember_token'       => $faker->sha256,
-        'main_character_id'    => $faker->unique()->numberBetween(90000000, 90001000),
+        'id'          => $faker->numberBetween(1, 10),
+        'title'       => $faker->name,
     ];
 });

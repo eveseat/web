@@ -20,33 +20,42 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Acl\Policies;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
-use stdClass;
-
-/**
- * Class AbstractEntityPolicy.
- *
- * @package Seat\Web\Acl\Policies
- */
-abstract class AbstractEntityPolicy extends AbstractPolicy
+class CreateRefreshTokensTestTable extends Migration
 {
     /**
-     * Determine if the requested entity is granted by the specified permission filter.
+     * Run the migrations.
      *
-     * @param stdClass $filters
-     * @param string $entity_type
-     * @param int $entity_id
-     * @return bool
+     * @return void
      */
-    protected function isGrantedByFilter(stdClass $filters, string $entity_type, ?int $entity_id): bool
+    public function up()
     {
-        if (! property_exists($filters, $entity_type))
-            return false;
 
-        if (is_null($entity_id))
-            return false;
+        Schema::create('refresh_tokens', function (Blueprint $table) {
 
-        return collect($filters->$entity_type)->contains('id', $entity_id);
+            $table->bigInteger('character_id')->primary();
+            $table->bigInteger('user_id');
+            $table->mediumText('refresh_token');
+            $table->longText('scopes');
+            $table->dateTime('expires_on');
+            $table->text('token');
+            $table->string('character_owner_hash');
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+
+        Schema::drop('refresh_tokens');
     }
 }

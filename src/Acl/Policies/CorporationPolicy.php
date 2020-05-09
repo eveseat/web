@@ -128,7 +128,7 @@ class CorporationPolicy extends AbstractEntityPolicy
 
         return Cache::store('redis')->remember($cache_key, self::CACHE_DURATION, function () use ($user, $corporation) {
             return $user->characters->filter(function ($character) use ($corporation) {
-                return $character->affiliation->corporation_id === $corporation->corporation_id;
+                return $character->affiliation->corporation_id == $corporation->corporation_id;
             })->pluck('corporation_roles')->flatten()->where('scope', 'roles')->unique('role')->pluck('role')->toArray();
         });
     }

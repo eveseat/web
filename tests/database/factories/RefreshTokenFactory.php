@@ -21,17 +21,16 @@
  */
 
 use Faker\Generator;
-use Seat\Web\Models\User;
+use Seat\Eveapi\Models\RefreshToken;
 
-$factory->define(User::class, function (Generator $faker) {
+$factory->define(RefreshToken::class, function (Generator $faker) {
     return [
-        'id'                   => $faker->numberBetween(2, 10),
-        'name'                 => $faker->name,
-        'active'               => $faker->boolean,
-        'admin'                => false,
-        'last_login'           => $faker->dateTime(),
-        'last_login_source'    => $faker->ipv4,
-        'remember_token'       => $faker->sha256,
-        'main_character_id'    => $faker->unique()->numberBetween(90000000, 90001000),
+        'character_id'  => $faker->numberBetween(98000000, 98001794),
+        'user_id'              => $faker->numberBetween(1, 10),
+        'refresh_token'        => $faker->sha256,
+        'scopes'               => [],
+        'expires_on'           => $faker->dateTime(),
+        'token'                => $faker->sha256,
+        'character_owner_hash' => $faker->sha256,
     ];
 });
