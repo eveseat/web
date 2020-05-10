@@ -25,13 +25,12 @@ namespace Seat\Web\Http\Controllers\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Seat\Eveapi\Models\RefreshToken;
-use Seat\Services\Repositories\Character\Info;
-use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Services\Settings\Profile;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\EmailUpdate;
 use Seat\Web\Http\Validation\ProfileSettings;
 use Seat\Web\Http\Validation\Sharelink;
+use Seat\Web\Models\User;
 use Seat\Web\Models\UserSharelink;
 
 /**
@@ -40,15 +39,15 @@ use Seat\Web\Models\UserSharelink;
  */
 class ProfileController extends Controller
 {
-    use UserRespository, Info;
-
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getView()
     {
 
-        $user = $this->getFullUser(auth()->user()->id);
+        $user = User::with('refresh_tokens', 'characters', 'roles.permissions')
+            ->find(auth()->user()->id);
+
         $history = auth()->user()->login_history->take(50)->sortByDesc('created_at');
 
         // Settings value possibilities

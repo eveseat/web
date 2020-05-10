@@ -25,7 +25,6 @@ namespace Seat\Web\Http\Controllers\Configuration;
 use Exception;
 use Illuminate\Http\Request;
 use Seat\Services\Models\UserSetting;
-use Seat\Services\Repositories\Configuration\UserRespository;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Configuration\UsersDataTable;
 use Seat\Web\Http\Validation\EditUser;
@@ -37,8 +36,6 @@ use Seat\Web\Models\User;
  */
 class UserController extends Controller
 {
-    use UserRespository;
-
     /**
      * @param \Seat\Web\Http\DataTables\Configuration\UsersDataTable $dataTable
      * @return mixed
@@ -55,7 +52,8 @@ class UserController extends Controller
     public function edit(int $user_id)
     {
 
-        $user = $this->getFullUser($user_id);
+        $user = User::with('refresh_tokens', 'characters', 'roles.permissions')
+            ->find($user_id);
 
         $login_history = $user->login_history()->orderBy('created_at', 'desc')->take(15)
             ->get();
@@ -110,7 +108,7 @@ class UserController extends Controller
                 ->with('warning', trans('web::seat.self_delete_warning'));
 
         // Delete the user.
-        $this->getUser($user_id)->delete();
+        User::findOrFail($user_id)->delete();
 
         return redirect()->back()
             ->with('success', trans('web::seat.user_deleted'));
@@ -122,8 +120,10 @@ class UserController extends Controller
      */
     public function editUserAccountStatus(int $user_id)
     {
+        $user = User::findOrFail($user_id);
 
-        $this->flipUserAccountStatus($user_id);
+        $user->active = $user->active == false ? true : false;
+        $user->save();
 
         return redirect()->back()
             ->with('success', trans('web::seat.account_status_change'));
@@ -140,7 +140,7 @@ class UserController extends Controller
         session(['impersonation_origin' => auth()->user()]);
 
         // Get the user
-        $user = $this->getUser($user_id);
+        $user = User::findOrFail($user_id);
 
         // Log the impersonation event.
         event('security.log', [

@@ -24,9 +24,6 @@ namespace Seat\Web\Http\Controllers\Configuration;
 
 use Illuminate\Http\Request;
 use Intervention\Image\Exception\NotReadableException;
-use Seat\Services\Repositories\Character\Character;
-use Seat\Services\Repositories\Configuration\UserRespository;
-use Seat\Services\Repositories\Corporation\Corporation;
 use Seat\Web\Acl\AccessManager;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Configuration\RolesDataTable;
@@ -39,7 +36,7 @@ use Seat\Web\Models\Acl\Role;
  */
 class AccessController extends Controller
 {
-    use AccessManager, UserRespository, Character, Corporation;
+    use AccessManager;
 
     /**
      * @param \Seat\Web\Http\DataTables\Configuration\RolesDataTable $data_table

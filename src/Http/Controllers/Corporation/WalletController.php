@@ -24,7 +24,6 @@ namespace Seat\Web\Http\Controllers\Corporation;
 
 use Illuminate\Support\Facades\Gate;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
-use Seat\Services\Repositories\Corporation\Wallet;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Financial\WalletJournalDataTable;
 use Seat\Web\Http\DataTables\Corporation\Financial\WalletTransactionDataTable;
@@ -37,8 +36,6 @@ use Seat\Web\Http\DataTables\Scopes\CorporationWalletDivisionsScope;
  */
 class WalletController extends Controller
 {
-    use Wallet;
-
     /**
      * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      * @param \Seat\Web\Http\DataTables\Corporation\Financial\WalletJournalDataTable $dataTable

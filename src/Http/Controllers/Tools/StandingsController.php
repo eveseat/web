@@ -23,11 +23,13 @@
 namespace Seat\Web\Http\Controllers\Tools;
 
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Seat\Services\Repositories\Character\Character;
-use Seat\Services\Repositories\Character\Contacts as CharacterContacts;
-use Seat\Services\Repositories\Corporation\Contacts as CorporationContacts;
-use Seat\Services\Repositories\Corporation\Corporation;
+use Illuminate\Support\Collection;
+use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Contacts\CharacterContact;
+use Seat\Eveapi\Models\Contacts\CorporationContact;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\StandingsBuilder;
 use Seat\Web\Http\Validation\StandingsElementAdd;
@@ -41,8 +43,6 @@ use Seat\Web\Models\StandingsProfileStanding;
  */
 class StandingsController extends Controller
 {
-    use Character, Corporation, CharacterContacts, CorporationContacts;
-
     /**
      * @var string
      */
@@ -105,6 +105,7 @@ class StandingsController extends Controller
             ->where('id', $id)
             ->first();
 
+        // TODO : switch to scope
         $characters = $this->getAllCharactersWithAffiliations();
         $corporations = $this->getAllCorporationsWithAffiliationsAndFilters();
 
@@ -243,7 +244,7 @@ class StandingsController extends Controller
                     'type'                 => $contact->contact_type,
                 ])->fill([
 
-                    // Update the standing incase its different to an
+                    // Update the standing in case its different to an
                     // existing one.
                     'standing' => $contact->standing,
                 ]);
@@ -295,5 +296,83 @@ class StandingsController extends Controller
         return redirect()->back()
             ->with('success', 'Standing removed!');
 
+    }
+
+    /**
+     * Get a characters contact list.
+     *
+     * @param \Illuminate\Support\Collection $character_ids
+     * @param array|null $standings
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    private function getCharacterContacts(Collection $character_ids, ?array $standings = null): Builder
+    {
+
+        $contacts = CharacterContact::whereIn('character_contacts.character_id', $character_ids->toArray());
+
+        if (! is_null($standings))
+            $contacts->whereIn('standing', $standings);
+
+        return $contacts;
+    }
+
+    /**
+     * Return the contacts list for a corporation.
+     *
+     * @param int $corporation_id
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    private function getCorporationContacts(int $corporation_id): Collection
+    {
+
+        return CorporationContact::where('corporation_id', $corporation_id)
+            ->orderBy('standing', 'desc')
+            ->get();
+    }
+
+    /**
+     * Query the database for characters, keeping filters,
+     * permissions and affiliations in mind.
+     *
+     * @param bool $get
+     *
+     * @return mixed
+     */
+    private function getAllCharactersWithAffiliations(bool $get = true)
+    {
+        // Start the character information query
+        $characters = CharacterInfo::authorized('character.sheet')
+            ->with('affiliation.corporation', 'affiliation.alliance')
+            ->select('character_infos.*');
+
+        if ($get)
+            return $characters
+                ->orderBy('name')
+                ->get();
+
+        return $characters;
+    }
+
+    /**
+     * Return the corporations for which a user has access.
+     *
+     * @param bool $get
+     *
+     * @return mixed
+     */
+    private function getAllCorporationsWithAffiliationsAndFilters(bool $get = true)
+    {
+        // Start a fresh query
+        $corporations = CorporationInfo::authorized('corporation.sheet')
+            ->with('ceo', 'alliance')
+            ->select('corporation_infos.*');
+
+        if ($get)
+            return $corporations->orderBy('name', 'desc')
+                ->get();
+
+        return $corporations;
     }
 }
