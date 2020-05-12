@@ -22,7 +22,6 @@
 
 namespace Seat\Web;
 
-use App\Providers\AbstractSeatPlugin;
 use Illuminate\Auth\Events\Attempting;
 use Illuminate\Auth\Events\Login as LoginEvent;
 use Illuminate\Auth\Events\Logout as LogoutEvent;
@@ -35,6 +34,7 @@ use Seat\Eveapi\Models\Character\CharacterAffiliation;
 use Seat\Eveapi\Models\Character\CharacterRole;
 use Seat\Eveapi\Models\Character\CharacterSkill;
 use Seat\Eveapi\Models\RefreshToken;
+use Seat\Services\AbstractSeatPlugin;
 use Seat\Web\Events\Attempt;
 use Seat\Web\Events\Login;
 use Seat\Web\Events\Logout;
