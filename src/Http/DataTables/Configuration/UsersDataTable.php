@@ -22,7 +22,6 @@
 
 namespace Seat\Web\Http\DataTables\Configuration;
 
-use Illuminate\Support\Facades\Gate;
 use Seat\Web\Models\User;
 use Yajra\DataTables\Services\DataTable;
 
@@ -55,11 +54,11 @@ class UsersDataTable extends DataTable
             ->editColumn('last_login_source', function ($row) {
                 return $row->last_login_source ?: '';
             })
+            ->editColumn('admin', function ($row) {
+                return view('web::configuration.users.partials.admin', compact('row'));
+            })
             ->editColumn('roles', function ($row) {
-                if (Gate::allows('global.superuser'))
-                    return sprintf('<span class="badge badge-danger">%d</span>', $row->roles->count());
-
-                return sprintf('<span class="badge badge-info">%d</span>', $row->roles->count());
+                return view('web::configuration.users.partials.roles', compact('row'));
             })
             ->editColumn('action', function ($row) {
                 return view('web::configuration.users.partials.actions', compact('row'));
@@ -115,6 +114,7 @@ class UsersDataTable extends DataTable
             ['data' => 'last_login', 'title' => trans('web::seat.last_login')],
             ['data' => 'last_login_source', 'title' => trans('web::seat.from')],
             ['data' => 'email', 'title' => trans('web::seat.email'), 'searchable' => false, 'orderable' => false],
+            ['data' => 'admin', 'title' => trans_choice('web::settings.admin', 1)],
             ['data' => 'roles', 'title' => trans_choice('web::seat.role', 0), 'orderable' => false],
         ];
     }

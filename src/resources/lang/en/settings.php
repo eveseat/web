@@ -21,7 +21,9 @@
  */
 
 return [
-    'jobs' => 'Job|Jobs',
-    'market_prices_region' => 'Market Prices Region',
+    'jobs'                      => 'Job|Jobs',
+    'market_prices_region'      => 'Market Prices Region',
     'market_prices_region_help' => 'This will be used by SeAT to collect market average prices from ESI. Those prices might be used in different place, like in contracts, fittings or mining ledgers.',
+    'admin'                     => 'Administrator|Administrators',
+    'admin_assist_edit'         => 'Attention, if you check this box, this user will get access to settings, users and permissions system. He will also bypass all the security layer due to its status. Proceed with caution.',
 ];
