@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2020 Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,8 @@ use Seat\Services\ReportParser\Parsers\MoonReport;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Tools\MoonsDataTable;
 use Seat\Web\Http\Validation\ProbeReport;
+use Illuminate\Http\Request;
+use Seat\Web\Http\DataTables\Scopes\MoonScope;
 
 /**
  * Class MoonsController.
@@ -52,7 +54,33 @@ class MoonsController extends Controller
             'standard' => UniverseMoonContent::standard()->count(),
         ];
 
-        return $dataTable->render('web::tools.moons.list', compact('stats'));
+        $regions = MapDenormalize::whereIn('typeID', [3,4])->orderBy('itemName')->get();
+        $constellations = MapDenormalize::whereIn('typeID', [4])->orderBy('itemName')->get();
+        $systems = MapDenormalize::whereIn('typeID', [5])->orderBy('itemName')->get();
+        $moonContents = [
+            'ubiquitous'    => 'ubiquitous',
+            'common'        => 'common',
+            'uncommon'      => 'uncommon',
+            'rare'          => 'rare',
+            'exceptional'   => 'exceptional'
+        ];
+
+        $regionID = request()->query('region_id','');
+        $constellationID = request()->query('constellation_id','');
+        $systemID = request()->query('system_id', '');
+        $moonSelections = request()->query('moon_selection','');
+        $moonInclusive = request()->query('moon_inclusive','');
+        // was getting null errors when empty...
+        if ($regionID == null) $regionID = "";
+        if ($constellationID == null) $constellationID = "";
+        if ($systemID == null) $systemID = "";
+        if ($moonSelections == null) $moonSelections = [];
+        if ($moonInclusive == null) $moonInclusive = false;
+
+        return $dataTable
+                ->addScope(new MoonScope($regionID,$constellationID,$systemID, $moonSelections, $moonInclusive))
+                ->render('web::tools.moons.list', compact(
+                    'stats', 'regions', 'constellations', 'systems', 'moonContents'));
     }
 
     /**
@@ -114,4 +142,5 @@ class MoonsController extends Controller
         return redirect()->back()
             ->with('success', trans('web::seat.probe_report_posted', ['lines' => count($parser->getGroups())]));
     }
+
 }

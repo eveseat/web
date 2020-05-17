@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2020 Leon Jacobs
+ * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 
 Route::group([
     'prefix' => '/moons/',
-    'middleware' => 'bouncer:moon.view_moon_reports',
+    'middleware' => 'bouncer:moons.view_moon_reports',
 ], function () {
     Route::get('/', [
         'as' => 'tools.moons.index',
@@ -37,6 +37,6 @@ Route::group([
     Route::post('/', [
         'as'   => 'tools.moons.store',
         'uses' => 'MoonsController@store',
-        'middleware' => 'bouncer:global.moon.create_moon_reports',
+        'middleware' => 'bouncer:moons.create_moon_reports',
     ]);
 });
