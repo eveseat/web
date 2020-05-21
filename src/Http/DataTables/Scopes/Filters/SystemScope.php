@@ -26,7 +26,7 @@ use Yajra\DataTables\Contracts\DataTableScope;
 
 /**
  * SystemScope.
- * 
+ *
  * Filters DataTable data by solarSystemID
  */
 class SystemScope implements DataTableScope
@@ -43,7 +43,7 @@ class SystemScope implements DataTableScope
      **/
     public function apply($query) {
         if (! empty($this->systemID)) $query->where('solarSystemID', $this->systemID);
-        
+
         return $query;
     }
 }

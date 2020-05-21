@@ -26,7 +26,7 @@ use Yajra\DataTables\Contracts\DataTableScope;
 
 /**
  * RegionScope.
- * 
+ *
  * Filters DataTable data by regionID
  */
 class RegionScope implements DataTableScope
@@ -43,7 +43,7 @@ class RegionScope implements DataTableScope
      **/
     public function apply($query) {
         if (! empty($this->regionID)) $query->where('regionID', $this->regionID);
-        
+
         return $query;
     }
 }

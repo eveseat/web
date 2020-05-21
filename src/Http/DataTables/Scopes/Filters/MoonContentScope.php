@@ -26,7 +26,7 @@ use Yajra\DataTables\Contracts\DataTableScope;
 
 /**
  * MoonContentScope.
- * 
+ *
  * Filters DataTable data by mooncontents
  */
 class MoonContentScope implements DataTableScope
@@ -54,31 +54,31 @@ class MoonContentScope implements DataTableScope
             $query->whereHas('moon_contents', function ($subQuery) {
                 foreach ($this->moonContents as $oreType) {
                     switch ($oreType) {
-                        case 'ubiquitous' :
+                        case 'ubiquitous':
                             $subQuery->whereHas('type', function ($type) {
                                 $type->where('marketGroupID', self::UBIQUITOUS);
                             });
                             break;
 
-                        case 'common' :
+                        case 'common':
                             $subQuery->whereHas('type', function ($type) {
                                 $type->where('marketGroupID', self::COMMON);
                             });
                             break;
 
-                        case 'uncommon' :
+                        case 'uncommon':
                             $subQuery->whereHas('type', function ($type) {
                                 $type->where('marketGroupID', self::UNCOMMON);
                             });
                             break;
                         
-                        case 'rare' :
+                        case 'rare':
                             $subQuery->whereHas('type', function ($type) {
                                 $type->where('marketGroupID', self::RARE);
                             });
                             break;
                         
-                        case 'exceptional' :
+                        case 'exceptional':
                             $subQuery->whereHas('type', function ($type) {
                                 $type->where('marketGroupID', self::EXCEPTIONAL);
                             });
@@ -91,5 +91,5 @@ class MoonContentScope implements DataTableScope
 
         return $query;
     }
-    
+
 }

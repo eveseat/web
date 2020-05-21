@@ -141,5 +141,4 @@ class MoonsController extends Controller
         return redirect()->back()
             ->with('success', trans('web::seat.probe_report_posted', ['lines' => count($parser->getGroups())]));
     }
-
 }
