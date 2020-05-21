@@ -20,23 +20,29 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::group([
-    'prefix' => '/moons/',
-    'middleware' => 'bouncer:moon.view_moon_reports',
-], function () {
-    Route::get('/', [
-        'as' => 'tools.moons.index',
-        'uses' => 'MoonsController@index',
-    ]);
+namespace Seat\Web\Http\DataTables\Scopes\Filters;
 
-    Route::get('/{id}', [
-        'as' => 'tools.moons.show',
-        'uses' => 'MoonsController@show',
-    ]);
+use Yajra\DataTables\Contracts\DataTableScope;
 
-    Route::post('/', [
-        'as'   => 'tools.moons.store',
-        'uses' => 'MoonsController@store',
-        'middleware' => 'bouncer:moon.create_moon_reports',
-    ]);
-});
+/**
+ * SystemScope
+ * 
+ * Filters DataTable data by solarSystemID
+ */
+class SystemScope implements DataTableScope
+{
+    public function __construct(string $systemID) {
+        $this->systemID = $systemID;
+    }
+
+    /**
+     * Apply a query scope
+     * 
+     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
+     * @return mixed
+     **/
+    public function apply($query) {
+        if (!empty($this->systemID)) $query->where('solarSystemID', $this->systemID);
+        return $query;
+    }
+}
