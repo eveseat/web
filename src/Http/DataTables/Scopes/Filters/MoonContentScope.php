@@ -68,12 +68,12 @@ class MoonContentScope implements DataTableScope
                             $subQuery->whereHas('type', function ($type) {
                                 $type->where('marketGroupID', self::UNCOMMON);
                             });
-                            break;   
+                            break;
                         case 'rare':
                             $subQuery->whereHas('type', function ($type) {
                                 $type->where('marketGroupID', self::RARE);
                             });
-                            break; 
+                            break;
                         case 'exceptional':
                             $subQuery->whereHas('type', function ($type) {
                                 $type->where('marketGroupID', self::EXCEPTIONAL);
@@ -86,4 +86,5 @@ class MoonContentScope implements DataTableScope
 
         return $query;
     }
+    
 }

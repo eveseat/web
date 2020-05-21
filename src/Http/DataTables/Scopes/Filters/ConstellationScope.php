@@ -46,4 +46,5 @@ class ConstellationScope implements DataTableScope
 
         return $query;
     }
+    
 }

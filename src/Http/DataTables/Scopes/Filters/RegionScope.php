@@ -46,4 +46,5 @@ class RegionScope implements DataTableScope
 
         return $query;
     }
+    
 }
