@@ -31,7 +31,7 @@ use Yajra\DataTables\Contracts\DataTableScope;
  */
 class ConstellationScope implements DataTableScope
 {
-    public function __construct(string $constellationID) {
+    public function __construct($constellationID) {
         $this->constellationID = $constellationID;
     }
 

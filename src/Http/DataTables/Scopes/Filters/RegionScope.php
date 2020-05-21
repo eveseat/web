@@ -31,7 +31,7 @@ use Yajra\DataTables\Contracts\DataTableScope;
  */
 class RegionScope implements DataTableScope
 {
-    public function __construct(string $regionID) {
+    public function __construct($regionID) {
         $this->regionID = $regionID;
     }
 

@@ -73,12 +73,7 @@ class MoonsController extends Controller
         $systemID = request()->query('system_id', '');
         $moonSelections = request()->query('moon_selection', '');
         $moonInclusive = request()->query('moon_inclusive', true);
-        // was getting null errors when empty...
-        if ($regionID == null) $regionID = '';
-        if ($constellationID == null) $constellationID = '';
-        if ($systemID == null) $systemID = '';
-        if ($moonSelections == null) $moonSelections = [];
-        if ($moonInclusive == null) $moonInclusive = false;
+
 
         return $dataTable
                 ->addScope(new RegionScope($regionID))

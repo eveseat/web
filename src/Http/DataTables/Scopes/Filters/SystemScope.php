@@ -31,7 +31,7 @@ use Yajra\DataTables\Contracts\DataTableScope;
  */
 class SystemScope implements DataTableScope
 {
-    public function __construct(string $systemID) {
+    public function __construct($systemID) {
         $this->systemID = $systemID;
     }
 
