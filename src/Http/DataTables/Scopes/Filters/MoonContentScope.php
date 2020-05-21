@@ -78,7 +78,7 @@ class MoonContentScope implements DataTableScope
                             $subQuery->whereHas('type', function ($type) {
                                 $type->where('marketGroupID', self::EXCEPTIONAL);
                             });
-                            break;      
+                            break;
                     }
                 }
             });
@@ -86,5 +86,4 @@ class MoonContentScope implements DataTableScope
 
         return $query;
     }
-    
 }

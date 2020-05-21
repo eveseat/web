@@ -46,5 +46,4 @@ class SystemScope implements DataTableScope
 
         return $query;
     }
-    
 }
