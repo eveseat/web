@@ -25,7 +25,7 @@ namespace Seat\Web\Http\DataTables\Scopes\Filters;
 use Yajra\DataTables\Contracts\DataTableScope;
 
 /**
- * RegionScope
+ * RegionScope.
  * 
  * Filters DataTable data by regionID
  */
@@ -36,13 +36,14 @@ class RegionScope implements DataTableScope
     }
 
     /**
-     * Apply a query scope
+     * Apply a query scope.
      * 
      * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
      * @return mixed
      **/
     public function apply($query) {
-        if (!empty($this->regionID)) $query->where('regionID', $this->regionID);
+        if (! empty($this->regionID)) $query->where('regionID', $this->regionID);
+        
         return $query;
     }
 }

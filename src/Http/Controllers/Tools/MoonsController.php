@@ -28,9 +28,9 @@ use Seat\Eveapi\Models\Universe\UniverseMoonContent;
 use Seat\Services\ReportParser\Exceptions\InvalidReportException;
 use Seat\Services\ReportParser\Parsers\MoonReport;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Http\DataTables\Scopes\Filters\RegionScope;
 use Seat\Web\Http\DataTables\Scopes\Filters\ConstellationScope;
 use Seat\Web\Http\DataTables\Scopes\Filters\MoonContentScope;
+use Seat\Web\Http\DataTables\Scopes\Filters\RegionScope;
 use Seat\Web\Http\DataTables\Scopes\Filters\SystemScope;
 use Seat\Web\Http\DataTables\Tools\MoonsDataTable;
 use Seat\Web\Http\Validation\ProbeReport;
@@ -72,14 +72,12 @@ class MoonsController extends Controller
         $constellationID = request()->query('constellation_id', '');
         $systemID = request()->query('system_id', '');
         $moonSelections = request()->query('moon_selection', '');
-        $moonInclusive = request()->query('moon_inclusive', true);
-
 
         return $dataTable
                 ->addScope(new RegionScope($regionID))
                 ->addScope(new ConstellationScope($constellationID))
                 ->addScope(new SystemScope($systemID))
-                ->addScope(new MoonContentScope($moonSelections, $moonInclusive))
+                ->addScope(new MoonContentScope($moonSelections))
                 ->render('web::tools.moons.list', compact(
                     'stats', 'regions', 'constellations', 'systems', 'moonContents'));
     }

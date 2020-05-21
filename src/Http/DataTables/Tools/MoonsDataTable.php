@@ -71,7 +71,7 @@ class MoonsDataTable extends DataTable
                 return view('web::tools.moons.buttons.show', compact('row'));
             })
             ->orderColumn('region', 'regionID $1')
-            ->orderColumn('constellation','constellationID $1')
+            ->orderColumn('constellation', 'constellationID $1')
             ->orderColumn('system', 'solarSystemID $1')
             ->make(true);
     }
@@ -94,7 +94,6 @@ class MoonsDataTable extends DataTable
                     d.constellation_id  = $("#constellation-selector").val();
                     d.system_id         = $("#system-selector").val();
                     d.moon_selection    = $("#moon-content-selector").val();
-                    d.moon_inclusive    = $("#moon-content-inclusive-selector:checked").is(":checked");
                 }',
             ]);
     }

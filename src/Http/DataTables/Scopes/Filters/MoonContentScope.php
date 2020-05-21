@@ -25,9 +25,9 @@ namespace Seat\Web\Http\DataTables\Scopes\Filters;
 use Yajra\DataTables\Contracts\DataTableScope;
 
 /**
- * RegionScope
+ * MoonContentScope.
  * 
- * Filters DataTable data by regionID
+ * Filters DataTable data by mooncontents
  */
 class MoonContentScope implements DataTableScope
 {
@@ -38,10 +38,9 @@ class MoonContentScope implements DataTableScope
     const RARE = 2400;
     const EXCEPTIONAL = 2401;
 
-    public function __construct($moonContents, $inclusive)
+    public function __construct($moonContents)
     {
         $this->moonContents = $moonContents;
-        $this->inclusive = $inclusive;
     }
 
     /**
@@ -51,44 +50,46 @@ class MoonContentScope implements DataTableScope
      * @return mixed
      **/
     public function apply($query) {
-        if (!empty($this->moonContents)) {
+        if (! empty($this->moonContents)) {
             $query->whereHas('moon_contents', function ($subQuery) {
                 foreach ($this->moonContents as $oreType) {
                     switch ($oreType) {
-                        case 'ubiquitous' : {
+                        case 'ubiquitous' :
                             $subQuery->whereHas('type', function ($type) {
                                 $type->where('marketGroupID', self::UBIQUITOUS);
                             });
                             break;
-                        }
-                        case 'common' : {
+
+                        case 'common' :
                             $subQuery->whereHas('type', function ($type) {
                                 $type->where('marketGroupID', self::COMMON);
                             });
                             break;
-                        }
-                        case 'uncommon' : {
+
+                        case 'uncommon' :
                             $subQuery->whereHas('type', function ($type) {
                                 $type->where('marketGroupID', self::UNCOMMON);
                             });
                             break;
-                        }
-                        case 'rare' : {
+                        
+                        case 'rare' :
                             $subQuery->whereHas('type', function ($type) {
                                 $type->where('marketGroupID', self::RARE);
                             });
                             break;
-                        }
-                        case 'exceptional' : {
+                        
+                        case 'exceptional' :
                             $subQuery->whereHas('type', function ($type) {
                                 $type->where('marketGroupID', self::EXCEPTIONAL);
                             });
                             break;
-                        }
+                        
                     }
                 }
             });
         }
+
         return $query;
     }
+    
 }
