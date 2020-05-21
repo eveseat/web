@@ -59,31 +59,26 @@ class MoonContentScope implements DataTableScope
                                 $type->where('marketGroupID', self::UBIQUITOUS);
                             });
                             break;
-
                         case 'common':
                             $subQuery->whereHas('type', function ($type) {
                                 $type->where('marketGroupID', self::COMMON);
                             });
                             break;
-
                         case 'uncommon':
                             $subQuery->whereHas('type', function ($type) {
                                 $type->where('marketGroupID', self::UNCOMMON);
                             });
-                            break;
-                        
+                            break;   
                         case 'rare':
                             $subQuery->whereHas('type', function ($type) {
                                 $type->where('marketGroupID', self::RARE);
                             });
-                            break;
-                        
+                            break; 
                         case 'exceptional':
                             $subQuery->whereHas('type', function ($type) {
                                 $type->where('marketGroupID', self::EXCEPTIONAL);
                             });
-                            break;
-                        
+                            break;      
                     }
                 }
             });
