@@ -65,3 +65,13 @@ Route::get('/regions', [
     'as'   => 'fastlookup.regions',
     'uses' => 'FastLookupController@getRegions',
 ]);
+
+Route::get('/constellations', [
+    'as'   => 'fastlookup.constellations',
+    'uses' => 'FastLookupController@getConstellations',
+]);
+
+Route::get('/systems', [
+    'as'   => 'fastlookup.systems',
+    'uses' => 'FastLookupController@getSystems',
+]);

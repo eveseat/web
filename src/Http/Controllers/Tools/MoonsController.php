@@ -22,14 +22,13 @@
 
 namespace Seat\Web\Http\Controllers\Tools;
 
-use Illuminate\Http\Request;
 use Seat\Eveapi\Models\Sde\MapDenormalize;
-use Seat\Eveapi\Models\Universe\UniverseMoonContent;
 use Seat\Services\ReportParser\Exceptions\InvalidReportException;
 use Seat\Services\ReportParser\Parsers\MoonReport;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Scopes\Filters\ConstellationScope;
-use Seat\Web\Http\DataTables\Scopes\Filters\MoonContentScope;
+use Seat\Web\Http\DataTables\Scopes\Filters\MoonProductScope;
+use Seat\Web\Http\DataTables\Scopes\Filters\MoonRankScope;
 use Seat\Web\Http\DataTables\Scopes\Filters\RegionScope;
 use Seat\Web\Http\DataTables\Scopes\Filters\SystemScope;
 use Seat\Web\Http\DataTables\Tools\MoonsDataTable;
@@ -49,37 +48,45 @@ class MoonsController extends Controller
     public function index(MoonsDataTable $dataTable)
     {
         $stats = (object) [
-            'ubiquitous' => UniverseMoonContent::ubiquitous()->count(),
-            'common' => UniverseMoonContent::common()->count(),
-            'uncommon' => UniverseMoonContent::uncommon()->count(),
-            'rare' => UniverseMoonContent::rare()->count(),
-            'exceptional' => UniverseMoonContent::exceptional()->count(),
-            'standard' => UniverseMoonContent::standard()->count(),
+            'ubiquitous' => MapDenormalize::ubiquitous()->count(),
+            'common' => MapDenormalize::common()->count(),
+            'uncommon' => MapDenormalize::uncommon()->count(),
+            'rare' => MapDenormalize::rare()->count(),
+            'exceptional' => MapDenormalize::exceptional()->count(),
+            'standard' => MapDenormalize::standard()->count(),
         ];
 
-        $regions = MapDenormalize::whereIn('typeID', [3, 4])->orderBy('itemName')->get();
-        $constellations = MapDenormalize::whereIn('typeID', [4])->orderBy('itemName')->get();
-        $systems = MapDenormalize::whereIn('typeID', [5])->orderBy('itemName')->get();
-        $moonContents = [
-            'ubiquitous'    => 'ubiquitous',
-            'common'        => 'common',
-            'uncommon'      => 'uncommon',
-            'rare'          => 'rare',
-            'exceptional'   => 'exceptional',
+        $groups = [
+            MapDenormalize::UBIQUITOUS  => trans('web::moons.ubiquitous'),
+            MapDenormalize::COMMON      => trans('web::moons.common'),
+            MapDenormalize::UNCOMMON    => trans('web::moons.uncommon'),
+            MapDenormalize::RARE        => trans('web::moons.rare'),
+            MapDenormalize::EXCEPTIONAL => trans('web::moons.exceptional'),
         ];
 
-        $regionID = request()->query('region_id', '');
-        $constellationID = request()->query('constellation_id', '');
-        $systemID = request()->query('system_id', '');
-        $moonSelections = request()->query('moon_selection', '');
+        $region_id = intval(request()->query('region_id', 0));
+        $constellation_id = intval(request()->query('constellation_id', 0));
+        $system_id = intval(request()->query('system_id', 0));
+        $rank_selection = request()->query('rank_selection', []);
+        $product_selection = request()->query('product_selection', []);
+
+        if ($region_id != 0)
+            $dataTable->addScope(new RegionScope($region_id));
+
+        if ($constellation_id != 0)
+            $dataTable->addScope(new ConstellationScope($constellation_id));
+
+        if ($system_id != 0)
+            $dataTable->addScope(new SystemScope($system_id));
+
+        if (! empty($rank_selection))
+            $dataTable->addScope(new MoonRankScope($rank_selection));
+
+        if (! empty($product_selection))
+            $dataTable->addScope(new MoonProductScope($product_selection));
 
         return $dataTable
-                ->addScope(new RegionScope($regionID))
-                ->addScope(new ConstellationScope($constellationID))
-                ->addScope(new SystemScope($systemID))
-                ->addScope(new MoonContentScope($moonSelections))
-                ->render('web::tools.moons.list', compact(
-                    'stats', 'regions', 'constellations', 'systems', 'moonContents'));
+                ->render('web::tools.moons.list', compact('stats', 'groups'));
     }
 
     /**
@@ -88,9 +95,10 @@ class MoonsController extends Controller
      */
     public function show(int $id)
     {
-        $moon = MapDenormalize::with('moon_contents', 'moon_contents.type', 'moon_contents.type.materials',
-            'moon_contents.type.materials.type', 'moon_contents.type.materials.type.reactions',
-            'moon_contents.type.materials.type.reactions.price')->find($id);
+        $moon = MapDenormalize::with(
+            'moon_content', 'moon_content.price', 'moon_content.materials', 'moon_content.materials.price',
+            'moon_content.materials.reactions', 'moon_content.materials.reactions.components')
+            ->find($id);
 
         return view('web::tools.moons.modals.components.content', compact('moon'));
     }
@@ -118,17 +126,16 @@ class MoonsController extends Controller
                 // iterate over each moons components
                 foreach ($moon->getElements() as $component) {
 
+                    $universe_moon = MapDenormalize::find($component->moonID);
+
                     if ($loop_first) {
                         $loop_first = false;
 
                         // search for any existing and outdated report regarding current moon
-                        UniverseMoonContent::where('moon_id', (int) $component->moonID)
-                            ->delete();
+                        $universe_moon->moon_content()->detach();
                     }
 
-                    UniverseMoonContent::create([
-                        'moon_id' => (int) $component->moonID,
-                        'type_id' => (int) $component->oreTypeID,
+                    $universe_moon->moon_content()->attach($component->oreTypeID, [
                         'rate' => (float) $component->quantity,
                     ]);
                 }

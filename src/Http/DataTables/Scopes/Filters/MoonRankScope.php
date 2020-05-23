@@ -25,33 +25,40 @@ namespace Seat\Web\Http\DataTables\Scopes\Filters;
 use Yajra\DataTables\Contracts\DataTableScope;
 
 /**
- * RegionScope.
+ * MoonRankScope.
  *
- * Filters DataTable data by regionID
+ * Filters DataTable data by moon contents.
  */
-class RegionScope implements DataTableScope
+class MoonRankScope implements DataTableScope
 {
     /**
-     * @var int
+     * @var int[]
      */
-    private $region_id;
+    private $groups;
 
     /**
-     * RegionScope constructor.
+     * MoonRankScope constructor.
      *
-     * @param int $region_id
+     * @param int[] $groups
      */
-    public function __construct(int $region_id) {
-        $this->region_id = $region_id;
+    public function __construct(array $groups)
+    {
+        $this->groups = $groups;
     }
 
     /**
      * Apply a query scope.
      *
-     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
-     */
+     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
+     * @return mixed
+     **/
     public function apply($query) {
-        return $query->where('regionID', $this->region_id);
+        foreach ($this->groups as $group_id) {
+            $query->whereHas('moon_content', function ($type) use ($group_id) {
+                $type->where('marketGroupID', $group_id);
+            });
+        }
+
+        return $query;
     }
 }

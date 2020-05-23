@@ -637,6 +637,7 @@ return [
     'current_format'               => 'Current Format',
     'thousands_seperator'          => 'Thousands Separator',
     'decimal_seperator'            => 'Decimal Separator',
+    'reprocessing_yield'           => 'Reprocessing Yield',
     'email_notifications'          => 'Email Notifications',
     'setup_token_now'              => 'Setup Token Now',
     'owned_keys'                   => 'Owned Keys',
