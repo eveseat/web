@@ -23,7 +23,6 @@
 namespace Seat\Web\Http\DataTables\Tools;
 
 use Seat\Eveapi\Models\Sde\MapDenormalize;
-use Seat\Eveapi\Models\Universe\UniverseMoonContent;
 use Yajra\DataTables\Services\DataTable;
 
 /**
@@ -40,17 +39,17 @@ class MoonsDataTable extends DataTable
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
-            ->editColumn('region', function ($item) {
-                return $item->region->itemName;
+            ->editColumn('region.itemName', function ($row) {
+                return $row->region->itemName;
             })
-            ->editColumn('constellation', function ($item) {
-                return $item->constellation->itemName;
+            ->editColumn('constellation.itemName', function ($row) {
+                return $row->constellation->itemName;
             })
-            ->editColumn('system', function ($item) {
-                return $item->system->itemName;
+            ->editColumn('system.itemName', function ($row) {
+                return $row->system->itemName;
             })
-            ->editColumn('planet', function ($item) {
-                return $item->planet->itemName;
+            ->editColumn('planet.itemName', function ($row) {
+                return $row->planet->itemName;
             })
             ->editColumn('sovereignty', function ($row) {
                 switch (true) {
@@ -70,9 +69,6 @@ class MoonsDataTable extends DataTable
             ->editColumn('action', function ($row) {
                 return view('web::tools.moons.buttons.show', compact('row'));
             })
-            ->orderColumn('region', 'regionID $1')
-            ->orderColumn('constellation', 'constellationID $1')
-            ->orderColumn('system', 'solarSystemID $1')
             ->make(true);
     }
 
@@ -82,6 +78,7 @@ class MoonsDataTable extends DataTable
     public function html()
     {
         return $this->builder()
+            ->dom('Brtip')
             ->postAjax()
             ->columns($this->getColumns())
             ->addAction()
@@ -89,11 +86,12 @@ class MoonsDataTable extends DataTable
                 'drawCallback' => 'function() { ids_to_names(); }',
             ])
             ->ajax([
-                'data' => 'function (d) { 
-                    d.region_id         = $("#region-selector").val();
-                    d.constellation_id  = $("#constellation-selector").val();
-                    d.system_id         = $("#system-selector").val();
-                    d.moon_selection    = $("#moon-content-selector").val();
+                'data' => 'function (d) {
+                    d.region_id         = $("#dt-filters-region").val() === null ? 0 : $("#dt-filters-region").val();
+                    d.constellation_id  = $("#dt-filters-constellation").val() === null ? 0 : $("#dt-filters-constellation").val();
+                    d.system_id         = $("#dt-filters-system").val() === null ? 0 : $("#dt-filters-system").val();
+                    d.rank_selection    = $("#dt-filters-rank").val() === null ? [] : $("#dt-filters-rank").val();
+                    d.product_selection = $("#dt-filters-product").val() === null ? [] : $("#dt-filters-product").val();
                 }',
             ]);
     }
@@ -103,10 +101,10 @@ class MoonsDataTable extends DataTable
      */
     public function query()
     {
-        return MapDenormalize::whereIn(
-            'itemID', UniverseMoonContent::groupBy('moon_id')->pluck('moon_id'))
+        return MapDenormalize::moons()
+            ->has('moon_content')
             ->with('planet', 'system', 'constellation', 'region', 'sovereignty', 'sovereignty.faction',
-                   'sovereignty.alliance', 'sovereignty.corporation', 'moon_contents', 'moon_contents.type');
+                   'sovereignty.alliance', 'sovereignty.corporation', 'moon_content');
     }
 
     /**
@@ -115,32 +113,12 @@ class MoonsDataTable extends DataTable
     public function getColumns() {
         return [
             ['data' => 'itemName', 'title' => trans_choice('web::moons.moon', 1)],
-            [
-                'data'  => 'region',
-                'title' => trans_choice('web::moons.region', 1),
-            ],
-            [
-                'data'  => 'constellation',
-                'title' => trans_choice('web::moons.constellation', 1),
-            ],
-            [
-                'data'  => 'system',
-                'title' => trans_choice('web::moons.system', 1),
-            ],
-            [
-                'data'  => 'planet',
-                'title' => trans_choice('web::moons.planet', 1),
-            ],
-            [
-                'data'  => 'sovereignty',
-                'title' => trans_choice('web::moons.sovereignty', 1),
-                'orderable' => false,
-            ],
-            [
-                'data'  => 'indicators',
-                'title' => trans_choice('web::moons.indicator', 0),
-                'orderable' => false,
-            ],
+            ['data'  => 'region.itemName', 'title' => trans_choice('web::moons.region', 1), 'orderable' => false],
+            ['data'  => 'constellation.itemName', 'title' => trans_choice('web::moons.constellation', 1), 'orderable' => false],
+            ['data'  => 'system.itemName', 'title' => trans_choice('web::moons.system', 1), 'orderable' => false],
+            ['data'  => 'planet.itemName', 'title' => trans_choice('web::moons.planet', 1), 'orderable' => false],
+            ['data'  => 'sovereignty', 'title' => trans_choice('web::moons.sovereignty', 1), 'orderable' => false, 'searchable' => false],
+            ['data'  => 'indicators', 'title' => trans_choice('web::moons.indicator', 0), 'orderable' => false, 'searchable' => false],
         ];
     }
 }

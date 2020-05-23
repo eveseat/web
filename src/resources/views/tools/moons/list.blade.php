@@ -50,9 +50,5 @@
 
 @push('javascript')
   {!! $dataTable->scripts() !!}
-  <script>
-    // Hide the builtin DataTable search bar
-    $('#dataTableBuilder_filter').css("display","none");
-  </script>
   @include('web::includes.javascript.id-to-name')
 @endpush
