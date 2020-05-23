@@ -53,11 +53,9 @@ class MoonProductScope implements DataTableScope
     public function apply($query)
     {
         foreach ($this->types as $type_id) {
-            $query->whereHas('moon_content', function ($content) use ($type_id) {
-                $content->whereHas('type', function ($type) use ($type_id) {
-                    $type->whereHas('materials', function ($material) use ($type_id) {
-                        $material->where('materialTypeID', $type_id);
-                    });
+            $query->whereHas('moon_content', function ($type) use ($type_id) {
+                $type->whereHas('materials', function ($material) use ($type_id) {
+                    $material->where('materialTypeID', $type_id);
                 });
             });
         }
