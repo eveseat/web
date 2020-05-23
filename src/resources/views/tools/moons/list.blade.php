@@ -17,6 +17,7 @@
       </div>
     </div>
     <div class="card-body">
+      @include('web::tools.moons.filters.moon-filter')<br>
       {!! $dataTable->table(['class' => 'table table-hover']) !!}
     </div>
     <div class="card-footer">
@@ -49,5 +50,9 @@
 
 @push('javascript')
   {!! $dataTable->scripts() !!}
+  <script>
+    // Hide the builtin DataTable search bar
+    $('#dataTableBuilder_filter').css("display","none");
+  </script>
   @include('web::includes.javascript.id-to-name')
 @endpush

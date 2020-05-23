@@ -22,11 +22,16 @@
 
 namespace Seat\Web\Http\Controllers\Tools;
 
+use Illuminate\Http\Request;
 use Seat\Eveapi\Models\Sde\MapDenormalize;
 use Seat\Eveapi\Models\Universe\UniverseMoonContent;
 use Seat\Services\ReportParser\Exceptions\InvalidReportException;
 use Seat\Services\ReportParser\Parsers\MoonReport;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Scopes\Filters\ConstellationScope;
+use Seat\Web\Http\DataTables\Scopes\Filters\MoonContentScope;
+use Seat\Web\Http\DataTables\Scopes\Filters\RegionScope;
+use Seat\Web\Http\DataTables\Scopes\Filters\SystemScope;
 use Seat\Web\Http\DataTables\Tools\MoonsDataTable;
 use Seat\Web\Http\Validation\ProbeReport;
 
@@ -52,7 +57,29 @@ class MoonsController extends Controller
             'standard' => UniverseMoonContent::standard()->count(),
         ];
 
-        return $dataTable->render('web::tools.moons.list', compact('stats'));
+        $regions = MapDenormalize::whereIn('typeID', [3, 4])->orderBy('itemName')->get();
+        $constellations = MapDenormalize::whereIn('typeID', [4])->orderBy('itemName')->get();
+        $systems = MapDenormalize::whereIn('typeID', [5])->orderBy('itemName')->get();
+        $moonContents = [
+            'ubiquitous'    => 'ubiquitous',
+            'common'        => 'common',
+            'uncommon'      => 'uncommon',
+            'rare'          => 'rare',
+            'exceptional'   => 'exceptional',
+        ];
+
+        $regionID = request()->query('region_id', '');
+        $constellationID = request()->query('constellation_id', '');
+        $systemID = request()->query('system_id', '');
+        $moonSelections = request()->query('moon_selection', '');
+
+        return $dataTable
+                ->addScope(new RegionScope($regionID))
+                ->addScope(new ConstellationScope($constellationID))
+                ->addScope(new SystemScope($systemID))
+                ->addScope(new MoonContentScope($moonSelections))
+                ->render('web::tools.moons.list', compact(
+                    'stats', 'regions', 'constellations', 'systems', 'moonContents'));
     }
 
     /**
