@@ -33,7 +33,7 @@
   <dt>{{ trans('web::seat.self_destruct') }}</dt>
   <dd>{{ $extraction->natural_decay_time }}</dd>
 </dl>
-@if (! $extraction->moon->moon_contents->isEmpty())
+@if (! $extraction->moon->moon_content->isEmpty())
 <table class="table table-striped">
   <thead>
     <tr>
@@ -43,36 +43,34 @@
     </tr>
   </thead>
   <tbody>
-    @foreach($extraction->moon->moon_contents as $content)
-    @if(! is_null($content->type))
-    <tr>
-      <td>
-        @include('web::partials.type', ['type_id' => $content->type->typeID, 'type_name' => $content->type->typeName])
-      </td>
-      <td>{{ number_format($content->rate * 100) }} %</td>
-      <td>
-        @switch($content->type->marketGroupID)
-          @case(2396)
-            <span class="badge badge-success">Gaz</span>
-            @break
-          @case(2397)
-            <span class="badge badge-primary">R8</span>
-            @break
-          @case(2398)
-            <span class="badge badge-info">R16</span>
-            @break
-          @case(2400)
-            <span class="badge badge-warning">R32</span>
-            @break
-          @case(2401)
-            <span class="badge badge-danger">R64</span>
-            @break
-          @default
-            <span class="badge badge-default">ORE</span>
-        @endswitch
-      </td>
-    </tr>
-    @endif
+    @foreach($extraction->moon->moon_content as $type)
+      <tr>
+        <td>
+          @include('web::partials.type', ['type_id' => $type->typeID, 'type_name' => $type->typeName])
+        </td>
+        <td>{{ number_format($type->pivot->rate * 100) }} %</td>
+        <td>
+          @switch($type->marketGroupID)
+            @case(2396)
+              <span class="badge badge-success">Gaz</span>
+              @break
+            @case(2397)
+              <span class="badge badge-primary">R8</span>
+              @break
+            @case(2398)
+              <span class="badge badge-info">R16</span>
+              @break
+            @case(2400)
+              <span class="badge badge-warning">R32</span>
+              @break
+            @case(2401)
+              <span class="badge badge-danger">R64</span>
+              @break
+            @default
+              <span class="badge badge-default">ORE</span>
+          @endswitch
+        </td>
+      </tr>
     @endforeach
   </tbody>
 </table>

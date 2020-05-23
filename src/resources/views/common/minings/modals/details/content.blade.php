@@ -35,14 +35,14 @@
     </tr>
   </thead>
   <tbody>
-    @foreach($entries->first()->type->materials as $material)
+    @foreach($entries->first()->type->materials as $type)
       <tr>
         <td>
-          @include('web::partials.type', ['type_id' => $material->type->typeID, 'type_name' => $material->type->typeName])
+          @include('web::partials.type', ['type_id' => $type->typeID, 'type_name' => $type->typeName])
         </td>
-        <td>{{ number_format(intdiv($entries->sum('quantity'), 100) * $material->quantity * 0.80) }}</td>
-        <td>{{ number_format(intdiv($entries->sum('quantity'), 100) * $material->quantity * 0.80 * $material->type->volume, 2) }}</td>
-        <td>{{ number_format(intdiv($entries->sum('quantity'), 100) * $material->quantity * 0.80 * $material->type->price->average, 2) }}</td>
+        <td>{{ number_format(intdiv($entries->sum('quantity'), 100) * $type->pivot->quantity * 0.80) }}</td>
+        <td>{{ number_format(intdiv($entries->sum('quantity'), 100) * $type->pivot->quantity * 0.80 * $type->volume, 2) }}</td>
+        <td>{{ number_format(intdiv($entries->sum('quantity'), 100) * $type->pivot->quantity * 0.80 * $type->price->average, 2) }}</td>
       </tr>
     @endforeach
   </tbody>

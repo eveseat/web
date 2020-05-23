@@ -68,6 +68,7 @@ class ProfileSettings extends FormRequest
             'mail_threads'        => 'required|in:' . $mail_threads,
             'thousand_seperator'  => 'nullable|in:" ",",","."|size:1',
             'decimal_seperator'   => 'required|in:",","."|size:1',
+            'reprocessing_yield'  => 'required|numeric|min:0|max:1',
             'email_notifications' => 'required|in:yes,no',
         ];
     }

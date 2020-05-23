@@ -282,13 +282,18 @@ class FastLookupController extends Controller
         }
 
         $items = InvType::where('typeName', 'like', '%' . $request->query('q', '') . '%')
-            ->where('published', true)
-            ->orderBy('typeName')
+            ->where('published', true);
+
+        if (! empty($request->query('market_filters', [])))
+            $items = $items->whereIn('marketGroupID', $request->query('market_filters'));
+
+        $items = $items->orderBy('typeName')
             ->get()
             ->map(function ($item, $key) {
                 return [
-                    'id' => $item->typeID,
+                    'id'   => $item->typeID,
                     'text' => $item->typeName,
+                    'img'  => img('types', 'icon', $item->typeID, 32, ['class' => 'img-circle eve-icon small-icon'], false),
                 ];
             });
 
@@ -350,7 +355,7 @@ class FastLookupController extends Controller
             ]);
         }
 
-        $regions = MapDenormalize::where('typeID', 3)
+        $regions = MapDenormalize::regions()
             ->whereRaw('itemName LIKE ?', ["%{$request->query('q', '')}%"])
             ->select('itemID', 'itemName')
             ->orderBy('itemName')
@@ -364,6 +369,89 @@ class FastLookupController extends Controller
 
         return response()->json([
             'results' => $regions,
+        ]);
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getConstellations(Request $request)
+    {
+        if ($request->query('_type', 'query') == 'find') {
+            $constellation = MapDenormalize::find($request->query('q', 0));
+
+            if (is_null($constellation)) {
+                return response()->json();
+            }
+
+            return response()->json([
+                'id'   => $constellation->itemID,
+                'text' => $constellation->itemName,
+            ]);
+        }
+
+        $constellations = MapDenormalize::constellations()
+            ->whereRaw('itemName LIKE ?', ["%{$request->query('q', '')}%"]);
+
+        if ($request->query('region_filter', 0) != 0)
+            $constellations->where('regionID', intval($request->query('region_filter')));
+
+        $constellations = $constellations->select('itemID', 'itemName')
+            ->orderBy('itemName')
+            ->get()
+            ->map(function ($constellation) {
+                return [
+                    'id'   => $constellation->itemID,
+                    'text' => $constellation->itemName,
+                ];
+            });
+
+        return response()->json([
+            'results' => $constellations,
+        ]);
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getSystems(Request $request)
+    {
+        if ($request->query('_type', 'query') == 'find') {
+            $system = MapDenormalize::find($request->query('q', 0));
+
+            if (is_null($system)) {
+                return response()->json();
+            }
+
+            return response()->json([
+                'id'   => $system->itemID,
+                'text' => $system->itemName,
+            ]);
+        }
+
+        $systems = MapDenormalize::systems()
+            ->whereRaw('itemName LIKE ?', ["%{$request->query('q', '')}%"]);
+
+        if ($request->query('region_filter', 0) != 0)
+            $systems = $systems->where('regionID', intval($request->query('region_filter')));
+
+        if ($request->query('constellation_filter', 0) != 0)
+            $systems = $systems->where('constellationID', intval($request->query('constellation_filter')));
+
+        $systems = $systems->select('itemID', 'itemName')
+            ->orderBy('itemName')
+            ->get()
+            ->map(function ($system) {
+                return [
+                    'id'       => $system->itemID,
+                    'text'     => $system->itemName,
+                ];
+            });
+
+        return response()->json([
+            'results' => $systems,
         ]);
     }
 }

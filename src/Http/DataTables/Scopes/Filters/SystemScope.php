@@ -31,19 +31,27 @@ use Yajra\DataTables\Contracts\DataTableScope;
  */
 class SystemScope implements DataTableScope
 {
-    public function __construct($systemID) {
-        $this->systemID = $systemID;
+    /**
+     * @var int
+     */
+    private $system_id;
+
+    /**
+     * SystemScope constructor.
+     *
+     * @param int $system_id
+     */
+    public function __construct(int $system_id) {
+        $this->system_id = $system_id;
     }
 
     /**
      * Apply a query scope.
      *
-     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
-     * @return mixed
-     **/
+     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
+     */
     public function apply($query) {
-        if (! empty($this->systemID)) $query->where('solarSystemID', $this->systemID);
-
-        return $query;
+        return $query->where('solarSystemID', $this->system_id);
     }
 }
