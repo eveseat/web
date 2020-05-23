@@ -25,25 +25,33 @@ namespace Seat\Web\Http\DataTables\Scopes\Filters;
 use Yajra\DataTables\Contracts\DataTableScope;
 
 /**
- * ConstelationScope.
+ * ConstellationScope.
  *
  * Filters DataTable data by constellationID
  */
 class ConstellationScope implements DataTableScope
 {
-    public function __construct($constellationID) {
-        $this->constellationID = $constellationID;
+    /**
+     * @var int
+     */
+    private $constellation_id;
+
+    /**
+     * ConstellationScope constructor.
+     *
+     * @param int $constellation_id
+     */
+    public function __construct(int $constellation_id) {
+        $this->constellation_id = $constellation_id;
     }
 
     /**
      * Apply a query scope.
      *
-     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
-     * @return mixed
-     **/
+     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
+     */
     public function apply($query) {
-        if (! empty($this->constellationID)) $query->where('constellationID', $this->constellationID);
-
-        return $query;
+        return $query->where('constellationID', $this->constellation_id);
     }
 }

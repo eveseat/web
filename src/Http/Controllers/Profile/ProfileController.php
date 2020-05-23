@@ -100,6 +100,7 @@ class ProfileController extends Controller
 
         Profile::set('thousand_seperator', $request->thousand_seperator);
         Profile::set('decimal_seperator', $request->decimal_seperator);
+        Profile::set('reprocessing_yield', $request->reprocessing_yield);
 
         Profile::set('email_notifications', $request->email_notifications);
 
