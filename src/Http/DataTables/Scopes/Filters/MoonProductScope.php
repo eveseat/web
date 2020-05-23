@@ -25,7 +25,7 @@ namespace Seat\Web\Http\DataTables\Scopes\Filters;
 use Yajra\DataTables\Contracts\DataTableScope;
 
 /**
- * Class MoonProductScope
+ * Class MoonProductScope.
  *
  * @package Seat\Web\Http\DataTables\Scopes\Filters
  */
