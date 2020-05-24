@@ -27,8 +27,10 @@ use Illuminate\Http\Request;
 use Seat\Eveapi\Models\Alliances\Alliance;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
+use Seat\Eveapi\Models\Sde\Constellation;
 use Seat\Eveapi\Models\Sde\InvType;
-use Seat\Eveapi\Models\Sde\MapDenormalize;
+use Seat\Eveapi\Models\Sde\Region;
+use Seat\Eveapi\Models\Sde\SolarSystem;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\User;
 
@@ -343,27 +345,26 @@ class FastLookupController extends Controller
     public function getRegions(Request $request)
     {
         if ($request->query('_type', 'query') == 'find') {
-            $region = MapDenormalize::find($request->query('q', 0));
+            $region = Region::find($request->query('q', 0));
 
             if (is_null($region)) {
                 return response()->json();
             }
 
             return response()->json([
-                'id'   => $region->itemID,
-                'text' => $region->itemName,
+                'id'   => $region->region_id,
+                'text' => $region->name,
             ]);
         }
 
-        $regions = MapDenormalize::regions()
-            ->whereRaw('itemName LIKE ?', ["%{$request->query('q', '')}%"])
-            ->select('itemID', 'itemName')
-            ->orderBy('itemName')
+        $regions = Region::whereRaw('name LIKE ?', ["%{$request->query('q', '')}%"])
+            ->select('region_id', 'name')
+            ->orderBy('name')
             ->get()
             ->map(function ($region) {
                 return [
-                    'id'   => $region->itemID,
-                    'text' => $region->itemName,
+                    'id'   => $region->region_id,
+                    'text' => $region->name,
                 ];
             });
 
@@ -379,31 +380,30 @@ class FastLookupController extends Controller
     public function getConstellations(Request $request)
     {
         if ($request->query('_type', 'query') == 'find') {
-            $constellation = MapDenormalize::find($request->query('q', 0));
+            $constellation = Constellation::find($request->query('q', 0));
 
             if (is_null($constellation)) {
                 return response()->json();
             }
 
             return response()->json([
-                'id'   => $constellation->itemID,
-                'text' => $constellation->itemName,
+                'id'   => $constellation->constellation_id,
+                'text' => $constellation->name,
             ]);
         }
 
-        $constellations = MapDenormalize::constellations()
-            ->whereRaw('itemName LIKE ?', ["%{$request->query('q', '')}%"]);
+        $constellations = Constellation::whereRaw('name LIKE ?', ["%{$request->query('q', '')}%"]);
 
         if ($request->query('region_filter', 0) != 0)
-            $constellations->where('regionID', intval($request->query('region_filter')));
+            $constellations->where('region_id', intval($request->query('region_filter')));
 
-        $constellations = $constellations->select('itemID', 'itemName')
-            ->orderBy('itemName')
+        $constellations = $constellations->select('constellation_id', 'name')
+            ->orderBy('name')
             ->get()
             ->map(function ($constellation) {
                 return [
-                    'id'   => $constellation->itemID,
-                    'text' => $constellation->itemName,
+                    'id'   => $constellation->constellation_id,
+                    'text' => $constellation->name,
                 ];
             });
 
@@ -419,34 +419,33 @@ class FastLookupController extends Controller
     public function getSystems(Request $request)
     {
         if ($request->query('_type', 'query') == 'find') {
-            $system = MapDenormalize::find($request->query('q', 0));
+            $system = SolarSystem::find($request->query('q', 0));
 
             if (is_null($system)) {
                 return response()->json();
             }
 
             return response()->json([
-                'id'   => $system->itemID,
-                'text' => $system->itemName,
+                'id'   => $system->system_id,
+                'text' => $system->name,
             ]);
         }
 
-        $systems = MapDenormalize::systems()
-            ->whereRaw('itemName LIKE ?', ["%{$request->query('q', '')}%"]);
+        $systems = SolarSystem::whereRaw('name LIKE ?', ["%{$request->query('q', '')}%"]);
 
         if ($request->query('region_filter', 0) != 0)
-            $systems = $systems->where('regionID', intval($request->query('region_filter')));
+            $systems = $systems->where('region_id', intval($request->query('region_filter')));
 
         if ($request->query('constellation_filter', 0) != 0)
-            $systems = $systems->where('constellationID', intval($request->query('constellation_filter')));
+            $systems = $systems->where('constellation_id', intval($request->query('constellation_filter')));
 
-        $systems = $systems->select('itemID', 'itemName')
-            ->orderBy('itemName')
+        $systems = $systems->select('system_id', 'name')
+            ->orderBy('name')
             ->get()
             ->map(function ($system) {
                 return [
-                    'id'       => $system->itemID,
-                    'text'     => $system->itemName,
+                    'id'       => $system->system_id,
+                    'text'     => $system->name,
                 ];
             });
 

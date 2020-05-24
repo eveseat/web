@@ -52,6 +52,6 @@ class SystemScope implements DataTableScope
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
      */
     public function apply($query) {
-        return $query->where('solarSystemID', $this->system_id);
+        return $query->where('moons.system_id', $this->system_id);
     }
 }

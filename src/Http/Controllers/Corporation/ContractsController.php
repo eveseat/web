@@ -64,11 +64,11 @@ class ContractsController extends Controller
             'lines.type',
             'lines.type.group',
             'start_location',
-            'start_location.system',
-            'start_location.system.region',
+            'start_location.solar_system',
+            'start_location.solar_system.region',
             'end_location',
-            'end_location.system',
-            'end_location.system.region'
+            'end_location.solar_system',
+            'end_location.solar_system.region'
         )->find($contract_id);
 
         return view('web::common.contracts.modals.details.content', compact('contract'));

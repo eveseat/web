@@ -7,8 +7,8 @@
     @else
       {{ sprintf('%s %s', trans('web::seat.unknown'), trans('web::seat.constellation')) }}
     @endif
-    @if (! is_null($extraction->moon->system))
-      | {{ $extraction->moon->system->name }}
+    @if (! is_null($extraction->moon->solar_system))
+      | {{ $extraction->moon->solar_system->name }}
     @else
       {{ sprintf('%s %s', trans('web::seat.unknown'), trans('web::seat.system')) }}
     @endif
@@ -33,7 +33,7 @@
   <dt>{{ trans('web::seat.self_destruct') }}</dt>
   <dd>{{ $extraction->natural_decay_time }}</dd>
 </dl>
-@if (! $extraction->moon->moon_content->isEmpty())
+@if (! $extraction->moon->content->isEmpty())
 <table class="table table-striped">
   <thead>
     <tr>
@@ -43,7 +43,7 @@
     </tr>
   </thead>
   <tbody>
-    @foreach($extraction->moon->moon_content as $type)
+    @foreach($extraction->moon->content as $type)
       <tr>
         <td>
           @include('web::partials.type', ['type_id' => $type->typeID, 'type_name' => $type->typeName])
