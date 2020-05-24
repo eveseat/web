@@ -1,4 +1,4 @@
-<a href="//evemaps.dotlan.net/system/{{ $row->system->itemName }}" target="_blank">
+<a href="//evemaps.dotlan.net/system/{{ $row->solar_system->name }}" target="_blank">
   <span class="fas fa-map-marker-alt"></span>
 </a>
-{{ $row->system->itemName }}
+{{ $row->solar_system->name }}

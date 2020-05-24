@@ -22,7 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
-use Seat\Eveapi\Models\Sde\MapDenormalize;
+use Seat\Eveapi\Models\Sde\SolarSystem;
 use Seat\Eveapi\Models\Sde\StaStation;
 use Seat\Eveapi\Models\Universe\UniverseStructure;
 use Seat\Services\Repositories\Corporation\Members;
@@ -95,8 +95,14 @@ class TrackingController extends Controller
 
                 $system_ids = collect();
 
-                if(strlen($keyword) > 1)
-                    $system_ids = MapDenormalize::where('itemName', 'like', '%' . $keyword . '%')->select('itemID')->get()->map(function ($system) { return $system->itemID; });
+                if(strlen($keyword) > 1) {
+                    $system_ids = SolarSystem::where('name', 'like', '%' . $keyword . '%')
+                        ->select('system_id')
+                        ->get()
+                        ->map(function ($system) {
+                            return $system->system_id;
+                        });
+                }
 
                 $station_ids = StaStation::where('stationName', 'like', '%' . $keyword . '%')->get()->map(function ($station) { return $station->stationID; });
                 $structure_ids = UniverseStructure::where('name', 'like', '%' . $keyword . '%')->get()->map(function ($structure) { return $structure->structure_id; });

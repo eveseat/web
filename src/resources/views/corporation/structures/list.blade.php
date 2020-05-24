@@ -37,7 +37,7 @@
                     @include('web::partials.type', ['type_id' => $structure->type->typeID, 'type_name' => $structure->type->typeName])
                   </td>
                   <td>
-                    {{ $structure->system->itemName }}
+                    {{ $structure->solar_system->name }}
                   </td>
                   <td>
                     {{ optional($structure->info)->name }}

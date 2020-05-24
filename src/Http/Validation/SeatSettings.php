@@ -59,7 +59,7 @@ class SeatSettings extends FormRequest
             'cleanup_data'         => 'required|in:' . $allowed_cleanup,
             'admin_contact'        => 'required|email',
             'allow_tracking'       => 'required|in:' . $allowed_tracking,
-            'market_prices_region' => 'required|exists:mapDenormalize,itemID',
+            'market_prices_region' => 'required|exists:regions,region_id',
         ];
     }
 }

@@ -40,7 +40,7 @@ class CustomOfficeDataTable extends DataTable
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
-            ->editColumn('planet.itemName', function ($row) {
+            ->editColumn('planet.name', function ($row) {
                 return view('web::partials.planet', ['planet' => $row->planet]);
             })
             ->addColumn('reinforcement', function ($row) {
@@ -114,7 +114,7 @@ class CustomOfficeDataTable extends DataTable
     public function getColumns()
     {
         return [
-            ['data' => 'planet.itemName',   'title' => trans('web::custom_offices.planet')],
+            ['data' => 'planet.name',       'title' => trans('web::custom_offices.planet')],
             ['data' => 'reinforcement',     'title' => trans('web::custom_offices.reinforcement')],
             ['data' => 'alliance',          'title' => trans('web::custom_offices.alliance')],
             ['data' => 'standings',         'title' => trans('web::custom_offices.standings')],

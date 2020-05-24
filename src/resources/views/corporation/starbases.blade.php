@@ -22,7 +22,7 @@
         <div class="card hidden" id="starbaseDetail{{ $starbase->starbase_id }}">
           <div class="card-header">
             <h3 class="card-title">
-              {{ $starbase->type->name }} <i>({{ $starbase->moon->itemName }})</i>
+              {{ $starbase->type->name }} <i>({{ $starbase->moon->name }})</i>
             </h3>
           </div>
           <div class="card-body">

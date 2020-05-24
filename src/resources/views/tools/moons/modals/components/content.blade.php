@@ -1,4 +1,4 @@
-<h4>{{ $moon->itemName }}</h4>
+<h4>{{ $moon->name }}</h4>
 <p class="lead">Provided figures are based on a chunk of one hour with {{ number_format(20000, 2) }} m3. Reprocessed figures are based on a {{ (setting('reprocessing_yield') ?: 0.80) * 100 }}% reprocessing yield.</p>
 
 <h4>Raw Materials</h4>
@@ -14,7 +14,7 @@
     </tr>
   </thead>
   <tbody>
-    @foreach($moon->moon_content as $type)
+    @foreach($moon->content as $type)
       <tr>
         <td>
           @include('web::partials.type', ['type_id' => $type->typeID, 'type_name' => $type->typeName])
@@ -42,7 +42,7 @@
   </thead>
   <tbody>
     @foreach(
-      $moon->moon_content->map(function ($type) {
+      $moon->content->map(function ($type) {
         return $type->materials->map(function ($material) use ($type) {
           // composite quantity = (moon rate * chunk volume) / composite volume
           // reprocessed quantity = composite quantity * material quantity / 100
@@ -73,7 +73,7 @@
     </tr>
   </thead>
   <tbody>
-    @foreach($moon->moon_content->filter(function ($type) {
+    @foreach($moon->content->filter(function ($type) {
         if (! $type->materials)
             return false;
 

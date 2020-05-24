@@ -47,8 +47,8 @@ abstract class AbstractMiningDataTable extends DataTable
             ->editColumn('action', function ($row) {
                 return view('web::common.minings.buttons.details', compact('row'));
             })
-            ->editColumn('system.itemName', function ($row) {
-                return view('web::partials.system', ['system' => $row->system->itemName, 'security' => $row->system->security]);
+            ->editColumn('solar_system.name', function ($row) {
+                return view('web::partials.system', ['system' => $row->solar_system->name, 'security' => $row->solar_system->security]);
             })
             ->editColumn('type.typeName', function ($row) {
                 return view('web::partials.type', ['type_id' => $row->type->typeID, 'type_name' => $row->type->typeName]);
@@ -98,7 +98,7 @@ abstract class AbstractMiningDataTable extends DataTable
     {
         return [
             ['data' => 'date', 'title' => trans('web::mining.date')],
-            ['data' => 'system.itemName', 'title' => trans('web::mining.system')],
+            ['data' => 'solar_system.name', 'title' => trans('web::mining.system')],
             ['data' => 'type.typeName', 'title' => trans('web::mining.ore')],
             ['data' => 'quantity', 'title' => trans('web::mining.quantity')],
             ['data' => 'volume', 'title' => trans('web::mining.volume'), 'orderable' => false],

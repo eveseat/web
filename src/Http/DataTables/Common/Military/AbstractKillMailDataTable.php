@@ -52,10 +52,10 @@ abstract class AbstractKillMailDataTable extends DataTable
                     'type_name' => $row->victim->ship->typeName,
                 ]);
             })
-            ->editColumn('detail.system.itemName', function ($row) {
+            ->editColumn('detail.solar_system.name', function ($row) {
                 return view('web::partials.system', [
-                    'system' => $row->detail->system->itemName,
-                    'security' => $row->detail->system->security,
+                    'system' => $row->detail->solar_system->name,
+                    'security' => $row->detail->solar_system->security,
                 ]);
             })
             ->editColumn('victim.character.name', function ($row) {
@@ -122,7 +122,7 @@ abstract class AbstractKillMailDataTable extends DataTable
      */
     public function query()
     {
-        return Killmail::with('detail', 'detail.system',
+        return Killmail::with('detail', 'detail.solar_system',
             'victim', 'victim.character', 'victim.corporation', 'victim.alliance', 'victim.faction', 'victim.ship',
             'attackers', 'attackers.character', 'attackers.corporation', 'attackers.alliance', 'attackers.faction');
     }
@@ -135,7 +135,7 @@ abstract class AbstractKillMailDataTable extends DataTable
         return [
             ['data' => 'detail.killmail_time', 'title' => trans('web::kills.date')],
             ['data' => 'victim.ship.typeName', 'title' => trans('web::kills.ship')],
-            ['data' => 'detail.system.itemName', 'title' => trans('web::kills.solar_system')],
+            ['data' => 'detail.solar_system.name', 'title' => trans('web::kills.solar_system')],
             ['data' => 'victim.character.name', 'title' => trans('web::kills.victim'), 'orderable' => false],
             ['data' => 'killer', 'title' => trans('web::kills.killer'), 'orderable' => false],
         ];
