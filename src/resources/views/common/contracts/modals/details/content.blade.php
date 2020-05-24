@@ -31,11 +31,11 @@
   <tbody>
     <tr>
       <th>Start Location</th>
-      <td>{{ $contract->start_location->name }} - {{ $contract->start_location->system->constellation->itemName }} - {{ $contract->start_location->system->region->itemName }}</td>
+      <td>{{ $contract->start_location->name }} - {{ $contract->start_location->solar_system->constellation->name }} - {{ $contract->start_location->solar_system->region->name }}</td>
     </tr>
     <tr>
       <th>End Location</th>
-      <td>{{ $contract->end_location->name }} - {{ $contract->end_location->system->constellation->itemName }} - {{ $contract->end_location->system->region->itemName }}</td>
+      <td>{{ $contract->end_location->name }} - {{ $contract->end_location->solar_system->constellation->name }} - {{ $contract->end_location->solar_system->region->name }}</td>
     </tr>
   </tbody>
 </table>

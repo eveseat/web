@@ -54,7 +54,7 @@ class StructureController extends Controller
      */
     public function show(int $corporation_id, int $structure_id)
     {
-        $structure = CorporationStructure::with('info', 'type', 'services', 'items', 'items.type', 'items.type.dogma_attributes', 'system')
+        $structure = CorporationStructure::with('info', 'type', 'services', 'items', 'items.type', 'items.type.dogma_attributes', 'solar_system')
             ->where('corporation_id', $corporation_id)
             ->where('structure_id', $structure_id)
             ->first();

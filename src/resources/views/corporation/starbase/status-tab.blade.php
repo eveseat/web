@@ -44,10 +44,10 @@
       <dl class="dl-horizontal">
 
         <dt>{{ trans('web::seat.system') }}</dt>
-        <dd>{{ $starbase->system->itemName }}</dd>
+        <dd>{{ $starbase->solar_system->name }}</dd>
 
         <dt>{{ trans('web::seat.moon') }}</dt>
-        <dd>{{ $starbase->moon->itemName }}</dd>
+        <dd>{{ $starbase->moon->name }}</dd>
 
         <dt>{{ trans('web::seat.security') }}</dt>
         <dd>
@@ -161,7 +161,7 @@
 
         <dt>{{ trans('web::seat.sov_bonus') }}</dt>
         <dd>
-          @if($starbase->system->sovereignty->alliance_id == $sheet->alliance_id || $starbase->system->sovereignty->corporation_id == $starbase->corporation_id)
+          @if($starbase->solar_system->sovereignty->alliance_id == $sheet->alliance_id || $starbase->solar_system->sovereignty->corporation_id == $starbase->corporation_id)
             <span class="text-success">
               {{ trans('web::seat.yes') }}
             </span>
@@ -172,7 +172,7 @@
 
         <dt>{{ trans('web::seat.fuel_usage') }}</dt>
         <dd>
-          @if($starbase->system->sovereignty->alliance_id == $sheet->alliance_id || $starbase->system->sovereignty->corporation_id == $starbase->corporation_id)
+          @if($starbase->solar_system->sovereignty->alliance_id == $sheet->alliance_id || $starbase->solar_system->sovereignty->corporation_id == $starbase->corporation_id)
             {{ ceil($starbase->baseFuelUsage * 0.75) }}
           @else
             {{ $starbase->baseFuelUsage }}
@@ -182,7 +182,7 @@
 
         <dt>{{ trans('web::seat.stront_usage') }}</dt>
         <dd>
-          @if($starbase->system->sovereignty->alliance_id == $sheet->alliance_id || $starbase->system->sovereignty->corporation_id == $starbase->corporation_id)
+          @if($starbase->solar_system->sovereignty->alliance_id == $sheet->alliance_id || $starbase->solar_system->sovereignty->corporation_id == $starbase->corporation_id)
             {{ ceil($starbase->baseStrontiumUsage * 0.75) }}
           @else
             {{ $starbase->baseStrontiumUsage }}
@@ -193,7 +193,7 @@
 
         <dt>{{ trans('web::seat.offline') }}</dt>
         <dd>
-          @if($starbase->system->sovereignty->alliance_id == $sheet->alliance_id || $starbase->system->sovereignty->corporation_id == $starbase->corporation_id)
+          @if($starbase->solar_system->sovereignty->alliance_id == $sheet->alliance_id || $starbase->solar_system->sovereignty->corporation_id == $starbase->corporation_id)
             {{
               carbon('now')->addHours((optional($starbase->fuelBays->whereIn('type_id', [4051, 4246, 4247, 4312, 36945]))->first()->quantity ?? 0) / ceil($starbase->baseFuelUsage * 0.75))
                 ->diffForHumans()
@@ -218,7 +218,7 @@
             {{ $starbase->reinforced_until }}
             <i>({{ human_diff($starbase->reinforced_until) }})</i>
           @else
-            @if($starbase->system->sovereignty->alliance_id == $sheet->alliance_id || $starbase->system->sovereignty->corporation_id == $starbase->corporation_id)
+            @if($starbase->solar_system->sovereignty->alliance_id == $sheet->alliance_id || $starbase->solar_system->sovereignty->corporation_id == $starbase->corporation_id)
               {{
                 round((optional($starbase->fuelBays->where('type_id', 16275))->first()->quantity ?? 0) / ceil($starbase->baseStrontiumUsage * 0.75))
               }} hours at

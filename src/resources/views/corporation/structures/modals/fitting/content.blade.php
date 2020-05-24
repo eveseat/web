@@ -32,7 +32,7 @@
   <div class="col-4">
     <dl>
       <dt>Location</dt>
-      <dd>{{ $structure->system->itemName }}</dd>
+      <dd>{{ $structure->solar_system->name }}</dd>
     </dl>
   </div>
   <div class="col-4">

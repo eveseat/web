@@ -22,7 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Tools;
 
-use Seat\Eveapi\Models\Sde\MapDenormalize;
+use Seat\Eveapi\Models\Sde\Moon;
 use Yajra\DataTables\Services\DataTable;
 
 /**
@@ -39,26 +39,26 @@ class MoonsDataTable extends DataTable
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
-            ->editColumn('region.itemName', function ($row) {
-                return $row->region->itemName;
+            ->editColumn('region.name', function ($row) {
+                return $row->region->name;
             })
-            ->editColumn('constellation.itemName', function ($row) {
-                return $row->constellation->itemName;
+            ->editColumn('constellation.name', function ($row) {
+                return $row->constellation->name;
             })
-            ->editColumn('system.itemName', function ($row) {
-                return $row->system->itemName;
+            ->editColumn('solar_system.name', function ($row) {
+                return $row->solar_system->name;
             })
-            ->editColumn('planet.itemName', function ($row) {
-                return $row->planet->itemName;
+            ->editColumn('planet.name', function ($row) {
+                return $row->planet->name;
             })
-            ->editColumn('sovereignty', function ($row) {
+            ->editColumn('solar_system.sovereignty', function ($row) {
                 switch (true) {
-                    case ! is_null($row->system->sovereignty->faction_id):
-                        return view('web::partials.faction', ['faction' => $row->system->sovereignty->faction]);
-                    case ! is_null($row->system->sovereignty->alliance_id):
-                        return view('web::partials.alliance', ['alliance' => $row->system->sovereignty->alliance]);
-                    case ! is_null($row->system->sovereignty->corporation_id):
-                        return view('web::partials.corporation', ['corporation' => $row->system->sovereignty->corporation]);
+                    case ! is_null($row->solar_system->sovereignty->faction_id):
+                        return view('web::partials.faction', ['faction' => $row->solar_system->sovereignty->faction]);
+                    case ! is_null($row->solar_system->sovereignty->alliance_id):
+                        return view('web::partials.alliance', ['alliance' => $row->solar_system->sovereignty->alliance]);
+                    case ! is_null($row->solar_system->sovereignty->corporation_id):
+                        return view('web::partials.corporation', ['corporation' => $row->solar_system->sovereignty->corporation]);
                     default:
                         return '';
                 }
@@ -101,10 +101,9 @@ class MoonsDataTable extends DataTable
      */
     public function query()
     {
-        return MapDenormalize::moons()
-            ->has('moon_content')
-            ->with('planet', 'system', 'constellation', 'region', 'sovereignty', 'sovereignty.faction',
-                   'sovereignty.alliance', 'sovereignty.corporation', 'moon_content');
+        return Moon::has('content')
+            ->with('planet', 'solar_system', 'constellation', 'region', 'solar_system.sovereignty', 'solar_system.sovereignty.faction',
+                   'solar_system.sovereignty.alliance', 'solar_system.sovereignty.corporation', 'content');
     }
 
     /**
@@ -112,13 +111,13 @@ class MoonsDataTable extends DataTable
      */
     public function getColumns() {
         return [
-            ['data' => 'itemName', 'title' => trans_choice('web::moons.moon', 1)],
-            ['data'  => 'region.itemName', 'title' => trans_choice('web::moons.region', 1), 'orderable' => false],
-            ['data'  => 'constellation.itemName', 'title' => trans_choice('web::moons.constellation', 1), 'orderable' => false],
-            ['data'  => 'system.itemName', 'title' => trans_choice('web::moons.system', 1), 'orderable' => false],
-            ['data'  => 'planet.itemName', 'title' => trans_choice('web::moons.planet', 1), 'orderable' => false],
-            ['data'  => 'sovereignty', 'title' => trans_choice('web::moons.sovereignty', 1), 'orderable' => false, 'searchable' => false],
-            ['data'  => 'indicators', 'title' => trans_choice('web::moons.indicator', 0), 'orderable' => false, 'searchable' => false],
+            ['data' => 'name', 'title' => trans_choice('web::moons.moon', 1)],
+            ['data' => 'region.name', 'title' => trans_choice('web::moons.region', 1)],
+            ['data' => 'constellation.name', 'title' => trans_choice('web::moons.constellation', 1)],
+            ['data' => 'solar_system.name', 'title' => trans_choice('web::moons.system', 1)],
+            ['data' => 'planet.name', 'title' => trans_choice('web::moons.planet', 1)],
+            ['data' => 'solar_system.sovereignty', 'title' => trans_choice('web::moons.sovereignty', 1), 'orderable' => false, 'searchable' => false],
+            ['data' => 'indicators', 'title' => trans_choice('web::moons.indicator', 0), 'orderable' => false, 'searchable' => false],
         ];
     }
 }
