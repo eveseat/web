@@ -42,7 +42,7 @@
                     title="" data-original-title="{{ $starbase->type->typeName }}">
                 @include('web::partials.type', ['type_id' => $starbase->type_id, 'type_name' => $starbase->type->typeName])
               </span>
-            @if($starbase->system->sovereignty->alliance_id == $sheet->alliance_id || $starbase->system->sovereignty->corporation_id == $starbase->corporation_id)
+            @if($starbase->solar_system->sovereignty->alliance_id == $sheet->alliance_id || $starbase->solar_system->sovereignty->corporation_id == $starbase->corporation_id)
 
               @if(carbon('now')->diffInHours(carbon('now')->addHours(optional($starbase->fuelBays->whereIn('type_id', [4051, 4246, 4247, 4312, 36945]))->first()->quantity ?? 0/ ceil($starbase->baseFuelUsage * 0.75))) < 24)
                 <span class="text-red float-right"><i>{{ trans('web::seat.low_fuel') }} !</i></span>
@@ -61,7 +61,7 @@
             @endif
           </td>
           <td>
-            <b>{{ $starbase->moon->itemName }}</b>
+            <b>{{ $starbase->moon->name }}</b>
             <span class="
                 @if($starbase->moon->security >= 0.5)
                     text-green
@@ -83,13 +83,13 @@
             </div>
           </td>
           <td data-order="
-          @if($starbase->system->sovereignty->alliance_id == $sheet->alliance_id || $starbase->system->sovereignty->corporation_id == $starbase->corporation_id)
+          @if($starbase->solar_system->sovereignty->alliance_id == $sheet->alliance_id || $starbase->solar_system->sovereignty->corporation_id == $starbase->corporation_id)
           {{ carbon('now')->addHours((optional($starbase->fuelBays->whereIn('type_id', [4051, 4246, 4247, 4312, 36945]))->first()->quantity ?? 0) / ceil($starbase->baseFuelUsage * 0.75)) }}
           @else
           {{ carbon('now')->addHours($starbase->fuelBlocks / $starbase->baseFuelUsage)  }}
           @endif
                   ">
-            @if($starbase->system->sovereignty->alliance_id == $sheet->alliance_id || $starbase->system->sovereignty->corporation_id == $starbase->corporation_id)
+            @if($starbase->solar_system->sovereignty->alliance_id == $sheet->alliance_id || $starbase->solar_system->sovereignty->corporation_id == $starbase->corporation_id)
               {{
                 carbon('now')->addHours((optional($starbase->fuelBays->whereIn('type_id', [4051, 4246, 4247, 4312, 36945]))->first()->quantity ?? 0) / ceil($starbase->baseFuelUsage * 0.75))
                   ->diffForHumans()

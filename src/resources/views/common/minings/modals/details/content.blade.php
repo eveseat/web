@@ -14,7 +14,7 @@
         @include('web::partials.date', ['datetime' => $entries->first()->date])
       </td>
       <td class="text-center">
-        @include('web::partials.system', ['system' => $entries->first()->system->itemName, 'security' => $entries->first()->system->security])
+        @include('web::partials.system', ['system' => $entries->first()->solar_system->name, 'security' => $entries->first()->solar_system->security])
       </td>
       <td class="text-center">
         @include('web::partials.type', ['type_id' => $entries->first()->type->typeID, 'type_name' => $entries->first()->type->typeName])

@@ -6,9 +6,9 @@
       <dt>Solar System</dt>
       <dd>
         @if($asset->location_flag == 'AssetSafety' || $asset->location_type == 'station')
-          @include('web::partials.system', ['system' => $asset->station->system->itemName, 'security' => $asset->station->system->security])
+          @include('web::partials.system', ['system' => $asset->station->solar_system->name, 'security' => $asset->station->solar_system->security])
         @else
-          @include('web::partials.system', ['system' => $asset->container->container->system->itemName, 'security' => $asset->container->container->system->security])
+          @include('web::partials.system', ['system' => $asset->container->container->solar_system->name, 'security' => $asset->container->container->solar_system->security])
         @endif
       </dd>
     </dl>

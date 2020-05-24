@@ -52,6 +52,6 @@ class ConstellationScope implements DataTableScope
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
      */
     public function apply($query) {
-        return $query->where('constellationID', $this->constellation_id);
+        return $query->where('moons.constellation_id', $this->constellation_id);
     }
 }

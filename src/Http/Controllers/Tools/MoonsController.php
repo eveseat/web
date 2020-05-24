@@ -22,7 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Tools;
 
-use Seat\Eveapi\Models\Sde\MapDenormalize;
+use Seat\Eveapi\Models\Sde\Moon;
 use Seat\Services\ReportParser\Exceptions\InvalidReportException;
 use Seat\Services\ReportParser\Parsers\MoonReport;
 use Seat\Web\Http\Controllers\Controller;
@@ -48,20 +48,20 @@ class MoonsController extends Controller
     public function index(MoonsDataTable $dataTable)
     {
         $stats = (object) [
-            'ubiquitous' => MapDenormalize::ubiquitous()->count(),
-            'common' => MapDenormalize::common()->count(),
-            'uncommon' => MapDenormalize::uncommon()->count(),
-            'rare' => MapDenormalize::rare()->count(),
-            'exceptional' => MapDenormalize::exceptional()->count(),
-            'standard' => MapDenormalize::standard()->count(),
+            'ubiquitous' => Moon::ubiquitous()->count(),
+            'common' => Moon::common()->count(),
+            'uncommon' => Moon::uncommon()->count(),
+            'rare' => Moon::rare()->count(),
+            'exceptional' => Moon::exceptional()->count(),
+            'standard' => Moon::standard()->count(),
         ];
 
         $groups = [
-            MapDenormalize::UBIQUITOUS  => trans('web::moons.ubiquitous'),
-            MapDenormalize::COMMON      => trans('web::moons.common'),
-            MapDenormalize::UNCOMMON    => trans('web::moons.uncommon'),
-            MapDenormalize::RARE        => trans('web::moons.rare'),
-            MapDenormalize::EXCEPTIONAL => trans('web::moons.exceptional'),
+            Moon::UBIQUITOUS  => trans('web::moons.ubiquitous'),
+            Moon::COMMON      => trans('web::moons.common'),
+            Moon::UNCOMMON    => trans('web::moons.uncommon'),
+            Moon::RARE        => trans('web::moons.rare'),
+            Moon::EXCEPTIONAL => trans('web::moons.exceptional'),
         ];
 
         $region_id = intval(request()->query('region_id', 0));
@@ -95,9 +95,9 @@ class MoonsController extends Controller
      */
     public function show(int $id)
     {
-        $moon = MapDenormalize::with(
-            'moon_content', 'moon_content.price', 'moon_content.materials', 'moon_content.materials.price',
-            'moon_content.materials.reactions', 'moon_content.materials.reactions.components')
+        $moon = Moon::with(
+            'content', 'content.price', 'content.materials', 'content.materials.price',
+            'content.materials.reactions', 'content.materials.reactions.components')
             ->find($id);
 
         return view('web::tools.moons.modals.components.content', compact('moon'));
@@ -126,16 +126,16 @@ class MoonsController extends Controller
                 // iterate over each moons components
                 foreach ($moon->getElements() as $component) {
 
-                    $universe_moon = MapDenormalize::find($component->moonID);
+                    $universe_moon = Moon::find($component->moonID);
 
                     if ($loop_first) {
                         $loop_first = false;
 
                         // search for any existing and outdated report regarding current moon
-                        $universe_moon->moon_content()->detach();
+                        $universe_moon->content()->detach();
                     }
 
-                    $universe_moon->moon_content()->attach($component->oreTypeID, [
+                    $universe_moon->content()->attach($component->oreTypeID, [
                         'rate' => (float) $component->quantity,
                     ]);
                 }
