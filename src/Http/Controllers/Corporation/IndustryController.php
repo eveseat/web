@@ -42,7 +42,7 @@ class IndustryController extends Controller
      */
     public function index(CorporationInfo $corporation, IndustryDataTable $dataTable)
     {
-        return $dataTable->addScope(new CorporationScope([$corporation->corporation_id]))
+        return $dataTable->addScope(new CorporationScope('corporation.industry', [$corporation->corporation_id]))
             ->addScope(new IndustryStatusScope(request()->input('filters.status')))
             ->addScope(new IndustryActivityScope(request()->input('filters.activity')))
             ->render('web::corporation.industry', compact('corporation'));

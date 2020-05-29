@@ -22,8 +22,8 @@
 
 namespace Seat\Web\Http\DataTables\Scopes;
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Gate;
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Yajra\DataTables\Contracts\DataTableScope;
 
 /**
@@ -37,22 +37,18 @@ use Yajra\DataTables\Contracts\DataTableScope;
 class CharacterMailScope implements DataTableScope
 {
     /**
-     * @var array
+     * @var int[]
      */
-    private $character_ids = [];
+    private $requested_characters;
 
     /**
      * CharacterMailScope constructor.
      *
-     * @param int $character_id
-     * @param array|null $character_ids
+     * @param int[]|null $character_ids
      */
-    public function __construct(int $character_id, ?array $character_ids)
+    public function __construct(?array $character_ids)
     {
-        if (is_null($character_ids))
-            $character_ids = [];
-
-        $this->character_ids = array_merge([$character_id], $character_ids);
+        $this->requested_characters = $character_ids;
     }
 
     /**
@@ -65,22 +61,59 @@ class CharacterMailScope implements DataTableScope
     {
         return $query->whereHas('recipients', function ($sub_query) {
 
-            $character_ids = [];
-            $map = Arr::get(auth()->user()->getAffiliationMap(), 'char');
+            if ($this->requested_characters != null) {
+                $character_ids = collect($this->requested_characters)->filter(function ($item) {
+                    return Gate::allows('character.mail', [$item]);
+                });
 
-            // in case user is super, apply filter over all requested characters
-            if (Gate::allows('global.superuser')) {
-                $character_ids = $this->character_ids;
+                return $character_ids->count() == count($this->requested_characters) ?
+                    $sub_query->whereIn('recipient_id', $this->requested_characters) :
+                    $sub_query->whereIn('recipient_id', []);
             }
 
-            // otherwise, determine to which character the user has access and include them in applied filters
-            // reject each other
-            if (empty($character_ids)) {
-                foreach ($this->character_ids as $character_id) {
-                    if (in_array(Arr::has($map, (int) $character_id), ['character.*', 'character.mail']))
-                        $character_ids[] = (int) $character_id;
-                }
-            }
+            if (auth()->user()->isAdmin())
+                return $sub_query;
+
+            // collect metadata related to required permission
+            $permissions = auth()->user()->roles()->with('permissions')->get()
+                ->pluck('permissions')
+                ->flatten()
+                ->filter(function ($permission) {
+                    return $permission->title == 'character.mail';
+                });
+
+            // in case at least one permission is granted without restrictions, return all
+            if ($permissions->filter(function ($permission) { return ! $permission->hasFilters(); })->isNotEmpty())
+                return $sub_query;
+
+            // extract entity ids and group by entity type
+            $map = $permissions->map(function ($permission) {
+                $filters = json_decode($permission->pivot->filters);
+
+                return [
+                    'characters'   => collect($filters->character ?? [])->pluck('id')->toArray(),
+                    'corporations' => collect($filters->corporation ?? [])->pluck('id')->toArray(),
+                    'alliances'    => collect($filters->alliance ?? [])->pluck('id')->toArray(),
+                ];
+            });
+
+            // collect at least user owned characters
+            $owned_range = auth()->user()->associatedCharacterIds()->toArray();
+
+            $characters_range = $map->pluck('characters')->flatten()->toArray();
+
+            $corporations_range = CharacterInfo::whereHas('affiliation', function ($affiliation) use ($map) {
+                $affiliation->whereIn('corporation_id', $map->pluck('corporations')->flatten()->toArray());
+            })->select('character_id')->get()->pluck('character_id')->toArray();
+
+            $alliances_range = CharacterInfo::whereHas('affiliation', function ($affiliation) use ($map) {
+                $affiliation->whereIn('alliance_id', $map->pluck('alliances')->flatten()->toArray());
+            })->select('character_id')->get()->pluck('character_id')->toArray();
+
+            // merge all collected characters IDs in a single array and apply filter
+            $character_ids = array_merge(
+                $characters_range, $corporations_range, $alliances_range, $owned_range,
+                $map->pluck('corporations')->flatten()->toArray(), $map->pluck('alliances')->flatten()->toArray());
 
             return $sub_query->whereIn('recipient_id', $character_ids);
         });

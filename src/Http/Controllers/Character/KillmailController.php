@@ -41,7 +41,7 @@ class KillmailController extends Controller
     public function index(CharacterInfo $character, KillMailDataTable $dataTable)
     {
         return $dataTable
-            ->addScope(new KillMailCharacterScope('character.killmail', $character->character_id, request()->input('characters', [])))
+            ->addScope(new KillMailCharacterScope(request()->input('characters', [])))
             ->render('web::character.killmails', compact('character'));
 
     }

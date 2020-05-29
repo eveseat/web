@@ -42,7 +42,7 @@ class StandingsController extends Controller
     public function index(CharacterInfo $character, StandingDataTable $dataTable)
     {
         return $dataTable
-            ->addScope(new CharacterScope('character.standing', $character->character_id, request()->input('characters', [])))
+            ->addScope(new CharacterScope('character.standing', request()->input('characters', [])))
             ->render('web::character.standings', compact('character'));
     }
 }

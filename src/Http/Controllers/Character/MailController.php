@@ -46,7 +46,7 @@ class MailController extends Controller
     public function index(CharacterInfo $character, MailDataTable $dataTable)
     {
         return $dataTable
-            ->addScope(new CharacterMailScope($character->character_id, request()->input('characters', [])))
+            ->addScope(new CharacterMailScope(request()->input('characters', [])))
             ->render('web::character.mail', compact('character'));
     }
 

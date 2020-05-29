@@ -57,7 +57,7 @@ class AssetsController extends Controller
                 array_push($division_ids, ($key + 1));
         }
 
-        return $dataTable->addScope(new CorporationScope([$corporation->corporation_id]))
+        return $dataTable->addScope(new CorporationScope('corporation.asset', [$corporation->corporation_id]))
             ->addScope(new CorporationAssetDivisionsScope($division_ids))
             ->render('web::corporation.assets.assets', compact('corporation'));
     }

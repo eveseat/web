@@ -49,6 +49,9 @@ class CharacterPolicy extends AbstractEntityPolicy
         $character = $args[1];
         $ability = sprintf('character.%s', $method);
 
+        if (is_numeric($character))
+            $character = CharacterInfo::find($character);
+
         return $this->userHasPermission($user, $ability, function () use ($user, $character, $ability) {
 
             // in case the user is owning requested character or is the CEO of it

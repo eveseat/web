@@ -43,7 +43,7 @@ class IndustryController extends Controller
     public function index(CharacterInfo $character, IndustryDataTable $dataTable)
     {
         return $dataTable
-            ->addScope(new CharacterScope('character.industry', $character->character_id, request()->input('characters', [])))
+            ->addScope(new CharacterScope('character.industry', request()->input('characters', [])))
             ->addScope(new IndustryStatusScope(request()->input('filters.status')))
             ->addScope(new IndustryActivityScope(request()->input('filters.activity')))
             ->render('web::character.industry', compact('character'));

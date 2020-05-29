@@ -42,7 +42,7 @@ class NotificationsController extends Controller
     public function index(CharacterInfo $character, NotificationDataTable $dataTable)
     {
         return $dataTable
-            ->addScope(new CharacterScope('character.notification', $character->character_id, request()->input('characters', [])))
+            ->addScope(new CharacterScope('character.notification', request()->input('characters', [])))
             ->render('web::character.notifications', compact('character'));
     }
 }

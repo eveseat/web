@@ -42,13 +42,8 @@ class CharacterController extends Controller
      */
     public function index(CharacterDataTable $dataTable)
     {
-        if (Gate::allows('global.superuser'))
-            return $dataTable->render('web::character.list');
-
-        $allowed_characters = array_keys(Arr::get(auth()->user()->getAffiliationMap(), 'char'));
-
         return $dataTable
-            ->addScope(new CharacterScope('character.sheet', auth()->user()->id, $allowed_characters))
+            ->addScope(new CharacterScope)
             ->render('web::character.list');
     }
 

@@ -44,7 +44,7 @@ class ContractsController extends Controller
     public function index(CharacterInfo $character, ContractDataTable $dataTable)
     {
         return $dataTable
-            ->addScope(new CharacterScope('character.contract', $character->character_id, request()->input('characters')))
+            ->addScope(new CharacterScope('character.contract', request()->input('characters')))
             ->addScope(new ContractTypeScope(request()->input('filters.type')))
             ->addScope(new ContractStatusScope(request()->input('filters.status')))
             ->render('web::character.contracts', compact('character'));

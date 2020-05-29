@@ -41,7 +41,7 @@ class CustomOfficeController extends Controller
      */
     public function index(CorporationInfo $corporation, CustomOfficeDataTable $data_table)
     {
-        return $data_table->addScope(new CorporationScope([$corporation->corporation_id]))
+        return $data_table->addScope(new CorporationScope('corporation.customs_office', [$corporation->corporation_id]))
             ->render('web::corporation.customs-offices', compact('corporation'));
     }
 }

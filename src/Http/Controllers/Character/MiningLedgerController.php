@@ -43,7 +43,7 @@ class MiningLedgerController extends Controller
     public function index(CharacterInfo $character, MiningDataTable $dataTable)
     {
         return $dataTable
-            ->addScope(new CharacterScope('character.mining', $character->character_id, request()->input('characters', [])))
+            ->addScope(new CharacterScope('character.mining', request()->input('characters', [])))
             ->render('web::character.mining-ledger', compact('character'));
     }
 

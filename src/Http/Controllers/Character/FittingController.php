@@ -42,7 +42,7 @@ class FittingController extends Controller
     public function index(CharacterInfo $character, FittingDataTable $dataTable)
     {
         return $dataTable
-            ->addScope(new CharacterScope('character.fitting', $character->character_id, request()->input('characters')))
+            ->addScope(new CharacterScope('character.fitting', request()->input('characters')))
             ->render('web::character.fittings', compact('character'));
     }
 

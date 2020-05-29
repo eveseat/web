@@ -67,7 +67,7 @@ class SecurityController extends Controller
      */
     public function getLogs(CorporationInfo $corporation, LogDataTable $dataTable)
     {
-        return $dataTable->addScope(new CorporationScope([$corporation->corporation_id]))
+        return $dataTable->addScope(new CorporationScope('corporation.security', [$corporation->corporation_id]))
             ->render('web::corporation.security.logs', compact('corporation'));
     }
 }

@@ -44,7 +44,7 @@ class ContractsController extends Controller
     public function index(CorporationInfo $corporation, ContractDataTable $dataTable)
     {
 
-        return $dataTable->addScope(new CorporationScope([$corporation->corporation_id]))
+        return $dataTable->addScope(new CorporationScope('corporation.contract', [$corporation->corporation_id]))
             ->addScope(new ContractTypeScope(request()->input('filters.type')))
             ->addScope(new ContractStatusScope(request()->input('filters.status')))
             ->render('web::corporation.contracts', compact('corporation'));

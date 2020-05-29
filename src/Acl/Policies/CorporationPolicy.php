@@ -49,6 +49,9 @@ class CorporationPolicy extends AbstractEntityPolicy
         $corporation = $args[1];
         $ability = sprintf('corporation.%s', $method);
 
+        if (is_numeric($corporation))
+            $corporation = CorporationInfo::find($corporation);
+
         return $this->userHasPermission($user, $ability, function () use ($user, $corporation, $ability) {
 
             // in case the user is corporation CEO

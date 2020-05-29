@@ -42,7 +42,7 @@ class CalendarController extends Controller
     public function index(CharacterInfo $character, CalendarDataTable $dataTable)
     {
         return $dataTable
-            ->addScope(new CharacterScope('character.calendar', $character->character_id, request()->input('characters')))
+            ->addScope(new CharacterScope('character.calendar', request()->input('characters')))
             ->render('web::character.calendar', compact('character'));
     }
 }

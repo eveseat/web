@@ -25,7 +25,7 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Intel\ContactDataTable;
-use Seat\Web\Http\DataTables\Scopes\CharacterContactScope;
+use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 use Seat\Web\Http\DataTables\Scopes\Filters\ContactCategoryScope;
 use Seat\Web\Http\DataTables\Scopes\Filters\ContactStandingLevelScope;
 
@@ -44,7 +44,7 @@ class ContactsController extends Controller
     public function index(CharacterInfo $character, ContactDataTable $dataTable)
     {
         return $dataTable
-            ->addScope(new CharacterContactScope('character.contact', $character->character_id, request()->input('characters', [])))
+            ->addScope(new CharacterScope('character.contact', request()->input('characters', [])))
             ->addScope(new ContactCategoryScope(request()->input('filters.category')))
             ->addScope(new ContactStandingLevelScope(request()->input('filters.standing')))
             ->render('web::character.contacts', compact('character'));

@@ -57,7 +57,7 @@ class MarketController extends Controller
                 array_push($division_ids, ($key + 1));
         }
 
-        return $dataTable->addScope(new CorporationScope([$corporation->corporation_id]))
+        return $dataTable->addScope(new CorporationScope('corporation.market', [$corporation->corporation_id]))
             ->addScope(new MarketStatusScope(request()->input('filters.status')))
             ->addScope(new MarketOrderTypeScope(request()->input('filters.type')))
             ->addScope(new CorporationMarketDivisionsScope($division_ids))

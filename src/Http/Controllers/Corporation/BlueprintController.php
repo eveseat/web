@@ -57,7 +57,7 @@ class BlueprintController extends Controller
                 array_push($division_ids, ($key + 1));
         }
 
-        return $dataTable->addScope(new CorporationScope([$corporation->corporation_id]))
+        return $dataTable->addScope(new CorporationScope('corporation.blueprint', [$corporation->corporation_id]))
             ->addScope(new CorporationAssetDivisionsScope($division_ids))
             ->addScope(new BlueprintTypeScope(request()->input('filters.type')))
             ->render('web::corporation.blueprint', compact('corporation'));

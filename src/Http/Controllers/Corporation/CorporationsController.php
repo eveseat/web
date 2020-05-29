@@ -40,10 +40,8 @@ class CorporationsController extends Controller
         if (Gate::allows('global.superuser'))
             return $dataTable->render('web::corporation.list');
 
-        $allowed_corporations = array_keys(Arr::get(auth()->user()->getAffiliationMap(), 'corp'));
-
         return $dataTable
-            ->addScope(new CorporationScope($allowed_corporations))
+            ->addScope(new CorporationScope)
             ->render('web::corporation.list');
     }
 

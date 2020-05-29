@@ -25,7 +25,7 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Intel\BookmarkDataTable;
-use Seat\Web\Http\DataTables\Scopes\BookmarkCharacterScope;
+use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 
 /**
  * Class BookmarksController.
@@ -42,7 +42,7 @@ class BookmarksController extends Controller
     public function index(CharacterInfo $character, BookmarkDataTable $dataTable)
     {
         return $dataTable
-            ->addScope(new BookmarkCharacterScope('character.bookmark', $character->character_id, request()->input('characters')))
+            ->addScope(new CharacterScope('character.bookmark', request()->input('characters')))
             ->render('web::character.bookmarks', compact('character'));
     }
 }

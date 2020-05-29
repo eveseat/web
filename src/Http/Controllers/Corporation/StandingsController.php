@@ -42,7 +42,7 @@ class StandingsController extends Controller
     public function index(CorporationInfo $corporation, StandingDataTable $dataTable)
     {
         return $dataTable
-            ->addScope(new CorporationScope([$corporation->corporation_id]))
+            ->addScope(new CorporationScope('corporation.standing', [$corporation->corporation_id]))
             ->render('web::corporation.standings', compact('corporation'));
     }
 }

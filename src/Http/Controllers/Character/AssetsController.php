@@ -40,7 +40,7 @@ class AssetsController extends Controller
      */
     public function getAssetsView(CharacterInfo $character, DataTable $dataTable)
     {
-        return $dataTable->addScope(new CharacterScope('character.asset', $character->character_id, request()->input('characters')))
+        return $dataTable->addScope(new CharacterScope('character.asset', request()->input('characters')))
             ->render('web::character.assets.assets', compact('character'));
     }
 

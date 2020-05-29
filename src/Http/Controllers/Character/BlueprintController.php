@@ -42,7 +42,7 @@ class BlueprintController extends Controller
      */
     public function index(CharacterInfo $character, DataTable $dataTable)
     {
-        return $dataTable->addScope(new CharacterScope('character.blueprint', $character->character_id, request()->input('characters')))
+        return $dataTable->addScope(new CharacterScope('character.blueprint', request()->input('characters')))
             ->addScope(new BlueprintTypeScope(request()->input('filters.type')))
             ->render('web::character.blueprint', compact('character'));
     }

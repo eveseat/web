@@ -42,7 +42,7 @@ class ResearchController extends Controller
     public function index(CharacterInfo $character, ResearchDataTable $dataTable)
     {
         return $dataTable
-            ->addScope(new CharacterScope('character.research', $character->character_id, request()->input('characters', [])))
+            ->addScope(new CharacterScope('character.research', request()->input('characters', [])))
             ->render('web::character.research', compact('character'));
     }
 }
