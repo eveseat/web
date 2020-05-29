@@ -83,7 +83,7 @@ class CandidatesDataTable extends DataTable
     public function query()
     {
         return SquadApplication::with('user', 'user.characters')
-            ->where('squad_id', $this->request->id)
+            ->where('squad_id', $this->request->squad->id)
             ->select('squad_applications.created_at', 'user_id', 'application_id');
     }
 

@@ -11,12 +11,12 @@
       </div>
       <div class="col">
         <div class="btn-group d-flex">
-          @if(auth()->user()->hasSuperUser())
+          @can('squads.create')
             <a href="{{ route('squads.create') }}" class="btn btn-default">
               <i class="fas fa-plus"></i>
               Create
             </a>
-          @endif
+          @endcan
           <button data-filter-field="type" data-filter-value="manual" type="button" class="btn btn-success deck-filters active">
             <i class="fas fa-check-circle"></i>
             Manual

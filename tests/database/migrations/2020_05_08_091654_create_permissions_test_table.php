@@ -20,42 +20,31 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\DataTables\Scopes;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
-use Yajra\DataTables\Contracts\DataTableScope;
-
-/**
- * Class BookmarkCorporationScope.
- *
- * This is a specific scope for bookmark in order to avoid collision on corporation_id field.
- *
- * @package Seat\Web\Http\DataTables\Scopes
- */
-class BookmarkCorporationScope implements DataTableScope
+class CreatePermissionsTestTable extends Migration
 {
     /**
-     * @var array
-     */
-    private $corporation_ids = [];
-
-    /**
-     * CorporationScope constructor.
+     * Run the migrations.
      *
-     * @param array $corporation_ids
+     * @return void
      */
-    public function __construct(array $corporation_ids)
+    public function up()
     {
-        $this->corporation_ids = $corporation_ids;
+        Schema::create('permissions', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('title');
+        });
     }
 
     /**
-     * Apply a query scope.
+     * Reverse the migrations.
      *
-     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
-     * @return mixed
+     * @return void
      */
-    public function apply($query)
+    public function down()
     {
-        return $query->whereIn('corporation_bookmarks.corporation_id', $this->corporation_ids);
+        Schema::drop('permissions');
     }
 }

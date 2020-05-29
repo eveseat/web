@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Corporation\CorporationStructure;
 use Seat\Services\Repositories\Corporation\Structures;
 use Seat\Web\Http\Controllers\Controller;
@@ -35,30 +36,30 @@ class StructureController extends Controller
     use Structures;
 
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getStructures(int $corporation_id)
+    public function getStructures(CorporationInfo $corporation)
     {
 
-        $structures = $this->getCorporationStructures($corporation_id);
+        $structures = $this->getCorporationStructures($corporation->corporation_id);
 
-        return view('web::corporation.structures.list', compact('structures'));
+        return view('web::corporation.structures.list', compact('corporation', 'structures'));
     }
 
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      * @param int $structure_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(int $corporation_id, int $structure_id)
+    public function show(CorporationInfo $corporation, int $structure_id)
     {
         $structure = CorporationStructure::with('info', 'type', 'services', 'items', 'items.type', 'items.type.dogma_attributes', 'solar_system')
-            ->where('corporation_id', $corporation_id)
+            ->where('corporation_id', $corporation->corporation_id)
             ->where('structure_id', $structure_id)
             ->first();
 
-        return view('web::corporation.structures.modals.fitting.content', compact('structure'));
+        return view('web::corporation.structures.modals.fitting.content', compact('corporation', 'structure'));
     }
 }

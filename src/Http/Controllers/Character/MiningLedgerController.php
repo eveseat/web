@@ -22,12 +22,11 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Industry\CharacterMining;
-use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Industrial\MiningDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
-use Seat\Web\Models\User;
 
 /**
  * Class MiningLedgerController.
@@ -37,32 +36,30 @@ use Seat\Web\Models\User;
 class MiningLedgerController extends Controller
 {
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @param \Seat\Web\Http\DataTables\Character\Industrial\MiningDataTable $dataTable
      * @return mixed
      */
-    public function index(int $character_id, MiningDataTable $dataTable)
+    public function index(CharacterInfo $character, MiningDataTable $dataTable)
     {
-        $token = RefreshToken::where('character_id', $character_id)->first();
-        $characters = collect();
-        if ($token) {
-            $characters = User::with('characters')->find($token->user_id)->characters;
-        }
-
         return $dataTable
-            ->addScope(new CharacterScope('character.mining', $character_id, request()->input('characters', [])))
-            ->render('web::character.mining-ledger', compact('characters'));
+            ->addScope(new CharacterScope('character.mining', request()->input('characters', [])))
+            ->render('web::character.mining-ledger', compact('character'));
     }
 
-    public function show(int $character_id)
+    /**
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show(CharacterInfo $character)
     {
-        $entries = CharacterMining::where('character_id', $character_id)
+        $entries = CharacterMining::where('character_id', $character->character_id)
                                   ->where('date', request()->query('date'))
                                   ->where('solar_system_id', request()->query('solar_system_id'))
                                   ->where('type_id', request()->query('type_id'))
                                   ->orderBy('time', 'desc')
                                   ->get();
 
-        return view('web::common.minings.modals.details.content', compact('entries'));
+        return view('web::common.minings.modals.details.content', compact('character', 'entries'));
     }
 }

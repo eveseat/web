@@ -65,7 +65,7 @@ return [
         'description' => 'web::permissions.corporation_asset_seventh_division_description',
         'division'    => 'assets',
     ],
-    'customs-office' => [
+    'customs_office' => [
         'label'       => 'web::permissions.corporation_customs-office_label',
         'description' => 'web::permissions.corporation_customs-office_description',
         'division'    => 'assets',
@@ -170,7 +170,7 @@ return [
         'description' => 'web::permissions.corporation_contact_description',
         'division'    => 'military',
     ],
-    'standings' => [
+    'standing' => [
         'label'       => 'web::permissions.corporation_standing_label',
         'description' => 'web::permissions.corporation_standing_description',
         'division'    => 'military',

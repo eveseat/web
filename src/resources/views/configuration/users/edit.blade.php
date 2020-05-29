@@ -33,6 +33,28 @@
             </div>
           </div>
 
+          <div class="form-group row">
+            <div class="offset-md-4 col-md-8">
+              <div class="form-check">
+                @if($user->isAdmin())
+                  @if($user->id == auth()->user()->id)
+                    <input type="checkbox" name="admin" value="1" id="admin" class="form-check-input" checked="checked" disabled="disabled" />
+                  @else
+                    <input type="checkbox" name="admin" value="1" id="admin" class="form-check-input" checked="checked" />
+                  @endif
+                @else
+                  @if($user->id == auth()->user()->id)
+                    <input type="checkbox" name="admin" value="1" id="admin" class="form-check-input" disabled="disabled" />
+                  @else
+                    <input type="checkbox" name="admin" value="1" id="admin" class="form-check-input" />
+                  @endif
+                @endif
+                <label for="admin" class="form-check-label col-md-4">{{ trans_choice('web::settings.admin', 1) }}</label>
+              </div>
+              <small class="form-text text-danger">{{ trans('web::settings.admin_assist_edit') }}</small>
+            </div>
+          </div>
+
         </div><!-- /.box-body -->
 
         <div class="box-footer">
@@ -147,7 +169,7 @@
                       @endif
                     </td>
                     <td>
-                      <span class="badge badge-{{ $permission->title == 'global.superuser' ? 'danger' : 'info' }}">
+                      <span class="badge badge-{{ $user->isAdmin() ? 'danger' : 'info' }}">
                         {{ Str::studly($permission->title) }}
                       </span>
                     </td>

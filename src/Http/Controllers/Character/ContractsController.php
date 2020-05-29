@@ -22,14 +22,13 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Contracts\ContractDetail;
-use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Financial\ContractDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 use Seat\Web\Http\DataTables\Scopes\Filters\ContractStatusScope;
 use Seat\Web\Http\DataTables\Scopes\Filters\ContractTypeScope;
-use Seat\Web\Models\User;
 
 /**
  * Class ContractsController.
@@ -38,31 +37,25 @@ use Seat\Web\Models\User;
 class ContractsController extends Controller
 {
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @param \Seat\Web\Http\DataTables\Character\Financial\ContractDataTable $dataTable
      * @return mixed
      */
-    public function index(int $character_id, ContractDataTable $dataTable)
+    public function index(CharacterInfo $character, ContractDataTable $dataTable)
     {
-        $token = RefreshToken::where('character_id', $character_id)->first();
-        $characters = collect();
-        if ($token) {
-            $characters = User::with('characters')->find($token->user_id)->characters;
-        }
-
         return $dataTable
-            ->addScope(new CharacterScope('character.contract', $character_id, request()->input('characters')))
+            ->addScope(new CharacterScope('character.contract', request()->input('characters')))
             ->addScope(new ContractTypeScope(request()->input('filters.type')))
             ->addScope(new ContractStatusScope(request()->input('filters.status')))
-            ->render('web::character.contracts', compact('characters'));
+            ->render('web::character.contracts', compact('character'));
     }
 
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @param int $contract_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(int $character_id, int $contract_id)
+    public function show(CharacterInfo $character, int $contract_id)
     {
         $contract = ContractDetail::with(
             'acceptor',

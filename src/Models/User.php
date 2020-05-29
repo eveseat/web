@@ -27,12 +27,12 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\Models\UserSetting;
 use Seat\Services\Settings\Profile;
-use Seat\Web\Acl\AccessChecker;
 use Seat\Web\Models\Acl\Role;
 use Seat\Web\Models\Squads\Squad;
 
@@ -42,7 +42,7 @@ use Seat\Web\Models\Squads\Squad;
  */
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
-    use Authenticatable, CanResetPassword, AccessChecker, Notifiable;
+    use Authenticatable, Authorizable, CanResetPassword, Notifiable;
 
     /**
      * @var bool
@@ -54,6 +54,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected $casts = [
         'active' => 'boolean',
+        'admin'  => 'boolean',
     ];
 
     /**
@@ -62,15 +63,15 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $fillable = [
-        'name', 'main_character_id', 'active',
+        'name', 'main_character_id', 'active', 'admin',
     ];
 
     /**
-     * The accessors to append to the model's array form.
+     * The accessors to hide from the model's array form.
      *
      * @var array
      */
-    protected $hidden = ['password', 'remember_token'];
+    protected $hidden = ['admin', 'remember_token'];
 
     /**
      * The attributes included in model's JSON form.
@@ -87,13 +88,25 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function delete()
     {
-
         // Cleanup the user
         $this->login_history()->delete();
         $this->refresh_tokens()->delete();
         $this->settings()->delete();
 
         return parent::delete();
+    }
+
+    /**
+     * Return the email address for this user based on the
+     * email address setting.
+     *
+     * @return mixed
+     * @throws \Seat\Services\Exceptions\SettingException
+     */
+    public function getEmailAttribute()
+    {
+
+        return Profile::get('email_address', $this->id) ?: '';
     }
 
     /**
@@ -176,16 +189,21 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Return the email address for this user based on the
-     * email address setting.
-     *
-     * @return mixed
-     * @throws \Seat\Services\Exceptions\SettingException
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function getEmailAttribute()
+    public function scopeStandard($query)
     {
+        return $query->where('name', '<>', 'admin');
+    }
 
-        return Profile::get('email_address', $this->id) ?: '';
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSystem($query)
+    {
+        return $query->where('name', 'admin');
     }
 
     /**
@@ -203,20 +221,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return bool
      */
-    public function scopeStandard($query)
+    public function isAdmin(): bool
     {
-        return $query->where('name', '<>', 'admin');
-    }
-
-    /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeSystem($query)
-    {
-        return $query->where('name', 'admin');
+        return $this->admin === true;
     }
 }

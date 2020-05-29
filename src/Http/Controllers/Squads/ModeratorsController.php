@@ -37,14 +37,14 @@ class ModeratorsController extends Controller
 {
     /**
      * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param \Seat\Web\Models\Squads\Squad $squad
      * @return \Illuminate\Http\JsonResponse
      */
-    public function lookup(Request $request, int $id)
+    public function lookup(Request $request, Squad $squad)
     {
         $users = User::standard()
-            ->whereDoesntHave('moderators', function (Builder $query) use ($id) {
-                $query->where('id', $id);
+            ->whereDoesntHave('moderators', function (Builder $query) use ($squad) {
+                $query->where('id', $squad->id);
             })
             ->where(function ($query) use ($request) {
                 $query->where('name', 'like', ["%{$request->query('q', '')}%"]);
@@ -68,17 +68,16 @@ class ModeratorsController extends Controller
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param \Seat\Web\Models\Squads\Squad $squad
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request, int $id)
+    public function store(Request $request, Squad $squad)
     {
         $request->validate([
             'user_id' => 'required|exists:users,id',
         ]);
 
         $user = User::find($request->input('user_id'));
-        $squad = Squad::find($id);
         $squad->moderators()->save($user);
 
         return redirect()->back()
@@ -86,19 +85,12 @@ class ModeratorsController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param \Seat\Web\Models\Squads\Squad $squad
+     * @param \Seat\Web\Models\User $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Request $request, int $id)
+    public function destroy(Squad $squad, User $user)
     {
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
-        ]);
-
-        $user = User::find($request->input('user_id'));
-        $squad = Squad::find($id);
-
         $squad->moderators()->detach($user->id);
 
         return redirect()->back()

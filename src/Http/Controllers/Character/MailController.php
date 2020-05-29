@@ -25,12 +25,10 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Mail\MailHeader;
-use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\Repositories\Character\Mail;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Intel\MailDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterMailScope;
-use Seat\Web\Models\User;
 
 /**
  * Class MailController.
@@ -41,30 +39,23 @@ class MailController extends Controller
     use Mail;
 
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @param \Seat\Web\Http\DataTables\Character\Intel\MailDataTable $dataTable
      * @return mixed
      */
-    public function index(int $character_id, MailDataTable $dataTable)
+    public function index(CharacterInfo $character, MailDataTable $dataTable)
     {
-        $token = RefreshToken::where('character_id', $character_id)->first();
-        $characters = collect();
-        if ($token) {
-            $characters = User::with('characters')->find($token->user_id)->characters;
-        }
-
         return $dataTable
-            ->addScope(new CharacterMailScope($character_id, request()->input('characters', [])))
-            ->render('web::character.mail', compact('characters'));
-
+            ->addScope(new CharacterMailScope(request()->input('characters', [])))
+            ->render('web::character.mail', compact('character'));
     }
 
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @param int $mail_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(int $character_id, int $mail_id)
+    public function show(CharacterInfo $character, int $mail_id)
     {
         $mail = MailHeader::with('body', 'sender', 'recipients', 'recipients.entity')
             ->where('mail_id', $mail_id)
@@ -74,17 +65,16 @@ class MailController extends Controller
     }
 
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character_id
      * @param int $message_id
      * @return array|string
      * @throws \Throwable
      */
-    public function getMailRead(int $character_id, int $message_id)
+    public function getMailRead(CharacterInfo $character, int $message_id)
     {
+        $message = $this->getCharacterMailMessage($character->character_id, $message_id);
 
-        $message = $this->getCharacterMailMessage($character_id, $message_id);
-
-        $from = CharacterInfo::find($message->from) ?: $message->from;
+        $from = $character ?: $message->from;
 
         $characters = $message
             ->recipients
@@ -112,7 +102,6 @@ class MailController extends Controller
      */
     public function getMailTimeline()
     {
-
         $messages = $this->getCharacterMailTimeline();
 
         return view('web::character.mail-timeline', compact('messages'));
@@ -124,7 +113,6 @@ class MailController extends Controller
      */
     public function getMailTimelineRead(int $message_id)
     {
-
         $message = $this->getCharacterMailTimeline($message_id);
 
         return view('web::character.mail-timeline-read', compact('message'));

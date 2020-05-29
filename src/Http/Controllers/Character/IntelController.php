@@ -23,7 +23,6 @@
 namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Eveapi\Models\Character\CharacterInfo;
-use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\Repositories\Character\Intel;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Intel\NoteDataTable;
@@ -44,43 +43,36 @@ class IntelController extends Controller
     protected $top_limit = 10;
 
     /**
-     * @param int $character_id
+     * @param CharacterInfo $character
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getIntelSummary(int $character_id)
+    public function getIntelSummary(CharacterInfo $character)
     {
-
-        $token = RefreshToken::where('character_id', $character_id)->first();
-        $characters = collect();
-        if ($token) {
-            $characters = User::with('characters')->find($token->user_id)->characters;
-        }
-
-        return view('web::character.intel.summary', compact('characters'));
+        return view('web::character.intel.summary', compact('character'));
     }
 
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @throws \Exception
      */
-    public function getTopWalletJournalData(int $character_id)
+    public function getTopWalletJournalData(CharacterInfo $character)
     {
 
         if (! request()->has('characters'))
             return abort(500);
 
         $requested_characters = (array) request()->input('characters');
-        $character_ids = collect($character_id);
+        $character_ids = collect($character->character_id);
 
-        if (CharacterInfo::find($character_id)->refresh_token) {
-            $related_characters_ids = User::find(CharacterInfo::find($character_id)->refresh_token->user_id)
+        if ($character->refresh_token) {
+            $related_characters_ids = User::find($character->refresh_token->user_id)
                 ->characters
                 ->pluck('character_id');
 
             $character_ids = $related_characters_ids;
         }
 
-        $character_ids = $character_ids->filter(function ($value, $key) use ($requested_characters) {
+        $character_ids = $character_ids->filter(function ($value) use ($requested_characters) {
             return in_array($value, $requested_characters);
         });
 
@@ -127,20 +119,20 @@ class IntelController extends Controller
     }
 
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @throws \Exception
      */
-    public function getTopTransactionsData(int $character_id)
+    public function getTopTransactionsData(CharacterInfo $character)
     {
 
         if (! request()->has('characters'))
             return abort(500);
 
         $requested_characters = (array) request()->input('characters');
-        $character_ids = collect($character_id);
+        $character_ids = collect($character->character_id);
 
-        if (CharacterInfo::find($character_id)->refresh_token) {
-            $related_characters_ids = User::find(CharacterInfo::find($character_id)->refresh_token->user_id)
+        if ($character->refresh_token) {
+            $related_characters_ids = User::find($character->refresh_token->user_id)
                 ->characters
                 ->pluck('character_id');
 
@@ -188,20 +180,20 @@ class IntelController extends Controller
     }
 
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @throws \Exception
      */
-    public function getTopMailFromData(int $character_id)
+    public function getTopMailFromData(CharacterInfo $character)
     {
 
         if (! request()->has('characters'))
             return abort(500);
 
         $requested_characters = (array) request()->input('characters');
-        $character_ids = collect($character_id);
+        $character_ids = collect($character->character_id);
 
-        if (CharacterInfo::find($character_id)->refresh_token) {
-            $related_characters_ids = User::find(CharacterInfo::find($character_id)->refresh_token->user_id)
+        if ($character->refresh_token) {
+            $related_characters_ids = User::find($character->refresh_token->user_id)
                 ->characters
                 ->pluck('character_id');
 
@@ -239,27 +231,25 @@ class IntelController extends Controller
     }
 
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getStandingsComparison(int $character_id)
+    public function getStandingsComparison(CharacterInfo $character)
     {
-
         $profiles = $this->standingsProfiles();
 
         return view('web::character.intel.standingscompare', compact('profiles'));
     }
 
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @param int $profile_id
      * @return mixed
      * @throws \Exception
      */
-    public function getCompareStandingsWithProfileData(int $character_id, int $profile_id)
+    public function getCompareStandingsWithProfileData(CharacterInfo $character, int $profile_id)
     {
-
-        $journal = $this->getCharacterJournalStandingsWithProfile($character_id, $profile_id);
+        $journal = $this->getCharacterJournalStandingsWithProfile($character->character_id, $profile_id);
 
         return DataTables::of($journal)
             ->editColumn('character.name', function ($row) {
@@ -278,34 +268,33 @@ class IntelController extends Controller
                 return view('web::partials.standing', ['standing' => $row->standing]);
             })
             ->make(true);
-
     }
 
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @param \Seat\Web\Http\DataTables\Character\Intel\NoteDataTable $dataTable
      * @return mixed
      */
-    public function notes(int $character_id, NoteDataTable $dataTable)
+    public function notes(CharacterInfo $character, NoteDataTable $dataTable)
     {
         return $dataTable->render('web::character.intel.notes');
     }
 
     /**
-     * @param int $character_id
+     * @param CharacterInfo $character
      * @param int $first_party_id
      * @param int $second_party_id
      * @param string $ref_type
      * @return mixed
      * @throws \Exception
      */
-    public function getJournalContent(int $character_id, int $first_party_id, int $second_party_id, string $ref_type)
+    public function getJournalContent(CharacterInfo $character, int $first_party_id, int $second_party_id, string $ref_type)
     {
 
-        $character_ids = collect($character_id);
+        $character_ids = collect($character->character_id);
 
-        if (CharacterInfo::find($character_id)->refresh_token) {
-            $related_characters_ids = User::find(CharacterInfo::find($character_id)->refresh_token->user_id)
+        if ($character->refresh_token) {
+            $related_characters_ids = User::find($character->refresh_token->user_id)
                 ->characters
                 ->pluck('character_id');
 
@@ -370,18 +359,18 @@ class IntelController extends Controller
     }
 
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @param int $client_id
      * @return mixed
      * @throws \Exception
      */
-    public function getTransactionContent(int $character_id, int $client_id)
+    public function getTransactionContent(CharacterInfo $character, int $client_id)
     {
 
-        $character_ids = collect($character_id);
+        $character_ids = collect($character->character_id);
 
-        if (CharacterInfo::find($character_id)->refresh_token) {
-            $related_characters_ids = User::find(CharacterInfo::find($character_id)->refresh_token->user_id)
+        if ($character->refresh_token) {
+            $related_characters_ids = User::find($character->refresh_token->user_id)
                 ->characters
                 ->pluck('character_id');
 
@@ -439,18 +428,18 @@ class IntelController extends Controller
     }
 
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @param int $from
      * @return mixed
      * @throws \Exception
      */
-    public function getTopMailContent(int $character_id, int $from)
+    public function getTopMailContent(CharacterInfo $character, int $from)
     {
 
-        $character_ids = collect($character_id);
+        $character_ids = collect($character->character_id);
 
-        if (CharacterInfo::find($character_id)->refresh_token) {
-            $related_characters_ids = User::find(CharacterInfo::find($character_id)->refresh_token->user_id)
+        if ($character->refresh_token) {
+            $related_characters_ids = User::find($character->refresh_token->user_id)
                 ->characters
                 ->pluck('character_id');
 
@@ -480,8 +469,8 @@ class IntelController extends Controller
             ->addColumn('recipients', function ($row) {
                 return view('web::common.mails.modals.read.tags', compact('row'));
             })
-            ->addColumn('read', function ($row) use ($character_id) {
-                return view('web::common.mails.buttons.read', ['character_id' => $character_id, 'mail_id' => $row->mail_id]);
+            ->addColumn('read', function ($row) use ($character) {
+                return view('web::common.mails.buttons.read', ['character_id' => $character->character_id, 'mail_id' => $row->mail_id]);
             })
             ->rawColumns(['from', 'subject', 'tocounts', 'read'])
             ->make(true);

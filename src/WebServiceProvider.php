@@ -27,6 +27,7 @@ use Illuminate\Auth\Events\Login as LoginEvent;
 use Illuminate\Auth\Events\Logout as LogoutEvent;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Horizon\Horizon;
 use Seat\Eveapi\Models\Assets\CharacterAsset;
@@ -41,21 +42,12 @@ use Seat\Web\Events\Logout;
 use Seat\Web\Events\SecLog;
 use Seat\Web\Http\Composers\CharacterLayout;
 use Seat\Web\Http\Composers\CharacterMenu;
-use Seat\Web\Http\Composers\CharacterSummary;
 use Seat\Web\Http\Composers\CorporationLayout;
 use Seat\Web\Http\Composers\CorporationMenu;
-use Seat\Web\Http\Composers\CorporationSummary;
 use Seat\Web\Http\Composers\Esi;
 use Seat\Web\Http\Composers\Sidebar;
 use Seat\Web\Http\Composers\User;
 use Seat\Web\Http\Middleware\Authenticate;
-use Seat\Web\Http\Middleware\Bouncer\Bouncer;
-use Seat\Web\Http\Middleware\Bouncer\CharacterBouncer;
-use Seat\Web\Http\Middleware\Bouncer\CorporationBouncer;
-use Seat\Web\Http\Middleware\Bouncer\KeyBouncer;
-use Seat\Web\Http\Middleware\Bouncer\SquadAuthorApplicationBouncer;
-use Seat\Web\Http\Middleware\Bouncer\SquadMemberBouncer;
-use Seat\Web\Http\Middleware\Bouncer\SquadModeratorBouncer;
 use Seat\Web\Http\Middleware\Locale;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
 use Seat\Web\Http\Middleware\Requirements;
@@ -82,6 +74,8 @@ class WebServiceProvider extends AbstractSeatPlugin
      */
     public function boot(Router $router)
     {
+        // Register policies
+        $this->register_policies();
 
         // Include the Routes
         $this->add_routes();
@@ -189,14 +183,6 @@ class WebServiceProvider extends AbstractSeatPlugin
         $this->app['view']->composer(
             'web::includes.sidebar', Sidebar::class);
 
-        // Character info composer
-        $this->app['view']->composer([
-            'web::character.includes.summary',
-            'web::character.includes.menu',
-            'web::character.intel.includes.menu',
-            'web::character.wallet.includes.menu',
-        ], CharacterSummary::class);
-
         // Character menu composer
         $this->app['view']->composer([
             'web::character.includes.menu',
@@ -206,15 +192,6 @@ class WebServiceProvider extends AbstractSeatPlugin
         $this->app['view']->composer([
             'web::character.layouts.view',
         ], CharacterLayout::class);
-
-        // Corporation info composer
-        $this->app['view']->composer([
-            'web::corporation.includes.summary',
-            'web::corporation.includes.menu',
-            'web::corporation.security.includes.menu',
-            'web::corporation.ledger.includes.menu',
-            'web::corporation.wallet.includes.menu',
-        ], CorporationSummary::class);
 
         // Corporation menu composer
         $this->app['view']->composer([
@@ -258,18 +235,6 @@ class WebServiceProvider extends AbstractSeatPlugin
         // Registration Middleware checks of the app is
         // allowing new user registration to occur.
         $router->aliasMiddleware('registration.status', RegistrationAllowed::class);
-
-        // The Bouncer is responsible for checking hes
-        // AccessChecker and ensuring that every request
-        // that comes in is authorized
-        $router->aliasMiddleware('bouncer', Bouncer::class);
-        $router->aliasMiddleware('characterbouncer', CharacterBouncer::class);
-        $router->aliasMiddleware('corporationbouncer', CorporationBouncer::class);
-        $router->aliasMiddleware('keybouncer', KeyBouncer::class);
-        $router->aliasMiddleware('squad.moderator.bouncer', SquadModeratorBouncer::class);
-        $router->aliasMiddleware('squad.member.bouncer', SquadMemberBouncer::class);
-        $router->aliasMiddleware('squad.author.bouncer', SquadAuthorApplicationBouncer::class);
-
     }
 
     /**
@@ -318,12 +283,8 @@ class WebServiceProvider extends AbstractSeatPlugin
     {
 
         // Require the queue_manager role to view the dashboard
-        Horizon::auth(function ($request) {
-
-            if (is_null($request->user()))
-                return false;
-
-            return $request->user()->has('queue_manager', false);
+        Horizon::auth(function () {
+            return Gate::allows('global.queue_manager');
         });
 
         // attempt to parse the QUEUE_BALANCING variable into a boolean
@@ -464,6 +425,49 @@ class WebServiceProvider extends AbstractSeatPlugin
                 __DIR__ . '/Models',
             ])),
         ]);
+    }
+
+    /**
+     * Register all gates.
+     */
+    private function register_policies()
+    {
+        $permissions = config('seat.permissions', []);
+
+        Gate::define('global.superuser', 'Seat\Web\Acl\Policies\GlobalPolicy@superuser');
+        Gate::define('squads.create', 'Seat\Web\Acl\Policies\SquadPolicy@create');
+        Gate::define('squads.edit', 'Seat\Web\Acl\Policies\SquadPolicy@edit');
+        Gate::define('squads.delete', 'Seat\Web\Acl\Policies\SquadPolicy@delete');
+        Gate::define('squads.kick', 'Seat\Web\Acl\Policies\SquadPolicy@kick');
+        Gate::define('squads.manage_candidates', 'Seat\Web\Acl\Policies\SquadPolicy@manage_candidates');
+        Gate::define('squads.manage_members', 'Seat\Web\Acl\Policies\SquadPolicy@manage_members');
+        Gate::define('squads.manage_moderators', 'Seat\Web\Acl\Policies\SquadPolicy@manage_moderators');
+        Gate::define('squads.manage_roles', 'Seat\Web\Acl\Policies\SquadPolicy@manage_roles');
+        Gate::define('squads.show_members', 'Seat\Web\Acl\Policies\SquadPolicy@show_members');
+
+        foreach ($permissions as $scope => $scope_permissions) {
+            foreach ($scope_permissions as $permission => $definition) {
+                $ability = sprintf('%s.%s', $scope, $permission);
+
+                // init default policy to GlobalPolicy.
+                $policy = 'Seat\Web\Acl\Policies\GlobalPolicy';
+
+                // in case the requested scope is character, set the CharacterPolicy as default.
+                if ($scope == 'character')
+                    $policy = 'Seat\Web\Acl\Policies\CharacterPolicy';
+
+                // in case the requested scope is corporation, set the CorporationPolicy as default.
+                if ($scope == 'corporation')
+                    $policy = 'Seat\Web\Acl\Policies\CorporationPolicy';
+
+                // in case a custom gate has been defined in the permission file, use it.
+                if (array_key_exists('gate', $definition))
+                    $policy = $definition['gate'];
+
+                // register a gate using permission and policy
+                Gate::define($ability, sprintf('%s@%s', $policy, $permission));
+            }
+        }
     }
 
     /**

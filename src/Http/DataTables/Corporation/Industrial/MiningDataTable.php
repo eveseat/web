@@ -35,13 +35,8 @@ class MiningDataTable extends AbstractMiningDataTable
     public function ajax()
     {
         return $this->data()
-            ->addColumn('character', function ($row) {
+            ->editColumn('character.name', function ($row) {
                 return view('web::partials.character', ['character' => $row->character]);
-            })
-            ->filterColumn('character', function ($query, $keyword) {
-                return $query->whereHas('character', function ($sub_query) use ($keyword) {
-                    $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
-                });
             })
             ->rawColumns(['date', 'system', 'ore', 'character', 'main_character'])
             ->make(true);
@@ -52,8 +47,8 @@ class MiningDataTable extends AbstractMiningDataTable
      */
     public function query()
     {
-        return CharacterMining::with('character', 'solar_system', 'type', 'type.price')
-            ->select('date', 'character_id', 'solar_system_id', 'type_id')
+        return CharacterMining::with('character', 'character.user', 'solar_system', 'type', 'type.price')
+            ->select('date', 'character_minings.character_id', 'solar_system_id', 'type_id')
             ->selectRaw('SUM(quantity) as quantity')
             ->groupBy('date', 'solar_system_id', 'type_id', 'character_id');
     }
@@ -61,7 +56,8 @@ class MiningDataTable extends AbstractMiningDataTable
     public function getColumns()
     {
         return array_merge(parent::getColumns(), [
-            ['data' => 'character', 'title' => trans_choice('web::seat.character', 1), 'orderable' => false],
+            ['data' => 'character.name', 'title' => trans_choice('web::seat.character', 1)],
+            ['data' => 'character.user.name', 'title' => trans_choice('web:seat.user', 1)],
         ]);
     }
 }

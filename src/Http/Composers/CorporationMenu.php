@@ -24,6 +24,7 @@ namespace Seat\Web\Http\Composers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class CorporationMenu.
@@ -32,11 +33,16 @@ use Illuminate\Support\Arr;
 class CorporationMenu extends AbstractMenu
 {
     /**
+     * @var \Seat\Eveapi\Models\Corporation\CorporationInfo
+     */
+    private $corporation;
+
+    /**
      * Create a new sidebar composer.
      */
     public function __construct()
     {
-
+        $this->corporation = request()->corporation;
     }
 
     /**
@@ -83,5 +89,16 @@ class CorporationMenu extends AbstractMenu
         }));
 
         $view->with('menu', $menu);
+    }
+
+    /**
+     * Return true if the current user can see menu entry.
+     *
+     * @param array $permissions
+     * @return bool
+     */
+    protected function userHasPermission(array $permissions): bool
+    {
+        return Gate::any($permissions, $this->corporation);
     }
 }

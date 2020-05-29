@@ -37,21 +37,20 @@ class ApplicationsController extends Controller
 {
     /**
      * @param \Seat\Web\Http\DataTables\Squads\CandidatesDataTable $dataTable
-     * @param int $id
+     * @param \Seat\Web\Models\Squads\Squad $squad
      * @return mixed
      */
-    public function index(CandidatesDataTable $dataTable, int $id)
+    public function index(CandidatesDataTable $dataTable, Squad $squad)
     {
-        $squad = Squad::with('members', 'moderators', 'moderators.main_character')->find($id);
-
         return $dataTable->render('web::squads.show', compact('squad'));
     }
 
     /**
+     * @param \Seat\Web\Models\Squads\Squad $squad
      * @param int $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(int $id)
+    public function show(Squad $squad, int $id)
     {
         $application = SquadApplication::with('user')->find($id);
 
@@ -60,16 +59,27 @@ class ApplicationsController extends Controller
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param \Seat\Web\Models\Squads\Squad $squad
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request, int $id)
+    public function store(Request $request, Squad $squad)
     {
+        // in case the squad is manual and does not contain any moderator
+        // applications are self-approved.
+        if ($squad->type == 'manual' && $squad->moderators->isEmpty()) {
+            $squad->members()->save(auth()->user());
+
+            $message = sprintf('Approved application from %s into squad %s.',
+                auth()->user()->name, $squad->name);
+
+            event('security.log', [$message, 'squads']);
+
+            return redirect()->back();
+        }
+
         $request->validate([
             'message' => 'required',
         ]);
-
-        $squad = Squad::find($id);
 
         $application = new SquadApplication([
             'message' => $request->input('message', ''),
@@ -88,15 +98,16 @@ class ApplicationsController extends Controller
     }
 
     /**
+     * @param \Seat\Web\Models\Squads\Squad $squad
      * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function approve(int $id)
+    public function approve(Squad $squad, int $id)
     {
         $application = SquadApplication::with('squad', 'user')->find($id);
 
-        $application->squad->members()->save($application->user);
+        $squad->members()->save($application->user);
 
         $message = sprintf('Approved application from %s into squad %s.',
             $application->user->name, $application->squad->name);
@@ -109,10 +120,11 @@ class ApplicationsController extends Controller
     }
 
     /**
+     * @param \Seat\Web\Models\Squads\Squad $squad
      * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function reject(int $id)
+    public function reject(Squad $squad, int $id)
     {
         $application = SquadApplication::find($id);
 
@@ -127,12 +139,14 @@ class ApplicationsController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param \Seat\Web\Models\Squads\Squad $squad
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function cancel(int $id)
+    public function cancel(Squad $squad)
     {
-        SquadApplication::find($id)->delete();
+        SquadApplication::where('squad_id', $squad->id)
+            ->where('user_id', auth()->user()->id)
+            ->delete();
 
         return redirect()->back();
     }

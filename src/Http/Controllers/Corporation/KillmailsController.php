@@ -22,7 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
-use Seat\Services\Repositories\Corporation\Killmails;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Military\KillMailDataTable;
 use Seat\Web\Http\DataTables\Scopes\KillMailCorporationScope;
@@ -33,17 +33,15 @@ use Seat\Web\Http\DataTables\Scopes\KillMailCorporationScope;
  */
 class KillmailsController extends Controller
 {
-    use Killmails;
-
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      * @param \Seat\Web\Http\DataTables\Corporation\Military\KillMailDataTable $dataTable
      * @return mixed
      */
-    public function index(int $corporation_id, KillMailDataTable $dataTable)
+    public function index(CorporationInfo $corporation, KillMailDataTable $dataTable)
     {
 
-        return $dataTable->addScope(new KillMailCorporationScope([$corporation_id]))
-            ->render('web::corporation.killmails');
+        return $dataTable->addScope(new KillMailCorporationScope([$corporation->corporation_id]))
+            ->render('web::corporation.killmails', compact('corporation'));
     }
 }

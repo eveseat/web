@@ -22,13 +22,12 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
-use Seat\Eveapi\Models\RefreshToken;
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Financial\MarketDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 use Seat\Web\Http\DataTables\Scopes\Filters\MarketOrderTypeScope;
 use Seat\Web\Http\DataTables\Scopes\Filters\MarketStatusScope;
-use Seat\Web\Models\User;
 
 /**
  * Class MarketController.
@@ -37,22 +36,16 @@ use Seat\Web\Models\User;
 class MarketController extends Controller
 {
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @param \Seat\Web\Http\DataTables\Character\Financial\MarketDataTable $dataTable
      * @return mixed
      */
-    public function index(int $character_id, MarketDataTable $dataTable)
+    public function index(CharacterInfo $character, MarketDataTable $dataTable)
     {
-        $token = RefreshToken::where('character_id', $character_id)->first();
-        $characters = collect();
-        if ($token) {
-            $characters = User::with('characters')->find($token->user_id)->characters;
-        }
-
         return $dataTable
-            ->addScope(new CharacterScope('character.market', $character_id, request()->input('characters', [])))
+            ->addScope(new CharacterScope('character.market', request()->input('characters', [])))
             ->addScope(new MarketStatusScope(request()->input('filters.status')))
             ->addScope(new MarketOrderTypeScope(request()->input('filters.type')))
-            ->render('web::character.market', compact('characters'));
+            ->render('web::character.market', compact('character'));
     }
 }

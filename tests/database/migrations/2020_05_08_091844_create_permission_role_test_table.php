@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
+ * Copyright (C) 2015 to 2020 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,9 +22,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
-class CreateCharacterAffiliationsTable extends Migration
+class CreatePermissionRoleTestTable extends Migration
 {
     /**
      * Run the migrations.
@@ -33,15 +32,13 @@ class CreateCharacterAffiliationsTable extends Migration
      */
     public function up()
     {
+        Schema::create('permission_role', function (Blueprint $table) {
+            $table->unsignedInteger('permission_id');
+            $table->unsignedInteger('role_id');
+            $table->boolean('not')->default(false);
+            $table->json('filters')->nullable();
 
-        Schema::create('character_affiliations', function (Blueprint $table) {
-
-            $table->bigInteger('character_id')->primary();
-            $table->bigInteger('corporation_id');
-            $table->bigInteger('alliance_id')->nullable();
-            $table->bigInteger('faction_id')->nullable();
-
-            $table->timestamps();
+            $table->primary(['permission_id', 'role_id']);
         });
     }
 
@@ -52,7 +49,6 @@ class CreateCharacterAffiliationsTable extends Migration
      */
     public function down()
     {
-
-        Schema::dropIfExists('character_affiliations');
+        Schema::drop('permission_role');
     }
 }

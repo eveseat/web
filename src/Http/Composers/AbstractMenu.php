@@ -62,18 +62,9 @@ abstract class AbstractMenu
         // Check if the current user has the permission
         // required to see the menu
         if (isset($menu_data['permission'])) {
+            $permissions = is_array($menu_data['permission']) ? $menu_data['permission'] : [$menu_data['permission']];
 
-            // Check if the parameter is an array
-            // in such case, we grant access if user has at least one permission
-            if (is_array($menu_data['permission'])) {
-                foreach ($menu_data['permission'] as $menu_permission)
-                    if (auth()->user()->has($menu_permission, $require_affiliation))
-                        return $menu_data;
-
-                return null;
-            }
-
-            if (! auth()->user()->has($menu_data['permission'], $require_affiliation))
+            if (! $this->userHasPermission($permissions))
                 return null;
         }
 
@@ -164,4 +155,12 @@ abstract class AbstractMenu
      * @return array
      */
     abstract public function getRequiredKeys(): array;
+
+    /**
+     * Return true if the current user can see menu entry.
+     *
+     * @param array $permissions
+     * @return bool
+     */
+    abstract protected function userHasPermission(array $permissions): bool;
 }

@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Eveapi\Models\Contracts\ContractDetail;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Financial\ContractDataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationScope;
@@ -36,25 +37,25 @@ use Seat\Web\Http\DataTables\Scopes\Filters\ContractTypeScope;
 class ContractsController extends Controller
 {
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      * @param \Seat\Web\Http\DataTables\Corporation\Financial\ContractDataTable $dataTable
      * @return mixed
      */
-    public function index(int $corporation_id, ContractDataTable $dataTable)
+    public function index(CorporationInfo $corporation, ContractDataTable $dataTable)
     {
 
-        return $dataTable->addScope(new CorporationScope([$corporation_id]))
+        return $dataTable->addScope(new CorporationScope('corporation.contract', [$corporation->corporation_id]))
             ->addScope(new ContractTypeScope(request()->input('filters.type')))
             ->addScope(new ContractStatusScope(request()->input('filters.status')))
-            ->render('web::corporation.contracts');
+            ->render('web::corporation.contracts', compact('corporation'));
     }
 
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      * @param int $contract_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(int $corporation_id, int $contract_id)
+    public function show(CorporationInfo $corporation, int $contract_id)
     {
         $contract = ContractDetail::with(
             'acceptor',

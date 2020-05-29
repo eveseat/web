@@ -20,282 +20,233 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/', [
-    'as'   => 'character.list',
-    'uses' => 'CharacterController@index',
-]);
+Route::get('/')->name('character.list')->uses('CharacterController@index');
 
-Route::get('/delete/{character_id}', [
-    'as'         => 'character.delete',
-    'middleware' => 'bouncer:global.superuser',
-    'uses'       => 'CharacterController@deleteCharacter',
-]);
+// TODO : surround with global superuser
+Route::get('/delete/{character}')->name('character.delete')->uses('CharacterController@deleteCharacter');
 
-Route::get('/{character_id}', [
+Route::get('/{character}', [
     'as'   => 'character.view.default',
     'uses' => 'CharacterController@show',
 ])->where('character_id', '[0-9]+');
 
-Route::get('/{character_id}/assets', [
-    'as'         => 'character.view.assets',
-    'middleware' => 'characterbouncer:asset',
-    'uses'       => 'AssetsController@getAssetsView',
-]);
+Route::get('/{character}/assets')
+    ->name('character.view.assets')
+    ->uses('AssetsController@getAssetsView')
+    ->middleware('can:character.asset,character');
 
-Route::get('/{character_id}/assets/{item_id}/fitting', [
-    'as'         => 'character.view.assets.fitting',
-    'middleware' => 'characterbouncer:asset',
-    'uses'       => 'AssetsController@getFitting',
-]);
+Route::get('/{character}/assets/{item_id}/fitting')
+    ->name('character.view.assets.fitting')
+    ->uses('AssetsController@getFitting')
+    ->middleware('can:character.asset,character');
 
-Route::get('/{character_id}/assets/{item_id}/container', [
-    'as'         => 'character.view.assets.container',
-    'middleware' => 'characterbouncer:asset',
-    'uses'       => 'AssetsController@getContainer',
-]);
+Route::get('/{character}/assets/{item_id}/container')
+    ->name('character.view.assets.container')
+    ->uses('AssetsController@getContainer')
+    ->middleware('can:character.asset,character');
 
-Route::get('/{character_id}/bookmarks', [
-    'as'         => 'character.view.bookmarks',
-    'middleware' => 'characterbouncer:bookmark',
-    'uses'       => 'BookmarksController@index',
-]);
+Route::get('/{character}/bookmarks')
+    ->name('character.view.bookmarks')
+    ->uses('BookmarksController@index')
+    ->middleware('can:character.bookmark,character');
 
-Route::get('/{character_id}/calendar', [
-    'as'         => 'character.view.calendar',
-    'middleware' => 'characterbouncer:calendar',
-    'uses'       => 'CalendarController@index',
-]);
+Route::get('/{character}/calendar')
+    ->name('character.view.calendar')
+    ->uses('CalendarController@index')
+    ->middleware('can:character.calendar,character');
 
-Route::get('/{character_id}/contacts', [
-    'as'         => 'character.view.contacts',
-    'middleware' => 'characterbouncer:contact',
-    'uses'       => 'ContactsController@index',
-]);
+Route::get('/{character}/contacts')
+    ->name('character.view.contacts')
+    ->uses('ContactsController@index')
+    ->middleware('can:character.contact,character');
 
-Route::get('/{character_id}/contracts', [
-    'as'         => 'character.view.contracts',
-    'middleware' => 'characterbouncer:contract',
-    'uses'       => 'ContractsController@index',
-]);
+Route::get('/{character}/contracts')
+    ->name('character.view.contracts')
+    ->uses('ContractsController@index')
+    ->middleware('can:character.contract,character');
 
-Route::get('/{character_id}/contracts/{contract_id}', [
-    'as'         => 'character.view.contracts.items',
-    'middleware' => 'characterbouncer:contract',
-    'uses'       => 'ContractsController@show',
-]);
+Route::get('/{character}/contracts/{contract_id}')
+    ->name('character.view.contracts.items')
+    ->uses('ContractsController@show')
+    ->middleware('can:character.contract,character');
 
-Route::get('/{character_id}/fittings', [
-    'as'         => 'character.view.fittings',
-    'middleware' => 'characterbouncer:fitting',
-    'uses'       => 'FittingController@index',
-]);
+Route::get('/{character}/fittings')
+    ->name('character.view.fittings')
+    ->uses('FittingController@index')
+    ->middleware('can:character.fitting,character');
 
-Route::get('/{character_id}/fittings/{fitting_id}', [
-    'as'         => 'character.view.fittings.items',
-    'middleware' => 'characterbouncer:fitting',
-    'uses'       => 'FittingController@show',
-]);
+Route::get('/{character}/fittings/{fitting_id}')
+    ->name('character.view.fittings.items')
+    ->uses('FittingController@show')
+    ->middleware('can:character.fitting,character');
 
-Route::get('/{character_id}/blueprint', [
-    'as'         => 'character.view.blueprint',
-    'middleware' => 'characterbouncer:blueprint',
-    'uses'       => 'BlueprintController@index',
-]);
+Route::get('/{character}/blueprint')
+    ->name('character.view.blueprint')
+    ->uses('BlueprintController@index')
+    ->middleware('can:character.blueprint,character');
 
-Route::get('/{character_id}/industry', [
-    'as'         => 'character.view.industry',
-    'middleware' => 'characterbouncer:industry',
-    'uses'       => 'IndustryController@index',
-]);
+Route::get('/{character}/industry')
+    ->name('character.view.industry')
+    ->uses('IndustryController@index')
+    ->middleware('can:character.industry,character');
 
-Route::group(['prefix' => '{character_id}/intel'], function () {
+Route::group(['prefix' => '{character}/intel'], function () {
 
-    Route::get('summary', [
-        'as'         => 'character.view.intel.summary',
-        'middleware' => 'characterbouncer:intel',
-        'uses'       => 'IntelController@getIntelSummary',
-    ]);
+    Route::get('summary')
+        ->name('character.view.intel.summary')
+        ->uses('IntelController@getIntelSummary')
+        ->middleware('can:character.intel,character');
 
     // Ajax Call Journal
-    Route::get('summary/journal/data', [
-        'as'         => 'character.view.intel.summary.journal.data',
-        'middleware' => 'characterbouncer:intel',
-        'uses'       => 'IntelController@getTopWalletJournalData',
-    ]);
+    Route::get('summary/journal/data')
+        ->name('character.view.intel.summary.journal.data')
+        ->uses('IntelController@getTopWalletJournalData')
+        ->middleware('can:character.intel,character');
 
-    Route::get('summary/journal/details/{first_party_id}/{second_party_id}/{ref_type}', [
-        'as'         => 'character.view.intel.summary.journal.details',
-        'middleware' => 'characterbouncer:intel',
-        'uses'       => 'IntelController@getJournalContent',
-    ]);
+    Route::get('summary/journal/details/{first_party_id}/{second_party_id}/{ref_type}')
+        ->name('character.view.intel.summary.journal.details')
+        ->uses('IntelController@getJournalContent')
+        ->middleware('can:character.intel,character');
 
     // Transactions
-    Route::get('summary/transactions/data', [
-        'as'         => 'character.view.intel.summary.transactions.data',
-        'middleware' => 'characterbouncer:intel',
-        'uses'       => 'IntelController@getTopTransactionsData',
-    ]);
+    Route::get('summary/transactions/data')
+        ->name('character.view.intel.summary.transactions.data')
+        ->uses('IntelController@getTopTransactionsData')
+        ->middleware('can:character.intel,character');
 
-    Route::get('summary/transactions/details/{client_id}', [
-        'as'         => 'character.view.intel.summary.transactions.details',
-        'middleware' => 'characterbouncer:intel',
-        'uses'       => 'IntelController@getTransactionContent',
-    ]);
+    Route::get('summary/transactions/details/{client_id}')
+        ->name('character.view.intel.summary.transactions.details')
+        ->uses('IntelController@getTransactionContent')
+        ->middleware('can:character.intel,character');
 
     // Mail
-    Route::get('summary/mail/data', [
-        'as'         => 'character.view.intel.summary.mail.data',
-        'middleware' => 'characterbouncer:intel',
-        'uses'       => 'IntelController@getTopMailFromData',
-    ]);
+    Route::get('summary/mail/data')
+        ->name('character.view.intel.summary.mail.data')
+        ->uses('IntelController@getTopMailFromData')
+        ->middleware('can:character.intel,character');
 
-    Route::get('summary/mail/details/{from}', [
-        'as'         => 'character.view.intel.summary.mail.details',
-        'middleware' => 'characterbouncer:intel',
-        'uses'       => 'IntelController@getTopMailContent',
-    ]);
+    Route::get('summary/mail/details/{from}')
+        ->name('character.view.intel.summary.mail.details')
+        ->uses('IntelController@getTopMailContent')
+        ->middleware('can:character.intel,character');
 
     // Standings Comparison
-    Route::get('comparison', [
-        'as'         => 'character.view.intel.standingscomparison',
-        'middleware' => 'characterbouncer:intel',
-        'uses'       => 'IntelController@getStandingsComparison',
-    ]);
+    Route::get('comparison')
+        ->name('character.view.intel.standingscomparison')
+        ->uses('IntelController@getStandingsComparison')
+        ->middleware('can:character.intel,character');
 
-    Route::get('comparison/data/{profile_id}', [
-        'as'         => 'character.view.intel.standingscomparison.data',
-        'middleware' => 'characterbouncer:intel',
-        'uses'       => 'IntelController@getCompareStandingsWithProfileData',
-    ]);
+    Route::get('comparison/data/{profile_id}')
+        ->name('character.view.intel.standingscomparison.data')
+        ->uses('IntelController@getCompareStandingsWithProfileData')
+        ->middleware('can:character.intel,character');
 
     // Notes
-    Route::get('notes', [
-        'as'         => 'character.view.intel.notes',
-        'middleware' => 'characterbouncer:intel',
-        'uses'       => 'IntelController@notes',
-    ]);
+    Route::get('notes')
+        ->name('character.view.intel.notes')
+        ->uses('IntelController@notes')
+        ->middleware('can:character.intel,character');
 });
 
-Route::get('/{character_id}/journal', [
-    'as'         => 'character.view.journal',
-    'middleware' => 'characterbouncer:journal',
-    'uses'       => 'WalletController@journal',
-]);
+Route::get('/{character}/journal')
+    ->name('character.view.journal')
+    ->uses('WalletController@journal')
+    ->middleware('can:character.journal,character');
 
-Route::get('/view/journal/graph/balance/{character_id}', [
-    'as'         => 'character.view.journal.graph.balance',
-    'middleware' => 'characterbouncer:journal',
-    'uses'       => 'WalletController@getJournalGraphBalance',
-]);
+Route::get('/view/journal/graph/balance/{character}')
+    ->name('character.view.journal.graph.balance')
+    ->uses('WalletController@getJournalGraphBalance')
+    ->middleware('can:character.journal,character');
 
-Route::get('/{character_id}/killmails', [
-    'as'         => 'character.view.killmails',
-    'middleware' => 'characterbouncer:killmail',
-    'uses'       => 'KillmailController@index',
-]);
+Route::get('/{character}/killmails')
+    ->name('character.view.killmails')
+    ->uses('KillmailController@index')
+    ->middleware('can:character.killmail,character');
 
-Route::get('/view/mail/timeline', [
-    'as'   => 'character.view.mail.timeline',
-    'uses' => 'MailController@getMailTimeline',
-]);
+Route::get('/view/mail/timeline')
+    ->name('character.view.mail.timeline')
+    ->uses('MailController@getMailTimeline');
 
-Route::get('/view/mail/timeline/read/{message_id}', [
-    'as'   => 'character.view.mail.timeline.read',
-    'uses' => 'MailController@getMailTimelineRead',
-]);
+Route::get('/view/mail/timeline/read/{message_id}')
+    ->name('character.view.mail.timeline.read')
+    ->uses('MailController@getMailTimelineRead');
 
-Route::get('/{character_id}/mail', [
-    'as'         => 'character.view.mail',
-    'middleware' => 'characterbouncer:mail',
-    'uses'       => 'MailController@index',
-]);
+Route::get('/{character}/mail')
+    ->name('character.view.mail')
+    ->uses('MailController@index')
+    ->middleware('can:character.mail,character');
 
-Route::get('/{character_id}/mail/{message_id}', [
-    'as'         => 'character.view.mail.read',
-    'middleware' => 'characterbouncer:mail',
-    'uses'       => 'MailController@show',
-]);
+Route::get('/{character}/mail/{message_id}')
+    ->name('character.view.mail.read')
+    ->uses('MailController@show')
+    ->middleware('can:character.mail,character');
 
-Route::get('/{character_id}/markets', [
-    'as'         => 'character.view.market',
-    'middleware' => 'characterbouncer:market',
-    'uses'       => 'MarketController@index',
-]);
+Route::get('/{character}/markets')
+    ->name('character.view.market')
+    ->uses('MarketController@index')
+    ->middleware('can:character.market,character');
 
-Route::get('/{character_id}/mining-ledger', [
-    'as'         => 'character.view.mining_ledger',
-    'middleware' => 'characterbouncer:mining',
-    'uses'       => 'MiningLedgerController@index',
-]);
+Route::get('/{character}/mining-ledger')
+    ->name('character.view.mining_ledger')
+    ->uses('MiningLedgerController@index')
+    ->middleware('can:character.mining,character');
 
-Route::get('/{character_id}/mining-ledger/details', [
-    'as'         => 'character.view.mining_ledger.details',
-    'middleware' => 'characterbouncer:mining',
-    'uses'       => 'MiningLedgerController@show',
-]);
+Route::get('/{character}/mining-ledger/details')
+    ->name('character.view.mining_ledger.details')
+    ->uses('MiningLedgerController@show')
+    ->middleware('can:character.mining,character');
 
-Route::get('/{character_id}/notifications', [
-    'as'         => 'character.view.notifications',
-    'middleware' => 'characterbouncer:notifications',
-    'uses'       => 'NotificationsController@index',
-]);
+Route::get('/{character}/notifications')
+    ->name('character.view.notifications')
+    ->uses('NotificationsController@index')
+    ->middleware('can:character.notification,character');
 
-Route::get('/{character_id}/pi', [
-    'as'         => 'character.view.pi',
-    'middleware' => 'characterbouncer:pi',
-    'uses'       => 'PiController@getPi',
-]);
+Route::get('/{character}/pi')
+    ->name('character.view.pi')
+    ->uses('PiController@getPi')
+    ->middleware('can:character.planetary,character');
 
-Route::get('/{character_id}/research', [
-    'as'         => 'character.view.research',
-    'middleware' => 'characterbouncer:research',
-    'uses'       => 'ResearchController@index',
-]);
+Route::get('/{character}/research')
+    ->name('character.view.research')
+    ->uses('ResearchController@index')
+    ->middleware('can:character.research,character');
 
-Route::get('/{character_id}/sheet', [
-    'as'         => 'character.view.sheet',
-    'middleware' => 'characterbouncer:sheet',
-    'uses'       => 'SheetController@show',
-]);
+Route::get('/{character}/sheet')
+    ->name('character.view.sheet')
+    ->uses('SheetController@show')
+    ->middleware('can:character.sheet,character');
 
-Route::get('/{character_id}/ship', [
-    'as'         => 'character.view.ship',
-    'middleware' => 'characterbouncer:asset',
-    'uses'       => 'CharacterController@getShip',
-]);
+Route::get('/{character}/ship')
+    ->name('character.view.ship')
+    ->uses('CharacterController@getShip')
+    ->middleware('can:character.asset,character');
 
-Route::get('/{character_id}/skills', [
-    'as'         => 'character.view.skills',
-    'middleware' => 'characterbouncer:skill',
-    'uses'       => 'SkillsController@getSkills',
-]);
+Route::get('/{character}/skills')
+    ->name('character.view.skills')
+    ->uses('SkillsController@getSkills')
+    ->middleware('can:character.skill,character');
 
-Route::get('/{character_id}/skills/export', [
-    'as'         => 'character.export.skills',
-    'middleware' => 'characterbouncer:skills',
-    'uses'       => 'SkillsController@export',
-]);
+Route::get('/{character}/skills/export')
+    ->name('character.export.skills')
+    ->uses('SkillsController@export')
+    ->middleware('can:character.skill,character');
 
-Route::get('/view/skills/graph/level/{character_id}', [
-    'as'         => 'character.view.skills.graph.level',
-    'middleware' => 'characterbouncer:sheet',
-    'uses'       => 'SkillsController@getCharacterSkillsLevelChartData',
-]);
+Route::get('/view/skills/graph/level/{character}')
+    ->name('character.view.skills.graph.level')
+    ->uses('SkillsController@getCharacterSkillsLevelChartData')
+    ->middleware('can:character.sheet,character');
 
-Route::get('/view/skills/graph/coverage/{character_id}', [
-    'as'         => 'character.view.skills.graph.coverage',
-    'middleware' => 'characterbouncer:sheet',
-    'uses'       => 'SkillsController@getCharacterSkillsCoverageChartData',
-]);
+Route::get('/view/skills/graph/coverage/{character}')
+    ->name('character.view.skills.graph.coverage')
+    ->uses('SkillsController@getCharacterSkillsCoverageChartData')
+    ->middleware('can:character.sheet,character');
 
-Route::get('/{character_id}/standings', [
-    'as'         => 'character.view.standings',
-    'middleware' => 'characterbouncer:standing',
-    'uses'       => 'StandingsController@index',
-]);
+Route::get('/{character}/standings')
+    ->name('character.view.standings')
+    ->uses('StandingsController@index')
+    ->middleware('can:character.standing,character');
 
-Route::get('/{character_id}/transactions', [
-    'as'         => 'character.view.transactions',
-    'middleware' => 'characterbouncer:transaction',
-    'uses'       => 'WalletController@transactions',
-]);
+Route::get('/{character}/transactions')
+    ->name('character.view.transactions')
+    ->uses('WalletController@transactions')
+    ->middleware('can:character.transaction,character');

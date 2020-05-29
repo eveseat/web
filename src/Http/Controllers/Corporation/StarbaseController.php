@@ -40,11 +40,11 @@ class StarbaseController extends Controller
     use Starbases;
 
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getStarbases(int $corporation_id)
+    public function getStarbases(CorporationInfo $corporation)
     {
 
         // The basic strategy here is that we will first try and get
@@ -52,10 +52,10 @@ class StarbaseController extends Controller
         // After that we will take the list of starbases and
         // attempt to determine the fuel usage as well as
         // the tower name as per the assets list.
-        $sheet = CorporationInfo::find($corporation_id);
-        $starbases = $this->getCorporationStarbases($corporation_id);
+        $starbases = $this->getCorporationStarbases($corporation->corporation_id);
+        $sheet = $corporation;
 
-        return view('web::corporation.starbases', compact('sheet', 'starbases'));
+        return view('web::corporation.starbases', compact('corporation', 'sheet', 'starbases'));
     }
 
     /**

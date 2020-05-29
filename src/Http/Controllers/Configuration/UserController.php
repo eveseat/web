@@ -73,6 +73,8 @@ class UserController extends Controller
 
         // retrieve the group to which the edited user is attached.
         $user = User::find($request->input('user_id'));
+        $user->admin = $request->input('admin', false);
+        $user->save();
 
         // determine if the new e-mail address is already in use.
         $email_exists = UserSetting::where('name', 'email_address')

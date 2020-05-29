@@ -20,195 +20,163 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-// list all squads
 Route::get('/', [
     'as'   => 'squads.index',
     'uses' => 'SquadsController@index',
 ]);
 
-Route::middleware(['bouncer::global.superuser'])
-    ->group(function () {
+Route::group([
+    'middleware' => 'can:squads.create',
+], function () {
+    // squad creation form
+    Route::get('/create')
+        ->name('squads.create')
+        ->uses('SquadsController@create');
 
-        // squad creation form
-        Route::get('/create', [
-            'as'   => 'squads.create',
-            'uses' => 'SquadsController@create',
-        ]);
+    // create a squad
+    Route::post('/')
+        ->name('squads.store')
+        ->uses('SquadsController@store');
+});
 
-        // create a squad
-        Route::post('/', [
-            'as'   => 'squads.store',
-            'uses' => 'SquadsController@store',
-        ]);
-    });
-
-Route::prefix('/{id}')
+Route::prefix('/{squad}')
     ->group(function () {
 
         // squad card
-        Route::get('/', [
-            'as'   => 'squads.show',
-            'uses' => 'SquadsController@show',
-        ]);
+        Route::get('/')
+            ->name('squads.show')
+            ->uses('SquadsController@show');
 
-        Route::middleware(['bouncer:global.superuser'])
-            ->group(function () {
+        // squad update form
+        Route::get('/edit')
+            ->name('squads.edit')
+            ->uses('SquadsController@edit')
+            ->middleware('can:squads.edit,squad');
 
-                // squad update form
-                Route::get('/edit', [
-                    'as'   => 'squads.edit',
-                    'uses' => 'SquadsController@edit',
-                ]);
+        // update a squad
+        Route::put('/')
+            ->name('squads.update')
+            ->uses('SquadsController@udpate')
+            ->middleware('can:squads.edit,squad');
 
-                // update a squad
-                Route::put('/', [
-                    'as'   => 'squads.update',
-                    'uses' => 'SquadsController@update',
-                ]);
-
-                // remove a squad
-                Route::delete('/', [
-                    'as' => 'squads.destroy',
-                    'uses' => 'SquadsController@destroy',
-                ]);
-            });
+        // remove a squad
+        Route::delete('/')
+            ->name('squads.destroy')
+            ->uses('SquadsController@destroy')
+            ->middleware('can:squads.delete,squad');
     });
 
-Route::prefix('/{id}/members')->group(function () {
+Route::prefix('/{squad}/members')->group(function () {
 
-    Route::middleware(['squad.moderator.bouncer'])
-        ->group(function () {
+    // select2 squad member (not already part of active squad)
+    Route::get('/lookup')
+        ->name('squads.members.lookup')
+        ->uses('MembersController@lookup')
+        ->middleware('can:squads.manage_members,squad');
 
-            // select2 squad member (not already part of active squad)
-            Route::get('/lookup', [
-                'as'   => 'squads.members.lookup',
-                'uses' => 'MembersController@lookup',
-            ]);
+    // add member to a squad
+    Route::post('/')
+        ->name('squads.members.store')
+        ->uses('MembersController@store')
+        ->middleware('can:squads.manage_members,squad');
 
-            // add member to a squad
-            Route::post('/', [
-                'as'   => 'squads.members.store',
-                'uses' => 'MembersController@store',
-            ]);
+    // remove member from a squad
+    Route::delete('/{user}')
+        ->name('squads.members.kick')
+        ->uses('MembersController@destroy')
+        ->middleware('can:squads.kick,squad,user');
 
-            // remove member from a squad
-            Route::delete('/', [
-                'as'   => 'squads.members.kick',
-                'uses' => 'MembersController@destroy',
-            ]);
-        });
+    // show squad members
+    Route::get('/')
+        ->name('squads.members.index')
+        ->uses('MembersController@index')
+        ->middleware('can:squads.show_members,squad');
 
-    Route::middleware(['squad.member.bouncer'])
-        ->group(function () {
-
-            // show squad members
-            Route::get('/', [
-                'as'   => 'squads.members.index',
-                'uses' => 'MembersController@index',
-            ]);
-
-            // leave a squad
-            Route::delete('/leave', [
-                'as' => 'squads.members.leave',
-                'uses' => 'MembersController@leave',
-            ]);
-        });
+    // leave a squad
+    Route::delete('/')
+        ->name('squads.members.leave')
+        ->uses('MembersController@leave');
 });
 
-Route::prefix('/{id}/moderators')
-    ->middleware('bouncer:global.superuser')
+Route::prefix('/{squad}/moderators')
+    ->middleware('can:squads.manage_moderators,squad')
     ->group(function () {
 
         // select2 squad moderators (not part of active squad)
-        Route::get('/lookup', [
-            'as'   => 'squads.moderators.lookup',
-            'uses' => 'ModeratorsController@lookup',
-        ]);
+        Route::get('/lookup')
+            ->name('squads.moderators.lookup')
+            ->uses('ModeratorsController@lookup');
 
         // add moderator to a squad
-        Route::post('/', [
-            'as'   => 'squads.moderators.store',
-            'uses' => 'ModeratorsController@store',
-        ]);
+        Route::post('/')
+            ->name('squads.moderators.store')
+            ->uses('ModeratorsController@store');
 
         // remove moderator from a squad
-        Route::delete('/', [
-            'as'   => 'squads.moderators.destroy',
-            'uses' => 'ModeratorsController@destroy',
-        ]);
+        Route::delete('/{user}')
+            ->name('squads.moderators.destroy')
+            ->uses('ModeratorsController@destroy');
     });
 
-Route::prefix('/{id}/roles')
-    ->middleware('bouncer:global.superuser')
+Route::prefix('/{squad}/roles')
+    ->middleware('can:squads.manage_roles,squad')
     ->group(function () {
 
         // show squad roles
-        Route::get('/', [
-            'as'   => 'squads.roles.show',
-            'uses' => 'RolesController@show',
-        ]);
+        Route::get('/')
+            ->name('squads.roles.show')
+            ->uses('RolesController@show');
 
         // select2 squad roles (not part of active squad)
-        Route::get('/lookup', [
-            'as'   => 'squads.roles.lookup',
-            'uses' => 'RolesController@lookup',
-        ]);
+        Route::get('/lookup')
+            ->name('squads.roles.lookup')
+            ->uses('RolesController@lookup');
 
         // add a role to a squad
-        Route::post('/', [
-            'as'   => 'squads.roles.store',
-            'uses' => 'RolesController@store',
-        ]);
+        Route::post('/')
+            ->name('squads.roles.store')
+            ->uses('RolesController@store');
 
         // remove a role from a squad
-        Route::delete('/', [
-            'as'   => 'squads.roles.destroy',
-            'uses' => 'RolesController@destroy',
-        ]);
+        Route::delete('/')
+            ->name('squads.roles.destroy')
+            ->uses('RolesController@destroy');
     });
 
-Route::prefix('/{id}/applications')
+Route::prefix('/{squad}/applications')
     ->group(function () {
 
         // show squad applications
-        Route::get('/', [
-            'as'   => 'squads.applications.index',
-            'uses' => 'ApplicationsController@index',
-            'middleware' => ['squad.moderator.bouncer'],
-        ]);
+        Route::get('/')
+            ->name('squads.applications.index')
+            ->uses('ApplicationsController@index')
+            ->middleware('can:squads.manage_members,squad');
 
         // apply to a squad
-        Route::post('/', [
-            'as'   => 'squads.applications.store',
-            'uses' => 'ApplicationsController@store',
-        ]);
+        Route::post('/')
+            ->name('squads.applications.store')
+            ->uses('ApplicationsController@store');
 
         // revoke squad application
-        Route::delete('/', [
-            'as'   => 'squads.applications.cancel',
-            'uses' => 'ApplicationsController@cancel',
-        ])->middleware('squad.author.bouncer');
-    });
-
-Route::prefix('/applications/{id}')
-    ->middleware('squad.moderator.bouncer')
-    ->group(function () {
+        Route::delete('/')
+            ->name('squads.applications.cancel')
+            ->uses('ApplicationsController@cancel');
 
         // show squad application details
-        Route::get('/', [
-            'as'   => 'squads.applications.show',
-            'uses' => 'ApplicationsController@show',
-        ]);
+        Route::get('/{id}')
+            ->name('squads.applications.show')
+            ->uses('ApplicationsController@show')
+            ->middleware('can:squads.manage_members,squad');
 
         // approve a squad application
-        Route::post('/', [
-            'as'   => 'squads.applications.approve',
-            'uses' => 'ApplicationsController@approve',
-        ]);
+        Route::post('/{id}')
+            ->name('squads.applications.approve')
+            ->uses('ApplicationsController@approve')
+            ->middleware('can:squads.manage_members,squad');
 
         // reject a squad application
-        Route::delete('/', [
-            'as'   => 'squads.applications.reject',
-            'uses' => 'ApplicationsController@reject',
-        ]);
+        Route::delete('/{id}')
+            ->name('squads.applications.reject')
+            ->uses('ApplicationsController@reject')
+            ->middleware('can:squads.manage_members,squad');
     });

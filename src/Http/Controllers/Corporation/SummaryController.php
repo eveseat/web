@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Corporation\Corporation;
 use Seat\Services\Repositories\Corporation\Divisions;
 use Seat\Services\Repositories\Corporation\Wallet;
@@ -34,13 +35,13 @@ class SummaryController extends Controller
     use Wallet;
 
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function show(int $corporation_id)
+    public function show(CorporationInfo $corporation)
     {
 
-        $sheet = $this->getCorporationSheet($corporation_id);
+        $sheet = $this->getCorporationSheet($corporation->corporation_id);
 
         // Check if we managed to get any records for
         // this character. If not, redirect back with
@@ -49,11 +50,11 @@ class SummaryController extends Controller
             return redirect()->back()
                 ->with('error', trans('web::seat.unknown_corporation'));
 
-        $asset_divisions = $this->getCorporationDivisions($corporation_id);
-        $wallet_divisions = $this->getCorporationWalletDivisions($corporation_id);
+        $asset_divisions = $this->getCorporationDivisions($corporation->corporation_id);
+        $wallet_divisions = $this->getCorporationWalletDivisions($corporation->corporation_id);
 
         return view('web::corporation.summary',
-            compact('sheet', 'asset_divisions', 'wallet_divisions'));
+            compact('corporation', 'sheet', 'asset_divisions', 'wallet_divisions'));
 
     }
 }

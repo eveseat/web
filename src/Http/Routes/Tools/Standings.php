@@ -22,7 +22,7 @@
 
 Route::group([
     'prefix'    => 'standings',
-    'middleware' => 'bouncer:global.standing_builder',
+    'middleware' => 'can:global.standing_builder',
 ], function () {
 
     Route::get('/', [
