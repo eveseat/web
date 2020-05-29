@@ -78,7 +78,7 @@ class RolesDataTable extends DataTable
     {
         return Role::with('permissions')
             ->whereHas('squads', function ($query) {
-                $query->where('id', $this->request->id);
+                $query->where('id', $this->request->squad->id);
             });
     }
 

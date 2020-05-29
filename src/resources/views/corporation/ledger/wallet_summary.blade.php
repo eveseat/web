@@ -21,13 +21,13 @@
           @foreach ($divisions->sortBy('name') as $division)
 
             @switch(true)
-              @case($division->division == 1 && auth()->user()->has('corporation.wallet_first_division'))
-              @case($division->division == 2 && auth()->user()->has('corporation.wallet_second_division'))
-              @case($division->division == 3 && auth()->user()->has('corporation.wallet_third_division'))
-              @case($division->division == 4 && auth()->user()->has('corporation.wallet_fourth_division'))
-              @case($division->division == 5 && auth()->user()->has('corporation.wallet_fifth_division'))
-              @case($division->division == 6 && auth()->user()->has('corporation.wallet_sixth_division'))
-              @case($division->division == 7 && auth()->user()->has('corporation.wallet_seventh_division'))
+              @case($division->division == 1 && \Illuminate\Support\Facades\Gate::allows('corporation.wallet_first_division', $corporation))
+              @case($division->division == 2 && \Illuminate\Support\Facades\Gate::allows('corporation.wallet_second_division', $corporation))
+              @case($division->division == 3 && \Illuminate\Support\Facades\Gate::allows('corporation.wallet_third_division', $corporation))
+              @case($division->division == 4 && \Illuminate\Support\Facades\Gate::allows('corporation.wallet_fourth_division', $corporation))
+              @case($division->division == 5 && \Illuminate\Support\Facades\Gate::allows('corporation.wallet_fifth_division', $corporation))
+              @case($division->division == 6 && \Illuminate\Support\Facades\Gate::allows('corporation.wallet_sixth_division', $corporation))
+              @case($division->division == 7 && \Illuminate\Support\Facades\Gate::allows('corporation.wallet_seventh_division', $corporation))
                 <tr>
                   <td>{{ $division->name }}</td>
                   <td data-order="{{ $division->balance }}">{{ number_format($division->balance) }}</td>

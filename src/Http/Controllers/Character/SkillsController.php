@@ -37,31 +37,22 @@ class SkillsController extends Controller
     use EveRepository;
 
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getSkills(int $character_id)
+    public function getSkills(CharacterInfo $character)
     {
-
-        $skills = $this->getCharacterSkillsInformation($character_id);
-        $skill_groups = $this->getEveSkillsGroups();
-
         return view('web::character.skills',
-            compact('skills', 'skill_groups'));
+            compact('character'));
     }
 
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getCharacterSkillsLevelChartData(int $character_id)
+    public function getCharacterSkillsLevelChartData(CharacterInfo $character)
     {
-
-        if ($character_id == 1) {
-            return response()->json([]);
-        }
-
-        $data = $this->getCharacterSkillsAmountPerLevel($character_id);
+        $data = $this->getCharacterSkillsAmountPerLevel($character->character_id);
 
         return response()->json([
             'labels'   => [
@@ -84,19 +75,14 @@ class SkillsController extends Controller
     }
 
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getCharacterSkillsCoverageChartData(int $character_id)
+    public function getCharacterSkillsCoverageChartData(CharacterInfo $character)
     {
+        $data = $this->getCharacterSkillCoverage($character->character_id);
 
-        if ($character_id == 1) {
-            return response()->json([]);
-        }
-
-        $data = $this->getCharacterSkillCoverage($character_id);
-
-        $character = CharacterInfo::where('character_id', $character_id)->first();
+        $character = CharacterInfo::where('character_id', $character->character_id)->first();
 
         return response()->json([
             'labels'   => $data->map(function ($item) {
@@ -124,15 +110,15 @@ class SkillsController extends Controller
      * @param int $character_id
      * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
-    public function export(int $character_id)
+    public function export(CharacterInfo $character)
     {
-        return response()->streamDownload(function () use ($character_id) {
-            $skills = $this->getCharacterSkillsInformation($character_id);
+        return response()->streamDownload(function () use ($character) {
+            $skills = $this->getCharacterSkillsInformation($character->character_id);
 
             echo $skills->map(function ($skill) {
                 return sprintf("%s\t%d", $skill->typeName, $skill->trained_skill_level);
             })->implode(PHP_EOL);
-        }, sprintf('characters_%d_skills.txt', $character_id), [
+        }, sprintf('characters_%d_skills.txt', $character->character_id), [
             'Content-Type' => 'text/plain',
         ]);
     }

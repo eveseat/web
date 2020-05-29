@@ -33,11 +33,11 @@
         <div class="card-body">
           <div class="mb-3">
             <select multiple="multiple" id="dt-character-selector" class="form-control" style="width: 100%;">
-              @foreach($characters as $character)
-                @if($character->character_id == $request->character_id)
-                  <option selected="selected" value="{{ $character->character_id }}">{{ $character->name }}</option>
+              @foreach($character->refresh_token->user->characters as $character_info)
+                @if($character_info->character_id == $character->character_id)
+                  <option selected="selected" value="{{ $character_info->character_id }}">{{ $character_info->name }}</option>
                 @else
-                  <option value="{{ $character->character_id }}">{{ $character->name }}</option>
+                  <option value="{{ $character_info->character_id }}">{{ $character_info->name }}</option>
                 @endif
               @endforeach
             </select>
@@ -67,7 +67,7 @@
 
   <script type="text/javascript">
     // ChartJS Spending Graph
-    $.get("{{ route('character.view.journal.graph.balance', ['character_id' => $request->character_id]) }}", function (data) {
+    $.get("{{ route('character.view.journal.graph.balance', ['character' => $request->character]) }}", function (data) {
 
       new Chart($("canvas#balance-over-time"), {
         type   : 'line',

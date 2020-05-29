@@ -12,8 +12,8 @@
 >
 
     <testsuites>
-        <testsuite name="Testbench Test Suite">
-            <directory suffix="Test.php">./tests/</directory>
+        <testsuite name="Access Control Layer Test Suite">
+            <directory suffix="Test.php">./tests/Acl/</directory>
         </testsuite>
     </testsuites>
 

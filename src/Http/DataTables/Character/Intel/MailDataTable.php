@@ -44,7 +44,7 @@ class MailDataTable extends DataTable
                 return view('web::partials.date', ['datetime' => $row->timestamp]);
             })
             ->editColumn('action', function ($row) {
-                return view('web::common.mails.buttons.read', ['character_id' => request()->character_id, 'mail_id' => $row->mail_id]);
+                return view('web::common.mails.buttons.read', ['character_id' => request()->character, 'mail_id' => $row->mail_id]);
             })
             ->editColumn('sender.name', function ($row) {
                 switch ($row->sender->category) {

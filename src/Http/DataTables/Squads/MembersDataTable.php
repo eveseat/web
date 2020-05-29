@@ -22,7 +22,6 @@
 
 namespace Seat\Web\Http\DataTables\Squads;
 
-use Seat\Web\Models\Squads\Squad;
 use Seat\Web\Models\User;
 use Yajra\DataTables\Services\DataTable;
 
@@ -38,8 +37,6 @@ class MembersDataTable extends DataTable
      */
     public function ajax()
     {
-        $squad = Squad::find(request()->route('id'));
-
         return datatables()
             ->eloquent($this->query())
             ->addColumn('characters', function ($row) {
@@ -54,8 +51,8 @@ class MembersDataTable extends DataTable
                     img('characters', 'portrait', $row->main_character_id, 64, ['class' => 'img-circle eve-icon small-icon'], false),
                     $row->name);
             })
-            ->editColumn('action', function ($row) use ($squad) {
-                return view('web::squads.buttons.squads.kick', compact('row', 'squad'));
+            ->editColumn('action', function ($row) {
+                return view('web::squads.buttons.squads.kick', compact('row'));
             })
             ->filterColumn('characters', function ($query, $keyword) {
                 $query->whereHas('characters', function ($sub_query) use ($keyword) {
@@ -87,7 +84,7 @@ class MembersDataTable extends DataTable
         return User::with('characters')
             ->standard()
             ->whereHas('squads', function ($query) {
-                $query->where('id', $this->request->id);
+                $query->where('id', $this->request->squad->id);
             });
     }
 

@@ -50,13 +50,13 @@
               <ol>
                 @foreach($asset_divisions as $asset_division)
                   @switch(true)
-                    @case($asset_division->division == 1 && auth()->user()->has('corporation.asset_first_division'))
-                    @case($asset_division->division == 2 && auth()->user()->has('corporation.asset_second_division'))
-                    @case($asset_division->division == 3 && auth()->user()->has('corporation.asset_third_division'))
-                    @case($asset_division->division == 4 && auth()->user()->has('corporation.asset_fourth_division'))
-                    @case($asset_division->division == 5 && auth()->user()->has('corporation.asset_fifth_division'))
-                    @case($asset_division->division == 6 && auth()->user()->has('corporation.asset_sixth_division'))
-                    @case($asset_division->division == 7 && auth()->user()->has('corporation.asset_seventh_division'))
+                    @case($asset_division->division == 1 && \Illuminate\Support\Facades\Gate::allows('corporation.asset_first_division', $corporation))
+                    @case($asset_division->division == 2 && \Illuminate\Support\Facades\Gate::allows('corporation.asset_second_division', $corporation))
+                    @case($asset_division->division == 3 && \Illuminate\Support\Facades\Gate::allows('corporation.asset_third_division', $corporation))
+                    @case($asset_division->division == 4 && \Illuminate\Support\Facades\Gate::allows('corporation.asset_fourth_division', $corporation))
+                    @case($asset_division->division == 5 && \Illuminate\Support\Facades\Gate::allows('corporation.asset_fifth_division', $corporation))
+                    @case($asset_division->division == 6 && \Illuminate\Support\Facades\Gate::allows('corporation.asset_sixth_division', $corporation))
+                    @case($asset_division->division == 7 && \Illuminate\Support\Facades\Gate::allows('corporation.asset_seventh_division', $corporation))
                       <li>{{ $asset_division->name }}</li>
                     @break
                   @endswitch
@@ -71,13 +71,13 @@
               <ol>
                 @foreach($wallet_divisions as $wallet_division)
                   @switch(true)
-                    @case($wallet_division->division == 1 && auth()->user()->has('corporation.wallet_first_division'))
-                    @case($wallet_division->division == 2 && auth()->user()->has('corporation.wallet_second_division'))
-                    @case($wallet_division->division == 3 && auth()->user()->has('corporation.wallet_third_division'))
-                    @case($wallet_division->division == 4 && auth()->user()->has('corporation.wallet_fourth_division'))
-                    @case($wallet_division->division == 5 && auth()->user()->has('corporation.wallet_fifth_division'))
-                    @case($wallet_division->division == 6 && auth()->user()->has('corporation.wallet_sixth_division'))
-                    @case($wallet_division->division == 7 && auth()->user()->has('corporation.wallet_seventh_division'))
+                    @case($wallet_division->division == 1 && \Illuminate\Support\Facades\Gate::allows('corporation.wallet_first_division', $corporation))
+                    @case($wallet_division->division == 2 && \Illuminate\Support\Facades\Gate::allows('corporation.wallet_second_division', $corporation))
+                    @case($wallet_division->division == 3 && \Illuminate\Support\Facades\Gate::allows('corporation.wallet_third_division', $corporation))
+                    @case($wallet_division->division == 4 && \Illuminate\Support\Facades\Gate::allows('corporation.wallet_fourth_division', $corporation))
+                    @case($wallet_division->division == 5 && \Illuminate\Support\Facades\Gate::allows('corporation.wallet_fifth_division', $corporation))
+                    @case($wallet_division->division == 6 && \Illuminate\Support\Facades\Gate::allows('corporation.wallet_sixth_division', $corporation))
+                    @case($wallet_division->division == 7 && \Illuminate\Support\Facades\Gate::allows('corporation.wallet_seventh_division', $corporation))
                       @if(is_null($wallet_division->name))
                         <li>Master</li>
                       @else

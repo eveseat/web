@@ -1,5 +1,5 @@
 @if ($corporation->name && $corporation->name !== trans('web::seat.unknown'))
-  <a href="{{ route('corporation.view.default', ['corporation_id' => $corporation->corporation_id ?? $corporation->entity_id]) }}">
+  <a href="{{ route('corporation.view.default', ['corporation' => $corporation->corporation_id ?? $corporation->entity_id]) }}">
     {!! img('corporations', 'logo', $corporation->corporation_id ?? $corporation->entity_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
     {{ $corporation->name }}
   </a>

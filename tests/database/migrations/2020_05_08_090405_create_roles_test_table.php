@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
+ * Copyright (C) 2015 to 2020 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateUsersTestTable extends Migration
+class CreateRolesTestTable extends Migration
 {
     /**
      * Run the migrations.
@@ -32,20 +32,9 @@ class CreateUsersTestTable extends Migration
      */
     public function up()
     {
-
-        Schema::create('users', function (Blueprint $table) {
-
-            $table->bigInteger('id')->primary();
-            $table->integer('group_id');
-            $table->string('name')->unique();
-            $table->string('email')->unique()->nullable();
-            $table->boolean('active')->default(true);
-            $table->string('character_owner_hash');
-            $table->dateTime('last_login')->nullable();
-            $table->string('last_login_source')->nullable();
-            $table->rememberToken();
-
-            $table->timestamps();
+        Schema::create('roles', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('title');
         });
     }
 
@@ -56,7 +45,6 @@ class CreateUsersTestTable extends Migration
      */
     public function down()
     {
-
-        Schema::drop('users');
+        Schema::drop('roles');
     }
 }

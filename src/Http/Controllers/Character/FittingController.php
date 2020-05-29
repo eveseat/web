@@ -22,12 +22,11 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Fittings\CharacterFitting;
-use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Military\FittingDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
-use Seat\Web\Models\User;
 
 /**
  * Class FittingController.
@@ -36,32 +35,26 @@ use Seat\Web\Models\User;
 class FittingController extends Controller
 {
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @param \Seat\Web\Http\DataTables\Character\Military\FittingDataTable $dataTable
      * @return mixed
      */
-    public function index(int $character_id, FittingDataTable $dataTable)
+    public function index(CharacterInfo $character, FittingDataTable $dataTable)
     {
-        $token = RefreshToken::where('character_id', $character_id)->first();
-        $characters = collect();
-        if ($token) {
-            $characters = User::with('characters')->find($token->user_id)->characters;
-        }
-
         return $dataTable
-            ->addScope(new CharacterScope('character.fitting', $character_id, request()->input('characters')))
-            ->render('web::character.fittings', compact('characters'));
+            ->addScope(new CharacterScope('character.fitting', request()->input('characters')))
+            ->render('web::character.fittings', compact('character'));
     }
 
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @param int $fitting_id
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|object|\Seat\Eveapi\Models\Fittings\CharacterFitting|null
      */
-    public function show(int $character_id, int $fitting_id)
+    public function show(CharacterInfo $character, int $fitting_id)
     {
         $fitting = CharacterFitting::with('ship', 'items', 'ship.price', 'items.type', 'items.type.price')
-            ->where('character_id', $character_id)
+            ->where('character_id', $character->character_id)
             ->where('fitting_id', $fitting_id)
             ->first();
 

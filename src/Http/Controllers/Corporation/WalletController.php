@@ -22,6 +22,8 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
+use Illuminate\Support\Facades\Gate;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Corporation\Wallet;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Financial\WalletJournalDataTable;
@@ -38,11 +40,11 @@ class WalletController extends Controller
     use Wallet;
 
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      * @param \Seat\Web\Http\DataTables\Corporation\Financial\WalletJournalDataTable $dataTable
      * @return mixed
      */
-    public function journal(int $corporation_id, WalletJournalDataTable $dataTable)
+    public function journal(CorporationInfo $corporation, WalletJournalDataTable $dataTable)
     {
 
         $division_ids = [];
@@ -52,21 +54,23 @@ class WalletController extends Controller
         ];
 
         foreach ($division_permissions as $key => $permission) {
-            if (auth()->user()->has(sprintf('corporation.%s', $permission)))
+            $ability = sprintf('corporation.%s', $permission);
+
+            if (Gate::allows($ability, $corporation))
                 array_push($division_ids, ($key + 1));
         }
 
-        return $dataTable->addScope(new CorporationScope([$corporation_id]))
+        return $dataTable->addScope(new CorporationScope('corporation.journal', [$corporation->corporation_id]))
             ->addScope(new CorporationWalletDivisionsScope($division_ids))
-            ->render('web::corporation.wallet.journal.journal');
+            ->render('web::corporation.wallet.journal.journal', compact('corporation'));
     }
 
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      * @param \Seat\Web\Http\DataTables\Corporation\Financial\WalletTransactionDataTable $dataTable
      * @return mixed
      */
-    public function transactions(int $corporation_id, WalletTransactionDataTable $dataTable)
+    public function transactions(CorporationInfo $corporation, WalletTransactionDataTable $dataTable)
     {
 
         $division_ids = [];
@@ -76,12 +80,14 @@ class WalletController extends Controller
         ];
 
         foreach ($division_permissions as $key => $permission) {
-            if (auth()->user()->has(sprintf('corporation.%s', $permission)))
+            $ability = sprintf('corporation.%s', $permission);
+
+            if (Gate::allows($ability, $corporation))
                 array_push($division_ids, ($key + 1));
         }
 
-        return $dataTable->addScope(new CorporationScope([$corporation_id]))
+        return $dataTable->addScope(new CorporationScope('corporation.transaction', [$corporation->corporation_id]))
             ->addScope(new CorporationWalletDivisionsScope($division_ids))
-            ->render('web::corporation.wallet.transactions.transactions');
+            ->render('web::corporation.wallet.transactions.transactions', compact('corporation'));
     }
 }

@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Corporation\MiningLedger;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Industrial\MiningDataTable;
@@ -37,20 +38,20 @@ class MiningLedgerController extends Controller
     use MiningLedger;
 
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      * @param \Seat\Web\Http\DataTables\Corporation\Industrial\MiningDataTable $dataTable
      * @return mixed
      */
-    public function index(int $corporation_id, MiningDataTable $dataTable, int $year = null, int $month = null)
+    public function index(CorporationInfo $corporation, MiningDataTable $dataTable, int $year = null, int $month = null)
     {
         if (is_null($year)) $year = carbon()->year;
 
         if (is_null($month)) $month = carbon()->month;
 
-        $ledgers = $this->getCorporationLedgers($corporation_id);
+        $ledgers = $this->getCorporationLedgers($corporation->corporation_id);
 
         return $dataTable
-            ->addScope(new MiningCorporationScope([$corporation_id], $year, $month))
-            ->render('web::corporation.mining.ledger', compact('ledgers'));
+            ->addScope(new MiningCorporationScope([$corporation->corporation_id], $year, $month))
+            ->render('web::corporation.mining.ledger', compact('corporation', 'ledgers'));
     }
 }

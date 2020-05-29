@@ -3,7 +3,7 @@ php:
   - 7.3
 before_script:
   - pecl install -o -f redis <<<""
-  - composer update
+  - COMPOSER_MEMORY_LIMIT=-1 composer update
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build

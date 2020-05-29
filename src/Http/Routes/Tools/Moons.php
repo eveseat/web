@@ -22,21 +22,18 @@
 
 Route::group([
     'prefix' => '/moons/',
-    'middleware' => 'bouncer:moon.view_moon_reports',
+    'middleware' => 'can:moon.view_moon_reports',
 ], function () {
-    Route::get('/', [
-        'as' => 'tools.moons.index',
-        'uses' => 'MoonsController@index',
-    ]);
+    Route::get('/')
+        ->name('tools.moons.index')
+        ->uses('MoonsController@index');
 
-    Route::get('/{id}', [
-        'as' => 'tools.moons.show',
-        'uses' => 'MoonsController@show',
-    ]);
+    Route::get('/{id}')
+        ->name('tools.moons.show')
+        ->uses('MoonsController@show');
 
-    Route::post('/', [
-        'as'   => 'tools.moons.store',
-        'uses' => 'MoonsController@store',
-        'middleware' => 'bouncer:moon.create_moon_reports',
-    ]);
+    Route::post('/')
+        ->name('tools.moons.store')
+        ->uses('MoonsController@store')
+        ->middleware('can:moon.create_moon_reports');
 });

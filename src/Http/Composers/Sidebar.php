@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\Composers;
 
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 
 /**
@@ -87,5 +88,16 @@ class Sidebar extends AbstractMenu
             if (! is_null($entry))
                 return $entry;
         }));
+    }
+
+    /**
+     * Return true if the current user can see menu entry.
+     *
+     * @param array $permissions
+     * @return bool
+     */
+    protected function userHasPermission(array $permissions): bool
+    {
+        return Gate::any($permissions);
     }
 }

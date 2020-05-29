@@ -22,11 +22,10 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
-use Seat\Eveapi\Models\RefreshToken;
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Intel\CalendarDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
-use Seat\Web\Models\User;
 
 /**
  * Class CalendarController.
@@ -36,20 +35,14 @@ use Seat\Web\Models\User;
 class CalendarController extends Controller
 {
     /**
-     * @param int $character_id
+     * @param CharacterInfo $character
      * @param \Seat\Web\Http\DataTables\Character\Intel\CalendarDataTable $dataTable
      * @return mixed
      */
-    public function index(int $character_id, CalendarDataTable $dataTable)
+    public function index(CharacterInfo $character, CalendarDataTable $dataTable)
     {
-        $token = RefreshToken::where('character_id', $character_id)->first();
-        $characters = collect();
-        if ($token) {
-            $characters = User::with('characters')->find($token->user_id)->characters;
-        }
-
         return $dataTable
-            ->addScope(new CharacterScope('character.calendar', $character_id, request()->input('characters')))
-            ->render('web::character.calendar', compact('characters'));
+            ->addScope(new CharacterScope('character.calendar', request()->input('characters')))
+            ->render('web::character.calendar', compact('character'));
     }
 }

@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Services\Repositories\Corporation\Extractions;
 use Seat\Web\Http\Controllers\Controller;
 
@@ -34,14 +35,14 @@ class ExtractionController extends Controller
     use Extractions;
 
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getExtractions(int $corporation_id)
+    public function getExtractions(CorporationInfo $corporation)
     {
         // retrieve any valid extraction for the current corporation
-        $extractions = $this->getCorporationExtractions($corporation_id)->get();
+        $extractions = $this->getCorporationExtractions($corporation->corporation_id)->get();
 
-        return view('web::corporation.extraction.extraction', compact('extractions'));
+        return view('web::corporation.extraction.extraction', compact('extractions', 'corporation'));
     }
 }
