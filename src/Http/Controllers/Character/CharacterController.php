@@ -23,7 +23,8 @@
 namespace Seat\Web\Http\Controllers\Character;
 
 use Illuminate\Support\Arr;
-use Seat\Eveapi\Models\Location\CharacterShip;
+use Illuminate\Support\Facades\Gate;
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\CharacterDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
@@ -41,26 +42,21 @@ class CharacterController extends Controller
      */
     public function index(CharacterDataTable $dataTable)
     {
-        if (auth()->user()->hasSuperUser())
-            return $dataTable->render('web::character.list');
-
-        $allowed_characters = array_keys(Arr::get(auth()->user()->getAffiliationMap(), 'char'));
-
         return $dataTable
-            ->addScope(new CharacterScope('character.sheet', auth()->user()->id, $allowed_characters))
+            ->addScope(new CharacterScope)
             ->render('web::character.list');
     }
 
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function show(int $character_id)
+    public function show(CharacterInfo $character)
     {
         // by default, redirect user to character sheet
-        if (auth()->user()->has('character.sheet'))
+        if (Gate::allows('character.sheet', $character))
             return redirect()->route('character.view.sheet', [
-                'character_id' => $character_id,
+                'character' => $character,
             ]);
 
         // collect all registered routes for character scope and sort them alphabetically
@@ -72,14 +68,10 @@ class CharacterController extends Controller
         foreach ($configured_routes as $menu) {
             $permissions = $menu['permission'];
 
-            if (! is_array($permissions))
-                $permissions = [$permissions];
-
-            foreach ($permissions as $permission) {
-                if (auth()->user()->has($permission))
-                    return redirect()->route($menu['route'], [
-                        'character_id' => $character_id,
-                    ]);
+            if (Gate::any(is_array($permissions) ? $permissions : [$permissions], $character)) {
+                return redirect()->route($menu['route'], [
+                    'character' => $character,
+                ]);
             }
         }
 
@@ -92,12 +84,12 @@ class CharacterController extends Controller
     }
 
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getShip(int $character_id)
+    public function getShip(CharacterInfo $character)
     {
-        $ship = CharacterShip::find($character_id);
+        $ship = $character->ship;
 
         return view('web::character.includes.modals.fitting.content', compact('ship'));
     }

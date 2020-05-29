@@ -19,7 +19,7 @@
           <div class="media">
             <img src="{{ $squad->logo }}" width="128" height="128" class="border align-self-center mr-3" id="squad-logo" />
             <div class="media-body">
-              <form method="post" action="{{ route('squads.update', $squad->id) }}" enctype="multipart/form-data" id="squad-form">
+              <form method="post" action="{{ route('squads.update', $squad) }}" enctype="multipart/form-data" id="squad-form">
                 {!! csrf_field() !!}
                 {!! method_field('PUT') !!}
                 <div class="form-group row">

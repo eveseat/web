@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Military\StandingDataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationScope;
@@ -34,15 +35,14 @@ use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 class StandingsController extends Controller
 {
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      * @param \Seat\Web\Http\DataTables\Corporation\Military\StandingDataTable $dataTable
      * @return mixed
      */
-    public function index(int $corporation_id, StandingDataTable $dataTable)
+    public function index(CorporationInfo $corporation, StandingDataTable $dataTable)
     {
-
         return $dataTable
-            ->addScope(new CorporationScope([$corporation_id]))
-            ->render('web::corporation.standings');
+            ->addScope(new CorporationScope('corporation.standing', [$corporation->corporation_id]))
+            ->render('web::corporation.standings', compact('corporation'));
     }
 }

@@ -9,14 +9,22 @@
         </div>
         <div class="card-body p-2">
             @foreach($ledgers->chunk(12) as $chunk)
-            <ul class="nav justify-content-between">
+            <ul class="nav nav-pills justify-content-between">
                 @foreach ($chunk as $ledger)
                     <li class="nav-item">
-                        <a href="{{ route('corporation.view.mining_ledger', [
-                            request()->route()->parameter('corporation_id'),
-                            date('Y', strtotime($ledger->year. '-01-01')),
-                            date('m', strtotime($ledger->year . '-' . $ledger->month . '-01'))
-                        ]) }}" class="nav-link">{{ date('M Y', strtotime($ledger->year . "-" . $ledger->month . "-01")) }}</a>
+                        @if(date('Y', strtotime($ledger->year . '-01-01')) == (request()->route()->parameter('year') ?: carbon()->isoFormat('YYYY')) && date('m', strtotime($ledger->year . '-' . $ledger->month . '-01')) == (request()->route()->parameter('month') ?: carbon()->isoFormat('MM')))
+                            <a href="{{ route('corporation.view.mining_ledger', [
+                                $corporation,
+                                date('Y', strtotime($ledger->year. '-01-01')),
+                                date('m', strtotime($ledger->year . '-' . $ledger->month . '-01'))
+                            ]) }}" class="nav-link active">{{ date('M Y', strtotime($ledger->year . "-" . $ledger->month . "-01")) }}</a>
+                        @else
+                            <a href="{{ route('corporation.view.mining_ledger', [
+                                $corporation,
+                                date('Y', strtotime($ledger->year. '-01-01')),
+                                date('m', strtotime($ledger->year . '-' . $ledger->month . '-01'))
+                            ]) }}" class="nav-link">{{ date('M Y', strtotime($ledger->year . "-" . $ledger->month . "-01")) }}</a>
+                        @endif
                     </li>
                 @endforeach
             </ul>

@@ -25,6 +25,7 @@ namespace Seat\Web\Http\Scopes;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class SquadScope.
@@ -43,7 +44,7 @@ class SquadScope implements Scope
             return $builder;
 
         // in case the current user is super user - we do not apply any constraint on the made query
-        if (auth()->user()->hasSuperUser())
+        if (Gate::allows('global.superuser'))
             return $builder;
 
         // otherwise, we only show user the list of squads :

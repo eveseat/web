@@ -16,7 +16,10 @@
   "autoload-dev": {
     "psr-4": {
       "Seat\\Tests\\Web\\": "tests/"
-    }
+    },
+    "classmap": [
+      "tests/database/factories"
+    ]
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -45,6 +48,7 @@
     "yajra/laravel-datatables-buttons": "^4.0"
   },
   "require-dev": {
+    "josiasmontag/laravel-redis-mock": "^1.0",
     "orchestra/testbench": "^4.0",
     "orchestra/database": "^4.0"
   },

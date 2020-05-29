@@ -20,46 +20,36 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\Composers;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
-use Illuminate\Http\Request;
-use Illuminate\View\View;
-use Seat\Services\Repositories\Corporation\Corporation;
-
-class CorporationSummary
+class CreateCharacterRolesTestTable extends Migration
 {
-    use Corporation;
-
     /**
-     * @var \Illuminate\Http\Request
-     */
-    protected $request;
-
-    /**
-     * Create a new corporation summary composer.
-     *
-     * @param \Illuminate\Http\Request $request
-     */
-    public function __construct(Request $request)
-    {
-
-        $this->request = $request;
-    }
-
-    /**
-     * Bind data to the view.
-     *
-     * @param  View $view
+     * Run the migrations.
      *
      * @return void
      */
-    public function compose(View $view)
+    public function up()
     {
+        Schema::create('character_roles', function (Blueprint $table) {
+            $table->bigInteger('character_id');
+            $table->string('role');
+            $table->string('scope');
 
-        $sheet = $this->getCorporationSheet(
-            $this->request->corporation_id);
+            $table->timestamps();
 
-        $view->with('sheet', $sheet);
+            $table->unique(['character_id', 'role', 'scope']);
+        });
+    }
 
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop('character_roles');
     }
 }

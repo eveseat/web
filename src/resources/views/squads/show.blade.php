@@ -11,18 +11,20 @@
         <div class="card-body">
           <h3>
             Summary
-            @if(auth()->user()->hasSuperUser())
+            @can('squads.edit', $squad)
               <div class="btn-group float-right" role="group">
-                <a href="{{ route('squads.edit', $squad->id) }}" class="btn btn-sm btn-warning">
+                <a href="{{ route('squads.edit', $squad) }}" class="btn btn-sm btn-warning">
                   <i class="fas fa-edit"></i>
                   Edit
                 </a>
-                <button type="submit" class="btn btn-sm btn-danger" form="delete-squad">
-                  <i class="fas fa-trash-alt"></i>
-                  Delete
-                </button>
+                @can('squads.create')
+                  <button type="submit" class="btn btn-sm btn-danger" form="delete-squad">
+                    <i class="fas fa-trash-alt"></i>
+                    Delete
+                  </button>
+                @endcan
               </div>
-            @endif
+            @endcan
           </h3>
 
           <hr/>
@@ -89,8 +91,8 @@
               @foreach($row as $moderator)
                 <div class="col-2">
                   @include('web::partials.character', ['character' => $moderator->main_character])
-                  @if(auth()->user()->hasSuperUser())
-                    <form method="post" action="{{ route('squads.moderators.destroy', ['id' => $squad->id, 'user_id' => $moderator->id]) }}" class="float-right">
+                  @can('squads.manage_moderators', $squad)
+                    <form method="post" action="{{ route('squads.moderators.destroy', ['squad' => $squad, 'user' => $moderator]) }}" class="float-right">
                       {!! csrf_field() !!}
                       {!! method_field('DELETE') !!}
                       <button type="submit" class="btn btn-sm btn-danger">
@@ -98,14 +100,14 @@
                         Remove
                       </button>
                     </form>
-                  @endif
+                  @endcan
                 </div>
               @endforeach
             </div>
           @endforeach
 
-          @if(auth()->user()->hasSuperUser())
-            <form method="post" action="{{ route('squads.moderators.store', $squad->id) }}" class="mt-3">
+          @can('squads.manage_moderators', $squad)
+            <form method="post" action="{{ route('squads.moderators.store', $squad) }}" class="mt-3">
               {!! csrf_field() !!}
               <div class="row justify-content-end">
                 <div class="col-4">
@@ -121,16 +123,16 @@
                 </div>
               </div>
             </form>
-            <form method="post" action="{{ route('squads.destroy', $squad->id) }}" id="delete-squad">
+            <form method="post" action="{{ route('squads.destroy', $squad) }}" id="delete-squad">
               {!! csrf_field() !!}
               {!! method_field('DELETE') !!}
             </form>
-          @endif
+          @endcan
         </div>
         @if($squad->type != 'auto' && auth()->user()->name !== 'admin')
           <div class="card-footer">
             @if($squad->is_member)
-              <form method="post" action="{{ route('squads.members.leave', $squad->id) }}" id="form-leave">
+              <form method="post" action="{{ route('squads.members.leave', $squad) }}" id="form-leave">
                 {!! csrf_field() !!}
                 {!! method_field('DELETE') !!}
               </form>
@@ -139,7 +141,7 @@
               </button>
             @else
               @if($squad->is_candidate)
-                <form method="post" action="{{ route('squads.applications.cancel', $squad->applications->where('user_id', auth()->user()->id)->first()->application_id) }}" id="form-cancel">
+                <form method="post" action="{{ route('squads.applications.cancel', $squad) }}" id="form-cancel">
                   {!! csrf_field() !!}
                   {!! method_field('DELETE') !!}
                 </form>
@@ -153,9 +155,18 @@
                 </div>
               @endif
               @if(! $squad->is_candidate && $squad->type == 'manual' && $squad->isEligible(auth()->user()))
-                <button data-toggle="modal" data-target="#application-create" class="btn btn-sm btn-success float-right">
-                  <i class="fas fa-sign-in-alt"></i> {{ trans('web::squads.join') }}
-                </button>
+                @if($squad->moderators->isEmpty())
+                  <form method="post" action="{{ route('squads.applications.store', $squad) }}">
+                    {!! csrf_field() !!}
+                    <button type="submit" class="btn btn-sm btn-success float-right">
+                      <i class="fas fa-sign-in-alt"></i> {{ trans('web::squads.join') }}
+                    </button>
+                  </form>
+                @else
+                  <button data-toggle="modal" data-target="#application-create" class="btn btn-sm btn-success float-right">
+                    <i class="fas fa-sign-in-alt"></i> {{ trans('web::squads.join') }}
+                  </button>
+                @endif
               @endif
             @endif
           </div>
@@ -164,7 +175,7 @@
     </div>
   </div>
 
-  @if(auth()->user()->hasSuperUser())
+  @can('squads.manage_roles', $squad)
     <div class="row">
       <div class="col-12">
         <div class="card">
@@ -184,7 +195,7 @@
             </table>
           </div>
           <div class="card-footer">
-            <form method="post" action="{{ route('squads.roles.store', $squad->id) }}" data-table="rolesTableBuilder" id="squad-role-form">
+            <form method="post" action="{{ route('squads.roles.store', $squad) }}" data-table="rolesTableBuilder" id="squad-role-form">
               {!! csrf_field() !!}
               <div class="row justify-content-end">
                 <div class="col-4">
@@ -204,7 +215,7 @@
         </div>
       </div>
     </div>
-  @endif
+  @endcan
 
   <div class="row">
     <div class="col-12">
@@ -213,7 +224,7 @@
           <h3 class="card-title">Members</h3>
         </div>
         <div class="card-body">
-          @if($squad->is_member || $squad->is_moderator || auth()->user()->hasSuperUser())
+          @can('squads.show_members', $squad)
             <table class="table table-striped table-hover" id="members-table">
               <thead>
                 <tr>
@@ -223,13 +234,14 @@
                 </tr>
               </thead>
             </table>
-          @else
+          @endcan
+          @cannot('squads.show_members', $squad)
             <p class="text-center">You are not member of that squad.</p>
-          @endif
+          @endcannot
         </div>
-        @if(auth()->user()->hasSuperUser() || $squad->is_moderator)
+        @can('squads.manage_members', $squad)
           <div class="card-footer">
-            <form method="post" action="{{ route('squads.members.store', $squad->id) }}" data-table="dataTableBuilder" id="squad-member-form">
+            <form method="post" action="{{ route('squads.members.store', $squad) }}" data-table="dataTableBuilder" id="squad-member-form">
               {!! csrf_field() !!}
               <div class="row justify-content-end">
                 <div class="col-4">
@@ -246,34 +258,36 @@
               </div>
             </form>
           </div>
-        @endif
+        @endcan
       </div>
     </div>
   </div>
 
-  @if($squad->type == 'manual' && ($squad->is_moderator || auth()->user()->hasSuperUser()))
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Candidates</h3>
-          </div>
-          <div class="card-body">
-            <table class="table table-striped table-hover" id="candidates-table">
-              <thead>
-                <tr>
-                  <th>{{ trans_choice('web::squads.name', 1) }}</th>
-                  <th>{{ trans_choice('web::squads.character', 0) }}</th>
-                  <th>{{ trans('web::squads.applied_at') }}</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-            </table>
+  @can('squads.manage_candidates', $squad)
+    @if($squad->type == 'manual' && $squad->moderators->isNotEmpty())
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Candidates</h3>
+            </div>
+            <div class="card-body">
+              <table class="table table-striped table-hover" id="candidates-table">
+                <thead>
+                  <tr>
+                    <th>{{ trans_choice('web::squads.name', 1) }}</th>
+                    <th>{{ trans_choice('web::squads.character', 0) }}</th>
+                    <th>{{ trans('web::squads.applied_at') }}</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  @endif
+    @endif
+  @endcan
 
   @include('web::squads.modals.applications.create.application')
   @include('web::squads.modals.applications.read.application')
@@ -293,7 +307,7 @@
         .select2({
             placeholder: 'Select a moderator to add to this Squad',
             ajax: {
-                url: '{{ route('squads.moderators.lookup', $squad->id) }}',
+                url: '{{ route('squads.moderators.lookup', $squad) }}',
                 dataType: 'json',
                 cache: true,
                 processResults: function (data, params) {
@@ -308,7 +322,7 @@
       .select2({
           placeholder: 'Select a role to add to this Squad',
           ajax: {
-              url: '{{ route('squads.roles.lookup', $squad->id) }}',
+              url: '{{ route('squads.roles.lookup', $squad) }}',
               dataType: 'json',
               cache: true,
               processResults: function (data, params) {
@@ -323,7 +337,7 @@
         .select2({
             placeholder: 'Select an user to add to this Squad',
             ajax: {
-                url: '{{ route('squads.members.lookup', $squad->id) }}',
+                url: '{{ route('squads.members.lookup', $squad) }}',
                 dataType: 'json',
                 cache: true,
                 processResults: function (data, params) {
@@ -376,7 +390,7 @@
             processing: true,
             serverSide: true,
             order: [[0, 'desc']],
-            ajax: '{{ route('squads.members.index', $squad->id) }}',
+            ajax: '{{ route('squads.members.index', $squad) }}',
             columns: [
                 {data: "name", name: "name", title: "Name", "orderable": true, "searchable": true},
                 {data: "characters", name: "characters", title: "Characters", "orderable": true, "searchable": true},
@@ -394,7 +408,7 @@
             processing: true,
             serverSide: true,
             order: [[0, 'desc']],
-            ajax: '{{ route('squads.applications.index', $squad->id) }}',
+            ajax: '{{ route('squads.applications.index', $squad) }}',
             columns: [
                 {data: 'user.name', name: 'user.name'},
                 {data: 'characters', name: 'characters'},
@@ -413,7 +427,7 @@
             processing: true,
             serverSide: true,
             order: [[0, 'desc']],
-            ajax: '{{ route('squads.roles.show', $squad->id) }}',
+            ajax: '{{ route('squads.roles.show', $squad) }}',
             columns: [
                 {data: 'title', name: 'title'},
                 {data: 'description', name: 'description'},

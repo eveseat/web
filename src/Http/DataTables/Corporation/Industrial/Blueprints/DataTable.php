@@ -61,7 +61,7 @@ class DataTable extends AbstractBlueprintDataTable
     public function getDivisions()
     {
         $divisions = CorporationDivision::where('type', 'hangar')
-            ->where('corporation_id', request()->route()->parameter('corporation_id'))
+            ->where('corporation_id', request()->route()->parameter('corporation')->corporation_id)
             ->get();
 
         return $divisions;

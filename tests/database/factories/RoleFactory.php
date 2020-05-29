@@ -20,12 +20,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Exceptions;
+use Faker\Generator;
+use Seat\Web\Models\Acl\Role;
 
-/**
- * Class BouncerException.
- * @package Seat\Web\Exceptions
- */
-class BouncerException extends \Exception
-{
-}
+$factory->define(Role::class, function (Generator $faker) {
+    return [
+        'id'          => $faker->numberBetween(1, 10),
+        'title'       => $faker->name,
+    ];
+});

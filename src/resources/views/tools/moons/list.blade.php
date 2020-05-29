@@ -10,9 +10,9 @@
       <h4 class="card-title">Moons</h4>
       <div class="card-tools">
         <div class="input-group input-group-sm">
-          @if(auth()->user()->has('moon.create_moon_reports', false))
-          @include('web::tools.moons.buttons.import')
-          @endif
+          @can('moon.create_moon_reports')
+            @include('web::tools.moons.buttons.import')
+          @endcan
         </div>
       </div>
     </div>

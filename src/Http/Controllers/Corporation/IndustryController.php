@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Industrial\IndustryDataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationScope;
@@ -35,16 +36,15 @@ use Seat\Web\Http\DataTables\Scopes\Filters\IndustryStatusScope;
 class IndustryController extends Controller
 {
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      * @param \Seat\Web\Http\DataTables\Corporation\Industrial\IndustryDataTable $dataTable
      * @return mixed
      */
-    public function index(int $corporation_id, IndustryDataTable $dataTable)
+    public function index(CorporationInfo $corporation, IndustryDataTable $dataTable)
     {
-
-        return $dataTable->addScope(new CorporationScope([$corporation_id]))
+        return $dataTable->addScope(new CorporationScope('corporation.industry', [$corporation->corporation_id]))
             ->addScope(new IndustryStatusScope(request()->input('filters.status')))
             ->addScope(new IndustryActivityScope(request()->input('filters.activity')))
-            ->render('web::corporation.industry');
+            ->render('web::corporation.industry', compact('corporation'));
     }
 }

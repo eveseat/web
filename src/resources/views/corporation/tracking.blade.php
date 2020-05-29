@@ -61,7 +61,7 @@
       processing      : true,
       serverSide      : true,
       ajax            : {
-        url : '{{ route('corporation.view.tracking.data', ['corporation_id' => $request->corporation_id]) }}',
+        url : '{{ route('corporation.view.tracking.data', ['corporation' => $corporation]) }}',
         data: function ( d ) {
           d.selected_refresh_token_status = getSelectedFilter();
         }

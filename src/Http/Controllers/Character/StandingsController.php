@@ -22,11 +22,10 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
-use Seat\Eveapi\Models\RefreshToken;
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Military\StandingDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
-use Seat\Web\Models\User;
 
 /**
  * Class StandingsController.
@@ -36,20 +35,14 @@ use Seat\Web\Models\User;
 class StandingsController extends Controller
 {
     /**
-     * @param int $character_id
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @param \Seat\Web\Http\DataTables\Character\Military\StandingDataTable $dataTable
      * @return mixed
      */
-    public function index(int $character_id, StandingDataTable $dataTable)
+    public function index(CharacterInfo $character, StandingDataTable $dataTable)
     {
-        $token = RefreshToken::where('character_id', $character_id)->first();
-        $characters = collect();
-        if ($token) {
-            $characters = User::with('characters')->find($token->user_id)->characters;
-        }
-
         return $dataTable
-            ->addScope(new CharacterScope('character.standing', $character_id, request()->input('characters', [])))
-            ->render('web::character.standings', compact('characters'));
+            ->addScope(new CharacterScope('character.standing', request()->input('characters', [])))
+            ->render('web::character.standings', compact('character'));
     }
 }

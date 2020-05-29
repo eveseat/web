@@ -22,6 +22,8 @@
 
 namespace Seat\Web\Http\DataTables\Scopes;
 
+use Illuminate\Support\Facades\Gate;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Yajra\DataTables\Contracts\DataTableScope;
 
 /**
@@ -35,18 +37,25 @@ use Yajra\DataTables\Contracts\DataTableScope;
 class CorporationScope implements DataTableScope
 {
     /**
+     * @var string
+     */
+    private $ability;
+
+    /**
      * @var array
      */
-    private $corporation_ids = [];
+    private $requested_corporations;
 
     /**
      * CorporationScope constructor.
      *
-     * @param array $corporation_ids
+     * @param string|null $ability
+     * @param int[]|null $corporation_ids
      */
-    public function __construct(array $corporation_ids)
+    public function __construct(?string $ability = null, ?array $corporation_ids = null)
     {
-        $this->corporation_ids = $corporation_ids;
+        $this->ability = $ability;
+        $this->requested_corporations = $corporation_ids;
     }
 
     /**
@@ -57,6 +66,58 @@ class CorporationScope implements DataTableScope
      */
     public function apply($query)
     {
-        return $query->whereIn('corporation_id', $this->corporation_ids);
+        // extract querying table (from)
+        $table = $query->getQuery()->from;
+
+        if ($this->requested_corporations != null) {
+            $corporation_ids = collect($this->requested_corporations)->filter(function ($item) {
+                return Gate::allows($this->ability, [$item]);
+            });
+
+            return $corporation_ids->count() == count($this->requested_corporations) ?
+                $query->whereIn($table . '.corporation_id', $this->requested_corporations) :
+                $query->whereIn($table . '.corporation_id', []);
+        }
+
+        if (auth()->user()->isAdmin())
+            return $query;
+
+        // collect metadata related to required permission
+        $permissions = auth()->user()->roles()->with('permissions')->get()
+            ->pluck('permissions')
+            ->flatten()
+            ->filter(function ($permission) {
+                if (empty($this->ability))
+                    return strpos('corporation.', $permission->title) === 0;
+
+                return $permission->title == $this->ability;
+            });
+
+        // in case at least one permission is granted without restrictions, return all
+        if ($permissions->filter(function ($permission) { return ! $permission->hasFilters(); })->isNotEmpty())
+            return $query;
+
+        // extract entity ids and group by entity type
+        $map = $permissions->map(function ($permission) {
+            $filters = json_decode($permission->pivot->filters);
+
+            return [
+                'corporations' => collect($filters->corporation ?? [])->pluck('id')->toArray(),
+                'alliances'    => collect($filters->alliance ?? [])->pluck('id')->toArray(),
+            ];
+        });
+
+        $owner_range = CorporationInfo::whereIn('ceo_id', auth()->user()->associatedCharacterIds()->toArray())
+            ->select('corporation_id')->get()->pluck('corporation_id')->toArray();
+
+        $corporations_range = $map->pluck('corporations')->flatten()->toArray();
+
+        $alliances_range = CorporationInfo::whereIn('alliance_id', $map->pluck('alliances')->flatten()->toArray())
+            ->select('corporation_id')->get()->pluck('corporation_id')->toArray();
+
+        // merge all collected characters IDs in a single array and apply filter
+        $corporation_ids = array_merge($owner_range, $corporations_range, $alliances_range);
+
+        return $query->whereIn($table . '.corporation_id', $corporation_ids);
     }
 }

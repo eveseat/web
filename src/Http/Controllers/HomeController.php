@@ -22,11 +22,11 @@
 
 namespace Seat\Web\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Seat\Services\Repositories\Character\Mail;
 use Seat\Services\Repositories\Eve\EveRepository;
 use Seat\Services\Repositories\Seat\Stats;
-use Seat\Services\Settings\Seat;
 
 /**
  * Class HomeController.
@@ -36,6 +36,11 @@ class HomeController extends Controller
 {
     use EveRepository, Stats, Mail;
 
+    public function test()
+    {
+        return view('web::test');
+    }
+
     /**
      * @return \Illuminate\View\View
      * @throws \Seat\Services\Exceptions\SettingException
@@ -44,8 +49,8 @@ class HomeController extends Controller
     {
 
         // Warn if the admin contact has not been set yet.
-        if (auth()->user()->hasSuperUser())
-            if (Seat::get('admin_contact') === 'seatadmin@localhost.local')
+        if (Gate::allows('global.superuser'))
+            if (setting('admin_contact', true) === 'seatadmin@localhost.local')
                 session()->flash('warning', trans('web::seat.admin_contact_warning'));
 
         // Warn if a refresh token is missing.

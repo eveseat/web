@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Industrial\CustomOfficeDataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationScope;
@@ -34,13 +35,13 @@ use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 class CustomOfficeController extends Controller
 {
     /**
-     * @param int $corporation_id
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      * @param \Seat\Web\Http\DataTables\Corporation\Industrial\CustomOfficeDataTable $data_table
      * @return mixed
      */
-    public function index(int $corporation_id, CustomOfficeDataTable $data_table)
+    public function index(CorporationInfo $corporation, CustomOfficeDataTable $data_table)
     {
-        return $data_table->addScope(new CorporationScope([$corporation_id]))
-            ->render('web::corporation.customs-offices');
+        return $data_table->addScope(new CorporationScope('corporation.customs_office', [$corporation->corporation_id]))
+            ->render('web::corporation.customs-offices', compact('corporation'));
     }
 }

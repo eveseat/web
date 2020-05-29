@@ -48,7 +48,7 @@ Route::get('/alliances', [
 Route::get('/entities', [
     'as'         => 'fastlookup.entities',
     'uses'       => 'FastLookupController@getEntities',
-    'middleware' => 'bouncer:global.superuser',
+    'middleware' => 'can:global.superuser',
 ]);
 
 Route::get('/items', [

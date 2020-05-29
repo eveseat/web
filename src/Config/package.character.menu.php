@@ -123,7 +123,7 @@ return [
     [
         'name'           => 'pi',
         'label'          => 'web::seat.pi',
-        'permission'     => 'character.pi',
+        'permission'     => 'character.planetary',
         'highlight_view' => 'pi',
         'route'          => 'character.view.pi',
     ],

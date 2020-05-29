@@ -82,4 +82,12 @@ class Permission extends Model
 
         return strpos($this->title, 'corporation.') !== false;
     }
+
+    /**
+     * @return bool
+     */
+    public function hasFilters(): bool
+    {
+        return $this->pivot && ! is_null($this->pivot->filters);
+    }
 }

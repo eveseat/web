@@ -83,13 +83,11 @@ class SquadsController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param \Seat\Web\Models\Squads\Squad $squad
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(int $id)
+    public function show(Squad $squad)
     {
-        $squad = Squad::with('members', 'moderators', 'moderators.main_character')->find($id);
-
         return view('web::squads.show', compact('squad'));
     }
 
@@ -120,25 +118,21 @@ class SquadsController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param \Seat\Web\Models\Squads\Squad $squad
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(int $id)
+    public function edit(Squad $squad)
     {
-        $squad = Squad::find($id);
-
         return view('web::squads.edit', compact('squad'));
     }
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param \Seat\Web\Models\Squads\Squad $squad
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, Squad $squad)
     {
-        $squad = Squad::find($id);
-
         $squad->name = $request->input('name');
         $squad->type = $request->input('type');
         $squad->description = $request->input('description');
@@ -150,17 +144,17 @@ class SquadsController extends Controller
         $squad->save();
 
         return redirect()
-            ->route('squads.show', [$id])
+            ->route('squads.show', $squad)
             ->with('success', 'Squad has successfully been updated.');
     }
 
     /**
-     * @param int $id
+     * @param \Seat\Web\Models\Squads\Squad $squad
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(int $id)
+    public function destroy(Squad $squad)
     {
-        Squad::destroy($id);
+        $squad->delete();
 
         return redirect()->route('squads.index')
             ->with('success', 'Squad has been deleted.');

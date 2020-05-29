@@ -120,7 +120,7 @@ Route::group([
         Route::group([
             'namespace'  => 'Configuration',
             'prefix'     => 'configuration',
-            'middleware' => 'bouncer:global.superuser',
+            'middleware' => 'can:global.superuser',
         ], function () {
 
             // User Management
