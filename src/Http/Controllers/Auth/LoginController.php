@@ -79,6 +79,17 @@ class LoginController extends Controller
         if (strlen(config('eveapi.config.eseye_client_secret')) < 5 || strlen(config('eveapi.config.eseye_client_id')) < 5)
             session()->flash('warning', trans('web::seat.sso_config_warning'));
 
-        return view('web::auth.login');
+        // Sign in message text
+        $custom_signin_message = setting('custom_signin_message', true);
+        $signin_message = trans('web::seat.login_welcome') . '<div class="box-body text-center"><a href="' . route('auth.eve') . '"><img src="' . asset('web/img/evesso.png') . '" alt="LOG IN with EVE Online"></a></div>';
+        if($custom_signin_message != '') {
+            // Look for patterns we can use as login buttons and swap them for the login links.
+            $pattern = '/([[]{2})([a-zA-Z0-9-_]+)([]]{2})/';
+            $signin_message = preg_replace_callback($pattern, function ($matches) {
+                return '<div class="box-body text-center"><a href="' . route('auth.eve.profile', $matches[2]) . '"><img src="' . asset('web/img/evesso.png') . '" alt="LOG IN with EVE Online"></a></div>';
+            }, $custom_signin_message);
+        }
+
+        return view('web::auth.login', compact('signin_message'));
     }
 }
