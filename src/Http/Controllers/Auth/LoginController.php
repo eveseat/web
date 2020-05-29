@@ -81,13 +81,25 @@ class LoginController extends Controller
 
         // Sign in message text
         $custom_signin_message = setting('custom_signin_message', true);
-        $signin_message = trans('web::seat.login_welcome') . '<div class="box-body text-center"><a href="' . route('auth.eve') . '"><img src="' . asset('web/img/evesso.png') . '" alt="LOG IN with EVE Online"></a></div>';
-        if($custom_signin_message != '') {
+        $signin_message = sprintf('%s<div class="box-body text-center"><a href="%s"><img src="%s" alt="LOG IN with EVE Online"></a></div>',
+            trans('web::seat.login_welcome'),
+            route('auth.eve'),
+            asset('web/img/evesso.png'));
+
+        if(! empty($custom_signin_message)) {
+            $auth_profiles = setting('sso_scopes', true);
+            $signin_message = $custom_signin_message;
+
             // Look for patterns we can use as login buttons and swap them for the login links.
-            $pattern = '/([[]{2})([a-zA-Z0-9-_]+)([]]{2})/';
-            $signin_message = preg_replace_callback($pattern, function ($matches) {
-                return '<div class="box-body text-center"><a href="' . route('auth.eve.profile', $matches[2]) . '"><img src="' . asset('web/img/evesso.png') . '" alt="LOG IN with EVE Online"></a></div>';
-            }, $custom_signin_message);
+            foreach ($auth_profiles as $profile) {
+                $pattern = sprintf('/[[]{2}(%s)[]]{2}/', $profile->name);
+
+                $signin_message = preg_replace_callback($pattern, function ($matches) {
+                    return sprintf('<div class="box-body text-center"><a href="%s"><img src="%s" alt="LOG IN with EVE Online"></a></div>',
+                        route('auth.eve.profile', $matches[1]),
+                        asset('web/img/evesso.png'));
+                }, $signin_message);
+            }
         }
 
         return view('web::auth.login', compact('signin_message'));
