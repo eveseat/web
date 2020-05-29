@@ -44,7 +44,8 @@ class ExtractionController extends Controller
             'structure', 'structure.info', 'structure.services')
             ->where('corporation_id', $corporation->corporation_id)
             ->where('natural_decay_time', '>', carbon()->subSeconds(CorporationIndustryMiningExtraction::THEORETICAL_DEPLETION_COUNTDOWN))
-            ->orderBy('chunk_arrival_time');
+            ->orderBy('chunk_arrival_time')
+            ->get();
 
         return view('web::corporation.extraction.extraction', compact('extractions', 'corporation'));
     }
