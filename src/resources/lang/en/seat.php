@@ -92,6 +92,7 @@ return [
     'read'                  => 'Read',
     'level'                 => 'Level',
     'token'                 => 'Token',
+    'set_default'           => 'Set Default',
 
     // Requirements
     'requirements'          => 'Requirements',
@@ -416,6 +417,8 @@ return [
 
     // SSO Settings
     'sso_scopes'                   => 'SSO Scopes',
+    'sso_scopes_profile_name'      => 'Profile Name',
+    'sso_scopes_profile_name_help' => 'You may use alpha-numeric characters along with hypens and underscores.',
     'available_scopes'             => 'Available SSO Scopes',
     'enable_all'                   => 'Enable All',
     'remove_all'                   => 'Remove All',
@@ -432,6 +435,9 @@ return [
     'callback_maybe_wrong'         => 'Callback URL set but might be incorrect. Currently set as :current ' .
         'and should maybe be :suggested',
     'client_callback_not_ok'       => 'Callback URL not set. Check .env and set as :url',
+    'custom_signin_page'           => 'Customise Sign In page',
+    'custom_signin_page_desc'      => 'You can customise the message on the sign in page and insert links to your custom SSO scope ' .
+        'profiles as well. Leave blank to use the default. If you enter something below, you must ensure at least one button is shown.',
 
     // Updaters
     'update_dispatched'            => 'Update job has successfully been dispatched. Please check back again ' .

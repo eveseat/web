@@ -23,13 +23,12 @@
 namespace Seat\Web\Http\Validation;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 /**
- * Class SsoScopes.
+ * Class CustomSignin.
  * @package Seat\Web\Http\Validation
  */
-class SsoScopes extends FormRequest
+class CustomSignin extends FormRequest
 {
     /**
      * Authorize the request by default.
@@ -51,9 +50,14 @@ class SsoScopes extends FormRequest
     {
 
         return [
-            'profile_id'   => 'required|integer',
-            'profile_name' => 'required|alpha_dash',
-            'scopes.*'     => ['required', Rule::in(config('eveapi.scopes'))],
+            'message'   => [
+                'nullable',
+                function ($attribute, $value, $fail) {
+                    $pattern = '/([[]{2})([a-zA-Z0-9-_]+)([]]{2})/';
+                    if(preg_match($pattern, $value) === 0)
+                        $fail('Missing a login button.');
+                },
+            ],
         ];
     }
 }

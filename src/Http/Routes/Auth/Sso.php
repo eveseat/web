@@ -25,6 +25,11 @@ Route::get('/eve', [
     'uses' => 'SsoController@redirectToProvider',
 ]);
 
+Route::get('/eve/profile/{profile?}', [
+    'as'   => 'auth.eve.profile',
+    'uses' => 'SsoController@redirectToProvider',
+]);
+
 Route::get('/eve/callback', [
     'as'   => 'auth.eve.callback',
     'uses' => 'SsoController@handleProviderCallback',
