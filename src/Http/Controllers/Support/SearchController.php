@@ -23,11 +23,14 @@
 namespace Seat\Web\Http\Controllers\Support;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Seat\Eveapi\Models\Assets\CharacterAsset;
 use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Character\CharacterSkill;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
+use Seat\Eveapi\Models\Mail\MailHeader;
 use Seat\Eveapi\Models\Universe\UniverseName;
-use Seat\Services\Search\Search;
 use Seat\Web\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
 
@@ -37,8 +40,6 @@ use Yajra\DataTables\DataTables;
  */
 class SearchController extends Controller
 {
-    use Search;
-
     /**
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -247,5 +248,120 @@ class SearchController extends Controller
                 return view('web::partials.type', ['type_id' => $row->type->typeID, 'type_name' => $row->type->typeName]);
             })
             ->make(true);
+    }
+
+    /**
+     * @return mixed
+     */
+    private function doSearchCharacters()
+    {
+
+        return $this->getAllCharactersWithAffiliations(false);
+    }
+
+    /**
+     * @return mixed
+     */
+    private function doSearchCorporations()
+    {
+
+        return $this->getAllCorporationsWithAffiliationsAndFilters(false);
+    }
+
+    /**
+     * @return mixed
+     */
+    private function doSearchCharacterMail()
+    {
+
+        // Get the User for permissions and affiliation
+        // checks
+        $user = auth()->user();
+
+        $messages = MailHeader::with('body', 'recipients', 'recipients.entity', 'sender')
+            ->select('timestamp', 'from', 'subject', 'mail_headers.mail_id');
+
+        // If the user is a super user, return all
+        if (! $user->isAdmin()) {
+
+            $messages = $messages->whereHas('recipients', function ($sub_query) {
+                // retrieve authenticated user permissions map
+                $character_map = collect(Arr::get(auth()->user()->getAffiliationMap(), 'char'));
+
+                // collect only character which has either the requested permission or wildcard
+                $characters_ids = $character_map->filter(function ($permissions, $key) {
+                    return in_array('character.*', $permissions) || in_array('character.mail', $permissions);
+                })->keys();
+
+                $sub_query->whereIn('recipient_id', $characters_ids);
+            });
+        }
+
+        return $messages;
+
+    }
+
+    /**
+     * @return mixed
+     */
+    private function doSearchCharacterAssets()
+    {
+        return CharacterAsset::authorized('character.asset')
+            ->with('character', 'character.affiliation.corporation', 'character.affiliation.alliance', 'type', 'type.group')
+            ->select()
+            ->addSelect('character_assets.name as asset_name');
+    }
+
+    /**
+     * @return mixed
+     */
+    private function doSearchCharacterSkills()
+    {
+        return CharacterSkill::authorized('character.skill')
+            ->with('character', 'character.affiliation.corporation', 'character.affiliation.alliance', 'type', 'type.group');
+    }
+
+    /**
+     * Query the database for characters, keeping filters,
+     * permissions and affiliations in mind.
+     *
+     * @param bool $get
+     *
+     * @return mixed
+     */
+    private function getAllCharactersWithAffiliations(bool $get = true)
+    {
+        // Start the character information query
+        $characters = CharacterInfo::authorized('character.sheet')
+            ->with('affiliation.corporation', 'affiliation.alliance')
+            ->select('character_infos.*');
+
+        if ($get)
+            return $characters
+                ->orderBy('name')
+                ->get();
+
+        return $characters;
+    }
+
+    /**
+     * Return the corporations for which a user has access.
+     *
+     * @param bool $get
+     *
+     * @return mixed
+     */
+    private function getAllCorporationsWithAffiliationsAndFilters(bool $get = true)
+    {
+        // Start a fresh query
+        $corporations = CorporationInfo::authorized('corporation.sheet')
+            ->with('ceo', 'alliance')
+            ->select('corporation_infos.*');
+
+        if ($get)
+            return $corporations->orderBy('name', 'desc')
+                ->get();
+
+        return $corporations;
     }
 }

@@ -23,7 +23,7 @@
 namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Eveapi\Models\Character\CharacterInfo;
-use Seat\Services\Repositories\Character\Wallet;
+use Seat\Eveapi\Models\Wallet\CharacterWalletJournal;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Financial\WalletJournalDataTable;
 use Seat\Web\Http\DataTables\Character\Financial\WalletTransactionDataTable;
@@ -35,8 +35,6 @@ use Seat\Web\Http\DataTables\Scopes\CharacterScope;
  */
 class WalletController extends Controller
 {
-    use Wallet;
-
     /**
      * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @param \Seat\Web\Http\DataTables\Character\Financial\WalletJournalDataTable $dataTable
@@ -69,7 +67,8 @@ class WalletController extends Controller
     public function getJournalGraphBalance(CharacterInfo $character)
     {
 
-        $data = $this->getCharacterWalletJournal(collect($character->character_id))
+        $data = CharacterWalletJournal::with('first_party', 'second_party')
+            ->where('character_id', $character->character_id)
             ->orderBy('date', 'desc')
             ->take(150)
             ->get();

@@ -22,18 +22,17 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
+use Seat\Eveapi\Models\Corporation\CorporationDivision;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
-use Seat\Services\Repositories\Corporation\Corporation;
-use Seat\Services\Repositories\Corporation\Divisions;
-use Seat\Services\Repositories\Corporation\Wallet;
 use Seat\Web\Http\Controllers\Controller;
 
+/**
+ * Class SummaryController.
+ *
+ * @package Seat\Web\Http\Controllers\Corporation
+ */
 class SummaryController extends Controller
 {
-    use Corporation;
-    use Divisions;
-    use Wallet;
-
     /**
      * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
@@ -41,7 +40,7 @@ class SummaryController extends Controller
     public function show(CorporationInfo $corporation)
     {
 
-        $sheet = $this->getCorporationSheet($corporation->corporation_id);
+        $sheet = $corporation;
 
         // Check if we managed to get any records for
         // this character. If not, redirect back with
@@ -50,8 +49,15 @@ class SummaryController extends Controller
             return redirect()->back()
                 ->with('error', trans('web::seat.unknown_corporation'));
 
-        $asset_divisions = $this->getCorporationDivisions($corporation->corporation_id);
-        $wallet_divisions = $this->getCorporationWalletDivisions($corporation->corporation_id);
+        $asset_divisions = CorporationDivision::where('corporation_id', $corporation->corporation_id)
+            ->where('type', 'hangar')
+            ->orderBy('division')
+            ->get();
+
+        $wallet_divisions = CorporationDivision::where('corporation_id', $corporation->corporation_id)
+            ->where('type', 'wallet')
+            ->orderBy('division')
+            ->get();
 
         return view('web::corporation.summary',
             compact('corporation', 'sheet', 'asset_divisions', 'wallet_divisions'));
