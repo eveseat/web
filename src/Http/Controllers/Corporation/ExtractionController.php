@@ -42,7 +42,7 @@ class ExtractionController extends Controller
         $extractions = CorporationIndustryMiningExtraction::with(
             'moon', 'moon.solar_system', 'moon.constellation', 'moon.region', 'moon.moon_content',
             'structure', 'structure.info', 'structure.services')
-            ->where('corporation_id', $corporation_id)
+            ->where('corporation_id', $corporation->corporation_id)
             ->where('natural_decay_time', '>', carbon()->subSeconds(CorporationIndustryMiningExtraction::THEORETICAL_DEPLETION_COUNTDOWN))
             ->orderBy('chunk_arrival_time');
 
