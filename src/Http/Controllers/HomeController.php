@@ -22,11 +22,10 @@
 
 namespace Seat\Web\Http\Controllers;
 
-use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
-use Seat\Services\Repositories\Character\Mail;
-use Seat\Services\Repositories\Eve\EveRepository;
-use Seat\Services\Repositories\Seat\Stats;
+use Seat\Eveapi\Models\Status\EsiStatus;
+use Seat\Eveapi\Models\Status\ServerStatus;
+use Seat\Web\Traits\Stats;
 
 /**
  * Class HomeController.
@@ -34,12 +33,7 @@ use Seat\Services\Repositories\Seat\Stats;
  */
 class HomeController extends Controller
 {
-    use EveRepository, Stats, Mail;
-
-    public function test()
-    {
-        return view('web::test');
-    }
+    use Stats;
 
     /**
      * @return \Illuminate\View\View
@@ -49,7 +43,7 @@ class HomeController extends Controller
     {
 
         // Warn if the admin contact has not been set yet.
-        if (Gate::allows('global.superuser'))
+        if (auth()->user()->isAdmin())
             if (setting('admin_contact', true) === 'seatadmin@localhost.local')
                 session()->flash('warning', trans('web::seat.admin_contact_warning'));
 
@@ -57,11 +51,12 @@ class HomeController extends Controller
         if (auth()->user()->refresh_tokens()->onlyTrashed()->get()->isNotEmpty() && auth()->user()->name !== 'admin')
             session()->flash('warning', trans('web::seat.refresh_token_warning'));
 
+        // TODO : switch to ajax calls
         $server_status = $this->getEveLastServerStatus();
-        $total_character_isk = $this->getTotalCharacterIsk();
-        $total_character_skillpoints = $this->getTotalCharacterSkillpoints();
-        $total_character_killmails = $this->getTotalCharacterKillmails();
-        $total_character_mining = $this->getTotalCharacterMiningIsk();
+        $total_character_isk = $this->getTotalCharacterIsk(auth()->user()->associatedCharacterIds());
+        $total_character_skillpoints = $this->getTotalCharacterSkillpoints(auth()->user()->main_character_id);
+        $total_character_killmails = $this->getTotalCharacterKillmails(auth()->user()->associatedCharacterIds());
+        $total_character_mining = $this->getTotalCharacterMiningIsk(auth()->user()->associatedCharacterIds());
 
         return view('web::home', compact(
             'server_status', 'total_character_isk', 'total_character_skillpoints',
@@ -125,5 +120,38 @@ class HomeController extends Controller
                 ],
             ],
         ]);
+    }
+
+    /**
+     * @param int $limit
+     *
+     * @return \Seat\Eveapi\Models\Status\ServerStatus[]
+     */
+    private function getEveServerStatuses(int $limit = 200)
+    {
+
+        return ServerStatus::latest()->take($limit)->get();
+    }
+
+    /**
+     * Get the last server status.
+     *
+     * @return \Seat\Eveapi\Models\Status\ServerStatus
+     */
+    private function getEveLastServerStatus()
+    {
+
+        return ServerStatus::latest()->first();
+    }
+
+    /**
+     * @param int $limit
+     *
+     * @return mixed
+     */
+    private function getEsiResponseTimes(int $limit = 200)
+    {
+
+        return EsiStatus::latest()->take($limit)->get();
     }
 }

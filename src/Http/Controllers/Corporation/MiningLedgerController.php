@@ -23,7 +23,7 @@
 namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
-use Seat\Services\Repositories\Corporation\MiningLedger;
+use Seat\Eveapi\Models\Industry\CharacterMining;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Industrial\MiningDataTable;
 use Seat\Web\Http\DataTables\Scopes\MiningCorporationScope;
@@ -35,8 +35,6 @@ use Seat\Web\Http\DataTables\Scopes\MiningCorporationScope;
  */
 class MiningLedgerController extends Controller
 {
-    use MiningLedger;
-
     /**
      * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      * @param \Seat\Web\Http\DataTables\Corporation\Industrial\MiningDataTable $dataTable
@@ -53,5 +51,22 @@ class MiningLedgerController extends Controller
         return $dataTable
             ->addScope(new MiningCorporationScope([$corporation->corporation_id], $year, $month))
             ->render('web::corporation.mining.ledger', compact('corporation', 'ledgers'));
+    }
+
+    /**
+     * @param int  $corporation_id
+     * @param bool $get
+     *
+     * @return CharacterMining[]
+     */
+    private function getCorporationLedgers(int $corporation_id)
+    {
+        return CharacterMining::select('year', 'month')
+            ->join('corporation_member_trackings', 'corporation_member_trackings.character_id', 'character_minings.character_id')
+            ->distinct()
+            ->where('corporation_id', $corporation_id)
+            ->orderBy('year', 'desc')
+            ->orderBy('month', 'desc')
+            ->get();
     }
 }
