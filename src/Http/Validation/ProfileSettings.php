@@ -46,7 +46,7 @@ class ProfileSettings extends FormRequest
     public function rules()
     {
 
-        $allowed_main_character_ids = auth()->user()->associatedCharacterIds()->implode(',');
+        $allowed_main_character_ids = implode(',', auth()->user()->associatedCharacterIds());
         $allowed_skins = implode(',', Profile::$options['skins']);
         $allowed_languages = implode(',', array_map(function ($entry) {
             return $entry['short'];

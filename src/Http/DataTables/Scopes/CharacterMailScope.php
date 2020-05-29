@@ -98,7 +98,7 @@ class CharacterMailScope implements DataTableScope
             });
 
             // collect at least user owned characters
-            $owned_range = auth()->user()->associatedCharacterIds()->toArray();
+            $owned_range = auth()->user()->associatedCharacterIds();
 
             $characters_range = $map->pluck('characters')->flatten()->toArray();
 
