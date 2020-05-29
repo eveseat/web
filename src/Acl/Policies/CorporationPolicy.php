@@ -93,7 +93,7 @@ class CorporationPolicy extends AbstractEntityPolicy
     private function isCeo(User $user, CorporationInfo $corporation)
     {
         // if user own the corporation CEO, return true.
-        return in_array($corporation->ceo_id, $user->associatedCharacterIds()->toArray());
+        return in_array($corporation->ceo_id, $user->associatedCharacterIds());
     }
 
     /**

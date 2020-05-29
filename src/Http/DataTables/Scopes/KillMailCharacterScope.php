@@ -36,11 +36,6 @@ use Yajra\DataTables\Contracts\DataTableScope;
 class KillMailCharacterScope implements DataTableScope
 {
     /**
-     * @var string
-     */
-    private $permission;
-
-    /**
      * @var int[]
      */
     private $requested_characters;
@@ -108,7 +103,7 @@ class KillMailCharacterScope implements DataTableScope
         });
 
         // collect at least user owned characters
-        $owned_range = auth()->user()->associatedCharacterIds()->toArray();
+        $owned_range = auth()->user()->associatedCharacterIds();
 
         $characters_range = $map->pluck('characters')->flatten()->toArray();
 

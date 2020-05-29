@@ -107,7 +107,7 @@ class CorporationScope implements DataTableScope
             ];
         });
 
-        $owner_range = CorporationInfo::whereIn('ceo_id', auth()->user()->associatedCharacterIds()->toArray())
+        $owner_range = CorporationInfo::whereIn('ceo_id', auth()->user()->associatedCharacterIds())
             ->select('corporation_id')->get()->pluck('corporation_id')->toArray();
 
         $corporations_range = $map->pluck('corporations')->flatten()->toArray();

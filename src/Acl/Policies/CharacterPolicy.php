@@ -104,7 +104,7 @@ class CharacterPolicy extends AbstractEntityPolicy
             return false;
 
         // if user own the corporation CEO, return true.
-        return in_array($corporation->ceo_id, $user->associatedCharacterIds()->toArray());
+        return in_array($corporation->ceo_id, $user->associatedCharacterIds());
     }
 
     /**
@@ -114,7 +114,7 @@ class CharacterPolicy extends AbstractEntityPolicy
      */
     private function isOwner(User $user, CharacterInfo $character)
     {
-        return in_array($character->character_id, $user->associatedCharacterIds()->toArray());
+        return in_array($character->character_id, $user->associatedCharacterIds());
     }
 
     /**
