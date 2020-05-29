@@ -26,7 +26,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Redis;
 use Seat\Eveapi\Jobs\EsiBase;
 use Seat\Eveapi\Models\Status\EsiStatus;
-use Seat\Services\Repositories\Configuration\UserRespository;
 
 /**
  * Class Esi.
@@ -34,8 +33,6 @@ use Seat\Services\Repositories\Configuration\UserRespository;
  */
 class Esi
 {
-    use UserRespository;
-
     /**
      * Bind data to the view.
      *

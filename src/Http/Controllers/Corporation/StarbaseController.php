@@ -22,10 +22,10 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
+use Illuminate\Support\Collection;
+use Seat\Eveapi\Models\Assets\CorporationAsset;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
-use Seat\Services\Repositories\Corporation\Assets;
-use Seat\Services\Repositories\Corporation\Starbases;
-use Seat\Services\Repositories\Eve\EveRepository;
+use Seat\Eveapi\Models\Corporation\CorporationStarbase;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\StarbaseModule;
 
@@ -35,10 +35,6 @@ use Seat\Web\Http\Validation\StarbaseModule;
  */
 class StarbaseController extends Controller
 {
-    use Assets;
-    use EveRepository;
-    use Starbases;
-
     /**
      * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      *
@@ -72,5 +68,73 @@ class StarbaseController extends Controller
         return view('web::corporation.starbase.ajax.modules-tab',
             compact('starbase', 'starbase_modules'));
 
+    }
+
+    /**
+     * Return a list of starbases for a Corporation. If a starbaseID is provided,
+     * then only data for that starbase is returned.
+     *
+     * @param int $corporation_id
+     * @param int $starbase_id
+     *
+     * @return Collection
+     */
+    private function getCorporationStarbases(int $corporation_id, ?int $starbase_id = null)
+    {
+
+        return CorporationStarbase::where('corporation_id', $corporation_id)->get();
+    }
+
+    /**
+     * Retrieving all modules which are inside a starbase area (forcefield and maximum control range).
+     *
+     * @param int $corporation_id
+     * @param int $starbase_id
+     *
+     * @return Collection
+     */
+    private function getStarbaseModules(int $corporation_id, int $starbase_id): Collection
+    {
+
+        // retrieving starbase location
+        $starbase = CorporationStarbase::where('starbase_id', $starbase_id)
+            ->where('corporation_id', $corporation_id)
+            ->first();
+
+        // retrieving all modules candidate filtering on item located on same place than starbase
+        // and starbase modules category (23)
+        $candidates = CorporationAsset::join('invTypes', 'type_id', '=', 'typeID')
+            ->join('invGroups', 'invGroups.groupID', '=', 'invTypes.groupID')
+            ->where('corporation_id', $corporation_id)
+            ->where('location_id', $starbase->system_id)
+            ->where('categoryID', 23)
+            ->where('item_id', '<>', $starbase_id)
+            ->select('item_id', 'quantity', 'location_id', 'x', 'y', 'z', 'name', 'type_id', 'typeName', 'capacity', 'volume')
+            ->get();
+
+        // get maximum distance between starbase and module
+        $max_structure_distance = 0.0;
+        $attribute = $starbase->type->dogmaAttributes->where('attributeID', 650)->first();
+
+        if (! is_null($attribute))
+            $max_structure_distance = (is_null($attribute->valueFloat)) ? $attribute->valueInt : $attribute->valueFloat;
+
+        // computing allowed starbase area
+        $starbaseArea = [
+            'x' => [$starbase->item->x - $max_structure_distance, $starbase->item->x + $max_structure_distance],
+            'y' => [$starbase->item->y - $max_structure_distance, $starbase->item->y + $max_structure_distance],
+            'z' => [$starbase->item->z - $max_structure_distance, $starbase->item->z + $max_structure_distance],
+        ];
+
+        // filtering candidates and keep only those which are inside the starbase area
+        return $candidates->filter(function ($candidate) use ($starbase, $starbaseArea) {
+
+            if (is_null($candidate->x) || is_null($candidate->y) || is_null($candidate->z))
+                return false;
+
+            return $candidate->x >= $starbaseArea['x'][0] && $candidate->x <= $starbaseArea['x'][1] &&
+                $candidate->y >= $starbaseArea['y'][0] && $candidate->y <= $starbaseArea['y'][1] &&
+                $candidate->z >= $starbaseArea['z'][0] && $candidate->z <= $starbaseArea['z'][1];
+        });
     }
 }

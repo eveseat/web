@@ -22,10 +22,10 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
+use Illuminate\Support\Arr;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Mail\MailHeader;
-use Seat\Services\Repositories\Character\Mail;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Intel\MailDataTable;
 use Seat\Web\Http\DataTables\Scopes\CharacterMailScope;
@@ -36,8 +36,6 @@ use Seat\Web\Http\DataTables\Scopes\CharacterMailScope;
  */
 class MailController extends Controller
 {
-    use Mail;
-
     /**
      * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
      * @param \Seat\Web\Http\DataTables\Character\Intel\MailDataTable $dataTable
@@ -117,5 +115,56 @@ class MailController extends Controller
 
         return view('web::character.mail-timeline-read', compact('message'));
 
+    }
+
+    /**
+     * Get the mail timeline for all of the characters
+     * a logged in user has access to. Either by owning the
+     * api key with the characters, or having the correct
+     * affiliation & role.
+     *
+     * Supplying the $message_id will return only that
+     * mail.
+     *
+     * @param int $message_id
+     *
+     * @return mixed
+     */
+    private function getCharacterMailTimeline(int $message_id = null)
+    {
+        // Get the User for permissions and affiliation
+        // checks
+        $user = auth()->user();
+        $messages = MailHeader::with('body', 'recipients', 'recipients.entity', 'sender');
+
+        // If a user is not a super user, only return their own mail and those
+        // which they are affiliated to to receive.
+        if (! $user->hasSuperUser()) {
+
+            $messages = $messages->whereHas('recipients', function ($sub_query) {
+
+                // TODO : add scope to MailHeader
+
+                // retrieve authenticated user permissions map
+                $character_map = collect(Arr::get(auth()->user()->getAffiliationMap(), 'char'));
+
+                // collect only character which has either the requested permission or wildcard
+                $characters_ids = $character_map->filter(function ($permissions, $key) {
+                    return in_array('character.*', $permissions) || in_array('character.mail', $permissions);
+                })->keys();
+
+                $sub_query->whereIn('recipient_id', $characters_ids);
+            });
+        }
+
+        // Filter by messageID if its set
+        if (! is_null($message_id))
+            return $messages->where('mail_id', $message_id)
+                ->first();
+
+        return $messages->select('mail_id', 'subject', 'from', 'timestamp')
+            ->orderBy('timestamp', 'desc')
+            ->distinct()
+            ->paginate(25);
     }
 }

@@ -23,8 +23,8 @@
 namespace Seat\Web\Http\Validation;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Seat\Services\Repositories\Character\Character;
-use Seat\Services\Repositories\Corporation\Corporation;
+use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 
 /**
  * Class StandingsExistingElementAdd.
@@ -32,8 +32,6 @@ use Seat\Services\Repositories\Corporation\Corporation;
  */
 class StandingsExistingElementAdd extends FormRequest
 {
-    use Character, Corporation;
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -60,5 +58,49 @@ class StandingsExistingElementAdd extends FormRequest
             'corporation' => 'nullable|in:' .
                 $this->getAllCorporationsWithAffiliationsAndFilters()->pluck('corporation_id')->implode(','),
         ];
+    }
+
+    /**
+     * Query the database for characters, keeping filters,
+     * permissions and affiliations in mind.
+     *
+     * @param bool $get
+     *
+     * @return mixed
+     */
+    private function getAllCharactersWithAffiliations(bool $get = true)
+    {
+        // Start the character information query
+        $characters = CharacterInfo::authorized('character.sheet')
+            ->with('affiliation.corporation', 'affiliation.alliance')
+            ->select('character_infos.*');
+
+        if ($get)
+            return $characters
+                ->orderBy('name')
+                ->get();
+
+        return $characters;
+    }
+
+    /**
+     * Return the corporations for which a user has access.
+     *
+     * @param bool $get
+     *
+     * @return mixed
+     */
+    private function getAllCorporationsWithAffiliationsAndFilters(bool $get = true)
+    {
+        // Start a fresh query
+        $corporations = CorporationInfo::authorized('corporation.sheet')
+            ->with('ceo', 'alliance')
+            ->select('corporation_infos.*');
+
+        if ($get)
+            return $corporations->orderBy('name', 'desc')
+                ->get();
+
+        return $corporations;
     }
 }

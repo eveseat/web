@@ -25,6 +25,11 @@ namespace Seat\Web\Http\Controllers\Character;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Web\Http\Controllers\Controller;
 
+/**
+ * Class PiController.
+ *
+ * @package Seat\Web\Http\Controllers\Character
+ */
 class PiController extends Controller
 {
     /**

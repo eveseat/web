@@ -22,18 +22,22 @@
 
 namespace Seat\Web\Http\Controllers\Corporation;
 
+use Illuminate\Database\Eloquent\Builder;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
+use Seat\Eveapi\Models\Corporation\CorporationMemberTracking;
 use Seat\Eveapi\Models\Sde\SolarSystem;
 use Seat\Eveapi\Models\Sde\StaStation;
 use Seat\Eveapi\Models\Universe\UniverseStructure;
-use Seat\Services\Repositories\Corporation\Members;
 use Seat\Web\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
 
+/**
+ * Class TrackingController.
+ *
+ * @package Seat\Web\Http\Controllers\Corporation
+ */
 class TrackingController extends Controller
 {
-    use Members;
-
     /**
      * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      *
@@ -111,5 +115,27 @@ class TrackingController extends Controller
             })
             ->rawColumns(['refresh_token_status', 'location'])
             ->make(true);
+
+    }
+
+    /**
+     * Return the Member Tracking for a Corporation.
+     *
+     * @param int $corporation_id
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    private function getCorporationMemberTracking(int $corporation_id): Builder
+    {
+
+        return CorporationMemberTracking::with(
+            'refresh_token',
+            'refresh_token.user',
+            'refresh_token.user.main_character',
+            'ship',
+            'character'
+        )
+            ->select('corporation_member_trackings.*')
+            ->where('corporation_id', $corporation_id);
     }
 }

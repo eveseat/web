@@ -23,8 +23,8 @@
 namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
-use Seat\Services\Repositories\Corporation\Corporation;
-use Seat\Services\Repositories\Corporation\Security;
+use Seat\Eveapi\Models\Corporation\CorporationMemberTracking;
+use Seat\Eveapi\Models\Corporation\CorporationTitle;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Intel\LogDataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationScope;
@@ -35,18 +35,18 @@ use Seat\Web\Http\DataTables\Scopes\CorporationScope;
  */
 class SecurityController extends Controller
 {
-    use Corporation;
-    use Security;
-
     /**
      * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getRoles(CorporationInfo $corporation)
     {
-        $security = $this->getCorporationMemberRoles($corporation->corporation_id);
 
-        return view('web::corporation.security.roles', compact('security', 'corporation'));
+        $security = CorporationMemberTracking::with('roles', 'character')
+            ->where('corporation_id', $corporation->corporation_id)
+            ->get();
+
+        return view('web::corporation.security.roles', compact('corporation', 'security'));
     }
 
     /**
@@ -55,9 +55,12 @@ class SecurityController extends Controller
      */
     public function getTitles(CorporationInfo $corporation)
     {
-        $titles = $this->getCorporationMemberSecurityTitles($corporation->corporation_id);
 
-        return view('web::corporation.security.titles', compact('titles', 'corporation'));
+        $titles = CorporationTitle::with('characters')
+            ->where('corporation_id', $corporation->corporation_id)
+            ->get();
+
+        return view('web::corporation.security.titles', compact('corporation', 'titles'));
     }
 
     /**

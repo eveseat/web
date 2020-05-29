@@ -22,10 +22,12 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
+use Illuminate\Support\Collection;
 use Seat\Eveapi\Models\Character\CharacterInfo;
-use Seat\Services\Repositories\Character\Skills;
-use Seat\Services\Repositories\Eve\EveRepository;
+use Seat\Eveapi\Models\Character\CharacterSkill;
+use Seat\Eveapi\Models\Sde\InvGroup;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Traits\Stats;
 
 /**
  * Class SkillsController.
@@ -33,8 +35,7 @@ use Seat\Web\Http\Controllers\Controller;
  */
 class SkillsController extends Controller
 {
-    use Skills;
-    use EveRepository;
+    use Stats;
 
     /**
      * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
@@ -121,5 +122,42 @@ class SkillsController extends Controller
         }, sprintf('characters_%d_skills.txt', $character->character_id), [
             'Content-Type' => 'text/plain',
         ]);
+    }
+
+    /**
+     * Return the groups that character skills
+     * fall in.
+     *
+     * @return InvGroup[]
+     */
+    private function getEveSkillsGroups()
+    {
+
+        $groups = InvGroup::where('categoryID', 16)
+            ->where('groupID', '<>', 505)
+            ->orderBy('groupName')
+            ->get();
+
+        return $groups;
+
+    }
+
+    /**
+     * Return the skills detail for a specific Character.
+     *
+     * @param int $character_id
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    private function getCharacterSkillsInformation(int $character_id): Collection
+    {
+
+        return CharacterSkill::join('invTypes',
+            'character_skills.skill_id', '=',
+            'invTypes.typeID')
+            ->join('invGroups', 'invTypes.groupID', '=', 'invGroups.groupID')
+            ->where('character_skills.character_id', $character_id)
+            ->orderBy('invTypes.typeName')
+            ->get();
     }
 }

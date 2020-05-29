@@ -213,11 +213,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * These are basically the characters the same account has logged
      * in with using the "link another" button.
      *
-     * @return \Illuminate\Support\Collection
+     * @return array
      */
-    public function associatedCharacterIds()
+    public function associatedCharacterIds(): array
     {
-        return $this->characters->pluck('character_id')->flatten();
+        return $this->characters->pluck('character_id')->values()->toArray();
     }
 
     /**

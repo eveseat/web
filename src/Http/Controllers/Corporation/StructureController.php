@@ -24,7 +24,6 @@ namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Corporation\CorporationStructure;
-use Seat\Services\Repositories\Corporation\Structures;
 use Seat\Web\Http\Controllers\Controller;
 
 /**
@@ -33,8 +32,6 @@ use Seat\Web\Http\Controllers\Controller;
  */
 class StructureController extends Controller
 {
-    use Structures;
-
     /**
      * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
      *
@@ -43,7 +40,9 @@ class StructureController extends Controller
     public function getStructures(CorporationInfo $corporation)
     {
 
-        $structures = $this->getCorporationStructures($corporation->corporation_id);
+        $structures = CorporationStructure::with('services', 'type', 'solar_system')
+            ->where('corporation_id', $corporation->corporation_id)
+            ->get();
 
         return view('web::corporation.structures.list', compact('corporation', 'structures'));
     }
