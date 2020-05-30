@@ -52,14 +52,14 @@ class MembersDataTable extends DataTable
                     $row->name);
             })
             ->editColumn('action', function ($row) {
-                return view('web::squads.buttons.squads.kick', compact('row'));
+                return view('web::squads.buttons.squads.kick', compact('row'))->render();
             })
             ->filterColumn('characters', function ($query, $keyword) {
                 $query->whereHas('characters', function ($sub_query) use ($keyword) {
                     $sub_query->whereRaw('name LIKE ?', ["%{$keyword}%"]);
                 });
             })
-            ->rawColumns(['name', 'characters'])
+            ->rawColumns(['characters', 'name', 'action'])
             ->make(true);
     }
 

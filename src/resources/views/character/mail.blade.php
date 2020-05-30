@@ -36,14 +36,14 @@
       {{ $dataTable->table() }}
     </div>
     <div class="card-footer">
-      <ul class="list-inline">
-        <li class="list-inline-item col-md-3">
+      <ul class="list-inline d-flex justify-content-around">
+        <li class="list-inline-item">
           <span class="badge badge-warning">0</span> Corporation
         </li>
-        <li class="list-inline-item col-md-3">
+        <li class="list-inline-item">
           <span class="badge badge-primary">0</span> Alliance
         </li>
-        <li class="list-inline-item col-md-3">
+        <li class="list-inline-item">
           <span class="badge badge-info">0</span> Characters
         </li>
         <li class="list-inline-item">

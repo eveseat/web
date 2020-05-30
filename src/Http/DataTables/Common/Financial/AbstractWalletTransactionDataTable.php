@@ -40,10 +40,10 @@ abstract class AbstractWalletTransactionDataTable extends DataTable
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('date', function ($row) {
-                return view('web::partials.date', ['datetime' => $row->date]);
+                return view('web::partials.date', ['datetime' => $row->date])->render();
             })
             ->editColumn('is_buy', function ($row) {
-                return view('web::partials.marketbuysell', ['is_buy' => $row->is_buy]);
+                return view('web::partials.marketbuysell', ['is_buy' => $row->is_buy])->render();
             })
             ->editColumn('quantity', function ($row) {
                 return number($row->quantity, 0);
@@ -59,7 +59,7 @@ abstract class AbstractWalletTransactionDataTable extends DataTable
                     'type_id' => $row->type->typeID,
                     'type_name' => $row->type->typeName,
                     'variation' => $row->type->group->categoryID == 9 ? 'bpc' : 'icon',
-                ]);
+                ])->render();
             })
             ->editColumn('location.name', function ($row) {
                 return $row->location->name;
@@ -67,11 +67,11 @@ abstract class AbstractWalletTransactionDataTable extends DataTable
             ->editColumn('party.name', function ($row) {
                 switch ($row->party->category) {
                     case 'alliance':
-                        return view('web::partials.alliance', ['alliance' => $row->party]);
+                        return view('web::partials.alliance', ['alliance' => $row->party])->render();
                     case 'corporation':
-                        return view('web::partials.corporation', ['corporation' => $row->party]);
+                        return view('web::partials.corporation', ['corporation' => $row->party])->render();
                     case 'character':
-                        return view('web::partials.character', ['character' => $row->party]);
+                        return view('web::partials.character', ['character' => $row->party])->render();
                     default:
                         return '';
                 }
@@ -90,6 +90,7 @@ abstract class AbstractWalletTransactionDataTable extends DataTable
                 return $query->whereRaw('(unit_price * quantity) LIKE ?', ["%$keyword%"]);
             })
             ->orderColumn('total', '(unit_price * quantity) $1')
+            ->rawColumns(['date', 'is_buy', 'type.typeName', 'party.name'])
             ->make(true);
     }
 

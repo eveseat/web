@@ -40,13 +40,13 @@ abstract class AbstractIndustryDataTable extends DataTable
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('start_date', function ($row) {
-                return view('web::partials.date', ['datetime' => $row->start_date]);
+                return view('web::partials.date', ['datetime' => $row->start_date])->render();
             })
             ->editColumn('end_date', function ($row) {
-                return view('web::partials.date', ['datetime' => $row->end_date]);
+                return view('web::partials.date', ['datetime' => $row->end_date])->render();
             })
             ->addColumn('progress', function ($row) {
-                return view('web::common.industries.partials.progress', compact('row'));
+                return view('web::common.industries.partials.progress', compact('row'))->render();
             })
             ->editColumn('runs', function ($row) {
                 switch ($row->status) {
@@ -90,16 +90,19 @@ abstract class AbstractIndustryDataTable extends DataTable
                     'type_id' => $row->blueprint->typeID,
                     'type_name' => $row->blueprint->typeName,
                     'variation' => 'bpc',
-                ]);
+                ])->render();
             })
             ->editColumn('product.typeName', function ($row) {
                 return view('web::partials.type', [
                     'type_id' => $row->product->typeID,
                     'type_name' => $row->product->typeName,
                     'variation' => $row->product->group->categoryID == 9 ? 'bpc' : 'icon',
-                ]);
+                ])->render();
             })
-            ->rawColumns(['runs', 'activity.activityName'])
+            ->rawColumns([
+                'start_date', 'end_date', 'progress', 'runs', 'activity.activityName',
+                'blueprint.typeName', 'product.typeName',
+            ])
             ->make(true);
     }
 

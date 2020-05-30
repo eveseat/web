@@ -36,9 +36,9 @@ class MiningDataTable extends AbstractMiningDataTable
     {
         return $this->data()
             ->editColumn('character.name', function ($row) {
-                return view('web::partials.character', ['character' => $row->character]);
+                return view('web::partials.character', ['character' => $row->character])->render();
             })
-            ->rawColumns(['date', 'system', 'ore', 'character', 'main_character'])
+            ->rawColumns(['date', 'action', 'solar_system.name', 'type.typeName', 'character.name'])
             ->make(true);
     }
 

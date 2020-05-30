@@ -42,10 +42,10 @@ class CalendarDataTable extends DataTable
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('event_date', function ($row) {
-                return view('web::partials.date', ['datetime' => $row->event_date]);
+                return view('web::partials.date', ['datetime' => $row->event_date])->render();
             })
             ->editColumn('title', function ($row) {
-                return view('web::character.calendar-detail', compact('row'));
+                return view('web::character.calendar-detail', compact('row'))->render();
             })
             ->editColumn('event_response', function ($row) {
                 return trans(sprintf('web::calendar.%s', $row->event_response));
@@ -53,11 +53,11 @@ class CalendarDataTable extends DataTable
             ->editColumn('owner.name', function ($row) {
                 switch ($row->detail->owner->category) {
                     case 'alliance':
-                        return view('web::partials.alliance', ['alliance' => $row->detail->owner]);
+                        return view('web::partials.alliance', ['alliance' => $row->detail->owner])->render();
                     case 'corporation':
-                        return view('web::partials.corporation', ['corporation' => $row->detail->owner]);
+                        return view('web::partials.corporation', ['corporation' => $row->detail->owner])->render();
                     case 'character':
-                        return view('web::partials.character', ['character' => $row->detail->owner]);
+                        return view('web::partials.character', ['character' => $row->detail->owner])->render();
                 }
 
                 return $row->detail->owner->name;
@@ -70,6 +70,7 @@ class CalendarDataTable extends DataTable
 
                 $query->whereIn('event_response', $status);
             })
+            ->rawColumns(['event_date', 'title', 'owner.name'])
             ->make(true);
     }
 
