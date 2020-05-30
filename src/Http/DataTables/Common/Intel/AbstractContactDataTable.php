@@ -41,29 +41,29 @@ abstract class AbstractContactDataTable extends DataTable
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('standing', function ($row) {
-                return view('web::partials.standing', ['standing' => $row->standing]);
+                return view('web::partials.standing', ['standing' => $row->standing])->render();
             })
             ->editColumn('entity.name', function ($row) {
                 switch ($row->entity->category) {
                     case 'alliance':
-                        return view('web::partials.alliance', ['alliance' => $row->entity]);
+                        return view('web::partials.alliance', ['alliance' => $row->entity])->render();
                     case 'corporation':
-                        return view('web::partials.corporation', ['corporation' => $row->entity]);
+                        return view('web::partials.corporation', ['corporation' => $row->entity])->render();
                     case 'character':
-                        return view('web::partials.character', ['character' => $row->entity]);
+                        return view('web::partials.character', ['character' => $row->entity])->render();
                     default:
                         return '';
                 }
             })
             ->editColumn('entity.affiliation.corporation.name', function ($row) {
                 if ($row->entity->affiliation->corporation->entity_id)
-                    return view('web::partials.corporation', ['corporation' => $row->entity->affiliation->corporation]);
+                    return view('web::partials.corporation', ['corporation' => $row->entity->affiliation->corporation])->render();
 
                 return '';
             })
             ->editColumn('entity.affiliation.alliance.name', function ($row) {
                 if ($row->entity->affiliation->alliance->entity_id)
-                    return view('web::partials.alliance', ['alliance' => $row->entity->affiliation->alliance]);
+                    return view('web::partials.alliance', ['alliance' => $row->entity->affiliation->alliance])->render();
 
                 return '';
             })
@@ -71,7 +71,7 @@ abstract class AbstractContactDataTable extends DataTable
                 return $row->labels->implode('name', ', ');
             })
             ->addColumn('action', function ($row) {
-                return view('web::partials.links', ['type' => $row->contact_type, 'id' => $row->contact_id]);
+                return view('web::partials.links', ['type' => $row->contact_type, 'id' => $row->contact_id])->render();
             })
             ->filterColumn('name', function ($query, $keyword) {
                 $query->whereHas('entity', function ($sub_query) use ($keyword) {
@@ -83,6 +83,10 @@ abstract class AbstractContactDataTable extends DataTable
                     $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
                 });
             })
+            ->rawColumns([
+                'standing', 'entity.name', 'entity.affiliation.corporation.name', 'entity.affiliation.alliance.name',
+                'action',
+            ])
             ->make(true);
     }
 

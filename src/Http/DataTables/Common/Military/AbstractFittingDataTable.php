@@ -44,7 +44,7 @@ abstract class AbstractFittingDataTable extends DataTable
                     'type_id' => $row->ship->typeID,
                     'type_name' => $row->ship->typeName,
                     'variation' => $row->ship->group->categoryID == 9 ? 'bpc' : 'icon',
-                ]);
+                ])->render();
             })
             ->addColumn('items', function ($row) {
                 return $row->items->count();
@@ -70,9 +70,9 @@ abstract class AbstractFittingDataTable extends DataTable
                     $detail_parameters['character_id'] = $row->character_id;
 
                 return
-                    view('web::common.fittings.buttons.insurance', ['type_id' => $row->ship->typeID]) . ' ' .
-                    view('web::common.fittings.buttons.detail', $detail_parameters) . ' ' .
-                    view('web::common.fittings.buttons.export', ['data_export' => $row->toEve()]);
+                    view('web::common.fittings.buttons.insurance', ['type_id' => $row->ship->typeID])->render() . ' ' .
+                    view('web::common.fittings.buttons.detail', $detail_parameters)->render() . ' ' .
+                    view('web::common.fittings.buttons.export', ['data_export' => $row->toEve()])->render();
             })
             ->filterColumn('items', function ($query, $keyword) {
                 $query->whereHas('items', function ($sub_query) use ($keyword) {
@@ -81,7 +81,7 @@ abstract class AbstractFittingDataTable extends DataTable
                     });
                 });
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['ship.typeName', 'action'])
             ->make(true);
     }
 

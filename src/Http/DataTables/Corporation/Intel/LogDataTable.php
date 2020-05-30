@@ -37,17 +37,18 @@ class LogDataTable extends DataTable
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('changed_at', function ($row) {
-                return view('web::partials.date', ['datetime' => $row->changed_at]);
+                return view('web::partials.date', ['datetime' => $row->changed_at])->render();
             })
             ->editColumn('issuer.name', function ($row) {
-                return view('web::partials.character', ['character' => $row->issuer]);
+                return view('web::partials.character', ['character' => $row->issuer])->render();
             })
             ->editColumn('character.name', function ($row) {
-                return view('web::partials.character', ['character' => $row->character]);
+                return view('web::partials.character', ['character' => $row->character])->render();
             })
             ->editColumn('role', function ($row) {
                 return str_replace('_', ' ', $row->role);
             })
+            ->rawColumns(['changed_at', 'issuer.name', 'character.name'])
             ->make(true);
     }
 

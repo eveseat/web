@@ -40,11 +40,12 @@ abstract class AbstractNoteDataTable extends DataTable
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('created_at', function ($row) {
-                return view('web::partials.date', ['datetime' => $row->created]);
+                return view('web::partials.date', ['datetime' => $row->created])->render();
             })
             ->editColumn('action', function ($row) {
-                return view('web::common.notes.buttons.action', compact('row'));
+                return view('web::common.notes.buttons.action', compact('row'))->render();
             })
+            ->rawColumns(['created_at', 'action'])
             ->make(true);
     }
 

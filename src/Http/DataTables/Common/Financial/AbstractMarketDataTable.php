@@ -40,16 +40,16 @@ abstract class AbstractMarketDataTable extends DataTable
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('issued', function ($row) {
-                return view('web::partials.date', ['datetime' => $row->issued]);
+                return view('web::partials.date', ['datetime' => $row->issued])->render();
             })
             ->editColumn('is_buy_order', function ($row) {
-                return view('web::partials.marketbuysell', ['is_buy' => $row->is_buy_order]);
+                return view('web::partials.marketbuysell', ['is_buy' => $row->is_buy_order])->render();
             })
             ->editColumn('price', function ($row) {
                 return number($row->price);
             })
             ->addColumn('expires', function ($row) {
-                return view('web::partials.date', ['datetime' => carbon($row->issued)->addDays($row->duration)]);
+                return view('web::partials.date', ['datetime' => carbon($row->issued)->addDays($row->duration)])->render();
             })
             ->editColumn('volume_total', function ($row) {
                 return sprintf('%s / %s', number($row->volume_remain, 0), number($row->volume_total, 0));
@@ -62,7 +62,7 @@ abstract class AbstractMarketDataTable extends DataTable
                     'type_id' => $row->type->typeID,
                     'type_name' => $row->type->typeName,
                     'variation' => $row->type->group->categoryID == 9 ? 'bpc' : 'icon',
-                ]);
+                ])->render();
             })
             ->filterColumn('is_buy_order', function ($query, $keyword) {
                 if (strpos('SELL', strtoupper($keyword)) !== false)
@@ -91,6 +91,7 @@ abstract class AbstractMarketDataTable extends DataTable
             ->orderColumn('expires', 'DATE_ADD(issued, INTERVAL duration DAY) $1')
             ->orderColumn('total', '(price * volume_total) $1')
             ->orderColumn('volume', '(volume_total - volume_remain) $1')
+            ->rawColumns(['issued', 'is_buy_order', 'expires', 'type.typeName'])
             ->make(true);
     }
 

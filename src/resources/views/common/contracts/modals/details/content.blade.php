@@ -11,14 +11,41 @@
   <tbody>
     <tr>
       <td class="text-center">
-        @include('web::partials.character', ['character' => $contract->issuer])
+        @switch($contract->issuer->category)
+          @case('alliance')
+            @include('web::partials.alliance', ['alliance' => $contract->issuer])
+            @break
+          @case('corporation')
+            @include('web::partials.corporation', ['corporation' => $contract->issuer])
+            @break
+          @default
+            @include('web::partials.character', ['character' => $contract->issuer])
+        @endswitch
       </td>
       <td class="text-center">
-        @include('web::partials.character', ['character' => $contract->assignee])
+        @switch($contract->assignee->category)
+          @case('alliance')
+            @include('web::partials.alliance', ['alliance' => $contract->assignee])
+            @break
+          @case('corporation')
+            @include('web::partials.corporation', ['corporation' => $contract->assignee])
+            @break
+          @default
+            @include('web::partials.character', ['character' => $contract->assignee])
+        @endswitch
       </td>
       <td class="text-center">
         @if($contract->acceptor && $contract->acceptor->entity_id != 0)
-          @include('web::partials.character', ['character' => $contract->acceptor])
+          @switch($contract->acceptor->category)
+            @case('alliance')
+              @include('web::partials.alliance', ['alliance' => $contract->acceptor])
+              @break
+            @case('corporation')
+              @include('web::partials.corporation', ['corporation' => $contract->acceptor])
+              @break
+            @default
+              @include('web::partials.character', ['character' => $contract->acceptor])
+          @endswitch
         @endif
       </td>
     </tr>

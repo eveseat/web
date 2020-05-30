@@ -40,11 +40,12 @@ abstract class AbstractBookmarkDataTable extends DataTable
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('created', function ($row) {
-                return view('web::partials.date', ['datetime' => $row->created]);
+                return view('web::partials.date', ['datetime' => $row->created])->render();
             })
             ->addColumn('coordinates', function ($row) {
-                return view('web::common.bookmarks.coordinates', compact('row'));
+                return view('web::common.bookmarks.coordinates', compact('row'))->render();
             })
+            ->rawColumns(['created', 'coordinates'])
             ->make(true);
     }
 

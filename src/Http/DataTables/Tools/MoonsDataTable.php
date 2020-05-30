@@ -54,21 +54,22 @@ class MoonsDataTable extends DataTable
             ->editColumn('solar_system.sovereignty', function ($row) {
                 switch (true) {
                     case ! is_null($row->solar_system->sovereignty->faction_id):
-                        return view('web::partials.faction', ['faction' => $row->solar_system->sovereignty->faction]);
+                        return view('web::partials.faction', ['faction' => $row->solar_system->sovereignty->faction])->render();
                     case ! is_null($row->solar_system->sovereignty->alliance_id):
-                        return view('web::partials.alliance', ['alliance' => $row->solar_system->sovereignty->alliance]);
+                        return view('web::partials.alliance', ['alliance' => $row->solar_system->sovereignty->alliance])->render();
                     case ! is_null($row->solar_system->sovereignty->corporation_id):
-                        return view('web::partials.corporation', ['corporation' => $row->solar_system->sovereignty->corporation]);
+                        return view('web::partials.corporation', ['corporation' => $row->solar_system->sovereignty->corporation])->render();
                     default:
                         return '';
                 }
             })
             ->editColumn('indicators', function ($row) {
-                return view('web::tools.moons.partials.indicators', compact('row'));
+                return view('web::tools.moons.partials.indicators', compact('row'))->render();
             })
             ->editColumn('action', function ($row) {
-                return view('web::tools.moons.buttons.show', compact('row'));
+                return view('web::tools.moons.buttons.show', compact('row'))->render();
             })
+            ->rawColumns(['solar_system.sovereignty', 'indicators', 'action'])
             ->make(true);
     }
 

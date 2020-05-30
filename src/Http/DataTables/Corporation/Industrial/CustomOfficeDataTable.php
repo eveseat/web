@@ -41,7 +41,7 @@ class CustomOfficeDataTable extends DataTable
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('planet.name', function ($row) {
-                return view('web::partials.planet', ['planet' => $row->planet]);
+                return view('web::partials.planet', ['planet' => $row->planet])->render();
             })
             ->addColumn('reinforcement', function ($row) {
                 return sprintf('between %dh and %dh', $row->reinforce_exit_start, $row->reinforce_exit_end);
@@ -86,7 +86,7 @@ class CustomOfficeDataTable extends DataTable
                         round((float) $row->terrible_standing_tax_rate * 100)
                     );
             })
-            ->rawColumns(['standing_level', 'tax_alliance_corp', 'tax_standings'])
+            ->rawColumns(['planet.name', 'standing_level', 'tax_alliance_corp', 'tax_standings'])
             ->make(true);
     }
 

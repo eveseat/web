@@ -41,25 +41,20 @@ class ResearchDataTable extends DataTable
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('started_at', function ($row) {
-                return view('web::partials.date', ['datetime' => $row->started_at]);
+                return view('web::partials.date', ['datetime' => $row->started_at])->render();
             })
             ->editColumn('agent.name', function ($row) {
-                return view('web::partials.character', ['character' => $row->agent]);
+                return view('web::partials.character', ['character' => $row->agent])->render();
             })
             ->editColumn('skill.typeName', function ($row) {
-                return view('web::partials.type', ['type_id' => $row->skill->typeID, 'type_name' => $row->skill->typeName]);
-            })
-            ->filterColumn('agent', function ($query, $keyword) {
-                return $query->whereHas('agent', function ($sub_query) use ($keyword) {
-                    return $sub_query->whereRaw('itemName LIKE ?', ["%$keyword%"]);
-                });
+                return view('web::partials.type', ['type_id' => $row->skill->typeID, 'type_name' => $row->skill->typeName])->render();
             })
             ->filterColumn('skill', function ($query, $keyword) {
                 return $query->whereHas('skill', function ($sub_query) use ($keyword) {
                     return $sub_query->whereRaw('typeName LIKE ?', ["%$keyword%"]);
                 });
             })
-            ->rawColumns(['started_at', 'agent', 'skill'])
+            ->rawColumns(['started_at', 'agent.name', 'skill.typeName'])
             ->make(true);
     }
 

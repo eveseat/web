@@ -48,7 +48,7 @@ abstract class AbstractAssetDataTable extends DataTable
                     'type_id'   => $row->type->typeID,
                     'type_name' => $row->name ? sprintf('%s (%s)', $row->name, $row->type->typeName) : $row->type->typeName,
                     'variation' => $row->type->group->categoryID == 9 ? 'bpc' : 'icon',
-                ]);
+                ])->render();
             })
             ->editColumn('quantity', function ($row) {
                 return number($row->quantity, 0);
@@ -60,9 +60,9 @@ abstract class AbstractAssetDataTable extends DataTable
             ->editColumn('action', function ($row) {
                 if ($row->content->isNotEmpty()) {
                     if (in_array($row->type->group->categoryID, [6, 65]))
-                        return view('web::common.assets.buttons.fitting', compact('row'));
+                        return view('web::common.assets.buttons.fitting', compact('row'))->render();
 
-                    return view('web::common.assets.buttons.cargo', compact('row'));
+                    return view('web::common.assets.buttons.cargo', compact('row'))->render();
                 }
 
                 return '';
@@ -88,7 +88,7 @@ abstract class AbstractAssetDataTable extends DataTable
 
                 return '';
             })
-            ->rawColumns(['type.volume'])
+            ->rawColumns(['type.typeName', 'action'])
             ->make(true);
     }
 
