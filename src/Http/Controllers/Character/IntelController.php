@@ -244,7 +244,7 @@ class IntelController extends Controller
         $profiles = StandingsProfile::with('standings')
             ->get();
 
-        return view('web::character.intel.standingscompare', compact('profiles'));
+        return view('web::character.intel.standingscompare', compact('character', 'profiles'));
     }
 
     /**
@@ -283,7 +283,7 @@ class IntelController extends Controller
      */
     public function notes(CharacterInfo $character, NoteDataTable $dataTable)
     {
-        return $dataTable->render('web::character.intel.notes');
+        return $dataTable->render('web::character.intel.notes', compact('character'));
     }
 
     /**
