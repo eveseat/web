@@ -22,12 +22,11 @@
 
 namespace Seat\Web\Http\Controllers\Configuration;
 
-use App\Providers\AbstractSeatPlugin;
-use Cache;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Parsedown;
+use Seat\Services\AbstractSeatPlugin;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\Customlink;
 use Seat\Web\Http\Validation\PackageChangelog;
@@ -131,7 +130,7 @@ class SeatController extends Controller
     public function getApprovedSDE()
     {
 
-        $sde_version = Cache::remember('live_sde_version', 720, function () {
+        $sde_version = cache()->remember('live_sde_version', 720, function () {
 
             try {
 
