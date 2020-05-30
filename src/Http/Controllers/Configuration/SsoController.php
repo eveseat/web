@@ -70,7 +70,7 @@ class SsoController extends Controller
         $scopes->transform(function ($item, $key) use ($request) {
             if($item->id == $request->input('profile_id')) {
                 $item->name = $request->input('profile_name');
-                $item->scopes = $request->input('scopes');
+                $item->scopes = $request->input('scopes', ['publicData']);
             }
 
             return $item;
@@ -78,7 +78,9 @@ class SsoController extends Controller
 
         setting(['sso_scopes', $scopes], true);
 
-        return redirect()->back()->with('success', trans('web::seat.updated'));
+        return redirect()->back()
+            ->with('success',
+                sprintf('SSO Profile %s has been successfully updated.', $request->input('profile_name')));
     }
 
     /**
