@@ -42,7 +42,7 @@
                   {{ human_diff($colony->last_update) }}
                 </span>
               </td>
-              <td>{{ $colony->system->itemName }}</td>
+              <td>{{ $colony->solar_system->name }}</td>
               <td>
                 @include('web::partials.type', ['type_id' => $colony->planet->type->typeID, 'type_name' => ucwords($colony->planet_type)])
               </td>
@@ -83,7 +83,7 @@
                 <td>
                   @include('web::partials.type', ['type_id' => $colony->planet->type->typeID, 'type_name' => ucwords($colony->planet_type)])
                 </td>
-                <td>{{ $colony->planet->itemName }}</td>
+                <td>{{ $colony->planet->name }}</td>
                 <td>
                   @include('web::partials.type', ['type_id' => $extractor->product->typeID, 'type_name' => $extractor->product->typeName])
                 </td>
