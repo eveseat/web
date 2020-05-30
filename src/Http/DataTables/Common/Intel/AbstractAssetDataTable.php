@@ -88,7 +88,7 @@ abstract class AbstractAssetDataTable extends DataTable
 
                 return '';
             })
-            ->rawColumns(['type.typeName', 'action'])
+            ->rawColumns(['type.typeName', 'type.volume', 'action'])
             ->make(true);
     }
 
