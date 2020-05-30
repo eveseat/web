@@ -48,7 +48,7 @@ abstract class AbstractBlueprintDataTable extends DataTable
                     'type_id' => $row->type->typeID,
                     'type_name' => $row->type->typeName,
                     'variation' => $row->quantity == -1 ? 'bp' : 'bpc',
-                ]);
+                ])->render();
             })
             ->editColumn('location_flag', $location_column)
             ->editColumn('quantity', function ($row) {
@@ -75,7 +75,7 @@ abstract class AbstractBlueprintDataTable extends DataTable
 
                 return '';
             })
-            ->rawColumns(['runs'])
+            ->rawColumns(['type.typeName', 'runs'])
             ->make(true);
     }
 

@@ -41,10 +41,10 @@ abstract class AbstractContractDataTable extends DataTable
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('action', function ($row) {
-                return view('web::common.contracts.buttons.details', compact('row'));
+                return view('web::common.contracts.buttons.details', compact('row'))->render();
             })
             ->editColumn('detail.date_issued', function ($row) {
-                return view('web::partials.date', ['datetime' => $row->detail->date_issued]);
+                return view('web::partials.date', ['datetime' => $row->detail->date_issued])->render();
             })
             ->editColumn('detail.type', function ($row) {
                 return trans(sprintf('web::contract.%s', $row->detail->type));
@@ -52,11 +52,11 @@ abstract class AbstractContractDataTable extends DataTable
             ->editColumn('detail.issuer.name', function ($row) {
                 switch ($row->detail->issuer->category) {
                     case 'alliance':
-                        return view('web::partials.alliance', ['alliance' => $row->detail->issuer]);
+                        return view('web::partials.alliance', ['alliance' => $row->detail->issuer])->render();
                     case 'corporation':
-                        return view('web::partials.corporation', ['corporation' => $row->detail->issuer]);
+                        return view('web::partials.corporation', ['corporation' => $row->detail->issuer])->render();
                     case 'character':
-                        return view('web::partials.character', ['character' => $row->detail->issuer]);
+                        return view('web::partials.character', ['character' => $row->detail->issuer])->render();
                     default:
                         return '';
                 }
@@ -64,11 +64,11 @@ abstract class AbstractContractDataTable extends DataTable
             ->editColumn('detail.assignee.name', function ($row) {
                 switch ($row->detail->assignee->category) {
                     case 'alliance':
-                        return view('web::partials.alliance', ['alliance' => $row->detail->assignee]);
+                        return view('web::partials.alliance', ['alliance' => $row->detail->assignee])->render();
                     case 'corporation':
-                        return view('web::partials.corporation', ['corporation' => $row->detail->assignee]);
+                        return view('web::partials.corporation', ['corporation' => $row->detail->assignee])->render();
                     case 'character':
-                        return view('web::partials.character', ['character' => $row->detail->assignee]);
+                        return view('web::partials.character', ['character' => $row->detail->assignee])->render();
                     default:
                         return '';
                 }
@@ -79,11 +79,11 @@ abstract class AbstractContractDataTable extends DataTable
 
                 switch ($row->detail->acceptor->category) {
                     case 'alliance':
-                        return view('web::partials.alliance', ['alliance' => $row->detail->acceptor]);
+                        return view('web::partials.alliance', ['alliance' => $row->detail->acceptor])->render();
                     case 'corporation':
-                        return view('web::partials.corporation', ['corporation' => $row->detail->acceptor]);
+                        return view('web::partials.corporation', ['corporation' => $row->detail->acceptor])->render();
                     case 'character':
-                        return view('web::partials.character', ['character' => $row->detail->acceptor]);
+                        return view('web::partials.character', ['character' => $row->detail->acceptor])->render();
                     default:
                         return '';
                 }
@@ -119,6 +119,10 @@ abstract class AbstractContractDataTable extends DataTable
                     $sub_query->whereIn('status', $status);
                 });
             })
+            ->rawColumns([
+                'action', 'detail.date_issued', 'detail.issuer.name', 'detail.assignee.name', 'detail.acceptor.name',
+                'detail.status', 'detail.price', 'detail.reward',
+            ])
             ->make(true);
     }
 

@@ -39,7 +39,7 @@ class UsersDataTable extends DataTable
     {
         return datatables()->eloquent($this->query())
             ->editColumn('users.name', function ($row) {
-                return view('web::partials.character', ['character' => $row->main_character]);
+                return view('web::partials.character', ['character' => $row->main_character])->render();
             })
             ->editColumn('characters.name', function ($row) {
                 return $row->characters->reject(function ($character) use ($row) {
@@ -49,19 +49,19 @@ class UsersDataTable extends DataTable
                 })->join(' ');
             })
             ->editColumn('last_login', function ($row) {
-                return view('web::partials.date', ['datetime' => $row->last_login]);
+                return view('web::partials.date', ['datetime' => $row->last_login])->render();
             })
             ->editColumn('last_login_source', function ($row) {
                 return $row->last_login_source ?: '';
             })
             ->editColumn('admin', function ($row) {
-                return view('web::configuration.users.partials.admin', compact('row'));
+                return view('web::configuration.users.partials.admin', compact('row'))->render();
             })
             ->editColumn('roles', function ($row) {
-                return view('web::configuration.users.partials.roles', compact('row'));
+                return view('web::configuration.users.partials.roles', compact('row'))->render();
             })
             ->editColumn('action', function ($row) {
-                return view('web::configuration.users.partials.actions', compact('row'));
+                return view('web::configuration.users.partials.actions', compact('row'))->render();
             })
             ->filterColumn('characters', function ($query, $keyword) {
                 return $query->whereHas('characters', function ($sub_query) use ($keyword) {
@@ -76,7 +76,7 @@ class UsersDataTable extends DataTable
                         });
                 });
             })
-            ->rawColumns(['characters.name', 'roles'])
+            ->rawColumns(['users.name', 'characters.name', 'last_login', 'admin', 'roles', 'action'])
             ->make(true);
     }
 

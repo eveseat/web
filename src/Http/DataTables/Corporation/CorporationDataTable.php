@@ -41,7 +41,7 @@ class CorporationDataTable extends DataTable
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('name', function ($row) {
-                return view('web::partials.corporation', ['corporation' => $row]);
+                return view('web::partials.corporation', ['corporation' => $row])->render();
             })
             ->editColumn('tax_rate', function ($row) {
                 return number($row->tax_rate * 100) . '%';
@@ -54,14 +54,15 @@ class CorporationDataTable extends DataTable
                     $row->member_count, $row->member_limit->limit, number($row->member_count / $row->member_limit->limit * 100));
             })
             ->editColumn('ceo.name', function ($row) {
-                return view('web::partials.character', ['character' => $row->ceo]);
+                return view('web::partials.character', ['character' => $row->ceo])->render();
             })
             ->editColumn('alliance.name', function ($row) {
                 if (! is_null($row->alliance_id))
-                    return view('web::partials.alliance', ['alliance' => $row->alliance]);
+                    return view('web::partials.alliance', ['alliance' => $row->alliance])->render();
 
                 return '';
             })
+            ->rawColumns(['name', 'ceo.name', 'alliance.name'])
             ->make(true);
     }
 

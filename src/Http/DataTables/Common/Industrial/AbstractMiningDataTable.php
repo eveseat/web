@@ -39,19 +39,19 @@ abstract class AbstractMiningDataTable extends DataTable
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('date', function ($row) {
-                return view('web::partials.date', ['datetime' => $row->date]);
+                return view('web::partials.date', ['datetime' => $row->date])->render();
             })
             ->editColumn('quantity', function ($row) {
                 return number($row->quantity);
             })
             ->editColumn('action', function ($row) {
-                return view('web::common.minings.buttons.details', compact('row'));
+                return view('web::common.minings.buttons.details', compact('row'))->render();
             })
             ->editColumn('solar_system.name', function ($row) {
-                return view('web::partials.system', ['system' => $row->solar_system->name, 'security' => $row->solar_system->security]);
+                return view('web::partials.system', ['system' => $row->solar_system->name, 'security' => $row->solar_system->security])->render();
             })
             ->editColumn('type.typeName', function ($row) {
-                return view('web::partials.type', ['type_id' => $row->type->typeID, 'type_name' => $row->type->typeName]);
+                return view('web::partials.type', ['type_id' => $row->type->typeID, 'type_name' => $row->type->typeName])->render();
             })
             ->addColumn('volume', function ($row) {
                 return number($row->type->volume * $row->quantity);
