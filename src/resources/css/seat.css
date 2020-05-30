@@ -28,6 +28,10 @@ img.eve-icon.xxlarge-icon {
     height: 256px;
 }
 
+.modal-body img {
+    max-width: 100%;
+}
+
 /*
  * Profile Drop Down
  */
