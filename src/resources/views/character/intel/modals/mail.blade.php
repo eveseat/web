@@ -21,19 +21,21 @@
             </tr>
           </thead>
         </table>
-        <div class="panel-footer clearfix">
-          <div class="col-md-2 offset-md-2">
-            <span class="badge badge-warning">0</span> Corporation
-          </div>
-          <div class="col-md-2">
-            <span class="badge badge-primary">0</span> Alliance
-          </div>
-          <div class="col-md-2">
-            <span class="badge badge-info">0</span> Characters
-          </div>
-          <div class="col-md-2">
-            <span class="badge badge-success">0</span> Mailing-Lists
-          </div>
+        <div class="modal-footer">
+          <ul class="list-inline w-100 d-flex justify-content-around">
+            <li class="list-inline-item">
+              <span class="badge badge-warning">0</span> Corporation
+            </li>
+            <li class="list-inline-item">
+              <span class="badge badge-primary">0</span> Alliance
+            </li>
+            <li class="list-inline-item">
+              <span class="badge badge-info">0</span> Characters
+            </li>
+            <li class="list-inline-item">
+              <span class="badge badge-success">0</span> Mailing-Lists
+            </li>
+          </ul>
         </div>
       </div>
     </div>
