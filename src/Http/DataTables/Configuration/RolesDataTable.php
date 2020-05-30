@@ -45,7 +45,7 @@ class RolesDataTable extends DataTable
                 return $row->permissions->count();
             })
             ->editColumn('action', function ($row) {
-                return view('web::configuration.access.partials.action', compact('row'));
+                return view('web::configuration.access.partials.action', compact('row'))->render();
             })
             ->filterColumn('users', function ($query, $keyword) {
                 return $query->whereHas('users', function ($sub_query) use ($keyword) {
@@ -59,6 +59,7 @@ class RolesDataTable extends DataTable
                     return $sub_query->whereRaw('title LIKE ?', ["%{$keyword}%"]);
                 });
             })
+            ->rawColumns(['action'])
             ->make(true);
     }
 

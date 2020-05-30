@@ -47,20 +47,20 @@ class CandidatesDataTable extends DataTable
                 })->join(' ');
             })
             ->editColumn('user.name', function ($row) {
-                return view('web::partials.character', ['character' => $row->user->main_character]);
+                return view('web::partials.character', ['character' => $row->user->main_character])->render();
             })
             ->editColumn('created_at', function ($row) {
-                return view('web::partials.date', ['datetime' => $row->created_at]);
+                return view('web::partials.date', ['datetime' => $row->created_at])->render();
             })
             ->editColumn('action', function ($row) {
-                return view('web::squads.buttons.application.action', compact('row'));
+                return view('web::squads.buttons.application.action', compact('row'))->render();
             })
             ->filterColumn('characters', function ($query, $keyword) {
                 $query->whereHas('user.characters', function ($sub_query) use ($keyword) {
                     $sub_query->whereRaw('name LIKE ?', ["%{$keyword}%"]);
                 });
             })
-            ->rawColumns(['characters'])
+            ->rawColumns(['characters', 'user.name', 'created_at', 'action'])
             ->make(true);
     }
 

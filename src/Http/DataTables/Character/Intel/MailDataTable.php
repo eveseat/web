@@ -41,25 +41,25 @@ class MailDataTable extends DataTable
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('timestamp', function ($row) {
-                return view('web::partials.date', ['datetime' => $row->timestamp]);
+                return view('web::partials.date', ['datetime' => $row->timestamp])->render();
             })
             ->editColumn('action', function ($row) {
-                return view('web::common.mails.buttons.read', ['character_id' => request()->character, 'mail_id' => $row->mail_id]);
+                return view('web::common.mails.buttons.read', ['character_id' => request()->character, 'mail_id' => $row->mail_id])->render();
             })
             ->editColumn('sender.name', function ($row) {
                 switch ($row->sender->category) {
                     case 'character':
-                        return view('web::partials.character', ['character' => $row->sender]);
+                        return view('web::partials.character', ['character' => $row->sender])->render();
                     case 'corporation':
-                        return view('web::partials.corporation', ['corporation' => $row->sender]);
+                        return view('web::partials.corporation', ['corporation' => $row->sender])->render();
                     case 'alliance':
-                        return view('web::partials.alliance', ['alliance' => $row->sender]);
+                        return view('web::partials.alliance', ['alliance' => $row->sender])->render();
                 }
 
                 return '';
             })
             ->addColumn('recipients', function ($row) {
-                return view('web::common.mails.modals.read.tags', compact('row'));
+                return view('web::common.mails.modals.read.tags', compact('row'))->render();
             })
             ->filterColumn('recipients', function ($query, $keyword) {
                 return $query->whereHas('recipients.entity', function ($sub_query) use ($keyword) {
@@ -68,7 +68,7 @@ class MailDataTable extends DataTable
                     return $sub_query->whereRaw('name LIKE ?', ["%$keyword%"]);
                 });
             })
-            ->rawColumns(['subject', 'action'])
+            ->rawColumns(['timestamp', 'action', 'sender.name', 'recipients'])
             ->make(true);
     }
 

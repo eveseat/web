@@ -41,25 +41,25 @@ abstract class AbstractKillMailDataTable extends DataTable
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('action', function ($row) {
-                return view('web::common.killmails.killmailzkb', compact('row'));
+                return view('web::common.killmails.killmailzkb', compact('row'))->render();
             })
             ->editColumn('detail.killmail_time', function ($row) {
-                return view('web::partials.date', ['datetime' => $row->detail->killmail_time]);
+                return view('web::partials.date', ['datetime' => $row->detail->killmail_time])->render();
             })
             ->editColumn('victim.ship.typeName', function ($row) {
                 return view('web::partials.type', [
                     'type_id' => $row->victim->ship->typeID,
                     'type_name' => $row->victim->ship->typeName,
-                ]);
+                ])->render();
             })
             ->editColumn('detail.solar_system.name', function ($row) {
                 return view('web::partials.system', [
                     'system' => $row->detail->solar_system->name,
                     'security' => $row->detail->solar_system->security,
-                ]);
+                ])->render();
             })
             ->editColumn('victim.character.name', function ($row) {
-                return view('web::common.killmails.entity', ['entity' => $row->victim]);
+                return view('web::common.killmails.entity', ['entity' => $row->victim])->render();
             })
             ->addColumn('killer', function ($row) {
                 $killer = $row->attackers->where('final_blow', true)->first();
@@ -67,7 +67,7 @@ abstract class AbstractKillMailDataTable extends DataTable
                 if (is_null($killer))
                     return '';
 
-                return view('web::common.killmails.entity', ['entity' => $killer]);
+                return view('web::common.killmails.entity', ['entity' => $killer])->render();
             })
             ->filterColumn('victim.character.name', function ($query, $keyword) {
                 $query->whereHas('victim.character', function ($sub_query) use ($keyword) {
@@ -99,6 +99,10 @@ abstract class AbstractKillMailDataTable extends DataTable
                     });
                 });
             })
+            ->rawColumns([
+                'action', 'detail.killmail_time', 'victim.ship.typeName', 'detail.solar_system.name',
+                'victim.character.name', 'killer',
+            ])
             ->make(true);
     }
 

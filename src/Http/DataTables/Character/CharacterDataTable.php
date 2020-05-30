@@ -41,23 +41,26 @@ class CharacterDataTable extends DataTable
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('name', function ($row) {
-                return view('web::partials.character', ['character' => $row]);
+                return view('web::partials.character', ['character' => $row])->render();
             })
             ->editColumn('affiliation.corporation.name', function ($row) {
-                return view('web::partials.corporation', ['corporation' => $row->affiliation->corporation]);
+                return view('web::partials.corporation', ['corporation' => $row->affiliation->corporation])->render();
             })
             ->editColumn('affiliation.alliance.name', function ($row) {
                 if (! is_null($row->affiliation->alliance_id))
-                    return view('web::partials.alliance', ['alliance' => $row->affiliation->alliance]);
+                    return view('web::partials.alliance', ['alliance' => $row->affiliation->alliance])->render();
 
                 return '';
             })
             ->editColumn('affiliation.faction.name', function ($row) {
                 if (! is_null($row->affiliation->faction_id))
-                    return view('web::partials.faction', ['faction' => $row->affiliation->faction]);
+                    return view('web::partials.faction', ['faction' => $row->affiliation->faction])->render();
 
                 return '';
             })
+            ->rawColumns([
+                'name', 'affiliation.corporation.name', 'affiliation.alliance.name', 'affiliation.faction.name',
+            ])
             ->make(true);
     }
 

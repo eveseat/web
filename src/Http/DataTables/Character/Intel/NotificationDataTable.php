@@ -41,24 +41,24 @@ class NotificationDataTable extends DataTable
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('timestamp', function ($row) {
-                return view('web::partials.date', ['datetime' => $row->timestamp]);
+                return view('web::partials.date', ['datetime' => $row->timestamp])->render();
             })
             ->editColumn('type', function ($row) {
-                return view('web::character.notification', compact('row'));
+                return view('web::character.notification', compact('row'))->render();
             })
             ->editColumn('sender.name', function ($row) {
                 switch ($row->sender->category) {
                     case 'alliance':
-                        return view('web::partials.alliance', ['alliance' => $row->sender]);
+                        return view('web::partials.alliance', ['alliance' => $row->sender])->render();
                     case 'corporation':
-                        return view('web::partials.corporation', ['corporation' => $row->sender]);
+                        return view('web::partials.corporation', ['corporation' => $row->sender])->render();
                     case 'character':
-                        return view('web::partials.character', ['character' => $row->sender]);
+                        return view('web::partials.character', ['character' => $row->sender])->render();
                 }
 
                 return $row->sender->name;
             })
-            ->rawColumns(['timestamp', 'sender', 'type'])
+            ->rawColumns(['timestamp', 'type', 'sender.name'])
             ->make(true);
     }
 

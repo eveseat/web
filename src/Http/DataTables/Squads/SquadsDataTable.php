@@ -42,13 +42,13 @@ class SquadsDataTable extends DataTable
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->addColumn('is_candidate', function ($row) {
-                return view('web::squads.partials.yes_no', ['value' => $row->isCandidate()]);
+                return view('web::squads.partials.yes_no', ['value' => $row->isCandidate()])->render();
             })
             ->addColumn('is_member', function ($row) {
-                return view('web::squads.partials.yes_no', ['value' => $row->isMember()]);
+                return view('web::squads.partials.yes_no', ['value' => $row->isMember()])->render();
             })
             ->addColumn('is_moderator', function ($row) {
-                return view('web::squads.partials.yes_no', ['value' => $row->isModerator()]);
+                return view('web::squads.partials.yes_no', ['value' => $row->isModerator()])->render();
             })
             ->editColumn('name', function ($row) {
                 return $row->name;
@@ -57,10 +57,10 @@ class SquadsDataTable extends DataTable
                 return Str::limit(strip_tags($row->description));
             })
             ->editColumn('type', function ($row) {
-                return view('web::squads.partials.type', compact('row'));
+                return view('web::squads.partials.type', compact('row'))->render();
             })
             ->editColumn('is_moderated', function ($row) {
-                return view('web::squads.partials.yes_no', ['value' => $row->is_moderated]);
+                return view('web::squads.partials.yes_no', ['value' => $row->is_moderated])->render();
             })
             ->editColumn('members', function ($row) {
                 return $row->members->count();
@@ -69,7 +69,7 @@ class SquadsDataTable extends DataTable
                 return $row->moderators->count();
             })
             ->editColumn('action', function ($row) {
-                return view('web::squads.buttons.squads.action', compact('row'));
+                return view('web::squads.buttons.squads.action', compact('row'))->render();
             })
             ->orderColumn('members', function ($query, $order) {
                 $query->select('id', 'name', 'description', 'type', 'is_moderated')
@@ -83,6 +83,7 @@ class SquadsDataTable extends DataTable
                     ->orderBy(DB::raw('COUNT(squad_id)'), $order)
                     ->groupBy('id', 'name', 'description', 'type', 'is_moderated');
             })
+            ->rawColumns(['is_candidate', 'is_member', 'is_moderator', 'is_moderated', 'action'])
             ->make(true);
     }
 

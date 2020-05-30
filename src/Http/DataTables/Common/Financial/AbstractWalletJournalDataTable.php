@@ -41,7 +41,7 @@ abstract class AbstractWalletJournalDataTable extends DataTable
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('date', function ($row) {
-                return view('web::partials.date', ['datetime' => $row->date]);
+                return view('web::partials.date', ['datetime' => $row->date])->render();
             })
             ->editColumn('ref_type', function ($row) {
                 return trans(sprintf('web::wallet.%s', $row->ref_type));
@@ -55,11 +55,11 @@ abstract class AbstractWalletJournalDataTable extends DataTable
             ->editColumn('first_party.name', function ($row) {
                 switch ($row->first_party->category) {
                     case 'alliance':
-                        return view('web::partials.alliance', ['alliance' => $row->first_party]);
+                        return view('web::partials.alliance', ['alliance' => $row->first_party])->render();
                     case 'corporation':
-                        return view('web::partials.corporation', ['corporation' => $row->first_party]);
+                        return view('web::partials.corporation', ['corporation' => $row->first_party])->render();
                     case 'character':
-                        return view('web::partials.character', ['character' => $row->first_party]);
+                        return view('web::partials.character', ['character' => $row->first_party])->render();
                     default:
                         return '';
                 }
@@ -67,11 +67,11 @@ abstract class AbstractWalletJournalDataTable extends DataTable
             ->editColumn('second_party.name', function ($row) {
                 switch ($row->second_party->category) {
                     case 'alliance':
-                        return view('web::partials.alliance', ['alliance' => $row->second_party]);
+                        return view('web::partials.alliance', ['alliance' => $row->second_party])->render();
                     case 'corporation':
-                        return view('web::partials.corporation', ['corporation' => $row->second_party]);
+                        return view('web::partials.corporation', ['corporation' => $row->second_party])->render();
                     case 'character':
-                        return view('web::partials.character', ['character' => $row->second_party]);
+                        return view('web::partials.character', ['character' => $row->second_party])->render();
                     default:
                         return '';
                 }
@@ -85,6 +85,7 @@ abstract class AbstractWalletJournalDataTable extends DataTable
 
                 $query->whereIn('ref_type', $ref_types);
             })
+            ->rawColumns(['date', 'first_party.name', 'second_party.name'])
             ->make(true);
     }
 
