@@ -166,13 +166,32 @@
             <div class="row">
 
               <div class="col-md-6">
-                <ul class="list-unstyled">
-                  <li>Charisma: {{ $character->pilot_attributes->charisma ?:! 0 }}</li>
-                  <li>Intelligence: {{ $character->pilot_attributes->intelligence ?: 0 }}</li>
-                  <li>Memory: {{ $character->pilot_attributes->memory ?: 0 }}</li>
-                  <li>Perception: {{ $character->pilot_attributes->perception ?: 0 }}</li>
-                  <li>Willpower: {{ $character->pilot_attributes->willpower ?: 0 }}</li>
-                </ul>
+                <dl class="row">
+                  <dt class="col-10">Perception</dt>
+                  <dd class="col-2">
+                    <span class="badge badge-success">{{ $character->pilot_attributes->perception ?: 0 }}</span>
+                  </dd>
+
+                  <dt class="col-10">Memory</dt>
+                  <dd class="col-2">
+                    <span class="badge bg-purple">{{ $character->pilot_attributes->memory ?: 0 }}</span>
+                  </dd>
+
+                  <dt class="col-10">Willpower</dt>
+                  <dd class="col-2">
+                    <span class="badge badge-danger">{{ $character->pilot_attributes->willpower ?: 0 }}</span>
+                  </dd>
+
+                  <dt class="col-10">Intelligence</dt>
+                  <dd class="col-2">
+                    <span class="badge badge-info">{{ $character->pilot_attributes->intelligence ?: 0 }}</span>
+                  </dd>
+
+                  <dt class="col-10">Charisma</dt>
+                  <dd class="col-2">
+                    <span class="badge badge-warning">{{ $character->pilot_attributes->charisma ?: 0 }}</span>
+                  </dd>
+                </dl>
               </div>
 
               <div class="col-md-6">
