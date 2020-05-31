@@ -38,7 +38,9 @@ class MiningDataTable extends AbstractMiningDataTable
      */
     public function ajax()
     {
-        return $this->data()->make(true);
+        return $this->data()
+            ->rawColumns(['date', 'action', 'solar_system.name', 'type.typeName'])
+            ->make(true);
     }
 
     /**

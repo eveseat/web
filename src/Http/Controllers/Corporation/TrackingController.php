@@ -71,19 +71,19 @@ class TrackingController extends Controller
                 if(is_null(optional($row)->refresh_token))
                     return '';
 
-                return view('web::partials.character', ['character' => $row->refresh_token->user->main_character]);
+                return view('web::partials.character', ['character' => $row->refresh_token->user->main_character])->render();
             })
             ->editColumn('character.name', function ($row) {
-                return view('web::partials.character', ['character' => $row->character]);
+                return view('web::partials.character', ['character' => $row->character])->render();
             })
             ->addColumn('location', function ($row) {
-                return view('web::corporation.partials.location', compact('row'));
+                return view('web::corporation.partials.location', compact('row'))->render();
             })
             ->editColumn('ship.typeName', function ($row) {
                 if(is_null(optional($row)->ship))
                     return '';
 
-                return view('web::partials.type', ['type_id' => $row->ship->typeID, 'type_name' => $row->ship->typeName]);
+                return view('web::partials.type', ['type_id' => $row->ship->typeID, 'type_name' => $row->ship->typeName])->render();
             })
             ->addColumn('refresh_token_status', function ($row) {
 
@@ -92,7 +92,7 @@ class TrackingController extends Controller
                 if(! is_null(optional($row)->refresh_token))
                     $refresh_token = true;
 
-                return view('web::corporation.partials.refresh-token', compact('refresh_token'));
+                return view('web::corporation.partials.refresh-token', compact('refresh_token'))->render();
             })
             ->filterColumn('location', function ($query, $keyword) {
 
@@ -113,7 +113,10 @@ class TrackingController extends Controller
                 $query->whereIn('location_id', array_merge($system_ids->toArray(), $station_ids->toArray(), $structure_ids->toArray()));
 
             })
-            ->rawColumns(['refresh_token_status', 'location'])
+            ->rawColumns([
+                'refresh_token.user.main_character.name', 'character.name', 'location',
+                'ship.typeName', 'refresh_token_status',
+            ])
             ->make(true);
 
     }
