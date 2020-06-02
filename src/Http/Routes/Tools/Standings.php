@@ -25,45 +25,36 @@ Route::group([
     'middleware' => 'can:global.standing_builder',
 ], function () {
 
-    Route::get('/', [
-        'as'   => 'tools.standings',
-        'uses' => 'StandingsController@getAvailableProfiles',
-    ]);
+    Route::get('/')
+        ->name('tools.standings')
+        ->uses('StandingsController@getAvailableProfiles');
 
-    Route::post('/', [
-        'as'   => 'tools.standings.new',
-        'uses' => 'StandingsController@postNewStanding',
-    ]);
+    Route::post('/')
+        ->name('tools.standings.new')
+        ->uses('StandingsController@postNewStanding');
 
-    Route::get('/delete/{profile_id}', [
-        'as'   => 'tools.standings.delete',
-        'uses' => 'StandingsController@getDeleteStandingsProfile',
-    ]);
+    Route::get('/delete/{profile_id}')
+        ->name('tools.standings.delete')
+        ->uses('StandingsController@getDeleteStandingsProfile');
 
-    Route::get('/edit/{id}', [
-        'as'   => 'tools.standings.edit',
-        'uses' => 'StandingsController@getStandingEdit',
-    ]);
+    Route::get('/edit/{id}')
+        ->name('tools.standings.edit')
+        ->uses('StandingsController@getStandingEdit');
 
     // Ajax Search
-    Route::post('/ajax/element', [
-        'as'   => 'tools.standings.ajax.element',
-        'uses' => 'StandingsController@getStandingsAjaxElementName',
-    ]);
+    Route::post('/ajax/element')
+        ->name('tools.standings.ajax.element')
+        ->uses('StandingsController@getStandingsAjaxElementName');
 
-    Route::post('/edit/add-element', [
-        'as'   => 'tools.standings.edit.addelement',
-        'uses' => 'StandingsController@postAddElementToStanding',
-    ]);
+    Route::post('/edit/add-element')
+        ->name('tools.standings.edit.addelement')
+        ->uses('StandingsController@postAddElementToStanding');
 
-    Route::post('/edit/add-element/fromcorpchar', [
-        'as'   => 'tools.standings.edit.addelement.fromcorpchar',
-        'uses' => 'StandingsController@postAddStandingsFromCorpOrChar',
-    ]);
+    Route::post('/edit/add-element/fromcorpchar')
+        ->name('tools.standings.edit.addelement.fromcorpchar')
+        ->uses('StandingsController@postAddStandingsFromCorpOrChar');
 
-    Route::get('/edit/remove/{element_id}/{profile_id}', [
-        'as'   => 'tools.standings.edit.remove',
-        'uses' => 'StandingsController@getRemoveElementFromProfile',
-    ]);
-
+    Route::get('/edit/remove/{entity_id}/{profile_id}')
+        ->name('tools.standings.edit.remove')
+        ->uses('StandingsController@getRemoveElementFromProfile');
 });

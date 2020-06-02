@@ -20,37 +20,31 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\Validation;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class StandingsElementAdd extends FormRequest
+/**
+ * Class RenameElementIDToEntityIDIntoStandingsProfileStandingsTable.
+ */
+class RenameElementIDToEntityIDIntoStandingsProfileStandingsTable extends Migration
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * Run the migrations.
      *
-     * @return bool
+     * @return void
      */
-    public function authorize()
+    public function up()
     {
-
-        return true;
+        DB::statement('ALTER TABLE standings_profile_standings CHANGE elementID entity_id bigint UNSIGNED NOT NULL');
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Reverse the migrations.
      *
-     * @return array
+     * @return void
      */
-    public function rules()
+    public function down()
     {
-
-        return [
-            'id'        => 'required|exists:standings_profiles,id',
-            'entity_id' => 'required|numeric',
-            'name'      => 'required|string',
-            'type'      => 'required|in:character,corporation,alliance',
-            'standing'  => 'required|between:-10,10',
-        ];
+        DB::statement('ALTER TABLE standings_profile_standings CHANGE entity_id elementID int');
     }
 }

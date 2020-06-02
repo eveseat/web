@@ -56,13 +56,14 @@
       <form role="form" action="{{ route('tools.standings.edit.addelement') }}" method="post">
         {{ csrf_field() }}
         <input type="hidden" name="id" value="{{ $request->id }}">
+        <input type="hidden" name="name" id="entity_name" value="" />
 
         <div class="box-body">
 
           <div class="form-group row">
             <label for="element-name" class="col-form-label col-md-4">Name</label>
             <div class="col-md-8">
-              <select id="element-name" name="element_id" style="width: 100%;"></select>
+              <select id="element-name" name="entity_id" style="width: 100%;"></select>
             </div>
           </div>
 
@@ -123,23 +124,32 @@
         </thead>
         <tbody>
 
-          @foreach($standing->standings->sortByDesc('standing') as $standing)
+          @foreach($standing->entities->sortByDesc('pivot.standing') as $entity)
 
             <tr class="
-              @if($standing->standing > 0)
+              @if($entity->pivot->standing > 0)
                 table-success
-              @elseif($standing->standing < 0)
+              @elseif($entity->pivot->standing < 0)
                 table-danger
               @endif
             ">
-              <td>{{ ucfirst($standing->type) }}</td>
+              <td>{{ ucfirst($entity->category) }}</td>
               <td>
-                {!! img('auto', '', $standing->elementID, 32, ['class' => 'img-circle eve-icon small-icon']) !!}
-                <span class="id-to-name" data-id="{{ $standing->elementID }}">{{ trans('web::seat.unknown') }}</span>
+                @switch($entity->category)
+                  @case('character')
+                    @include('web::partials.character', ['character' => $entity])
+                    @break
+                  @case('corporation')
+                    @include('web::partials.corporation', ['corporation' => $entity])
+                    @break
+                  @case('alliance')
+                    @include('web::partials.alliance', ['alliance' => $entity])
+                    @break
+                @endswitch
               </td>
-              <td>{!! view('web::partials.standing', ['standing' => $standing->standing]) !!}</td>
+              <td>{!! view('web::partials.standing', ['standing' => $entity->pivot->standing]) !!}</td>
               <td>
-                <a href="{{ route('tools.standings.edit.remove', ['element_id' => $standing->id, 'profile_id' => $request->id]) }}"
+                <a href="{{ route('tools.standings.edit.remove', ['entity_id' => $entity->entity_id, 'profile_id' => $request->id]) }}"
                    type="button" class="btn btn-danger btn-sm">
                   <i class="fas fa-trash-alt"></i>
                   {{ trans('web::seat.delete') }}
@@ -176,6 +186,8 @@
           }
       }
     }
+  }).on('select2:select', function (e) {
+      $('#entity_name').val(e.params.data.text ?? '');
   });
 
   $("select#element-type," + "select#element-standing").select2();
