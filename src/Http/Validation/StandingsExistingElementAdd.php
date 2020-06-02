@@ -64,43 +64,123 @@ class StandingsExistingElementAdd extends FormRequest
      * Query the database for characters, keeping filters,
      * permissions and affiliations in mind.
      *
-     * @param bool $get
-     *
-     * @return mixed
+     * @return \Illuminate\Support\Collection
      */
-    private function getAllCharactersWithAffiliations(bool $get = true)
+    private function getAllCharactersWithAffiliations()
     {
-        // Start the character information query
-        $characters = CharacterInfo::authorized('character.sheet')
-            ->with('affiliation.corporation', 'affiliation.alliance')
-            ->select('character_infos.*');
-
-        if ($get)
-            return $characters
-                ->orderBy('name')
-                ->get();
-
-        return $characters;
+        return $this->addCharacterPermissionScope(CharacterInfo::select('character_id'), 'character.sheet')
+            ->get();
     }
 
     /**
      * Return the corporations for which a user has access.
      *
-     * @param bool $get
-     *
-     * @return mixed
+     * @return \Illuminate\Support\Collection
      */
-    private function getAllCorporationsWithAffiliationsAndFilters(bool $get = true)
+    private function getAllCorporationsWithAffiliationsAndFilters()
     {
-        // Start a fresh query
-        $corporations = CorporationInfo::authorized('corporation.sheet')
-            ->with('ceo', 'alliance')
-            ->select('corporation_infos.*');
+        return $this->addCorporationPermissionScope(CorporationInfo::select('corporation_id'), 'corporation.summary')
+            ->get();
+    }
 
-        if ($get)
-            return $corporations->orderBy('name', 'desc')
-                ->get();
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $ability
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    private function addCharacterPermissionScope($query, string $ability)
+    {
+        if (auth()->user()->isAdmin())
+            return $query;
 
-        return $corporations;
+        // collect metadata related to required permission
+        $permissions = auth()->user()->roles()->with('permissions')->get()
+            ->pluck('permissions')
+            ->flatten()
+            ->filter(function ($permission) use ($ability) {
+                return $permission->title == $ability;
+            });
+
+        // in case at least one permission is granted without restrictions, return all
+        if ($permissions->filter(function ($permission) { return ! $permission->hasFilters(); })->isNotEmpty())
+            return $query;
+
+        // extract entity ids and group by entity type
+        $map = $permissions->map(function ($permission) {
+            $filters = json_decode($permission->pivot->filters);
+
+            return [
+                'characters'   => collect($filters->character ?? [])->pluck('id')->toArray(),
+                'corporations' => collect($filters->corporation ?? [])->pluck('id')->toArray(),
+                'alliances'    => collect($filters->alliance ?? [])->pluck('id')->toArray(),
+            ];
+        });
+
+        // collect all corporations ID
+        return $query->where(function ($sub_query) use ($map) {
+            $character_ids = array_merge(
+                auth()->user()->associatedCharacterIds(),
+                $map->pluck('characters')->flatten()->toArray(),
+            );
+
+            $sub_query->whereHas('affiliation', function ($affiliation) use ($map) {
+                $affiliation->whereIn('corporation_id', $map->pluck('corporations')->flatten()->toArray());
+                $affiliation->orWhereIn('alliance_id', $map->pluck('alliances')->flatten()->toArray());
+            });
+
+            $sub_query->orWhereIn('character_id', $character_ids);
+        });
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $ability
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    private function addCorporationPermissionScope($query, string $ability)
+    {
+        if (auth()->user()->isAdmin())
+            return $query;
+
+        // collect metadata related to required permission
+        $permissions = auth()->user()->roles()->with('permissions')->get()
+            ->pluck('permissions')
+            ->flatten()
+            ->filter(function ($permission) use ($ability) {
+                return $permission->title == $ability;
+            });
+
+        // in case at least one permission is granted without restrictions, return all
+        if ($permissions->filter(function ($permission) { return ! $permission->hasFilters(); })->isNotEmpty())
+            return $query;
+
+        // extract entity ids and group by entity type
+        $map = $permissions->map(function ($permission) {
+            $filters = json_decode($permission->pivot->filters);
+
+            return [
+                'characters'   => collect($filters->character ?? [])->pluck('id')->toArray(),
+                'corporations' => collect($filters->corporation ?? [])->pluck('id')->toArray(),
+                'alliances'    => collect($filters->alliance ?? [])->pluck('id')->toArray(),
+            ];
+        });
+
+        // collect at least user owned characters
+        $owned_range = auth()->user()->associatedCharacterIds();
+
+        // collect all characters ID
+        $characters_range = array_merge($owned_range, $map->pluck('characters')->flatten()->toArray());
+
+        // collect all corporations ID
+        $corporations_range = $map->pluck('corporations')->flatten()->toArray();
+
+        // collect all alliances ID
+        $alliances_range = $map->pluck('alliances')->flatten()->toArray();
+
+        return $query->where(function ($sub_query) use ($characters_range, $corporations_range, $alliances_range) {
+            return $sub_query->whereIn('ceo_id', $characters_range)
+                ->orWhereIn('alliance_id', $alliances_range)
+                ->orWhereIn('corporation_id', $corporations_range);
+        });
     }
 }
