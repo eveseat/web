@@ -61,7 +61,7 @@
 
             <tr>
               <td>{{ $standing->name }}</td>
-              <td>{{ $standing->standings->count() }}</td>
+              <td>{{ $standing->entities->count() }}</td>
               <td>
                 <div class="btn-group btn-group-sm float-right">
                   <a href="{{ route('tools.standings.edit', ['id' => $standing->id]) }}" type="button"

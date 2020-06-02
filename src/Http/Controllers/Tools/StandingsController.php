@@ -26,16 +26,14 @@ use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Contacts\CharacterContact;
 use Seat\Eveapi\Models\Contacts\CorporationContact;
-use Seat\Eveapi\Models\Corporation\CorporationInfo;
+use Seat\Eveapi\Models\Universe\UniverseName;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\StandingsBuilder;
 use Seat\Web\Http\Validation\StandingsElementAdd;
 use Seat\Web\Http\Validation\StandingsExistingElementAdd;
 use Seat\Web\Models\StandingsProfile;
-use Seat\Web\Models\StandingsProfileStanding;
 
 /**
  * Class StandingsController.
@@ -43,10 +41,7 @@ use Seat\Web\Models\StandingsProfileStanding;
  */
 class StandingsController extends Controller
 {
-    /**
-     * @var string
-     */
-    protected $cache_prefix = 'name_id:';
+    const ENTITY_CACHE_PREFIX = 'name_id';
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -54,8 +49,7 @@ class StandingsController extends Controller
     public function getAvailableProfiles()
     {
 
-        $standings = StandingsProfile::with('standings')
-            ->get();
+        $standings = StandingsProfile::all();
 
         return view('web::tools.standings.list', compact('standings'));
 
@@ -101,16 +95,11 @@ class StandingsController extends Controller
     public function getStandingEdit(int $id)
     {
 
-        $standing = StandingsProfile::with('standings')
-            ->where('id', $id)
-            ->first();
-
-        // TODO : switch to scope
-        $characters = $this->getAllCharactersWithAffiliations();
-        $corporations = $this->getAllCorporationsWithAffiliationsAndFilters();
+        $standing = StandingsProfile::with('entities')
+            ->find($id);
 
         return view('web::tools.standings.edit',
-            compact('standing', 'characters', 'corporations'));
+            compact('standing'));
     }
 
     /**
@@ -150,7 +139,7 @@ class StandingsController extends Controller
 
                         // Next, filter the ids we have in the cache, setting
                         // the appropriate response values as we go along.
-                        if ($cached_entry = cache('name_id:' . $id)) {
+                        if ($cached_entry = cache(sprintf('%s:%d', self::ENTITY_CACHE_PREFIX, $id))) {
 
                             $response['results'][] = [
                                 'id'   => $id,
@@ -174,7 +163,9 @@ class StandingsController extends Controller
                         collect($names)->each(function ($name) use (&$response) {
 
                             // Cache the name resolution for this id for a long time.
-                            cache(['name_id:' . $name->id => $name->name], carbon()->addCentury());
+                            cache(
+                                [sprintf('%s:%d', self::ENTITY_CACHE_PREFIX, $name->id) => $name->name],
+                                now()->addHour());
 
                             $response['results'][] = [
                                 'id'   => $name->id,
@@ -200,22 +191,26 @@ class StandingsController extends Controller
     public function postAddElementToStanding(StandingsElementAdd $request)
     {
 
-        $element_id = $request->input('element_id');
-        $type = $request->input('type');
         $standing = $request->input('standing');
+        $entity_id = $request->input('entity_id');
+        $entity_name = $request->input('name');
+        $entity_type = $request->input('type');
 
         // Ensure that the element we got is one what we managed
         // to resolve earlier.
-        if (! cache($this->cache_prefix . $element_id))
+        if (! cache(sprintf('%s:%d', self::ENTITY_CACHE_PREFIX, $entity_id)))
             return redirect()->back()
-                ->with('error', 'Invalid Element ID');
+                ->with('error', 'Invalid entity ID');
+
+        UniverseName::firstOrCreate([
+            'entity_id' => $entity_id,
+        ], [
+            'name'     => $entity_name,
+            'category' => $entity_type,
+        ]);
 
         $standings_profile = StandingsProfile::find($request->input('id'));
-        $standings_profile->standings()->save(new StandingsProfileStanding([
-            'type'      => $type,
-            'elementID' => $element_id,
-            'standing'  => $standing,
-        ]));
+        $standings_profile->entities()->attach($entity_id, ['standing' => $standing]);
 
         return redirect()->back()
             ->with('success', 'Element Added to Profile!');
@@ -236,42 +231,14 @@ class StandingsController extends Controller
         // Character Contacts
         if ($request->filled('character')) {
             foreach ($this->getCharacterContacts(collect($request->input('character')))->get() as $contact) {
-
-                // Prepare the standings entry.
-                $standing = StandingsProfileStanding::firstOrNew([
-                    'standings_profile_id' => $request->input('id'),
-                    'elementID'            => $contact->contact_id,
-                    'type'                 => $contact->contact_type,
-                ])->fill([
-
-                    // Update the standing in case its different to an
-                    // existing one.
-                    'standing' => $contact->standing,
-                ]);
-
-                // Save the standings entry to the profile.
-                $standings_profile->standings()->save($standing);
+                $standings_profile->entities()->attach($contact->contact_id, ['standing' => $contact->standing]);
             }
         }
 
         // Corporation Contacts
         if ($request->filled('corporation')) {
             foreach ($this->getCorporationContacts($request->input('corporation')) as $contact) {
-
-                // Prepare the standings entry.
-                $standing = StandingsProfileStanding::firstOrNew([
-                    'standings_profile_id' => $request->input('id'),
-                    'elementID'            => $contact->contact_id,
-                    'type'                 => $contact->contact_type,
-                ])->fill([
-
-                    // Update the standing incase its different to an
-                    // existing one.
-                    'standing' => $contact->standing,
-                ]);
-
-                // Save the standings entry to the profile.
-                $standings_profile->standings()->save($standing);
+                $standings_profile->entities()->attach($contact->contact_id, ['standing' => $contact->standing]);
             }
         }
 
@@ -291,7 +258,7 @@ class StandingsController extends Controller
 
         // Get the standings profile that will be updated.
         $standings_profile = StandingsProfile::find($profile_id);
-        $standings_profile->standings()->find($element_id)->delete();
+        $standings_profile->entities()->detach($element_id);
 
         return redirect()->back()
             ->with('success', 'Standing removed!');
@@ -330,49 +297,5 @@ class StandingsController extends Controller
         return CorporationContact::where('corporation_id', $corporation_id)
             ->orderBy('standing', 'desc')
             ->get();
-    }
-
-    /**
-     * Query the database for characters, keeping filters,
-     * permissions and affiliations in mind.
-     *
-     * @param bool $get
-     *
-     * @return mixed
-     */
-    private function getAllCharactersWithAffiliations(bool $get = true)
-    {
-        // Start the character information query
-        $characters = CharacterInfo::authorized('character.sheet')
-            ->with('affiliation.corporation', 'affiliation.alliance')
-            ->select('character_infos.*');
-
-        if ($get)
-            return $characters
-                ->orderBy('name')
-                ->get();
-
-        return $characters;
-    }
-
-    /**
-     * Return the corporations for which a user has access.
-     *
-     * @param bool $get
-     *
-     * @return mixed
-     */
-    private function getAllCorporationsWithAffiliationsAndFilters(bool $get = true)
-    {
-        // Start a fresh query
-        $corporations = CorporationInfo::authorized('corporation.sheet')
-            ->with('ceo', 'alliance')
-            ->select('corporation_infos.*');
-
-        if ($get)
-            return $corporations->orderBy('name', 'desc')
-                ->get();
-
-        return $corporations;
     }
 }

@@ -20,34 +20,36 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Models;
-
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 /**
- * Class StandingsProfileStanding.
- * @package Seat\Web\Models
+ * Class RenameElementIDToEntityIDIntoStandingsProfileStandingsTable.
  */
-class StandingsProfileStanding extends Model
+class DropTimestampsFromStandingsProfileStandingsTable extends Migration
 {
     /**
-     * @var string
+     * Run the migrations.
+     *
+     * @return void
      */
-    protected $table = 'standings_profile_standings';
-
-    /**
-     * @var array
-     */
-    protected $fillable = [
-        'standings_profile_id', 'type', 'elementID', 'standing',
-    ];
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function profile()
+    public function up()
     {
+        Schema::table('standings_profile_standings', function (Blueprint $table) {
+            $table->dropTimestamps();
+        });
+    }
 
-        return $this->belongsTo(StandingsProfile::class);
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('standings_profile_standings', function (Blueprint $table) {
+            $table->timestamps();
+        });
     }
 }

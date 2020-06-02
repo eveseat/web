@@ -241,8 +241,7 @@ class IntelController extends Controller
      */
     public function getStandingsComparison(CharacterInfo $character)
     {
-        $profiles = StandingsProfile::with('standings')
-            ->get();
+        $profiles = StandingsProfile::all();
 
         return view('web::character.intel.standingscompare', compact('character', 'profiles'));
     }
@@ -622,9 +621,9 @@ class IntelController extends Controller
                 'character_affiliations.corporation_id',
                 'character_affiliations.alliance_id',
                 'character_affiliations.faction_id',
-                'standings_profile_standings.elementID as standing_match_on',
-                'standings_profile_standings.type as standing_type',
-                'standings_profile_standings.standing as standing'
+                'standings_profile_standings.standing',
+                'universe_names.category as standing_type',
+                'universe_names.entity_id as standing_match_on'
             )->leftJoin('character_wallet_journals', function ($join) {
 
                 $join->on(
@@ -640,24 +639,27 @@ class IntelController extends Controller
             })->join('standings_profile_standings', function ($join) {
 
                 $join->on(
-                    'standings_profile_standings.elementID', '=',
+                    'standings_profile_standings.entity_id', '=',
                     'character_affiliations.character_id'
                 );
 
                 $join->orOn(
-                    'standings_profile_standings.elementID', '=',
+                    'standings_profile_standings.entity_id', '=',
                     'character_affiliations.corporation_id'
                 );
 
                 $join->orOn(
-                    'standings_profile_standings.elementID', '=',
+                    'standings_profile_standings.entity_id', '=',
                     'character_affiliations.alliance_id'
                 );
 
             })
+            ->join('universe_names', function ($join) {
+                $join->on('standings_profile_standings.entity_id', '=', 'universe_names.entity_id');
+            })
             ->where('character_wallet_journals.character_id', $character_id)
             ->where('standings_profile_standings.standings_profile_id', $profile_id)
-            ->groupBy('elementID', 'character_id', 'corporation_id', 'alliance_id', 'faction_id', 'standing', 'type');
+            ->groupBy('universe_names.entity_id', 'character_id', 'corporation_id', 'alliance_id', 'faction_id', 'standing', 'category');
 
     }
 
