@@ -88,7 +88,7 @@ class CharacterScope implements DataTableScope
             ->flatten()
             ->filter(function ($permission) {
                 if (empty($this->ability))
-                    return strpos('character.', $permission->title) === 0;
+                    return strpos($permission->title, 'character.') === 0;
 
                 return $permission->title == $this->ability;
             });
