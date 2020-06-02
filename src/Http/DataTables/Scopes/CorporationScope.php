@@ -88,7 +88,7 @@ class CorporationScope implements DataTableScope
             ->flatten()
             ->filter(function ($permission) {
                 if (empty($this->ability))
-                    return strpos('corporation.', $permission->title) === 0;
+                    return strpos($permission->title, 'corporation.') === 0;
 
                 return $permission->title == $this->ability;
             });
