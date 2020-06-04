@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
+ * Copyright (C) 2015 to 2020 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -511,7 +511,7 @@ class IntelController extends Controller
      *
      * @return \Illuminate\Support\Collection
      */
-    private function getUniverseNameResolved(int $character_id, int $first_party_id, int $second_party_id = null) : Collection
+    private function getUniverseNameResolved(int $character_id, int $first_party_id, int $second_party_id = null): Collection
     {
         // f.e. market escrow -> self referential payment.
         if($first_party_id === $second_party_id)
@@ -569,7 +569,7 @@ class IntelController extends Controller
      *
      * @return string
      */
-    private function getIntelView(string $type, int $character_id, int $first_other_id, int $second_other_id = null) : string
+    private function getIntelView(string $type, int $character_id, int $first_other_id, int $second_other_id = null): string
     {
         $universe_name = $this->getUniverseNameResolved($character_id, $first_other_id, $second_other_id);
 
@@ -593,7 +593,7 @@ class IntelController extends Controller
      *
      * @return string
      */
-    private function getCharacterIntelView(Collection $universe_name, int $character_id) : string
+    private function getCharacterIntelView(Collection $universe_name, int $character_id): string
     {
         if ($universe_name->has('unknown_id'))
             return $this->getUnknownIntelView($universe_name);
@@ -613,7 +613,7 @@ class IntelController extends Controller
      *
      * @return string
      */
-    private function getCorporationIntelView(Collection $universe_name, int $character_id) : string
+    private function getCorporationIntelView(Collection $universe_name, int $character_id): string
     {
         if ($universe_name->has('unknown_id'))
             return $this->getUnknownIntelView($universe_name);
@@ -633,7 +633,7 @@ class IntelController extends Controller
      *
      * @return string
      */
-    private function getAllianceIntelView(Collection $universe_name, int $character_id) : string
+    private function getAllianceIntelView(Collection $universe_name, int $character_id): string
     {
         if ($universe_name->has('unknown_id'))
             return $this->getUnknownIntelView($universe_name);
@@ -651,7 +651,7 @@ class IntelController extends Controller
      *
      * @return string
      */
-    private function getUnknownIntelView(Collection $universe_name) : string
+    private function getUnknownIntelView(Collection $universe_name): string
     {
 
         return view('web::partials.unknown', [

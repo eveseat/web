@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015, 2016, 2017, 2018, 2019  Leon Jacobs
+ * Copyright (C) 2015 to 2020 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ class MiningLedgerController extends Controller
         return view('web::character.mining-ledger');
     }
 
-    public function getMiningLedger(int $character_id) : JsonResponse
+    public function getMiningLedger(int $character_id): JsonResponse
     {
         if (! request()->has('all_linked_characters'))
             return abort(500);
