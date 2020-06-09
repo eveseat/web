@@ -56,7 +56,7 @@ Route::prefix('/{squad}')
         // update a squad
         Route::put('/')
             ->name('squads.update')
-            ->uses('SquadsController@udpate')
+            ->uses('SquadsController@update')
             ->middleware('can:squads.edit,squad');
 
         // remove a squad
