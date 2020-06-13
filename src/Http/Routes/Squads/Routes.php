@@ -81,10 +81,10 @@ Route::prefix('/{squad}/members')->group(function () {
         ->middleware('can:squads.manage_members,squad');
 
     // remove member from a squad
-    Route::delete('/{user}')
+    Route::delete('/{member}')
         ->name('squads.members.kick')
         ->uses('MembersController@destroy')
-        ->middleware('can:squads.kick,squad,user');
+        ->middleware('can:squads.kick,squad,member');
 
     // show squad members
     Route::get('/')
