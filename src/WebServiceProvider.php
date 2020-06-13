@@ -114,7 +114,7 @@ class WebServiceProvider extends AbstractSeatPlugin
     /**
      * Include the routes.
      */
-    public function add_routes()
+    private function add_routes()
     {
         $this->loadRoutesFrom(__DIR__ . '/Http/routes.php');
     }
@@ -123,7 +123,7 @@ class WebServiceProvider extends AbstractSeatPlugin
      * Set the paths for migrations and assets that
      * should be published to the main application.
      */
-    public function add_publications()
+    private function add_publications()
     {
 
         $this->publishes([
@@ -149,12 +149,17 @@ class WebServiceProvider extends AbstractSeatPlugin
             base_path('vendor/components/font-awesome/css/all.min.css') => public_path('web/css/all.min.css'),
             base_path('vendor/components/font-awesome/webfonts')        => public_path('web/webfonts'),
         ], ['public', 'seat']);
+
+        // publish horizon override for queues setup
+        $this->publishes([
+            __DIR__ . '/Config/seat-queues.php' => config_path('seat-queues.php'),
+        ], ['config', 'seat']);
     }
 
     /**
      * Set the path and namespace for the vies.
      */
-    public function add_views()
+    private function add_views()
     {
 
         $this->loadViewsFrom(__DIR__ . '/resources/views', 'web');
@@ -165,7 +170,7 @@ class WebServiceProvider extends AbstractSeatPlugin
      * to make data available in views without
      * repeating any of the code.
      */
-    public function add_view_composers()
+    private function add_view_composers()
     {
 
         // User information view composer
@@ -208,7 +213,7 @@ class WebServiceProvider extends AbstractSeatPlugin
     /**
      * Include the translations and set the namespace.
      */
-    public function add_translations()
+    private function add_translations()
     {
 
         $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'web');
@@ -219,7 +224,7 @@ class WebServiceProvider extends AbstractSeatPlugin
      *
      * @param \Illuminate\Routing\Router $router
      */
-    public function add_middleware(Router $router)
+    private function add_middleware(Router $router)
     {
 
         // Authenticate checks that the session is
@@ -241,7 +246,7 @@ class WebServiceProvider extends AbstractSeatPlugin
      * Register the custom events that may fire for
      * this package.
      */
-    public function add_events()
+    private function add_events()
     {
 
         // Internal Authentication Events
@@ -267,7 +272,7 @@ class WebServiceProvider extends AbstractSeatPlugin
     /**
      * Add custom validators that are not part of Laravel core.
      */
-    public function add_custom_validators()
+    private function add_custom_validators()
     {
 
         Validator::extend('cron', 'Seat\Web\Http\Validation\Custom\Cron@validate');
@@ -279,75 +284,13 @@ class WebServiceProvider extends AbstractSeatPlugin
      * This includes the access rules for the dashboard, as
      * well as the number of workers to use for the job processor.
      */
-    public function configure_horizon()
+    private function configure_horizon()
     {
 
         // Require the queue_manager role to view the dashboard
         Horizon::auth(function () {
             return Gate::allows('global.queue_manager');
         });
-
-        // attempt to parse the QUEUE_BALANCING variable into a boolean
-        $balancing_mode = filter_var(config('seat.config.balancing', false), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
-        // in case the variable cannot be parsed into a boolean, assign the environment value itself
-        if (is_null($balancing_mode))
-            $balancing_mode = 'auto';
-
-        // Configure the workers for SeAT.
-
-        /*
-        |-----------------------------------------------------------------------------------------
-        | Queue Worker Configuration
-        | ----------------------------------------------------------------------------------------
-        | Default queue is used to collect all jobs with no queue specified
-        | High queue is used to collect all jobs which need to be execute as soon as possible
-        | Characters queue is used to collect characters jobs dispatched by the scheduler
-        | Corporations queue is used to collect corporations jobs dispatched by the scheduler
-        | Notifications queue is used to collect notifications jobs
-        */
-
-        $horizon_environment_tpl = [
-            'connection' => 'redis',
-            'queue'      => ['default', 'high', 'characters', 'corporations', 'public', 'notifications'],
-            'balance'    => $balancing_mode,
-            'tries'      => 3,
-            'timeout'    => 900, // 15 minutes
-        ];
-
-        $horizon_environment = $horizon_environment_tpl;
-
-        // adapt queue worker configuration according to auto balancing mode
-        if ($balancing_mode === 'auto') {
-            $horizon_environment['minProcesses'] = 1;
-            $horizon_environment['maxProcesses'] = (int) config('seat.config.workers', $horizon_environment['minProcesses'] * 2);
-        }
-
-        // adapt queue worker configuration according to simple balancing mode
-        if ($balancing_mode === 'simple') {
-            $horizon_environment['processes'] = (int) config('seat.config.workers', count($horizon_environment['queue']));
-        }
-
-        $horizon_environments = [
-            'production' => [
-                'seat-workers' => $horizon_environment,
-            ],
-            'local' => [
-                'seat-workers' => $horizon_environment,
-            ],
-            'production' => [
-                'seat-workers' => [
-                    'connection' => 'redis',
-                    'queue'      => ['high', 'medium', 'low', 'default'],
-                    'balance'    => $balancing_mode,
-                    'processes'  => (int) env(self::QUEUE_BALANCING_WORKERS, 4),
-                    'tries'      => 1,
-                    'timeout'    => 900, // 15 minutes
-                ],
-            ],
-        ];
-
-        // Set the environment configuration.
-        config(['horizon.environments' => $horizon_environments]);
     }
 
     /**
@@ -386,22 +329,32 @@ class WebServiceProvider extends AbstractSeatPlugin
         $this->registerPermissions(__DIR__ . '/Config/Permissions/search.php', 'search');
         $this->registerPermissions(__DIR__ . '/Config/Permissions/moon.php', 'moon');
 
+        // Override horizon environments configuration
+        $this->override_horizon();
+
         // Register any extra services.
         $this->register_services();
+    }
 
+    /**
+     * Override horizon default configuration using custom seat queue settings.
+     */
+    private function override_horizon()
+    {
+        $pool_key = sprintf('horizon.environments.%s', config('app.env', 'local'));
+        config([$pool_key => config('seat-queues')]);
     }
 
     /**
      * Register external services used in this package.
      *
      * Currently this consists of:
-     *  - PragmaRX\Google2FA
      *  - Laravel\Socialite
      *  - Yajra\Datatables
      */
-    public function register_services()
+    private function register_services()
     {
-        // Register the datatables package! Thanks
+        // Register the datatables package!
         //  https://laracasts.com/discuss/channels/laravel/register-service-provider-and-facade-within-service-provider
         $this->app->register('Yajra\DataTables\DataTablesServiceProvider');
         $loader = AliasLoader::getInstance();
