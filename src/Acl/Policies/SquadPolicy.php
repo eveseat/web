@@ -143,20 +143,4 @@ class SquadPolicy
         if ($user->isAdmin())
             return true;
     }
-
-    /**
-     * @param \Seat\Web\Models\User $user
-     * @param $ability
-     * @param $result
-     * @param $arguments
-     * @return \Illuminate\Http\RedirectResponse|void
-     */
-    public function after(User $user, $ability, $result, $arguments)
-    {
-        if (! $result) {
-            $message = sprintf('Request to %s was denied. The permission required is %s', request()->path(), $ability);
-
-            event('security.log', [$message, 'authorization']);
-        }
-    }
 }
