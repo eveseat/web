@@ -148,7 +148,7 @@ class WebServiceProvider extends AbstractSeatPlugin
             // Font Awesome pulled from packagist
             base_path('vendor/components/font-awesome/css/all.min.css') => public_path('web/css/all.min.css'),
             base_path('vendor/components/font-awesome/webfonts')        => public_path('web/webfonts'),
-        ]);
+        ], ['public', 'seat']);
     }
 
     /**
