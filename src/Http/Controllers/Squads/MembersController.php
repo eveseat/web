@@ -99,17 +99,17 @@ class MembersController extends Controller
      * @param \Seat\Web\Models\Squads\Squad $squad
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Squad $squad, User $user)
+    public function destroy(Squad $squad, User $member)
     {
-        $squad->members()->detach($user->id);
+        $squad->members()->detach($member->id);
 
         $message = sprintf('%s has been kicked from squad %s.',
-            $user->name, $squad->name);
+            $member->name, $squad->name);
 
         event('security.log', [$message, 'squads']);
 
         return redirect()->back()
-            ->with('success', sprintf('%s has been kicked from the Squad.', $user->name));
+            ->with('success', sprintf('%s has been kicked from the Squad.', $member->name));
     }
 
     /**

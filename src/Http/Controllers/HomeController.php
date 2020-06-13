@@ -36,6 +36,14 @@ class HomeController extends Controller
     use Stats;
 
     /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function index()
+    {
+        return redirect('home');
+    }
+
+    /**
      * @return \Illuminate\View\View
      * @throws \Seat\Services\Exceptions\SettingException
      */
