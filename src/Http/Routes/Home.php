@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/test', ['uses' => 'HomeController@test']);
+Route::get('/')->uses('HomeController@index');
 
 Route::get('/home', [
     'as'   => 'home',
