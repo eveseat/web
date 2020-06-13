@@ -49,9 +49,9 @@ class SeatController extends Controller
         $packages = $this->getPluginsMetadataList();
 
         // Validate SSO Environment settings
-        if (is_null(config('eveapi.config.eseye_client_id')) or
-            is_null(config('eveapi.config.eseye_client_secret')) or
-            is_null(config('eveapi.config.eseye_client_callback'))
+        if (is_null(config('esi.eseye_client_id')) or
+            is_null(config('esi.eseye_client_secret')) or
+            is_null(config('esi.eseye_client_callback'))
         )
             $warn_sso = true;
         else
