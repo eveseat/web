@@ -25,7 +25,7 @@ namespace Seat\Web\Http\Validation;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class ReassignCharacter
+ * Class ReassignCharacter.
  *
  * @package Seat\Web\Http\Validation
  */
