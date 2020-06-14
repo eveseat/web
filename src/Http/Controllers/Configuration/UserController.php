@@ -24,10 +24,12 @@ namespace Seat\Web\Http\Controllers\Configuration;
 
 use Exception;
 use Illuminate\Http\Request;
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Services\Models\UserSetting;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Configuration\UsersDataTable;
 use Seat\Web\Http\Validation\EditUser;
+use Seat\Web\Http\Validation\ReassignCharacter;
 use Seat\Web\Models\User;
 
 /**
@@ -60,6 +62,34 @@ class UserController extends Controller
 
         return view('web::configuration.users.edit',
             compact('user', 'login_history'));
+    }
+
+    /**
+     * @param \Seat\Web\Http\Validation\ReassignCharacter $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function reassign(ReassignCharacter $request)
+    {
+        $character = CharacterInfo::with('user')->find($request->input('character'));
+        $current_user = $character->user;
+        $target_user = User::find($request->input('user'));
+
+        $token = $character->refresh_token;
+
+        // erase existing link between the character and current user
+        $token->user_id = $target_user->id;
+
+        // spawn a new link between the character and target user
+        $character->refresh_token()->save($token);
+
+        $message = sprintf('Character %s has been transferred from account %s to %s by %s',
+            $character->name, $current_user->name, $target_user->name, auth()->user()->name);
+
+        event('security.log', [$message, 'transfer']);
+
+        return redirect()->back()
+            ->with('success', sprintf('Character %s has been successfully transferred to account %s.',
+                $character->name, $target_user->name));
     }
 
     /**

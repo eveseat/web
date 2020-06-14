@@ -108,6 +108,8 @@
               @include('web::profile.buttons.scopes')
             @endif
 
+            @include('web::configuration.users.buttons.transfer')
+
             @include('web::partials.character', ['character' => $character])
 
           </li>
@@ -118,6 +120,8 @@
     </div>
   </div>
   @endif
+
+  @include('web::configuration.users.modals.transfer.transfer')
 
 @stop
 @section('right')
