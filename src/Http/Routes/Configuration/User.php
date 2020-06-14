@@ -35,6 +35,11 @@ Route::put('/{user_id}', [
     'uses' => 'UserController@update',
 ]);
 
+Route::put('/{user_id}/reassign')
+    ->middleware('can:global.superuser')
+    ->name('configuration.users.reassign')
+    ->uses('UserController@reassign');
+
 Route::delete('/{user_id}', [
     'as'   => 'configuration.users.delete',
     'uses' => 'UserController@delete',
