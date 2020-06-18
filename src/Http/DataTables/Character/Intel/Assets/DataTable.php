@@ -53,6 +53,8 @@ class DataTable extends AbstractAssetDataTable
         'FighterBay', 'FleetHangar', 'SpecializedFuelBay', 'ShipHangar',
         // Loaded fighters fitting flags
         'FighterTube0', 'FighterTube1', 'FighterTube2', 'FighterTube3', 'FighterTube4', 'FighterTube5', 'FighterTube6', 'FighterTube7',
+        // Stuff inside a container
+        'AutoFit',
     ];
 
     /**
