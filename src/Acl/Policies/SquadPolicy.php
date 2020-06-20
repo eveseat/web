@@ -47,9 +47,7 @@ class SquadPolicy
      */
     public function edit(User $user, Squad $squad)
     {
-        return $squad->whereHas('moderators', function ($query) use ($user) {
-            $query->where('id', $user->id);
-        })->exists();
+        return $squad->moderators->where('id', $user->id)->isNotEmpty();
     }
 
     /**
@@ -70,9 +68,7 @@ class SquadPolicy
      */
     public function kick(User $user, Squad $squad, User $member)
     {
-        return $user->id !== $member->id && $squad->whereHas('moderators', function ($query) use ($user) {
-            $query->where('id', $user->id);
-        })->exists();
+        return $user->id !== $member->id && $squad->moderators->where('id', $user->id)->isNotEmpty();
     }
 
     /**
@@ -82,9 +78,7 @@ class SquadPolicy
      */
     public function manage_candidates(User $user, Squad $squad)
     {
-        return $squad->type == 'manual' && $squad->whereHas('moderators', function ($query) use ($user) {
-            $query->where('id', $user->id);
-        })->exists();
+        return $squad->type == 'manual' && $squad->moderators->where('id', $user->id)->isNotEmpty();
     }
 
     /**
@@ -94,9 +88,7 @@ class SquadPolicy
      */
     public function manage_members(User $user, Squad $squad)
     {
-        return $squad->whereHas('moderators', function ($query) use ($user) {
-            $query->where('id', $user->id);
-        })->exists();
+        return $squad->moderators->where('id', $user->id)->isNotEmpty();
     }
 
     /**
@@ -126,11 +118,8 @@ class SquadPolicy
      */
     public function show_members(User $user, Squad $squad)
     {
-        return $squad->whereHas('members', function ($query) use ($user) {
-                $query->where('id', $user->id);
-            })->orWhereHas('moderators', function ($query) use ($user) {
-                $query->where('id', $user->id);
-            })->exists();
+        return $squad->members->where('id', $user->id)->isNotEmpty() ||
+            $squad->moderators->where('id', $user->id)->isNotEmpty();
     }
 
     /**
