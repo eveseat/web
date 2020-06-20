@@ -25,9 +25,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Class CreateCharacterAffiliationsTestTable.
+ * Class CreateSecurityLogsTestTable.
  */
-class CreateCharacterAffiliationsTestTable extends Migration
+class CreateSecurityLogsTestTable extends Migration
 {
     /**
      * Run the migrations.
@@ -36,11 +36,11 @@ class CreateCharacterAffiliationsTestTable extends Migration
      */
     public function up()
     {
-        Schema::create('character_affiliations', function (Blueprint $table) {
-            $table->bigInteger('character_id')->primary();
-            $table->bigInteger('corporation_id');
-            $table->bigInteger('alliance_id')->nullable();
-            $table->bigInteger('faction_id')->nullable();
+        Schema::create('security_logs', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('user_id')->nullable();
+            $table->text('message');
+            $table->string('category')->nullable();
 
             $table->timestamps();
         });
@@ -53,6 +53,6 @@ class CreateCharacterAffiliationsTestTable extends Migration
      */
     public function down()
     {
-        Schema::drop('character_affiliations');
+        Schema::drop('security_logs');
     }
 }
