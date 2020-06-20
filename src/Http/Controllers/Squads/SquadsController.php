@@ -74,7 +74,7 @@ class SquadsController extends Controller
             });
         }
 
-        $squads = $squads->paginate(6);
+        $squads = $squads->orderBy('name')->paginate(6);
 
         if (request()->ajax())
             return response()->json($squads);
