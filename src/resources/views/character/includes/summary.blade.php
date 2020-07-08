@@ -2,7 +2,11 @@
   <div class="card-header">
     <h3 class="card-title">{{ trans('web::seat.summary') }}</h3>
     <div class="card-tools">
-      <span class="badge badge-secondary">{{ $character->refresh_token->user->characters->count() }}</span>
+      @if(! is_null($character->refresh_token))
+        <span class="badge badge-secondary">{{ $character->refresh_token->user->characters->count() }}</span>
+      @else
+        <span class="badge badge-secondary">0</span>
+      @endif
     </div>
   </div>
   <div class="card-body box-profile">
@@ -21,20 +25,22 @@
     </p>
 
     <ul class="list-group list-group-unbordered mb-3">
-      @foreach($character->refresh_token->user->characters->where('character_id', '<>', $character->character_id)->sortBy('name') as $character_info)
+      @if(! is_null($character->refresh_token))
+        @foreach($character->refresh_token->user->characters->where('character_id', '<>', $character->character_id)->sortBy('name') as $character_info)
 
-        <li class="list-group-item">
+          <li class="list-group-item">
 
-          <a href="{{ route(\Illuminate\Support\Facades\Route::currentRouteName(),
-           array_merge(request()->route()->parameters, ['character' => $character_info])) }}">
-            {!! img('characters', 'portrait', $character_info->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-            {{ $character_info->name }}
-          </a>
+            <a href="{{ route(\Illuminate\Support\Facades\Route::currentRouteName(),
+             array_merge(request()->route()->parameters, ['character' => $character_info])) }}">
+              {!! img('characters', 'portrait', $character_info->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
+              {{ $character_info->name }}
+            </a>
 
-          <span class="id-to-name text-muted float-right" data-id="{{ $character_info->affiliation->corporation_id }}">{{ $character_info->affiliation->corporation->name }}</span>
-        </li>
+            <span class="id-to-name text-muted float-right" data-id="{{ $character_info->affiliation->corporation_id }}">{{ $character_info->affiliation->corporation->name }}</span>
+          </li>
 
-      @endforeach
+        @endforeach
+      @endif
 
     </ul>
 
