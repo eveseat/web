@@ -193,15 +193,11 @@
 
 @section('right')
 
+  <div class="alert alert-info">{{ trans('web::seat.account_help') }}</div>
+
   <div class="card">
     <div class="card-header">
-      <h3 class="card-title">
-        {{ trans('web::seat.user_account') }}
-        <span class="float-right">
-          {{ trans('web::seat.last_login') }}: {{ auth()->user()->last_login }}
-          ({{ human_diff(auth()->user()->last_login) }})
-        </span>
-      </h3>
+      <h3 class="card-title">{{ trans('web::seat.user_account') }}</h3>
     </div>
     <div class="card-body">
 
@@ -237,16 +233,21 @@
       </div>
 
     </div>
+    <div class="card-footer">
+      <span class="text-muted float-right">
+        <b>{{ trans('web::seat.last_login') }}:</b> {{ auth()->user()->last_login }}
+          ({{ human_diff(auth()->user()->last_login) }})
+        </span>
+    </div>
   </div>
 
-  <div class="card">
-    <div class="card-body">
-      <p>{{ trans('web::seat.third_party_access') }}</p>
-      <a href="https://community.eveonline.com/support/third-party-applications/" target="_blank"
-         class="btn btn-success btn-sm float-right">
-        {{ trans('web::seat.view_third_party_access') }}
-      </a>
-    </div>
+  <div class="callout callout-warning">
+    <h4>Third Party Applications</h4>
+    <p>{{ trans('web::seat.third_party_access') }}</p>
+    <hr/>
+    <p class="mb-0 text-right">
+      <a class="btn btn-sm btn-warning" style="color: inherit; text-decoration: inherit;" href="https://community.eveonline.com/support/third-party-applications/" target="_blank">{{ trans('web::seat.view_third_party_access') }}</a>
+    </p>
   </div>
 
   <div class="card">
@@ -369,10 +370,6 @@
     </div>
   </div>
   @endif
-
-  <span class="text-center">
-    {{ trans('web::seat.account_help') }}
-  </span>
 
   @include('web::profile.modals.email.email')
   @include('web::profile.modals.login_history.login_history')
