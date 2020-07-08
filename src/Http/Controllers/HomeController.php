@@ -55,10 +55,6 @@ class HomeController extends Controller
             if (setting('admin_contact', true) === 'seatadmin@localhost.local')
                 session()->flash('warning', trans('web::seat.admin_contact_warning'));
 
-        // Warn if a refresh token is missing.
-        if (auth()->user()->refresh_tokens()->onlyTrashed()->get()->isNotEmpty() && auth()->user()->name !== 'admin')
-            session()->flash('warning', trans('web::seat.refresh_token_warning'));
-
         // TODO : switch to ajax calls
         $server_status = $this->getEveLastServerStatus();
         $total_character_isk = $this->getTotalCharacterIsk(auth()->user()->associatedCharacterIds());
