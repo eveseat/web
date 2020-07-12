@@ -61,6 +61,11 @@ class DropGroupsTable extends Migration
         /// Pre-check regarding users table structure and associated main_character
         ///
 
+        // drop accounts coming from generation 2 or prior which has not been used since then.
+        DB::table('users')
+            ->whereNull('character_owner_hash')
+            ->delete();
+
         // control regarding user structure
         $entries = DB::table('users')
             ->leftJoin('user_settings', function ($join) {
@@ -71,17 +76,22 @@ class DropGroupsTable extends Migration
             ->get();
 
         foreach ($entries as $entry) {
-            if (is_null($entry->group_id))
-                throw new Exception(sprintf('User with id %s | name %s | hash %s has group_id unset.',
-                    $entry->id, $entry->name, $entry->character_owner_hash));
+            // spawn missing user settings regarding main character.
+            DB::table('user_settings')
+                ->updateOrInsert([
+                    'group_id' => $entry->group_id,
+                    'name' => 'main_character_id',
+                ], [
+                    'value' => $entry->id,
+                ]);
 
-            if (is_null($entry->character_owner_hash))
-                throw new Exception(sprintf('User with id %s | name %s | group_id %s has character_owner_hash unset.',
-                    $entry->id, $entry->name, $entry->group_id));
-
-            if (is_null($entry->value))
-                throw new Exception(sprintf('User with id %s | name %s | group_id %s has no main_character set.',
-                    $entry->id, $entry->name, $entry->group_id));
+            DB::table('user_settings')
+                ->updateOrInsert([
+                    'group_id' => $entry->group_id,
+                    'name' => 'main_character_name',
+                ], [
+                    'value' => sprintf('"%s"', $entry->name),
+                ]);
         }
 
         // remove orphan settings
