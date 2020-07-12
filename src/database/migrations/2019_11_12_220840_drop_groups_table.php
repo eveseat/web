@@ -90,7 +90,7 @@ class DropGroupsTable extends Migration
                     'group_id' => $entry->group_id,
                     'name' => 'main_character_name',
                 ], [
-                    'value' => sprintf('"%s"', $entry->name),
+                    'value' => json_encode($entry->name),
                 ]);
         }
 
