@@ -70,6 +70,14 @@ class MoonsDataTable extends DataTable
                 return view('web::tools.moons.buttons.show', compact('row'))->render();
             })
             ->rawColumns(['solar_system.sovereignty', 'indicators', 'action'])
+            ->with('stats', [
+                'ubiquitous' => $this->applyScopes(Moon::query()->ubiquitous())->count(),
+                'common' => $this->applyScopes(Moon::query()->common())->count(),
+                'uncommon' => $this->applyScopes(Moon::query()->uncommon())->count(),
+                'rare' => $this->applyScopes(Moon::query()->rare())->count(),
+                'exceptional' => $this->applyScopes(Moon::query()->exceptional())->count(),
+                'standard' => $this->applyScopes(Moon::query()->standard())->count(),
+            ])
             ->make(true);
     }
 
@@ -84,7 +92,7 @@ class MoonsDataTable extends DataTable
             ->columns($this->getColumns())
             ->addAction()
             ->parameters([
-                'drawCallback' => 'function() { ids_to_names(); }',
+                'drawCallback' => 'function(settings) { ids_to_names(); $(".moon-stats .badge-success").text(settings.json.stats.ubiquitous); $(".moon-stats .badge-primary").text(settings.json.stats.common); $(".moon-stats .badge-info").text(settings.json.stats.uncommon); $(".moon-stats .badge-warning").text(settings.json.stats.rare); $(".moon-stats .badge-danger").text(settings.json.stats.exceptional); $(".moon-stats .badge-default").text(settings.json.stats.standard); }',
             ])
             ->ajax([
                 'data' => 'function (d) {
