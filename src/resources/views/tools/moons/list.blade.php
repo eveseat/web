@@ -21,7 +21,7 @@
       {!! $dataTable->table(['class' => 'table table-hover']) !!}
     </div>
     <div class="card-footer">
-      <ul class="list-inline">
+      <ul class="list-inline moon-stats">
         <li class="list-inline-item col-2">
           <span class="badge badge-success">{{ $stats->ubiquitous }}</span> Gaz
         </li>
