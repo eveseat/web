@@ -52,10 +52,27 @@ class DropGroupsTable extends Migration
                 ->delete();
         }
 
+        // drop orphan groups
+        DB::table('groups')
+            ->whereNotIn('id', DB::table('users')->slect('group_id'))
+            ->delete();
+
         // drop erased tokens
         DB::table('refresh_tokens')
             ->whereNotNull('deleted_at')
             ->delete();
+
+        // remove orphan settings
+        DB::table('user_settings')
+            ->whereNotIn('group_id', DB::table('groups')->select('id'))
+            ->delete();
+
+        // remove duplicate entries using group_id and name as pivot
+        DB::statement('DELETE a FROM user_settings a INNER JOIN user_settings b WHERE a.id > b.id AND a.group_id = b.group_id AND a.name = b.name');
+
+        // remove duplicate main character setting using name and value as pivot
+        DB::statement('DELETE a FROM user_settings a INNER JOIN user_settings b WHERE a.id < b.id AND a.name = b.name AND a.name = "main_character_id" AND a.value = b.value');
+        DB::statement('DELETE a FROM user_settings a INNER JOIN user_settings b WHERE a.id < b.id AND a.name = b.name AND a.name = "main_character_name" AND a.value = b.value');
 
         ///
         /// Pre-check regarding users table structure and associated main_character
@@ -72,6 +89,7 @@ class DropGroupsTable extends Migration
                 $join->on('users.group_id', 'user_settings.group_id');
                 $join->where('user_settings.name', 'main_character_id');
             })
+            ->whereNull('value')
             ->select('users.group_id', 'users.id', 'users.name', 'users.character_owner_hash', 'user_settings.value')
             ->get();
 
@@ -93,24 +111,6 @@ class DropGroupsTable extends Migration
                     'value' => json_encode($entry->name),
                 ]);
         }
-
-        // remove orphan settings
-        DB::table('user_settings')
-            ->whereNotIn('group_id', DB::table('groups')->select('id'))
-            ->delete();
-
-        // control regarding main_character
-        $entries = DB::table('user_settings')
-            ->where('name', 'main_character_id')
-            ->select('value')
-            ->selectRaw('COUNT(*) AS counter')
-            ->groupBy('value')
-            ->havingRaw('COUNT(*) > 1')
-            ->get();
-
-        if ($entries->isNotEmpty())
-            throw new Exception(sprintf('The following main_character are set to more than a single group: %s',
-                implode(',', $entries->pluck('value')->flatten()->toArray())));
 
         ///
         /// Ensure compatibility level with third party structures
