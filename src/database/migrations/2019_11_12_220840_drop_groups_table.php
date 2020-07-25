@@ -54,7 +54,7 @@ class DropGroupsTable extends Migration
 
         // drop orphan groups
         DB::table('groups')
-            ->whereNotIn('id', DB::table('users')->select('group_id'))
+            ->whereNotIn('id', DB::table('users')->slect('group_id'))
             ->delete();
 
         // drop erased tokens
