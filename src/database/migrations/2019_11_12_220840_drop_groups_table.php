@@ -130,7 +130,7 @@ class DropGroupsTable extends Migration
             });
         }
 
-        // Slack
+        // Slackbot
 
         if (Schema::hasTable('slack_users')) {
             Schema::table('slack_users', function (Blueprint $table) {
@@ -149,6 +149,28 @@ class DropGroupsTable extends Migration
         if (Schema::hasTable('seat_connector_users')) {
             Schema::table('seat_connector_users', function (Blueprint $table) {
                 $table->dropForeign('fk_groups');
+            });
+        }
+
+        // SeAT Groups
+
+        if (Schema::hasTable('group_seatgroup')) {
+            Schema::table('group_seatgroup', function (Blueprint $table) {
+                $table->dropForeign('group_seatgroup_group_id_foreign');
+            });
+        }
+
+        // SeAT Notifications
+
+        if (Schema::hasTable('herpaderp_discord_users')) {
+            Schema::table('herpaderp_discord_users', function (Blueprint $table) {
+                $table->dropForeign('herpaderp_discord_users_group_foreign');
+            });
+        }
+
+        if (Schema::hasTable('herpaderp_slack_users')) {
+            Schema::table('herpaderp_slack_users', function (Blueprint $table) {
+                $table->dropForeign('herpaderp_slack_users_group_foreign');
             });
         }
 
