@@ -83,7 +83,30 @@ class DropGroupsTable extends Migration
             ->whereNull('character_owner_hash')
             ->delete();
 
-        // control regarding user structure
+        //
+        // ensure currently set main_character is valid for user pool
+        // otherwise, drop setting and spawn random value
+        //
+        $entries = DB::table('users')
+            ->join('user_settings', function ($join) {
+                $join->on('users.group_id', 'user_settings.group_id');
+                $join->where('user_settings.name', 'main_character_id');
+            })
+            ->select('users.group_id', 'users.id', 'user_settings.value')
+            ->get();
+
+        foreach ($entries as $entry) {
+            if (! DB::table('users')->where('group_id', $entry->group_id)->where('id', (int) $entry->value)->exists()) {
+                DB::table('user_settings')
+                    ->where('name', 'main_character_id')
+                    ->where('group_id', $entry->group_id)
+                    ->delete();
+            }
+        }
+
+        //
+        // ensure main character is properly set for all user pools
+        //
         $entries = DB::table('users')
             ->leftJoin('user_settings', function ($join) {
                 $join->on('users.group_id', 'user_settings.group_id');
@@ -95,6 +118,7 @@ class DropGroupsTable extends Migration
 
         foreach ($entries as $entry) {
             // spawn missing user settings regarding main character.
+            // we will keep track of last updated character for a single user pool.
             DB::table('user_settings')
                 ->updateOrInsert([
                     'group_id' => $entry->group_id,
@@ -140,6 +164,34 @@ class DropGroupsTable extends Migration
 
         if (Schema::hasTable('slack_channel_users')) {
             Schema::table('slack_channel_users', function (Blueprint $table) {
+                $table->dropForeign(['group_id']);
+            });
+        }
+
+        // Discord Connector
+
+        if (Schema::hasTable('warlof_discord_connector_role_groups')) {
+            Schema::table('warlof_discord_connector_role_groups', function (Blueprint $table) {
+                $table->dropForeign(['group_id']);
+            });
+        }
+
+        if (Schema::hasTable('warlof_discord_connector_users')) {
+            Schema::table('warlof_discord_connector_users', function (Blueprint $table) {
+                $table->dropForeign(['group_id']);
+            });
+        }
+
+        // Teamspeak Connector
+
+        if (Schema::hasTable('teamspeak_group_users')) {
+            Schema::table('teamspeak_group_users', function (Blueprint $table) {
+                $table->dropForeign(['group_id']);
+            });
+        }
+
+        if (Schema::hasTable('teamspeak_users')) {
+            Schema::table('teamspeak_users', function (Blueprint $table) {
                 $table->dropForeign(['group_id']);
             });
         }
