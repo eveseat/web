@@ -172,13 +172,13 @@ class DropGroupsTable extends Migration
 
         if (Schema::hasTable('warlof_discord_connector_role_groups')) {
             Schema::table('warlof_discord_connector_role_groups', function (Blueprint $table) {
-                $table->dropForeign(['group_id']);
+                $table->dropForeign('discord_role_groups_group_id_foreign');
             });
         }
 
         if (Schema::hasTable('warlof_discord_connector_users')) {
             Schema::table('warlof_discord_connector_users', function (Blueprint $table) {
-                $table->dropForeign(['group_id']);
+                $table->dropForeign('discord_users_group_id_foreign');
             });
         }
 
