@@ -57,7 +57,7 @@ class MiningDataTable extends AbstractMiningDataTable
     {
         return array_merge(parent::getColumns(), [
             ['data' => 'character.name', 'title' => trans_choice('web::seat.character', 1)],
-            ['data' => 'character.user.name', 'title' => trans_choice('web:seat.user', 1)],
+            ['data' => 'character.user.name', 'title' => trans_choice('web::seat.user', 1)],
         ]);
     }
 }
