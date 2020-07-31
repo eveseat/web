@@ -41,6 +41,7 @@ return [
     'global_moons_reporter_description'         => 'The Moon Reporter can show all moons of New Eden and their registered composition reports.',
     'global_moons_reporter_manager_label'       => 'Moon Reports Manager',
     'global_moons_reporter_manager_description' => 'The Moon Reports Manager can create and update moon reports.',
+    'global_queue_manager_label'               => 'Queue Manager',
 
     // Moon Reporter Scope
     'view_moon_reports_label'           => 'View Moon Reports',
@@ -163,4 +164,23 @@ return [
     'corporation_journal_description'                 => 'Displays a corporations wallet journal.',
     'corporation_transaction_label'                   => 'Grant access to Corporation Wallet Transactions',
     'corporation_transaction_description'             => 'Displays a corporations Wallet Transactions.',
+
+    // Mail Scope
+    'mail_bodies_label'   => 'Read Mail Bodies',
+    'mail_subjects_label' => 'Read Mail Subjects',
+
+    // People Scope
+    'people_create_label' => 'Create People',
+    'people_edit_label'   => 'Edit People',
+    'people_view_label'   => 'View People',
+
+    // Search Scope
+    'search_character_assets_label'        => 'Search Character Assets',
+    'search_character_contact_lists_label' => 'Search Character Contact Lists',
+    'search_character_mail_label'          => 'Search Character Mail',
+    'search_characters_label'              => 'Search Characters',
+    'search_character_skills_label'        => 'Search Character Skills',
+    'search_character_standings_label'     => 'Search Character Standings',
+    'search_corporation_assets_label'      => 'Search Corporation Assets',
+    'search_corporation_standings_label'   => 'Search Corporation Standings',
 ];
