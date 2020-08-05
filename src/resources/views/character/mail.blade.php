@@ -22,14 +22,18 @@
     </div>
     <div class="card-body">
       <div class="mb-3">
-        <select multiple="multiple" id="dt-character-selector" class="form-control" style="width: 100%;">
-          @foreach($character->refresh_token->user->characters as $character_info)
-            @if($character_info->character_id == $character->character_id)
-              <option selected="selected" value="{{ $character_info->character_id }}">{{ $character_info->name }}</option>
-            @else
-              <option value="{{ $character_info->character_id }}">{{ $character_info->name }}</option>
-            @endif
-          @endforeach
+        <select multiple="multiple" id="dt-character-selector" class="form-control" style="width: 100%;"> 
+          @if(!is_null($character->user))
+            @foreach($character->user->characters as $character_info)
+              @if($character_info->character_id == $character->character_id)
+                <option selected="selected" value="{{ $character_info->character_id }}">{{ $character_info->name }}</option>
+              @else
+                <option value="{{ $character_info->character_id }}">{{ $character_info->name }}</option>
+              @endif
+            @endforeach
+          @else
+            <option selected="selected" value="{{ $character->character_id }}">{{ $character->name }}</option>
+          @endif
         </select>
       </div>
 
