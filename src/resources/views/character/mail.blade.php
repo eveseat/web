@@ -3,7 +3,6 @@
 @section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.mail'))
 
 @inject('request', 'Illuminate\Http\Request')
-@inject('CharacterInfo', 'Seat\Eveapi\Models\Character\CharacterInfo')
 
 @section('character_content')
 
@@ -26,7 +25,7 @@
       <div class="mb-3">
         <select multiple="multiple" id="dt-character-selector" class="form-control" style="width: 100%;"> 
           @if(!is_null($character->user))
-            @foreach($character->user->characters as $character_info) <!-- This one breaks -->
+            @foreach($character->user->characters as $character_info)
               @if($character_info->character_id == $character->character_id)
                 <option selected="selected" value="{{ $character_info->character_id }}">{{ $character_info->name }}</option>
               @else
