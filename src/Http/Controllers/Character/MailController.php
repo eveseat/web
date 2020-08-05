@@ -139,21 +139,53 @@ class MailController extends Controller
 
         // If a user is not a super user, only return their own mail and those
         // which they are affiliated to to receive.
-        if (! $user->hasSuperUser()) {
+        if (! $user->isAdmin()) {
 
             $messages = $messages->whereHas('recipients', function ($sub_query) {
 
                 // TODO : add scope to MailHeader
 
-                // retrieve authenticated user permissions map
-                $character_map = collect(Arr::get(auth()->user()->getAffiliationMap(), 'char'));
+                // collect metadata related to required permission
+                $permissions = auth()->user()->roles()->with('permissions')->get()
+                    ->pluck('permissions')
+                    ->flatten()
+                    ->filter(function ($permission) {
+                        return $permission->title == 'character.mail';
+                    });
 
-                // collect only character which has either the requested permission or wildcard
-                $characters_ids = $character_map->filter(function ($permissions, $key) {
-                    return in_array('character.*', $permissions) || in_array('character.mail', $permissions);
-                })->keys();
+                
+                if ($permissions->filter(function ($permission) { return ! $permission->hasFilters(); })->isNotEmpty())
+                    return $sub_query;
+                
+                // extract entity ids and group by entity type
+                $map = $permissions->map(function ($permission) {
+                    $filters = json_decode($permission->pivot->filters);
 
-                $sub_query->whereIn('recipient_id', $characters_ids);
+                    return [
+                        'characters'   => collect($filters->character ?? [])->pluck('id')->toArray(),
+                        'corporations' => collect($filters->corporation ?? [])->pluck('id')->toArray(),
+                        'alliances'    => collect($filters->alliance ?? [])->pluck('id')->toArray(),
+                    ];
+                });
+
+                // collect at least user owned characters
+                $owned_range = auth()->user()->associatedCharacterIds();
+
+                $characters_range = $map->pluck('characters')->flatten()->toArray();
+
+                $corporations_range = CharacterInfo::whereHas('affiliation', function ($affiliation) use ($map) {
+                    $affiliation->whereIn('corporation_id', $map->pluck('corporations')->flatten()->toArray());
+                })->select('character_id')->get()->pluck('character_id')->toArray();
+
+                $alliances_range = CharacterInfo::whereHas('affiliation', function ($affiliation) use ($map) {
+                    $affiliation->whereIn('alliance_id', $map->pluck('alliances')->flatten()->toArray());
+                })->select('character_id')->get()->pluck('character_id')->toArray();
+
+                $character_ids = array_merge(
+                    $characters_range, $corporations_range, $alliances_range, $owned_range,
+                    $map->pluck('corporations')->flatten()->toArray(), $map->pluck('alliances')->flatten()->toArray());
+
+                $sub_query->whereIn('recipient_id', $character_ids);
             });
         }
 
