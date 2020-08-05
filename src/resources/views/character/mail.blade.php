@@ -21,7 +21,6 @@
       </div>
     </div>
     <div class="card-body">
-    
       <div class="mb-3">
         <select multiple="multiple" id="dt-character-selector" class="form-control" style="width: 100%;"> 
           @if(!is_null($character->user))
