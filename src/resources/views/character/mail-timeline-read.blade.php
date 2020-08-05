@@ -19,10 +19,17 @@
           <ul class="list-unstyled">
             <li>
               <b>{{ trans('web::seat.from') }}: </b>
-              <a href="{{ route('character.view.sheet', ['character_id' => $message->from]) }}">
-                {!! img('characters', 'portrait', $message->from, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
-                <span class="id-to-name" data-id="{{ $message->from }}">{{ trans('web::seat.unknown') }}</span>
-              </a>
+              @switch($message->sender->category)
+                @case('character')
+                  @include('web::partials.character', ['character' => $message->sender])
+                  @break
+                @case('corporation')
+                  @include('web::partials.corporation', ['corporation' => $message->sender])
+                  @break
+                @case('alliance')
+                  @include('web::partials.alliance', ['alliance' => $message->sender])
+                  @break
+              @endswitch
             </li>
 
             @if($message->recipients->where('recipient_type', 'alliance')->count() > 0)
