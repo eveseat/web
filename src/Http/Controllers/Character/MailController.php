@@ -22,7 +22,6 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
-use Illuminate\Support\Arr;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Mail\MailHeader;
@@ -153,10 +152,9 @@ class MailController extends Controller
                         return $permission->title == 'character.mail';
                     });
 
-                
                 if ($permissions->filter(function ($permission) { return ! $permission->hasFilters(); })->isNotEmpty())
                     return $sub_query;
-                
+
                 // extract entity ids and group by entity type
                 $map = $permissions->map(function ($permission) {
                     $filters = json_decode($permission->pivot->filters);

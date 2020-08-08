@@ -127,7 +127,7 @@ class StarbaseController extends Controller
         ];
 
         // filtering candidates and keep only those which are inside the starbase area
-        return $candidates->filter(function ($candidate) use ($starbase, $starbaseArea) {
+        return $candidates->filter(function ($candidate) use ($starbaseArea) {
 
             if (is_null($candidate->x) || is_null($candidate->y) || is_null($candidate->z))
                 return false;
