@@ -65,12 +65,23 @@ class SsoController extends Controller
                 abort(400);
         }
 
+        $used_scopes = $scopes->scopes;
+
+        // in case the user is already authenticated - we're in a link flow
+        if (auth()->check()) {
+            // attempt to determine a used scopes and apply the same pattern for the newly linked character
+            $token = auth()->user()->refresh_tokens->first();
+
+            if (! is_null($token))
+                $used_scopes = $token->scopes;
+        }
+
         // Store the scopes we are sending to CCP in the session so we can
         // validate the JWT response contains the right scopes.
-        session()->put('scopes', $scopes->scopes);
+        session()->put('scopes', $used_scopes);
 
         return $social->driver('eveonline')
-            ->scopes($scopes->scopes)
+            ->scopes($used_scopes)
             ->redirect();
     }
 
