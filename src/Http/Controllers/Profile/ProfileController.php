@@ -160,8 +160,6 @@ class ProfileController extends Controller
 
         auth()->user()->fresh();
 
-        //auth()->login($user, true);
-
         return redirect()->back();
     }
 
