@@ -35,7 +35,7 @@ class JobPolicy extends AbstractPolicy
 {
     /**
      * @param \Seat\Web\Models\User $user
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo|integer $character_info
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo|int $character_info
      *
      * @return bool
      */
@@ -51,7 +51,7 @@ class JobPolicy extends AbstractPolicy
 
     /**
      * @param \Seat\Web\Models\User $user
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo|integer $corporation_info
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo|int $corporation_info
      *
      * @return bool
      */
