@@ -21,7 +21,7 @@
  */
 
 Route::get('/dispatch/{character_id}/{job_name}', [
-    'middleware' => 'can:job',
+    'middleware' => 'can:queue.character_job,character_id',
     'as'         => 'tools.jobs.dispatch',
     'uses'       => 'JobController@getDispatchUpdateJob',
 ]);
