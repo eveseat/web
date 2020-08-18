@@ -59,7 +59,8 @@
   @include('web::components.filters.modals.filters.filters', [
     'filters' => [
         (object) ['name' => 'character', 'src' => route('fastlookup.characters'), 'path' => 'characters', 'field' => 'character_infos.character_id', 'label' => 'Character'],
-        (object) ['name' => 'corporation', 'src' => route('fastlookup.corporations'), 'path' => 'characters.affiliation', 'field' => 'corporation_id', 'label' => 'Corporation'],
+        (object) ['name' => 'title', 'src' => route('fastlookup.titles'), 'path' => 'characters.titles', 'field' => 'title_id', 'label' => 'Title'],
+	(object) ['name' => 'corporation', 'src' => route('fastlookup.corporations'), 'path' => 'characters.affiliation', 'field' => 'corporation_id', 'label' => 'Corporation'],
         (object) ['name' => 'alliance', 'src' => route('fastlookup.alliances'), 'path' => 'characters.affiliation', 'field' => 'alliance_id', 'label' => 'Alliance'],
         (object) ['name' => 'skill', 'src' => route('fastlookup.skills'), 'path' => 'characters.skills', 'field' => 'skill_id', 'label' => 'Skill'],
         (object) ['name' => 'type', 'src' => route('fastlookup.items'), 'path' => 'characters.assets', 'field' => 'type_id', 'label' => 'Item'],
