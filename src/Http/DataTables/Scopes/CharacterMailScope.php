@@ -46,7 +46,7 @@ class CharacterMailScope implements DataTableScope
      *
      * @param int[]|null $character_ids
      */
-    public function __construct(?array $character_ids)
+    public function __construct(?array $character_ids = null)
     {
         $this->requested_characters = $character_ids;
     }

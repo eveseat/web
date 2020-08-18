@@ -32,6 +32,9 @@ use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Mail\MailHeader;
 use Seat\Eveapi\Models\Universe\UniverseName;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Scopes\CharacterMailScope;
+use Seat\Web\Http\DataTables\Scopes\CharacterScope;
+use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 use Yajra\DataTables\DataTables;
 
 /**
@@ -178,9 +181,16 @@ class SearchController extends Controller
      */
     public function getSearchCharacterAssetsData(Request $request)
     {
-        $assets = $this->doSearchCharacterAssets();
+        $scope = new CharacterScope('character.asset');
 
-        return DataTables::of($assets)
+        $query = CharacterAsset::with('character', 'type', 'type.group',
+            'character.affiliation.corporation', 'character.affiliation.alliance')
+            ->select()
+            ->addSelect('character_assets.name as asset_name');
+
+        $scope->apply($query);
+
+        return DataTables::of($query)
             ->editColumn('asset_name', function ($row) {
                 return $row->asset_name ?: '';
             })
@@ -232,9 +242,14 @@ class SearchController extends Controller
      */
     public function getSearchCharacterSkillsData(Request $request)
     {
-        $skills = $this->doSearchCharacterSkills();
+        $scope = new CharacterScope('character.skill');
 
-        return DataTables::of($skills)
+        $query = CharacterSkill::with('character', 'type', 'type.group',
+            'character.affiliation.corporation', 'character.affiliation.alliance');
+
+        $scope->apply($query);
+
+        return DataTables::of($query)
             ->editColumn('character.name', function ($row) {
                 return view('web::partials.character', ['character' => $row->character]);
             })
@@ -251,21 +266,33 @@ class SearchController extends Controller
     }
 
     /**
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     private function doSearchCharacters()
     {
+        $scope = new CharacterScope();
 
-        return $this->getAllCharactersWithAffiliations(false);
+        $query = CharacterInfo::with('affiliation.corporation', 'affiliation.alliance')
+            ->select('character_infos.*');
+
+        $scope->apply($query);
+
+        return $query;
     }
 
     /**
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     private function doSearchCorporations()
     {
+        $scope = new CorporationScope();
 
-        return $this->getAllCorporationsWithAffiliationsAndFilters(false);
+        $query = CorporationInfo::with('ceo', 'alliance')
+            ->select('corporation_infos.*');
+
+        $scope->apply($query);
+
+        return $query;
     }
 
     /**
@@ -273,95 +300,13 @@ class SearchController extends Controller
      */
     private function doSearchCharacterMail()
     {
+        $scope = new CharacterMailScope();
 
-        // Get the User for permissions and affiliation
-        // checks
-        $user = auth()->user();
-
-        $messages = MailHeader::with('body', 'recipients', 'recipients.entity', 'sender')
+        $query = MailHeader::with('body', 'recipients', 'recipients.entity', 'sender')
             ->select('timestamp', 'from', 'subject', 'mail_headers.mail_id');
 
-        // If the user is a super user, return all
-        if (! $user->isAdmin()) {
+        $scope->apply($query);
 
-            $messages = $messages->whereHas('recipients', function ($sub_query) {
-                // retrieve authenticated user permissions map
-                $character_map = collect(Arr::get(auth()->user()->getAffiliationMap(), 'char'));
-
-                // collect only character which has either the requested permission or wildcard
-                $characters_ids = $character_map->filter(function ($permissions, $key) {
-                    return in_array('character.*', $permissions) || in_array('character.mail', $permissions);
-                })->keys();
-
-                $sub_query->whereIn('recipient_id', $characters_ids);
-            });
-        }
-
-        return $messages;
-
-    }
-
-    /**
-     * @return mixed
-     */
-    private function doSearchCharacterAssets()
-    {
-        return CharacterAsset::authorized('character.asset')
-            ->with('character', 'character.affiliation.corporation', 'character.affiliation.alliance', 'type', 'type.group')
-            ->select()
-            ->addSelect('character_assets.name as asset_name');
-    }
-
-    /**
-     * @return mixed
-     */
-    private function doSearchCharacterSkills()
-    {
-        return CharacterSkill::authorized('character.skill')
-            ->with('character', 'character.affiliation.corporation', 'character.affiliation.alliance', 'type', 'type.group');
-    }
-
-    /**
-     * Query the database for characters, keeping filters,
-     * permissions and affiliations in mind.
-     *
-     * @param bool $get
-     *
-     * @return mixed
-     */
-    private function getAllCharactersWithAffiliations(bool $get = true)
-    {
-        // Start the character information query
-        $characters = CharacterInfo::authorized('character.sheet')
-            ->with('affiliation.corporation', 'affiliation.alliance')
-            ->select('character_infos.*');
-
-        if ($get)
-            return $characters
-                ->orderBy('name')
-                ->get();
-
-        return $characters;
-    }
-
-    /**
-     * Return the corporations for which a user has access.
-     *
-     * @param bool $get
-     *
-     * @return mixed
-     */
-    private function getAllCorporationsWithAffiliationsAndFilters(bool $get = true)
-    {
-        // Start a fresh query
-        $corporations = CorporationInfo::authorized('corporation.sheet')
-            ->with('ceo', 'alliance')
-            ->select('corporation_infos.*');
-
-        if ($get)
-            return $corporations->orderBy('name', 'desc')
-                ->get();
-
-        return $corporations;
+        return $query;
     }
 }
