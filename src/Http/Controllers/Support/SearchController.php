@@ -23,7 +23,6 @@
 namespace Seat\Web\Http\Controllers\Support;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Seat\Eveapi\Models\Assets\CharacterAsset;
 use Seat\Eveapi\Models\Character\CharacterInfo;
