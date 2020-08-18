@@ -67,7 +67,7 @@ class Station extends AbstractColumn
         if ($row->location_type == 'solar_system')
             return $row->name;
 
-        return '';
+        return sprintf('%d (%d)', $row->item_id, $row->location_id);
     }
 
     /**
@@ -125,6 +125,9 @@ class Station extends AbstractColumn
                 return $item->container->station->name;
 
             if ($item->container->location_flag == 'Impounded' && $item->container->location_type == 'other')
+                return $item->container->structure->name;
+
+            if ($item->container->location_flag == 'OfficeFolder' && $item->container->location_type == 'item')
                 return $item->container->structure->name;
 
             return $item->container->container->name;
