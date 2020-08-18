@@ -27,7 +27,7 @@ use Illuminate\Http\Request;
 use Seat\Eveapi\Models\Alliances\Alliance;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
-use Seat\Eveapi\Models\Corporation\CorporationTitle as CorporationTitle;
+use Seat\Eveapi\Models\Corporation\CorporationTitle;
 use Seat\Eveapi\Models\Sde\Constellation;
 use Seat\Eveapi\Models\Sde\InvType;
 use Seat\Eveapi\Models\Sde\Region;

@@ -23,6 +23,7 @@
 namespace Seat\Web\Observers;
 
 use Illuminate\Database\Eloquent\Model;
+use Seat\Eveapi\Pivot\Character\CharacterTitle;
 use Seat\Web\Models\User;
 
 /**

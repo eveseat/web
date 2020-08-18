@@ -35,6 +35,7 @@ use Seat\Eveapi\Models\Character\CharacterAffiliation;
 use Seat\Eveapi\Models\Character\CharacterRole;
 use Seat\Eveapi\Models\Character\CharacterSkill;
 use Seat\Eveapi\Models\RefreshToken;
+use Seat\Eveapi\Pivot\Character\CharacterTitle;
 use Seat\Services\AbstractSeatPlugin;
 use Seat\Web\Events\Attempt;
 use Seat\Web\Events\Login;
