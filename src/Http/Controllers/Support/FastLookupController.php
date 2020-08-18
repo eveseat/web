@@ -27,6 +27,7 @@ use Illuminate\Http\Request;
 use Seat\Eveapi\Models\Alliances\Alliance;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
+use Seat\Eveapi\Models\Corporation\CorporationTitle as CorporationTitle;
 use Seat\Eveapi\Models\Sde\Constellation;
 use Seat\Eveapi\Models\Sde\InvType;
 use Seat\Eveapi\Models\Sde\Region;
@@ -101,6 +102,41 @@ class FastLookupController extends Controller
             }),
         ]);
     }
+
+
+
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getTitles(Request $request)
+    {
+
+        if ($request->query('_type', 'query') == 'find') {
+            $title = CorporationTitle::find($request->query('q', 1));
+
+            return response()->json([
+                'id' => $title->title_id,
+                'text' => strip_tags($title->name),
+            ]);
+        }
+     
+     $titles = CorporationTitle::where('name', 'like', '%' . $request->query('q', '') . '%')
+          ->orderBy('name')
+          ->get()
+          ->map(function($title){
+           return [
+                'id' => $title->title_id,
+                'text' =>  strip_tags($title->name),
+           ];
+      });
+      
+        return response()->json([
+            'results' => $titles,
+     ]);
+    }
+
 
     /**
      * @param \Illuminate\Http\Request $request

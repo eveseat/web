@@ -54,6 +54,7 @@ use Seat\Web\Http\Middleware\Requirements;
 use Seat\Web\Models\Squads\SquadMember;
 use Seat\Web\Models\Squads\SquadRole;
 use Seat\Web\Observers\CharacterAffiliationObserver;
+use Seat\Web\Observers\CharacterTitleObserver;
 use Seat\Web\Observers\CharacterAssetObserver;
 use Seat\Web\Observers\CharacterRoleObserver;
 use Seat\Web\Observers\CharacterSkillObserver;
@@ -265,6 +266,7 @@ class WebServiceProvider extends AbstractSeatPlugin
         CharacterAffiliation::observe(CharacterAffiliationObserver::class);
         CharacterAsset::observe(CharacterAssetObserver::class);
         CharacterSkill::observe(CharacterSkillObserver::class);
+        CharacterTitle::observe(CharacterTitleObserver::class);
         SquadMember::observe(SquadMemberObserver::class);
         SquadRole::observe(SquadRoleObserver::class);
     }
