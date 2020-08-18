@@ -103,9 +103,6 @@ class FastLookupController extends Controller
         ]);
     }
 
-
-
-
     /**
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -121,22 +118,21 @@ class FastLookupController extends Controller
                 'text' => strip_tags($title->name),
             ]);
         }
-     
+
      $titles = CorporationTitle::where('name', 'like', '%' . $request->query('q', '') . '%')
           ->orderBy('name')
           ->get()
-          ->map(function($title){
+          ->map(function ($title) {
            return [
-                'id' => $title->title_id,
-                'text' =>  strip_tags($title->name),
+               'id' => $title->title_id,
+               'text' =>  strip_tags($title->name),
            ];
       });
-      
+
         return response()->json([
             'results' => $titles,
-     ]);
+        ]);
     }
-
 
     /**
      * @param \Illuminate\Http\Request $request

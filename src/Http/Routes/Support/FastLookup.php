@@ -25,12 +25,10 @@ Route::get('/groups', [
     'uses' => 'FastLookupController@getGroups',
 ]);
 
-
 Route::get('/titles', [
     'as'   => 'fastlookup.titles',
     'uses' => 'FastLookupController@getTitles',
 ]);
-
 
 Route::get('/users', [
     'as'   => 'fastlookup.users',
