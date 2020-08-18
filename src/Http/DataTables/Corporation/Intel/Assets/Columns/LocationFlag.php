@@ -59,19 +59,19 @@ class LocationFlag extends AbstractColumn
     {
         switch ($row->location_flag) {
             case 'CorpSAG1':
-                return $this->divisions->where('division', 1)->first()->name;
+                return $this->divisions->where('division', 1)->first()->name ?? sprintf('%s 1', trans_choice('web::assets.division', 1));
             case 'CorpSAG2':
-                return $this->divisions->where('division', 2)->first()->name;
+                return $this->divisions->where('division', 2)->first()->name ?? sprintf('%s 2', trans_choice('web::assets.division', 1));
             case 'CorpSAG3':
-                return $this->divisions->where('division', 3)->first()->name;
+                return $this->divisions->where('division', 3)->first()->name ?? sprintf('%s 3', trans_choice('web::assets.division', 1));
             case 'CorpSAG4':
-                return $this->divisions->where('division', 4)->first()->name;
+                return $this->divisions->where('division', 4)->first()->name ?? sprintf('%s 4', trans_choice('web::assets.division', 1));
             case 'CorpSAG5':
-                return $this->divisions->where('division', 5)->first()->name;
+                return $this->divisions->where('division', 5)->first()->name ?? sprintf('%s 5', trans_choice('web::assets.division', 1));
             case 'CorpSAG6':
-                return $this->divisions->where('division', 6)->first()->name;
+                return $this->divisions->where('division', 6)->first()->name ?? sprintf('%s 6', trans_choice('web::assets.division', 1));
             case 'CorpSAG7':
-                return $this->divisions->where('division', 7)->first()->name;
+                return $this->divisions->where('division', 7)->first()->name ?? sprintf('%s 7', trans_choice('web::assets.division', 1));
             case 'CorpDeliveries':
                 return 'Delivery Hangar';
             default:
