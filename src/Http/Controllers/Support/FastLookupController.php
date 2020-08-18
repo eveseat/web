@@ -128,7 +128,7 @@ class FastLookupController extends Controller
 		->map(function($title){
 		 return [
 			 'id' => $title->title_id,
-			 'text' =>  strip_tags($title->name)
+			 'text' =>  strip_tags($title->name),
 		 ];
 	 });
 	 
