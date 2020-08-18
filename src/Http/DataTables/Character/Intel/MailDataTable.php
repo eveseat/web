@@ -78,7 +78,9 @@ class MailDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->postAjax()
+            ->postAjax([
+                'data' => 'function(d) { d.characters = $("#dt-character-selector").val(); }',
+            ])
             ->columns($this->getColumns())
             ->addAction()
             ->parameters([
