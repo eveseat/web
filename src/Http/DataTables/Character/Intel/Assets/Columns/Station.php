@@ -43,6 +43,15 @@ class Station extends AbstractColumn
         if ($row->location_type == 'station')
             return $row->station->name;
 
+        if ($row->location_type == 'item') {
+            if ($row->location_flag == 'Hangar') {
+                if ($row->container->location_flag == 'AssetSafety')
+                    return $row->container->station->name;
+
+                return $row->structure->name;
+            }
+        }
+
         if ($row->location_type == 'other') {
             if ($row->location_flag == 'Hangar') {
                 if ($row->container->location_flag == 'AssetSafety')
@@ -59,7 +68,7 @@ class Station extends AbstractColumn
             }
         }
 
-        return '';
+        return sprintf('%d (%d)', $row->item_id, $row->location_id);
     }
 
     /**
