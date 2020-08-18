@@ -121,20 +121,20 @@ class FastLookupController extends Controller
                 'text' => strip_tags($title->name),
             ]);
         }
-	
-	$titles = CorporationTitle::where('name', 'like', '%' . $request->query('q', '') . '%')
-		->orderBy('name')
-		->get()
-		->map(function($title){
-		 return [
-			 'id' => $title->title_id,
-			 'text' =>  strip_tags($title->name),
-		 ];
-	 });
-	 
+     
+     $titles = CorporationTitle::where('name', 'like', '%' . $request->query('q', '') . '%')
+          ->orderBy('name')
+          ->get()
+          ->map(function($title){
+           return [
+                'id' => $title->title_id,
+                'text' =>  strip_tags($title->name),
+           ];
+      });
+      
         return response()->json([
             'results' => $titles,
-	]);
+     ]);
     }
 
 
