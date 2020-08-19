@@ -49,7 +49,7 @@
                     <input type="checkbox" name="admin" value="1" id="admin" class="form-check-input" />
                   @endif
                 @endif
-                <label for="admin" class="form-check-label col-md-4">{{ trans_choice('web::settings.admin', 1) }}</label>
+                <label for="admin" class="form-check-label col-md-6">{{ trans_choice('web::settings.admin', 1) }}</label>
               </div>
               <small class="form-text text-danger">{{ trans('web::settings.admin_assist_edit') }}</small>
             </div>
