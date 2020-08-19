@@ -40,7 +40,7 @@ class CreateSquadApplicationsTable extends Migration
             $table->bigIncrements('application_id');
             $table->integer('user_id')->unsigned();
             $table->integer('squad_id')->unsigned()->unique();
-            $table->text('message')->default('');
+            $table->text('message');
             $table->timestamps();
 
             $table->index('squad_id');
