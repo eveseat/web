@@ -17,8 +17,9 @@ jobs:
           git config user.email github-actions@github.com
           currver=`cat version`
           a=(${currver//./ })
-          ((a[2]++))
-          newver="${a[0]}.${a[1]}.${a[2]}"
+          newrelease=${a[2]}
+          newrelease=$((newrelease+1))
+          newver="${a[0]}.${a[1]}.${newrelease}"
           echo $newver > version
           git add version
           git commit -m "bump to version $newver"
