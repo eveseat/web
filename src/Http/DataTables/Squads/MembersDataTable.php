@@ -40,6 +40,10 @@ class MembersDataTable extends DataTable
         return datatables()
             ->eloquent($this->query())
             ->addColumn('characters', function ($row) {
+                // disclose alts only if the user is a moderator
+                if (! auth()->user()->can('squads.manage_members', $this->request->squad))
+                    return '';
+
                 return $row->characters->reject(function ($character) use ($row) {
                     return $character->character_id == $row->main_character_id;
                 })->map(function ($character) {
@@ -55,9 +59,12 @@ class MembersDataTable extends DataTable
                 return view('web::squads.buttons.squads.kick', compact('row'))->render();
             })
             ->filterColumn('characters', function ($query, $keyword) {
-                $query->whereHas('characters', function ($sub_query) use ($keyword) {
-                    $sub_query->whereRaw('name LIKE ?', ["%{$keyword}%"]);
-                });
+                // disclose alts only if the user is a moderator
+                if (auth()->user()->can('squads.manage_members', $this->request->squad)) {
+                    $query->whereHas('characters', function ($sub_query) use ($keyword) {
+                        $sub_query->whereRaw('name LIKE ?', ["%{$keyword}%"]);
+                    });
+                }
             })
             ->rawColumns(['characters', 'name', 'action'])
             ->make(true);
