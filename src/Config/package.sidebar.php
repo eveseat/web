@@ -67,6 +67,7 @@ return [
     'squads'      => [
         'name'          => 'squads',
         'label'         => 'web::squads.squad',
+        'permission'    => 'global.squads',
         'plural'        => true,
         'icon'          => 'fas fa-user-friends',
         'route_segment' => 'squads',
