@@ -12,13 +12,17 @@
     <div class="card-body">
       <div class="mb-3">
         <select multiple="multiple" id="dt-character-selector" class="form-control" style="width: 100%;">
-          @foreach($character->refresh_token->user->characters as $character_info)
-            @if($character_info->character_id == $character->character_id)
-              <option selected="selected" value="{{ $character_info->character_id }}">{{ $character_info->name }}</option>
-            @else
-              <option value="{{ $character_info->character_id }}">{{ $character_info->name }}</option>
-            @endif
-          @endforeach
+          @if($character->refresh_token)
+            @foreach($character->refresh_token->user->characters as $character_info)
+              @if($character_info->character_id == $character->character_id)
+                <option selected="selected" value="{{ $character_info->character_id }}">{{ $character_info->name }}</option>
+              @else
+                <option value="{{ $character_info->character_id }}">{{ $character_info->name }}</option>
+              @endif
+            @endforeach
+          @else
+            <option selected="selected" value="{{ $character->character_id }}">{{ $character->name }}</option>
+          @endif
         </select>
       </div>
 
