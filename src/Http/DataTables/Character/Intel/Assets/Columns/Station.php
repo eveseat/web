@@ -50,6 +50,17 @@ class Station extends AbstractColumn
 
                 return $row->structure->name;
             }
+
+            if ($row->location_flag == 'Unlocked') {
+                if ($row->container->location_flag == 'Hangar') {
+                    switch ($row->container->location_type) {
+                        case 'station':
+                            return $row->container->station->name;
+                        case 'item':
+                            return $row->container->structure->name;
+                    }
+                }
+            }
         }
 
         if ($row->location_type == 'other') {
