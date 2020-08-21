@@ -137,9 +137,16 @@ class Station extends AbstractColumn
         if ($item->container->location_flag == 'AssetSafety')
             return $item->container->station->name;
 
-        if ($item->location_flag == 'CorpDeliveries' && $item->location_type == 'other')
-            return $item->structure->name;
+        if ($item->location_flag == 'CorpDeliveries') {
+            switch ($item->location_type) {
+                case 'other':
+                case 'item':
+                    return $item->structure->name;
+                case 'station':
+                    return $item->station->name;
+            }
+        }
 
-        return '';
+        return sprintf('%d (%d)', $item->item_id, $item->location_id);
     }
 }
