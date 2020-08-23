@@ -37,7 +37,7 @@
       <li>
         <b>{{ trans_choice('web::seat.corporation', 0) }}: </b>
         @foreach($mail->recipients->where('recipient_type', 'corporation') as $corporation)
-          @include('web::partials.corporation', ['corporation' => $corporation->entity->entity_id])
+          @include('web::partials.corporation', ['corporation' => $corporation->entity])
         @endforeach
       </li>
     @endif
