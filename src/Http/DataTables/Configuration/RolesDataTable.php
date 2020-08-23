@@ -69,6 +69,7 @@ class RolesDataTable extends DataTable
     public function html()
     {
         return $this->builder()
+            ->postAjax()
             ->columns($this->getColumns())
             ->addAction();
     }

@@ -45,8 +45,9 @@ class IndustryDataTable extends AbstractIndustryDataTable
      */
     public function html()
     {
-        return parent::html()->ajax([
-            'data' => 'function(d) { d.filters = {}; $("[data-filter-field].dt-filters.active").each(function (i, e) { var a = $(e); var field = a.data("filter-field"); var value = a.data("filter-value"); if (! d.filters[field]) { d.filters[field] = []; } d.filters[field].push(value); }); }',
-        ]);
+        return parent::html()
+            ->postAjax([
+                'data' => 'function(d) { d.filters = {}; $("[data-filter-field].dt-filters.active").each(function (i, e) { var a = $(e); var field = a.data("filter-field"); var value = a.data("filter-value"); if (! d.filters[field]) { d.filters[field] = []; } d.filters[field].push(value); }); }',
+            ]);
     }
 }

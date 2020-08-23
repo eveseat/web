@@ -64,11 +64,11 @@ class MoonsController extends Controller
             Moon::EXCEPTIONAL => trans('web::moons.exceptional'),
         ];
 
-        $region_id = intval(request()->query('region_id', 0));
-        $constellation_id = intval(request()->query('constellation_id', 0));
-        $system_id = intval(request()->query('system_id', 0));
-        $rank_selection = request()->query('rank_selection', []);
-        $product_selection = request()->query('product_selection', []);
+        $region_id = intval(request()->input('region_id', 0));
+        $constellation_id = intval(request()->input('constellation_id', 0));
+        $system_id = intval(request()->input('system_id', 0));
+        $rank_selection = request()->input('rank_selection', []);
+        $product_selection = request()->input('product_selection', []);
 
         if ($region_id != 0)
             $dataTable->addScope(new RegionScope($region_id));
