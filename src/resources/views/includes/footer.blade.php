@@ -16,7 +16,11 @@
 
     <b>{{ trans('web::seat.render_in') }}</b> {{ number_format((microtime(true) - LARAVEL_START), 3) }}s |
     <b>{{ trans('web::seat.sde_version') }}</b> {{ setting('installed_sde', true) }} |
-    <b>{{ trans('web::seat.web_version') }}</b> {{ config('web.config.version') }}
+    @if(file_exists(storage_path('version')))
+      <b>{{ trans('web::seat.docker_version') }}</b> {{ file_get_contents(storage_path('version')) }}
+    @else
+      <b>{{ trans('web::seat.web_version') }}</b> {{ config('web.config.version') }}
+    @endif
   </div>
 
   <!-- Default to the left -->

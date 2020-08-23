@@ -715,6 +715,7 @@ return [
 
     // Footer
     'web_version'                  => 'Web Version',
+    'docker_version'               => 'Docker Version',
     'sde_version'                  => 'SDE Version',
     'render_in'                    => 'Rendered In',
     'copyright'                    => 'Copyright',
