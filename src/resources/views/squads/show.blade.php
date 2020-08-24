@@ -392,7 +392,13 @@
             processing: true,
             serverSide: true,
             order: [[0, 'desc']],
-            ajax: '{{ route('squads.members.index', $squad) }}',
+            ajax: {
+                url: '{{ route('squads.members.index', $squad) }}',
+                type: 'POST',
+                headers: {
+                    'X-HTTP-Method-Override': 'GET'
+                }
+            },
             columns: [
                 {data: "name", name: "name", title: "Name", "orderable": true, "searchable": true},
                 {data: "characters", name: "characters", title: "Characters", "orderable": true, "searchable": true},
@@ -410,7 +416,13 @@
             processing: true,
             serverSide: true,
             order: [[0, 'desc']],
-            ajax: '{{ route('squads.applications.index', $squad) }}',
+            ajax: {
+                url: '{{ route('squads.applications.index', $squad) }}',
+                type: 'POST',
+                headers: {
+                    'X-HTTP-Method-Override': 'GET'
+                }
+            },
             columns: [
                 {data: 'user.name', name: 'user.name'},
                 {data: 'characters', name: 'characters'},
@@ -429,7 +441,13 @@
             processing: true,
             serverSide: true,
             order: [[0, 'desc']],
-            ajax: '{{ route('squads.roles.show', $squad) }}',
+            ajax: {
+                url: '{{ route('squads.roles.show', $squad) }}',
+                type: 'POST',
+                headers: {
+                    'X-HTTP-Method-Override': 'GET'
+                }
+            },
             columns: [
                 {data: 'title', name: 'title'},
                 {data: 'description', name: 'description'},
