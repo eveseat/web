@@ -37,6 +37,15 @@
                     </select>
                   </div>
                 </div>
+                <div class="form-group row">
+                  <label for="squad-classified" class="col-sm-1 col-form-label">Classified?</label>
+                  <div class="col-sm-1">
+                    <input type="checkbox" name="classified" id="squad-classified" class="form-check-input ml-0" />
+                  </div>
+                  <div class="col-sm-10">
+                    <div>If a squad is classified, then only moderators and administrators will be able to see the member list</div>
+                  </div>
+                </div>
                 <input type="hidden" name="description" />
                 <input type="hidden" name="filters" />
                 <input type="file" name="logo" accept="image/png, image/jpeg" id="file-image" class="d-none" />

@@ -106,11 +106,12 @@ class SquadsController extends Controller
     public function store(SquadValidation $request)
     {
         $squad = Squad::create([
-            'name'        => $request->input('name'),
-            'type'        => $request->input('type'),
-            'description' => $request->input('description'),
-            'filters'     => $request->input('filters'),
-            'logo'        => $request->file('logo'),
+            'name'          => $request->input('name'),
+            'type'          => $request->input('type'),
+            'description'   => $request->input('description'),
+            'filters'       => $request->input('filters'),
+            'is_classified' => $request->input('classified') == 'on',
+            'logo'          => $request->file('logo'),
         ]);
 
         return redirect()->route('squads.show', $squad->id)
@@ -136,6 +137,7 @@ class SquadsController extends Controller
         $squad->name = $request->input('name');
         $squad->type = $request->input('type');
         $squad->description = $request->input('description');
+        $squad->is_classified = $request->input('classified') == 'on';
         $squad->filters = $request->input('filters');
 
         if ($request->hasFile('logo'))

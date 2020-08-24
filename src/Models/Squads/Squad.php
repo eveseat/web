@@ -53,6 +53,13 @@ class Squad extends Model
     /**
      * @var array
      */
+    protected $casts = [
+        'is_classified' => 'boolean',
+    ];
+
+    /**
+     * @var array
+     */
     protected $hidden = [
         'applications', 'members',
     ];
