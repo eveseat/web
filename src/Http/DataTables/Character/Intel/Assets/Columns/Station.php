@@ -61,6 +61,9 @@ class Station extends AbstractColumn
                     }
                 }
             }
+
+            if ($row->location_flag == 'AssetSafety')
+                return $row->structure->name;
         }
 
         if ($row->location_type == 'other') {
