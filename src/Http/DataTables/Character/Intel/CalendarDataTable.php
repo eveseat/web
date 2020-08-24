@@ -80,9 +80,8 @@ class CalendarDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->postAjax()
             ->columns($this->getColumns())
-            ->ajax([
+            ->postAjax([
                 'data' => 'function(d) { d.characters = $("#dt-character-selector").val(); }',
             ])
             ->parameters([

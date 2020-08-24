@@ -109,25 +109,25 @@ class FastLookupController extends Controller
      */
     public function getTitles(Request $request)
     {
-
         if ($request->query('_type', 'query') == 'find') {
             $title = CorporationTitle::find($request->query('q', 1));
 
             return response()->json([
-                'id' => $title->title_id,
-                'text' => strip_tags($title->name),
+                'id'   => $title->id,
+                'text' => sprintf('%s (%s)', strip_tags($title->name), $title->corporation->name),
             ]);
         }
 
-     $titles = CorporationTitle::where('name', 'like', '%' . $request->query('q', '') . '%')
-          ->orderBy('name')
-          ->get()
-          ->map(function ($title) {
-           return [
-               'id' => $title->title_id,
-               'text' =>  strip_tags($title->name),
-           ];
-      });
+        $titles = CorporationTitle::with('corporation')
+            ->where('name', 'like', '%' . $request->query('q', '') . '%')
+            ->orderBy('name')
+            ->get()
+            ->map(function ($title) {
+                return [
+                    'id'   => $title->id,
+                    'text' => sprintf('%s (%s)', strip_tags($title->name), $title->corporation->name),
+                ];
+            });
 
         return response()->json([
             'results' => $titles,

@@ -64,12 +64,11 @@ class ResearchDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->postAjax()
             ->columns($this->getColumns())
             ->parameters([
                 'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); }',
             ])
-            ->ajax([
+            ->postAjax([
                 'data' => 'function(d) { d.characters = $("#dt-character-selector").val(); }',
             ]);
     }

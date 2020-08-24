@@ -64,7 +64,7 @@ class DataTable extends AbstractAssetDataTable
     {
         return parent::html()
             ->removeColumn('location_flag')
-            ->ajax([
+            ->postAjax([
                 'data' => 'function(d) { d.characters = $("#dt-character-selector").val(); }',
             ]);
     }

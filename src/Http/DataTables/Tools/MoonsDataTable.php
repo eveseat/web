@@ -88,13 +88,12 @@ class MoonsDataTable extends DataTable
     {
         return $this->builder()
             ->dom('Brtip')
-            ->postAjax()
             ->columns($this->getColumns())
             ->addAction()
             ->parameters([
                 'drawCallback' => 'function(settings) { ids_to_names(); $(".moon-stats .badge-success").text(settings.json.stats.ubiquitous); $(".moon-stats .badge-primary").text(settings.json.stats.common); $(".moon-stats .badge-info").text(settings.json.stats.uncommon); $(".moon-stats .badge-warning").text(settings.json.stats.rare); $(".moon-stats .badge-danger").text(settings.json.stats.exceptional); $(".moon-stats .badge-default").text(settings.json.stats.standard); }',
             ])
-            ->ajax([
+            ->postAjax([
                 'data' => 'function (d) {
                     d.region_id         = $("#dt-filters-region").val() === null ? 0 : $("#dt-filters-region").val();
                     d.constellation_id  = $("#dt-filters-constellation").val() === null ? 0 : $("#dt-filters-constellation").val();

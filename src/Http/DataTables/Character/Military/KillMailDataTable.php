@@ -37,7 +37,7 @@ class KillMailDataTable extends AbstractKillMailDataTable
     public function html()
     {
         return parent::html()
-            ->ajax([
+            ->postAjax([
                 'data' => 'function(d) { d.characters = $("#dt-character-selector").val(); }',
             ]);
     }

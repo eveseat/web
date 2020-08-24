@@ -44,7 +44,7 @@ class Station extends AbstractColumn
             return $row->station->name;
 
         if ($row->location_type == 'item') {
-            if ($row->location_flag == 'Hangar') {
+            if (in_array($row->location_flag, ['Deliveries', 'Hangar'])) {
                 if ($row->container->location_flag == 'AssetSafety')
                     return $row->container->station->name;
 
