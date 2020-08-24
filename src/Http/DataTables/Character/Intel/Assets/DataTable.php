@@ -48,7 +48,7 @@ class DataTable extends AbstractAssetDataTable
         // battleship fitting flags
         'FrigateEscapeBay',
         // tech 3 fitting flags
-        'SubSystemSlot0', 'SubSystemSlot1', 'SubSystemSlot2', 'SubSystemSlot3', 'SubSystemSlot4', 'SubSystemSlot5', 'SubSystemSlot6', 'SubSystemSlot7',
+        'SubSystemSlot0', 'SubSystemSlot1', 'SubSystemSlot2', 'SubSystemSlot3', 'SubSystemSlot4', 'SubSystemSlot5', 'SubSystemSlot6', 'SubSystemSlot7', 'HiddenModifiers',
         // capitals fitting flags
         'FighterBay', 'FleetHangar', 'SpecializedFuelBay', 'ShipHangar',
         // Loaded fighters fitting flags
