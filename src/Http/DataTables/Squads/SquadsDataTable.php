@@ -101,6 +101,7 @@ class SquadsDataTable extends DataTable
     public function html()
     {
         return $this->builder()
+            ->postAjax()
             ->columns($this->columns())
             ->addAction();
     }

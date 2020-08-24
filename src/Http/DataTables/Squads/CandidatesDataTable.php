@@ -70,6 +70,7 @@ class CandidatesDataTable extends DataTable
     public function html()
     {
         return $this->builder()
+            ->postAjax()
             ->columns($this->columns())
             ->parameters([
                 'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); }',
