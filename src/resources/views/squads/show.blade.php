@@ -217,7 +217,7 @@
     </div>
   @endcan
 
-  @if(!$squad->is_classified or $squad->getIsModeratorAttribute() or auth()->user()->isAdmin())
+  @can('squads.show_members', $squad)
   <div class="row">
     <div class="col-12">
       <div class="card">
@@ -263,7 +263,7 @@
       </div>
     </div>
   </div>
-  @endif
+  @endcan
 
   @can('squads.manage_candidates', $squad)
     @if($squad->type == 'manual' && $squad->moderators->isNotEmpty())

@@ -118,7 +118,8 @@ class SquadPolicy
      */
     public function show_members(User $user, Squad $squad)
     {
-        return $squad->members->where('id', $user->id)->isNotEmpty() ||
+        return ($squad->members->where('id', $user->id)->isNotEmpty() &&
+            !$squad->is_classified) ||
             $squad->moderators->where('id', $user->id)->isNotEmpty();
     }
 

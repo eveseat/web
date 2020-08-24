@@ -60,7 +60,7 @@
                     @endif
                   </div>
                   <div class="col-sm-10">
-                    <div>If a squad is classified, then only moderators will be able to see the member list</div>
+                    <div>If a squad is classified, then only moderators and administrators will be able to see the member list</div>
                   </div>
                 </div>
                 <input type="hidden" name="description" value="{{ $squad->getOriginal('filters') }}" />
