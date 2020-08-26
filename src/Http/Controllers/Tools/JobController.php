@@ -22,6 +22,8 @@
 
 namespace Seat\Web\Http\Controllers\Tools;
 
+use Illuminate\Http\Request;
+use Seat\Eveapi\Jobs\AbstractAuthCharacterJob;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Http\Controllers\Controller;
 
@@ -32,41 +34,56 @@ use Seat\Web\Http\Controllers\Controller;
 class JobController extends Controller
 {
     /**
-     * @param int    $character_id
-     * @param string $job_name
+     * @param \Illuminate\Http\Request $request
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function getDispatchUpdateJob(int $character_id, string $job_name)
+    public function getDispatchUpdateJob(Request $request)
     {
+        $request->validate([
+            'character_id' => 'integer|required',
+            'job_name' => sprintf('in:character.%s|required', implode(',character.', array_keys(config('web.jobnames.character')))),
+        ]);
 
-        $job_classes = collect(config('web.jobnames.' . $job_name));
+        $job_classes = collect(config('web.jobnames.' . $request->input('job_name')));
 
-        // If we could not find the jon to dispatch, log this as a
+        // If we could not find the job to dispatch, log this as a
         // security event as someone might be trying something funny.
         if ($job_classes->isEmpty()) {
 
-            $message = 'Failed to find the jobclass for job_name ' . $job_name .
+            $message = 'Failed to find the class for job_name ' . $request->input('job_name') .
                 ' Someone might be trying something strange.';
 
             event('security.log', [$message, 'jobdispatching']);
 
-            return redirect()->back()->with('warning', trans('web::seat.update_failed'));
+            return response()->json([
+                'message' => trans('web::seat.update_failed'),
+            ], 400);
         }
 
         // Find the refresh token for the jobs.
-        $refresh_token = RefreshToken::findOrFail($character_id);
+        $refresh_token = RefreshToken::find($request->input('character_id'));
 
         // Dispatch jobs for each jobclass
-        $job_classes->each(function ($job) use ($refresh_token, $character_id) {
+        $job_classes->each(function ($job) use ($refresh_token, $request) {
 
-            (new $job($refresh_token))->dispatch($refresh_token)->onQueue('high');
+            if (is_subclass_of($job, AbstractAuthCharacterJob::class)) {
+                if (is_null($refresh_token)) {
+                    return response()->json([
+                        'message' => trans('web::seat.update_failed'),
+                    ], 400);
+                }
 
-            logger()->info('Manually dispatched job \'' . $job . '\' for character ' .
-                $character_id);
+                (new $job($refresh_token))->dispatch($refresh_token)->onQueue('high');
+            } else {
+                (new $job($request->input('character_id')))->dispatch($request->input('character_id'))->onQueue('high');
+            }
+
+            logger()->info(sprintf('Manually dispatched job "%s" for character "%d"', $job,
+                $request->input('character_id')));
         });
 
         // Redirect back!
-        return redirect()->back()->with('success', trans('web::seat.update_dispatched'));
+        return response()->json([], 200);
     }
 }
