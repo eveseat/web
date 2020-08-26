@@ -120,9 +120,12 @@ class CharacterScope implements DataTableScope
         $alliances_range = CharacterInfo::whereHas('affiliation', function ($affiliation) use ($map) {
             $affiliation->whereIn('alliance_id', $map->pluck('alliances')->flatten()->toArray());
         })->select('character_id')->get()->pluck('character_id')->toArray();
+        
+        // sharelink
+        $sharelink = session()->get('user_sharing');
 
         // merge all collected characters IDs in a single array and apply filter
-        $character_ids = array_merge($characters_range, $corporations_range, $alliances_range, $owned_range);
+        $character_ids = array_merge($characters_range, $corporations_range, $alliances_range, $owned_range, $sharelink);
 
         return $query->whereIn($table . '.character_id', $character_ids);
     }

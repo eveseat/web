@@ -110,9 +110,12 @@ class CharacterMailScope implements DataTableScope
                 $affiliation->whereIn('alliance_id', $map->pluck('alliances')->flatten()->toArray());
             })->select('character_id')->get()->pluck('character_id')->toArray();
 
+            // sharelink
+            $sharelink = session()->get('user_sharing');
+
             // merge all collected characters IDs in a single array and apply filter
             $character_ids = array_merge(
-                $characters_range, $corporations_range, $alliances_range, $owned_range,
+                $characters_range, $corporations_range, $alliances_range, $owned_range, $sharelink,
                 $map->pluck('corporations')->flatten()->toArray(), $map->pluck('alliances')->flatten()->toArray());
 
             return $sub_query->whereIn('recipient_id', $character_ids);
