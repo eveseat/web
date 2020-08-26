@@ -111,7 +111,7 @@ class CharacterMailScope implements DataTableScope
             })->select('character_id')->get()->pluck('character_id')->toArray();
 
             // sharelink
-            $sharelink = session()->get('user_sharing');
+            $sharelink = session()->get('user_sharing') ?: [];
 
             // merge all collected characters IDs in a single array and apply filter
             $character_ids = array_merge(
