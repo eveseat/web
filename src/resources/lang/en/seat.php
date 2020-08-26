@@ -445,6 +445,7 @@ return [
     'update_failed'                => 'Update job dispatching failed. Please contact your SeAT administrator.',
     'update_skill_queue'           => 'Update Skill Queue',
     'update_assets'                => 'Update Assets',
+    'update_blueprints'            => 'Update Blueprints',
     'update_bookmarks'             => 'Update Bookmarks',
     'update_calendar'              => 'Update Calendar',
     'update_contacts'              => 'Update Contacts',
@@ -459,8 +460,9 @@ return [
     'update_notifications'         => 'Update Notifications',
     'update_pi'                    => 'Update Planetary Interaction',
     'update_research'              => 'Update Agents Research',
-    'update_skills'              => 'Update Skills',
-    'update_wallet'              => 'Update Wallet',
+    'update_skills'                => 'Update Skills',
+    'update_standings'             => 'Update Standings',
+    'update_wallet'                => 'Update Wallet',
 
     // Character
     'joined_curr_corp'             => 'Joined Current Corporation',

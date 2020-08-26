@@ -7,6 +7,13 @@
   <div class="card">
     <div class="card-header">
       <h3 class="card-title">{{ trans_choice('web::seat.standings', 0) }}</h3>
+      <div class="card-tools">
+        <div class="input-group input-group-sm">
+          <button type="button" class="btn btn-sm btn-light" data-widget="esi-update" data-character="{{ $character->character_id }}" data-job="character.standings">
+            <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_standings') }}"></i>
+          </button>
+        </div>
+      </div>
     </div>
     <div class="card-body">
       <div class="mb-3">

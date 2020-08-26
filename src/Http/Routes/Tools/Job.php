@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/dispatch/{character_id}/{job_name}', [
+Route::post('/dispatch', [
     'middleware' => 'can:queue.character_job,character_id',
     'as'         => 'tools.jobs.dispatch',
     'uses'       => 'JobController@getDispatchUpdateJob',

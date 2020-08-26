@@ -11,10 +11,9 @@
       <h3 class="card-title">{{ trans('web::seat.market') }}</h3>
       <div class="card-tools">
         <div class="input-group input-group-sm">
-          <a href="{{ route('tools.jobs.dispatch', ['character_id' => $character->character_id, 'job_name' => 'character.market']) }}"
-             class="btn btn-sm btn-light">
+          <button type="button" class="btn btn-sm btn-light" data-widget="esi-update" data-character="{{ $character->character_id }}" data-job="character.market">
             <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_market') }}"></i>
-          </a>
+          </button>
         </div>
       </div>
     </div>

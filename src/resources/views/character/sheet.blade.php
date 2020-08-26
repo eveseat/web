@@ -18,10 +18,9 @@
             </h3>
             <div class="card-tools">
               <div class="input-group input-group-sm">
-                <a href="{{ route('tools.jobs.dispatch', ['character_id' => $character->character_id, 'job_name' => 'character.skillqueue']) }}"
-                   class="btn btn-sm btn-light">
+                <button type="button" class="btn btn-sm btn-light" data-widget="esi-update" data-character="{{ $character->character_id }}" data-job="character.skillqueue">
                   <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_skill_queue') }}"></i>
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -221,10 +220,9 @@
           </h3>
           <div class="card-tools">
             <div class="input-group input-group-sm">
-              <a href="{{ route('tools.jobs.dispatch', ['character_id' => $character->character_id, 'job_name' => 'character.corphistory']) }}"
-                 class="btn btn-sm btn-light">
+              <button type="button" class="btn btn-sm btn-light" data-widget="esi-update" data-character="{{ $character->character_id }}" data-job="character.corphistory">
                 <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_corp_history') }}"></i>
-              </a>
+              </button>
             </div>
           </div>
         </div>

@@ -11,9 +11,9 @@
       <h3 class="card-title">Assets</h3>
       <div class="card-tools">
         <div class="input-group input-group-sm">
-            <a href="{{ route('tools.jobs.dispatch', ['character_id' => $character->character_id, 'job_name' => 'character.assets']) }}" class="btn btn-sm btn-light">
-              <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_assets') }}"></i>
-            </a>
+          <button type="button" class="btn btn-sm btn-light" data-widget="esi-update" data-character="{{ $character->character_id }}" data-job="character.assets">
+            <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_assets') }}"></i>
+          </button>
         </div>
       </div>
     </div>
