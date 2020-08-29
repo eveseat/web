@@ -25,7 +25,7 @@ return [
     'constellation' => 'Konstellation(en)',
     'system'        => 'Sonnensystem(e)',
     'planet'        => 'Planet(en)',
-    'moon'          => 'Moon(de)',
+    'moon'          => 'Mond(e)',
     'indicator'     => 'Indikator(en)',
     'sovereignty'   => 'Souveränität',
 ];
