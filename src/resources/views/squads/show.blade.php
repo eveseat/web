@@ -354,6 +354,9 @@
         .on('submit', function (e) {
             e.preventDefault();
 
+            if (! $(this).find('select').val())
+                return;
+
             var button = $(this).find('.btn-success');
 
             button.attr('disabled', true);
