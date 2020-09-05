@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\Validation;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 /**
  * Class Squad.
@@ -37,7 +38,13 @@ class Squad extends FormRequest
     public function rules()
     {
         return [
-            'name'        => 'required|unique:squads|max:255',
+            'name' => [
+                'required',
+                $this->route()->parameter('squad') ?
+                    Rule::unique('squads', 'name')->ignore($this->route()->parameter('squad')) :
+                    Rule::unique('squads', 'name'),
+                'max:255',
+            ],
             'type'        => 'required|in:manual,auto,hidden',
             'description' => 'required',
             'logo'        => 'mimes:jpeg,jpg,png|max:2000',
