@@ -128,11 +128,12 @@ class SquadsController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param \Seat\Web\Http\Validation\Squad $request
      * @param \Seat\Web\Models\Squads\Squad $squad
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Squad $squad)
+    public function update(SquadValidation $request, Squad $squad)
     {
         $squad->name = $request->input('name');
         $squad->type = $request->input('type');
