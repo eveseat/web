@@ -123,6 +123,10 @@
 
     $('#squad-form').on('submit', function () {
         $('input[name="description"]').val(editor.getHtml());
+
+        if ($('input[name="description"]').val() === '<p><br></p>')
+            $('input[name="description"]').val('');
+
         $('input[name="filters"]').val(document.getElementById('filters-btn').dataset.filters);
     });
 
