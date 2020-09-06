@@ -57,8 +57,6 @@ class ContactCategoryScope implements DataTableScope
      */
     public function apply($query)
     {
-        return $query->whereHas('entity', function ($sub_query) {
-            return $sub_query->whereIn('category', $this->categories);
-        });
+        return $query->whereIn('contact_type', $this->categories);
     }
 }
