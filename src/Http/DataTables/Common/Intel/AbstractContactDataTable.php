@@ -44,7 +44,7 @@ abstract class AbstractContactDataTable extends DataTable
                 return view('web::partials.standing', ['standing' => $row->standing])->render();
             })
             ->editColumn('entity.name', function ($row) {
-                switch ($row->entity->category) {
+                switch ($row->contact_type) {
                     case 'alliance':
                         return view('web::partials.alliance', ['alliance' => $row->entity])->render();
                     case 'corporation':
