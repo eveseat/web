@@ -58,7 +58,7 @@ class HomeController extends Controller
         // TODO : switch to ajax calls
         $server_status = $this->getEveLastServerStatus();
         $total_character_isk = $this->getTotalCharacterIsk(auth()->user()->associatedCharacterIds());
-        $total_character_skillpoints = $this->getTotalCharacterSkillpoints(auth()->user()->main_character_id);
+        $total_character_skillpoints = $this->getTotalCharacterSkillpoints(auth()->user()->associatedCharacterIds());
         $total_character_killmails = $this->getTotalCharacterKillmails(auth()->user()->associatedCharacterIds());
         $total_character_mining = $this->getTotalCharacterMiningIsk(auth()->user()->associatedCharacterIds());
 
