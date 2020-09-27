@@ -67,10 +67,10 @@ trait Stats
      * @param int $character_id
      * @return int
      */
-    public function getTotalCharacterSkillpoints(int $character_id): ?int
+    public function getTotalCharacterSkillpoints(array $character_ids): ?int
     {
 
-        return CharacterInfoSkill::where('character_id', $character_id)
+        return CharacterInfoSkill::whereIn('character_id', $character_ids)
             ->sum('total_sp');
     }
 
