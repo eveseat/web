@@ -31,8 +31,8 @@
               <dt>{{ trans('web::seat.curr_training') }}</dt>
               <dd>
                 @if($character->skill_queue->where('finish_date', '>', carbon())->isNotEmpty())
-                  {{ $character->skill_queue->where('finish_date', '>', carbon())->sortByDesc('record_id')->first()->type->typeName }} to level
-                  <b>{{ $character->skill_queue->where('finish_date', '>', carbon())->sortByDesc('record_id')->first()->finished_level }}</b>
+                  {{ $character->skill_queue->where('finish_date', '>', carbon())->first()->type->typeName }} to level
+                  <b>{{ $character->skill_queue->where('finish_date', '>', carbon())->first()->finished_level }}</b>
                 @else
                   {{ trans('web::seat.no_skill_training') }}
                 @endif
@@ -41,9 +41,9 @@
               <dt>{{ trans('web::seat.skill_training_end') }}</dt>
               <dd>
                 @if($character->skill_queue->where('finish_date', '>', carbon())->isNotEmpty())
-                  {{ human_diff(carbon($character->skill_queue->where('finish_date', '>', carbon())->sortByDesc('record_id')->first()->finish_date)) }}
-                  on {{ carbon($character->skill_queue->where('finish_date', '>', carbon())->sortByDesc('record_id')->first()->finish_date)->toDateString() }}
-                  at {{ carbon($character->skill_queue->where('finish_date', '>', carbon())->sortByDesc('record_id')->first()->finish_date)->toTimeString() }}
+                  {{ human_diff(carbon($character->skill_queue->where('finish_date', '>', carbon())->first()->finish_date)) }}
+                  on {{ carbon($character->skill_queue->where('finish_date', '>', carbon())->first()->finish_date)->toDateString() }}
+                  at {{ carbon($character->skill_queue->where('finish_date', '>', carbon())->first()->finish_date)->toTimeString() }}
                 @else
                   {{ trans('web::seat.no_skill_training') }}
                 @endif
@@ -54,7 +54,7 @@
                 @if($character->skill_queue->isNotEmpty())
                   <ol class="skill-list">
 
-                    @foreach($character->skill_queue->where('finish_date', '>', carbon())->sortByDesc('record_id')->slice(1)->all() as $skill)
+                    @foreach($character->skill_queue->where('finish_date', '>', carbon())->slice(1)->all() as $skill)
 
                       <li>
                         <span class="col-md-8" data-toggle="tooltip" title=""
@@ -231,7 +231,7 @@
           @if($character->corporation_history->isNotEmpty())
             <ul class="list-unstyled">
 
-              @foreach($character->corporation_history->sortByDesc('start_date') as $history)
+              @foreach($character->corporation_history as $history)
 
                 <li>
                   {!! img('corporations', 'logo', $history->corporation_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
