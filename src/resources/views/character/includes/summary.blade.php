@@ -3,8 +3,20 @@
     <h3 class="card-title">{{ trans('web::seat.summary') }}</h3>
     <div class="card-tools">
       @if(! is_null($character->refresh_token))
+        @if($character->refresh_token->updated_at->lt(carbon()->subDay()))
+          <span class="text-warning">
+            <i class="fas fa-exclamation-circle" data-toggle="tooltip" title="Token has not been updated since more than a day, you should check your jobs."></i>
+          </span>
+        @else
+          <span class="text-success">
+            <i class="fas fa-check-circle" data-toggle="tooltip" title="This character has a valid registered token."></i>
+          </span>
+        @endif
         <span class="badge badge-secondary">{{ $character->refresh_token->user->characters->count() }}</span>
       @else
+        <span class="text-danger">
+          <i class="fas fa-times-circle" data-toggle="tooltip" title="You don't own any valid token for this character."></i>
+        </span>
         <span class="badge badge-secondary">0</span>
       @endif
     </div>
