@@ -58,7 +58,7 @@ class RolesDataTable extends DataTable
                     ->orderBy(DB::raw('COUNT(permission_id)'), $order)
                     ->groupBy('id', 'title', 'description');
             })
-            ->rawColumns(['permissions'])
+            ->rawColumns(['permissions', 'action'])
             ->make(true);
     }
 
