@@ -219,7 +219,8 @@ class LedgerController extends Controller
         return CorporationWalletJournal::select(DB::raw('DISTINCT MONTH(date) as month, YEAR(date) as year'))
             ->where('corporation_id', $corporation_id)
             ->whereIn('ref_type', $ref_types)
-            ->orderBy('date', 'desc')
+            ->orderBy('year', 'desc')
+            ->orderBy('month', 'desc')
             ->get();
     }
 
@@ -243,7 +244,7 @@ class LedgerController extends Controller
             ->whereYear('date', ! is_null($year) ? $year : date('Y'))
             ->whereMonth('date', ! is_null($month) ? $month : date('m'))
             ->groupBy($group_field)
-            ->orderBy(DB::raw('SUM(amount)'), 'desc')
+            ->orderBy('total', 'desc')
             ->get();
     }
 }
