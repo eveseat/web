@@ -198,7 +198,7 @@
 
       $(document)
           .on('click', '.pagination a', function(e) {
-              var keyword = $('input[name="search-squad]').val();
+              var keyword = $('input[name="search-squad"]').val();
               e.preventDefault();
 
               $('.pagination li').removeClass('active');
