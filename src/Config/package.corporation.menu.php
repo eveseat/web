@@ -96,7 +96,7 @@ return [
     [
         'name'           => 'customs-offices',
         'label'          => 'web::seat.customs-offices',
-        'permission'     => 'corporation.customs-office',
+        'permission'     => 'corporation.customs_office',
         'highlight_view' => 'customs-offices',
         'route'          => 'corporation.view.customs_offices',
     ],
