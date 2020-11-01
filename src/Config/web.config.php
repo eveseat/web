@@ -21,6 +21,6 @@
  */
 
 return [
-    'version'                  => '4.2.3',
+    'version'                  => '4.2.4',
     'queue_status_update_time' => 10 * 1000, // milliseconds = seconds x 1,000
 ];
