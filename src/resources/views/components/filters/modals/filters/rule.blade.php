@@ -5,7 +5,7 @@
       <label>Type</label>
       <select class="form-control rule-type">
         @foreach($filters as $filter)
-          <option value="{{ $filter->name }}" data-src="{{ $filter->src }}" data-path="{{ $filter->path }}" data-field="{{ $filter->field }}">{{ $filter->label }}</option>
+          <option value="{{ $filter->name }}" data-src="{{ is_array($filter->src) ? json_encode($filter->src) : $filter->src }}" data-path="{{ $filter->path }}" data-field="{{ $filter->field }}">{{ $filter->label }}</option>
         @endforeach
       </select>
     </div>
@@ -14,6 +14,8 @@
       <select class="form-control rule-operator">
         <option value="=">Is</option>
         <option value="<>">Is Not</option>
+        <option value=">">Is Greater Than</option>
+        <option value="<">Is Less Than</option>
         <option value="contains">Contains</option>
       </select>
     </div>

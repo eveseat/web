@@ -90,6 +90,7 @@
         (object) ['name' => 'corporation', 'src' => route('fastlookup.corporations'), 'path' => 'characters.affiliation', 'field' => 'corporation_id', 'label' => 'Corporation'],
         (object) ['name' => 'alliance', 'src' => route('fastlookup.alliances'), 'path' => 'characters.affiliation', 'field' => 'alliance_id', 'label' => 'Alliance'],
         (object) ['name' => 'skill', 'src' => route('fastlookup.skills'), 'path' => 'characters.skills', 'field' => 'skill_id', 'label' => 'Skill'],
+        (object) ['name' => 'skill_level', 'src' => [['id' => 1, 'text' => 'Level 1'], ['id' => 2, 'text' => 'Level 2'], ['id' => 3, 'text' => 'Level 3'], ['id' => 4, 'text' => 'Level 4'], ['id' => 5, 'text' => 'Level 5']], 'path' => 'characters.skills', 'field' => 'trained_skill_level', 'label' => 'Skill Level'],
         (object) ['name' => 'type', 'src' => route('fastlookup.items'), 'path' => 'characters.assets', 'field' => 'type_id', 'label' => 'Item'],
     ],
   ])

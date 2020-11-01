@@ -53,6 +53,11 @@
 
 @push('javascript')
   <script>
+    function isUrl(s) {
+      var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+      return regexp.test(s);
+    }
+
     function buildFilters(source)
     {
         var filters = {};
@@ -99,6 +104,27 @@
 
         $(e.target).closest('.card').find('.card-body').first().append(rule);
       })
+      .on('change', '.rule-type', function () {
+          let criteria = $(this).closest('.form-row').find('.rule-criteria');
+          let src = $('option:selected', $(this)).data('src');
+
+          // determine the filter type (closed list or lookup)
+          if (isUrl(src)) {
+              criteria.select2({
+                  dropdownParent: $('#filters-modal'),
+                  ajax: {
+                      url: function () {
+                          return src;
+                      }
+                  }
+              });
+          } else {
+              criteria.select2({
+                  dropdownParent: $('#filters-modal'),
+                  data: src
+              });
+          }
+      })
       .on('click', '.btn-ruleset', function (e) {
         var group = $('#ruleset-template').clone();
         group.removeAttr('id');
@@ -141,30 +167,42 @@
 
                   node.find('.rule-operator').val(rule.operator);
 
-                  type = node.find('.rule-type');
-                  criteria = node.find('.rule-criteria');
+                  let type = node.find('.rule-type');
+                  let criteria = node.find('.rule-criteria');
 
                   type.val(rule.name);
 
-                  criteria.select2({
-                      dropdownParent: $('#filters-modal'),
-                      ajax: {
-                          url: function () {
-                              return $('option:selected', type).data('src');
+                  // determine the filter type (closed list or lookup)
+                  if (isUrl($('option:selected', type).data('src'))) {
+                      criteria.select2({
+                          dropdownParent: $('#filters-modal'),
+                          ajax: {
+                              url: function () {
+                                  return $('option:selected', type).data('src');
+                              }
                           }
-                      }
-                  });
+                      });
 
-                  criteria.append(new Option(rule.text, rule.criteria, true, true)).trigger('change');
-                  criteria.trigger({
-                      type: 'select2:select',
-                      params: {
-                          data: {
-                              text: rule.text,
-                              id: rule.criteria
-                          },
-                      }
-                  });
+                      criteria.append(new Option(rule.text, rule.criteria, true, true)).trigger('change');
+
+                      criteria.trigger({
+                          type: 'select2:select',
+                          params: {
+                              data: {
+                                  text: rule.text,
+                                  id: rule.criteria
+                              },
+                          }
+                      });
+                  } else {
+                      criteria.select2({
+                          dropdownParent: $('#filters-modal'),
+                          data: $('option:selected', type).data('src')
+                      });
+
+                      criteria.val(rule.criteria);
+                      criteria.trigger('change');
+                  }
 
                   modal.append(node);
               }
@@ -186,30 +224,42 @@
 
                           node.find('.rule-operator').val(ruleset_rule.operator);
 
-                          type = node.find('.rule-type');
-                          criteria = node.find('.rule-criteria');
+                          let type = node.find('.rule-type');
+                          let criteria = node.find('.rule-criteria');
 
                           type.val(ruleset_rule.name);
 
-                          criteria.select2({
-                              dropdownParent: $('#filters-modal'),
-                              ajax: {
-                                  url: function () {
-                                      return $('option:selected', type).data('src');
+                          // determine the filter type (closed list or lookup)
+                          if (isUrl($('option:selected', type).data('src'))) {
+                              criteria.select2({
+                                  dropdownParent: $('#filters-modal'),
+                                  ajax: {
+                                      url: function () {
+                                          return $('option:selected', type).data('src');
+                                      }
                                   }
-                              }
-                          });
+                              });
 
-                          criteria.append(new Option(ruleset_rule.text, ruleset_rule.criteria, true, true)).trigger('change');
-                          criteria.trigger({
-                              type: 'select2:select',
-                              params: {
-                                  data: {
-                                      text: ruleset_rule.text,
-                                      id: ruleset_rule.criteria
-                                  },
-                              }
-                          });
+                              criteria.append(new Option(ruleset_rule.text, ruleset_rule.criteria, true, true)).trigger('change');
+
+                              criteria.trigger({
+                                  type: 'select2:select',
+                                  params: {
+                                      data: {
+                                          text: ruleset_rule.text,
+                                          id: ruleset_rule.criteria
+                                      },
+                                  }
+                              });
+                          } else {
+                              criteria.select2({
+                                  dropdownParent: $('#filters-modal'),
+                                  data: $('option:selected', type).data('src')
+                              });
+
+                              criteria.val(ruleset_rule.criteria);
+                              criteria.trigger('change');
+                          }
 
                           ruleset.find('.card-body').append(node);
                       });
