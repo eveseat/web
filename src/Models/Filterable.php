@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use stdClass;
 
@@ -59,45 +60,112 @@ trait Filterable
                 // rules will determine all objects and ruleset in the current object root
                 $rules = property_exists($this->getFilters(), 'and') ? $this->getFilters()->and : $this->getFilters()->or;
 
-                foreach ($rules as $key => $rule) {
+                // sort rules by path
+                $sorted_rules = $this->sortFiltersByRelations($rules);
 
-                    // in case the current object contain a filter property, this is a rule object
-                    // add a query using proper words
-                    if (property_exists($rule, 'name')) {
-                        $query->$verb($rule->path, function ($sub_query) use ($rule) {
-                            if ($rule->operator === 'contains')
-                                $sub_query->whereJsonContains($rule->field, $rule->criteria);
-                            else
-                                $sub_query->where($rule->field, $rule->operator, $rule->criteria);
-                        });
-                    }
+                // TODO: find a way to handle this using recursive loop and determine common patterns
+                $sorted_rules->each(function ($rules_group, $path) use ($query, $verb) {
 
-                    // in case the current object is an array, this is a ruleset object
-                    if (property_exists($rule, 'or') || property_exists($rule, 'and')) {
+                    if (is_int($path)) {
 
-                        // verb will determine what kind of method we have to use (simple andWhere or orWhere)
-                        $ruleset_verb = property_exists($this->getFilters(), 'and') ? 'where' : 'orWhere';
+                        $parent_verb = $verb == 'whereHas' ? 'where' : 'orWhere';
 
-                        // add a complex sub_query using the current ruleset rules
-                        $query->$ruleset_verb(function ($sub_query) use ($rule) {
+                        $query->$parent_verb(function ($q2) use ($rules_group, $parent_verb) {
 
-                            // verb will determine what kind of method we have to use (simple andWhere or orWhere)
-                            $verb = property_exists($rule, 'and') ? 'whereHas' : 'orWhereHas';
+                            // all pairs will be group in distinct collection due to previous group by
+                            // as a result, we have to iterate over each members
+                            $rules_group->each(function ($rules) use ($parent_verb, $q2) {
 
-                            // rules will determine all objects and ruleset in the current object root
-                            $rules = property_exists($rule, 'and') ? $rule->and : $rule->or;
+                                // determine the match kind for the current pair
+                                // sort all rules from this pair in order to ensure relationship consistency
+                                $group_verb = property_exists($rules, 'and') ? 'whereHas' : 'orWhereHas';
+                                $rules_group = $this->sortFiltersByRelations(property_exists($rules, 'and') ?
+                                    $rules->and : $rules->or);
 
-                            foreach ($rules as $ruleset_rule) {
-                                $sub_query->$verb($ruleset_rule->path, function ($query) use ($ruleset_rule) {
-                                    if ($ruleset_rule->operator === 'contains')
-                                        $query->whereJsonContains($ruleset_rule->field, $ruleset_rule->criteria);
-                                    else
-                                        $query->where($ruleset_rule->field, $ruleset_rule->operator, $ruleset_rule->criteria);
+                                $rules_group->each(function ($rules, $path) use ($parent_verb, $group_verb, $q2) {
+
+                                    // prepare query from current pair group
+                                    $q2->$parent_verb(function ($q3) use ($rules, $path, $group_verb) {
+                                        $q3->$group_verb($path, function ($q4) use ($rules, $group_verb) {
+
+                                            // prevent dummy query by encapsulating rules outside relations
+                                            $q4->where(function ($q5) use ($rules, $group_verb) {
+                                                $this->applyRules($q5, $group_verb, $rules);
+                                            });
+                                        });
+                                    });
                                 });
-                            }
+                            });
+                        });
+
+                    } else {
+
+                        $rules = $rules_group;
+
+                        // using group by, we've pair all relationships by their top level relation
+                        // $query->whereHas('characters(.*)', function ($sub_query) { ... }
+                        $query->$verb($path, function ($q2) use ($rules, $verb) {
+
+                            // override the complete rule group with a global where.
+                            // doing it so will prevent SQL query like
+                            // (users.id = tokens.user_id OR character_id = ? OR character_id = ?)
+                            // when multiple rules are applied on same path.
+                            $q2->where(function ($q3) use ($rules, $verb) {
+                                $this->applyRules($q3, $verb, $rules);
+                            });
                         });
                     }
-                }
+                });
             })->exists();
+    }
+
+    /**
+     * @param array $rules
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    private function sortFiltersByRelations(array $rules)
+    {
+        return collect($rules)->sortBy('path')->groupBy(function ($rule) {
+            if (! property_exists($rule, 'path'))
+                return false;
+
+            $relation_members = explode('.', $rule->path);
+
+            return $relation_members[0];
+        });
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $group_verb
+     * @param array|\Illuminate\Support\Collection $rules
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    private function applyRules(Builder $query, string $group_verb, $rules)
+    {
+        $query_operator = $group_verb == 'whereHas' ? 'where' : 'orWhere';
+
+        foreach ($rules as $rule) {
+            $separator = strpos($rule->path, '.');
+
+            if ($separator === false) {
+                if ($rule->operator == 'contains') {
+                    $json_operator = $query_operator == 'where' ? 'whereJsonContains' : 'orWhereJsonContains';
+                    $query->$json_operator($rule->field, $rule->criteria);
+                } else {
+                    $query->$query_operator($rule->field, $rule->operator, $rule->criteria);
+                }
+            } else {
+                $relation = substr($rule->path, $separator + 1);
+
+                $query->$group_verb($relation, function ($sub_query) use ($rule, $query_operator) {
+                    $sub_query->$query_operator($rule->field, $rule->operator, $rule->criteria);
+                });
+            }
+        }
+
+        return $query;
     }
 }
