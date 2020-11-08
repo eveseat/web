@@ -715,6 +715,10 @@ return [
     'standings_builder'            => 'Standings Builder',
     'moons_reporter'               => 'Moons Reporter',
 
+    // Error pages
+    'duplicate_account'            => 'Duplicate Account',
+    'duplicate_account_msg'        => 'We are unable to proceed your change. The character :name is already used in another account. Please contact your administrator to regulate the situation.',
+
     // Footer
     'web_version'                  => 'Web Version',
     'docker_version'               => 'Docker Version',
