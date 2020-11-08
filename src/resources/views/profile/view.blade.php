@@ -17,25 +17,6 @@
 
           <legend>{{ trans('web::seat.user_interface') }}</legend>
 
-          @if(auth()->user()->name != 'admin')
-          <!-- Select Basic -->
-          <div class="form-group row">
-            <label class="col-md-4 col-form-label"
-                   for="main_character_id">{{ trans('web::seat.main_character') }}</label>
-            <div class="col-md-6">
-              <select id="main_character_id" name="main_character_id" class="form-control" style="width: 100%;">
-                @foreach($characters as $character)
-                  <option value="{{ $character->character_id }}"
-                          @if(setting('main_character_id') == $character->id)
-                          selected
-                      @endif>
-                    {{ $character->name }}</option>
-                @endforeach
-              </select>
-            </div>
-          </div>
-          @endif
-
           <!-- Select Basic -->
           <div class="form-group row">
             <label class="col-md-4 col-form-label" for="skin">{{ trans('web::seat.seat_skin') }}</label>
