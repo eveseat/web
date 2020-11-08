@@ -91,7 +91,6 @@ class ProfileController extends Controller
     {
 
         // Update the rest of the settings
-        Profile::set('main_character_id', $request->main_character_id);
         Profile::set('skin', $request->skin);
         Profile::set('language', $request->language);
         Profile::set('sidebar', $request->sidebar);
@@ -124,7 +123,7 @@ class ProfileController extends Controller
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
     public function postChangeCharacter(Request $request)
     {
@@ -144,6 +143,28 @@ class ProfileController extends Controller
             // Log this attempt
             event('security.log', ['Character change denied ', 'authentication']);
             abort(404);
+        }
+
+        // Determine if the new main character has been used as an account
+        // In such case, determine if it's tied to tokens
+        // If the user is non longer related to token, log event and drop the account
+        // Otherwise, redirect the user to an error page.
+        $existing_account = User::withCount('refresh_tokens')->where('name', $requested_character->name)->first();
+
+        if ($existing_account) {
+            if ($existing_account->refresh_tokens_count > 0) {
+                return response()->view('web::error', [
+                    'error_name' => trans('web::seat.duplicate_account'),
+                    'error_message' => trans('web::seat.duplicate_account_msg', ['name' => $requested_character->name]),
+                ], 500);
+            }
+
+            $existing_account->delete();
+
+            event('security.log', [
+                sprintf('Account %s has been removed by %s due to main character update', $existing_account->name, auth()->user()->name),
+                'authentication',
+            ]);
         }
 
         // Find the new user to login as.
