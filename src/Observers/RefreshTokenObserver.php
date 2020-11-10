@@ -23,15 +23,17 @@
 namespace Seat\Web\Observers;
 
 use Exception;
+use Illuminate\Database\Eloquent\Model;
 use Seat\Console\Bus\CharacterTokenShouldUpdate;
 use Seat\Eveapi\Models\RefreshToken;
+use Seat\Web\Models\User;
 
 /**
  * Class RefreshTokenObserver.
  *
  * @package Seat\Web\Observers
  */
-class RefreshTokenObserver
+class RefreshTokenObserver extends AbstractSquadObserver
 {
     /**
      * @param \Seat\Eveapi\Models\RefreshToken $token
@@ -44,5 +46,22 @@ class RefreshTokenObserver
         } catch (Exception $e) {
             logger()->error($e->getMessage());
         }
+    }
+
+    /**
+     * @param \Seat\Eveapi\Models\RefreshToken $token
+     */
+    public function deleted(RefreshToken $token)
+    {
+        $this->updateUserSquads($token);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function findRelatedUser(Model $fired_model): ?User
+    {
+        return User::with('squads')
+            ->find($fired_model->user_id);
     }
 }
