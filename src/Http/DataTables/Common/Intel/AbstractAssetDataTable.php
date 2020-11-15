@@ -41,7 +41,7 @@ abstract class AbstractAssetDataTable extends DataTable
         $location_column = $this->getLocationFlagColumn($this);
         $station_column = $this->getStationColumn($this);
 
-        return datatables()
+        $ajax = datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('type.typeName', function ($row) {
                 return view('web::partials.type', [
@@ -88,8 +88,13 @@ abstract class AbstractAssetDataTable extends DataTable
 
                 return '';
             })
-            ->rawColumns(['type.typeName', 'type.volume', 'action'])
-            ->make(true);
+            ->rawColumns(['type.typeName', 'type.volume', 'action']);
+
+        foreach ($this->extraColumns() as $name => $column) {
+            $ajax->addColumn($name, $column);
+        }
+
+        return $ajax->make(true);
     }
 
     /**
@@ -102,6 +107,16 @@ abstract class AbstractAssetDataTable extends DataTable
             ->columns($this->getColumns())
             ->orderBy(0, 'asc')
             ->addAction();
+    }
+
+    /**
+     * Give ability to define extra column to base class
+     *
+     * @return \Seat\Web\Http\DataTables\Common\IColumn[]
+     */
+    protected function extraColumns(): array
+    {
+        return [];
     }
 
     /**
