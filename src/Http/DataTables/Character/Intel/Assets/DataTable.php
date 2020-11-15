@@ -24,6 +24,7 @@ namespace Seat\Web\Http\DataTables\Character\Intel\Assets;
 
 use Seat\Eveapi\Models\Assets\CharacterAsset;
 use Seat\Web\Http\DataTables\Character\Intel\Assets\Columns\LocationFlag;
+use Seat\Web\Http\DataTables\Character\Intel\Assets\Columns\Owner;
 use Seat\Web\Http\DataTables\Character\Intel\Assets\Columns\Station;
 use Seat\Web\Http\DataTables\Common\IColumn;
 use Seat\Web\Http\DataTables\Common\Intel\AbstractAssetDataTable;
@@ -65,6 +66,13 @@ class DataTable extends AbstractAssetDataTable
     {
         return parent::html()
             ->removeColumn('location_flag')
+            ->addColumnBefore([
+                'data' => 'character.name',
+                'title' => trans_choice('web::seat.owner', 1),
+                'orderable' => false,
+                'searchable' => false,
+            ])
+            ->orders([1, 'asc'])
             ->postAjax([
                 'data' => 'function(d) { d.characters = $("#dt-character-selector").val(); }',
             ]);
@@ -101,5 +109,15 @@ class DataTable extends AbstractAssetDataTable
     protected function getStationColumn($table): IColumn
     {
         return new Station($table);
+    }
+
+    /**
+     * @return \Seat\Web\Http\DataTables\Common\IColumn[]
+     */
+    protected function extraColumns(): array
+    {
+        return [
+            'character.name' => new Owner($this),
+        ];
     }
 }
