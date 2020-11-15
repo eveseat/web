@@ -110,7 +110,7 @@ abstract class AbstractAssetDataTable extends DataTable
     }
 
     /**
-     * Give ability to define extra column to base class
+     * Give ability to define extra column to base class.
      *
      * @return \Seat\Web\Http\DataTables\Common\IColumn[]
      */
