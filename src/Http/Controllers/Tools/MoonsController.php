@@ -111,6 +111,9 @@ class MoonsController extends Controller
     {
         $report = $request->input('moon-report');
 
+        // enforce tabulation spacer
+        $report = preg_replace("/[ ]{4}/", "\t", $report);
+
         $parser = new MoonReport();
         $parser->parse($report);
 
