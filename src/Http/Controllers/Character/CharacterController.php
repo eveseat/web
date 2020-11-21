@@ -93,4 +93,18 @@ class CharacterController extends Controller
 
         return view('web::character.includes.modals.fitting.content', compact('ship'));
     }
+
+    /**
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function destroy(CharacterInfo $character)
+    {
+        $character->delete();
+
+        return redirect()->back()
+            ->with('success', sprintf('Character %s has been successfully removed.', $character->name));
+    }
 }

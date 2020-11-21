@@ -62,6 +62,9 @@ class CorporationDataTable extends DataTable
 
                 return '';
             })
+            ->editColumn('action', function ($row) {
+                return view('web::corporation.partials.delete', compact('row'));
+            })
             ->rawColumns(['name', 'ceo.name', 'alliance.name'])
             ->make(true);
     }
@@ -73,6 +76,7 @@ class CorporationDataTable extends DataTable
     {
         return $this->builder()
             ->columns($this->getColumns())
+            ->addAction()
             ->orderBy(0, 'asc')
             ->postAjax()
             ->parameters([

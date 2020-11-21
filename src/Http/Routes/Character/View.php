@@ -23,7 +23,10 @@
 Route::get('/')->name('character.list')->uses('CharacterController@index');
 
 // TODO : surround with global superuser
-Route::get('/delete/{character}')->name('character.delete')->uses('CharacterController@deleteCharacter');
+Route::delete('/{character}')
+    ->name('character.destroy')
+    ->uses('CharacterController@destroy')
+    ->middleware('can:global.superuser');
 
 Route::get('/{character}', [
     'as'   => 'character.view.default',

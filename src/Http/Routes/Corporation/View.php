@@ -28,6 +28,10 @@ Route::get('/{corporation}')
     ->name('corporation.view.default')
     ->uses('CorporationsController@show');
 
+Route::delete('/{corporation}')
+    ->name('corporation.destroy')
+    ->uses('CorporationsController@destroy');
+
 Route::get('/{corporation}/assets')
     ->name('corporation.view.assets')
     ->uses('AssetsController@getAssets')

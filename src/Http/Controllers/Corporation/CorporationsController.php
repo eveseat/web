@@ -35,6 +35,11 @@ use Seat\Web\Http\DataTables\Scopes\CorporationScope;
  */
 class CorporationsController extends Controller
 {
+    /**
+     * @param \Seat\Web\Http\DataTables\Corporation\CorporationDataTable $dataTable
+     *
+     * @return mixed
+     */
     public function index(CorporationDataTable $dataTable)
     {
         if (Gate::allows('global.superuser'))
@@ -79,5 +84,19 @@ class CorporationsController extends Controller
 
         // Redirect away from the original request
         return redirect()->route('auth.unauthorized');
+    }
+
+    /**
+     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function destroy(CorporationInfo $corporation)
+    {
+        $corporation->delete();
+
+        return redirect()->back()
+            ->with('success', sprintf('Corporation %s has been successfully removed.', $corporation->name));
     }
 }
