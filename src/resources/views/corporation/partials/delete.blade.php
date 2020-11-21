@@ -1,5 +1,9 @@
 @can('global.superuser')
-  <a class="btn btn-danger btn-sm confirmlink" href="{{ route('corporation.delete', ['corporation_id' => $row->corporation_id]) }}">
-    {{ trans('web::seat.delete') }}
-  </a>
+  <form method="post" action="{{ route('corporation.destroy', ['corporation' => $row->corporation_id]) }}">
+    {!! csrf_field() !!}
+    {!! method_field('delete') !!}
+    <button class="btn btn-xs btn-danger">
+      <i class="fas fa-trash-alt"></i>
+      {{ trans('web::seat.delete') }}
+    </button>
 @endcan

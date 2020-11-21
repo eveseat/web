@@ -58,6 +58,9 @@ class CharacterDataTable extends DataTable
 
                 return '';
             })
+            ->editColumn('action', function ($row) {
+                return view('web::character.partials.delete', compact('row'));
+            })
             ->rawColumns([
                 'name', 'affiliation.corporation.name', 'affiliation.alliance.name', 'affiliation.faction.name',
             ])
@@ -72,6 +75,7 @@ class CharacterDataTable extends DataTable
         return $this->builder()
             ->postAjax()
             ->columns($this->getColumns())
+            ->addAction()
             ->orderBy(0, 'asc')
             ->parameters([
                 'drawCallback' => 'function() { ids_to_names(); }',
