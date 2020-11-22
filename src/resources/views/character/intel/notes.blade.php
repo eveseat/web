@@ -14,7 +14,7 @@
           <!-- Button trigger modal -->
           <button type="button" data-toggle="modal" data-target="#note-create-modal"
                   data-object-type="{{ Seat\Eveapi\Models\Character\CharacterInfo::class }}"
-                  data-object-id="{{ request()->character_id }}" class="btn btn-sm btn-success">
+                  data-object-id="{{ request()->character->character_id }}" class="btn btn-sm btn-success">
             <i class="fas fa-plus-square"></i>
             Add Note
           </button>
