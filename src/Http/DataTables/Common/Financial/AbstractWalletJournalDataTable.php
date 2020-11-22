@@ -44,7 +44,7 @@ abstract class AbstractWalletJournalDataTable extends DataTable
                 return view('web::partials.date', ['datetime' => $row->date])->render();
             })
             ->editColumn('ref_type', function ($row) {
-                return trans(sprintf('web::wallet.%s', $row->ref_type));
+                return view('web::common.wallets.journaltranstype', compact('row'));
             })
             ->editColumn('amount', function ($row) {
                 return number($row->amount);
