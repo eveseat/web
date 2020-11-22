@@ -61,6 +61,11 @@ Route::get('/items', [
     'uses' => 'FastLookupController@getItems',
 ]);
 
+Route::get('/scopes', [
+    'as'   => 'fastlookup.scopes',
+    'uses' => 'FastLookupController@getScopes',
+]);
+
 Route::get('/skills', [
     'as'   => 'fastlookup.skills',
     'uses' => 'FastLookupController@getSkills',

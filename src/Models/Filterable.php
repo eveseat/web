@@ -65,7 +65,10 @@ trait Filterable
                     // add a query using proper words
                     if (property_exists($rule, 'name')) {
                         $query->$verb($rule->path, function ($sub_query) use ($rule) {
-                            $sub_query->where($rule->field, $rule->operator, $rule->criteria);
+                            if ($rule->operator === 'contains')
+                                $sub_query->whereJsonContains($rule->field, $rule->criteria);
+                            else
+                                $sub_query->where($rule->field, $rule->operator, $rule->criteria);
                         });
                     }
 
@@ -86,7 +89,10 @@ trait Filterable
 
                             foreach ($rules as $ruleset_rule) {
                                 $sub_query->$verb($ruleset_rule->path, function ($query) use ($ruleset_rule) {
-                                    $query->where($ruleset_rule->field, $ruleset_rule->operator, $ruleset_rule->criteria);
+                                    if ($ruleset_rule->operator === 'contains')
+                                        $query->whereJsonContains($ruleset_rule->field, $ruleset_rule->criteria);
+                                    else
+                                        $query->where($ruleset_rule->field, $ruleset_rule->operator, $ruleset_rule->criteria);
                                 });
                             }
                         });

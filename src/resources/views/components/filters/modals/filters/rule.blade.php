@@ -14,6 +14,7 @@
       <select class="form-control rule-operator">
         <option value="=">Is</option>
         <option value="<>">Is Not</option>
+        <option value="contains">Contains</option>
       </select>
     </div>
     <div class="form-group col-7">

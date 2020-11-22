@@ -67,6 +67,7 @@
 
   @include('web::components.filters.modals.filters.filters', [
     'filters' => [
+        (object) ['name' => 'scopes', 'src' => route('fastlookup.scopes'), 'path' => 'refresh_tokens', 'field' => 'scopes', 'label' => 'Scopes'],
         (object) ['name' => 'character', 'src' => route('fastlookup.characters'), 'path' => 'characters', 'field' => 'character_infos.character_id', 'label' => 'Character'],
         (object) ['name' => 'title', 'src' => route('fastlookup.titles'), 'path' => 'characters.titles', 'field' => 'id', 'label' => 'Title'],
         (object) ['name' => 'corporation', 'src' => route('fastlookup.corporations'), 'path' => 'characters.affiliation', 'field' => 'corporation_id', 'label' => 'Corporation'],
