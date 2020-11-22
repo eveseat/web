@@ -451,6 +451,42 @@ class FastLookupController extends Controller
 
     /**
      * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getScopes(Request $request)
+    {
+        $scopes = config('eveapi.scopes', []);
+
+        if ($request->query('_type', 'query') == 'find') {
+            if (in_array($request->query('q', ''), $scopes))
+                return response()->json([
+                    'id' => $request->query('q', ''),
+                    'text' => $request->query('q', ''),
+                ]);
+
+            return response()->json();
+        }
+
+        if (! empty($request->query('q', '')))
+            $scopes = array_filter($scopes, function ($scope) use ($request) {
+                return strpos($scope, strtolower($request->query('q'))) !== false;
+            });
+
+        $scopes = collect($scopes)->map(function ($scope) {
+            return [
+                'id' => $scope,
+                'text' => $scope,
+            ];
+        })->values();
+
+        return response()->json([
+            'results' => $scopes,
+        ]);
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function getSystems(Request $request)
