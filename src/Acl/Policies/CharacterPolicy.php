@@ -24,6 +24,7 @@ namespace Seat\Web\Acl\Policies;
 
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
+use Seat\Eveapi\Models\Corporation\CorporationRole;
 use Seat\Web\Models\Acl\Permission;
 use Seat\Web\Models\User;
 
@@ -55,7 +56,8 @@ class CharacterPolicy extends AbstractEntityPolicy
         return $this->userHasPermission($user, $ability, function () use ($user, $character, $ability) {
 
             // in case the user is owning requested character or is the CEO of it
-            if ($this->isOwner($user, $character) || $this->isValidSharingSession($character) || $this->isCeo($user, $character))
+            if ($this->isOwner($user, $character) || $this->isValidSharingSession($character)
+                || $this->isCeo($user, $character) || $this->isDirector($user, $character))
                 return true;
 
             // retrieve defined authorization for the requested user
@@ -105,6 +107,31 @@ class CharacterPolicy extends AbstractEntityPolicy
 
         // if user own the corporation CEO, return true.
         return in_array($corporation->ceo_id, $user->associatedCharacterIds());
+    }
+
+    /**
+     * @param \Seat\Web\Models\User $user
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
+     * @return bool
+     */
+    private function isDirector(User $user, CharacterInfo $character): bool
+    {
+        // retrieve corporation to which the character is assigned
+        $corporation_id = $character->affiliation->corporation_id ?? null;
+
+        // in case we were not able to find the corporation ID - assume the user is not Director of their corporation
+        if (is_null($corporation_id)) {
+            return false;
+        }
+
+        // attempt to retrieve roles for any associated character related to the corporation
+        $corporationRoles = CorporationRole::where('corporation_id', $corporation_id)
+            ->whereIn('character_id', $user->associatedCharacterIds())
+            ->where('role', 'Director')
+            ->where('type', 'roles')->get();
+
+        // if user has any director roles in the corporation return true
+        return $corporationRoles->count() > 0;
     }
 
     /**
