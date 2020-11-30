@@ -27,6 +27,7 @@ use Illuminate\Http\Request;
 use Seat\Eveapi\Models\Alliances\Alliance;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
+use Seat\Eveapi\Models\Corporation\CorporationRole;
 use Seat\Eveapi\Models\Corporation\CorporationTitle;
 use Seat\Eveapi\Models\Sde\Constellation;
 use Seat\Eveapi\Models\Sde\InvType;
@@ -524,6 +525,31 @@ class FastLookupController extends Controller
 
         return response()->json([
             'results' => $systems,
+        ]);
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getRoles(Request $request)
+    {
+        $roles = CorporationRole::where('type', 'roles')
+            ->whereRaw('role LIKE ?', ["%{$request->query('q', '')}%"]);
+
+        $roles = $roles->select('role')
+            ->groupBy('role')
+            ->orderBy('role')
+            ->get()
+            ->map(function ($role) {
+                return [
+                    'id'       => $role->role,
+                    'text'     => $role->role,
+                ];
+            });
+
+        return response()->json([
+            'results' => $roles,
         ]);
     }
 }

@@ -74,6 +74,7 @@
         (object) ['name' => 'alliance', 'src' => route('fastlookup.alliances'), 'path' => 'characters.affiliation', 'field' => 'alliance_id', 'label' => 'Alliance'],
         (object) ['name' => 'skill', 'src' => route('fastlookup.skills'), 'path' => 'characters.skills', 'field' => 'skill_id', 'label' => 'Skill'],
         (object) ['name' => 'type', 'src' => route('fastlookup.items'), 'path' => 'characters.assets', 'field' => 'type_id', 'label' => 'Item'],
+        (object) ['name' => 'role', 'src' => route('fastlookup.roles'), 'path' => 'characters.corporation_roles', 'field' => 'role', 'label' => 'Role'],
     ],
   ])
 @endsection
