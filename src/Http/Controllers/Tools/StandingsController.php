@@ -26,14 +26,18 @@ use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Seat\Eveapi\Models\Contacts\AllianceContact;
 use Seat\Eveapi\Models\Contacts\CharacterContact;
 use Seat\Eveapi\Models\Contacts\CorporationContact;
 use Seat\Eveapi\Models\Universe\UniverseName;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Scopes\Filters\StandingsProfileScope;
+use Seat\Web\Http\DataTables\Tools\StandingsDataTable;
 use Seat\Web\Http\Validation\StandingsBuilder;
 use Seat\Web\Http\Validation\StandingsElementAdd;
 use Seat\Web\Http\Validation\StandingsExistingElementAdd;
 use Seat\Web\Models\StandingsProfile;
+use Seat\Web\Models\StandingsProfileStanding;
 
 /**
  * Class StandingsController.
@@ -89,17 +93,15 @@ class StandingsController extends Controller
 
     /**
      * @param int $id
-     *
+     * @param StandingsDataTable $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getStandingEdit(int $id)
+    public function getStandingEdit(int $id, StandingsDataTable $dataTable)
     {
+        $standing = StandingsProfile::findOrFail($id);
 
-        $standing = StandingsProfile::with('entities')
-            ->find($id);
-
-        return view('web::tools.standings.edit',
-            compact('standing'));
+        return $dataTable->addScope(new StandingsProfileScope($id))
+            ->render('web::tools.standings.edit', compact('standing'));
     }
 
     /**
@@ -210,7 +212,13 @@ class StandingsController extends Controller
         ]);
 
         $standings_profile = StandingsProfile::find($request->input('id'));
-        $standings_profile->entities()->attach($entity_id, ['standing' => $standing]);
+
+        $standing = new StandingsProfileStanding([
+            'entity_id' => $entity_id,
+            'standing' =>$standing,
+            'category' => $entity_type
+        ]);
+        $standings_profile->entities()->save($standing);
 
         return redirect()->back()
             ->with('success', 'Element Added to Profile!');
@@ -231,14 +239,36 @@ class StandingsController extends Controller
         // Character Contacts
         if ($request->filled('character')) {
             foreach ($this->getCharacterContacts(collect($request->input('character')))->get() as $contact) {
-                $standings_profile->entities()->attach($contact->contact_id, ['standing' => $contact->standing]);
+                $standing = new StandingsProfileStanding([
+                    'entity_id' => $contact->contact_id,
+                    'standing' => $contact->standing,
+                    'category' => $contact->contact_type
+                ]);
+                $standings_profile->entities()->save($standing);
             }
         }
 
         // Corporation Contacts
         if ($request->filled('corporation')) {
             foreach ($this->getCorporationContacts($request->input('corporation')) as $contact) {
-                $standings_profile->entities()->attach($contact->contact_id, ['standing' => $contact->standing]);
+                $standing = new StandingsProfileStanding([
+                    'entity_id' => $contact->contact_id,
+                    'standing' => $contact->standing,
+                    'category' => $contact->contact_type
+                ]);
+                $standings_profile->entities()->save($standing);
+            }
+        }
+
+        // Alliance Contacts
+        if ($request->filled('alliance')) {
+            foreach ($this->getAllianceContacts($request->input('alliance')) as $contact) {
+                $standing = new StandingsProfileStanding([
+                    'entity_id' => $contact->contact_id,
+                    'standing' => $contact->standing,
+                    'category' => $contact->contact_type
+                ]);
+                $standings_profile->entities()->save($standing);
             }
         }
 
@@ -256,9 +286,8 @@ class StandingsController extends Controller
     public function getRemoveElementFromProfile(int $element_id, int $profile_id)
     {
 
-        // Get the standings profile that will be updated.
-        $standings_profile = StandingsProfile::find($profile_id);
-        $standings_profile->entities()->detach($element_id);
+        StandingsProfileStanding::where('standings_profile_id', $profile_id)
+            ->where('entity_id', $element_id)->delete();
 
         return redirect()->back()
             ->with('success', 'Standing removed!');
@@ -295,6 +324,21 @@ class StandingsController extends Controller
     {
 
         return CorporationContact::where('corporation_id', $corporation_id)
+            ->orderBy('standing', 'desc')
+            ->get();
+    }
+
+    /**
+     * Return the contacts list for an alliance.
+     *
+     * @param int $alliance_id
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    private function getAllianceContacts(int $alliance_id): Collection
+    {
+
+        return AllianceContact::where('alliance_id', $alliance_id)
             ->orderBy('standing', 'desc')
             ->get();
     }

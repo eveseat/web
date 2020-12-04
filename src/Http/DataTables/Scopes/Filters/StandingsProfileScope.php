@@ -20,33 +20,38 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\Validation;
+namespace Seat\Web\Http\DataTables\Scopes\Filters;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Yajra\DataTables\Contracts\DataTableScope;
 
-class StandingsBuilder extends FormRequest
+/**
+ * StandingsProfileScope.
+ *
+ * Filters DataTable data by standings_profile_id
+ */
+class StandingsProfileScope implements DataTableScope
 {
     /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
+     * @var int
      */
-    public function authorize()
-    {
+    private $profile_id;
 
-        return true;
+    /**
+     * StandingsProfileScope constructor.
+     *
+     * @param int $profile_id
+     */
+    public function __construct(int $profile_id) {
+        $this->profile_id = $profile_id;
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Apply a query scope.
      *
-     * @return array
+     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
      */
-    public function rules()
-    {
-
-        return [
-            'name' => 'required|regex:/^[a-zA-Z0-9\s]+$/|unique:standings_profiles,name',
-        ];
+    public function apply($query) {
+        return $query->where('standings_profile_id', $this->profile_id);
     }
 }
