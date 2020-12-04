@@ -56,7 +56,7 @@ class StandingsDataTable extends DataTable
                     return '<span class="badge badge-success">' . $row->standing . '</span>';
                 if ($row->standing < 0)
                     return '<span class="badge badge-danger">' . $row->standing . '</span>';
-                
+
                 return '<span class="badge badge-dark">' . $row->standing . '</span>';
             })
             ->editColumn('entity_name.name', function ($row) {
