@@ -208,7 +208,7 @@ class StandingsController extends Controller
             'entity_id' => $entity_id,
         ], [
             'name'     => $entity_name,
-            'category' => $entity_type
+            'category' => $entity_type,
         ]);
 
         $standings_profile = StandingsProfile::find($request->input('id'));
@@ -216,7 +216,7 @@ class StandingsController extends Controller
         $standing = new StandingsProfileStanding([
             'entity_id' => $entity_id,
             'standing' =>$standing,
-            'category' => $entity_type
+            'category' => $entity_type,
         ]);
         $standings_profile->entities()->save($standing);
 

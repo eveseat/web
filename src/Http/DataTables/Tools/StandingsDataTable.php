@@ -48,6 +48,7 @@ class StandingsDataTable extends DataTable
                     case 'alliance':
                         return '<span class="badge badge-info">' . ucfirst($row->category) . '</span>';
                 }
+
                 return '<span class="badge badge-dark">' . ucfirst($row->category) . '</span>';
             })
             ->editColumn('standing', function ($row) {
@@ -55,6 +56,7 @@ class StandingsDataTable extends DataTable
                     return '<span class="badge badge-success">' . $row->standing . '</span>';
                 if ($row->standing < 0)
                     return '<span class="badge badge-danger">' . $row->standing . '</span>';
+                
                 return '<span class="badge badge-dark">' . $row->standing . '</span>';
             })
             ->editColumn('entity_name.name', function ($row) {
