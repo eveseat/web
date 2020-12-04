@@ -42,11 +42,11 @@ class StandingsDataTable extends DataTable
             ->editColumn('category', function ($row) {
                 switch($row->category) {
                     case 'character':
-                        return '<span class="badge badge-success">' . ucfirst($row->category) . '</span>';
+                        return '<span><i class="fas fa-user"></i> ' . ucfirst($row->category) . '</span>';
                     case 'corporation':
-                        return '<span class="badge badge-primary">' . ucfirst($row->category) . '</span>';
+                        return '<span><i class="fas fa-building"></i> ' . ucfirst($row->category) . '</span>';
                     case 'alliance':
-                        return '<span class="badge badge-info">' . ucfirst($row->category) . '</span>';
+                        return '<span><i class="fas fa-star"></i> ' . ucfirst($row->category) . '</span>';
                 }
 
                 return '<span class="badge badge-dark">' . ucfirst($row->category) . '</span>';

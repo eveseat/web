@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Schema;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
-class AddTypeToStandingsProfileStandingsTable extends Migration
+class AddCategoryToStandingsProfileStandingsTable extends Migration
 {
     /**
      * Run the migrations.
