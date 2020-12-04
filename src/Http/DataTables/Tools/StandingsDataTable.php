@@ -41,11 +41,11 @@ class StandingsDataTable extends DataTable
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('category', function ($row) {
                 switch($row->category) {
-                    case('character'):
+                    case 'character':
                         return '<span class="badge badge-success">' . ucfirst($row->category) . '</span>';
-                    case('corporation'):
+                    case 'corporation':
                         return '<span class="badge badge-primary">' . ucfirst($row->category) . '</span>';
-                    case('alliance'):
+                    case 'alliance':
                         return '<span class="badge badge-info">' . ucfirst($row->category) . '</span>';
                 }
                 return '<span class="badge badge-dark">' . ucfirst($row->category) . '</span>';
@@ -59,11 +59,11 @@ class StandingsDataTable extends DataTable
             })
             ->editColumn('entity_name.name', function ($row) {
                 switch($row->category) {
-                    case('character'):
+                    case 'character':
                         return view('web::partials.character', ['character' => $row])->render();
-                    case('corporation'):
+                    case 'corporation':
                         return view('web::partials.corporation', ['corporation' => $row])->render();
-                    case('alliance'):
+                    case 'alliance':
                         return view('web::partials.alliance', ['alliance' => $row])->render();
                 }
 

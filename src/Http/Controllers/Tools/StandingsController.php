@@ -208,7 +208,7 @@ class StandingsController extends Controller
             'entity_id' => $entity_id,
         ], [
             'name'     => $entity_name,
-            'category' => $entity_type,
+            'category' => $entity_type
         ]);
 
         $standings_profile = StandingsProfile::find($request->input('id'));
@@ -242,7 +242,7 @@ class StandingsController extends Controller
                 $standing = new StandingsProfileStanding([
                     'entity_id' => $contact->contact_id,
                     'standing' => $contact->standing,
-                    'category' => $contact->contact_type
+                    'category' => $contact->contact_type,
                 ]);
                 $standings_profile->entities()->save($standing);
             }
@@ -254,7 +254,7 @@ class StandingsController extends Controller
                 $standing = new StandingsProfileStanding([
                     'entity_id' => $contact->contact_id,
                     'standing' => $contact->standing,
-                    'category' => $contact->contact_type
+                    'category' => $contact->contact_type,
                 ]);
                 $standings_profile->entities()->save($standing);
             }
@@ -266,7 +266,7 @@ class StandingsController extends Controller
                 $standing = new StandingsProfileStanding([
                     'entity_id' => $contact->contact_id,
                     'standing' => $contact->standing,
-                    'category' => $contact->contact_type
+                    'category' => $contact->contact_type,
                 ]);
                 $standings_profile->entities()->save($standing);
             }

@@ -23,7 +23,6 @@
 namespace Seat\Web\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Seat\Eveapi\Models\Universe\UniverseName;
 
 /**
  * Class StandingsProfile.
@@ -63,6 +62,6 @@ class StandingsProfile extends Model
     public function entities()
     {
 
-        return $this->hasMany(StandingsProfileStanding::class,'standings_profile_id');
+        return $this->hasMany(StandingsProfileStanding::class, 'standings_profile_id');
     }
 }
