@@ -532,13 +532,13 @@ class FastLookupController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getRoles(Request $request)
+    public function getCorporationRoles(Request $request)
     {
         $roles = CorporationRole::where('type', 'roles')
             ->whereRaw('role LIKE ?', ["%{$request->query('q', '')}%"]);
 
         $roles = $roles->select('role')
-            ->groupBy('role')
+            ->distinct('role')
             ->orderBy('role')
             ->get()
             ->map(function ($role) {

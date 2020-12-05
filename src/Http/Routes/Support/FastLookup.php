@@ -88,5 +88,5 @@ Route::get('/systems', [
 
 Route::get('/roles', [
     'as'   => 'fastlookup.roles',
-    'uses' => 'FastLookupController@getRoles',
+    'uses' => 'FastLookupController@getCorporationRoles',
 ]);
