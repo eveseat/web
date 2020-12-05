@@ -104,13 +104,10 @@ class CorporationPolicy extends AbstractEntityPolicy
      */
     private function isDirector(User $user, CorporationInfo $corporation)
     {
-        $corporationRoles = CorporationRole::where('corporation_id', $corporation->corporation_id)
+        return CorporationRole::where('corporation_id', $corporation->corporation_id)
             ->whereIn('character_id', $user->associatedCharacterIds())
             ->where('role', 'Director')
-            ->where('type', 'roles')->get();
-
-        // if user has any director roles in the corporation return true
-        return $corporationRoles->count() > 0;
+            ->where('type', 'roles')->exists();
     }
 
     /**

@@ -125,13 +125,10 @@ class CharacterPolicy extends AbstractEntityPolicy
         }
 
         // attempt to retrieve roles for any associated character related to the corporation
-        $corporationRoles = CorporationRole::where('corporation_id', $corporation_id)
+        return CorporationRole::where('corporation_id', $corporation_id)
             ->whereIn('character_id', $user->associatedCharacterIds())
             ->where('role', 'Director')
-            ->where('type', 'roles')->get();
-
-        // if user has any director roles in the corporation return true
-        return $corporationRoles->count() > 0;
+            ->where('type', 'roles')->exists();
     }
 
     /**
