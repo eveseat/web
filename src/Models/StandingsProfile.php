@@ -23,7 +23,6 @@
 namespace Seat\Web\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Seat\Eveapi\Models\Universe\UniverseName;
 
 /**
  * Class StandingsProfile.
@@ -50,18 +49,19 @@ class StandingsProfile extends Model
     public function delete()
     {
 
-        $this->entities()->detach();
+        foreach ($this->entities as $entity) {
+            $entity->delete();
+        }
 
         return parent::delete();
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function entities()
     {
 
-        return $this->belongsToMany(UniverseName::class, 'standings_profile_standings', 'standings_profile_id', 'entity_id')
-            ->withPivot('standing');
+        return $this->hasMany(StandingsProfileStanding::class, 'standings_profile_id');
     }
 }

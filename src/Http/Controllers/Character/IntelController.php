@@ -622,7 +622,7 @@ class IntelController extends Controller
                 'character_affiliations.alliance_id',
                 'character_affiliations.faction_id',
                 'standings_profile_standings.standing',
-                'universe_names.category as standing_type',
+                'standings_profile_standings.category as standing_type',
                 'universe_names.entity_id as standing_match_on'
             )->leftJoin('character_wallet_journals', function ($join) {
 
@@ -659,7 +659,7 @@ class IntelController extends Controller
             })
             ->where('character_wallet_journals.character_id', $character_id)
             ->where('standings_profile_standings.standings_profile_id', $profile_id)
-            ->groupBy('universe_names.entity_id', 'character_id', 'corporation_id', 'alliance_id', 'faction_id', 'standing', 'category');
+            ->groupBy('universe_names.entity_id', 'character_id', 'corporation_id', 'alliance_id', 'faction_id', 'standing', 'standings_profile_standings.category');
 
     }
 

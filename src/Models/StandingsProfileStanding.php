@@ -20,33 +20,31 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\Validation;
+namespace Seat\Web\Models;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Database\Eloquent\Model;
+use Seat\Eveapi\Models\Universe\UniverseName;
 
-class StandingsBuilder extends FormRequest
+/**
+ * Class StandingsProfileStanding.
+ * @package Seat\Web\Models
+ */
+class StandingsProfileStanding extends Model
 {
     /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
+     * @var string
      */
-    public function authorize()
-    {
-
-        return true;
-    }
+    protected $table = 'standings_profile_standings';
 
     /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
+     * @var array
      */
-    public function rules()
-    {
+    protected $fillable = ['standings_profile_id', 'entity_id', 'standing', 'category'];
 
-        return [
-            'name' => 'required|regex:/^[a-zA-Z0-9\s]+$/|unique:standings_profiles,name',
-        ];
+    public $timestamps = false;
+
+    public function entity_name()
+    {
+        return $this->hasOne(UniverseName::class, 'entity_id', 'entity_id');
     }
 }

@@ -34,6 +34,13 @@
             </div>
           </div>
 
+          <div class="form-group row">
+            <label for="alliancestanding" class="col-form-label col-md-4">Alliances</label>
+            <div class="col-md-8">
+              <select id="alliancestanding" name="alliance" style="width: 100%;"></select>
+            </div>
+          </div>
+
         </div><!-- /.box-body -->
 
         <div class="box-footer">
@@ -113,55 +120,7 @@
       <h3 class="card-title">Current Standings</h3>
     </div>
     <div class="card-body">
-
-      <table class="table table-sm table-condensed table-hover">
-        <thead>
-          <tr>
-            <th>Type</th>
-            <th>Name</th>
-            <th>Standing</th>
-          </tr>
-        </thead>
-        <tbody>
-
-          @foreach($standing->entities->sortByDesc('pivot.standing') as $entity)
-
-            <tr class="
-              @if($entity->pivot->standing > 0)
-                table-success
-              @elseif($entity->pivot->standing < 0)
-                table-danger
-              @endif
-            ">
-              <td>{{ ucfirst($entity->category) }}</td>
-              <td>
-                @switch($entity->category)
-                  @case('character')
-                    @include('web::partials.character', ['character' => $entity])
-                    @break
-                  @case('corporation')
-                    @include('web::partials.corporation', ['corporation' => $entity])
-                    @break
-                  @case('alliance')
-                    @include('web::partials.alliance', ['alliance' => $entity])
-                    @break
-                @endswitch
-              </td>
-              <td>{!! view('web::partials.standing', ['standing' => $entity->pivot->standing]) !!}</td>
-              <td>
-                <a href="{{ route('tools.standings.edit.remove', ['entity_id' => $entity->entity_id, 'profile_id' => $request->id]) }}"
-                   type="button" class="btn btn-danger btn-sm">
-                  <i class="fas fa-trash-alt"></i>
-                  {{ trans('web::seat.delete') }}
-                </a>
-              </td>
-            </tr>
-
-          @endforeach
-
-        </tbody>
-      </table>
-
+      {!! $dataTable->table(['class' => 'table table-hover']) !!}
     </div>
   </div>
 
@@ -212,8 +171,19 @@
     minimumInputLength: 3
   })
 
+  $("select#alliancestanding").select2({
+    placeholder: "{{ trans('web::seat.select_item_add') }}",
+    ajax: {
+      url: "{{ route('fastlookup.alliances') }}",
+      dataType: 'json',
+      cache: true,
+    },
+    minimumInputLength: 3
+  })
+
 </script>
 
+{!! $dataTable->scripts() !!}
 @include('web::includes.javascript.id-to-name')
 
 @endpush
