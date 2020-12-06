@@ -40,6 +40,7 @@ class CreateRefreshTokensTestTable extends Migration
         Schema::create('refresh_tokens', function (Blueprint $table) {
 
             $table->bigInteger('character_id')->primary();
+            $table->unsignedSmallInteger('version');
             $table->bigInteger('user_id');
             $table->mediumText('refresh_token');
             $table->longText('scopes');
