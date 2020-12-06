@@ -46,6 +46,7 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">{{ $skill_group->first()->type->group->groupName }}</h3>
+                @if($character->refresh_token)
                 <div class="card-tools">
                   <div class="input-group input-group-sm">
                     <button type="button" class="btn btn-sm btn-light" data-widget="esi-update" data-character="{{ $character->character_id }}" data-job="character.skills">
@@ -53,6 +54,7 @@
                     </button>
                   </div>
                 </div>
+                @endif
               </div>
               <div class="card-body p-0">
                 <table class="table table-striped table-hover table-condensed table-sm">
