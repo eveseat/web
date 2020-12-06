@@ -21,13 +21,13 @@
  */
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+use Seat\Web\Models\Squads\Squad;
+use Seat\Web\Models\User;
 
 /**
- * Class CreateRefreshTokensTestTable.
+ * Class UpgradeSquadsMaj4Min4Hf1.
  */
-class CreateRefreshTokensTestTable extends Migration
+class UpgradeSquadsMaj4Min4Hf1 extends Migration
 {
     /**
      * Run the migrations.
@@ -36,20 +36,18 @@ class CreateRefreshTokensTestTable extends Migration
      */
     public function up()
     {
+        Squad::where('type', 'auto')->get()->each(function ($squad) {
+            User::chunk(100, function ($users) use ($squad) {
+                $users->each(function ($user) use ($squad) {
+                    $is_member = $squad->members()->where('id', $user->id)->exists();
 
-        Schema::create('refresh_tokens', function (Blueprint $table) {
+                    if ($is_member && ! $squad->isEligible($user))
+                        $squad->members()->detach($user->id);
 
-            $table->bigInteger('character_id')->primary();
-            $table->unsignedSmallInteger('version');
-            $table->bigInteger('user_id');
-            $table->mediumText('refresh_token');
-            $table->longText('scopes');
-            $table->dateTime('expires_on');
-            $table->text('token');
-            $table->string('character_owner_hash');
-
-            $table->timestamps();
-            $table->softDeletes();
+                    if (! $is_member && $squad->isEligible($user))
+                        $squad->members()->attach($user->id);
+                });
+            });
         });
     }
 
@@ -61,6 +59,5 @@ class CreateRefreshTokensTestTable extends Migration
     public function down()
     {
 
-        Schema::drop('refresh_tokens');
     }
 }
