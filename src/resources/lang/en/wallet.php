@@ -104,6 +104,7 @@ return [
     'duel_wager_escrow' => 'Duel Wager Escrow',
     'duel_wager_payment' => 'Duel Wager Payment',
     'duel_wager_refund' => 'Duel Wager Refund',
+    'ess_escrow_transfer' => 'ESS Escrow Transfer',
     'factory_slot_rental_fee' => 'Factory Slot Rental Fee',
     'gm_cash_transfer' => 'Gm Cash Transfer',
     'industry_job_tax' => 'Industry Job Tax',
