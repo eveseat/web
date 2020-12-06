@@ -11,6 +11,7 @@
       <h3 class="card-title">
         {{ trans('web::seat.pi') }}
       </h3>
+      @if($character->refresh_token)
       <div class="card-tools">
         <div class="input-group input-group-sm">
           <button type="button" class="btn btn-sm btn-light" data-widget="esi-update" data-character="{{ $character->character_id }}" data-job="character.pi">
@@ -18,6 +19,7 @@
           </button>
         </div>
       </div>
+      @endif
     </div>
     <div class="card-body">
 

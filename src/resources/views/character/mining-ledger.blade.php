@@ -8,6 +8,7 @@
   <div class="card">
     <div class="card-header">
       <h3 class="card-title">{{ trans('web::seat.mining') }}</h3>
+      @if($character->refresh_token)
       <div class="card-tools">
         <div class="input-group input-group-sm">
           <button type="button" class="btn btn-sm btn-light" data-widget="esi-update" data-character="{{ $character->character_id }}" data-job="character.mining">
@@ -15,6 +16,7 @@
           </button>
         </div>
       </div>
+      @endif
     </div>
     <div class="card-body">
       <div class="mb-3">

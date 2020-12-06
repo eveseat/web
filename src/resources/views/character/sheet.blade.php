@@ -16,6 +16,7 @@
             <h3 class="card-title">
               {{ trans('web::seat.skills_summary') }}
             </h3>
+            @if($character->refresh_token)
             <div class="card-tools">
               <div class="input-group input-group-sm">
                 <button type="button" class="btn btn-sm btn-light" data-widget="esi-update" data-character="{{ $character->character_id }}" data-job="character.skillqueue">
@@ -23,6 +24,7 @@
                 </button>
               </div>
             </div>
+            @endif
           </div>
           <div class="card-body">
 
@@ -218,6 +220,7 @@
           <h3 class="card-title">
             {{ trans('web::seat.employment_history') }}
           </h3>
+          @if($character->refresh_token)
           <div class="card-tools">
             <div class="input-group input-group-sm">
               <button type="button" class="btn btn-sm btn-light" data-widget="esi-update" data-character="{{ $character->character_id }}" data-job="character.corphistory">
@@ -225,6 +228,7 @@
               </button>
             </div>
           </div>
+          @endif
         </div>
         <div class="card-body overflow-auto" style="max-height: 200px;">
 
