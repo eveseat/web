@@ -46,7 +46,6 @@ class ProfileSettings extends FormRequest
     public function rules()
     {
 
-        $allowed_main_character_ids = implode(',', auth()->user()->associatedCharacterIds());
         $allowed_skins = implode(',', Profile::$options['skins']);
         $allowed_languages = implode(',', array_map(function ($entry) {
             return $entry['short'];
@@ -61,7 +60,6 @@ class ProfileSettings extends FormRequest
             $this->request->set('thousand_seperator', ' ');
 
         return [
-            'main_character_id'   => auth()->user()->name == 'admin' ? 'optional' : 'required|in:' . $allowed_main_character_ids,
             'skin'                => 'required|in:' . $allowed_skins,
             'language'            => 'required|in:' . $allowed_languages,
             'sidebar'             => 'required|in:' . $allowed_sidebar,
