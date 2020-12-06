@@ -24,6 +24,8 @@ namespace Seat\Web\Http\DataTables\Scopes;
 
 use Illuminate\Support\Facades\Gate;
 use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
+use Seat\Eveapi\Models\Corporation\CorporationRole;
 use Yajra\DataTables\Contracts\DataTableScope;
 
 /**
@@ -124,8 +126,24 @@ class CharacterScope implements DataTableScope
         // sharelink
         $sharelink = session()->get('user_sharing') ?: [];
 
+        $associated_ceo_corporations = CorporationInfo::whereIn('ceo_id', $owned_range)->get();
+        $ceo_range = [];
+        foreach ($associated_ceo_corporations as $corporation) {
+            $ceo_range += $corporation->characters->pluck('character_id')->values()->toArray();
+        }
+
+        $associated_corporations = auth()->user()->characters->load('affiliation')->pluck('affiliation.corporation_id')->values()->toArray();
+        $director_roles_corporations = CorporationRole::whereIn('corporation_id', $associated_corporations)->whereIn('character_id', $owned_range)
+            ->where('role', 'Director')->where('type', 'roles')
+            ->pluck('corporation_id')->values()->toArray();
+        $director_corporations = CorporationInfo::with('characters')->whereIn('corporation_id', $director_roles_corporations)->get();
+        $director_range = [];
+        foreach ($director_corporations as $corporation) {
+            $director_range += $corporation->characters->pluck('character_id')->values()->toArray();
+        }
+
         // merge all collected characters IDs in a single array and apply filter
-        $character_ids = array_merge($characters_range, $corporations_range, $alliances_range, $owned_range, $sharelink);
+        $character_ids = array_merge($characters_range, $corporations_range, $alliances_range, $owned_range, $sharelink, $ceo_range, $director_range);
 
         return $query->whereIn($table . '.character_id', $character_ids);
     }

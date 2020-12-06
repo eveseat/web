@@ -24,6 +24,7 @@ namespace Seat\Web\Acl\Policies;
 
 use Illuminate\Support\Facades\Cache;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
+use Seat\Eveapi\Models\Corporation\CorporationRole;
 use Seat\Web\Acl\EsiRolesMap;
 use Seat\Web\Models\Acl\Permission;
 use Seat\Web\Models\User;
@@ -54,8 +55,8 @@ class CorporationPolicy extends AbstractEntityPolicy
 
         return $this->userHasPermission($user, $ability, function () use ($user, $corporation, $ability) {
 
-            // in case the user is corporation CEO
-            if ($this->isCeo($user, $corporation))
+            // in case the user is corporation CEO or Director
+            if ($this->isCeo($user, $corporation) || $this->isDirector($user, $corporation))
                 return true;
 
             // in case the user is owning a role in-game mapped to this ability
@@ -94,6 +95,19 @@ class CorporationPolicy extends AbstractEntityPolicy
     {
         // if user own the corporation CEO, return true.
         return in_array($corporation->ceo_id, $user->associatedCharacterIds());
+    }
+
+    /**
+     * @param \Seat\Web\Models\User $user
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
+     * @return bool
+     */
+    private function isDirector(User $user, CorporationInfo $corporation)
+    {
+        return CorporationRole::where('corporation_id', $corporation->corporation_id)
+            ->whereIn('character_id', $user->associatedCharacterIds())
+            ->where('role', 'Director')
+            ->where('type', 'roles')->exists();
     }
 
     /**

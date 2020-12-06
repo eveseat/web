@@ -24,6 +24,7 @@ namespace Seat\Web\Http\DataTables\Scopes;
 
 use Illuminate\Support\Facades\Gate;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
+use Seat\Eveapi\Models\Corporation\CorporationRole;
 use Yajra\DataTables\Contracts\DataTableScope;
 
 /**
@@ -115,8 +116,13 @@ class CorporationScope implements DataTableScope
         $alliances_range = CorporationInfo::whereIn('alliance_id', $map->pluck('alliances')->flatten()->toArray())
             ->select('corporation_id')->get()->pluck('corporation_id')->toArray();
 
+        $associated_corporations = auth()->user()->characters->load('affiliation')->pluck('affiliation.corporation_id')->values()->toArray();
+        $director_range = CorporationRole::whereIn('corporation_id', $associated_corporations)->whereIn('character_id', auth()->user()->associatedCharacterIds())
+            ->where('role', 'Director')->where('type', 'roles')
+            ->pluck('corporation_id')->values()->toArray();
+
         // merge all collected characters IDs in a single array and apply filter
-        $corporation_ids = array_merge($owner_range, $corporations_range, $alliances_range);
+        $corporation_ids = array_merge($owner_range, $corporations_range, $alliances_range, $director_range);
 
         return $query->whereIn($table . '.corporation_id', $corporation_ids);
     }
