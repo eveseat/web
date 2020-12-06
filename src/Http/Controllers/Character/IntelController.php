@@ -32,6 +32,7 @@ use Seat\Eveapi\Models\Wallet\CharacterWalletJournal;
 use Seat\Eveapi\Models\Wallet\CharacterWalletTransaction;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Intel\NoteDataTable;
+use Seat\Web\Http\DataTables\Scopes\CharacterNoteScope;
 use Seat\Web\Models\StandingsProfile;
 use Seat\Web\Models\User;
 use Yajra\DataTables\DataTables;
@@ -282,6 +283,7 @@ class IntelController extends Controller
      */
     public function notes(CharacterInfo $character, NoteDataTable $dataTable)
     {
+        $dataTable->addScope(new CharacterNoteScope([$character->character_id]));
         return $dataTable->render('web::character.intel.notes', compact('character'));
     }
 
