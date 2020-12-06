@@ -147,24 +147,38 @@ trait Filterable
     {
         $query_operator = $group_verb == 'whereHas' ? 'where' : 'orWhere';
 
-        foreach ($rules as $rule) {
-            $separator = strpos($rule->path, '.');
+        if (is_array($rules))
+            $rules = collect($rules);
 
-            if ($separator === false) {
-                if ($rule->operator == 'contains') {
-                    $json_operator = $query_operator == 'where' ? 'whereJsonContains' : 'orWhereJsonContains';
-                    $query->$json_operator($rule->field, $rule->criteria);
-                } else {
-                    $query->$query_operator($rule->field, $rule->operator, $rule->criteria);
-                }
+        $rules->sortBy('path')->groupBy('path')->each(function ($relation_rules, $relation) use ($query, $query_operator) {
+            if (strpos($relation, '.') !== false) {
+                $relation = substr($relation, strpos($relation, '.') + 1);
+
+                $query->whereHas($relation, function ($q2) use ($query_operator, $relation_rules) {
+                    $q2->where(function ($q3) use ($relation_rules, $query_operator) {
+                        foreach ($relation_rules as $index => $rule) {
+                            if ($rule->operator == 'contains') {
+                                $json_operator = $query_operator == 'where' ? 'whereJsonContains' : 'orWhereJsonContains';
+                                $q3->$json_operator($rule->field, $rule->criteria);
+                            } else {
+                                $q3->$query_operator($rule->field, $rule->operator, $rule->criteria);
+                            }
+                        }
+                    });
+                });
             } else {
-                $relation = substr($rule->path, $separator + 1);
-
-                $query->$group_verb($relation, function ($sub_query) use ($rule, $query_operator) {
-                    $sub_query->$query_operator($rule->field, $rule->operator, $rule->criteria);
+                $query->where(function ($q2) use ($relation_rules, $query_operator) {
+                    foreach ($relation_rules as $index => $rule) {
+                        if ($rule->operator == 'contains') {
+                            $json_operator = $query_operator == 'where' ? 'whereJsonContains' : 'orWhereJsonContains';
+                            $q2->$json_operator($rule->field, $rule->criteria);
+                        } else {
+                            $q2->$query_operator($rule->field, $rule->operator, $rule->criteria);
+                        }
+                    }
                 });
             }
-        }
+        });
 
         return $query;
     }
