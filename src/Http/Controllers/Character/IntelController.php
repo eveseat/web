@@ -284,6 +284,7 @@ class IntelController extends Controller
     public function notes(CharacterInfo $character, NoteDataTable $dataTable)
     {
         $dataTable->addScope(new CharacterNoteScope([$character->character_id]));
+
         return $dataTable->render('web::character.intel.notes', compact('character'));
     }
 
