@@ -21,20 +21,18 @@
  */
 
 use Faker\Generator;
-use Seat\Eveapi\Models\RefreshToken;
+use Seat\Eveapi\Models\Character\CharacterRole;
 
-$factory->define(RefreshToken::class, function (Generator $faker) {
+$factory->define(CharacterRole::class, function (Generator $faker) {
+
+    $roles = [];
+
+    for ($i = 1; $i <= 500; $i++) {
+        $roles[] = 'role_' . $i;
+    }
+
     return [
-        'character_id'         => $faker->numberBetween(98000000, 98001794),
-        'version'              => $faker->numberBetween(1, RefreshToken::CURRENT_VERSION),
-        'user_id'              => $faker->numberBetween(1, 10),
-        'refresh_token'        => $faker->sha256,
-        'scopes'               => [
-            'esi-characters.read_agents_research.v1', 'esi-characters.read_blueprints.v1',
-            'esi-characters.read_fatigue.v1', ' esi-characters.read_medals.v1', 'esi-characters.read_notifications.v1',
-        ],
-        'expires_on'           => $faker->dateTime(),
-        'token'                => $faker->sha256,
-        'character_owner_hash' => $faker->sha256,
+        'role'  => $faker->unique()->randomElement($roles),
+        'scope' => $faker->randomElement(['roles', 'roles_at_hq', 'roles_at_base', 'roles_at_other']),
     ];
 });

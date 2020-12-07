@@ -21,20 +21,13 @@
  */
 
 use Faker\Generator;
-use Seat\Eveapi\Models\RefreshToken;
+use Seat\Eveapi\Models\Corporation\CorporationTitle;
 
-$factory->define(RefreshToken::class, function (Generator $faker) {
+$factory->define(CorporationTitle::class, function (Generator $faker) {
+    static $id = 1;
+
     return [
-        'character_id'         => $faker->numberBetween(98000000, 98001794),
-        'version'              => $faker->numberBetween(1, RefreshToken::CURRENT_VERSION),
-        'user_id'              => $faker->numberBetween(1, 10),
-        'refresh_token'        => $faker->sha256,
-        'scopes'               => [
-            'esi-characters.read_agents_research.v1', 'esi-characters.read_blueprints.v1',
-            'esi-characters.read_fatigue.v1', ' esi-characters.read_medals.v1', 'esi-characters.read_notifications.v1',
-        ],
-        'expires_on'           => $faker->dateTime(),
-        'token'                => $faker->sha256,
-        'character_owner_hash' => $faker->sha256,
+        'title_id'       => (2 * $id++),
+        'name' => $faker->name,
     ];
 });

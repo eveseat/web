@@ -21,20 +21,12 @@
  */
 
 use Faker\Generator;
-use Seat\Eveapi\Models\RefreshToken;
+use Seat\Eveapi\Models\Character\CharacterAffiliation;
 
-$factory->define(RefreshToken::class, function (Generator $faker) {
+$factory->define(CharacterAffiliation::class, function (Generator $faker) {
     return [
-        'character_id'         => $faker->numberBetween(98000000, 98001794),
-        'version'              => $faker->numberBetween(1, RefreshToken::CURRENT_VERSION),
-        'user_id'              => $faker->numberBetween(1, 10),
-        'refresh_token'        => $faker->sha256,
-        'scopes'               => [
-            'esi-characters.read_agents_research.v1', 'esi-characters.read_blueprints.v1',
-            'esi-characters.read_fatigue.v1', ' esi-characters.read_medals.v1', 'esi-characters.read_notifications.v1',
-        ],
-        'expires_on'           => $faker->dateTime(),
-        'token'                => $faker->sha256,
-        'character_owner_hash' => $faker->sha256,
+        'corporation_id' => $faker->numberBetween(98541680, 98541699),
+        'alliance_id' => $faker->optional()->numberBetween(99000001, 99000050),
+        'faction_id' => null,
     ];
 });
