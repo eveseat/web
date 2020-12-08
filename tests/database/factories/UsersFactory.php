@@ -24,8 +24,11 @@ use Faker\Generator;
 use Seat\Web\Models\User;
 
 $factory->define(User::class, function (Generator $faker) {
+    // exclude 1 which should be admin
+    static $id = 2;
+
     return [
-        'id'                   => $faker->numberBetween(2),
+        'id'                   => $id++,
         'name'                 => $faker->name,
         'active'               => $faker->boolean,
         'admin'                => false,
