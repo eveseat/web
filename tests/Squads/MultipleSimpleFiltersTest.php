@@ -20,21 +20,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-use Faker\Generator;
-use Seat\Web\Models\User;
+namespace Seat\Tests\Web\Squads;
 
-$factory->define(User::class, function (Generator $faker) {
-    // exclude 1 which should be admin
-    static $id = 2;
+use Orchestra\Testbench\TestCase;
 
-    return [
-        'id'                   => $id++,
-        'name'                 => $faker->name,
-        'active'               => $faker->boolean,
-        'admin'                => false,
-        'last_login'           => $faker->dateTime(),
-        'last_login_source'    => $faker->ipv4,
-        'remember_token'       => $faker->sha256,
-        'main_character_id'    => $faker->unique()->numberBetween(90000000, 90001000),
-    ];
-});
+/**
+ * Class MultipleSimpleFilters.
+ *
+ * @package Seat\Tests\Web\Squads
+ */
+class MultipleSimpleFiltersTest extends TestCase
+{
+
+}

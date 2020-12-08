@@ -21,20 +21,12 @@
  */
 
 use Faker\Generator;
-use Seat\Web\Models\User;
+use Seat\Eveapi\Models\Character\CharacterAffiliation;
 
-$factory->define(User::class, function (Generator $faker) {
-    // exclude 1 which should be admin
-    static $id = 2;
-
+$factory->define(CharacterAffiliation::class, function (Generator $faker) {
     return [
-        'id'                   => $id++,
-        'name'                 => $faker->name,
-        'active'               => $faker->boolean,
-        'admin'                => false,
-        'last_login'           => $faker->dateTime(),
-        'last_login_source'    => $faker->ipv4,
-        'remember_token'       => $faker->sha256,
-        'main_character_id'    => $faker->unique()->numberBetween(90000000, 90001000),
+        'corporation_id' => $faker->numberBetween(98541680, 98541699),
+        'alliance_id' => $faker->optional()->numberBetween(99000001, 99000050),
+        'faction_id' => null,
     ];
 });

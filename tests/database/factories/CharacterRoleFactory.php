@@ -21,20 +21,18 @@
  */
 
 use Faker\Generator;
-use Seat\Web\Models\User;
+use Seat\Eveapi\Models\Character\CharacterRole;
 
-$factory->define(User::class, function (Generator $faker) {
-    // exclude 1 which should be admin
-    static $id = 2;
+$factory->define(CharacterRole::class, function (Generator $faker) {
+
+    $roles = [];
+
+    for ($i = 1; $i <= 500; $i++) {
+        $roles[] = 'role_' . $i;
+    }
 
     return [
-        'id'                   => $id++,
-        'name'                 => $faker->name,
-        'active'               => $faker->boolean,
-        'admin'                => false,
-        'last_login'           => $faker->dateTime(),
-        'last_login_source'    => $faker->ipv4,
-        'remember_token'       => $faker->sha256,
-        'main_character_id'    => $faker->unique()->numberBetween(90000000, 90001000),
+        'role'  => $faker->unique()->randomElement($roles),
+        'scope' => $faker->randomElement(['roles', 'roles_at_hq', 'roles_at_base', 'roles_at_other']),
     ];
 });

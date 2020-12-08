@@ -21,20 +21,13 @@
  */
 
 use Faker\Generator;
-use Seat\Web\Models\User;
+use Seat\Eveapi\Models\Corporation\CorporationTitle;
 
-$factory->define(User::class, function (Generator $faker) {
-    // exclude 1 which should be admin
-    static $id = 2;
+$factory->define(CorporationTitle::class, function (Generator $faker) {
+    static $id = 1;
 
     return [
-        'id'                   => $id++,
-        'name'                 => $faker->name,
-        'active'               => $faker->boolean,
-        'admin'                => false,
-        'last_login'           => $faker->dateTime(),
-        'last_login_source'    => $faker->ipv4,
-        'remember_token'       => $faker->sha256,
-        'main_character_id'    => $faker->unique()->numberBetween(90000000, 90001000),
+        'title_id'       => (2 * $id++),
+        'name' => $faker->name,
     ];
 });

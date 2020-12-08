@@ -21,20 +21,13 @@
  */
 
 use Faker\Generator;
-use Seat\Web\Models\User;
+use Seat\Eveapi\Models\Character\CharacterSkill;
 
-$factory->define(User::class, function (Generator $faker) {
-    // exclude 1 which should be admin
-    static $id = 2;
-
+$factory->define(CharacterSkill::class, function (Generator $faker) {
     return [
-        'id'                   => $id++,
-        'name'                 => $faker->name,
-        'active'               => $faker->boolean,
-        'admin'                => false,
-        'last_login'           => $faker->dateTime(),
-        'last_login_source'    => $faker->ipv4,
-        'remember_token'       => $faker->sha256,
-        'main_character_id'    => $faker->unique()->numberBetween(90000000, 90001000),
+        'skill_id'             => $faker->unique(true)->numberBetween(3300, 3349),
+        'skillpoints_in_skill' => $faker->numberBetween(1, 999999999),
+        'trained_skill_level'  => $faker->numberBetween(0, 4),
+        'active_skill_level'   => $faker->numberBetween(1, 5),
     ];
 });
