@@ -26,18 +26,17 @@ use Illuminate\Support\Facades\Event;
 use Lunaweb\RedisMock\Providers\RedisMockServiceProvider;
 use Orchestra\Testbench\TestCase;
 use Seat\Eveapi\Models\Character\CharacterInfo;
-use Seat\Eveapi\Models\Character\CharacterSkill;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Models\Squads\Squad;
 use Seat\Web\Models\User;
 use Seat\Web\WebServiceProvider;
 
 /**
- * Class SkillRule.
+ * Class NoRulesTest.
  *
  * @package Seat\Tests\Web\Squads
  */
-class SkillRuleTest extends TestCase
+class NoRulesTest extends TestCase
 {
     /**
      * @param \Illuminate\Foundation\Application $app
@@ -76,10 +75,7 @@ class SkillRuleTest extends TestCase
         Event::fake();
 
         factory(CharacterInfo::class, 50)
-            ->create()
-            ->each(function ($character) {
-                $character->skills()->saveMany(factory(CharacterSkill::class, 20)->make());
-            });
+            ->create();
 
         factory(User::class, 10)
             ->create()
@@ -94,25 +90,14 @@ class SkillRuleTest extends TestCase
             });
     }
 
-    public function testUserHasNoCharacterWithSkill()
+    public function testUserWithNoRules()
     {
         // spawn test squad
         $squad = new Squad([
             'name' => 'Testing Squad',
             'description' => 'Some description',
             'type' => 'auto',
-            'filters' => json_encode([
-                'and' => [
-                    [
-                        'name' => 'skill',
-                        'path' => 'characters.skills',
-                        'field' => 'skill_id',
-                        'operator' => '=',
-                        'criteria' => 3350,
-                        'text' => 'Random Skill',
-                    ],
-                ],
-            ]),
+            'filters' => '{}',
         ]);
 
         // pickup users
@@ -120,44 +105,7 @@ class SkillRuleTest extends TestCase
 
         // ensure no users are eligible
         foreach ($users as $user) {
-            $this->assertFalse($squad->isEligible($user));
-        }
-    }
-
-    public function testUserHasCharacterWithSkill()
-    {
-        // spawn test squad
-        $squad = new Squad([
-            'name' => 'Testing Squad',
-            'description' => 'Some description',
-            'type' => 'auto',
-            'filters' => json_encode([
-                'and' => [
-                    [
-                        'name' => 'skill',
-                        'path' => 'characters.skills',
-                        'field' => 'skill_id',
-                        'operator' => '=',
-                        'criteria' => 3350,
-                        'text' => 'Random Skill',
-                    ],
-                ],
-            ]),
-        ]);
-
-        $reference_user = User::first();
-        $reference_user->characters->first()->skills->first()->update([
-            'skill_id' => 3350,
-        ]);
-
-        // pickup users
-        $users = User::all();
-
-        // ensure no users are eligible
-        foreach ($users as $user) {
-            $user->id == $reference_user->id ?
-                $this->assertTrue($squad->isEligible($user)) :
-                $this->assertFalse($squad->isEligible($user));
+            $this->assertTrue($squad->isEligible($user));
         }
     }
 }

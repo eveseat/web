@@ -33,11 +33,11 @@ use Seat\Web\Models\User;
 use Seat\Web\WebServiceProvider;
 
 /**
- * Class SkillRule.
+ * Class SkillSkillLevelPairFiltersTest.
  *
  * @package Seat\Tests\Web\Squads
  */
-class SkillRuleTest extends TestCase
+class SkillSkillLevelPairFiltersTest extends TestCase
 {
     /**
      * @param \Illuminate\Foundation\Application $app
@@ -94,7 +94,7 @@ class SkillRuleTest extends TestCase
             });
     }
 
-    public function testUserHasNoCharacterWithSkill()
+    public function testUserHasNoCharacterWithSkillAndSkillLevel()
     {
         // spawn test squad
         $squad = new Squad([
@@ -109,6 +109,14 @@ class SkillRuleTest extends TestCase
                         'field' => 'skill_id',
                         'operator' => '=',
                         'criteria' => 3350,
+                        'text' => 'Random Skill',
+                    ],
+                    [
+                        'name' => 'skill level',
+                        'path' => 'characters.skills',
+                        'field' => 'trained_skill_level',
+                        'operator' => '>',
+                        'criteria' => 4,
                         'text' => 'Random Skill',
                     ],
                 ],
@@ -124,7 +132,7 @@ class SkillRuleTest extends TestCase
         }
     }
 
-    public function testUserHasCharacterWithSkill()
+    public function testUserHasCharacterWithSkillAndSkillLevel()
     {
         // spawn test squad
         $squad = new Squad([
@@ -141,6 +149,14 @@ class SkillRuleTest extends TestCase
                         'criteria' => 3350,
                         'text' => 'Random Skill',
                     ],
+                    [
+                        'name' => 'skill level',
+                        'path' => 'characters.skills',
+                        'field' => 'trained_skill_level',
+                        'operator' => '>',
+                        'criteria' => 4,
+                        'text' => 'Random Skill',
+                    ],
                 ],
             ]),
         ]);
@@ -148,6 +164,107 @@ class SkillRuleTest extends TestCase
         $reference_user = User::first();
         $reference_user->characters->first()->skills->first()->update([
             'skill_id' => 3350,
+            'trained_skill_level' => 5,
+        ]);
+
+        // pickup users
+        $users = User::all();
+
+        // ensure no users are eligible
+        foreach ($users as $user) {
+            $user->id == $reference_user->id ?
+                $this->assertTrue($squad->isEligible($user)) :
+                $this->assertFalse($squad->isEligible($user));
+        }
+    }
+
+    public function testUserHasNoCharacterWithSkillOrSkillLevel()
+    {
+        // spawn test squad
+        $squad = new Squad([
+            'name' => 'Testing Squad',
+            'description' => 'Some description',
+            'type' => 'auto',
+            'filters' => json_encode([
+                'or' => [
+                    [
+                        'name' => 'skill',
+                        'path' => 'characters.skills',
+                        'field' => 'skill_id',
+                        'operator' => '=',
+                        'criteria' => 3350,
+                        'text' => 'Random Skill',
+                    ],
+                    [
+                        'name' => 'skill level',
+                        'path' => 'characters.skills',
+                        'field' => 'trained_skill_level',
+                        'operator' => '>',
+                        'criteria' => 4,
+                        'text' => 'Random Skill',
+                    ],
+                ],
+            ]),
+        ]);
+
+        // pickup users
+        $users = User::all();
+
+        // ensure no users are eligible
+        foreach ($users as $user) {
+            $this->assertFalse($squad->isEligible($user));
+        }
+    }
+
+    public function testUserHasCharacterWithSkillOrSkillLevel()
+    {
+        // spawn test squad
+        $squad = new Squad([
+            'name' => 'Testing Squad',
+            'description' => 'Some description',
+            'type' => 'auto',
+            'filters' => json_encode([
+                'or' => [
+                    [
+                        'name' => 'skill',
+                        'path' => 'characters.skills',
+                        'field' => 'skill_id',
+                        'operator' => '=',
+                        'criteria' => 3350,
+                        'text' => 'Random Skill',
+                    ],
+                    [
+                        'name' => 'skill level',
+                        'path' => 'characters.skills',
+                        'field' => 'trained_skill_level',
+                        'operator' => '>',
+                        'criteria' => 4,
+                        'text' => 'Random Skill',
+                    ],
+                ],
+            ]),
+        ]);
+
+        $reference_user = User::first();
+        $reference_character = $reference_user->characters->first();
+        $reference_character->skills->first()->update([
+            'skill_id' => 3350,
+            'trained_skill_level' => 1,
+        ]);
+
+        // pickup users
+        $users = User::all();
+
+        // ensure no users are eligible
+        foreach ($users as $user) {
+            $user->id == $reference_user->id ?
+                $this->assertTrue($squad->isEligible($user)) :
+                $this->assertFalse($squad->isEligible($user));
+        }
+
+        $reference_character->skills->first()->update([
+            'skill_id' => 3351,
+            'trained_skill_level' => 5,
         ]);
 
         // pickup users

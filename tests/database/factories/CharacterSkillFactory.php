@@ -25,7 +25,7 @@ use Seat\Eveapi\Models\Character\CharacterSkill;
 
 $factory->define(CharacterSkill::class, function (Generator $faker) {
     return [
-        'skill_id'             => $faker->unique(true)->numberBetween(3300, 3349),
+        'skill_id'             => $faker->unique()->numberBetween(1, 3349),
         'skillpoints_in_skill' => $faker->numberBetween(1, 999999999),
         'trained_skill_level'  => $faker->numberBetween(0, 4),
         'active_skill_level'   => $faker->numberBetween(1, 5),

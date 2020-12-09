@@ -26,7 +26,7 @@ use Seat\Eveapi\Models\Character\CharacterAffiliation;
 $factory->define(CharacterAffiliation::class, function (Generator $faker) {
     return [
         'corporation_id' => $faker->numberBetween(98541680, 98541699),
-        'alliance_id' => $faker->optional()->numberBetween(99000001, 99000050),
+        'alliance_id' => $faker->optional()->numberBetween(99000001, 99000049),
         'faction_id' => null,
     ];
 });
