@@ -382,7 +382,6 @@ return [
     'no_account_info'              => 'Aucune information de compte disponible',
     'channel_members'              => 'Membres sur le canal',
     'motd'                         => 'Message du jour',
-    'bookmark'                     => 'Emplacements',
     'coordinates'                  => 'Coordonnées',
     'folder'                       => 'Dossier',
 

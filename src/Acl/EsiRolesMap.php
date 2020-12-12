@@ -125,7 +125,6 @@ class EsiRolesMap
             'corporation.wallet_fifth_division',
             'corporation.wallet_sixth_division',
             'corporation.wallet_seventh_division',
-            'corporation.bookmark',
             'corporation.contact',
             'corporation.standing',
             'corporation.killmail',

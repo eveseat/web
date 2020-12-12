@@ -29,14 +29,6 @@ return [
         'route'          => 'corporation.view.assets',
     ],
     [
-        'name'           => 'bookmark',
-        'label'          => 'web::seat.bookmark',
-        'plural'         => true,
-        'permission'     => 'corporation.bookmark',
-        'highlight_view' => 'bookmarks',
-        'route'          => 'corporation.view.bookmarks',
-    ],
-    [
         'name'           => 'contacts',
         'label'          => 'web::seat.contacts',
         'permission'     => 'corporation.contact',

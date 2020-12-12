@@ -29,14 +29,6 @@ return [
         'route'          => 'character.view.assets',
     ],
     [
-        'name'           => 'bookmarks',
-        'label'          => 'web::seat.bookmark',
-        'plural'         => true,
-        'permission'     => 'character.bookmark',
-        'highlight_view' => 'bookmarks',
-        'route'          => 'character.view.bookmarks',
-    ],
-    [
         'name'           => 'calendar',
         'label'          => 'web::seat.calendar',
         'permission'     => 'character.calendar',

@@ -496,7 +496,6 @@ return [
     'no_account_info'              => 'Нет информации об аккаунте',
     'channel_members'              => 'Члены канала связи',
     'motd'                         => 'MoTD',
-    'bookmark'                     => 'Закладка|Закладки/Буки',
     'coordinates'                  => 'Координаты',
     'folder'                       => 'Папка',
     'skills_graph'                 => 'Графики навыков',
