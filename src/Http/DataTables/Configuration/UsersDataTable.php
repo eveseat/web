@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Configuration;
 
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Web\Models\User;
 use Yajra\DataTables\Services\DataTable;
 
@@ -39,7 +40,12 @@ class UsersDataTable extends DataTable
     {
         return datatables()->eloquent($this->query())
             ->editColumn('users.name', function ($row) {
-                return view('web::partials.character', ['character' => $row->main_character])->render();
+                $main_character = new CharacterInfo([
+                    'character_id' => $row->main_character_id,
+                    'name' => $row->name,
+                ]);
+
+                return view('web::partials.character', ['character' => $main_character])->render();
             })
             ->editColumn('characters.name', function ($row) {
                 return $row->characters->reject(function ($character) use ($row) {
@@ -99,7 +105,7 @@ class UsersDataTable extends DataTable
      */
     public function query()
     {
-        return User::with('main_character', 'characters', 'roles', 'roles.permissions')
+        return User::with('characters', 'roles', 'roles.permissions')
             ->standard();
     }
 
