@@ -58,11 +58,15 @@ class CharacterDataTable extends DataTable
 
                 return '';
             })
+            ->editColumn('refresh_token.expires_on', function ($row) {
+                return view('web::character.partials.token_status', ['refresh_token' => $row])->render();
+            })
             ->editColumn('action', function ($row) {
                 return view('web::character.partials.delete', compact('row'));
             })
             ->rawColumns([
                 'name', 'affiliation.corporation.name', 'affiliation.alliance.name', 'affiliation.faction.name',
+                'refresh_token.expires_on',
             ])
             ->make(true);
     }
@@ -78,7 +82,7 @@ class CharacterDataTable extends DataTable
             ->addAction()
             ->orderBy(0, 'asc')
             ->parameters([
-                'drawCallback' => 'function() { ids_to_names(); }',
+                'drawCallback' => 'function() { ids_to_names(); $("[data-toggle=tooltip]").tooltip(); }',
             ]);
     }
 
@@ -87,7 +91,10 @@ class CharacterDataTable extends DataTable
      */
     public function query()
     {
-        return CharacterInfo::with(['affiliation', 'affiliation.corporation', 'affiliation.alliance', 'affiliation.faction'])
+        return CharacterInfo::with([
+                'affiliation', 'affiliation.corporation', 'affiliation.alliance', 'affiliation.faction',
+                'refresh_token',
+            ])
             ->select('character_infos.*');
     }
 
@@ -102,6 +109,7 @@ class CharacterDataTable extends DataTable
             ['data' => 'affiliation.alliance.name', 'title' => trans('web::seat.alliance')],
             ['data' => 'affiliation.faction.name', 'title' => trans('web::seat.faction')],
             ['data' => 'security_status', 'title' => trans('web::seat.security_status')],
+            ['data' => 'refresh_token.expires_on', 'title' => trans('web::seat.token_status'), 'sortable' => false, 'searchable' => false],
         ];
     }
 }

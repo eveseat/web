@@ -92,6 +92,10 @@ return [
     'read'                  => 'Read',
     'level'                 => 'Level',
     'token'                 => 'Token',
+    'token_status'          => 'Token Status',
+    'token_status_warning'  => 'Token has not been updated since more than a day, you should check your jobs.',
+    'token_status_valid'    => 'This character has a valid registered token.',
+    'token_status_invalid'  => 'You don\'t own any valid token for this character.',
     'set_default'           => 'Set Default',
 
     // Requirements

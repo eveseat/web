@@ -29,6 +29,9 @@ use Seat\Eveapi\Models\Sde\SolarSystem;
 use Seat\Eveapi\Models\Sde\StaStation;
 use Seat\Eveapi\Models\Universe\UniverseStructure;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Corporation\Intel\MembersTrackingDataTable;
+use Seat\Web\Http\DataTables\Scopes\CorporationScope;
+use Seat\Web\Http\DataTables\Scopes\Filters\TokenStatusScope;
 use Yajra\DataTables\DataTables;
 
 /**
@@ -40,12 +43,15 @@ class TrackingController extends Controller
 {
     /**
      * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
+     * @param \Seat\Web\Http\DataTables\Corporation\Intel\MembersTrackingDataTable $dataTable
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getTracking(CorporationInfo $corporation)
+    public function getTracking(CorporationInfo $corporation, MembersTrackingDataTable $dataTable)
     {
-        return view('web::corporation.tracking', compact('corporation'));
+        return $dataTable->addScope(new CorporationScope('corporation.tracking', [$corporation->corporation_id]))
+            ->addScope(new TokenStatusScope(request()->input('filters.type')))
+            ->render('web::corporation.tracking', compact('corporation'));
     }
 
     /**
