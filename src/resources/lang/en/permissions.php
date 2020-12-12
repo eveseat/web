@@ -54,8 +54,6 @@ return [
     // Character Scope
     'character_asset_label'              => 'Grant access to Character Assets',
     'character_asset_description'        => 'Displays every asset (item) of a character as well as their location and quantity.',
-    'character_bookmark_label'           => 'Grant access to Character Bookmarks',
-    'character_bookmark_description'     => 'Displays every active bookmark made by a character, including folder structure, name, location and optional notes.',
     'character_calendar_label'           => 'Grant access to Character Calendar Events ',
     'character_calendar_description'     => 'Displays every calendar event the character either created or is subscribed to.',
     'character_contact_label'            => 'Grant access to Character Contacts',
@@ -112,8 +110,6 @@ return [
     'corporation_asset_sixth_division_description'    => 'Grants permission to view all corporation assets inside the Sixth (6th) Division.',
     'corporation_asset_seventh_division_label'        => 'Grant access to Corporation Assets inside the Seventh Division',
     'corporation_asset_seventh_division_description'  => 'Grants permission to view all corporation assets inside the Seventh (7th) Division.',
-    'corporation_bookmark_label'                      => 'Grant access to Corporation Bookmarks',
-    'corporation_bookmark_description'                => 'Shows every single bookmark made on behalf of a corporation, including folder structure, name, location and optional note.',
     'corporation_contact_label'                       => 'Grant access to Corporation Contacts',
     'corporation_contact_description'                 => 'Displays corporation contacts including name, standing and link to third-party platforms (like zkillboard).',
     'corporation_contract_label'                      => 'Grant access to Corporation Contracts',

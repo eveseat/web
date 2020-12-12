@@ -47,11 +47,6 @@ Route::get('/{corporation}/assets/{item_id}/container')
     ->uses('AssetsController@getContainer')
     ->middleware('can:corporation.asset,corporation');
 
-Route::get('/{corporation}/bookmarks')
-    ->name('corporation.view.bookmarks')
-    ->uses('BookmarksController@index')
-    ->middleware('can:corporation.bookmark,corporation');
-
 Route::get('/{corporation}/contacts')
     ->name('corporation.view.contacts')
     ->uses('ContactsController@index')

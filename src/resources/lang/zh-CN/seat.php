@@ -483,7 +483,6 @@ return [
     'no_account_info'              => '无可用账户信息',
     'channel_members'              => '频道成员',
     'motd'                         => 'MoTD',
-    'bookmark'                     => '保存的地点|保存的地点',
     'coordinates'                  => '坐标',
     'folder'                       => '文件夹',
     'skills_graph'                 => '技能图表',

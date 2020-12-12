@@ -48,11 +48,6 @@ Route::get('/{character}/assets/{item_id}/container')
     ->uses('AssetsController@getContainer')
     ->middleware('can:character.asset,character');
 
-Route::get('/{character}/bookmarks')
-    ->name('character.view.bookmarks')
-    ->uses('BookmarksController@index')
-    ->middleware('can:character.bookmark,character');
-
 Route::get('/{character}/calendar')
     ->name('character.view.calendar')
     ->uses('CalendarController@index')

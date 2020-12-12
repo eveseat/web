@@ -45,8 +45,6 @@ return [
     // Character Scope
     'character_asset_label'              => 'Zugriff auf Charakter Besitz gewähren.',
     'character_asset_description'        => 'Zeigt alle Besitztümer eines Charakter an, sowie deren Orte.',
-    'character_bookmark_label'           => 'Zugriff auf Charakter Lesezeichen (Bookmarks) gewähren.',
-    'character_bookmark_description'     => 'Zeigt alle aktiven Lesezeichen (Bookmarks) eines Charakters an, inklusive Ordnerstruktur, Name, Ort und Notizen.',
     'character_calendar_label'           => 'Zugriff auf Charakter Kalenderereignisse gewähren.',
     'character_calendar_description'     => 'Zeigt alle Kalenderereignisse an die einem Character zur Verfügung stehen.',
     'character_contact_label'            => 'Zugriff auf Charakter Kontakte gewähren.',
@@ -103,8 +101,6 @@ return [
     'corporation_asset_sixth_division_description'    => 'Gewährt Einsicht auf die sechste Abteilung eines Corp-Büros.',
     'corporation_asset_seventh_division_label'        => 'Zugriff Corp-Büro Abteilung 7 gewähren.',
     'corporation_asset_seventh_division_description'  => 'Gewährt Einsicht auf die siebte Abteilung eines Corp-Büros.',
-    'corporation_bookmark_label'                      => 'Zugriff auf Corp Lesezeichen (Bookmarks) gewähren.',
-    'corporation_bookmark_description'                => 'Zeigt jedes Lesezeichen (Bookmark) welches für die Corp erstellt wurde.',
     'corporation_contact_label'                       => 'Zugriff auf Corp Kontakte gewähren.',
     'corporation_contact_description'                 => 'Zeigt die Kontaktliste einer Corp an, inklusive Name, Ansehen und links zu nützlichen Tools wie zKillboard.',
     'corporation_contract_label'                      => 'Zugriff auf Corp Verträge gewähren.',

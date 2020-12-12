@@ -26,10 +26,6 @@ return [
     'character' => [
         'assets'        => \Seat\Eveapi\Jobs\Assets\Character\Assets::class,
         'blueprints'    => \Seat\Eveapi\Jobs\Character\Blueprints::class,
-        'bookmarks'     => [
-            \Seat\Eveapi\Jobs\Bookmarks\Character\Bookmarks::class,
-            \Seat\Eveapi\Jobs\Bookmarks\Character\Folders::class,
-        ],
         'calendar'      => [
             \Seat\Eveapi\Jobs\Calendar\Events::class,
             \Seat\Eveapi\Jobs\Calendar\Detail::class,

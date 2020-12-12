@@ -160,11 +160,6 @@ return [
         'description' => 'web::permissions.corporation_wallet_seventh_division_description',
         'division'    => 'financial',
     ],
-    'bookmark' => [
-        'label'       => 'web::permissions.corporation_bookmark_label',
-        'description' => 'web::permissions.corporation_bookmark_description',
-        'division'    => 'military',
-    ],
     'contact' => [
         'label'       => 'web::permissions.corporation_contact_label',
         'description' => 'web::permissions.corporation_contact_description',

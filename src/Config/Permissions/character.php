@@ -95,11 +95,6 @@ return [
         'description' => 'web::permissions.character_transaction_description',
         'division'    => 'financial',
     ],
-    'bookmark' => [
-        'label'       => 'web::permissions.character_bookmark_label',
-        'description' => 'web::permissions.character_bookmark_description',
-        'division'    => 'military',
-    ],
     'contact' => [
         'label'       => 'web::permissions.character_contact_label',
         'description' => 'web::permissions.character_contact_description',

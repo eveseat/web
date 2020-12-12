@@ -361,7 +361,6 @@ return [
     'no_account_info'              => 'Keine Account Informationen verfügbar',
     'channel_members'              => 'Kanal Mitglieder .DE',
     'motd'                         => 'MoTD',
-    'bookmark'                     => 'Bookmark|Bookmarks',
     'coordinates'                  => 'Koordinaten',
     'folder'                       => 'Ordner',
 
