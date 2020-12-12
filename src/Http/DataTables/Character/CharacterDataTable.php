@@ -92,10 +92,9 @@ class CharacterDataTable extends DataTable
     public function query()
     {
         return CharacterInfo::with([
-                'affiliation', 'affiliation.corporation', 'affiliation.alliance', 'affiliation.faction',
-                'refresh_token',
-            ])
-            ->select('character_infos.*');
+            'affiliation', 'affiliation.corporation', 'affiliation.alliance', 'affiliation.faction',
+            'refresh_token',
+        ])->select('character_infos.*');
     }
 
     /**
