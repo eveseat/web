@@ -185,11 +185,6 @@ Route::get('/{corporation}/tracking')
     ->uses('TrackingController@getTracking')
     ->middleware('can:corporation.tracking,corporation');
 
-Route::get('/{corporation}/tracking/member-tracking')
-    ->name('corporation.view.tracking.data')
-    ->uses('TrackingController@getMemberTracking')
-    ->middleware('can:corporation.tracking,corporation');
-
 Route::get('/{corporation}/journal')
     ->name('corporation.view.journal')
     ->uses('WalletController@journal')
