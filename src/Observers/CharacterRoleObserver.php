@@ -24,7 +24,7 @@ namespace Seat\Web\Observers;
 
 use Exception;
 use Illuminate\Database\Eloquent\Model;
-use Seat\Console\Bus\CorporationTokenShouldUpdate;
+use Seat\Console\Bus\CorporationBus;
 use Seat\Eveapi\Models\Character\CharacterRole;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Models\User;
@@ -55,7 +55,7 @@ class CharacterRoleObserver extends AbstractSquadObserver
 
         try {
             // enqueue jobs related to the character corporation
-            $job = new CorporationTokenShouldUpdate($token->affiliation->corporation_id, $token);
+            $job = new CorporationBus($token->affiliation->corporation_id, $token);
             $job->fire();
         } catch (Exception $e) {
             logger()->error($e->getMessage());
