@@ -24,7 +24,7 @@ namespace Seat\Web\Observers;
 
 use Exception;
 use Illuminate\Database\Eloquent\Model;
-use Seat\Console\Bus\CharacterTokenShouldUpdate;
+use Seat\Console\Bus\CharacterBus;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Models\User;
 
@@ -41,7 +41,7 @@ class RefreshTokenObserver extends AbstractSquadObserver
     public function created(RefreshToken $token)
     {
         try {
-            $job = new CharacterTokenShouldUpdate($token);
+            $job = new CharacterBus($token);
             $job->fire();
         } catch (Exception $e) {
             logger()->error($e->getMessage());
