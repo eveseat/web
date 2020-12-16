@@ -37,12 +37,19 @@ abstract class AbstractPolicy
     const CACHE_DURATION = 10;
 
     /**
+     * @var string
+     */
+    protected $ability;
+
+    /**
      * @param \Seat\Web\Models\User $user
      * @param string $ability
      * @return bool|void
      */
     public function before(User $user, $ability)
     {
+        $this->ability = $ability;
+
         if ($user->isAdmin())
             return true;
     }
