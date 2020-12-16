@@ -59,7 +59,7 @@ class CharacterDataTable extends DataTable
                 return '';
             })
             ->editColumn('refresh_token.expires_on', function ($row) {
-                return view('web::character.partials.token_status', ['refresh_token' => $row])->render();
+                return view('web::character.partials.token_status', ['refresh_token' => $row->refresh_token])->render();
             })
             ->editColumn('action', function ($row) {
                 return view('web::character.partials.delete', compact('row'));
