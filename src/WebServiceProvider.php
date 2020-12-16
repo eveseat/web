@@ -435,14 +435,6 @@ class WebServiceProvider extends AbstractSeatPlugin
                 Gate::define($ability, sprintf('%s@%s', $policy, $permission));
             }
         }
-
-        Gate::after(function ($user, $ability, $result, $arguments) {
-            if (! $result) {
-                $message = sprintf('Request to %s was denied. The permission required is %s', request()->path(), $ability);
-
-                event('security.log', [$message, 'authorization']);
-            }
-        });
     }
 
     /**
