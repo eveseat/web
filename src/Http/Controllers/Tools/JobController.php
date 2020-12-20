@@ -48,7 +48,7 @@ class JobController extends Controller
             'entity_id' => 'integer|required',
             'job_name' => sprintf('in:%s.%s|required',
                 $request->input('type'),
-                implode(',' . $request->input('type') .'.', array_keys(config('web.jobnames.' . $request->input('type'), [])))
+                implode(',' . $request->input('type') . '.', array_keys(config('web.jobnames.' . $request->input('type'), [])))
             ),
         ]);
 
