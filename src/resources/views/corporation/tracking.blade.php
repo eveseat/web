@@ -9,6 +9,11 @@
   <div class="card card-gray card-outline card-outline-tabs">
     <div class="card-header">
       <h3 class="card-title">{{ trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.tracking') }}</h3>
+      <div class="card-tools">
+        <div class="input-group input-group-sm">
+          @include('web::components.jobs.buttons.update', ['type' => 'corporation', 'entity' => $corporation->corporation_id, 'job' => 'corporation.members_tracking', 'label' => trans('web::seat.update_members_tracking')])
+        </div>
+      </div>
     </div>
     <div class="card-body">
 

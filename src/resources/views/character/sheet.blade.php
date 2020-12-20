@@ -19,9 +19,7 @@
             @if($character->refresh_token)
             <div class="card-tools">
               <div class="input-group input-group-sm">
-                <button type="button" class="btn btn-sm btn-light" data-widget="esi-update" data-character="{{ $character->character_id }}" data-job="character.skillqueue">
-                  <i class="fas fa-sync" data-toggle="tooltip" title="{{ trans('web::seat.update_skill_queue') }}"></i>
-                </button>
+                @include('web::components.jobs.buttons.update', ['type' => 'character', 'entity' => $character->character_id, 'job' => 'character.skillqueue', 'label' => trans('web::seat.update_skill_queue')])
               </div>
             </div>
             @endif
