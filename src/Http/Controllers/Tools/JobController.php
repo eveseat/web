@@ -43,6 +43,16 @@ class JobController extends Controller
      */
     public function getDispatchUpdateJob(Request $request)
     {
+        return $this->postDispatchJob($request);
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function postDispatchJob(Request $request)
+    {
         $request->validate([
             'type' => 'in:character,corporation|required',
             'entity_id' => 'integer|required',
