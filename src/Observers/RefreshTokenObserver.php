@@ -43,6 +43,25 @@ class RefreshTokenObserver extends AbstractSquadObserver
         try {
             $job = new Character($token);
             $job->fire();
+
+            // enqueue squads update
+            $this->updateUserSquads($token);
+        } catch (Exception $e) {
+            logger()->error($e->getMessage());
+        }
+    }
+
+    /**
+     * @param \Seat\Eveapi\Models\RefreshToken $token
+     */
+    public function updated(RefreshToken $token)
+    {
+        // in case scopes are not altered, bypass update
+        if (! array_key_exists('scopes', $token->getChanges()))
+            return;
+
+        try {
+            $this->updateUserSquads($token);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
         }
@@ -53,7 +72,11 @@ class RefreshTokenObserver extends AbstractSquadObserver
      */
     public function deleted(RefreshToken $token)
     {
-        $this->updateUserSquads($token);
+        try {
+            $this->updateUserSquads($token);
+        } catch (Exception $e) {
+            logger()->error($e->getMessage());
+        }
     }
 
     /**
