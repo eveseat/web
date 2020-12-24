@@ -31,6 +31,7 @@ use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Mail\MailHeader;
 use Seat\Eveapi\Models\Universe\UniverseName;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Character\Intel\Assets\Columns\Station;
 use Seat\Web\Http\DataTables\Scopes\CharacterMailScope;
 use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 use Seat\Web\Http\DataTables\Scopes\CorporationScope;
@@ -182,14 +183,14 @@ class SearchController extends Controller
     {
         $scope = new CharacterScope('character.asset');
 
-        $query = CharacterAsset::with('character', 'type', 'type.group',
+        $query = CharacterAsset::with('character', 'type', 'type.group', 'station', 'container', 'container.station',
             'character.affiliation.corporation', 'character.affiliation.alliance')
             ->select()
             ->addSelect('character_assets.name as asset_name');
 
         $scope->apply($query);
 
-        return DataTables::of($query)
+        $table = DataTables::of($query)
             ->editColumn('asset_name', function ($row) {
                 return $row->asset_name ?: '';
             })
@@ -209,29 +210,18 @@ class SearchController extends Controller
                     'variation' => $row->type->group->categoryID == 9 ? 'bpc' : 'icon',
                 ]);
             })
-            ->addColumn('location_name', function ($row) {
+            ->addColumn('station', function ($row) {
                 return $row->station->name ?: ($row->structure->name ?: $row->container->name);
             })
             ->filterColumn('asset_name', function ($query, $search) {
                 return $query->whereRaw('character_assets.name LIKE ?', ["%$search%"]);
-            })
-            ->filterColumn('location_name', function ($query, $search) {
-                $query->whereRaw("
-                    CASE
-                        WHEN location_id = 2004 THEN
-                            'Asset Safety' LIKE ?
-                        WHEN location_id BETWEEN 30000000 AND 33000000 THEN
-                            EXISTS (SELECT itemName FROM mapDenormalize WHERE itemID = location_id AND itemName LIKE ?)
-                        WHEN location_id BETWEEN 60000000 AND 64000000 THEN
-                            EXISTS (SELECT stationName FROM staStations WHERE stationID = location_id AND stationName LIKE ?)
-                        WHEN location_flag IN ('Hangar', 'AssetSafety') THEN
-                            EXISTS (SELECT name FROM universe_structures WHERE structure_id = location_id AND name LIKE ?)
-                        ELSE
-                            character_assets.name LIKE ?
-                    END
-                ", ["%{$search}%", "%{$search}%", "%{$search}%", "%{$search}%", "%{$search}%"]);
-            })
-            ->make(true);
+            });
+
+        $station_column = new Station($table);
+        $table->addColumn('station', $station_column)
+            ->filterColumn('station', $station_column);
+
+        return $table->make(true);
     }
 
     /**
