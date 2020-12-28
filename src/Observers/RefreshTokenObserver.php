@@ -41,7 +41,7 @@ class RefreshTokenObserver extends AbstractSquadObserver
     public function created(RefreshToken $token)
     {
         try {
-            $job = new Character($token);
+            $job = new Character($token->character_id, $token);
             $job->fire();
 
             // enqueue squads update
