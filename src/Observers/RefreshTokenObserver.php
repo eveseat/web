@@ -41,7 +41,7 @@ class RefreshTokenObserver extends AbstractSquadObserver
     public function created(RefreshToken $token)
     {
         try {
-            $job = new Character($token->character_id, $token);
+            $job = new Character($token);
             $job->fire();
 
             // enqueue squads update
@@ -65,6 +65,14 @@ class RefreshTokenObserver extends AbstractSquadObserver
         } catch (Exception $e) {
             logger()->error($e->getMessage());
         }
+    }
+
+    /**
+     * @param \Seat\Eveapi\Models\RefreshToken $token
+     */
+    public function softDeleted(RefreshToken $token)
+    {
+        $this->deleted($token);
     }
 
     /**
