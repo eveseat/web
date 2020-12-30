@@ -83,6 +83,23 @@
             </div>
           </div>
 
+          <!-- User Character Unlink -->
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label" for="allow_user_character_unlink">{{ trans('web::seat.allow_user_character_unlink') }}</label>
+            <div class="col-md-6">
+              <select id="allow_user_character_unlink" name="allow_user_character_unlink" class="form-control" style="width: 100%;">
+                <option value="yes"
+                        @if(setting('allow_user_character_unlink', true) == "yes") selected @endif>
+                  {{ trans('web::seat.yes') }}
+                </option>
+                <option value="no"
+                        @if(in_array(setting('allow_user_character_unlink', true), [null, 'no'])) selected @endif>
+                  {{ trans('web::seat.no') }}
+                </option>
+              </select>
+            </div>
+          </div>
+
           <legend>{{ trans('web::seat.google_analytics') }}</legend>
 
           <!-- Select Basic -->

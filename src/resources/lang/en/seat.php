@@ -402,6 +402,8 @@ return [
         ' values in the .env file as they may be empty or invalid. SSO can fail because of this!',
     'allow_sso'                    => 'Allow Single Signon',
     'allow_registration'           => 'Allow Registration',
+    'allow_user_character_unlink'  => 'Allow user to unlink their characters',
+    'unlink'                       => 'Unlink',
     'email_activation'             => 'Email Activation',
     'require_activation'           => 'Require Email Activation',
     'module_versions'              => 'SeAT Module Versions',
