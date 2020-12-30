@@ -54,3 +54,8 @@ Route::delete('/update/sharelink', [
     'as'   => 'profile.update.sharelink.remove',
     'uses' => 'ProfileController@deleteRemoveSharelink',
 ]);
+
+Route::delete('/character', [
+    'as' => 'profile.delete.character',
+    'uses' => 'ProfileController@deleteUnlinkCharacter',
+]);

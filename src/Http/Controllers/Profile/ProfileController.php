@@ -24,6 +24,7 @@ namespace Seat\Web\Http\Controllers\Profile;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\Settings\Profile;
 use Seat\Web\Http\Controllers\Controller;
@@ -251,5 +252,37 @@ class ProfileController extends Controller
 
         return redirect()->back()
             ->with('success', 'Sharelink has been removed!');
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deleteUnlinkCharacter(Request $request)
+    {
+        $request->validate([
+            'character' => 'required|exists:character_infos,character_id',
+        ]);
+
+        $character = CharacterInfo::findOrFail($request->input('character'));
+
+        if (! in_array($character->character_id, auth()->user()->associatedCharacterIds()))
+            return redirect()->back(403);
+
+        // record action
+        event('security.log', [
+            sprintf('%s unlinked %s', auth()->user()->name, $character->name),
+            'user unlink',
+        ]);
+
+        // remove link between character and active account
+        auth()->user()
+            ->refresh_tokens()
+            ->where('character_id', $character->character_id)
+            ->delete();
+
+        return redirect()->back()
+            ->with('success', sprintf('%s has been successfully removed from your account.', $character->name));
     }
 }
