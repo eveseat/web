@@ -70,6 +70,14 @@ class RefreshTokenObserver extends AbstractSquadObserver
     /**
      * @param \Seat\Eveapi\Models\RefreshToken $token
      */
+    public function softDeleted(RefreshToken $token)
+    {
+        $this->deleted($token);
+    }
+
+    /**
+     * @param \Seat\Eveapi\Models\RefreshToken $token
+     */
     public function deleted(RefreshToken $token)
     {
         try {
