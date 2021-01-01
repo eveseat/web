@@ -1,5 +1,5 @@
 <div class="modal fade in" tabindex="-1" role="dialog" id="insurances-detail">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header bg-blue">
         <h4 class="modal-title">Insurances</h4>
@@ -7,7 +7,7 @@
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <div class="modal-body"></div>
+      <div class="modal-body p-0"></div>
       <div class="modal-footer bg-blue">
         <div class="text-left">
           Those information are indicative only. They are pulled regularly from EVE Server.<br>
