@@ -45,7 +45,7 @@ class TokenStatusScope implements DataTableScope
      */
     public function __construct(?array $status)
     {
-        $this->status = $status ?: [];
+        $this->status = $status ?: ['valid', 'invalid'];
     }
 
     /**
