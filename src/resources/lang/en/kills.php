@@ -26,4 +26,6 @@ return [
     'solar_system' => 'Solar System',
     'victim'       => 'Victim',
     'killer'       => 'Killer',
+    'attackers'    => 'Attacker|Attackers',
+    'items'        => 'Item|Items',
 ];
