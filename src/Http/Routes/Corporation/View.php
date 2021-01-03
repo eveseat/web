@@ -77,6 +77,11 @@ Route::get('/{corporation}/killmails')
     ->uses('KillmailsController@index')
     ->middleware('can:corporation.killmail,corporation');
 
+Route::get('/{corporation}/killmails/{killmail}')
+    ->name('corporation.view.killmail')
+    ->uses('KillmailsController@show')
+    ->middleware('can:corporation.killmail,corporation');
+
 Route::get('/{corporation}/markets')
     ->name('corporation.view.market')
     ->uses('MarketController@index')

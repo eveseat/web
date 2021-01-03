@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Killmails\Killmail;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Character\Military\KillMailDataTable;
 use Seat\Web\Http\DataTables\Scopes\KillMailCharacterScope;
@@ -43,6 +44,15 @@ class KillmailController extends Controller
         return $dataTable
             ->addScope(new KillMailCharacterScope(request()->input('characters', [])))
             ->render('web::character.killmails', compact('character'));
+    }
 
+    /**
+     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
+     * @param \Seat\Eveapi\Models\Killmails\Killmail $killmail
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show(CharacterInfo $character, Killmail $killmail)
+    {
+        return view('web::common.killmails.modals.show.content', compact('killmail'));
     }
 }

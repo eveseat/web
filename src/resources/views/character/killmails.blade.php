@@ -40,6 +40,8 @@
     </div>
   </div>
 
+  @include('web::common.killmails.modals.show.show')
+
 @stop
 
 @push('javascript')

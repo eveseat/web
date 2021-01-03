@@ -161,6 +161,11 @@ Route::get('/{character}/killmails')
     ->uses('KillmailController@index')
     ->middleware('can:character.killmail,character');
 
+Route::get('/{character}/killmails/{killmail}')
+    ->name('character.view.killmail')
+    ->uses('KillmailController@show')
+    ->middleware('can:character.killmail,character');
+
 Route::get('/view/mail/timeline')
     ->name('character.view.mail.timeline')
     ->uses('MailController@getMailTimeline');

@@ -244,6 +244,7 @@ table.dataTable tr.shown + tr {
 
 .list-group-item {
     background-color: #282828;
+    border-color: rgba(124, 111, 100, .64);
 }
 
 .list-header {
@@ -727,6 +728,14 @@ table.dataTable tr.shown + tr {
 
 .bg-success, .bg-success a, .bg-green, .bg-green a {
     color: #1f2d3d !important;
+}
+
+.bg-gradient-primary a {
+    color: #fe8019;
+}
+
+.bg-gradient-primary a:hover {
+    color: #d65d0e;
 }
 
 .bg-gradient-success {
