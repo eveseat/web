@@ -98,6 +98,8 @@ abstract class AbstractWalletJournalDataTable extends DataTable
             ->columns($this->getColumns())
             ->postAjax()
             ->parameters([
+                'dom'          => '<"row"<"col-sm-12 col-md-4"l><"col-sm-12 col-md-4 text-center"B><"col-sm-12 col-md-4"f>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+                'buttons' => ['postCsv', 'postExcel'],
                 'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); ids_to_names(); }',
             ]);
     }
