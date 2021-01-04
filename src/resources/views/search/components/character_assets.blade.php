@@ -42,7 +42,7 @@
         ids_to_names();
       },
       'search'    : {
-        'search': '{{ $query }}'
+        'search': '{{ $query }}'.replace('&#039;', '\'')
       },
       order       : [[0, "asc"]]
     });
