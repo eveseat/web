@@ -139,9 +139,11 @@ class WebServiceProvider extends AbstractSeatPlugin
 
             // Datatables pulled from packagist
             base_path('vendor/datatables/datatables/media/css/dataTables.bootstrap4.min.css') => public_path('web/css/dataTables.bootstrap4.min.css'),
-            base_path('vendor/datatables/datatables/media/js/jquery.dataTables.min.js')       => public_path('web/js/jquery.dataTables.min.js'),
-            base_path('vendor/datatables/datatables/media/js/dataTables.dataTables.min.js')   => public_path('web/js/dataTables.dataTables.min.js'),
             base_path('vendor/datatables/datatables/media/js/dataTables.bootstrap4.min.js')   => public_path('web/js/dataTables.bootstrap4.min.js'),
+            base_path('vendor/datatables.net/datatables.net/js/jquery.dataTables.min.js')       => public_path('web/js/jquery.dataTables.min.js'),
+            base_path('vendor/datatables.net/datatables.net-buttons/js/dataTables.buttons.min.js')   => public_path('web/js/dataTables.buttons.min.js'),
+            base_path('vendor/datatables.net/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css')   => public_path('web/css/buttons.bootstrap4.min.css'),
+            base_path('vendor/datatables.net/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js')   => public_path('web/js/buttons.bootstrap4.min.js'),
 
             // AdminLTE pulled from packagist
             base_path('vendor/almasaeed2010/adminlte/dist/css/adminlte.min.css') => public_path('web/css/adminlte.min.css'),
