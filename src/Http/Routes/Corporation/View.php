@@ -57,6 +57,10 @@ Route::get('/{corporation}/contracts')
     ->uses('ContractsController@index')
     ->middleware('can:corporation.contract,corporation');
 
+Route::post('/{corporation}/contracts/export')
+    ->uses('ContractsController@index')
+    ->middleware('can:corporation.contract,corporation');
+
 Route::get('/{corporation}/contracts/{contract_id}')
     ->name('corporation.view.contracts.items')
     ->uses('ContractsController@show')
@@ -84,6 +88,10 @@ Route::get('/{corporation}/killmails/{killmail}')
 
 Route::get('/{corporation}/markets')
     ->name('corporation.view.market')
+    ->uses('MarketController@index')
+    ->middleware('can:corporation.market,corporation');
+
+Route::post('/{corporation}/markets/export')
     ->uses('MarketController@index')
     ->middleware('can:corporation.market,corporation');
 
@@ -190,7 +198,15 @@ Route::get('/{corporation}/journal')
     ->uses('WalletController@journal')
     ->middleware('can:corporation.journal,corporation');
 
+Route::post('/{corporation}/journal/export')
+    ->uses('WalletController@journal')
+    ->middleware('can:corporation.journal,corporation');
+
 Route::get('/{corporation}/transactions')
     ->name('corporation.view.transactions')
+    ->uses('WalletController@transactions')
+    ->middleware('can:corporation.transaction,corporation');
+
+Route::post('/{corporation}/transactions/export')
     ->uses('WalletController@transactions')
     ->middleware('can:corporation.transaction,corporation');

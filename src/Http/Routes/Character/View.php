@@ -63,6 +63,10 @@ Route::get('/{character}/contracts')
     ->uses('ContractsController@index')
     ->middleware('can:character.contract,character');
 
+Route::post('/{character}/contracts/export')
+    ->uses('ContractsController@index')
+    ->middleware('can:character.contract,character');
+
 Route::get('/{character}/contracts/{contract_id}')
     ->name('character.view.contracts.items')
     ->uses('ContractsController@show')
@@ -151,6 +155,10 @@ Route::get('/{character}/journal')
     ->uses('WalletController@journal')
     ->middleware('can:character.journal,character');
 
+Route::post('/{character}/journal/export')
+    ->uses('WalletController@journal')
+    ->middleware('can:character.journal,character');
+
 Route::get('/view/journal/graph/balance/{character}')
     ->name('character.view.journal.graph.balance')
     ->uses('WalletController@getJournalGraphBalance')
@@ -186,6 +194,10 @@ Route::get('/{character}/mail/{message_id}')
 
 Route::get('/{character}/markets')
     ->name('character.view.market')
+    ->uses('MarketController@index')
+    ->middleware('can:character.market,character');
+
+Route::post('/{character}/markets/export')
     ->uses('MarketController@index')
     ->middleware('can:character.market,character');
 
@@ -251,5 +263,9 @@ Route::get('/{character}/standings')
 
 Route::get('/{character}/transactions')
     ->name('character.view.transactions')
+    ->uses('WalletController@transactions')
+    ->middleware('can:character.transaction,character');
+
+Route::post('/{character}/transactions/export')
     ->uses('WalletController@transactions')
     ->middleware('can:character.transaction,character');
