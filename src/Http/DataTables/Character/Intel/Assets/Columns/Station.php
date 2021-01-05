@@ -64,6 +64,9 @@ class Station extends AbstractColumn
 
             if ($row->location_flag == 'AssetSafety')
                 return $row->structure->name;
+
+            // assume item is fit on a ship
+            return $row->container->name ?: trans('web::seat.unknown');
         }
 
         if ($row->location_type == 'other') {

@@ -341,6 +341,10 @@
               @include('web::profile.buttons.scopes')
             @endif
 
+            @if($character->refresh_token && setting('allow_user_character_unlink', true) == 'yes')
+              @include('web::profile.buttons.unlink')
+            @endif
+
             @include('web::partials.character', ['character' => $character])
 
           </li>

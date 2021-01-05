@@ -211,6 +211,9 @@ class SsoController extends Controller
             'token'                => $eve_user->token,
             'character_owner_hash' => $eve_user->character_owner_hash,
             'expires_on'           => $eve_user->expires_on,
+            // enforce version since restore action will not use default field value
+            // the version from an authenticate token is always latest.
+            'version'              => RefreshToken::CURRENT_VERSION,
         ])->save();
 
         // restore soft deleted token if any

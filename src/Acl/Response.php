@@ -20,12 +20,24 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-return [
-    'date'         => 'Date',
-    'ship'         => 'Ship',
-    'solar_system' => 'Solar System',
-    'victim'       => 'Victim',
-    'killer'       => 'Killer',
-    'attackers'    => 'Attacker|Attackers',
-    'items'        => 'Item|Items',
-];
+namespace Seat\Web\Acl;
+
+/**
+ * Class Response.
+ *
+ * @package Seat\Web\Acl
+ */
+class Response extends \Illuminate\Auth\Access\Response
+{
+    /**
+     * @return \Seat\Web\Acl\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function authorize()
+    {
+        if ($this->denied())
+            event('security.log', [$this->message(), 'authorization']);
+
+        return parent::authorize();
+    }
+}

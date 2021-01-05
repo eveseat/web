@@ -41,6 +41,11 @@
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">{{ trans('web::seat.divisional_information') }}</h3>
+          <div class="card-tools">
+            <div class="input-group input-group-sm">
+              @include('web::components.jobs.buttons.update', ['type' => 'corporation', 'entity' => $corporation->corporation_id, 'job' => 'corporation.divisions', 'label' => trans('web::seat.update_divisions')])
+            </div>
+          </div>
         </div>
         <div class="card-body">
 

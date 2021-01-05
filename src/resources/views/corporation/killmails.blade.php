@@ -9,11 +9,18 @@
   <div class="card">
     <div class="card-header">
       <h3 class="card-title">{{ trans('web::seat.killmails') }}</h3>
+      <div class="card-tools">
+        <div class="input-group input-group-sm">
+          @include('web::components.jobs.buttons.update', ['type' => 'corporation', 'entity' => $corporation->corporation_id, 'job' => 'corporation.killmails', 'label' => trans('web::seat.update_killmails')])
+        </div>
+      </div>
     </div>
     <div class="card-body">
       {{ $dataTable->table() }}
     </div>
   </div>
+
+  @include('web::common.killmails.modals.show.show')
 
 @stop
 

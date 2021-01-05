@@ -8,9 +8,12 @@
 
   <div class="card">
     <div class="card-header">
-      <h3 class="card-title">
-        {{ trans('web::seat.blueprint') }}
-      </h3>
+      <h3 class="card-title">{{ trans('web::seat.blueprint') }}</h3>
+      <div class="card-tools">
+        <div class="input-group input-group-sm">
+          @include('web::components.jobs.buttons.update', ['type' => 'corporation', 'entity' => $corporation->corporation_id, 'job' => 'corporation.blueprints', 'label' => trans('web::seat.update_blueprints')])
+        </div>
+      </div>
     </div>
     <div class="card-body">
 

@@ -24,7 +24,7 @@ namespace Seat\Web\Observers;
 
 use Exception;
 use Illuminate\Database\Eloquent\Model;
-use Seat\Console\Bus\CharacterBus;
+use Seat\Console\Bus\Character;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Models\User;
 
@@ -41,8 +41,11 @@ class RefreshTokenObserver extends AbstractSquadObserver
     public function created(RefreshToken $token)
     {
         try {
-            $job = new CharacterBus($token);
+            $job = new Character($token);
             $job->fire();
+
+            // enqueue squads update
+            $this->updateUserSquads($token);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
         }
@@ -51,9 +54,37 @@ class RefreshTokenObserver extends AbstractSquadObserver
     /**
      * @param \Seat\Eveapi\Models\RefreshToken $token
      */
+    public function updated(RefreshToken $token)
+    {
+        // in case scopes are not altered, bypass update
+        if (! array_key_exists('scopes', $token->getChanges()))
+            return;
+
+        try {
+            $this->updateUserSquads($token);
+        } catch (Exception $e) {
+            logger()->error($e->getMessage());
+        }
+    }
+
+    /**
+     * @param \Seat\Eveapi\Models\RefreshToken $token
+     */
+    public function softDeleted(RefreshToken $token)
+    {
+        $this->deleted($token);
+    }
+
+    /**
+     * @param \Seat\Eveapi\Models\RefreshToken $token
+     */
     public function deleted(RefreshToken $token)
     {
-        $this->updateUserSquads($token);
+        try {
+            $this->updateUserSquads($token);
+        } catch (Exception $e) {
+            logger()->error($e->getMessage());
+        }
     }
 
     /**

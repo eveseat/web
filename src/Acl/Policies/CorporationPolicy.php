@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Cache;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Corporation\CorporationRole;
 use Seat\Web\Acl\EsiRolesMap;
+use Seat\Web\Acl\Response;
 use Seat\Web\Models\Acl\Permission;
 use Seat\Web\Models\User;
 
@@ -39,7 +40,8 @@ class CorporationPolicy extends AbstractEntityPolicy
     /**
      * @param string $method
      * @param array $args
-     * @return bool
+     *
+     * @return \Illuminate\Auth\Access\Response|bool
      */
     public function __call($method, $args)
     {
@@ -48,29 +50,30 @@ class CorporationPolicy extends AbstractEntityPolicy
 
         $user = $args[0];
         $corporation = $args[1];
-        $ability = sprintf('corporation.%s', $method);
+
+        $message = sprintf('Request to %s was denied. The permission required is %s', request()->path(), $this->ability);
 
         if (is_numeric($corporation))
             $corporation = CorporationInfo::find($corporation);
 
-        return $this->userHasPermission($user, $ability, function () use ($user, $corporation, $ability) {
+        return $this->userHasPermission($user, $this->ability, function () use ($user, $corporation) {
 
             // in case the user is corporation CEO or Director
             if ($this->isCeo($user, $corporation) || $this->isDirector($user, $corporation))
                 return true;
 
             // in case the user is owning a role in-game mapped to this ability
-            if ($this->hasDelegatedPermission($user, $corporation, $ability))
+            if ($this->hasDelegatedPermission($user, $corporation, $this->ability))
                 return true;
 
             // retrieve defined authorization for the requested user
             $acl = $this->permissionsFrom($user);
 
             // filter out permissions which don't match with required one
-            $permissions = $acl->filter(function ($permission) use ($corporation, $ability) {
+            $permissions = $acl->filter(function ($permission) use ($corporation) {
 
                 // exclude all permissions which does not match with the requested permission
-                if ($permission->title != $ability)
+                if ($permission->title != $this->ability)
                     return false;
 
                 // in case no filters is available, return true as the permission is not limited
@@ -83,7 +86,7 @@ class CorporationPolicy extends AbstractEntityPolicy
 
             // if we have at least one valid permission - grant access
             return $permissions->isNotEmpty();
-        }, $corporation->corporation_id);
+        }, $corporation->corporation_id) ? Response::allow() : Response::deny($message);
     }
 
     /**

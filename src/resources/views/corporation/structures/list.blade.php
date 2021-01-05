@@ -12,6 +12,11 @@
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">{{ trans_choice('web::seat.structure', 2) }}</h3>
+          <div class="card-tools">
+            <div class="input-group input-group-sm">
+                @include('web::components.jobs.buttons.update', ['type' => 'corporation', 'entity' => $corporation->corporation_id, 'job' => 'corporation.structures', 'label' => trans('web::seat.update_structures')])
+            </div>
+          </div>
         </div>
         <div class="card-body">
 

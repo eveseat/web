@@ -55,11 +55,12 @@ class SeatSettings extends FormRequest
         $allowed_tracking = implode(',', Seat::$options['allow_tracking']);
 
         return [
-            'registration'         => 'required|in:' . $allowed_registration,
-            'cleanup_data'         => 'required|in:' . $allowed_cleanup,
-            'admin_contact'        => 'required|email',
-            'allow_tracking'       => 'required|in:' . $allowed_tracking,
-            'market_prices_region' => 'required|exists:regions,region_id',
+            'registration'                => 'required|in:' . $allowed_registration,
+            'allow_user_character_unlink' => 'required|in:yes,no',
+            'cleanup_data'                => 'required|in:' . $allowed_cleanup,
+            'admin_contact'               => 'required|email',
+            'allow_tracking'              => 'required|in:' . $allowed_tracking,
+            'market_prices_region'        => 'required|exists:regions,region_id',
         ];
     }
 }

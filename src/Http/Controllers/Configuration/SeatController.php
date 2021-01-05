@@ -86,6 +86,7 @@ class SeatController extends Controller
         setting(['allow_tracking', $request->allow_tracking], true);
         setting(['cleanup_data', $request->cleanup_data], true);
         setting(['market_prices_region_id', $request->market_prices_region], true);
+        setting(['allow_user_character_unlink', $request->allow_user_character_unlink], true);
 
         return redirect()->back()
             ->with('success', 'SeAT settings updated!');

@@ -37,7 +37,7 @@ class InsuranceController extends Controller
      */
     public function show(int $type_id)
     {
-        $ship = InvType::find($type_id);
+        $ship = InvType::find($type_id) ?? new InvType();
 
         return view('web::common.fittings.modals.insurances.content', compact('ship'));
     }

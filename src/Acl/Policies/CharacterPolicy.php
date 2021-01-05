@@ -25,6 +25,7 @@ namespace Seat\Web\Acl\Policies;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Corporation\CorporationRole;
+use Seat\Web\Acl\Response;
 use Seat\Web\Models\Acl\Permission;
 use Seat\Web\Models\User;
 
@@ -38,7 +39,8 @@ class CharacterPolicy extends AbstractEntityPolicy
     /**
      * @param string $method
      * @param array $args
-     * @return bool
+     *
+     * @return \Illuminate\Auth\Access\Response|bool
      */
     public function __call($method, $args)
     {
@@ -48,12 +50,13 @@ class CharacterPolicy extends AbstractEntityPolicy
 
         $user = $args[0];
         $character = $args[1];
-        $ability = sprintf('character.%s', $method);
+
+        $message = sprintf('Request to %s was denied. The permission required is %s', request()->path(), $this->ability);
 
         if (is_numeric($character))
             $character = CharacterInfo::find($character);
 
-        return $this->userHasPermission($user, $ability, function () use ($user, $character, $ability) {
+        return $this->userHasPermission($user, $this->ability, function () use ($user, $character) {
 
             // in case the user is owning requested character or is the CEO of it
             if ($this->isOwner($user, $character) || $this->isValidSharingSession($character)
@@ -64,10 +67,10 @@ class CharacterPolicy extends AbstractEntityPolicy
             $acl = $this->permissionsFrom($user);
 
             // filter out permissions which don't match with required one
-            $permissions = $acl->filter(function ($permission) use ($character, $ability) {
+            $permissions = $acl->filter(function ($permission) use ($character) {
 
                 // exclude all permissions which does not match with the requested permission
-                if ($permission->title !== $ability)
+                if ($permission->title !== $this->ability)
                     return false;
 
                 // in case no filters is available, return true as the permission is not limited
@@ -80,7 +83,7 @@ class CharacterPolicy extends AbstractEntityPolicy
 
             // if we have at least one valid permission - grant access
             return $permissions->isNotEmpty();
-        }, $character->character_id);
+        }, $character->character_id) ? Response::allow() : Response::deny($message);
     }
 
     /**

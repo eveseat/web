@@ -41,7 +41,8 @@ abstract class AbstractKillMailDataTable extends DataTable
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('action', function ($row) {
-                return view('web::common.killmails.killmailzkb', compact('row'))->render();
+                return view('web::common.killmails.buttons.show', compact('row'))->render() . ' ' .
+                    view('web::common.killmails.buttons.zkb', compact('row'))->render();
             })
             ->editColumn('detail.killmail_time', function ($row) {
                 return view('web::partials.date', ['datetime' => $row->detail->killmail_time])->render();

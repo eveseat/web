@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Acl\Policies;
 
+use Seat\Web\Acl\Response;
 use Seat\Web\Models\User;
 
 /**
@@ -32,21 +33,19 @@ use Seat\Web\Models\User;
 class GlobalPolicy extends AbstractPolicy
 {
     /**
-     * @var string
-     */
-    private $ability;
-
-    /**
      * @param string $method
      * @param array $args
-     * @return bool
+     *
+     * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function __call($method, $args)
+    public function __call(string $method, array $args)
     {
         if (count($args) < 1)
             return false;
 
         $user = $args[0];
+
+        $message = sprintf('Request to %s was denied. The permission required is %s', request()->path(), $this->ability);
 
         return $this->userHasPermission($user, $this->ability, function () use ($user) {
 
@@ -60,28 +59,18 @@ class GlobalPolicy extends AbstractPolicy
 
             // if we have at least one valid permission - grant access
             return $permissions->isNotEmpty();
-        });
+        }) ? Response::allow() : Response::deny($message);
     }
 
     /**
      * @param \Seat\Web\Models\User $user
-     * @return bool
+     *
+     * @return \Illuminate\Auth\Access\Response
      */
     public function superuser(User $user)
     {
-        return $user->isAdmin();
-    }
+        $message = sprintf('Request to %s was denied. The permission required is %s', request()->path(), $this->ability);
 
-    /**
-     * @param \Seat\Web\Models\User $user
-     * @param string $ability
-     * @return bool|void
-     */
-    public function before(User $user, $ability)
-    {
-        // store requested ability - so we can use it in magic call method.
-        $this->ability = $ability;
-
-        return parent::before($user, $ability);
+        return $user->isAdmin() ? Response::allow() : Response::deny($message);
     }
 }
