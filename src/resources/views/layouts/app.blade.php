@@ -76,6 +76,42 @@
       <section class="content">
         <div class="container-fluid">
 
+          <!-- Disclaimer Configuration Alerts -->
+          @if(config('app.debug', false))
+            @can('global.superuser')
+              <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading"><i class="fas fa-bug"></i> {{ trans('web::seat.critical') }} !</h4>
+
+                <p>
+                  It appears you're using <b>debug mode</b>.<br/>
+                  This setting can result in a security outage for your overall system by disclosing confidential
+                  and critical information.
+                </p>
+                <p>
+                  Depending on case, it even allow user to execute malicious code on your server and
+                  alter at least SeAT codebase by exploiting backdoors.
+                </p>
+
+                <hr/>
+
+                <p>
+                  If you're not using it, you <b>SHOULD</b> disable it right now !<br/>
+                  To do so, edit your <kbd>.env</kbd> file and replace the value of <kbd>APP_DEBUG</kbd> from <kbd>true</kbd> to <kbd>false</kbd>.<br/>
+                  Once done, ensure cached configuration is up-to-date by executing <kbd>php artisan config:cache</kbd>.
+                </p>
+              </div>
+            @else
+              <div class="alert alert-warning" role="alert">
+                <h4 class="alert-heading"><i class="fas fa-bug"></i> {{ trans('web::seat.critical') }} !</h4>
+
+                <p>
+                  There are some important information which require an update.<br/>
+                  Please contact your administrator as soon as possible and ask him to connect to SeAT using an administrator account.
+                </p>
+              </div>
+            @endif
+          @endif
+
           <!-- Notifications -->
           @include('web::includes.notifications')
 

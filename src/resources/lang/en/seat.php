@@ -157,6 +157,7 @@ return [
     'characters_in_group'   => 'Character in group|Characters in group',
 
     // Notifications
+    'critical'              => 'Critical',
     'error'                 => 'Error',
     'success'               => 'Success',
     'warning'               => 'Warning',
