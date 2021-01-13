@@ -105,6 +105,7 @@ class UsersDataTable extends DataTable
      */
     public function query()
     {
+        
         return User::with('characters', 'roles', 'roles.permissions')
             ->standard();
     }

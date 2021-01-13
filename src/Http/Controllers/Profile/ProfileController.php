@@ -52,7 +52,11 @@ class ProfileController extends Controller
         $history = auth()->user()->login_history->take(50)->sortByDesc('created_at');
 
         // Settings value possibilities
-        $characters = auth()->user()->characters;
+        if (auth()->user()->can('global.invalid_tokens')){
+            $characters = auth()->user()->all_characters();
+        } else {
+            $characters = auth()->user()->characters;
+        }
 
         // available languages
         $languages = config('web.locale.languages');

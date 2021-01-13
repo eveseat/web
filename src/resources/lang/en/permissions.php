@@ -37,11 +37,13 @@ return [
     // Global Scope
     'global_standing_builder_label'             => 'Grant access to the Standings Builder',
     'global_standing_builder_description'       => 'The Standings Builder shows an overview of your character, corporation and alliance standings. It is mainly used for exchanging standings between alliances of a coalition or corporations within an alliance. Also useful for character intel.',
+    'global_invalid_tokens_label'             => 'Grant access to see invalidated tokens',
+    'global_invalid_tokens_description'       => 'Showing invalid tokens allows you to see the characters associated with an account that are now invalid. Normally they are hidden.',
     'global_moons_reporter_label'               => 'Moon Reporter',
     'global_moons_reporter_description'         => 'The Moon Reporter can show all moons of New Eden and their registered composition reports.',
     'global_moons_reporter_manager_label'       => 'Moon Reports Manager',
     'global_moons_reporter_manager_description' => 'The Moon Reports Manager can create and update moon reports.',
-    'global_queue_manager_label'               => 'Queue Manager',
+    'global_queue_manager_label'                => 'Queue Manager',
 
     // Moon Reporter Scope
     'view_moon_reports_label'           => 'View Moon Reports',
