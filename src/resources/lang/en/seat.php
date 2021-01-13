@@ -163,6 +163,8 @@ return [
     'warning'               => 'Warning',
     'notice'                => 'Notice',
     'info'                  => 'Info',
+    'debug_disclaimer'      => 'It looks like <b>debug mode</b> is currently <b>enabled</b>.<br/>This is an extremely dangerous configuration state that leaves your instance vulnerable to easily exploitable security issues via the debug features that are now enabled.</p><hr/><p>Unless you are developing for SeAT, or debugging a problem, <b>it is highly recommended that you disable this</b> as soon as possible.<br/>You can do so by setting the <kbd>APP_DEBUG</kbd> value to <kbd>false</kbd> in your <kbd>.env</kbd> file.<br/>After doing that, run <kbd>php artisan config:cache.</kbd>',
+    'warning_disclaimer'    => 'There are some important information which require an update.<br/>Please contact your administrator as soon as possible and ask him to connect to SeAT using an administrator account.',
 
     // Menu
     'api_key_management'    => 'API Key Management',
