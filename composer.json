@@ -29,7 +29,7 @@
     "ext-gd": "*",
     "almasaeed2010/adminlte": "^3.0",
     "components/font-awesome": "^5.9",
-    "datatables/datatables": "^1.10",
+    "datatables.net/datatables.net-bs4": "dev-master",
     "datatables.net/datatables.net-buttons-bs4": "dev-master",
     "doctrine/dbal": "~2",
     "erusev/parsedown": "^1.7",
