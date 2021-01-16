@@ -51,9 +51,15 @@
                     {{ ucfirst(str_replace('_', ' ', $structure->state)) }}
                   </td>
                   <td data-sort="{{ $structure->fuel_expires }}">
+                    @if($structure->fuel_expires)
                       <span data-toggle="tooltip" title="" data-original-title="{{ $structure->fuel_expires }}">
                         {{ human_diff($structure->fuel_expires) }}
                       </span>
+                    @else
+                    <span data-toggle="tooltip" title="" data-original-title="{{ $structure->fuel_expires }}">
+                        {{ trans('web::seat.low_power') }}
+                      </span>
+                    @endif
                   </td>
                   <td>
                     <span data-toggle="tooltip" title=""

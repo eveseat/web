@@ -585,6 +585,7 @@ return [
     'starbase'                     => 'Starbase|Starbases',
     'structure'                    => 'Structure|Structures',
     'reinforce_week_hour'          => 'Reinf. Week/Hour',
+    'low_power'                    => 'Low Power',
     'state'                        => 'State',
     'fuel_level'                   => 'Fuel Level',
     'offline'                      => 'Offline Est.',
