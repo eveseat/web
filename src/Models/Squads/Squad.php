@@ -154,7 +154,7 @@ class Squad extends Model
      */
     public function getApplicationsCountAttribute(): int
     {
-        return $this->applications->count();
+        return auth()->user()->can('squads.manage_candidates', $this) ? $this->applications->count() : 0;
     }
 
     /**
@@ -162,7 +162,7 @@ class Squad extends Model
      */
     public function getMembersCountAttribute(): int
     {
-        return $this->members->count();
+        return auth()->user()->can('squads.show_members', $this) ? $this->members->count() : 0;
     }
 
     /**

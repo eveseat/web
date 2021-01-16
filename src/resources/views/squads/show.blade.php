@@ -70,15 +70,19 @@
               @endswitch
             </li>
             <li class="list-group-item flex-fill border-0">
-              Members <span class="badge badge-pill badge-light">{{ $squad->members_count }}</span>
+              @can('squads.show_members', $squad)
+                Members <span class="badge badge-pill badge-light">{{ $squad->members_count }}</span>
+              @endcan
             </li>
             <li class="list-group-item flex-fill border-0">
               Moderators <span class="badge badge-pill badge-warning">{{ $squad->moderators_count }}</span>
             </li>
             <li class="list-group-item flex-fill border-0">
+            @can('squads.manage_candidates', $squad)
               @if($squad->type == 'manual')
                 Candidates <span class="badge badge-pill badge-primary">{{ $squad->applications_count }}</span>
               @endif
+            @endcan
             </li>
           </ul>
 
