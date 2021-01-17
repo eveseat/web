@@ -21,7 +21,6 @@
  */
 
 Route::post('/dispatch', [
-    'middleware' => 'can:queue.character_job,character_id',
     'as'         => 'tools.jobs.dispatch',
     'uses'       => 'JobController@getDispatchUpdateJob',
 ]);

@@ -71,6 +71,30 @@ $(document).ready(function () {
     }).on('hide.bs.dropdown', function () {
         $('#user-dropdown').find('i.fa-caret-left').removeClass('fa-rotate-270');
     });
+
+    $('button[data-widget="esi-update"]').on('click', function() {
+        var button = $(this);
+        button.find('i').addClass('fa-spin');
+
+        $.ajax({
+            url: button.data('url'),
+            method: 'POST',
+            data: {
+                type: button.data('type'),
+                entity_id: button.data('entity'),
+                job_name: button.data('job')
+            },
+            success: function() {
+                button.find('i').removeClass('fa-spin');
+            },
+            error: function(e) {
+                button.addClass('btn-danger');
+                button.removeClass('btn-light');
+
+                console.error(e);
+            }
+        });
+    });
 });
 
 // Helper function to mimic the PHP human_readable method
