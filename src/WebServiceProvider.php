@@ -403,7 +403,6 @@ class WebServiceProvider extends AbstractSeatPlugin
         $permissions = config('seat.permissions', []);
 
         Gate::define('global.superuser', 'Seat\Web\Acl\Policies\GlobalPolicy@superuser');
-        Gate::define('queue.character_job', 'Seat\Web\Acl\Policies\JobPolicy@queue_character_job');
         Gate::define('squads.create', 'Seat\Web\Acl\Policies\SquadPolicy@create');
         Gate::define('squads.edit', 'Seat\Web\Acl\Policies\SquadPolicy@edit');
         Gate::define('squads.delete', 'Seat\Web\Acl\Policies\SquadPolicy@delete');
