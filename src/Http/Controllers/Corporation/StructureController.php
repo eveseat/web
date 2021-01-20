@@ -25,6 +25,8 @@ namespace Seat\Web\Http\Controllers\Corporation;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Corporation\CorporationStructure;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Http\DataTables\Corporation\Military\StructureDataTable;
+use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 
 /**
  * Class StructureController.
@@ -34,17 +36,14 @@ class StructureController extends Controller
 {
     /**
      * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
-     *
+     * @param \Seat\Web\Http\DataTables\Corporation\Military\StructureDataTable $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getStructures(CorporationInfo $corporation)
+    public function getStructures(CorporationInfo $corporation, StructureDataTable $dataTable)
     {
 
-        $structures = CorporationStructure::with('services', 'type', 'solar_system')
-            ->where('corporation_id', $corporation->corporation_id)
-            ->get();
-
-        return view('web::corporation.structures.list', compact('corporation', 'structures'));
+        return $dataTable->addScope(new CorporationScope('corporation.structure', [$corporation->corporation_id]))
+            ->render('web::corporation.structures.list', compact('corporation'));
     }
 
     /**

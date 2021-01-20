@@ -20,85 +20,7 @@
         </div>
         <div class="card-body">
 
-          <table class="table datatable compact table-condensed table-hover">
-            <thead>
-              <tr>
-                <th>{{ trans_choice('web::seat.type', 1) }}</th>
-                <th>{{ trans_choice('web::seat.location', 1) }}</th>
-                <th>{{ trans_choice('web::seat.name', 1) }}</th>
-                <th>{{ trans('web::seat.state') }} </th>
-                <th>{{ trans_choice('web::seat.offline', 1) }}</th>
-                <th>{{ trans('web::seat.reinforce_week_hour') }}</th>
-                <th data-orderable="false"></th>
-                <th data-orderable="false"></th>
-              </tr>
-            </thead>
-            <tbody>
-
-              @foreach($structures as $structure)
-
-                <tr>
-                  <td>
-                    @include('web::partials.type', ['type_id' => $structure->type->typeID, 'type_name' => $structure->type->typeName])
-                  </td>
-                  <td>
-                    {{ $structure->solar_system->name }}
-                  </td>
-                  <td>
-                    {{ optional($structure->info)->name }}
-                  </td>
-                  <td>
-                    {{ ucfirst(str_replace('_', ' ', $structure->state)) }}
-                  </td>
-                  <td data-sort="{{ $structure->fuel_expires }}">
-                    @if($structure->fuel_expires)
-                      <span data-toggle="tooltip" title="" data-original-title="{{ $structure->fuel_expires }}">
-                        {{ human_diff($structure->fuel_expires) }}
-                      </span>
-                    @else
-                    <span data-toggle="tooltip" title="" data-original-title="{{ $structure->fuel_expires }}">
-                        {{ trans('web::seat.low_power') }}
-                      </span>
-                    @endif
-                  </td>
-                  <td>
-                    <span data-toggle="tooltip" title=""
-                          data-original-title="Weekday: {{ $structure->reinforce_weekday }} | Hour: {{ $structure->reinforce_hour }}">
-                      {{ $structure->reinforce_weekday }}/{{ $structure->reinforce_hour }}
-                    </span>
-                  </td>
-                  <td>
-                    <ul>
-                      @foreach($structure->services as $service)
-                        <li>
-                          {{ $service->name }} :
-                          @if($service->state == 'online')
-                            <span class="text text-green">
-                              {{ ucfirst($service->state) }}
-                            </span>
-                          @else
-                            <span class="text text-red">
-                              {{ ucfirst($service->state) }}
-                            </span>
-                          @endif
-                        </li>
-                      @endforeach
-                    </ul>
-                  </td>
-                  <td>
-                    @include('web::corporation.structures.buttons.detail', [
-                      'corporation_id' => $structure->corporation_id,
-                      'structure_id' => $structure->structure_id
-                    ])
-
-                    @include('web::corporation.structures.buttons.export', ['data_export' => $structure->toEve()])
-                  </td>
-                </tr>
-
-              @endforeach
-
-            </tbody>
-          </table>
+          {{ $dataTable->table() }}
 
         </div>
       </div>
@@ -111,6 +33,7 @@
 @stop
 
 @push('javascript')
+  {!! $dataTable->scripts() !!}
   <script>
       $('#fitting-detail').on('show.bs.modal', function (e) {
           var body = $(e.target).find('.modal-body');
