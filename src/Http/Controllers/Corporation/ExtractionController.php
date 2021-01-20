@@ -25,6 +25,7 @@ namespace Seat\Web\Http\Controllers\Corporation;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Industry\CorporationIndustryMiningExtraction;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Web\Models\UniverseMoonReport;
 
 /**
  * Class ExtractionController.
@@ -39,14 +40,15 @@ class ExtractionController extends Controller
     public function getExtractions(CorporationInfo $corporation)
     {
         // retrieve any valid extraction for the current corporation
-        $extractions = CorporationIndustryMiningExtraction::with(
-            'moon', 'moon.solar_system', 'moon.constellation', 'moon.region', 'moon.content',
-            'structure', 'structure.info', 'structure.services')
-            ->where('corporation_id', $corporation->corporation_id)
-            ->where('natural_decay_time', '>', carbon()->subSeconds(CorporationIndustryMiningExtraction::THEORETICAL_DEPLETION_COUNTDOWN))
-            ->orderBy('chunk_arrival_time')
-            ->get();
+        $moons = UniverseMoonReport::with(
+            'content', 'moon', 'moon.solar_system', 'moon.constellation',
+                'moon.region', 'moon.extraction', 'moon.extraction.structure'
+            )->whereHas('moon.extraction.structure', function ($query) use ($corporation) {
+                $query->where('corporation_id', $corporation->corporation_id);
+            })->whereHas('moon.extraction', function ($query) {
+                $query->where('natural_decay_time', '>', carbon()->subSeconds(CorporationIndustryMiningExtraction::THEORETICAL_DEPLETION_COUNTDOWN));
+            })->get();
 
-        return view('web::corporation.extraction.extraction', compact('extractions', 'corporation'));
+        return view('web::corporation.extraction.extraction', compact('moons', 'corporation'));
     }
 }

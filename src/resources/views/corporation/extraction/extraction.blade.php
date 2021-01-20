@@ -3,9 +3,9 @@
 @section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.extraction', 0))
 
 @section('corporation_content')
-@foreach ($extractions->chunk(3) as $row)
+@foreach ($moons->sortBy('moon.extraction.chunk_arrival_time')->chunk(3) as $row)
   <div class="row">
-  @foreach($row as $extraction)
+  @foreach($row as $column)
     @include('web::corporation.extraction.partials.card')
   @endforeach
   </div>

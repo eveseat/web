@@ -1,14 +1,14 @@
 <h5>
   <i class="fa fa-map"></i>
-  @if (! is_null($extraction->moon) && ! is_null($extraction->moon->region))
-    {{ $extraction->moon->region->name }}
-    @if (! is_null($extraction->moon->constellation))
-      | {{ $extraction->moon->constellation->name }}
+  @if (! is_null($column->moon) && ! is_null($column->moon->region))
+    {{ $column->moon->region->name }}
+    @if (! is_null($column->moon->constellation))
+      | {{ $column->moon->constellation->name }}
     @else
       {{ sprintf('%s %s', trans('web::seat.unknown'), trans('web::seat.constellation')) }}
     @endif
-    @if (! is_null($extraction->moon->solar_system))
-      | {{ $extraction->moon->solar_system->name }}
+    @if (! is_null($column->moon->solar_system))
+      | {{ $column->moon->solar_system->name }}
     @else
       {{ sprintf('%s %s', trans('web::seat.unknown'), trans('web::seat.system')) }}
     @endif
@@ -18,8 +18,8 @@
 </h5>
 <span class="text-muted">
   <i class="fa fa-globe"></i>
-  @if (! is_null($extraction->moon))
-    {{ $extraction->moon->name }}
+  @if (! is_null($column->moon))
+    {{ $column->moon->name }}
   @else
     {{ trans('web::seat.unknown') }}
   @endif
@@ -27,13 +27,13 @@
 <hr/>
 <dl class="dl-horizontal">
   <dt>{{ trans('web::seat.start_at') }}</dt>
-  <dd>{{ $extraction->extraction_start_time }}</dd>
+  <dd>{{ $column->moon->extraction->extraction_start_time }}</dd>
   <dt>{{ trans('web::seat.chunk_arrival') }}</dt>
-  <dd>{{ $extraction->chunk_arrival_time }}</dd>
+  <dd>{{ $column->moon->extraction->chunk_arrival_time }}</dd>
   <dt>{{ trans('web::seat.self_destruct') }}</dt>
-  <dd>{{ $extraction->natural_decay_time }}</dd>
+  <dd>{{ $column->moon->extraction->natural_decay_time }}</dd>
 </dl>
-@if (! $extraction->moon->content->isEmpty())
+@if (! $column->content->isEmpty())
 <table class="table table-striped">
   <thead>
     <tr>
@@ -43,7 +43,7 @@
     </tr>
   </thead>
   <tbody>
-    @foreach($extraction->moon->content as $type)
+    @foreach($column->content as $type)
       <tr>
         <td>
           @include('web::partials.type', ['type_id' => $type->typeID, 'type_name' => $type->typeName])

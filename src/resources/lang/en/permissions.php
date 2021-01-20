@@ -49,7 +49,7 @@ return [
     'create_moon_reports_label'         => 'Create new Moon Reports',
     'create_moon_reports_description'   => 'Allows a user to submit moon probe results.',
     'manage_moon_reports_label'         => 'Manage Moon Reports',
-    'manage_moon_reports_description'   => 'Allows a user to edit and / or approve submitted moon reports.',
+    'manage_moon_reports_description'   => 'Allows a user to edit and/or delete moon reports.',
 
     // Character Scope
     'character_asset_label'              => 'Grant access to Character Assets',
@@ -77,7 +77,7 @@ return [
     'character_mining_label'             => 'Grant access to Character Mining',
     'character_mining_description'       => 'Displays statistics regarding mining done by a character. It is based on the in-game Personal Mining Ledger and shows date, system, ore, quantity, volume and estimated value.',
     'character_notification_label'       => 'Grant access to Character Notification',
-    'cgaracter_notification_description' => 'Displays a characters notifications like DED payout grants or standings update notifiers',
+    'character_notification_description' => 'Displays a characters notifications like DED payout grants or standings update notifiers',
     'character_planetary_label'          => 'Grant access to Character Planetary Interaction',
     'character_planetary_description'    => 'Displays planets on which the character has a command center and the linked installations.',
     'character_research_label'           => 'Grant access to Character Research Agents',

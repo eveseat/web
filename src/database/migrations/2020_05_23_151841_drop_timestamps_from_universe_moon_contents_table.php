@@ -20,40 +20,26 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\DataTables\Scopes\Filters;
-
-use Yajra\DataTables\Contracts\DataTableScope;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 /**
- * SystemScope.
- *
- * Filters DataTable data by solarSystemID
+ * Class DropTimestampsFromUniverseMoonContentsTable.
  */
-class SystemScope implements DataTableScope
+class DropTimestampsFromUniverseMoonContentsTable extends Migration
 {
-    /**
-     * @var int
-     */
-    private $system_id;
-
-    /**
-     * SystemScope constructor.
-     *
-     * @param int $system_id
-     */
-    public function __construct(int $system_id) {
-        $this->system_id = $system_id;
+    public function up()
+    {
+        Schema::table('universe_moon_contents', function (Blueprint $table) {
+            $table->dropTimestamps();
+        });
     }
 
-    /**
-     * Apply a query scope.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
-     */
-    public function apply($query) {
-        return $query->whereHas('moon', function ($sub_query) {
-            $sub_query->where('moons.system_id', $this->system_id);
+    public function down()
+    {
+        Schema::table('universe_moon_contents', function (Blueprint $table) {
+            $table->timestamps();
         });
     }
 }
