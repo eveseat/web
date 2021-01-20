@@ -20,40 +20,39 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\DataTables\Scopes\Filters;
-
-use Yajra\DataTables\Contracts\DataTableScope;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 /**
- * SystemScope.
- *
- * Filters DataTable data by solarSystemID
+ * Class AddMoonIdForeignKeyToUniverseMoonContents.
  */
-class SystemScope implements DataTableScope
+class AddMoonIdForeignKeyToUniverseMoonContents extends Migration
 {
     /**
-     * @var int
-     */
-    private $system_id;
-
-    /**
-     * SystemScope constructor.
+     * Run the migrations.
      *
-     * @param int $system_id
+     * @return void
      */
-    public function __construct(int $system_id) {
-        $this->system_id = $system_id;
+    public function up()
+    {
+        Schema::table('universe_moon_contents', function (Blueprint $table) {
+            $table->foreign('moon_id')
+                ->references('moon_id')
+                ->on('universe_moon_reports')
+                ->onDelete('CASCADE');
+        });
     }
 
     /**
-     * Apply a query scope.
+     * Reverse the migrations.
      *
-     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
+     * @return void
      */
-    public function apply($query) {
-        return $query->whereHas('moon', function ($sub_query) {
-            $sub_query->where('moons.system_id', $this->system_id);
+    public function down()
+    {
+        Schema::table('universe_moon_contents', function (Blueprint $table) {
+            $table->dropForeign(['moon_id']);
         });
     }
 }

@@ -52,6 +52,8 @@ class RegionScope implements DataTableScope
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
      */
     public function apply($query) {
-        return $query->where('moons.region_id', $this->region_id);
+        return $query->whereHas('moon', function ($sub_query) {
+            $sub_query->where('moons.region_id', $this->region_id);
+        });
     }
 }

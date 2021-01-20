@@ -20,27 +20,22 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-use Illuminate\Support\Facades\Route;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
-Route::group([
-    'prefix' => '/moons/',
-    'middleware' => 'can:moon.view_moon_reports',
-], function () {
-    Route::get('/')
-        ->name('tools.moons.index')
-        ->uses('MoonsController@index');
+/**
+ * Class RemoveDuplicateEntriesFromUniverseMoonContentsTable.
+ */
+class RemoveDuplicateEntriesFromUniverseMoonContentsTable extends Migration
+{
+    public function up()
+    {
+        // remove any duplicated entry base on moon_id and type_id
+        DB::statement('DELETE a FROM universe_moon_contents a INNER JOIN universe_moon_contents b WHERE a.id < b.id AND a.moon_id = b.moon_id AND a.type_id = b.type_id');
+    }
 
-    Route::get('/{id}')
-        ->name('tools.moons.show')
-        ->uses('MoonsController@show');
+    public function down()
+    {
 
-    Route::post('/')
-        ->name('tools.moons.store')
-        ->uses('MoonsController@store')
-        ->middleware('can:moon.create_moon_reports');
-
-    Route::delete('/{report}')
-        ->name('tools.moons.destroy')
-        ->uses('MoonsController@destroy')
-        ->middleware('can:moon.manage_moon_reports');
-});
+    }
+}

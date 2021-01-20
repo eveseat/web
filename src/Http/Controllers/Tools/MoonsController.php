@@ -33,6 +33,7 @@ use Seat\Web\Http\DataTables\Scopes\Filters\RegionScope;
 use Seat\Web\Http\DataTables\Scopes\Filters\SystemScope;
 use Seat\Web\Http\DataTables\Tools\MoonsDataTable;
 use Seat\Web\Http\Validation\ProbeReport;
+use Seat\Web\Models\UniverseMoonReport;
 
 /**
  * Class MoonsController.
@@ -47,15 +48,6 @@ class MoonsController extends Controller
      */
     public function index(MoonsDataTable $dataTable)
     {
-        $stats = (object) [
-            'ubiquitous' => Moon::ubiquitous()->count(),
-            'common' => Moon::common()->count(),
-            'uncommon' => Moon::uncommon()->count(),
-            'rare' => Moon::rare()->count(),
-            'exceptional' => Moon::exceptional()->count(),
-            'standard' => Moon::standard()->count(),
-        ];
-
         $groups = [
             Moon::UBIQUITOUS  => trans('web::moons.ubiquitous'),
             Moon::COMMON      => trans('web::moons.common'),
@@ -86,7 +78,7 @@ class MoonsController extends Controller
             $dataTable->addScope(new MoonProductScope($product_selection));
 
         return $dataTable
-                ->render('web::tools.moons.list', compact('stats', 'groups'));
+                ->render('web::tools.moons.list', compact('groups'));
     }
 
     /**
@@ -95,7 +87,7 @@ class MoonsController extends Controller
      */
     public function show(int $id)
     {
-        $moon = Moon::with(
+        $moon = UniverseMoonReport::with(
             'content', 'content.price', 'content.materials', 'content.materials.price',
             'content.materials.reactions', 'content.materials.reactions.components')
             ->find($id);
@@ -128,11 +120,12 @@ class MoonsController extends Controller
 
                 // iterate over each moons components
                 foreach ($moon->getElements() as $component) {
-
-                    $universe_moon = Moon::find($component->moonID);
-
                     if ($loop_first) {
                         $loop_first = false;
+                        $universe_moon = UniverseMoonReport::firstOrNew(['moon_id' => $component->moonID]);
+                        $universe_moon->user_id = auth()->user()->getAuthIdentifier();
+                        $universe_moon->updated_at = now();
+                        $universe_moon->save();
 
                         // search for any existing and outdated report regarding current moon
                         $universe_moon->content()->detach();
@@ -150,5 +143,18 @@ class MoonsController extends Controller
 
         return redirect()->back()
             ->with('success', trans('web::seat.probe_report_posted', ['lines' => count($parser->getGroups())]));
+    }
+
+    /**
+     * @param \Seat\Web\Models\UniverseMoonReport $report
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function destroy(UniverseMoonReport $report)
+    {
+        $report->content()->detach();
+        $report->delete();
+
+        return redirect()->back();
     }
 }
