@@ -593,6 +593,7 @@ return [
     'offline'                      => 'Offline Est.',
     'cargo_usage'                  => 'Cargo Usage',
     'onlined_at'                   => 'Onlined At',
+    'services'                     => 'Service|Services',
     'moon'                         => 'Moon',
     'use_standings_from'           => 'Use Standings From',
     'attack_on_agression'          => 'Attack On Aggression',
