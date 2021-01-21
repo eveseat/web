@@ -235,6 +235,7 @@
                 <tr>
                   <th>{{ trans_choice('web::squads.name', 1) }}</th>
                   <th>{{ trans_choice('web::squads.character', 0) }}</th>
+                  <th>{{ trans('web::squads.member_since') }}</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -409,6 +410,7 @@
             columns: [
                 {data: "name", name: "name", title: "Name", "orderable": true, "searchable": true},
                 {data: "characters", name: "characters", title: "Characters", "orderable": true, "searchable": true},
+                {data: "member_since", name: "member_since", title: "Member Since", "orderable": false, "searchable": false},
                 {defaultContent: "", data: "action", name: "action", title: "Action", "orderable": false, "searchable": false}
             ],
             "drawCallback": function() {
