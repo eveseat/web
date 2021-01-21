@@ -56,6 +56,7 @@ class MembersDataTable extends DataTable
             })
             ->editColumn('name', function ($row) {
                 $character = CharacterInfo::firstOrNew(['character_id' => $row->main_character_id], ['name' => $row->name]);
+
                 return view('web::partials.character', compact('character'))->render();
             })
             ->editColumn('action', function ($row) {
