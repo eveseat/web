@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Squads;
 
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Web\Models\User;
 use Yajra\DataTables\Services\DataTable;
 
@@ -51,9 +52,8 @@ class MembersDataTable extends DataTable
                 })->join(' ');
             })
             ->editColumn('name', function ($row) {
-                return sprintf('%s %s',
-                    img('characters', 'portrait', $row->main_character_id, 64, ['class' => 'img-circle eve-icon small-icon'], false),
-                    $row->name);
+                $character = CharacterInfo::firstOrNew(['character_id' => $row->main_character_id], ['name' => $row->name]);
+                return view('web::partials.character', compact('character'))->render();
             })
             ->editColumn('action', function ($row) {
                 return view('web::squads.buttons.squads.kick', compact('row'))->render();
