@@ -22,6 +22,7 @@
 
 namespace Seat\Tests\Web\Squads;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Lunaweb\RedisMock\Providers\RedisMockServiceProvider;
 use Orchestra\Testbench\TestCase;
@@ -38,6 +39,8 @@ use Seat\Web\WebServiceProvider;
  */
 class NoRulesTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * @param \Illuminate\Foundation\Application $app
      */
