@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Squads;
 
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Web\Models\User;
 use Yajra\DataTables\Services\DataTable;
 
@@ -50,10 +51,13 @@ class MembersDataTable extends DataTable
                     return view('web::partials.character-icon-hover', compact('character'))->render();
                 })->join(' ');
             })
+            ->addColumn('member_since', function ($row) {
+                return view('web::partials.date', ['datetime' => $row->squads->first()->pivot->created_at])->render();
+            })
             ->editColumn('name', function ($row) {
-                return sprintf('%s %s',
-                    img('characters', 'portrait', $row->main_character_id, 64, ['class' => 'img-circle eve-icon small-icon'], false),
-                    $row->name);
+                $character = CharacterInfo::firstOrNew(['character_id' => $row->main_character_id], ['name' => $row->name]);
+
+                return view('web::partials.character', compact('character'))->render();
             })
             ->editColumn('action', function ($row) {
                 return view('web::squads.buttons.squads.kick', compact('row'))->render();
@@ -66,7 +70,7 @@ class MembersDataTable extends DataTable
                     });
                 }
             })
-            ->rawColumns(['characters', 'name', 'action'])
+            ->rawColumns(['characters', 'name', 'member_since', 'action'])
             ->make(true);
     }
 
@@ -89,7 +93,9 @@ class MembersDataTable extends DataTable
      */
     public function query()
     {
-        return User::with('characters')
+        return User::with(['characters', 'squads' => function ($query) {
+                $query->where('id', $this->request->squad->id);
+            }])
             ->standard()
             ->whereHas('squads', function ($query) {
                 $query->where('id', $this->request->squad->id);
@@ -104,6 +110,7 @@ class MembersDataTable extends DataTable
         return [
             ['data' => 'name', 'title' => trans_choice('web::squads.name', 1)],
             ['data' => 'characters', 'title' => trans_choice('web::squads.character', 0), 'orderable' => false],
+            ['data' => 'member_since', 'title' => trans('web::squads.member_since'), 'orderable' => false, 'searchable' => false],
         ];
     }
 }
