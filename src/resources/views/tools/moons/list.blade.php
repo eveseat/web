@@ -23,7 +23,7 @@
     <div class="card-footer">
       <ul class="list-inline moon-stats">
         <li class="list-inline-item col-2">
-          <span class="badge badge-success">0</span> Gaz
+          <span class="badge badge-success">0</span> Gas
         </li>
         <li class="list-inline-item col-2">
           <span class="badge badge-primary">0</span> R8
