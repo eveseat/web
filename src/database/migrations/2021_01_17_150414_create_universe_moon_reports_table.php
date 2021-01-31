@@ -38,7 +38,7 @@ class CreateUniverseMoonReportsTable extends Migration
     public function up()
     {
         Schema::create('universe_moon_reports', function (Blueprint $table) {
-            $table->integer('moon_id');
+            $table->integer('moon_id')->primary();
             $table->unsignedInteger('user_id');
             $table->timestamps();
         });
