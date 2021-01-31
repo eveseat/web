@@ -40,7 +40,8 @@
               {{ $character_info->name }}
             </a>
             @else
-            <a>
+            <a href="{{ route(\Illuminate\Support\Facades\Route::currentRouteName(),
+            array_merge(request()->route()->parameters, ['character' => $character_info])) }}">
               {!! img('characters', 'portrait', $character_info->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
               {{ $character_info->name }}
             </a>
