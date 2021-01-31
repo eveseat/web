@@ -155,6 +155,15 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\
+     */
+    public function all_characters()
+    {
+
+        return CharacterInfo::whereIn('character_id', RefreshToken::withTrashed()->where('user_id', $this->id)->pluck('character_id'))->get();
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function main_character()

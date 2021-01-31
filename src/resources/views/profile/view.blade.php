@@ -339,6 +339,8 @@
 
             @if($character->refresh_token)
               @include('web::profile.buttons.scopes')
+            @else
+              @include('web::profile.buttons.noscopes')
             @endif
 
             @if($character->refresh_token && setting('allow_user_character_unlink', true) == 'yes')

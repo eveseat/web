@@ -91,29 +91,61 @@
 
       <ul class="list-group list-group-flush">
 
-        @foreach($user->characters as $character)
-          <li class="list-group-item">
+        @can('global.invalid_tokens')
 
-            @if ($character->refresh_token)
-              <button data-toggle="tooltip" title="Valid Token" class="btn btn-sm btn-link">
-                <i class="fa fa-check text-success"></i>
-              </button>
-            @else
-              <button data-toggle="tooltip" title="Invalid Token" class="btn btn-sm btn-link">
-                <i class="fa fa-exclamation-triangle text-danger"></i>
-              </button>
-            @endif
+          @foreach($user->all_characters() as $character)
+            <li class="list-group-item">
 
-            @if($character->refresh_token)
-              @include('web::profile.buttons.scopes')
-            @endif
+              @if ($character->refresh_token)
+                <button data-toggle="tooltip" title="Valid Token" class="btn btn-sm btn-link">
+                  <i class="fa fa-check text-success"></i>
+                </button>
+              @else
+                <button data-toggle="tooltip" title="Invalid Token" class="btn btn-sm btn-link">
+                  <i class="fa fa-exclamation-triangle text-danger"></i>
+                </button>
+              @endif
 
-            @include('web::configuration.users.buttons.transfer')
+              @if($character->refresh_token)
+                @include('web::profile.buttons.scopes')
+              @else
+                @include('web::profile.buttons.noscopes')
+              @endif
 
-            @include('web::partials.character', ['character' => $character])
+              @include('web::configuration.users.buttons.transfer')
 
-          </li>
-        @endforeach
+              @include('web::partials.character', ['character' => $character])
+
+            </li>
+          @endforeach
+
+        @else
+
+          @foreach($user->characters as $character)
+            <li class="list-group-item">
+
+              @if ($character->refresh_token)
+                <button data-toggle="tooltip" title="Valid Token" class="btn btn-sm btn-link">
+                  <i class="fa fa-check text-success"></i>
+                </button>
+              @else
+                <button data-toggle="tooltip" title="Invalid Token" class="btn btn-sm btn-link">
+                  <i class="fa fa-exclamation-triangle text-danger"></i>
+                </button>
+              @endif
+
+              @if($character->refresh_token)
+                @include('web::profile.buttons.scopes')
+              @endif
+
+              @include('web::configuration.users.buttons.transfer')
+
+              @include('web::partials.character', ['character' => $character])
+
+            </li>
+          @endforeach
+
+        @endcan
 
       </ul>
 
