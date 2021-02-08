@@ -548,6 +548,7 @@ return [
     'bonus_remaps'                 => 'Bonus Remaps',
     'last_remap_date'              => 'Last Remap Date',
     'accrued_remap_cooldown_date'  => 'Accured Remap Cooldown Date',
+    'no_remap'                     => 'No Remap Found',
     'item_type'                    => 'Item Type',
     'client_name'                  => 'Client Name',
     'client'                       => 'Client',
