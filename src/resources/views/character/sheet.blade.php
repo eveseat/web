@@ -200,7 +200,7 @@
                   <dt>{{ trans('web::seat.last_remap_date') }}</dt>
                   <dd>{{ $character->pilot_attributes->last_remap_date ?: trans('web::seat.no_remap') }}</dd>
                   <dt>{{ trans('web::seat.accrued_remap_cooldown_date') }}</dt>
-                  <dd>{{ $character->pilot_attributes->accrued_remap_cooldown_date ?: trans('web::seat.no_remap') }}</dd>
+                  <dd>{{ $character->pilot_attributes->accrued_remap_cooldown_date ?: carbon() }}</dd>
                 </dl>
               </div>
 
