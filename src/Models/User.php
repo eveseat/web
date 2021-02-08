@@ -35,6 +35,7 @@ use Seat\Services\Models\UserSetting;
 use Seat\Services\Settings\Profile;
 use Seat\Web\Models\Acl\Role;
 use Seat\Web\Models\Squads\Squad;
+use Seat\Web\Models\Squads\SquadMember;
 
 /**
  * Class User.
@@ -186,6 +187,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function squads()
     {
         return $this->belongsToMany(Squad::class, 'squad_member')
+            ->using(SquadMember::class)
             ->withPivot('created_at');
     }
 

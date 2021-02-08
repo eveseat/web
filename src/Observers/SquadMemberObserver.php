@@ -56,8 +56,14 @@ class SquadMemberObserver
         // retrieve user from pivot
         $user = User::find($member->user_id);
 
-        // retrieve roles from pivot
-        $roles = SquadRole::where('squad_id', $member->squad_id)->get();
+        // retrieve roles from pivot that need to be removed
+        $roles = SquadRole::where('squad_id', $member->squad_id)
+            ->whereNotIn('role_id', $member->squads->where('id', '<>', $member->squad_id)
+                ->map(function ($squad) {
+                    return $squad->roles->pluck('id');
+                })->flatten()
+            )
+            ->get();
 
         // remove squad roles from user
         $user->roles()->detach($roles->pluck('role_id'));
