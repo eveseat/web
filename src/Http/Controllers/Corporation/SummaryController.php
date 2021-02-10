@@ -59,8 +59,12 @@ class SummaryController extends Controller
             ->orderBy('division')
             ->get();
 
+        $trackings = $corporation->characters->reject(function ($char) {
+            return is_null($char->refresh_token);
+        })->count();
+
         return view('web::corporation.summary',
-            compact('corporation', 'sheet', 'asset_divisions', 'wallet_divisions'));
+            compact('corporation', 'sheet', 'asset_divisions', 'wallet_divisions', 'trackings'));
 
     }
 }
