@@ -23,6 +23,7 @@
 namespace Seat\Web\Models\Squads;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Seat\Web\Models\User;
 
 /**
  * Class SquadMember.
@@ -31,5 +32,19 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  */
 class SquadMember extends Pivot
 {
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function squad()
+    {
+        return $this->belongsTo(Squad::class);
+    }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
