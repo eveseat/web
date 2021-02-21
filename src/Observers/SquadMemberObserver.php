@@ -24,7 +24,6 @@ namespace Seat\Web\Observers;
 
 use Seat\Web\Models\Squads\SquadMember;
 use Seat\Web\Models\Squads\SquadRole;
-use Seat\Web\Models\User;
 
 /**
  * Class SquadMemberObserver.
@@ -38,14 +37,11 @@ class SquadMemberObserver
      */
     public function created(SquadMember $member)
     {
-        // retrieve user from pivot
-        $user = User::find($member->user_id);
-
         // retrieve roles from pivot
         $roles = SquadRole::where('squad_id', $member->squad_id)->get();
 
         // add squad roles to user
-        $user->roles()->syncWithoutDetaching($roles->pluck('role_id'));
+        $member->user->roles()->syncWithoutDetaching($roles->pluck('role_id'));
     }
 
     /**
@@ -53,12 +49,9 @@ class SquadMemberObserver
      */
     public function deleted(SquadMember $member)
     {
-        // retrieve user from pivot
-        $user = User::find($member->user_id);
-
         // retrieve roles from pivot that need to be removed
         $roles = SquadRole::where('squad_id', $member->squad_id)
-            ->whereNotIn('role_id', $member->squads->where('id', '<>', $member->squad_id)
+            ->whereNotIn('role_id', $member->user->squads->where('id', '<>', $member->squad_id)
                 ->map(function ($squad) {
                     return $squad->roles->pluck('id');
                 })->flatten()
@@ -66,6 +59,6 @@ class SquadMemberObserver
             ->get();
 
         // remove squad roles from user
-        $user->roles()->detach($roles->pluck('role_id'));
+        $member->user->roles()->detach($roles->pluck('role_id'));
     }
 }
