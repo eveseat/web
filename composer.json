@@ -11,7 +11,10 @@
   "autoload": {
     "psr-4": {
       "Seat\\Web\\": "src/"
-    }
+    },
+    "classmap": [
+      "database/seeds"
+    ]
   },
   "autoload-dev": {
     "psr-4": {
