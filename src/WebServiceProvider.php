@@ -370,7 +370,6 @@ class WebServiceProvider extends AbstractSeatPlugin
         $loader->alias('DataTables', 'Yajra\DataTables\Facades\DataTables');
     }
 
-
     private function addCommands()
     {
         $this->commands([
