@@ -13,7 +13,7 @@
       "Seat\\Web\\": "src/"
     },
     "classmap": [
-      "database/seeds"
+      "src/database/seeds"
     ]
   },
   "autoload-dev": {
