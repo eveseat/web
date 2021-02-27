@@ -37,6 +37,7 @@ use Seat\Eveapi\Models\Character\CharacterSkill;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Eveapi\Pivot\Character\CharacterTitle;
 use Seat\Services\AbstractSeatPlugin;
+use Seat\Web\Commands\Seat\Admin\Login as AdminLogin;
 use Seat\Web\Events\Attempt;
 use Seat\Web\Events\Login;
 use Seat\Web\Events\Logout;
@@ -84,6 +85,9 @@ class WebServiceProvider extends AbstractSeatPlugin
 
         // Publish the JS & CSS, and Database migrations
         $this->add_publications();
+
+        // Register commands
+        $this->addCommands();
 
         // Inform Laravel how to load migrations
         $this->add_migrations();
@@ -364,6 +368,13 @@ class WebServiceProvider extends AbstractSeatPlugin
         $this->app->register('Yajra\DataTables\DataTablesServiceProvider');
         $loader = AliasLoader::getInstance();
         $loader->alias('DataTables', 'Yajra\DataTables\Facades\DataTables');
+    }
+
+    private function addCommands()
+    {
+        $this->commands([
+            AdminLogin::class,
+        ]);
     }
 
     /**
