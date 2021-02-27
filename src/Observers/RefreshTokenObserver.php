@@ -24,7 +24,7 @@ namespace Seat\Web\Observers;
 
 use Exception;
 use Illuminate\Database\Eloquent\Model;
-use Seat\Console\Bus\Character;
+use Seat\Eveapi\Bus\Character;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Models\User;
 
@@ -41,7 +41,7 @@ class RefreshTokenObserver extends AbstractSquadObserver
     public function created(RefreshToken $token)
     {
         try {
-            $job = new Character($token);
+            $job = new Character($token->character_id, $token);
             $job->fire();
 
             // enqueue squads update
@@ -81,6 +81,24 @@ class RefreshTokenObserver extends AbstractSquadObserver
     public function deleted(RefreshToken $token)
     {
         try {
+            $this->updateUserSquads($token);
+        } catch (Exception $e) {
+            logger()->error($e->getMessage());
+        }
+    }
+
+    /**
+     * @param \Seat\Eveapi\Models\RefreshToken $token
+     */
+    public function restored(RefreshToken $token)
+    {
+        try {
+            logger()->debug('test observer restored token');
+
+            $job = new Character($token->character_id, $token);
+            $job->fire();
+
+            // enqueue squads update
             $this->updateUserSquads($token);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
