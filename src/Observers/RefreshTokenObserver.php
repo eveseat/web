@@ -56,10 +56,6 @@ class RefreshTokenObserver extends AbstractSquadObserver
      */
     public function updated(RefreshToken $token)
     {
-        // in case scopes are not altered, bypass update
-        if (! array_key_exists('scopes', $token->getChanges()))
-            return;
-
         try {
             $this->updateUserSquads($token);
         } catch (Exception $e) {
@@ -93,8 +89,6 @@ class RefreshTokenObserver extends AbstractSquadObserver
     public function restored(RefreshToken $token)
     {
         try {
-            logger()->debug('test observer restored token');
-
             $job = new Character($token->character_id, $token);
             $job->fire();
 
