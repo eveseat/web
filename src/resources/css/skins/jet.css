@@ -31,6 +31,10 @@ a:hover {
     color: #d65d0e;
 }
 
+hr {
+    border-color: rgba(146, 131, 116, .125);
+}
+
 .page-link {
     color: #fe8019;
     background-color: #3c3836;

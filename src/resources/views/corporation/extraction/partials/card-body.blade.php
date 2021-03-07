@@ -16,14 +16,17 @@
     {{ sprintf('%s %s', trans('web::seat.unknown'), trans('web::seat.region')) }}
   @endif
 </h5>
-<span class="text-muted">
-  <i class="fa fa-globe"></i>
+<div class="text-muted">
+  <i class="fas fa-globe"></i>
   @if (! is_null($column->moon))
     {{ $column->moon->name }}
   @else
     {{ trans('web::seat.unknown') }}
   @endif
-</span>
+</div>
+<div class="text-muted">
+    <i class="fas fa-monument"></i> {{ $column->moon->extraction->structure->info->name }}
+</div>
 <hr/>
 <dl class="dl-horizontal">
   <dt>{{ trans('web::seat.start_at') }}</dt>
@@ -34,6 +37,7 @@
   <dd>{{ $column->moon->extraction->natural_decay_time }}</dd>
 </dl>
 @if (! $column->content->isEmpty())
+<hr/>
 <table class="table table-striped">
   <thead>
     <tr>
