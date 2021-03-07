@@ -151,6 +151,13 @@
         <img src="{{ asset('web/img/eve-prism.png') }}" />
       </a>
     </span>
+    @can('global.superuser')
+      @if(! is_null($character->refresh_token))
+        <a href="{{ route('configuration.users.edit', $character->refresh_token->user_id) }}" class="btn btn-xs btn-secondary float-right">
+          <i class="fas fa-user"></i> {{ trans_choice('web::seat.user', 1) }}
+        </a>
+      @endif
+    @endcan
   </div>
 </div>
 
