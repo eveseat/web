@@ -42,7 +42,7 @@ class ExtractionController extends Controller
         // retrieve any valid extraction for the current corporation
         $moons = UniverseMoonReport::with(
             'content', 'moon', 'moon.solar_system', 'moon.constellation',
-                'moon.region', 'moon.extraction', 'moon.extraction.structure'
+                'moon.region', 'moon.extraction', 'moon.extraction.structure', 'moon.extraction.structure.info'
             )->whereHas('moon.extraction.structure', function ($query) use ($corporation) {
                 $query->where('corporation_id', $corporation->corporation_id);
             })->whereHas('moon.extraction', function ($query) {
