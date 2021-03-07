@@ -34,6 +34,13 @@
           </div>
 
           <div class="form-group row">
+              <label for="member_since" class="col-form-label col-md-4">{{ trans('web::seat.member_since') }}</label>
+              <div class="col-md-8">
+                  <input type="text" class="form-control" id="member_since" value="{{ $user->created_at }}" disabled />
+              </div>
+          </div>
+
+          <div class="form-group row">
             <div class="offset-md-4 col-md-8">
               <div class="form-check">
                 @if($user->isAdmin())

@@ -54,6 +54,9 @@ class UsersDataTable extends DataTable
                     return view('web::partials.character-icon-hover', compact('character'))->render();
                 })->join(' ');
             })
+            ->editColumn('created_at', function ($row) {
+                return view('web::partials.date', ['datetime' => $row->created_at])->render();
+            })
             ->editColumn('last_login', function ($row) {
                 return view('web::partials.date', ['datetime' => $row->last_login])->render();
             })
@@ -82,7 +85,7 @@ class UsersDataTable extends DataTable
                         });
                 });
             })
-            ->rawColumns(['users.name', 'characters.name', 'last_login', 'admin', 'roles', 'action'])
+            ->rawColumns(['users.name', 'characters.name', 'created_at', 'last_login', 'admin', 'roles', 'action'])
             ->make(true);
     }
 
@@ -117,6 +120,7 @@ class UsersDataTable extends DataTable
         return [
             ['data' => 'users.name', 'title' => trans_choice('web::seat.name', 1)],
             ['data' => 'characters.name', 'title' => trans_choice('web::seat.character', 0), 'orderable' => false],
+            ['data' => 'created_at', 'title' => trans('web::seat.member_since')],
             ['data' => 'last_login', 'title' => trans('web::seat.last_login')],
             ['data' => 'last_login_source', 'title' => trans('web::seat.from')],
             ['data' => 'email', 'title' => trans('web::seat.email'), 'searchable' => false, 'orderable' => false],
