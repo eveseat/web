@@ -258,6 +258,7 @@ return [
     'api_job_update'              => 'Queue an Update Job',
     'owner_info'                  => 'Owner Information',
     'no_owner'                    => 'This API Key has no Owner',
+    'member_since'                => 'Member Since',
     'last_login'                  => 'Last Login',
     'account_status'              => 'Account Status',
     'transfer_ownership'          => 'Transfer Ownership',
