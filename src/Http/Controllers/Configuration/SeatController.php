@@ -69,7 +69,11 @@ class SeatController extends Controller
      */
     public function getAbout()
     {
-        return view('web::about');
+        $discord_widget = $this->getDiscordWidget();
+        $documentation_widget = $this->getDocumentationWidget();
+        $github_widget = $this->getGithubWidget();
+
+        return view('web::about.about', compact('discord_widget', 'documentation_widget', 'github_widget'));
     }
 
     /**
@@ -190,6 +194,134 @@ class SeatController extends Controller
             return $this->getChangelogFromApi($changelog_uri, $changelog_body, $changelog_tag);
 
         return $this->getChangelogFromFile($changelog_uri);
+    }
+
+    /**
+     * @return object
+     */
+    private function getDiscordWidget()
+    {
+        $discord_widget = cache()->remember('discord_support_widget', 720, function () {
+
+            $discord_widget = [
+                'id' => '0',
+                'name' => 'SeAT',
+                'instant_invite' => '#',
+                'presence_count' => 0,
+            ];
+
+            try {
+
+                $discord_uri = 'https://discord.com/api/guilds/821361165791133716/widget.json';
+                $response = (new Client())->request('GET', $discord_uri);
+
+                // Ensure that the request was successful
+                if ($response->getStatusCode() == 200) {
+                    $json = json_decode($response->getBody());
+
+                    $discord_widget['id'] = $json->id ?: 0;
+                    $discord_widget['name'] = $json->name ?: 'SeAT';
+                    $discord_widget['instant_invite'] = $json->instant_invite ?: '#';
+                    $discord_widget['presence_count'] = $json->presence_count ?: 0;
+                }
+
+                return $discord_widget;
+
+            } catch (Exception $e) {
+
+                logger()->error($e->getMessage(), $e->getTrace());
+
+                return $discord_widget;
+            }
+
+        });
+
+        return (object) $discord_widget;
+    }
+
+    /**
+     * @return object
+     */
+    private function getDocumentationWidget()
+    {
+        $docs_widget = cache()->remember('docs_seat_widget', 720, function () {
+
+            $docs_widget = [
+                'id' => '0',
+                'name' => 'SeAT',
+                'url' => 'https://seat.eveseat.net',
+                'updated_at' => carbon('now'),
+            ];
+
+            try {
+
+                $github_uri = 'https://api.github.com/repos/eveseat/docs';
+                $response = (new Client())->request('GET', $github_uri);
+
+                // Ensure that the request was successful
+                if ($response->getStatusCode() == 200) {
+                    $json = json_decode($response->getBody());
+
+                    $docs_widget['id'] = $json->id ?: 0;
+                    $docs_widget['name'] = $json->name ?: 'SeAT';
+                    $docs_widget['updated_at'] = carbon($json->pushed_at ?: 'now');
+                }
+
+                return $docs_widget;
+
+            } catch (Exception $e) {
+
+                logger()->error($e->getMessage(), $e->getTrace());
+
+                return $docs_widget;
+            }
+
+        });
+
+        return (object) $docs_widget;
+    }
+
+    /**
+     * @return object
+     */
+    private function getGithubWidget()
+    {
+        $github_widget = cache()->remember('github_seat_widget', 720, function () {
+
+            $github_widget = [
+                'id' => '0',
+                'name' => 'SeAT',
+                'url' => '#',
+                'open_issues' => 0,
+            ];
+
+            try {
+
+                $github_uri = 'https://api.github.com/repos/eveseat/seat';
+                $response = (new Client())->request('GET', $github_uri);
+
+                // Ensure that the request was successful
+                if ($response->getStatusCode() == 200) {
+                    $json = json_decode($response->getBody());
+
+                    $github_widget['id'] = $json->id ?: 0;
+                    $github_widget['name'] = $json->name ?: 'SeAT';
+                    $github_widget['url'] = $json->html_url ?: '#';
+                    $github_widget['open_issues'] = $json->open_issues_count ?: 0;
+                }
+
+                return $github_widget;
+
+            } catch (Exception $e) {
+
+                logger()->error($e->getMessage(), $e->getTrace());
+
+                return $github_widget;
+            }
+
+        });
+
+        return (object) $github_widget;
     }
 
     /**
