@@ -3,20 +3,25 @@
     <div class="card-header with-border">
         <h3 class="card-title">
             <i class="fas fa-file-alt"></i>
-            Licenses
+            @lang('web::about.licences_pane_title')
         </h3>
     </div>
     <div class="card-body">
-        <p>SeAT is built upon a large panel of components which are published under the following licenses :</p>
+        <p>@lang('web::about.licences_pane_third_party_used_licences')</p>
         <ul>
             <li>jQuery ~ <a href="https://opensource.org/licenses/mit-license.html">MIT License</a></li>
             <li>Laravel ~ <a href="https://opensource.org/licenses/mit-license.html">MIT License</a></li>
             <li>Admin LTE ~ <a href="https://opensource.org/licenses/mit-license.html">MIT License</a></li>
             <li>Datatables ~ <a href="https://opensource.org/licenses/mit-license.html">MIT License</a></li>
             <li>Fontawesome ~ <a href="https://opensource.org/licenses/mit-license.html">MIT License</a></li>
-            <li>ESI & EVE Online assets ~ <a href="https://developers.eveonline.com/resource/license-agreement">Third Party License Agreement</a></li>
+            <li>JSONPath for PHP ~ <a href="https://opensource.org/licenses/mit-license.html">MIT License</a></li>
+            <li>ESI & EVE Online assets ~ <a href="https://developers.eveonline.com/resource/license-agreement">@lang('web::about.licences_pane_ccp_third_party_licence')</a></li>
         </ul>
-        <p>SeAT himself is published under the <a href="https://opensource.org/licenses/GPL-2.0">GNU General Public License (GPL)</a>.</p>
+        <p>
+            @lang('web::about.licences_pane_seat_used_licence', [
+                'licence_link' => '<a href="https://opensource.org/licenses/GPL-2.0">GNU General Public License (GPL)</a>'
+            ])
+        </p>
     </div>
 
 </div>
