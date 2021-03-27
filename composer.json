@@ -33,7 +33,6 @@
     "datatables.net/datatables.net-buttons-bs4": "dev-master",
     "doctrine/dbal": "~2",
     "erusev/parsedown": "^1.7",
-    "eveseat/console": "^4.5.0",
     "eveseat/eseye": "~2",
     "eveseat/eveapi": "^4.8",
     "eveseat/services": "^4.1",
