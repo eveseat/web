@@ -59,7 +59,7 @@ class LedgerController extends Controller
         $month = is_null($month) ? date('m') : $month;
 
         $group_column = 'second_party_id';
-        $ref_types = ['bounty_prizes', 'bounty_prize'];
+        $ref_types = ['bounty_prizes', 'bounty_prize', 'ess_escrow_transfer'];
 
         $periods = $this->getCorporationLedgerPeriods($corporation->corporation_id, $ref_types);
         $entries = $this->getCorporationLedgerByMonth($corporation->corporation_id, $group_column, $ref_types, $year, $month);
