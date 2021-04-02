@@ -249,7 +249,7 @@ class SeatController extends Controller
             $docs_widget = [
                 'id' => '0',
                 'name' => 'SeAT',
-                'url' => 'https://seat.eveseat.net',
+                'url' => 'https://docs.eveseat.net',
                 'updated_at' => carbon('now'),
             ];
 
