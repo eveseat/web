@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2020 Leon Jacobs
+ * Copyright (C) 2015 to 2021 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -91,7 +91,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         // Cleanup the user
         $this->login_history()->delete();
-        $this->refresh_tokens->each(function ($token) { $token->delete(); });
+        $this->refresh_tokens->each(function ($token) {
+            event('security.log', [
+                sprintf('Token tied to character %d has been permanently removed due to user %s deletion.',
+                    $token->character_id,
+                    $this->name),
+                'authentication',
+            ]);
+
+            $token->forceDelete();
+        });
         $this->settings()->delete();
 
         return parent::delete();
