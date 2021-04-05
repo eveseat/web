@@ -3,7 +3,7 @@
   <!-- Logo -->
   <a href="{{ route('home') }}" class="brand-link">
     <img class="brand-image img-circle elevation-3" src="{{ asset('web/img/logo.png') }}" alt="SeAT" />
-    <span class="brand-text font-weight-light">S<b>e</b>AT</span>
+    <span class="brand-text font-weight-light">WHBOO</span>
   </a>
 
   <!-- sidebar: style can be found in sidebar.less -->
