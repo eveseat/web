@@ -43,14 +43,14 @@
   @can('global.queue_manager')
     <li class="nav-item dropdown">
       <a href="{{ route('horizon.index') }}" class="nav-link" data-widget="dropdown" data-placement="bottom"
-         title="{{ trans('web::seat.queued') }}">
+         title="{{ trans('web::seat.queued') }}" target="_blank">
         <i class="fas fa-truck"></i>
         <span class="badge badge-success navbar-badge" id="queue_count">0</span>
       </a>
     </li>
     <li class="nav-item dropdown">
       <a href="{{ route('horizon.index') }}" class="nav-link" data-widget="dropdown" data-placement="bottom"
-         title="{{ trans('web::seat.error') }}">
+         title="{{ trans('web::seat.error') }}" target="_blank">
         <i class="fas fa-exclamation"></i>
         <span class="badge badge-danger navbar-badge" id="error_count">0</span>
       </a>
