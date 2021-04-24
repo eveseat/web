@@ -8,7 +8,7 @@
       {{ trans('web::seat.edit') }}
     </a>
     @if($row->title !== 'Superuser')
-      <button type="submit" class="btn btn-danger">
+      <button type="submit" class="btn btn-danger confirmdelete" data-seat-entity="{{ trans('web::seat.role') }}">
         <i class="fas fa-trash-alt"></i>
         {{ trans('web::seat.delete') }}
       </button>

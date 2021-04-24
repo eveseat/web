@@ -19,6 +19,26 @@ $(document).on("click", ".confirmform", function (e) {
     });
 });
 
+// Deletion 'confirm' dialog.
+// Make your submit button part of class confirmdelete, and viola.
+// You can add an entity name by adding a "data-seat-entity" attribute.
+var currentForm;
+$(document).on("click", ".confirmdelete", function (e) {
+    currentForm = $(this).closest("form");
+    e.preventDefault();
+    entity = $(this).data('seat-entity');
+    if (typeof entity !== 'undefined') {
+        message = `Are you sure you want to delete this ${entity}?`;
+    } else {
+        message = 'Are you sure you want to delete this?';
+    }
+    bootbox.confirm(message, function (confirmed) {
+        if (confirmed) {
+            currentForm.submit();
+        }
+    });
+});
+
 // Generic 'confirm' dialog code for links.
 // Make your link button part of class confirmlink, and viola
 $(document).on("click", "a.confirmlink", function (event) {
