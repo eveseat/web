@@ -147,6 +147,8 @@ return [
     'warning'               => '警告',
     'notice'                => '提醒',
     'info'                  => '消息',
+    'debug_disclaimer'      => '看起来 <b>调试模式</b> 现在 <b>被打开了</b>.<br/>这是一个非常危险的配置状态，通过现在启用的调试功能，使实例容易受到易于利用的安全问题的影响。</p><hr/><p>除非您正在开发或调试 SeAT ， <b>强烈建议您尽快禁用调试模式</b>。<br/>您可以通过调整<kbd>.env</kbd> 文件中的 <kbd>APP_DEBUG</kbd> 的值为 <kbd>false</kbd> ，然后运行 <kbd>php artisan config:cache.</kbd> 来关闭调试模式。',
+    'warning_disclaimer'    => '有一个关键的警告，需要管理员注意！<br/>请尽快联系您的 SeAT 管理员，并要求他们使用具有超级用户权限的帐户登录。',
 
     // Menu
     'api_key_management'    => 'API Key 管理',
@@ -171,6 +173,7 @@ return [
     'security'              => '安全',
     'sso'                   => 'SSO',
     'tracking'              => '追踪',
+    'about'                 => '关于',
 
     'assets'                      => '资产',
     'location_flag'               => '位标',
@@ -202,12 +205,14 @@ return [
     'owned_api_keys'              => '拥有的API数量',
     'total_character_isk'         => '总角色ISK',
     'total_character_skillpoints' => '总角色技能点',
+    'total_character_mined_isk'   => '总角色挖矿价值',
     'total_killmails'             => '总击杀报告数量',
     'main_char_skills'            => ':character_name 的技能',
     'main_char_skills_per_level'  => '每级的技能',
     'main_char_skills_coverage'   => '技能覆盖率 (百分比)',
     'concurrent_player_count'     => '同时在线人数',
     'esi_response_time'           => 'ESI响应时间',
+    'current_month'               => '本月',
 
     // Api Keys
     'api_key_add'                 => '添加一个新的 API Key',
@@ -413,7 +418,7 @@ return [
     'current_ship'                 => '当前船只',
     'last_location'                => '最后地点',
     'security_status'              => '安全等级',
-    'items_taking'                 => 'items taking',
+    'items_taking'                 => '持有的资产',
     'calendar_events'              => '日历事件',
     'positive_standings'           => '正面声望',
     'neutral_standings'            => '中立声望',
@@ -479,7 +484,7 @@ return [
     'client_name'                  => '客户名称',
     'client'                       => '客户',
     'qty'                          => '#',
-    'unknown_character'            => '未知角色，是否已提交SSO?',
+    'unknown_character'            => '未知角色，是否已提交 SSO ?',
     'no_account_info'              => '无可用账户信息',
     'channel_members'              => '频道成员',
     'motd'                         => 'MoTD',
@@ -509,7 +514,7 @@ return [
     'divisional_information'       => '部门信息',
     'corporation_divisions'        => '公司部门',
     'wallet_divisions'             => '钱包部门',
-    'unknown_corporation'          => '未知公司，是否已提交SSO?',
+    'unknown_corporation'          => '未知公司，是否已提交 SSO ?',
     'created_by'                   => '创建由',
     'starbase'                     => '哨站|哨站',
     'structure'                    => '建筑|建筑',
@@ -560,7 +565,7 @@ return [
     'account_settings'             => '设置',
     'upgrade_sso'                  => '升级至 EVE Online SSO Account',
     'change_email'                 => '更改邮箱',
-    'superuser'                    => 'Superuser',
+    'superuser'                    => '超级用户',
     'user_interface'               => '用户界面',
     'main_character'               => '主要角色',
     'seat_skin'                    => 'SeAT 皮肤',
@@ -586,12 +591,15 @@ return [
     'other_apps'                   => '其他应用',
     'confirm_code'                 => '确认认证器的安全码',
     'confirm_help'                 => '接下来，输入你的认证器显示的安全码来确认你的设置',
-    'code'                         => 'Code',
+    'code'                         => '代码',
     'confirm_setup'                => '确认设置',
     'linked_characters'            => '链接的角色',
     'link_another_character'       => '添加一个新的角色',
-    'view_third_party_access'      => '在Eveonline.com查看其他Apps',
-    'third_party_access'           => '经常查看第三方软件对你EVE帐号的访问情况.',
+    'view_third_party_access'      => '在 EVE Online 官网查看其他应用对您的账号的访问情况',
+    'third_party_access'           => '经常查看第三方软件对你 EVE Online 帐号的访问情况。',
+    'user_sharelink'               => '数据共享',
+    'user_sharelink_description'   => '您可以生成一个共享链接，该链接可以与其他 SeAT 用户共享，以便他们查看链接的角色信息。',
+    'user_sharelink_generate'      => '生成链接',
 
     // Queue
     'queue_manage'                 => '队列管理',
@@ -628,6 +636,7 @@ return [
 
     // Tools
     'standings_builder'            => '声望工具',
+    'moons_reporter'               => '月亮数据报告工具',
 
     // Footer
     'web_version'                  => '网页版',
