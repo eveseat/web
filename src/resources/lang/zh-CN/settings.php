@@ -21,9 +21,9 @@
  */
 
 return [
-    'jobs'                      => 'Job|Jobs',
-    'market_prices_region'      => 'Market Prices Region',
-    'market_prices_region_help' => 'This will be used by SeAT to collect market average prices from ESI. Those prices might be used in different place, like in contracts, fittings or mining ledgers.',
-    'admin'                     => 'Administrator|Administrators',
-    'admin_assist_edit'         => 'Attention, if you check this box, this user will get access to all settings, users and permissions. They will also bypass all the security layers because of this status. Proceed with caution.',
+    'jobs'                      => '任务',
+    'market_prices_region'      => '星域市场数据',
+    'market_prices_region_help' => 'SeAT 将使用它从 ESI 收集市场平均价格。这些价格可能在不同的地方使用，例如在合同，装配方案或采矿帐本中。',
+    'admin'                     => '超级用户',
+    'admin_assist_edit'         => '警告，如果选中此框，则该用户将有权访问所有设置，用户和权限。由于此状态，他（们）还将绕过所有安全限制。请务必谨慎考虑。',
 ];
