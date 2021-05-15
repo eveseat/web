@@ -21,10 +21,10 @@
  */
 
 return [
-    'name'            => 'Name',
-    'type'            => 'Type',
-    'items'           => 'Items',
-    'hull_estimated_value' => 'Hull Estimated Value',
-    'fitting_estimated_value' => 'Fitting Estimated Value',
-    'full_estimated_value' => 'Full Estimated Value',
+    'name'            => '名称',
+    'type'            => '类型',
+    'items'           => '物品',
+    'hull_estimated_value' => '船体估算价值',
+    'fitting_estimated_value' => '装备估算价值',
+    'full_estimated_value' => '总估算价值',
 ];
