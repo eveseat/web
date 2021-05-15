@@ -21,9 +21,9 @@
  */
 
 return [
-    'created'     => 'Created',
-    'label'       => 'Label',
-    'location'    => 'Location',
-    'notes'       => 'Notes',
-    'coordinates' => 'Coordinates',
+    'created'     => '已创建',
+    'label'       => '标签',
+    'location'    => '地点',
+    'notes'       => '注解',
+    'coordinates' => '坐标',
 ];
