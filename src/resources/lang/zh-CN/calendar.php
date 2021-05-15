@@ -21,13 +21,13 @@
  */
 
 return [
-    'date'          => 'Date',
-    'owner'         => 'Owner',
-    'description'   => 'Description',
-    'status'        => 'Status',
+    'date'          => '日期',
+    'owner'         => '所有人',
+    'description'   => '简介',
+    'status'        => '状态',
 
-    'not_responded' => 'Not responded',
-    'accepted'      => 'Accepted',
-    'tentative'     => 'Tentative',
-    'declined'      => 'Declined',
+    'not_responded' => '未响应',
+    'accepted'      => '已接受',
+    'tentative'     => '尝试',
+    'declined'      => '已拒绝',
 ];
