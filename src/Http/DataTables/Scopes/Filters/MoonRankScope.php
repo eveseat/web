@@ -53,7 +53,7 @@ class MoonRankScope implements DataTableScope
      * @return mixed
      **/
     public function apply($query) {
-        $query->whereHas('content', function ($type) use ($group_id) {
+        $query->whereHas('content', function ($type) {
             $type->whereIn('marketGroupID', $this->groups);
         });
 
