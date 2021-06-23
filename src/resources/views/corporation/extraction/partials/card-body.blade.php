@@ -56,7 +56,7 @@
         <td>
           @switch($type->marketGroupID)
             @case(2396)
-              <span class="badge badge-success">Gas</span>
+              <span class="badge badge-success">R4</span>
               @break
             @case(2397)
               <span class="badge badge-primary">R8</span>
