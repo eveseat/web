@@ -36,7 +36,7 @@
         ids_to_names();
       },
       'search'    : {
-        'search': '{{ $query }}'
+        'search': '{{ $query }}'.replace('&#039;', '\'')
       }
     });
   </script>
