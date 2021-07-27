@@ -217,7 +217,7 @@ class WebServiceProvider extends AbstractSeatPlugin
         $this->app['view']->composer([
             'web::corporation.layouts.view',
         ], CorporationLayout::class);
-        
+
         // Alliance menu composer
         $this->app['view']->composer([
             'web::alliance.includes.menu',
@@ -338,7 +338,6 @@ class WebServiceProvider extends AbstractSeatPlugin
             __DIR__ . '/Config/package.corporation.menu.php', 'package.corporation.menu');
         $this->mergeConfigFrom(
             __DIR__ . '/Config/package.alliance.menu.php', 'package.alliance.menu');
-            
 
         // Helper configurations
         $this->mergeConfigFrom(__DIR__ . '/Config/web.jobnames.php', 'web.jobnames');

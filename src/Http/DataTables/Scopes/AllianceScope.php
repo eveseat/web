@@ -23,9 +23,6 @@
 namespace Seat\Web\Http\DataTables\Scopes;
 
 use Illuminate\Support\Facades\Gate;
-use Seat\Eveapi\Models\Alliances\Alliance;
-use Seat\Eveapi\Models\Corporation\CorporationInfo;
-use Seat\Eveapi\Models\Corporation\CorporationRole;
 use Yajra\DataTables\Contracts\DataTableScope;
 
 /**

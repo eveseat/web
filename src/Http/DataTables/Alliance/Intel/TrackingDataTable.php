@@ -58,7 +58,7 @@ class TrackingDataTable extends DataTable
             })
             ->editColumn('tracking', function ($row) {
                 // <dd>{{ $trackings }} / {{ $sheet->member_count }} ({{ number_format($trackings/$sheet->member_count * 100, 2) }}%) {{ trans_choice('web::seat.valid_token', $sheet->member_count) }}</dd>
-               
+
                 $trackings = $row->characters->reject(function ($char) {
                     return is_null($char->refresh_token);
                 })->count();

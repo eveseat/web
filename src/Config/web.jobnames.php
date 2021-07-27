@@ -80,6 +80,6 @@ return [
         'contacts'         => [
             \Seat\Eveapi\Jobs\Contacts\Alliance\Contacts::class,
             \Seat\Eveapi\Jobs\Contacts\Alliance\Labels::class,
-        ]
-    ]
+        ],
+    ],
 ];
