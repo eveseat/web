@@ -31,7 +31,13 @@
         
             @can('alliance.tracking', $sheet)
               <dt><i class="far fa-address-book"></i> {{ trans('web::seat.tracking') }}</dt>
-              <dd>{{ $tracked }} / {{ $alliance->character_count() }} ({{ number_format($tracked/$alliance->character_count() * 100, 2) }}%) {{ trans_choice('web::seat.valid_token', $alliance->character_count()) }}</dd>
+              <dd>
+                @if($alliance->character_count() > 0)
+                {{ $tracked }} / {{ $alliance->character_count() }} ({{ number_format($tracked/$alliance->character_count() * 100, 2) }}%) {{ trans_choice('web::seat.valid_token', $alliance->character_count()) }}
+                @else
+                0 / 0 (0.00%) {{ trans_choice('web::seat.valid_token', 2) }}
+                @endif
+              </dd>
             @endcan
           </dl>
 

@@ -33,7 +33,7 @@ return [
         'label'         => 'web::seat.alliance',
         'plural'        => true,
         'icon'          => 'fas fa-city',
-        'route_segment' => 'corporation',
+        'route_segment' => 'alliance',
         'entries'       => [
             [
                 'name'  => 'all alliances',

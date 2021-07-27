@@ -43,25 +43,6 @@ class AllianceDataTable extends DataTable
             ->editColumn('name', function ($row) {
                 return view('web::partials.alliance', ['alliance' => $row])->render();
             })
-            // ->editColumn('tax_rate', function ($row) {
-            //     return number($row->tax_rate * 100) . '%';
-            // })
-            // ->editColumn('member_count', function ($row) {
-            //     if ($row->member_limit->limit < 1)
-            //         return sprintf('%d/%d (100.00%%)', $row->member_count, $row->member_count);
-
-            //     return sprintf('%d/%d (%s%%)',
-            //         $row->member_count, $row->member_limit->limit, number($row->member_count / $row->member_limit->limit * 100));
-            // })
-            // ->editColumn('ceo.name', function ($row) {
-            //     return view('web::partials.character', ['character' => $row->ceo])->render();
-            // })
-            // ->editColumn('alliance.name', function ($row) {
-            //     if (! is_null($row->alliance_id))
-            //         return view('web::partials.alliance', ['alliance' => $row->alliance])->render();
-
-            //     return '';
-            // })
             ->editColumn('action', function ($row) {
                 return view('web::alliance.partials.delete', compact('row'));
             })

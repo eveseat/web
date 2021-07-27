@@ -174,6 +174,7 @@ return [
     'all_char'              => 'All Characters',
     'mail_timeline'         => 'Mail Timeline',
     'all_corp'              => 'All Corporations',
+    'all_alliance'          => 'All Alliances',
     'configuration'         => 'Settings',
     'access'                => 'Access Management',
     'other'                 => 'Other',
