@@ -164,6 +164,7 @@ return [
     'corporation_transaction_description'             => 'Displays a corporations Wallet Transactions.',
 
     // Alliance Scope
+    'all_alliance'                   => 'All Alliances',
     'alliance_contact_label'         => 'Grant access to Alliance Contacts',
     'alliance_contact_description'   => 'Displays alliance contacts including name, standing and link to third-party platforms (like zkillboard).',
     'alliance_summary_label'         => 'Grant access to Alliance Summary Sheet',
