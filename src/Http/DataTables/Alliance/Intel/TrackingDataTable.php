@@ -20,7 +20,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Http\DataTables\Corporation;
+namespace Seat\Web\Http\DataTables\Alliance\Intel;
 
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Yajra\DataTables\Services\DataTable;
@@ -28,9 +28,9 @@ use Yajra\DataTables\Services\DataTable;
 /**
  * Class CorporationDataTable.
  *
- * @package Seat\Web\Http\DataTables\Corporation
+ * @package Seat\Web\Http\DataTables\Alliance\Intel
  */
-class CorporationDataTable extends DataTable
+class TrackingDataTable extends DataTable
 {
     /**
      * @return \Illuminate\Http\JsonResponse
@@ -56,16 +56,19 @@ class CorporationDataTable extends DataTable
             ->editColumn('ceo.name', function ($row) {
                 return view('web::partials.character', ['character' => $row->ceo])->render();
             })
-            ->editColumn('alliance.name', function ($row) {
-                if (! is_null($row->alliance_id))
-                    return view('web::partials.alliance', ['alliance' => $row->alliance])->render();
+            ->editColumn('tracking', function ($row) {
+                // <dd>{{ $trackings }} / {{ $sheet->member_count }} ({{ number_format($trackings/$sheet->member_count * 100, 2) }}%) {{ trans_choice('web::seat.valid_token', $sheet->member_count) }}</dd>
+               
+                $trackings = $row->characters->reject(function ($char) {
+                    return is_null($char->refresh_token);
+                })->count();
 
-                return '';
+                return $trackings . '/' . $row->member_count . ' (' . number_format($trackings / $row->member_count * 100, 2) . '%)';
             })
             ->editColumn('action', function ($row) {
                 return view('web::corporation.partials.delete', compact('row'));
             })
-            ->rawColumns(['name', 'ceo.name', 'alliance.name'])
+            ->rawColumns(['name', 'ceo.name'])
             ->make(true);
     }
 
@@ -102,9 +105,9 @@ class CorporationDataTable extends DataTable
             ['data' => 'name', 'title' => trans_choice('web::seat.name', 1)],
             ['data' => 'ticker', 'title' => trans('web::seat.ticker')],
             ['data' => 'ceo.name', 'title' => trans('web::seat.ceo')],
-            ['data' => 'alliance.name', 'title' => trans_choice('web::seat.alliance', 1)],
             ['data' => 'tax_rate', 'title' => trans('web::seat.tax_rate')],
             ['data' => 'member_count', 'title' => trans('web::seat.member_count')],
+            ['data' => 'tracking', 'title' => trans('web::seat.tracking')],
         ];
     }
 }

@@ -35,7 +35,7 @@
     {{ $label }}
   </label>
 
-  @if(in_array($scope, ['character', 'corporation']))
+  @if(in_array($scope, ['character', 'corporation', 'alliance']))
     @include('web::configuration.access.partials.permissions.buttons.filters', ['role_id' => $role_id, 'scope' => $scope, 'class' => $filters ? 'btn-warning' : 'btn-default', 'disabled' => ! $is_granted])
   @endif
 
@@ -43,7 +43,7 @@
   <i class="form-text text-muted">{{ trans($description) }}</i>
   @endif
 
-  @if(in_array($scope, ['character', 'corporation']))
+  @if(in_array($scope, ['character', 'corporation', 'alliance']))
     @if($filters)
       <input type="hidden" name="filters[{{ $scope }}.{{ $ability }}]" value="{{ $filters }}" form="role-form" />
     @else

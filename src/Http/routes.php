@@ -88,6 +88,15 @@ Route::group([
             include __DIR__ . '/Routes/Queue/Status.php';
         });
 
+        // Alliance Routes
+        Route::group([
+            'namespace' => 'Alliance',
+            'prefix'    => 'alliances',
+        ], function () {
+
+            include __DIR__ . '/Routes/Alliance/View.php';
+        });
+
         // Corporation Routes
         Route::group([
             'namespace' => 'Corporation',

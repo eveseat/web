@@ -24,6 +24,7 @@ namespace Seat\Web\Http\Controllers\Tools;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Seat\Eveapi\Jobs\AbstractAuthAllianceJob;
 use Seat\Eveapi\Jobs\AbstractAuthCharacterJob;
 use Seat\Eveapi\Jobs\AbstractAuthCorporationJob;
 use Seat\Eveapi\Models\RefreshToken;
@@ -54,7 +55,7 @@ class JobController extends Controller
     public function postDispatchJob(Request $request)
     {
         $request->validate([
-            'type' => 'in:character,corporation|required',
+            'type' => 'in:character,corporation,alliance|required',
             'entity_id' => 'integer|required',
             'job_name' => sprintf('in:%s.%s|required',
                 $request->input('type'),
@@ -103,6 +104,13 @@ class JobController extends Controller
                 // process corporation job
                 case is_subclass_of($class, AbstractAuthCorporationJob::class):
                     if (! $this->handleCorporationJobsDispatch($class, $request->input('entity_id')))
+                        return response()->json([
+                            'message' => 'Unable to retrieve a suitable token.',
+                        ], 400);
+                    break;
+                // process corporation job
+                case is_subclass_of($class, AbstractAuthAllianceJob::class):
+                    if (! $this->handleAllianceJobsDispatch($class, $request->input('entity_id')))
                         return response()->json([
                             'message' => 'Unable to retrieve a suitable token.',
                         ], 400);
@@ -162,6 +170,34 @@ class JobController extends Controller
             return false;
 
         $class::dispatch($refresh_token->affiliation->corporation_id, $refresh_token)->onQueue('high');
+
+        return true;
+    }
+
+    /**
+     * @param string $class
+     * @param int $alliance_id
+     *
+     * @return false
+     */
+    private function handleAllianceJobsDispatch(string $class, int $alliance_id)
+    {
+        // generate a dummy job - so we can pickup the required roles
+        $dummy_job = new $class(0, new RefreshToken());
+
+        $refresh_token = RefreshToken::whereHas('character.affiliation', function ($query) use ($alliance_id) {
+            $query->where('alliance_id', $alliance_id);
+        })->when(! empty($dummy_job->getRoles()), function ($sub_query) use ($dummy_job) {
+            $sub_query->whereHas('character.corporation_roles', function ($query) use ($dummy_job) {
+                $query->where('scope', 'roles');
+                $query->whereIn('role', $dummy_job->getRoles());
+            });
+        })->first();
+
+        if (! $refresh_token)
+            return false;
+
+        $class::dispatch($refresh_token->affiliation->alliance_id, $refresh_token)->onQueue('high');
 
         return true;
     }

@@ -571,7 +571,7 @@ return [
     'loading_mail'                 => 'Loading Mail Entries...',
 
     // Corporation
-    'alliance'                     => 'Alliance',
+    'alliance'                     => 'Alliance|Alliances',
     'ticker'                       => 'Ticker',
     'ceo'                          => 'CEO',
     'home_station'                 => 'Home Station',
