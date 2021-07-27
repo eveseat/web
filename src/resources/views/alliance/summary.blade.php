@@ -17,7 +17,7 @@
           <dl>
             
             <dt><i class="fas fa-building"></i> {{ trans('web::seat.corporation_count') }}</dt>
-            <dd>{{ $sheet->members->count()}}</dd>
+            <dd>{{ $sheet->members->count()}} {{ trans_choice('web::seat.corporation', $sheet->members->count()) }}</dd>
         
             <dt><i class="fas fa-users"></i> {{ trans_choice('web::seat.member', 2) }}</dt>
             <dd>

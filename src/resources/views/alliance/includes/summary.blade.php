@@ -26,17 +26,17 @@
         @include('web::partials.corporation', ['corporation' => $alliance->executor])
       </dd>
 
-      <dt>{{ trans('web::seat.founded') }}</dt>
+      <dt>{{ trans('web::seat.created') }}</dt>
       <dd>
         {{ $alliance->date_founded }}
       </dd>
 
-      <dt>{{ trans('web::seat.creator') }}</dt>
+      <dt>{{ trans('web::seat.created_by') }}</dt>
       <dd>
         @include('web::partials.character', ['character' => $alliance->creator])
       </dd>
 
-      <dt>{{ trans('web::seat.creator_corporation') }}</dt>
+      <dt>{{ trans('web::seat.created_by_corporation') }}</dt>
       <dd>
         @include('web::partials.corporation', ['corporation' => $alliance->creator_corporation])
       </dd>

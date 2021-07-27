@@ -572,6 +572,8 @@ return [
 
     // Corporation
     'alliance'                     => 'Alliance|Alliances',
+    'corporation_count'            => 'Corporation Count',
+    'executor'                     => 'Executor',
     'ticker'                       => 'Ticker',
     'ceo'                          => 'CEO',
     'home_station'                 => 'Home Station',
@@ -587,6 +589,7 @@ return [
     'wallet_divisions'             => 'Wallet Divisions',
     'unknown_corporation'          => 'Unknown Corporation. Is the API Key on record and updated?',
     'created_by'                   => 'Created By',
+    'created_by_corporation'       => 'Created By Corporation',
     'starbase'                     => 'Starbase|Starbases',
     'structure'                    => 'Structure|Structures',
     'reinforce_week_hour'          => 'Reinf. Week/Hour',
