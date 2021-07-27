@@ -174,6 +174,7 @@ return [
     'all_char'              => 'All Characters',
     'mail_timeline'         => 'Mail Timeline',
     'all_corp'              => 'All Corporations',
+    'all_alliance'          => 'All Alliances',
     'configuration'         => 'Settings',
     'access'                => 'Access Management',
     'other'                 => 'Other',
@@ -571,7 +572,9 @@ return [
     'loading_mail'                 => 'Loading Mail Entries...',
 
     // Corporation
-    'alliance'                     => 'Alliance',
+    'alliance'                     => 'Alliance|Alliances',
+    'corporation_count'            => 'Corporation Count',
+    'executor'                     => 'Executor',
     'ticker'                       => 'Ticker',
     'ceo'                          => 'CEO',
     'home_station'                 => 'Home Station',
@@ -587,6 +590,7 @@ return [
     'wallet_divisions'             => 'Wallet Divisions',
     'unknown_corporation'          => 'Unknown Corporation. Is the API Key on record and updated?',
     'created_by'                   => 'Created By',
+    'created_by_corporation'       => 'Created By Corporation',
     'starbase'                     => 'Starbase|Starbases',
     'structure'                    => 'Structure|Structures',
     'reinforce_week_hour'          => 'Reinf. Week/Hour',

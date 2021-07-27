@@ -42,6 +42,8 @@ use Seat\Web\Events\Attempt;
 use Seat\Web\Events\Login;
 use Seat\Web\Events\Logout;
 use Seat\Web\Events\SecLog;
+use Seat\Web\Http\Composers\AllianceLayout;
+use Seat\Web\Http\Composers\AllianceMenu;
 use Seat\Web\Http\Composers\CharacterLayout;
 use Seat\Web\Http\Composers\CharacterMenu;
 use Seat\Web\Http\Composers\CorporationLayout;
@@ -216,6 +218,16 @@ class WebServiceProvider extends AbstractSeatPlugin
             'web::corporation.layouts.view',
         ], CorporationLayout::class);
 
+        // Alliance menu composer
+        $this->app['view']->composer([
+            'web::alliance.includes.menu',
+        ], AllianceMenu::class);
+
+        // Alliance layout breadcrumb
+        $this->app['view']->composer([
+            'web::alliance.layouts.view',
+        ], AllianceLayout::class);
+
     }
 
     /**
@@ -324,6 +336,8 @@ class WebServiceProvider extends AbstractSeatPlugin
             __DIR__ . '/Config/package.character.menu.php', 'package.character.menu');
         $this->mergeConfigFrom(
             __DIR__ . '/Config/package.corporation.menu.php', 'package.corporation.menu');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/package.alliance.menu.php', 'package.alliance.menu');
 
         // Helper configurations
         $this->mergeConfigFrom(__DIR__ . '/Config/web.jobnames.php', 'web.jobnames');
@@ -332,6 +346,7 @@ class WebServiceProvider extends AbstractSeatPlugin
         // Permissions
         $this->registerPermissions(__DIR__ . '/Config/Permissions/character.php', 'character');
         $this->registerPermissions(__DIR__ . '/Config/Permissions/corporation.php', 'corporation');
+        $this->registerPermissions(__DIR__ . '/Config/Permissions/alliance.php', 'alliance');
         $this->registerPermissions(__DIR__ . '/Config/Permissions/global.php', 'global');
         $this->registerPermissions(__DIR__ . '/Config/Permissions/mail.php', 'mail');
         $this->registerPermissions(__DIR__ . '/Config/Permissions/people.php', 'people');
@@ -438,6 +453,10 @@ class WebServiceProvider extends AbstractSeatPlugin
                 // in case the requested scope is corporation, set the CorporationPolicy as default.
                 if ($scope == 'corporation')
                     $policy = 'Seat\Web\Acl\Policies\CorporationPolicy';
+
+                // in case the requested scope is corporation, set the CorporationPolicy as default.
+                if ($scope == 'alliance')
+                    $policy = 'Seat\Web\Acl\Policies\AlliancePolicy';
 
                 // in case a custom gate has been defined in the permission file, use it.
                 if (array_key_exists('gate', $definition))

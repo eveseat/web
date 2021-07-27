@@ -76,4 +76,10 @@ return [
         'starbases'        => \Seat\Eveapi\Jobs\Corporation\Starbases::class,
         'structures'       => \Seat\Eveapi\Jobs\Corporation\Structures::class,
     ],
+    'alliance' => [
+        'contacts'         => [
+            \Seat\Eveapi\Jobs\Contacts\Alliance\Contacts::class,
+            \Seat\Eveapi\Jobs\Contacts\Alliance\Labels::class,
+        ],
+    ],
 ];
