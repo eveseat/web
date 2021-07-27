@@ -23,10 +23,8 @@
 namespace Seat\Web\Acl\Policies;
 
 use Seat\Eveapi\Models\Alliances\Alliance;
-use Seat\Web\Acl\EsiRolesMap;
 use Seat\Web\Acl\Response;
 use Seat\Web\Models\Acl\Permission;
-use Seat\Web\Models\User;
 
 /**
  * Class AlliancePolicy.
