@@ -163,6 +163,14 @@ return [
     'corporation_transaction_label'                   => 'Grant access to Corporation Wallet Transactions',
     'corporation_transaction_description'             => 'Displays a corporations Wallet Transactions.',
 
+    // Alliance Scope
+    'alliance_contact_label'         => 'Grant access to Alliance Contacts',
+    'alliance_contact_description'   => 'Displays alliance contacts including name, standing and link to third-party platforms (like zkillboard).',
+    'alliance_summary_label'         => 'Grant access to Alliance Summary Sheet',
+    'alliance_summary_description'   => 'The Alliance Sheet contains basic information like the alliance name, founder, member corporations, etc...',
+    'alliance_tracking_label'        => 'Grant access to Alliance Tracking',
+    'alliance_tracking_description'  => 'Displays a report of users registered on SeAT in comparison to all members.',
+
     // Mail Scope
     'mail_bodies_label'   => 'Read Mail Bodies',
     'mail_subjects_label' => 'Read Mail Subjects',
