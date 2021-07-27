@@ -107,7 +107,7 @@ class TrackingDataTable extends DataTable
             ['data' => 'ceo.name', 'title' => trans('web::seat.ceo')],
             ['data' => 'tax_rate', 'title' => trans('web::seat.tax_rate')],
             ['data' => 'member_count', 'title' => trans('web::seat.member_count')],
-            ['data' => 'tracking', 'title' => trans('web::seat.tracking')],
+            ['data' => 'tracking', 'title' => trans_choice('web::seat.valid_token', 2)],
         ];
     }
 }
