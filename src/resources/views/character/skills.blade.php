@@ -114,6 +114,7 @@
           scale : {
             ticks: {
               beginAtZero: true,
+              showLabelBackdrop: false,
               max        : 100
             }
           },
