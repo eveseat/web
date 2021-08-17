@@ -13,12 +13,12 @@
         </p>
         <p>
             @lang('web::about.contact_pane_question_forum', [
-                'link' => sprintf('<a href="https://forums.eveonline.com/default.aspx?g=posts&t=460658&find=unread">%s</a>', trans('web::about.contact_pane_question_eve_online_forums_placeholder'))
+                'link' => sprintf('<a href="https://forums.eveonline.com/default.aspx?g=posts&t=460658&find=unread"  target="_blank">%s</a>', trans('web::about.contact_pane_question_eve_online_forums_placeholder'))
             ])
         </p>
         <p>
             @lang('web::about.contact_pane_question_github', [
-                'link' => sprintf('<a href="https://github.com/eveseat/seat/issues">%s</a>', trans('web::about.contact_pane_question_github_here_placeholder')),
+                'link' => sprintf('<a href="https://github.com/eveseat/seat/issues"  target="_blank">%s</a>', trans('web::about.contact_pane_question_github_here_placeholder')),
             ])
         </p>
     </div>
