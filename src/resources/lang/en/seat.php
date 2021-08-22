@@ -462,7 +462,7 @@ return [
     'update_contacts'              => 'Update Contacts',
     'update_contracts'             => 'Update Contracts',
     'update_corp_history'          => 'Update Employment History',
-    'update_customs_offices'       => 'Update customs offices',
+    'update_customs_offices'       => 'Update Customs Offices',
     'update_divisions'             => 'Update Divisions'
     'update_fittings'              => 'Update Fittings',
     'update_industry'              => 'Update Industry Jobs',
