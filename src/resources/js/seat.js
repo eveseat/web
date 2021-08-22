@@ -10,7 +10,11 @@ $.ajaxSetup({
 // Make your submit button part of class confirmform, and viola
 var currentForm;
 $(document).on("click", ".confirmform", function (e) {
-    currentForm = $(this).closest("form");
+    if ($(this).attr('form') === undefined) {
+        currentForm = $(this).closest("form");
+    } else {
+        currentForm = $('#'.concat($(this).attr('form')))
+    }
     e.preventDefault();
     bootbox.confirm("Are you sure you want to continue?", function (confirmed) {
         if (confirmed) {
@@ -24,7 +28,11 @@ $(document).on("click", ".confirmform", function (e) {
 // You can add an entity name by adding a "data-seat-entity" attribute.
 var currentForm;
 $(document).on("click", ".confirmdelete", function (e) {
-    currentForm = $(this).closest("form");
+    if ($(this).attr('form') === undefined) {
+        currentForm = $(this).closest("form");
+    } else {
+        currentForm = $('#'.concat($(this).attr('form')))
+    }
     e.preventDefault();
     entity = $(this).data('seat-entity');
     if (typeof entity !== 'undefined') {
