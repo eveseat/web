@@ -463,7 +463,7 @@ return [
     'update_contracts'             => 'Update Contracts',
     'update_corp_history'          => 'Update Employment History',
     'update_customs_offices'       => 'Update Customs Offices',
-    'update_divisions'             => 'Update Divisions'
+    'update_divisions'             => 'Update Divisions',
     'update_fittings'              => 'Update Fittings',
     'update_industry'              => 'Update Industry Jobs',
     'update_journals'              => 'Update Journals',
