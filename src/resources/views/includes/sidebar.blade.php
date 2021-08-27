@@ -32,7 +32,7 @@
           {{-- determine if we should pop a treeview --}}
           @if(isset($entry['entries']))
 
-            <li class="nav-item has-treeview">
+            <li class="nav-item has-treeview {{ Request::segment(1) === $entry['route_segment'] ? 'menu-is-opening menu-open' : null }}">
               <a href="#" class="nav-link {{ Request::segment(1) === $entry['route_segment'] ? 'active' : null }}">
                 <i class="nav-icon {{ $entry['icon'] }}"></i>
 
