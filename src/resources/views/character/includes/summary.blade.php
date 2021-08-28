@@ -24,7 +24,6 @@
 
     <p class="text-muted text-center">
       @include('web::partials.corporation', ['corporation' => $character->affiliation->corporation])
-      @include('web::components.jobs.buttons.update', ['type' => 'character', 'entity' => $character->character_id, 'job' => 'character.affiliations', 'label' => trans('web::seat.update_affiliation', 1)])
     </p>
 
     <ul class="list-group list-group-unbordered mb-3">
@@ -152,13 +151,16 @@
         <img src="{{ asset('web/img/eve-prism.png') }}" />
       </a>
     </span>
-    @can('global.superuser')
-      @if(! is_null($character->refresh_token))
-        <a href="{{ route('configuration.users.edit', $character->refresh_token->user_id) }}" class="btn btn-xs btn-secondary float-right">
-          <i class="fas fa-user"></i> {{ trans_choice('web::seat.user', 1) }}
-        </a>
-      @endif
-    @endcan
+    <span class="float-right">
+      @can('global.superuser')
+        @if(! is_null($character->refresh_token))
+          <a href="{{ route('configuration.users.edit', $character->refresh_token->user_id) }}" class="btn btn-xs btn-secondary">
+            <i class="fas fa-user"></i> {{ trans_choice('web::seat.user', 1) }}
+          </a>
+        @endif
+      @endcan
+      @include('web::components.jobs.buttons.update', ['type' => 'character', 'entity' => $character->character_id, 'job' => 'character.affiliations', 'label' => trans('web::seat.update_affiliation', 1)])
+    </span>
   </div>
 </div>
 
