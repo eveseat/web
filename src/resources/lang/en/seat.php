@@ -452,6 +452,7 @@ return [
         'profiles as well. Leave blank to use the default. If you enter something below, you must ensure at least one button is shown.',
 
     // Updaters
+    'update_affiliation'           => 'Update Affiliation|Update Affiliations'
     'update_dispatched'            => 'Update job has successfully been dispatched. Please check back again ' .
         'in a few moments.',
     'update_failed'                => 'Update job dispatching failed. Please contact your SeAT administrator.',

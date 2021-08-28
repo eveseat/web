@@ -24,6 +24,7 @@
 
     <p class="text-muted text-center">
       @include('web::partials.corporation', ['corporation' => $character->affiliation->corporation])
+      @include('web::components.jobs.buttons.update', ['type' => 'character', 'entity' => $character->character_id, 'job' => 'character.affiliations', 'label' => trans('web::seat.update_affiliation', 1)])
     </p>
 
     <ul class="list-group list-group-unbordered mb-3">

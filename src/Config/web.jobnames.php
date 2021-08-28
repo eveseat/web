@@ -24,6 +24,7 @@
 return [
 
     'character' => [
+        'affiliations'     => \Seat\Eveapi\Jobs\Esi\Update\Affiliations::class,
         'assets'           => \Seat\Eveapi\Jobs\Assets\Character\Assets::class,
         'blueprints'       => \Seat\Eveapi\Jobs\Character\Blueprints::class,
         'calendar'         => [
