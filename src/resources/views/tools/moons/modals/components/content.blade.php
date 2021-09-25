@@ -3,7 +3,7 @@
 
 <h4>Raw Materials</h4>
 
-<table class="table datatable table-striped">
+<table class="table datatable table-striped" id="rawMaterials">
   <thead>
     <tr>
       <th>Type</th>
@@ -26,12 +26,19 @@
         <td>{{ number_format((($type->pivot->rate * 20000 * 720) / $type->volume) * $type->price->average, 2) }}</td>
       </tr>
     @endforeach
+      <tfoot>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tfoot>
   </tbody>
 </table>
 
 <h4>Refined Materials</h4>
 
-<table class="table datatable table-striped">
+<table class="table datatable table-striped" id="refinedMaterials">
   <thead>
     <tr>
       <th>Type</th>
@@ -60,12 +67,18 @@
         <td>{{ number_format($material->sum('pivot.quantity') * $material->first()->price->average) }}</td>
       </tr>
     @endforeach
+      <tfoot>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tfoot>
   </tbody>
 </table>
 
 <h4>Reactions Candidates</h4>
 
-<table class="table datatable table-striped">
+<table class="table datatable table-striped" id="reactionsCandidates">
   <thead>
     <tr>
       <th>Type</th>

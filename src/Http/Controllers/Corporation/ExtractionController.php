@@ -13,7 +13,7 @@
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * GNU General Public License `for more details.
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
@@ -39,16 +39,15 @@ class ExtractionController extends Controller
      */
     public function getExtractions(CorporationInfo $corporation)
     {
-        // retrieve any valid extraction for the current corporation
-        $moons = UniverseMoonReport::with(
-            'content', 'moon', 'moon.solar_system', 'moon.constellation',
-                'moon.region', 'moon.extraction', 'moon.extraction.structure', 'moon.extraction.structure.info'
-            )->whereHas('moon.extraction.structure', function ($query) use ($corporation) {
-                $query->where('corporation_id', $corporation->corporation_id);
-            })->whereHas('moon.extraction', function ($query) {
-                $query->where('natural_decay_time', '>', carbon()->subSeconds(CorporationIndustryMiningExtraction::THEORETICAL_DEPLETION_COUNTDOWN));
-            })->get();
 
-        return view('web::corporation.extraction.extraction', compact('moons', 'corporation'));
+        $extractions = CorporationIndustryMiningExtraction::with(
+            'moon', 'moon.solar_system', 'moon.constellation', 'moon.region',
+            'moon.moon_report', 'moon.moon_report.content', 'structure', 'structure.info')
+            ->where('corporation_id', $corporation->corporation_id)
+            ->where('natural_decay_time', '>', carbon()->subSeconds(CorporationIndustryMiningExtraction::THEORETICAL_DEPLETION_COUNTDOWN))
+            ->get();
+        
+
+        return view('web::corporation.extraction.extraction', compact('extractions', 'corporation'));
     }
 }
