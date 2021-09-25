@@ -101,11 +101,11 @@
         <td>-</td>
       </tr>
       @endfor
-      <tr>
-        <td>Total</td>
-        <td>{{ number_format($column->moon->moon_report->content->sum('pivot.rate') * $column->volume()) }} m3</td>
-        <td></td>
-      </tr>
+      <tfoot>
+        <th>Total</th>
+        <th>{{ number_format($column->moon->moon_report->content->sum('pivot.rate') * $column->volume()) }} m3</th>
+        <th></th>
+      </tfoot>
     </tbody>
   </table>
 </div>
