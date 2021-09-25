@@ -13,7 +13,7 @@
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License `for more details.
+ * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
@@ -25,16 +25,16 @@ namespace Seat\Web\Http\Controllers\Corporation;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Industry\CorporationIndustryMiningExtraction;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Models\UniverseMoonReport;
 
 /**
  * Class ExtractionController.
+ *
  * @package Seat\Web\Http\Controllers\Corporation
  */
 class ExtractionController extends Controller
 {
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getExtractions(CorporationInfo $corporation)
@@ -46,7 +46,6 @@ class ExtractionController extends Controller
             ->where('corporation_id', $corporation->corporation_id)
             ->where('natural_decay_time', '>', carbon()->subSeconds(CorporationIndustryMiningExtraction::THEORETICAL_DEPLETION_COUNTDOWN))
             ->get();
-        
 
         return view('web::corporation.extraction.extraction', compact('extractions', 'corporation'));
     }
