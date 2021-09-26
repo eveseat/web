@@ -25,30 +25,28 @@ namespace Seat\Web\Http\Controllers\Corporation;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Industry\CorporationIndustryMiningExtraction;
 use Seat\Web\Http\Controllers\Controller;
-use Seat\Web\Models\UniverseMoonReport;
 
 /**
  * Class ExtractionController.
+ *
  * @package Seat\Web\Http\Controllers\Corporation
  */
 class ExtractionController extends Controller
 {
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getExtractions(CorporationInfo $corporation)
     {
-        // retrieve any valid extraction for the current corporation
-        $moons = UniverseMoonReport::with(
-            'content', 'moon', 'moon.solar_system', 'moon.constellation',
-                'moon.region', 'moon.extraction', 'moon.extraction.structure', 'moon.extraction.structure.info'
-            )->whereHas('moon.extraction.structure', function ($query) use ($corporation) {
-                $query->where('corporation_id', $corporation->corporation_id);
-            })->whereHas('moon.extraction', function ($query) {
-                $query->where('natural_decay_time', '>', carbon()->subSeconds(CorporationIndustryMiningExtraction::THEORETICAL_DEPLETION_COUNTDOWN));
-            })->get();
 
-        return view('web::corporation.extraction.extraction', compact('moons', 'corporation'));
+        $extractions = CorporationIndustryMiningExtraction::with(
+            'moon', 'moon.solar_system', 'moon.constellation', 'moon.region',
+            'moon.moon_report', 'moon.moon_report.content', 'structure', 'structure.info')
+            ->where('corporation_id', $corporation->corporation_id)
+            ->where('natural_decay_time', '>', carbon()->subSeconds(CorporationIndustryMiningExtraction::THEORETICAL_DEPLETION_COUNTDOWN))
+            ->get();
+
+        return view('web::corporation.extraction.extraction', compact('extractions', 'corporation'));
     }
 }

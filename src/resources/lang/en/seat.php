@@ -638,8 +638,11 @@ return [
     'faction'                      => 'Faction',
 
     'start_at'                     => 'Start at',
+    'drill_start'                  => 'Drill Start',
     'chunk_arrival'                => 'Chunk Arrival',
+    'chunk_age'                    => 'Extraction Length',
     'self_destruct'                => 'Self-Destruct',
+    'auto_fracture'                => 'Auto Fracture',
     'rarity'                       => 'Rarity',
     'rate'                         => 'Rate',
 
