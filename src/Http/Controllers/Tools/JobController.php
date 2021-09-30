@@ -32,14 +32,15 @@ use Seat\Web\Http\Controllers\Controller;
 
 /**
  * Class JobController.
+ *
  * @package Seat\Web\Http\Controllers
  */
 class JobController extends Controller
 {
     /**
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
+     *
      * @deprecated will be replaced by postDispatchJob
      */
     public function getDispatchUpdateJob(Request $request)
@@ -48,8 +49,7 @@ class JobController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function postDispatchJob(Request $request)
@@ -84,9 +84,8 @@ class JobController extends Controller
     }
 
     /**
-     * @param \Illuminate\Support\Collection $job_classes
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Support\Collection  $job_classes
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     private function handleJobDispatch(Collection $job_classes, Request $request)
@@ -129,9 +128,8 @@ class JobController extends Controller
     }
 
     /**
-     * @param string $class
-     * @param int $character_id
-     *
+     * @param  string  $class
+     * @param  int  $character_id
      * @return bool
      */
     private function handleCharacterJobsDispatch(string $class, int $character_id)
@@ -147,9 +145,8 @@ class JobController extends Controller
     }
 
     /**
-     * @param string $class
-     * @param int $corporation_id
-     *
+     * @param  string  $class
+     * @param  int  $corporation_id
      * @return false
      */
     private function handleCorporationJobsDispatch(string $class, int $corporation_id)
@@ -175,9 +172,8 @@ class JobController extends Controller
     }
 
     /**
-     * @param string $class
-     * @param int $alliance_id
-     *
+     * @param  string  $class
+     * @param  int  $alliance_id
      * @return false
      */
     private function handleAllianceJobsDispatch(string $class, int $alliance_id)

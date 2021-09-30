@@ -28,6 +28,7 @@ use Yajra\DataTables\DataTables;
 
 /**
  * Class SecurityController.
+ *
  * @package Seat\Web\Http\Controllers\Configuration
  */
 class SecurityController extends Controller
@@ -44,6 +45,7 @@ class SecurityController extends Controller
 
     /**
      * @return mixed
+     *
      * @throws \Exception
      */
     public function getLogsData()

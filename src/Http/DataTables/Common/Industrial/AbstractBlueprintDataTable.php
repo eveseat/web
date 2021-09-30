@@ -34,6 +34,7 @@ abstract class AbstractBlueprintDataTable extends DataTable
 {
     /**
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Exception
      */
     public function ajax()
@@ -97,13 +98,13 @@ abstract class AbstractBlueprintDataTable extends DataTable
     abstract public function query();
 
     /**
-     * @param self $table
+     * @param  self  $table
      * @return \Seat\Web\Http\DataTables\Common\IColumn
      */
     abstract protected function getLocationFlagColumn($table): IColumn;
 
     /**
-     * @param self $table
+     * @param  self  $table
      * @return \Seat\Web\Http\DataTables\Common\IColumn
      */
     abstract protected function getStationColumn($table): IColumn;

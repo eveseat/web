@@ -33,7 +33,7 @@ use Seat\Web\Http\Controllers\Controller;
 class PiController extends Controller
 {
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getPi(CharacterInfo $character)

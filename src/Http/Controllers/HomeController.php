@@ -29,6 +29,7 @@ use Seat\Web\Traits\Stats;
 
 /**
  * Class HomeController.
+ *
  * @package Seat\Web\Http\Controllers
  */
 class HomeController extends Controller
@@ -45,6 +46,7 @@ class HomeController extends Controller
 
     /**
      * @return \Illuminate\View\View
+     *
      * @throws \Seat\Services\Exceptions\SettingException
      */
     public function getHome(): View
@@ -127,8 +129,7 @@ class HomeController extends Controller
     }
 
     /**
-     * @param int $limit
-     *
+     * @param  int  $limit
      * @return \Seat\Eveapi\Models\Status\ServerStatus[]
      */
     private function getEveServerStatuses(int $limit = 200)
@@ -149,8 +150,7 @@ class HomeController extends Controller
     }
 
     /**
-     * @param int $limit
-     *
+     * @param  int  $limit
      * @return mixed
      */
     private function getEsiResponseTimes(int $limit = 200)

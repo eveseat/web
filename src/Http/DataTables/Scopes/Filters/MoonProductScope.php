@@ -39,7 +39,7 @@ class MoonProductScope implements DataTableScope
     /**
      * MoonProductScope constructor.
      *
-     * @param int[] $types
+     * @param  int[]  $types
      */
     public function __construct(array $types)
     {
@@ -47,7 +47,7 @@ class MoonProductScope implements DataTableScope
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
      */
     public function apply($query)

@@ -33,7 +33,8 @@ class CorporationLayout
 
     /**
      * CharacterLayout constructor.
-     * @param Request $request
+     *
+     * @param  Request  $request
      */
     public function __construct(Request $request)
     {
@@ -43,7 +44,7 @@ class CorporationLayout
     /**
      * Bind Character Name to the view.
      *
-     * @param View $view
+     * @param  View  $view
      */
     public function compose(View $view)
     {

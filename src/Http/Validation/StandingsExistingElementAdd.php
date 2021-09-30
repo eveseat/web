@@ -28,6 +28,7 @@ use Seat\Eveapi\Models\Corporation\CorporationInfo;
 
 /**
  * Class StandingsExistingElementAdd.
+ *
  * @package Seat\Web\Http\Validation
  */
 class StandingsExistingElementAdd extends FormRequest
@@ -84,8 +85,8 @@ class StandingsExistingElementAdd extends FormRequest
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param string $ability
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $ability
      * @return \Illuminate\Database\Eloquent\Builder
      */
     private function addCharacterPermissionScope($query, string $ability)
@@ -133,8 +134,8 @@ class StandingsExistingElementAdd extends FormRequest
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param string $ability
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $ability
      * @return \Illuminate\Database\Eloquent\Builder
      */
     private function addCorporationPermissionScope($query, string $ability)

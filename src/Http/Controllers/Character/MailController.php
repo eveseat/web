@@ -31,13 +31,14 @@ use Seat\Web\Http\DataTables\Scopes\CharacterMailScope;
 
 /**
  * Class MailController.
+ *
  * @package Seat\Web\Http\Controllers\Character
  */
 class MailController extends Controller
 {
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
-     * @param \Seat\Web\Http\DataTables\Character\Intel\MailDataTable $dataTable
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
+     * @param  \Seat\Web\Http\DataTables\Character\Intel\MailDataTable  $dataTable
      * @return mixed
      */
     public function index(CharacterInfo $character, MailDataTable $dataTable)
@@ -48,8 +49,8 @@ class MailController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
-     * @param int $mail_id
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
+     * @param  int  $mail_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(CharacterInfo $character, int $mail_id)
@@ -62,9 +63,10 @@ class MailController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character_id
-     * @param int $message_id
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character_id
+     * @param  int  $message_id
      * @return array|string
+     *
      * @throws \Throwable
      */
     public function getMailRead(CharacterInfo $character, int $message_id)
@@ -105,7 +107,7 @@ class MailController extends Controller
     }
 
     /**
-     * @param int $message_id
+     * @param  int  $message_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getMailTimelineRead(int $message_id)
@@ -125,8 +127,7 @@ class MailController extends Controller
      * Supplying the $message_id will return only that
      * mail.
      *
-     * @param int $message_id
-     *
+     * @param  int  $message_id
      * @return mixed
      */
     private function getCharacterMailTimeline(int $message_id = null)

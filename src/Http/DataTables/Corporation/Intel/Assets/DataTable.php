@@ -89,7 +89,7 @@ class DataTable extends AbstractAssetDataTable
     }
 
     /**
-     * @param \Seat\Web\Http\DataTables\Corporation\Intel\Assets\DataTable $table
+     * @param  \Seat\Web\Http\DataTables\Corporation\Intel\Assets\DataTable  $table
      * @return \Seat\Web\Http\DataTables\Common\IColumn
      */
     protected function getLocationFlagColumn($table): IColumn
@@ -98,7 +98,7 @@ class DataTable extends AbstractAssetDataTable
     }
 
     /**
-     * @param \Seat\Web\Http\DataTables\Corporation\Intel\Assets\DataTable $table
+     * @param  \Seat\Web\Http\DataTables\Corporation\Intel\Assets\DataTable  $table
      * @return \Seat\Web\Http\DataTables\Common\IColumn
      */
     protected function getStationColumn($table): IColumn

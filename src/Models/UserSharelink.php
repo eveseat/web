@@ -27,6 +27,7 @@ use Seat\Eveapi\Models\Character\CharacterInfo;
 
 /**
  * Class UserSharelink.
+ *
  * @package Seat\Web\Models
  */
 class UserSharelink extends Model

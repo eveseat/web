@@ -38,6 +38,7 @@ use Seat\Web\Models\User;
 
 /**
  * Class FastLookupController.
+ *
  * @package Seat\Web\Http\Controllers\Support
  */
 class FastLookupController extends Controller
@@ -45,7 +46,7 @@ class FastLookupController extends Controller
     const SKILL_CATEGORY_ID = 16;
 
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function getUsers(Request $request)
@@ -105,7 +106,7 @@ class FastLookupController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function getTitles(Request $request)
@@ -136,7 +137,7 @@ class FastLookupController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function getCharacters(Request $request)
@@ -166,7 +167,7 @@ class FastLookupController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function getCorporations(Request $request)
@@ -197,7 +198,7 @@ class FastLookupController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function getAlliances(Request $request)
@@ -228,7 +229,7 @@ class FastLookupController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function getEntities(Request $request)
@@ -343,7 +344,7 @@ class FastLookupController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function getSkills(Request $request)
@@ -412,7 +413,7 @@ class FastLookupController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function getConstellations(Request $request)
@@ -451,8 +452,7 @@ class FastLookupController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function getScopes(Request $request)
@@ -487,7 +487,7 @@ class FastLookupController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function getSystems(Request $request)
@@ -529,7 +529,7 @@ class FastLookupController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function getCorporationRoles(Request $request)

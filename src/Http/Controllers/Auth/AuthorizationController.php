@@ -26,6 +26,7 @@ use Seat\Web\Http\Controllers\Controller;
 
 /**
  * Class AuthorizationController.
+ *
  * @package Seat\Web\Http\Controllers\Auth
  */
 class AuthorizationController extends Controller

@@ -29,6 +29,7 @@ use Seat\Web\Http\Validation\NewSchedule;
 
 /**
  * Class ScheduleController.
+ *
  * @package Seat\Web\Http\Controllers\Configuration
  */
 class ScheduleController extends Controller
@@ -59,7 +60,7 @@ class ScheduleController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Http\Validation\NewSchedule $request
+     * @param  \Seat\Web\Http\Validation\NewSchedule  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function newSchedule(NewSchedule $request)
@@ -73,7 +74,7 @@ class ScheduleController extends Controller
     }
 
     /**
-     * @param int $schedule_id
+     * @param  int  $schedule_id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function deleteSchedule(int $schedule_id)

@@ -38,9 +38,8 @@ use Seat\Web\Models\User;
 class CorporationPolicy extends AbstractEntityPolicy
 {
     /**
-     * @param string $method
-     * @param array $args
-     *
+     * @param  string  $method
+     * @param  array  $args
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function __call($method, $args)
@@ -90,8 +89,8 @@ class CorporationPolicy extends AbstractEntityPolicy
     }
 
     /**
-     * @param \Seat\Web\Models\User $user
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
+     * @param  \Seat\Web\Models\User  $user
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
      * @return bool
      */
     private function isCeo(User $user, CorporationInfo $corporation)
@@ -101,8 +100,8 @@ class CorporationPolicy extends AbstractEntityPolicy
     }
 
     /**
-     * @param \Seat\Web\Models\User $user
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
+     * @param  \Seat\Web\Models\User  $user
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
      * @return bool
      */
     private function isDirector(User $user, CorporationInfo $corporation)
@@ -116,9 +115,9 @@ class CorporationPolicy extends AbstractEntityPolicy
     /**
      * Return true in case the requested ability is mapped to a role owned by the user inside this corporation.
      *
-     * @param \Seat\Web\Models\User $user
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
-     * @param string $ability
+     * @param  \Seat\Web\Models\User  $user
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
+     * @param  string  $ability
      * @return bool
      */
     private function hasDelegatedPermission(User $user, CorporationInfo $corporation, string $ability): bool
@@ -138,8 +137,8 @@ class CorporationPolicy extends AbstractEntityPolicy
     /**
      * Return a list of all roles owned by user inside the corporation.
      *
-     * @param \Seat\Web\Models\User $user
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
+     * @param  \Seat\Web\Models\User  $user
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
      * @return array
      */
     private function corporationRolesFrom(User $user, CorporationInfo $corporation): array
@@ -154,7 +153,7 @@ class CorporationPolicy extends AbstractEntityPolicy
     }
 
     /**
-     * @param \Seat\Web\Models\Acl\Permission $permission
+     * @param  \Seat\Web\Models\Acl\Permission  $permission
      * @param $entity
      * @return bool
      */

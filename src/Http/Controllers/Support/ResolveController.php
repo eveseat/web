@@ -33,6 +33,7 @@ use Seat\Web\Models\User;
 
 /**
  * Class ResolveController.
+ *
  * @package Seat\Web\Http\Controllers\Support
  */
 class ResolveController extends Controller
@@ -60,9 +61,9 @@ class ResolveController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Exception
      */
     public function resolveIdsToNames(Request $request)
@@ -143,7 +144,7 @@ class ResolveController extends Controller
      * Resolve received sets of ids with the help of chrFactions table
      * map the resolved names, cache the results and return unresolved ids.
      *
-     * @param \Illuminate\Support\Collection $ids
+     * @param  \Illuminate\Support\Collection  $ids
      * @return \Illuminate\Support\Collection collection of ids that were unable to be resolved within this function
      */
     private function resolveFactionIDs(Collection $ids)
@@ -168,7 +169,7 @@ class ResolveController extends Controller
      * Resolve received sets of ids with the help of universe_names table
      * map the resolved names, cache the results and return unresolved ids.
      *
-     * @param \Illuminate\Support\Collection $ids
+     * @param  \Illuminate\Support\Collection  $ids
      * @return \Illuminate\Support\Collection collection of ids that were unable to be resolved within this function
      */
     private function resolveInternalUniverseIDs(Collection $ids)
@@ -192,7 +193,7 @@ class ResolveController extends Controller
      * Resolve received sets of ids with the help of character_infos table
      * map the resolved names, cache the results and return unresolved ids.
      *
-     * @param \Illuminate\Support\Collection $ids
+     * @param  \Illuminate\Support\Collection  $ids
      * @return \Illuminate\Support\Collection collection of ids that were unable to be resolved within this function
      */
     private function resolveInternalCharacterIDs(Collection $ids)
@@ -217,7 +218,7 @@ class ResolveController extends Controller
      * Resolve received sets of ids with the help of corporation_infos table
      * map the resolved names, cache the results and return unresolved ids.
      *
-     * @param \Illuminate\Support\Collection $ids
+     * @param  \Illuminate\Support\Collection  $ids
      * @return \Illuminate\Support\Collection collection of ids that were unable to be resolved within this function
      */
     private function resolveInternalCorporationIDs(Collection $ids)
@@ -239,7 +240,7 @@ class ResolveController extends Controller
     }
 
     /**
-     * @param \Illuminate\Support\Collection $ids
+     * @param  \Illuminate\Support\Collection  $ids
      * @return \Illuminate\Support\Collection
      */
     private function resolveInternalAllianceIDs(Collection $ids)
@@ -266,8 +267,8 @@ class ResolveController extends Controller
      * is invalid.
      * If name could be resolved, save the name to universe_names table.
      *
-     * @param \Illuminate\Support\Collection $ids
-     * @param \Seat\Eseye\Eseye $eseye
+     * @param  \Illuminate\Support\Collection  $ids
+     * @param  \Seat\Eseye\Eseye  $eseye
      */
     private function resolveIDsfromESI(Collection $ids, $eseye)
     {
@@ -320,9 +321,8 @@ class ResolveController extends Controller
     /**
      * Cache and save resolved IDs. Return unresolved collection of ids.
      *
-     * @param \Illuminate\Support\Collection $names resolved names
-     * @param \Illuminate\Support\Collection $ids
-     *
+     * @param  \Illuminate\Support\Collection  $names  resolved names
+     * @param  \Illuminate\Support\Collection  $ids
      * @return \Illuminate\Support\Collection unresolved collection of ids
      */
     private function cacheIDsAndReturnUnresolvedIDs(Collection $names, Collection $ids): Collection
@@ -350,7 +350,7 @@ class ResolveController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function resolveMainCharacter(Request $request)

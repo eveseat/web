@@ -33,7 +33,7 @@ use Seat\Web\Models\Squads\SquadRole;
 class SquadMemberObserver
 {
     /**
-     * @param \Seat\Web\Models\Squads\SquadMember $member
+     * @param  \Seat\Web\Models\Squads\SquadMember  $member
      */
     public function created(SquadMember $member)
     {
@@ -45,7 +45,7 @@ class SquadMemberObserver
     }
 
     /**
-     * @param \Seat\Web\Models\Squads\SquadMember $member
+     * @param  \Seat\Web\Models\Squads\SquadMember  $member
      */
     public function deleted(SquadMember $member)
     {

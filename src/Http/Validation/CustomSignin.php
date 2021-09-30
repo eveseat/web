@@ -26,6 +26,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * Class CustomSignin.
+ *
  * @package Seat\Web\Http\Validation
  */
 class CustomSignin extends FormRequest

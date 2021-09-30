@@ -33,6 +33,7 @@ use Seat\Web\Models\User;
 
 /**
  * Class SsoController.
+ *
  * @package Seat\Web\Http\Controllers\Auth
  */
 class SsoController extends Controller
@@ -40,9 +41,10 @@ class SsoController extends Controller
     /**
      * Redirect the user to the Eve Online authentication page.
      *
-     * @param \Laravel\Socialite\Contracts\Factory $social
-     * @param string $profile
+     * @param  \Laravel\Socialite\Contracts\Factory  $social
+     * @param  string  $profile
      * @return mixed
+     *
      * @throws \Seat\Services\Exceptions\SettingException
      */
     public function redirectToProvider($profile = null, Socialite $social)
@@ -88,8 +90,9 @@ class SsoController extends Controller
     /**
      * Obtain the user information from Eve Online.
      *
-     * @param \Laravel\Socialite\Contracts\Factory $social
+     * @param  \Laravel\Socialite\Contracts\Factory  $social
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Seat\Services\Exceptions\SettingException
      */
     public function handleProviderCallback(Socialite $social)
@@ -128,8 +131,7 @@ class SsoController extends Controller
      * will be associated with that sessions group. Otherwise,
      * a new group for this user will be created.
      *
-     * @param \Laravel\Socialite\Two\User $eve_user
-     *
+     * @param  \Laravel\Socialite\Two\User  $eve_user
      * @return \Seat\Web\Models\User
      */
     private function findOrCreateUser(SocialiteUser $eve_user): User
@@ -184,8 +186,8 @@ class SsoController extends Controller
     }
 
     /**
-     * @param \Laravel\Socialite\Two\User $eve_user
-     * @param \Seat\Web\Models\User $seat_user
+     * @param  \Laravel\Socialite\Two\User  $eve_user
+     * @param  \Seat\Web\Models\User  $seat_user
      */
     public function updateRefreshToken(SocialiteUser $eve_user, User $seat_user): void
     {
@@ -224,7 +226,7 @@ class SsoController extends Controller
     }
 
     /**
-     * @param \Laravel\Socialite\Two\User $eve_user
+     * @param  \Laravel\Socialite\Two\User  $eve_user
      */
     private function updateCharacterInfo(SocialiteUser $eve_user)
     {
@@ -256,8 +258,7 @@ class SsoController extends Controller
      * login routine. If a false is returned, it might mean
      * that that account is not allowed to sign in.
      *
-     * @param \Seat\Web\Models\User $user
-     *
+     * @param  \Seat\Web\Models\User  $user
      * @return bool
      */
     public function loginUser(User $user): bool

@@ -34,7 +34,7 @@ use Seat\Web\Models\User;
 class CharacterAssetObserver extends AbstractSquadObserver
 {
     /**
-     * @param \Seat\Eveapi\Models\Assets\CharacterAsset $asset
+     * @param  \Seat\Eveapi\Models\Assets\CharacterAsset  $asset
      */
     public function created(CharacterAsset $asset)
     {
@@ -42,7 +42,7 @@ class CharacterAssetObserver extends AbstractSquadObserver
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Assets\CharacterAsset $asset
+     * @param  \Seat\Eveapi\Models\Assets\CharacterAsset  $asset
      */
     public function updated(CharacterAsset $asset)
     {
@@ -50,7 +50,7 @@ class CharacterAssetObserver extends AbstractSquadObserver
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Assets\CharacterAsset $asset
+     * @param  \Seat\Eveapi\Models\Assets\CharacterAsset  $asset
      */
     public function deleted(CharacterAsset $asset)
     {

@@ -42,7 +42,7 @@ class MarketOrderTypeScope implements DataTableScope
     /**
      * MarketOrderTypeScope constructor.
      *
-     * @param array|null $order_type
+     * @param  array|null  $order_type
      */
     public function __construct(?array $order_type)
     {
@@ -52,7 +52,7 @@ class MarketOrderTypeScope implements DataTableScope
     /**
      * Apply a query scope.
      *
-     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder  $query
      * @return mixed
      */
     public function apply($query)

@@ -30,13 +30,14 @@ use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 
 /**
  * Class FittingController.
+ *
  * @package Seat\Web\Http\Controllers\Character
  */
 class FittingController extends Controller
 {
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
-     * @param \Seat\Web\Http\DataTables\Character\Military\FittingDataTable $dataTable
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
+     * @param  \Seat\Web\Http\DataTables\Character\Military\FittingDataTable  $dataTable
      * @return mixed
      */
     public function index(CharacterInfo $character, FittingDataTable $dataTable)
@@ -47,8 +48,8 @@ class FittingController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
-     * @param int $fitting_id
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
+     * @param  int  $fitting_id
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|object|\Seat\Eveapi\Models\Fittings\CharacterFitting|null
      */
     public function show(CharacterInfo $character, int $fitting_id)

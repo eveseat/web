@@ -41,7 +41,7 @@ class KillMailCorporationScope implements DataTableScope
     /**
      * KillMailCorporationScope constructor.
      *
-     * @param array $corporation_ids
+     * @param  array  $corporation_ids
      */
     public function __construct(array $corporation_ids)
     {
@@ -51,7 +51,7 @@ class KillMailCorporationScope implements DataTableScope
     /**
      * Apply a query scope.
      *
-     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder  $query
      * @return mixed
      */
     public function apply($query)

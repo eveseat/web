@@ -32,13 +32,14 @@ use Seat\Web\Http\DataTables\Scopes\CorporationWalletDivisionsScope;
 
 /**
  * Class WalletController.
+ *
  * @package Seat\Web\Http\Controllers\Corporation
  */
 class WalletController extends Controller
 {
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
-     * @param \Seat\Web\Http\DataTables\Corporation\Financial\WalletJournalDataTable $dataTable
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
+     * @param  \Seat\Web\Http\DataTables\Corporation\Financial\WalletJournalDataTable  $dataTable
      * @return mixed
      */
     public function journal(CorporationInfo $corporation, WalletJournalDataTable $dataTable)
@@ -63,8 +64,8 @@ class WalletController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
-     * @param \Seat\Web\Http\DataTables\Corporation\Financial\WalletTransactionDataTable $dataTable
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
+     * @param  \Seat\Web\Http\DataTables\Corporation\Financial\WalletTransactionDataTable  $dataTable
      * @return mixed
      */
     public function transactions(CorporationInfo $corporation, WalletTransactionDataTable $dataTable)

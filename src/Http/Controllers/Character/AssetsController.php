@@ -30,12 +30,13 @@ use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 
 /**
  * Class AssetsController.
+ *
  * @package Seat\Web\Http\Controllers\Character
  */
 class AssetsController extends Controller
 {
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getAssetsView(CharacterInfo $character, DataTable $dataTable)
@@ -45,8 +46,8 @@ class AssetsController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
-     * @param int $item_id
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
+     * @param  int  $item_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getFitting(CharacterInfo $character, int $item_id)
@@ -57,8 +58,8 @@ class AssetsController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
-     * @param int $item_id
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
+     * @param  int  $item_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getContainer(CharacterInfo $character, int $item_id)

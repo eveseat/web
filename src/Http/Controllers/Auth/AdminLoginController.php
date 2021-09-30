@@ -27,6 +27,7 @@ use Seat\Web\Models\User;
 
 /**
  * Class AdminLoginController.
+ *
  * @package Seat\Web\Http\Controllers\Auth
  */
 class AdminLoginController extends Controller
@@ -34,8 +35,9 @@ class AdminLoginController extends Controller
     /**
      * Login using the cached admin user token.
      *
-     * @param string $token
+     * @param  string  $token
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public function checkLoginToken(string $token)

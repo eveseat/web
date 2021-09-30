@@ -34,7 +34,7 @@ use Seat\Web\Models\UserSharelink;
 class SharelinkController extends Controller
 {
     /**
-     * @param string $token
+     * @param  string  $token
      * @return \Illuminate\Http\RedirectResponse
      */
     public function checkLoginToken(string $token)

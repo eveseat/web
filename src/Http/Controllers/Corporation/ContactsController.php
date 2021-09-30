@@ -37,8 +37,8 @@ use Seat\Web\Http\DataTables\Scopes\Filters\ContactStandingLevelScope;
 class ContactsController extends Controller
 {
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
-     * @param \Seat\Web\Http\DataTables\Corporation\Intel\ContactDataTable $dataTable
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
+     * @param  \Seat\Web\Http\DataTables\Corporation\Intel\ContactDataTable  $dataTable
      * @return mixed
      */
     public function index(CorporationInfo $corporation, ContactDataTable $dataTable)

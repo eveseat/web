@@ -39,6 +39,7 @@ use Yajra\DataTables\DataTables;
 
 /**
  * Class IntelController.
+ *
  * @package Seat\Web\Http\Controllers\Character
  */
 class IntelController extends Controller
@@ -49,7 +50,7 @@ class IntelController extends Controller
     protected $top_limit = 10;
 
     /**
-     * @param CharacterInfo $character
+     * @param  CharacterInfo  $character
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getIntelSummary(CharacterInfo $character)
@@ -58,7 +59,8 @@ class IntelController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
+     *
      * @throws \Exception
      */
     public function getTopWalletJournalData(CharacterInfo $character)
@@ -125,7 +127,8 @@ class IntelController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
+     *
      * @throws \Exception
      */
     public function getTopTransactionsData(CharacterInfo $character)
@@ -186,7 +189,8 @@ class IntelController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
+     *
      * @throws \Exception
      */
     public function getTopMailFromData(CharacterInfo $character)
@@ -237,7 +241,7 @@ class IntelController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getStandingsComparison(CharacterInfo $character)
@@ -248,9 +252,10 @@ class IntelController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
-     * @param int $profile_id
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
+     * @param  int  $profile_id
      * @return mixed
+     *
      * @throws \Exception
      */
     public function getCompareStandingsWithProfileData(CharacterInfo $character, int $profile_id)
@@ -277,8 +282,8 @@ class IntelController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
-     * @param \Seat\Web\Http\DataTables\Character\Intel\NoteDataTable $dataTable
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
+     * @param  \Seat\Web\Http\DataTables\Character\Intel\NoteDataTable  $dataTable
      * @return mixed
      */
     public function notes(CharacterInfo $character, NoteDataTable $dataTable)
@@ -289,11 +294,12 @@ class IntelController extends Controller
     }
 
     /**
-     * @param CharacterInfo $character
-     * @param int $first_party_id
-     * @param int $second_party_id
-     * @param string $ref_type
+     * @param  CharacterInfo  $character
+     * @param  int  $first_party_id
+     * @param  int  $second_party_id
+     * @param  string  $ref_type
      * @return mixed
+     *
      * @throws \Exception
      */
     public function getJournalContent(CharacterInfo $character, int $first_party_id, int $second_party_id, string $ref_type)
@@ -367,9 +373,10 @@ class IntelController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
-     * @param int $client_id
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
+     * @param  int  $client_id
      * @return mixed
+     *
      * @throws \Exception
      */
     public function getTransactionContent(CharacterInfo $character, int $client_id)
@@ -436,9 +443,10 @@ class IntelController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
-     * @param int $from
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
+     * @param  int  $from
      * @return mixed
+     *
      * @throws \Exception
      */
     public function getTopMailContent(CharacterInfo $character, int $from)
@@ -490,8 +498,7 @@ class IntelController extends Controller
     }
 
     /**
-     * @param \Illuminate\Support\Collection $character_ids
-     *
+     * @param  \Illuminate\Support\Collection  $character_ids
      * @return \Illuminate\Database\Eloquent\Builder
      */
     private function characterTopWalletJournalInteractions(Collection $character_ids): Builder
@@ -534,8 +541,7 @@ class IntelController extends Controller
     }
 
     /**
-     * @param \Illuminate\Support\Collection $character_ids
-     *
+     * @param  \Illuminate\Support\Collection  $character_ids
      * @return \Illuminate\Database\Eloquent\Builder
      */
     private function characterTopWalletTransactionInteractions(Collection $character_ids): Builder
@@ -572,8 +578,7 @@ class IntelController extends Controller
     }
 
     /**
-     * @param \Illuminate\Support\Collection $character_ids
-     *
+     * @param  \Illuminate\Support\Collection  $character_ids
      * @return \Illuminate\Database\Eloquent\Builder
      */
     private function characterTopMailInteractions(Collection $character_ids): Builder
@@ -609,9 +614,8 @@ class IntelController extends Controller
     }
 
     /**
-     * @param int $character_id
-     * @param int $profile_id
-     *
+     * @param  int  $character_id
+     * @param  int  $profile_id
      * @return mixed
      */
     private function getCharacterJournalStandingsWithProfile(int $character_id, int $profile_id)
@@ -667,11 +671,10 @@ class IntelController extends Controller
     }
 
     /**
-     * @param \Illuminate\Support\Collection $character_ids
-     * @param int $first_party_id
-     * @param int $second_party_id
-     * @param string $ref_type
-     *
+     * @param  \Illuminate\Support\Collection  $character_ids
+     * @param  int  $first_party_id
+     * @param  int  $second_party_id
+     * @param  string  $ref_type
      * @return \Illuminate\Database\Eloquent\Builder
      */
     private function characterWalletJournalInteractions(Collection $character_ids, int $first_party_id, int $second_party_id, string $ref_type): Builder
@@ -685,9 +688,8 @@ class IntelController extends Controller
     }
 
     /**
-     * @param \Illuminate\Support\Collection $character_ids
-     * @param int $client_id
-     *
+     * @param  \Illuminate\Support\Collection  $character_ids
+     * @param  int  $client_id
      * @return \Illuminate\Database\Eloquent\Builder
      */
     private function characterWalletTransactionInteraction(Collection $character_ids, int $client_id): Builder

@@ -27,6 +27,7 @@ use Seat\Web\Http\Controllers\Controller;
 
 /**
  * Class LoginController.
+ *
  * @package Seat\Web\Http\Controllers\Auth
  */
 class LoginController extends Controller

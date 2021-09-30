@@ -26,6 +26,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * Class EditUser.
+ *
  * @package Seat\Web\Http\Validation
  */
 class EditUser extends FormRequest

@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\DB;
 
 /**
  * Class ScheduleSeeder.
+ *
  * @package Seat\Web\database\seeds
  */
 class ScheduleSeeder extends Seeder

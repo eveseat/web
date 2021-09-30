@@ -34,7 +34,7 @@ use Seat\Web\Http\Validation\NewIntelNote;
 class NotesController extends Controller
 {
     /**
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(int $id)
@@ -43,7 +43,7 @@ class NotesController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Http\Validation\NewIntelNote $request
+     * @param  \Seat\Web\Http\Validation\NewIntelNote  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(NewIntelNote $request)
@@ -60,8 +60,8 @@ class NotesController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Http\Validation\NewIntelNote $request
-     * @param int $id
+     * @param  \Seat\Web\Http\Validation\NewIntelNote  $request
+     * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(NewIntelNote $request, int $id)
@@ -81,7 +81,7 @@ class NotesController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(int $id)

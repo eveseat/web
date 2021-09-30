@@ -37,7 +37,7 @@ use Seat\Web\Models\User;
 class CharacterRoleObserver extends AbstractSquadObserver
 {
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterRole $role
+     * @param  \Seat\Eveapi\Models\Character\CharacterRole  $role
      */
     public function created(CharacterRole $role)
     {
@@ -63,7 +63,7 @@ class CharacterRoleObserver extends AbstractSquadObserver
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterRole $role
+     * @param  \Seat\Eveapi\Models\Character\CharacterRole  $role
      */
     public function updated(CharacterRole $role)
     {
@@ -71,7 +71,7 @@ class CharacterRoleObserver extends AbstractSquadObserver
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterRole $role
+     * @param  \Seat\Eveapi\Models\Character\CharacterRole  $role
      */
     public function deleted(CharacterRole $role)
     {

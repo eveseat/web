@@ -33,9 +33,8 @@ use Seat\Web\Models\User;
 class GlobalPolicy extends AbstractPolicy
 {
     /**
-     * @param string $method
-     * @param array $args
-     *
+     * @param  string  $method
+     * @param  array  $args
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function __call(string $method, array $args)
@@ -63,8 +62,7 @@ class GlobalPolicy extends AbstractPolicy
     }
 
     /**
-     * @param \Seat\Web\Models\User $user
-     *
+     * @param  \Seat\Web\Models\User  $user
      * @return \Illuminate\Auth\Access\Response
      */
     public function superuser(User $user)

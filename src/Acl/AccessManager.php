@@ -30,6 +30,7 @@ use Seat\Web\Models\User;
 
 /**
  * Class AccessManager.
+ *
  * @package Seat\Web\Acl
  */
 trait AccessManager
@@ -38,8 +39,7 @@ trait AccessManager
      * Return everything related to the Role
      * with eager loading.
      *
-     * @param int $role_id
-     *
+     * @param  int  $role_id
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Collection
      */
     public function getCompleteRole(int $role_id = null)
@@ -62,8 +62,7 @@ trait AccessManager
     /**
      * Add a new role.
      *
-     * @param string $title
-     *
+     * @param  string  $title
      * @return \Seat\Web\Models\Acl\Role
      */
     public function addRole(string $title): RoleModel
@@ -78,7 +77,7 @@ trait AccessManager
     /**
      * Remove a role by title.
      *
-     * @param string $title
+     * @param  string  $title
      */
     public function removeRoleByTitle(string $title)
     {
@@ -90,8 +89,7 @@ trait AccessManager
     /**
      * Remove a role.
      *
-     * @param int $id
-     *
+     * @param  int  $id
      * @return int
      */
     public function removeRole(int $id): int
@@ -103,9 +101,9 @@ trait AccessManager
     /**
      * Give a role many permissions.
      *
-     * @param int   $role_id
-     * @param array $permissions
-     * @param bool  $inverse
+     * @param  int  $role_id
+     * @param  array  $permissions
+     * @param  bool  $inverse
      */
     public function giveRolePermissions(int $role_id, array $permissions, bool $inverse)
     {
@@ -118,9 +116,9 @@ trait AccessManager
     /**
      * Give a Role a permission.
      *
-     * @param int    $role_id
-     * @param string $permission_name
-     * @param bool   $inverse
+     * @param  int  $role_id
+     * @param  string  $permission_name
+     * @param  bool  $inverse
      */
     public function giveRolePermission(int $role_id, string $permission_name, bool $inverse)
     {
@@ -142,8 +140,7 @@ trait AccessManager
     /**
      * Get a role.
      *
-     * @param int $id
-     *
+     * @param  int  $id
      * @return \Seat\Web\Models\Acl\Role
      */
     public function getRole(int $id): RoleModel
@@ -155,8 +152,8 @@ trait AccessManager
     /**
      * Remove a permission from a Role.
      *
-     * @param int $permission_id
-     * @param int $role_id
+     * @param  int  $permission_id
+     * @param  int  $role_id
      */
     public function removePermissionFromRole(int $permission_id, int $role_id)
     {
@@ -169,8 +166,8 @@ trait AccessManager
     /**
      * Give an array of user_ids a role.
      *
-     * @param array $user_ids
-     * @param int $role_id
+     * @param  array  $user_ids
+     * @param  int  $role_id
      */
     public function giveUsersRole(array $user_ids, int $role_id)
     {
@@ -182,8 +179,8 @@ trait AccessManager
     /**
      * Give to an user a Role.
      *
-     * @param int $user_id
-     * @param int $role_id
+     * @param  int  $user_id
+     * @param  int  $role_id
      */
     public function giveUserRole(int $user_id, int $role_id)
     {
@@ -200,8 +197,8 @@ trait AccessManager
     /**
      * Remove an user from a role.
      *
-     * @param int $user_id
-     * @param int $role_id
+     * @param  int  $user_id
+     * @param  int  $role_id
      */
     public function removeUserFromRole(int $user_id, int $role_id)
     {

@@ -39,7 +39,7 @@ class StandingsProfileScope implements DataTableScope
     /**
      * StandingsProfileScope constructor.
      *
-     * @param int $profile_id
+     * @param  int  $profile_id
      */
     public function __construct(int $profile_id) {
         $this->profile_id = $profile_id;
@@ -48,7 +48,7 @@ class StandingsProfileScope implements DataTableScope
     /**
      * Apply a query scope.
      *
-     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
      */
     public function apply($query) {

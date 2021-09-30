@@ -36,9 +36,8 @@ use Seat\Web\Http\DataTables\Scopes\Filters\TokenStatusScope;
 class TrackingController extends Controller
 {
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
-     * @param \Seat\Web\Http\DataTables\Corporation\Intel\MembersTrackingDataTable $dataTable
-     *
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
+     * @param  \Seat\Web\Http\DataTables\Corporation\Intel\MembersTrackingDataTable  $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getTracking(CorporationInfo $corporation, MembersTrackingDataTable $dataTable)

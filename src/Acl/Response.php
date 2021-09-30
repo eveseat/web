@@ -31,6 +31,7 @@ class Response extends \Illuminate\Auth\Access\Response
 {
     /**
      * @return \Seat\Web\Acl\Response
+     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function authorize()

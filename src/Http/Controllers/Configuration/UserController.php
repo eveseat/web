@@ -34,12 +34,13 @@ use Seat\Web\Models\User;
 
 /**
  * Class UserController.
+ *
  * @package Seat\Web\Http\Controllers\Configuration
  */
 class UserController extends Controller
 {
     /**
-     * @param \Seat\Web\Http\DataTables\Configuration\UsersDataTable $dataTable
+     * @param  \Seat\Web\Http\DataTables\Configuration\UsersDataTable  $dataTable
      * @return mixed
      */
     public function index(UsersDataTable $dataTable)
@@ -48,7 +49,7 @@ class UserController extends Controller
     }
 
     /**
-     * @param int $user_id
+     * @param  int  $user_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(int $user_id)
@@ -65,7 +66,7 @@ class UserController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Http\Validation\ReassignCharacter $request
+     * @param  \Seat\Web\Http\Validation\ReassignCharacter  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function reassign(ReassignCharacter $request)
@@ -93,7 +94,7 @@ class UserController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Http\Validation\EditUser $request
+     * @param  \Seat\Web\Http\Validation\EditUser  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(EditUser $request)
@@ -126,8 +127,8 @@ class UserController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param int $user_id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $user_id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function delete(Request $request, int $user_id)
@@ -145,7 +146,7 @@ class UserController extends Controller
     }
 
     /**
-     * @param int $user_id
+     * @param  int  $user_id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function editUserAccountStatus(int $user_id)
@@ -160,7 +161,7 @@ class UserController extends Controller
     }
 
     /**
-     * @param int $user_id
+     * @param  int  $user_id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function impersonate(int $user_id)

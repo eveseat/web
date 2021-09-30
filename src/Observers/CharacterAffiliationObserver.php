@@ -34,7 +34,7 @@ use Seat\Web\Models\User;
 class CharacterAffiliationObserver extends AbstractSquadObserver
 {
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterAffiliation $affiliation
+     * @param  \Seat\Eveapi\Models\Character\CharacterAffiliation  $affiliation
      */
     public function created(CharacterAffiliation $affiliation)
     {
@@ -42,7 +42,7 @@ class CharacterAffiliationObserver extends AbstractSquadObserver
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterAffiliation $affiliation
+     * @param  \Seat\Eveapi\Models\Character\CharacterAffiliation  $affiliation
      */
     public function updated(CharacterAffiliation $affiliation)
     {

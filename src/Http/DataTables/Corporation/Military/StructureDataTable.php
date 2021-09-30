@@ -27,12 +27,14 @@ use Yajra\DataTables\Services\DataTable;
 
 /**
  * Class StructureDataTable.
+ *
  * @package Seat\Web\Http\DataTables\Corporation\Military
  */
 class StructureDataTable extends DataTable
 {
     /**
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Exception
      */
     public function ajax()

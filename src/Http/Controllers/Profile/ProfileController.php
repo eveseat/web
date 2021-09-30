@@ -36,6 +36,7 @@ use Seat\Web\Models\UserSharelink;
 
 /**
  * Class ProfileController.
+ *
  * @package Seat\Web\Http\Controllers\Profile
  */
 class ProfileController extends Controller
@@ -73,8 +74,8 @@ class ProfileController extends Controller
     }
 
     /**
-     * @param int $user_id
-     * @param int $character_id
+     * @param  int  $user_id
+     * @param  int  $character_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getCharacterScopes(int $user_id, int $character_id)
@@ -87,9 +88,9 @@ class ProfileController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Http\Validation\ProfileSettings $request
-     *
+     * @param  \Seat\Web\Http\Validation\ProfileSettings  $request
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Seat\Services\Exceptions\SettingException
      */
     public function postUpdateUserSettings(ProfileSettings $request)
@@ -112,9 +113,9 @@ class ProfileController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Http\Validation\EmailUpdate $request
-     *
+     * @param  \Seat\Web\Http\Validation\EmailUpdate  $request
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Seat\Services\Exceptions\SettingException
      */
     public function postUpdateEmail(EmailUpdate $request)
@@ -127,7 +128,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
     public function postChangeCharacter(Request $request)
@@ -190,7 +191,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Http\Validation\Sharelink $request
+     * @param  \Seat\Web\Http\Validation\Sharelink  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function postUpdateSharelink(Sharelink $request)
@@ -259,8 +260,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function deleteUnlinkCharacter(Request $request)

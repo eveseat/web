@@ -39,12 +39,13 @@ use Yajra\DataTables\DataTables;
 
 /**
  * Class SearchController.
+ *
  * @package Seat\Web\Http\Controllers\Support
  */
 class SearchController extends Controller
 {
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getSearch(Request $request)
@@ -57,8 +58,9 @@ class SearchController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return mixed
+     *
      * @throws \Exception
      */
     public function getSearchCharactersData(Request $request)
@@ -81,8 +83,9 @@ class SearchController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return mixed
+     *
      * @throws \Exception
      */
     public function getSearchCorporationsData(Request $request)
@@ -104,8 +107,9 @@ class SearchController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return mixed
+     *
      * @throws \Exception
      */
     public function getSearchMailData(Request $request)
@@ -175,8 +179,9 @@ class SearchController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return mixed
+     *
      * @throws \Exception
      */
     public function getSearchCharacterAssetsData(Request $request)
@@ -225,8 +230,9 @@ class SearchController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return mixed
+     *
      * @throws \Exception
      */
     public function getSearchCharacterSkillsData(Request $request)

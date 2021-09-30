@@ -44,7 +44,7 @@ class CharacterMailScope implements DataTableScope
     /**
      * CharacterMailScope constructor.
      *
-     * @param int[]|null $character_ids
+     * @param  int[]|null  $character_ids
      */
     public function __construct(?array $character_ids = null)
     {
@@ -54,7 +54,7 @@ class CharacterMailScope implements DataTableScope
     /**
      * Apply a query scope.
      *
-     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder  $query
      * @return mixed
      */
     public function apply($query)

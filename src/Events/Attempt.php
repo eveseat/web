@@ -26,12 +26,13 @@ use Illuminate\Auth\Events\Attempting;
 
 /**
  * Class Attempt.
+ *
  * @package Seat\Web\Events
  */
 class Attempt
 {
     /**
-     * @param \Illuminate\Auth\Events\Attempting $data
+     * @param  \Illuminate\Auth\Events\Attempting  $data
      */
     public static function handle(Attempting $data)
     {

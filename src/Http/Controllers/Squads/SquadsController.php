@@ -36,7 +36,7 @@ use Seat\Web\Models\Squads\Squad;
 class SquadsController extends Controller
 {
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
      */
     public function index(Request $request)
@@ -83,7 +83,7 @@ class SquadsController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Models\Squads\Squad $squad
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Squad $squad)
@@ -100,7 +100,7 @@ class SquadsController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(SquadValidation $request)
@@ -119,7 +119,7 @@ class SquadsController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Models\Squads\Squad $squad
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Squad $squad)
@@ -128,9 +128,8 @@ class SquadsController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Http\Validation\Squad $request
-     * @param \Seat\Web\Models\Squads\Squad $squad
-     *
+     * @param  \Seat\Web\Http\Validation\Squad  $request
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(SquadValidation $request, Squad $squad)
@@ -152,7 +151,7 @@ class SquadsController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Models\Squads\Squad $squad
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Squad $squad)

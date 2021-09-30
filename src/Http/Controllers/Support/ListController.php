@@ -28,13 +28,13 @@ use Seat\Web\Http\Controllers\Controller;
 
 /**
  * Class ListController.
+ *
  * @package Seat\Web\Http\Controllers\Support
  */
 class ListController extends Controller
 {
     /**
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function getInvTypes(Request $request)
@@ -49,8 +49,7 @@ class ListController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function getSeatUserList(Request $request)

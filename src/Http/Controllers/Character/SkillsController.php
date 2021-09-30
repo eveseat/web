@@ -31,6 +31,7 @@ use Seat\Web\Traits\Stats;
 
 /**
  * Class SkillsController.
+ *
  * @package Seat\Web\Http\Controllers\Character
  */
 class SkillsController extends Controller
@@ -38,7 +39,7 @@ class SkillsController extends Controller
     use Stats;
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getSkills(CharacterInfo $character)
@@ -48,7 +49,7 @@ class SkillsController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
      * @return \Illuminate\Http\JsonResponse
      */
     public function getCharacterSkillsLevelChartData(CharacterInfo $character)
@@ -76,7 +77,7 @@ class SkillsController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
      * @return \Illuminate\Http\JsonResponse
      */
     public function getCharacterSkillsCoverageChartData(CharacterInfo $character)
@@ -108,7 +109,7 @@ class SkillsController extends Controller
     }
 
     /**
-     * @param int $character_id
+     * @param  int  $character_id
      * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
     public function export(CharacterInfo $character)
@@ -145,8 +146,7 @@ class SkillsController extends Controller
     /**
      * Return the skills detail for a specific Character.
      *
-     * @param int $character_id
-     *
+     * @param  int  $character_id
      * @return \Illuminate\Support\Collection
      */
     private function getCharacterSkillsInformation(int $character_id): Collection

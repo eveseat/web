@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\Gate;
 
 /**
  * Class CorporationMenu.
+ *
  * @package Seat\Web\Http\Composers
  */
 class CorporationMenu extends AbstractMenu
@@ -61,9 +62,9 @@ class CorporationMenu extends AbstractMenu
     /**
      * Bind data to the view.
      *
-     * @param  View $view
-     *
+     * @param  View  $view
      * @return void
+     *
      * @throws \Seat\Web\Exceptions\PackageMenuBuilderException
      */
     public function compose(View $view)
@@ -94,7 +95,7 @@ class CorporationMenu extends AbstractMenu
     /**
      * Return true if the current user can see menu entry.
      *
-     * @param array $permissions
+     * @param  array  $permissions
      * @return bool
      */
     protected function userHasPermission(array $permissions): bool

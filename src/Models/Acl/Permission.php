@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Permission.
+ *
  * @package Seat\Web\Models\Acl
  */
 class Permission extends Model

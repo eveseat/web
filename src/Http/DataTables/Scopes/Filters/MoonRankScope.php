@@ -39,7 +39,7 @@ class MoonRankScope implements DataTableScope
     /**
      * MoonRankScope constructor.
      *
-     * @param int[] $groups
+     * @param  int[]  $groups
      */
     public function __construct(array $groups)
     {
@@ -49,7 +49,7 @@ class MoonRankScope implements DataTableScope
     /**
      * Apply a query scope.
      *
-     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder  $query
      * @return mixed
      **/
     public function apply($query) {

@@ -31,13 +31,14 @@ use Seat\Web\Http\DataTables\Scopes\Filters\IndustryStatusScope;
 
 /**
  * Class IndustryController.
+ *
  * @package Seat\Web\Http\Controllers\Corporation
  */
 class IndustryController extends Controller
 {
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
-     * @param \Seat\Web\Http\DataTables\Corporation\Industrial\IndustryDataTable $dataTable
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
+     * @param  \Seat\Web\Http\DataTables\Corporation\Industrial\IndustryDataTable  $dataTable
      * @return mixed
      */
     public function index(CorporationInfo $corporation, IndustryDataTable $dataTable)

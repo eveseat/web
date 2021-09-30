@@ -35,7 +35,7 @@ class LocationFlag extends AbstractColumn
     /**
      * Draw a column cell.
      *
-     * @param \Illuminate\Database\Eloquent\Model $row
+     * @param  \Illuminate\Database\Eloquent\Model  $row
      * @return string;
      */
     public function draw(Model $row)

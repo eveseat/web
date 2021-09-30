@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class AffiliationRole.
+ *
  * @package Seat\Web\Models\Acl
  */
 class AffiliationRole extends Model

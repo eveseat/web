@@ -24,6 +24,7 @@ use Illuminate\Database\Migrations\Migration;
 
 /**
  * Class UpgradeSquadsMaj4Min3Hf1.
+ *
  * @deprecated since 4.4.1
  */
 class UpgradeSquadsMaj4Min3Hf1 extends Migration

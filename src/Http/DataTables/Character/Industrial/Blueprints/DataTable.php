@@ -57,7 +57,7 @@ class DataTable extends AbstractBlueprintDataTable
     }
 
     /**
-     * @param self $table
+     * @param  self  $table
      * @return \Seat\Web\Http\DataTables\Common\IColumn
      */
     protected function getLocationFlagColumn($table): IColumn
@@ -66,7 +66,7 @@ class DataTable extends AbstractBlueprintDataTable
     }
 
     /**
-     * @param self $table
+     * @param  self  $table
      * @return \Seat\Web\Http\DataTables\Common\IColumn
      */
     protected function getStationColumn($table): IColumn

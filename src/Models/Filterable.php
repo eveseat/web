@@ -39,7 +39,7 @@ trait Filterable
     abstract public function getFilters(): stdClass;
 
     /**
-     * @param \Illuminate\Database\Eloquent\Model $member
+     * @param  \Illuminate\Database\Eloquent\Model  $member
      * @return bool
      */
     final public function isEligible(Model $member): bool
@@ -120,8 +120,7 @@ trait Filterable
     }
 
     /**
-     * @param array $rules
-     *
+     * @param  array  $rules
      * @return \Illuminate\Support\Collection
      */
     private function sortFiltersByRelations(array $rules)
@@ -137,10 +136,9 @@ trait Filterable
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param string $group_verb
-     * @param array|\Illuminate\Support\Collection $rules
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $group_verb
+     * @param  array|\Illuminate\Support\Collection  $rules
      * @return \Illuminate\Database\Eloquent\Builder
      */
     private function applyRules(Builder $query, string $group_verb, $rules)

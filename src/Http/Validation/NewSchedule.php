@@ -27,6 +27,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * Class NewSchedule.
+ *
  * @package Seat\Web\Http\Validation
  */
 class NewSchedule extends FormRequest

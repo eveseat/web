@@ -34,7 +34,7 @@ use Seat\Web\Http\Controllers\Controller;
 class SummaryController extends Controller
 {
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function show(CorporationInfo $corporation)

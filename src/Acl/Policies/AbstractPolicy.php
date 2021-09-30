@@ -42,8 +42,8 @@ abstract class AbstractPolicy
     protected $ability;
 
     /**
-     * @param \Seat\Web\Models\User $user
-     * @param string $ability
+     * @param  \Seat\Web\Models\User  $user
+     * @param  string  $ability
      * @return bool|void
      */
     public function before(User $user, $ability)
@@ -55,7 +55,7 @@ abstract class AbstractPolicy
     }
 
     /**
-     * @param \Seat\Web\Models\User $user
+     * @param  \Seat\Web\Models\User  $user
      * @return \Illuminate\Support\Collection
      */
     protected function permissionsFrom(User $user)
@@ -68,10 +68,10 @@ abstract class AbstractPolicy
     }
 
     /**
-     * @param \Seat\Web\Models\User $user
-     * @param string $permission
-     * @param Closure $callback
-     * @param int|null $entity_id
+     * @param  \Seat\Web\Models\User  $user
+     * @param  string  $permission
+     * @param  Closure  $callback
+     * @param  int|null  $entity_id
      * @return bool
      */
     protected function userHasPermission(User $user, string $permission, Closure $callback, ?int $entity_id = null)
