@@ -46,7 +46,6 @@ class CreateCharacterInfosTestTable extends Migration
             $table->string('gender');
             $table->integer('race_id');
             $table->integer('bloodline_id');
-            $table->integer('ancestry_id')->nullable();
             $table->double('security_status')->nullable();
 
             $table->timestamps();
