@@ -42,7 +42,7 @@ class CorporationMarketDivisionsScope implements DataTableScope
     /**
      * CorporationMarketDivisionsScope constructor.
      *
-     * @param array $divisions
+     * @param  array  $divisions
      */
     public function __construct(array $divisions)
     {
@@ -52,7 +52,7 @@ class CorporationMarketDivisionsScope implements DataTableScope
     /**
      * Apply a query scope.
      *
-     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder  $query
      * @return mixed
      */
     public function apply($query)

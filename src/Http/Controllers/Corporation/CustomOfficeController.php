@@ -35,8 +35,8 @@ use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 class CustomOfficeController extends Controller
 {
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
-     * @param \Seat\Web\Http\DataTables\Corporation\Industrial\CustomOfficeDataTable $data_table
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
+     * @param  \Seat\Web\Http\DataTables\Corporation\Industrial\CustomOfficeDataTable  $data_table
      * @return mixed
      */
     public function index(CorporationInfo $corporation, CustomOfficeDataTable $data_table)

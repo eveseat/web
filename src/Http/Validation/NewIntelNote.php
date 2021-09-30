@@ -26,6 +26,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * Class NewIntelNote.
+ *
  * @package Seat\Web\Http\Validation
  */
 class NewIntelNote extends FormRequest

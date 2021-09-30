@@ -50,8 +50,8 @@ class CorporationScope implements DataTableScope
     /**
      * CorporationScope constructor.
      *
-     * @param string|null $ability
-     * @param int[]|null $corporation_ids
+     * @param  string|null  $ability
+     * @param  int[]|null  $corporation_ids
      */
     public function __construct(?string $ability = null, ?array $corporation_ids = null)
     {
@@ -62,7 +62,7 @@ class CorporationScope implements DataTableScope
     /**
      * Apply a query scope.
      *
-     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder  $query
      * @return mixed
      */
     public function apply($query)

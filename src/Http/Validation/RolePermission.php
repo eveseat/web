@@ -27,6 +27,7 @@ use Illuminate\Support\Str;
 
 /**
  * Class RolePermission.
+ *
  * @package Seat\Web\Http\Validation
  */
 class RolePermission extends FormRequest

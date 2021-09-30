@@ -27,6 +27,7 @@ use Seat\Eveapi\Models\Universe\UniverseName;
 
 /**
  * Class StandingsProfileStanding.
+ *
  * @package Seat\Web\Models
  */
 class StandingsProfileStanding extends Model

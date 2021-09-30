@@ -36,7 +36,7 @@ use Seat\Web\Models\User;
 class RefreshTokenObserver extends AbstractSquadObserver
 {
     /**
-     * @param \Seat\Eveapi\Models\RefreshToken $token
+     * @param  \Seat\Eveapi\Models\RefreshToken  $token
      */
     public function created(RefreshToken $token)
     {
@@ -52,7 +52,7 @@ class RefreshTokenObserver extends AbstractSquadObserver
     }
 
     /**
-     * @param \Seat\Eveapi\Models\RefreshToken $token
+     * @param  \Seat\Eveapi\Models\RefreshToken  $token
      */
     public function updated(RefreshToken $token)
     {
@@ -64,7 +64,7 @@ class RefreshTokenObserver extends AbstractSquadObserver
     }
 
     /**
-     * @param \Seat\Eveapi\Models\RefreshToken $token
+     * @param  \Seat\Eveapi\Models\RefreshToken  $token
      */
     public function softDeleted(RefreshToken $token)
     {
@@ -72,7 +72,7 @@ class RefreshTokenObserver extends AbstractSquadObserver
     }
 
     /**
-     * @param \Seat\Eveapi\Models\RefreshToken $token
+     * @param  \Seat\Eveapi\Models\RefreshToken  $token
      */
     public function deleted(RefreshToken $token)
     {
@@ -84,7 +84,7 @@ class RefreshTokenObserver extends AbstractSquadObserver
     }
 
     /**
-     * @param \Seat\Eveapi\Models\RefreshToken $token
+     * @param  \Seat\Eveapi\Models\RefreshToken  $token
      */
     public function restored(RefreshToken $token)
     {

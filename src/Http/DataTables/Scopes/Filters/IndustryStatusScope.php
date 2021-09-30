@@ -42,7 +42,7 @@ class IndustryStatusScope implements DataTableScope
     /**
      * IndustryScope constructor.
      *
-     * @param array $status
+     * @param  array  $status
      */
     public function __construct(?array $status)
     {
@@ -52,7 +52,7 @@ class IndustryStatusScope implements DataTableScope
     /**
      * Apply a query scope.
      *
-     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder  $query
      * @return mixed
      */
     public function apply($query)

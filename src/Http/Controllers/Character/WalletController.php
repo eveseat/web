@@ -31,13 +31,14 @@ use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 
 /**
  * Class WalletController.
+ *
  * @package Seat\Web\Http\Controllers\Character
  */
 class WalletController extends Controller
 {
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
-     * @param \Seat\Web\Http\DataTables\Character\Financial\WalletJournalDataTable $dataTable
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
+     * @param  \Seat\Web\Http\DataTables\Character\Financial\WalletJournalDataTable  $dataTable
      * @return mixed
      */
     public function journal(CharacterInfo $character, WalletJournalDataTable $dataTable)
@@ -48,8 +49,8 @@ class WalletController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
-     * @param \Seat\Web\Http\DataTables\Character\Financial\WalletTransactionDataTable $dataTable
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
+     * @param  \Seat\Web\Http\DataTables\Character\Financial\WalletTransactionDataTable  $dataTable
      * @return mixed
      */
     public function transactions(CharacterInfo $character, WalletTransactionDataTable $dataTable)
@@ -60,8 +61,7 @@ class WalletController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
-     *
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
      * @return \Illuminate\Http\JsonResponse
      */
     public function getJournalGraphBalance(CharacterInfo $character)

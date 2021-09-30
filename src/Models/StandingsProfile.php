@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class StandingsProfile.
+ *
  * @package Seat\Web\Models
  */
 class StandingsProfile extends Model
@@ -44,6 +45,7 @@ class StandingsProfile extends Model
      * Make sure we cleanup on delete.
      *
      * @return bool|null
+     *
      * @throws \Exception
      */
     public function delete()

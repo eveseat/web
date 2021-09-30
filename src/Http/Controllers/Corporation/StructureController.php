@@ -30,13 +30,14 @@ use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 
 /**
  * Class StructureController.
+ *
  * @package Seat\Web\Http\Controllers\Corporation
  */
 class StructureController extends Controller
 {
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
-     * @param \Seat\Web\Http\DataTables\Corporation\Military\StructureDataTable $dataTable
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
+     * @param  \Seat\Web\Http\DataTables\Corporation\Military\StructureDataTable  $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getStructures(CorporationInfo $corporation, StructureDataTable $dataTable)
@@ -47,8 +48,8 @@ class StructureController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
-     * @param int $structure_id
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
+     * @param  int  $structure_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(CorporationInfo $corporation, int $structure_id)

@@ -35,8 +35,8 @@ use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 class StandingsController extends Controller
 {
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
-     * @param \Seat\Web\Http\DataTables\Corporation\Military\StandingDataTable $dataTable
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
+     * @param  \Seat\Web\Http\DataTables\Corporation\Military\StandingDataTable  $dataTable
      * @return mixed
      */
     public function index(CorporationInfo $corporation, StandingDataTable $dataTable)

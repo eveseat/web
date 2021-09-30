@@ -38,7 +38,7 @@ use Seat\Eveapi\Models\Wallet\CharacterWalletBalance;
 trait Stats
 {
     /**
-     * @param int[] $character_ids
+     * @param  int[]  $character_ids
      * @return float|null
      */
     public function getTotalCharacterIsk(array $character_ids): ?float
@@ -49,7 +49,7 @@ trait Stats
     }
 
     /**
-     * @param int[] $character_ids
+     * @param  int[]  $character_ids
      * @return float|null
      */
     public function getTotalCharacterMiningIsk(array $character_ids): ?float
@@ -64,7 +64,7 @@ trait Stats
     }
 
     /**
-     * @param int $character_id
+     * @param  int  $character_id
      * @return int
      */
     public function getTotalCharacterSkillpoints(array $character_ids): ?int
@@ -77,8 +77,7 @@ trait Stats
     /**
      * Get the numer of skills per Level for a character.
      *
-     * @param int $character_id
-     *
+     * @param  int  $character_id
      * @return array
      */
     public function getCharacterSkillsAmountPerLevel(int $character_id): array
@@ -103,8 +102,7 @@ trait Stats
      *
      * TODO: This is definitely a candidate for a better refactor!
      *
-     * @param int $character_id
-     *
+     * @param  int  $character_id
      * @return \Illuminate\Support\Collection
      */
     public function getCharacterSkillCoverage(int $character_id): Collection
@@ -163,7 +161,7 @@ trait Stats
     }
 
     /**
-     * @param int[] $character_ids
+     * @param  int[]  $character_ids
      * @return int
      */
     public function getTotalCharacterKillmails(array $character_ids): int

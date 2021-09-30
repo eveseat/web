@@ -42,7 +42,7 @@ class IndustryActivityScope implements DataTableScope
     /**
      * IndustryScope constructor.
      *
-     * @param array $activities
+     * @param  array  $activities
      */
     public function __construct(?array $activities)
     {
@@ -52,7 +52,7 @@ class IndustryActivityScope implements DataTableScope
     /**
      * Apply a query scope.
      *
-     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder  $query
      * @return mixed
      */
     public function apply($query)

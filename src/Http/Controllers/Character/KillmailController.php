@@ -30,13 +30,14 @@ use Seat\Web\Http\DataTables\Scopes\KillMailCharacterScope;
 
 /**
  * Class KillmailController.
+ *
  * @package Seat\Web\Http\Controllers\Character
  */
 class KillmailController extends Controller
 {
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
-     * @param \Seat\Web\Http\DataTables\Character\Military\KillMailDataTable $dataTable
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
+     * @param  \Seat\Web\Http\DataTables\Character\Military\KillMailDataTable  $dataTable
      * @return mixed
      */
     public function index(CharacterInfo $character, KillMailDataTable $dataTable)
@@ -47,8 +48,8 @@ class KillmailController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
-     * @param \Seat\Eveapi\Models\Killmails\Killmail $killmail
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
+     * @param  \Seat\Eveapi\Models\Killmails\Killmail  $killmail
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(CharacterInfo $character, Killmail $killmail)

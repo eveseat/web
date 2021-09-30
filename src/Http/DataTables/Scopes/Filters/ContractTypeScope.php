@@ -42,7 +42,7 @@ class ContractTypeScope implements DataTableScope
     /**
      * ContractTypeScope constructor.
      *
-     * @param array|null $type
+     * @param  array|null  $type
      */
     public function __construct(?array $type)
     {
@@ -52,7 +52,7 @@ class ContractTypeScope implements DataTableScope
     /**
      * Apply a query scope.
      *
-     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder  $query
      * @return mixed
      */
     public function apply($query)

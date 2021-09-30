@@ -35,13 +35,13 @@ use Seat\Web\Http\DataTables\Scopes\Filters\ContactStandingLevelScope;
 
 /**
  * Class CorporationsController.
+ *
  * @package Seat\Web\Http\Controllers\Corporation
  */
 class AlliancesController extends Controller
 {
     /**
-     * @param \Seat\Web\Http\DataTables\Alliance\AllianceDataTable $dataTable
-     *
+     * @param  \Seat\Web\Http\DataTables\Alliance\AllianceDataTable  $dataTable
      * @return mixed
      */
     public function index(AllianceDataTable $dataTable)
@@ -55,7 +55,7 @@ class AlliancesController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Alliances\Alliance $alliance
+     * @param  \Seat\Eveapi\Models\Alliances\Alliance  $alliance
      * @return \Illuminate\Http\RedirectResponse
      */
     public function show(Alliance $alliance)
@@ -91,9 +91,9 @@ class AlliancesController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Alliances\Alliance $alliance
-     *
+     * @param  \Seat\Eveapi\Models\Alliances\Alliance  $alliance
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Exception
      */
     public function destroy(Alliance $alliance)
@@ -105,7 +105,7 @@ class AlliancesController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Alliance\Alliance $alliance
+     * @param  \Seat\Eveapi\Models\Alliance\Alliance  $alliance
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function showSummary(Alliance $alliance)
@@ -133,8 +133,8 @@ class AlliancesController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Alliance\Alliance $alliance
-     * @param \Seat\Web\Http\DataTables\Alliances\Intel\ContactDataTable $dataTable
+     * @param  \Seat\Eveapi\Models\Alliance\Alliance  $alliance
+     * @param  \Seat\Web\Http\DataTables\Alliances\Intel\ContactDataTable  $dataTable
      * @return mixed
      */
     public function showContacts(Alliance $alliance, ContactDataTable $dataTable)
@@ -147,8 +147,8 @@ class AlliancesController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
-     * @param \Seat\Web\Http\DataTables\Alliances\TrackingDataTable $dataTable
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
+     * @param  \Seat\Web\Http\DataTables\Alliances\TrackingDataTable  $dataTable
      * @return mixed
      */
     public function showTracking(Alliance $alliance, TrackingDataTable $dataTable)

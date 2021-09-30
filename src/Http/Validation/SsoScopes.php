@@ -27,6 +27,7 @@ use Illuminate\Validation\Rule;
 
 /**
  * Class SsoScopes.
+ *
  * @package Seat\Web\Http\Validation
  */
 class SsoScopes extends FormRequest

@@ -31,13 +31,14 @@ use Seat\Web\Http\DataTables\Scopes\Filters\MarketStatusScope;
 
 /**
  * Class MarketController.
+ *
  * @package Seat\Web\Http\Controllers\Character
  */
 class MarketController extends Controller
 {
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
-     * @param \Seat\Web\Http\DataTables\Character\Financial\MarketDataTable $dataTable
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
+     * @param  \Seat\Web\Http\DataTables\Character\Financial\MarketDataTable  $dataTable
      * @return mixed
      */
     public function index(CharacterInfo $character, MarketDataTable $dataTable)

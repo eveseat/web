@@ -37,8 +37,8 @@ use Seat\Web\Models\User;
 class MembersController extends Controller
 {
     /**
-     * @param \Seat\Web\Http\DataTables\Squads\MembersDataTable $dataTable
-     * @param \Seat\Web\Models\Squads\Squad $squad
+     * @param  \Seat\Web\Http\DataTables\Squads\MembersDataTable  $dataTable
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
      * @return mixed
      */
     public function index(MembersDataTable $dataTable, Squad $squad)
@@ -47,8 +47,8 @@ class MembersController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param \Seat\Web\Models\Squads\Squad $squad
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
      * @return \Illuminate\Http\JsonResponse
      */
     public function lookup(Request $request, Squad $squad)
@@ -78,8 +78,8 @@ class MembersController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param \Seat\Web\Models\Squads\Squad $squad
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request, Squad $squad)
@@ -96,7 +96,7 @@ class MembersController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Models\Squads\Squad $squad
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Squad $squad, User $member)
@@ -113,7 +113,7 @@ class MembersController extends Controller
     }
 
     /**
-     * @param Squad $squad
+     * @param  Squad  $squad
      * @return \Illuminate\Http\RedirectResponse
      */
     public function leave(Squad $squad)

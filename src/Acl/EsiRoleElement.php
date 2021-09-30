@@ -37,8 +37,8 @@ class EsiRoleElement
     /**
      * EsiRoleElement constructor.
      *
-     * @param string $role_name
-     * @param array $permissions
+     * @param  string  $role_name
+     * @param  array  $permissions
      */
     public function __construct(string $role_name, array $permissions)
     {
@@ -69,7 +69,7 @@ class EsiRoleElement
     /**
      * Add the specified SeAT permission to the permissions list.
      *
-     * @param string $permission
+     * @param  string  $permission
      * @return array
      */
     public function add(string $permission)
@@ -80,7 +80,7 @@ class EsiRoleElement
     /**
      * Remove the specified SeAT permission from the permissions list.
      *
-     * @param string $permission
+     * @param  string  $permission
      */
     public function remove(string $permission)
     {

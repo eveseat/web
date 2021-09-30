@@ -32,13 +32,14 @@ use Seat\Web\Http\DataTables\Scopes\Filters\ContractTypeScope;
 
 /**
  * Class ContractsController.
+ *
  * @package Seat\Web\Http\Controllers\Character
  */
 class ContractsController extends Controller
 {
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
-     * @param \Seat\Web\Http\DataTables\Character\Financial\ContractDataTable $dataTable
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
+     * @param  \Seat\Web\Http\DataTables\Character\Financial\ContractDataTable  $dataTable
      * @return mixed
      */
     public function index(CharacterInfo $character, ContractDataTable $dataTable)
@@ -51,8 +52,8 @@ class ContractsController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
-     * @param int $contract_id
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
+     * @param  int  $contract_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(CharacterInfo $character, int $contract_id)

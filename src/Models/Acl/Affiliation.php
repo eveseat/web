@@ -27,6 +27,7 @@ use Seat\Web\Models\User;
 
 /**
  * Class Affiliation.
+ *
  * @package Seat\Web\Models\Acl
  */
 class Affiliation extends Model
@@ -62,8 +63,7 @@ class Affiliation extends Model
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return mixed
      */
     public function scopeChar($query)
@@ -73,8 +73,7 @@ class Affiliation extends Model
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return mixed
      */
     public function scopeCorp($query)

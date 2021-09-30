@@ -27,6 +27,7 @@ use Seat\Services\Settings\Seat;
 
 /**
  * Class SeatSettings.
+ *
  * @package Seat\Web\Http\Validation
  */
 class SeatSettings extends FormRequest

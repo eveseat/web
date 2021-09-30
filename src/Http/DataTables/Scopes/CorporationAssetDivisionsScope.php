@@ -39,7 +39,7 @@ class CorporationAssetDivisionsScope implements DataTableScope
     /**
      * CorporationAssetDivisionsScope constructor.
      *
-     * @param array $divisions
+     * @param  array  $divisions
      */
     public function __construct(array $divisions)
     {
@@ -47,7 +47,7 @@ class CorporationAssetDivisionsScope implements DataTableScope
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|mixed
      */
     public function apply($query)

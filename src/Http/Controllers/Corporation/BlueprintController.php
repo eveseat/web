@@ -38,8 +38,8 @@ use Seat\Web\Http\DataTables\Scopes\Filters\BlueprintTypeScope;
 class BlueprintController extends Controller
 {
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
-     * @param \Seat\Web\Http\DataTables\Corporation\Industrial\Blueprints\DataTable $dataTable
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
+     * @param  \Seat\Web\Http\DataTables\Corporation\Industrial\Blueprints\DataTable  $dataTable
      * @return mixed
      */
     public function index(CorporationInfo $corporation, DataTable $dataTable)

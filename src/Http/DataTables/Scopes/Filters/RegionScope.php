@@ -39,7 +39,7 @@ class RegionScope implements DataTableScope
     /**
      * RegionScope constructor.
      *
-     * @param int $region_id
+     * @param  int  $region_id
      */
     public function __construct(int $region_id) {
         $this->region_id = $region_id;
@@ -48,7 +48,7 @@ class RegionScope implements DataTableScope
     /**
      * Apply a query scope.
      *
-     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
      */
     public function apply($query) {

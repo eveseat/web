@@ -35,8 +35,8 @@ use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 class NotificationsController extends Controller
 {
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
-     * @param \Seat\Web\Http\DataTables\Character\Intel\NotificationDataTable $dataTable
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
+     * @param  \Seat\Web\Http\DataTables\Character\Intel\NotificationDataTable  $dataTable
      * @return mixed
      */
     public function index(CharacterInfo $character, NotificationDataTable $dataTable)

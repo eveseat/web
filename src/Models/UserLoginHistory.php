@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class UserLoginHistory.
+ *
  * @package Seat\Web\Models
  */
 class UserLoginHistory extends Model

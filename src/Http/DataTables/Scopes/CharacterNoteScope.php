@@ -43,7 +43,7 @@ class CharacterNoteScope implements DataTableScope
     /**
      * CharacterScope constructor.
      *
-     * @param int[]|null $character_id
+     * @param  int[]|null  $character_id
      */
     public function __construct(?array $character_id = null)
     {
@@ -53,7 +53,7 @@ class CharacterNoteScope implements DataTableScope
     /**
      * Apply a query scope.
      *
-     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder  $query
      * @return mixed
      */
     public function apply($query)

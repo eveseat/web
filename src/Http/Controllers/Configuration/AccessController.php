@@ -32,6 +32,7 @@ use Seat\Web\Models\Acl\Role;
 
 /**
  * Class AccessController.
+ *
  * @package Seat\Web\Http\Controllers\Configuration
  */
 class AccessController extends Controller
@@ -39,7 +40,7 @@ class AccessController extends Controller
     use AccessManager;
 
     /**
-     * @param \Seat\Web\Http\DataTables\Configuration\RolesDataTable $data_table
+     * @param  \Seat\Web\Http\DataTables\Configuration\RolesDataTable  $data_table
      * @return \Illuminate\View\View
      */
     public function index(RolesDataTable $data_table)
@@ -50,7 +51,7 @@ class AccessController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
@@ -70,7 +71,7 @@ class AccessController extends Controller
     }
 
     /**
-     * @param Role $role
+     * @param  Role  $role
      * @return \Illuminate\View\View
      */
     public function edit(Role $role)
@@ -86,8 +87,8 @@ class AccessController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param Role $role
+     * @param  Request  $request
+     * @param  Role  $role
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Role $role)
@@ -208,7 +209,7 @@ class AccessController extends Controller
     }
 
     /**
-     * @param Role $role
+     * @param  Role  $role
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Role $role)
@@ -220,8 +221,8 @@ class AccessController extends Controller
     }
 
     /**
-     * @param int $role_id
-     * @param int $user_id
+     * @param  int  $role_id
+     * @param  int  $user_id
      */
     public function removeUser(int $role_id, int $user_id)
     {

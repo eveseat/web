@@ -28,6 +28,7 @@ use Illuminate\Support\Str;
 
 /**
  * Class User.
+ *
  * @package Seat\Web\Http\Composers
  */
 class Sidebar extends AbstractMenu
@@ -48,7 +49,7 @@ class Sidebar extends AbstractMenu
     /**
      * Bind data to the view.
      *
-     * @param  View $view
+     * @param  View  $view
      */
     public function compose(View $view)
     {
@@ -93,7 +94,7 @@ class Sidebar extends AbstractMenu
     /**
      * Return true if the current user can see menu entry.
      *
-     * @param array $permissions
+     * @param  array  $permissions
      * @return bool
      */
     protected function userHasPermission(array $permissions): bool

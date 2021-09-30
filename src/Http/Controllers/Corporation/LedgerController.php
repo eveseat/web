@@ -31,12 +31,13 @@ use Seat\Web\Http\Controllers\Controller;
 
 /**
  * Class ViewController.
+ *
  * @package Seat\Web\Http\Controllers\Corporation
  */
 class LedgerController extends Controller
 {
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getWalletSummary(CorporationInfo $corporation)
@@ -48,9 +49,9 @@ class LedgerController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
-     * @param int|null $year
-     * @param int|null $month
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
+     * @param  int|null  $year
+     * @param  int|null  $month
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getBountyPrizesByMonth(CorporationInfo $corporation, ?int $year = null, ?int $month = null)
@@ -69,9 +70,9 @@ class LedgerController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
-     * @param int|null $year
-     * @param int|null $month
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
+     * @param  int|null  $year
+     * @param  int|null  $month
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getPlanetaryInteractionByMonth(CorporationInfo $corporation, ?int $year = null, ?int $month = null)
@@ -90,9 +91,9 @@ class LedgerController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
-     * @param int|null $year
-     * @param int|null $month
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
+     * @param  int|null  $year
+     * @param  int|null  $month
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getOfficesRentalsByMonth(CorporationInfo $corporation, ?int $year = null, ?int $month = null)
@@ -111,9 +112,9 @@ class LedgerController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
-     * @param int|null $year
-     * @param int|null $month
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
+     * @param  int|null  $year
+     * @param  int|null  $month
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getIndustryFacilityByMonth(CorporationInfo $corporation, ?int $year = null, ?int $month = null)
@@ -132,9 +133,9 @@ class LedgerController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
-     * @param int|null $year
-     * @param int|null $month
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
+     * @param  int|null  $year
+     * @param  int|null  $month
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getReprocessingByMonth(CorporationInfo $corporation, ?int $year = null, ?int $month = null)
@@ -153,9 +154,9 @@ class LedgerController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
-     * @param int|null $year
-     * @param int|null $month
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
+     * @param  int|null  $year
+     * @param  int|null  $month
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getJumpClonesByMonth(CorporationInfo $corporation, ?int $year = null, ?int $month = null)
@@ -174,9 +175,9 @@ class LedgerController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
-     * @param int|null $year
-     * @param int|null $month
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
+     * @param  int|null  $year
+     * @param  int|null  $month
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getJumpBridgesByMonth(CorporationInfo $corporation, ?int $year = null, ?int $month = null)
@@ -197,8 +198,7 @@ class LedgerController extends Controller
     /**
      * Return the Wallet Division Summary for a Corporation.
      *
-     * @param int $corporation_id
-     *
+     * @param  int  $corporation_id
      * @return \Illuminate\Support\Collection
      */
     private function getCorporationWalletDivisionSummary(int $corporation_id): Collection
@@ -210,8 +210,8 @@ class LedgerController extends Controller
     }
 
     /**
-     * @param int $corporation_id
-     * @param string[] $ref_types
+     * @param  int  $corporation_id
+     * @param  string[]  $ref_types
      * @return \Seat\Eveapi\Models\Wallet\CorporationWalletJournal[]
      */
     private function getCorporationLedgerPeriods(int $corporation_id, array $ref_types)
@@ -225,11 +225,11 @@ class LedgerController extends Controller
     }
 
     /**
-     * @param int $corporation_id
-     * @param string $group_field
-     * @param array $ref_types
-     * @param int|null $year
-     * @param int|null $month
+     * @param  int  $corporation_id
+     * @param  string  $group_field
+     * @param  array  $ref_types
+     * @param  int|null  $year
+     * @param  int|null  $month
      * @return \Illuminate\Support\Collection
      */
     private function getCorporationLedgerByMonth(int $corporation_id,

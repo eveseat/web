@@ -41,6 +41,7 @@ use Seat\Web\Models\StandingsProfileStanding;
 
 /**
  * Class StandingsController.
+ *
  * @package Seat\Web\Http\Controllers\Other
  */
 class StandingsController extends Controller
@@ -60,8 +61,7 @@ class StandingsController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Http\Validation\StandingsBuilder $request
-     *
+     * @param  \Seat\Web\Http\Validation\StandingsBuilder  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function postNewStanding(StandingsBuilder $request)
@@ -77,8 +77,7 @@ class StandingsController extends Controller
     }
 
     /**
-     * @param int $profile_id
-     *
+     * @param  int  $profile_id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function getDeleteStandingsProfile(int $profile_id)
@@ -92,8 +91,8 @@ class StandingsController extends Controller
     }
 
     /**
-     * @param int $id
-     * @param StandingsDataTable $dataTable
+     * @param  int  $id
+     * @param  StandingsDataTable  $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getStandingEdit(int $id, StandingsDataTable $dataTable)
@@ -105,8 +104,7 @@ class StandingsController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function getStandingsAjaxElementName(Request $request)
@@ -185,9 +183,9 @@ class StandingsController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Http\Validation\StandingsElementAdd $request
-     *
+     * @param  \Seat\Web\Http\Validation\StandingsElementAdd  $request
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Exception
      */
     public function postAddElementToStanding(StandingsElementAdd $request)
@@ -226,8 +224,7 @@ class StandingsController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Http\Validation\StandingsExistingElementAdd $request
-     *
+     * @param  \Seat\Web\Http\Validation\StandingsExistingElementAdd  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function postAddStandingsFromCorpOrChar(StandingsExistingElementAdd $request)
@@ -278,9 +275,8 @@ class StandingsController extends Controller
     }
 
     /**
-     * @param int $element_id
-     * @param int $profile_id
-     *
+     * @param  int  $element_id
+     * @param  int  $profile_id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function getRemoveElementFromProfile(int $element_id, int $profile_id)
@@ -297,9 +293,8 @@ class StandingsController extends Controller
     /**
      * Get a characters contact list.
      *
-     * @param \Illuminate\Support\Collection $character_ids
-     * @param array|null $standings
-     *
+     * @param  \Illuminate\Support\Collection  $character_ids
+     * @param  array|null  $standings
      * @return \Illuminate\Database\Eloquent\Builder
      */
     private function getCharacterContacts(Collection $character_ids, ?array $standings = null): Builder
@@ -316,8 +311,7 @@ class StandingsController extends Controller
     /**
      * Return the contacts list for a corporation.
      *
-     * @param int $corporation_id
-     *
+     * @param  int  $corporation_id
      * @return \Illuminate\Support\Collection
      */
     private function getCorporationContacts(int $corporation_id): Collection
@@ -331,8 +325,7 @@ class StandingsController extends Controller
     /**
      * Return the contacts list for an alliance.
      *
-     * @param int $alliance_id
-     *
+     * @param  int  $alliance_id
      * @return \Illuminate\Support\Collection
      */
     private function getAllianceContacts(int $alliance_id): Collection

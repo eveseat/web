@@ -34,9 +34,9 @@ abstract class AbstractEntityPolicy extends AbstractPolicy
     /**
      * Determine if the requested entity is granted by the specified permission filter.
      *
-     * @param stdClass $filters
-     * @param string $entity_type
-     * @param int $entity_id
+     * @param  stdClass  $filters
+     * @param  string  $entity_type
+     * @param  int  $entity_id
      * @return bool
      */
     protected function isGrantedByFilter(stdClass $filters, string $entity_type, ?int $entity_id): bool

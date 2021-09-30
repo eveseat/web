@@ -30,6 +30,7 @@ use Seat\Web\Models\User;
 
 /**
  * Class Role.
+ *
  * @package Seat\Web\Models\Acl
  *
  * @OA\Schema(
@@ -58,6 +59,7 @@ class Role extends Model
      * Make sure we cleanup on delete.
      *
      * @return bool|null
+     *
      * @throws \Exception
      */
     public function delete()
@@ -101,7 +103,7 @@ class Role extends Model
     /**
      * Return the logo url-encoded.
      *
-     * @param mixed $value
+     * @param  mixed  $value
      * @return string
      */
     public function getLogoAttribute($value): string
@@ -118,7 +120,7 @@ class Role extends Model
     /**
      * Store the file into blob attribute using url-encoding.
      *
-     * @param mixed $value
+     * @param  mixed  $value
      */
     public function setLogoAttribute($value)
     {

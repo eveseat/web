@@ -39,6 +39,7 @@ use Seat\Web\Models\Squads\SquadMember;
 
 /**
  * Class User.
+ *
  * @package Seat\Web\Models
  */
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
@@ -85,6 +86,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * Make sure we cleanup on delete.
      *
      * @return bool|null
+     *
      * @throws \Exception
      */
     public function delete()
@@ -111,6 +113,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * email address setting.
      *
      * @return mixed
+     *
      * @throws \Seat\Services\Exceptions\SettingException
      */
     public function getEmailAttribute()
@@ -209,7 +212,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeStandard($query)
@@ -218,7 +221,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeSystem($query)

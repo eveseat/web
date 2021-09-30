@@ -37,9 +37,8 @@ use Seat\Web\Models\User;
 class CharacterPolicy extends AbstractEntityPolicy
 {
     /**
-     * @param string $method
-     * @param array $args
-     *
+     * @param  string  $method
+     * @param  array  $args
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function __call($method, $args)
@@ -87,8 +86,8 @@ class CharacterPolicy extends AbstractEntityPolicy
     }
 
     /**
-     * @param \Seat\Web\Models\User $user
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
+     * @param  \Seat\Web\Models\User  $user
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
      * @return bool
      */
     private function isCeo(User $user, CharacterInfo $character)
@@ -113,8 +112,8 @@ class CharacterPolicy extends AbstractEntityPolicy
     }
 
     /**
-     * @param \Seat\Web\Models\User $user
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
+     * @param  \Seat\Web\Models\User  $user
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
      * @return bool
      */
     private function isDirector(User $user, CharacterInfo $character): bool
@@ -135,8 +134,8 @@ class CharacterPolicy extends AbstractEntityPolicy
     }
 
     /**
-     * @param \Seat\Web\Models\User $user
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
+     * @param  \Seat\Web\Models\User  $user
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
      * @return bool
      */
     private function isOwner(User $user, CharacterInfo $character)
@@ -145,7 +144,7 @@ class CharacterPolicy extends AbstractEntityPolicy
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
      * @return bool
      */
     private function isValidSharingSession(CharacterInfo $character)
@@ -154,7 +153,7 @@ class CharacterPolicy extends AbstractEntityPolicy
     }
 
     /**
-     * @param \Seat\Web\Models\Acl\Permission $permission
+     * @param  \Seat\Web\Models\Acl\Permission  $permission
      * @param $character
      * @return bool
      */

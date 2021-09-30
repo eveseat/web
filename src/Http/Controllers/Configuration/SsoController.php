@@ -29,6 +29,7 @@ use Seat\Web\Http\Validation\SsoScopes;
 
 /**
  * Class SsoController.
+ *
  * @package Seat\Web\Http\Controllers\Configuration
  */
 class SsoController extends Controller
@@ -57,9 +58,9 @@ class SsoController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Http\Validation\SsoScopes $request
-     *
+     * @param  \Seat\Web\Http\Validation\SsoScopes  $request
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Seat\Services\Exceptions\SettingException
      */
     public function postUpdateScopes(SsoScopes $request)
@@ -85,6 +86,7 @@ class SsoController extends Controller
 
     /**
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Seat\Services\Exceptions\SettingException
      */
     public function getSetDefaultProfile(int $id)
@@ -117,6 +119,7 @@ class SsoController extends Controller
 
     /**
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Seat\Services\Exceptions\SettingException
      */
     public function getAddProfile()
@@ -140,6 +143,7 @@ class SsoController extends Controller
 
     /**
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Seat\Services\Exceptions\SettingException
      */
     public function getDeleteProfile(int $id)
@@ -167,9 +171,9 @@ class SsoController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Seat\Services\Exceptions\SettingException
      */
     public function postUpdateCustomSignin(CustomSignin $request)

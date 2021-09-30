@@ -215,7 +215,7 @@ class Squad extends Model
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeCandidate($query)
@@ -226,7 +226,7 @@ class Squad extends Model
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeMember($query)
@@ -237,7 +237,7 @@ class Squad extends Model
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeModerator($query)
@@ -248,7 +248,7 @@ class Squad extends Model
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeModerated($query)
@@ -257,8 +257,8 @@ class Squad extends Model
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param array $types
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  array  $types
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeOfType($query, $types)

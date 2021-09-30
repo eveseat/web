@@ -40,7 +40,7 @@ class LocationFlag extends AbstractColumn
     /**
      * AssetLocationFlagColumn constructor.
      *
-     * @param \Seat\Web\Http\DataTables\Corporation\Intel\Assets\DataTable $table
+     * @param  \Seat\Web\Http\DataTables\Corporation\Intel\Assets\DataTable  $table
      */
     public function __construct($table)
     {
@@ -52,7 +52,7 @@ class LocationFlag extends AbstractColumn
     /**
      * Draw a column cell.
      *
-     * @param \Illuminate\Database\Eloquent\Model $row
+     * @param  \Illuminate\Database\Eloquent\Model  $row
      * @return string;
      */
     public function draw(Model $row)
@@ -82,8 +82,8 @@ class LocationFlag extends AbstractColumn
     /**
      * Search in a column cell.
      *
-     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder $query
-     * @param string $keyword
+     * @param  \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder  $query
+     * @param  string  $keyword
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
      */
     public function search($query, string $keyword)

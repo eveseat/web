@@ -35,6 +35,7 @@ use Seat\Web\Http\Validation\SeatSettings;
 
 /**
  * Class SeatController.
+ *
  * @package Seat\Web\Http\Controllers\Configuration
  */
 class SeatController extends Controller
@@ -77,9 +78,9 @@ class SeatController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Http\Validation\SeatSettings $request
-     *
+     * @param  \Seat\Web\Http\Validation\SeatSettings  $request
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Seat\Services\Exceptions\SettingException
      */
     public function postUpdateSettings(SeatSettings $request)
@@ -97,9 +98,9 @@ class SeatController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Http\Validation\Customlink $request
-     *
+     * @param  \Seat\Web\Http\Validation\Customlink  $request
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Seat\Services\Exceptions\SettingException
      */
     public function postUpdateCustomLinks(Customlink $request)
@@ -164,8 +165,7 @@ class SeatController extends Controller
     /**
      * Determine if a package is or not outdated.
      *
-     * @param \Seat\Web\Http\Validation\PackageVersionCheck $request
-     *
+     * @param  \Seat\Web\Http\Validation\PackageVersionCheck  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function postPackagesCheck(PackageVersionCheck $request)
@@ -182,6 +182,7 @@ class SeatController extends Controller
      * Return the changelog based on provided parameters.
      *
      * @return mixed|string
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function postPackagesChangelog(PackageChangelog $request)
@@ -327,9 +328,9 @@ class SeatController extends Controller
     /**
      * Return a rendered changelog based on the provided release API endpoint.
      *
-     * @param string $uri
-     * @param string $body_attribute
-     * @param string $tag_attribute
+     * @param  string  $uri
+     * @param  string  $body_attribute
+     * @param  string  $tag_attribute
      * @return string
      */
     private function getChangelogFromApi(string $uri, string $body_attribute, string $tag_attribute): string
@@ -382,8 +383,9 @@ class SeatController extends Controller
     /**
      * Return parsed markdown from the file located at the provided URI.
      *
-     * @param string $uri
+     * @param  string  $uri
      * @return mixed
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     private function getChangelogFromFile(string $uri)
@@ -416,7 +418,7 @@ class SeatController extends Controller
     /**
      * Determine a valid cache key for the provided URI.
      *
-     * @param string $uri
+     * @param  string  $uri
      * @return string
      */
     private function getChangelogCacheKey(string $uri)

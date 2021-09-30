@@ -27,6 +27,7 @@ use InvalidArgumentException;
 
 /**
  * Class Cron.
+ *
  * @package Seat\Web\Http\Validation\Custom
  */
 class Cron
@@ -38,7 +39,6 @@ class Cron
      * @param $value
      * @param $parameters
      * @param $validator
-     *
      * @return bool
      */
     public function validate($attribute, $value, $parameters, $validator)

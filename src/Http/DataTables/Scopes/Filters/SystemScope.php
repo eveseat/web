@@ -39,7 +39,7 @@ class SystemScope implements DataTableScope
     /**
      * SystemScope constructor.
      *
-     * @param int $system_id
+     * @param  int  $system_id
      */
     public function __construct(int $system_id) {
         $this->system_id = $system_id;
@@ -48,7 +48,7 @@ class SystemScope implements DataTableScope
     /**
      * Apply a query scope.
      *
-     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
      */
     public function apply($query) {

@@ -36,8 +36,8 @@ use Seat\Web\Http\DataTables\Scopes\MiningCorporationScope;
 class MiningLedgerController extends Controller
 {
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
-     * @param \Seat\Web\Http\DataTables\Corporation\Industrial\MiningDataTable $dataTable
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
+     * @param  \Seat\Web\Http\DataTables\Corporation\Industrial\MiningDataTable  $dataTable
      * @return mixed
      */
     public function index(CorporationInfo $corporation, MiningDataTable $dataTable, int $year = null, int $month = null)
@@ -54,9 +54,8 @@ class MiningLedgerController extends Controller
     }
 
     /**
-     * @param int  $corporation_id
-     * @param bool $get
-     *
+     * @param  int  $corporation_id
+     * @param  bool  $get
      * @return CharacterMining[]
      */
     private function getCorporationLedgers(int $corporation_id)

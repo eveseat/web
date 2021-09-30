@@ -30,7 +30,7 @@ abstract class AbstractMenu
     /**
      * Bind data to the view.
      *
-     * @param \Illuminate\Contracts\View\View $view
+     * @param  \Illuminate\Contracts\View\View  $view
      * @return mixed
      */
     abstract public function compose(View $view);
@@ -47,10 +47,11 @@ abstract class AbstractMenu
      * 'package.sidebar' namespace. The structure of these
      * menus can be seen in the SeAT Wiki.
      *
-     * @param string $package_name
-     * @param array $menu_data
-     * @param bool $require_affiliation
+     * @param  string  $package_name
+     * @param  array  $menu_data
+     * @param  bool  $require_affiliation
      * @return array|null
+     *
      * @throws \Seat\Web\Exceptions\PackageMenuBuilderException
      */
     public function load_plugin_menu(string $package_name, array $menu_data, bool $require_affiliation = false): ?array
@@ -74,8 +75,9 @@ abstract class AbstractMenu
     /**
      * The actual menu validation logic.
      *
-     * @param string $package_name
-     * @param array $menu_data
+     * @param  string  $package_name
+     * @param  array  $menu_data
+     *
      * @throws \Seat\Web\Exceptions\PackageMenuBuilderException
      */
     public function validate_menu(string $package_name, array $menu_data)
@@ -159,7 +161,7 @@ abstract class AbstractMenu
     /**
      * Return true if the current user can see menu entry.
      *
-     * @param array $permissions
+     * @param  array  $permissions
      * @return bool
      */
     abstract protected function userHasPermission(array $permissions): bool;

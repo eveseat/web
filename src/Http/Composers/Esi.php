@@ -29,6 +29,7 @@ use Seat\Eveapi\Models\Status\EsiStatus;
 
 /**
  * Class Esi.
+ *
  * @package Seat\Web\Http\Composers
  */
 class Esi
@@ -36,9 +37,9 @@ class Esi
     /**
      * Bind data to the view.
      *
-     * @param  View $view
-     *
+     * @param  View  $view
      * @return void
+     *
      * @throws \Exception
      */
     public function compose(View $view)

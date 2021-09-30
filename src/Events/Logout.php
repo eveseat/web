@@ -28,6 +28,7 @@ use Seat\Web\Models\UserLoginHistory;
 
 /**
  * Class Logout.
+ *
  * @package Seat\Web\Events
  */
 class Logout
@@ -35,7 +36,7 @@ class Logout
     /**
      * Write a logout history item for this user.
      *
-     * @param \Illuminate\Auth\Events\Logout $event
+     * @param  \Illuminate\Auth\Events\Logout  $event
      */
     public static function handle(LogoutEvent $event)
     {

@@ -31,12 +31,13 @@ use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 
 /**
  * Class ViewController.
+ *
  * @package Seat\Web\Http\Controllers\Corporation
  */
 class SecurityController extends Controller
 {
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getRoles(CorporationInfo $corporation)
@@ -50,7 +51,7 @@ class SecurityController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getTitles(CorporationInfo $corporation)
@@ -64,8 +65,8 @@ class SecurityController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
-     * @param \Seat\Web\Http\DataTables\Corporation\Intel\LogDataTable $dataTable
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
+     * @param  \Seat\Web\Http\DataTables\Corporation\Intel\LogDataTable  $dataTable
      * @return mixed
      */
     public function getLogs(CorporationInfo $corporation, LogDataTable $dataTable)

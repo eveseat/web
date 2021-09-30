@@ -28,6 +28,7 @@ use Seat\Web\Http\Controllers\Controller;
 
 /**
  * Class QueueController.
+ *
  * @package Seat\Web\Http\Controllers\Queue
  */
 class QueueController extends Controller

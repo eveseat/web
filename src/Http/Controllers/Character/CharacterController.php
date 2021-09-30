@@ -37,7 +37,7 @@ use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 class CharacterController extends Controller
 {
     /**
-     * @param \Seat\Web\Http\DataTables\Character\CharacterDataTable $dataTable
+     * @param  \Seat\Web\Http\DataTables\Character\CharacterDataTable  $dataTable
      * @return mixed
      */
     public function index(CharacterDataTable $dataTable)
@@ -48,7 +48,7 @@ class CharacterController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
      * @return \Illuminate\Http\RedirectResponse
      */
     public function show(CharacterInfo $character)
@@ -84,7 +84,7 @@ class CharacterController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getShip(CharacterInfo $character)
@@ -95,9 +95,9 @@ class CharacterController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
-     *
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Exception
      */
     public function destroy(CharacterInfo $character)

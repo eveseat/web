@@ -35,7 +35,7 @@ class Station extends AbstractColumn
     /**
      * Draw a column cell.
      *
-     * @param \Illuminate\Database\Eloquent\Model $row
+     * @param  \Illuminate\Database\Eloquent\Model  $row
      * @return string;
      */
     public function draw(Model $row)
@@ -91,8 +91,8 @@ class Station extends AbstractColumn
     /**
      * Search in a column cell.
      *
-     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder $query
-     * @param string $keyword
+     * @param  \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder  $query
+     * @param  string  $keyword
      * @return \Illuminate\Database\Query\Builder
      */
     public function search($query, string $keyword)

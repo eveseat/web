@@ -29,8 +29,8 @@ class SecLog
     /**
      * Write an entry in the security log.
      *
-     * @param string $message
-     * @param string $category
+     * @param  string  $message
+     * @param  string  $category
      */
     public static function handle($message, $category = null)
     {

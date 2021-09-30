@@ -35,8 +35,8 @@ use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 class CalendarController extends Controller
 {
     /**
-     * @param CharacterInfo $character
-     * @param \Seat\Web\Http\DataTables\Character\Intel\CalendarDataTable $dataTable
+     * @param  CharacterInfo  $character
+     * @param  \Seat\Web\Http\DataTables\Character\Intel\CalendarDataTable  $dataTable
      * @return mixed
      */
     public function index(CharacterInfo $character, CalendarDataTable $dataTable)

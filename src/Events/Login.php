@@ -38,7 +38,7 @@ class Login
      * Update the last login values and write a new
      * login history item.
      *
-     * @param \Illuminate\Auth\Events\Login $event
+     * @param  \Illuminate\Auth\Events\Login  $event
      */
     public static function handle(LoginEvent $event)
     {

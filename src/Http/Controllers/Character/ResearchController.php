@@ -35,8 +35,8 @@ use Seat\Web\Http\DataTables\Scopes\CharacterScope;
 class ResearchController extends Controller
 {
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
-     * @param \Seat\Web\Http\DataTables\Character\Industrial\ResearchDataTable $dataTable
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
+     * @param  \Seat\Web\Http\DataTables\Character\Industrial\ResearchDataTable  $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(CharacterInfo $character, ResearchDataTable $dataTable)
