@@ -229,6 +229,7 @@ return [
     'total_character_isk'         => 'Total Character ISK',
     'total_character_skillpoints' => 'Total Character Skillpoints',
     'total_character_mined_isk'   => 'Total Mined ISK',
+    'total_character_ratted_isk'   => 'Total Ratted ISK',
     'total_killmails'             => 'Total Killmails',
     'main_char_skills'            => ':character_name\'s Skills',
     'main_char_skills_per_level'  => 'Skills Per Level',

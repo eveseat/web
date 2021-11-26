@@ -26,6 +26,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Seat\Eveapi\Models\Character\CharacterInfoSkill;
 use Seat\Eveapi\Models\Character\CharacterSkill;
+use Seat\Eveapi\Models\Character\CharacterWalletJournal;
 use Seat\Eveapi\Models\Industry\CharacterMining;
 use Seat\Eveapi\Models\Killmails\KillmailDetail;
 use Seat\Eveapi\Models\Wallet\CharacterWalletBalance;
@@ -61,6 +62,19 @@ trait Stats
             ->where('month', carbon()->month)
             ->first()
             ->total_mined_value;
+    }
+
+    /**
+     * @param  int[]  $character_ids
+     * @return float|null
+     */
+    public function getTotalCharacterRattingIsk(array $character_ids): ?float
+    {
+        return CharacterWalletJournal::selectRaw('SUM(amount) as total_ratting_value')
+            ->whereIn('second_party_id', $character_ids)
+            ->whereIn('ref_type', ['bounty_prizes', 'ess_escrow_transfer'])
+            ->first()
+            ->total_ratting_value;
     }
 
     /**
