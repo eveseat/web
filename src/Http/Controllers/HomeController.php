@@ -59,14 +59,17 @@ class HomeController extends Controller
 
         // TODO : switch to ajax calls
         $server_status = $this->getEveLastServerStatus();
-        $total_character_isk = $this->getTotalCharacterIsk(auth()->user()->associatedCharacterIds());
-        $total_character_skillpoints = $this->getTotalCharacterSkillpoints(auth()->user()->associatedCharacterIds());
-        $total_character_killmails = $this->getTotalCharacterKillmails(auth()->user()->associatedCharacterIds());
-        $total_character_mining = $this->getTotalCharacterMiningIsk(auth()->user()->associatedCharacterIds());
+
+        $characterIds = auth()->user()->associatedCharacterIds();
+        $total_character_isk = $this->getTotalCharacterIsk($characterIds);
+        $total_character_skillpoints = $this->getTotalCharacterSkillpoints($characterIds);
+        $total_character_killmails = $this->getTotalCharacterKillmails($characterIds);
+        $total_character_mining = $this->getTotalCharacterMiningIsk($characterIds);
+        $total_character_ratting = $this->getTotalCharacterRattingIsk($characterIds);
 
         return view('web::home', compact(
             'server_status', 'total_character_isk', 'total_character_skillpoints',
-            'total_character_killmails', 'total_character_mining'
+            'total_character_killmails', 'total_character_mining', 'total_character_ratting'
         ));
     }
 
