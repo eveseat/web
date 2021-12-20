@@ -26,7 +26,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Seat\Eveapi\Models\Character\CharacterInfoSkill;
 use Seat\Eveapi\Models\Character\CharacterSkill;
-use Seat\Eveapi\Models\Character\CharacterWalletJournal;
+use Seat\Eveapi\Models\Wallet\CharacterWalletJournal;
 use Seat\Eveapi\Models\Industry\CharacterMining;
 use Seat\Eveapi\Models\Killmails\KillmailDetail;
 use Seat\Eveapi\Models\Wallet\CharacterWalletBalance;
