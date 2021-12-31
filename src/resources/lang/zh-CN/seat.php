@@ -368,8 +368,6 @@ return [
     'admin_warn_sso'               => '请仔细检查你在 .env 文件中的的 EVE_CLIENT_ID, EVE_CLIENT_SECRET and EVE_CALLBACK_URL ，他们可能是错误的或者是空的，这会导致 SSO 失败',
     'allow_sso'                    => '允许 SSO',
     'allow_registration'           => '允许注册',
-    'email_activation'             => '邮件激活',
-    'require_activation'           => '需要邮件激活',
     'module_versions'              => 'SeAT 模块版本',
     'tp_versions'                  => '第三方版本',
     'installed'                    => '已安装',

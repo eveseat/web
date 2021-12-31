@@ -411,8 +411,6 @@ return [
     'allow_registration'           => 'Allow Registration',
     'allow_user_character_unlink'  => 'Allow user to unlink their characters',
     'unlink'                       => 'Unlink',
-    'email_activation'             => 'Email Activation',
-    'require_activation'           => 'Require Email Activation',
     'module_versions'              => 'SeAT Module Versions',
     'tp_versions'                  => 'Third Party Versions',
     'installed'                    => 'Installed',
