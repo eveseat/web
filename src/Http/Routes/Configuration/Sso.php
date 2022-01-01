@@ -20,32 +20,26 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::match(['get', 'post'], '/', [
-    'as'   => 'configuration.sso',
-    'uses' => 'SsoController@getConfigurationHome',
-]);
+Route::match(['get', 'post'], '/')
+    ->name('seatcore::configuration.sso')
+    ->uses('SsoController@getConfigurationHome');
 
-Route::post('/update-scopes', [
-    'as'   => 'configuration.sso.update_scopes',
-    'uses' => 'SsoController@postUpdateScopes',
-]);
+Route::post('/update-scopes')
+    ->name('seatcore::configuration.sso.update_scopes')
+    ->uses('SsoController@postUpdateScopes');
 
-Route::get('/set-default-profile/{id}', [
-    'as'   => 'configuration.sso.set_default_profile',
-    'uses' => 'SsoController@getSetDefaultProfile',
-]);
+Route::get('/set-default-profile/{id}')
+    ->name('seatcore::configuration.sso.set_default_profile')
+    ->uses('SsoController@getSetDefaultProfile');
 
-Route::get('/add-profile', [
-    'as'   => 'configuration.sso.add_profile',
-    'uses' => 'SsoController@getAddProfile',
-]);
+Route::get('/add-profile')
+    ->name('seatcore::configuration.sso.add_profile')
+    ->uses('SsoController@getAddProfile');
 
-Route::get('/delete-profile/{id}', [
-    'as'   => 'configuration.sso.delete_profile',
-    'uses' => 'SsoController@getDeleteProfile',
-]);
+Route::get('/delete-profile/{id}')
+    ->name('seatcore::configuration.sso.delete_profile')
+    ->uses('SsoController@getDeleteProfile');
 
-Route::post('/update-custom-signin', [
-    'as'   => 'configuration.sso.update_custom_signin',
-    'uses' => 'SsoController@postUpdateCustomSignin',
-]);
+Route::post('/update-custom-signin')
+    ->name('seatcore::configuration.sso.update_custom_signin')
+    ->uses('SsoController@postUpdateCustomSignin');

@@ -55,7 +55,7 @@ class CharacterController extends Controller
     {
         // by default, redirect user to character sheet
         if (Gate::allows('character.sheet', $character))
-            return redirect()->route('character.view.sheet', [
+            return redirect()->route('seatcore::character.view.sheet', [
                 'character' => $character,
             ]);
 
@@ -80,7 +80,7 @@ class CharacterController extends Controller
         event('security.log', [$message, 'authorization']);
 
         // Redirect away from the original request
-        return redirect()->route('auth.unauthorized');
+        return redirect()->route('seatcore::auth.unauthorized');
     }
 
     /**

@@ -20,32 +20,27 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::match(['get', 'post'], '/search', [
-    'as'   => 'support.search',
-    'uses' => 'SearchController@getSearch',
-]);
+Route::match(['get', 'post'], '/search')
+    ->name('seatcore::support.search')
+    ->uses('SearchController@getSearch');
 
-Route::get('/search/characters/data', [
-    'as'   => 'support.search.characters.data',
-    'uses' => 'SearchController@getSearchCharactersData',
-]);
+Route::get('/search/characters/data')
+    ->name('seatcore::support.search.characters.data')
+    ->uses('SearchController@getSearchCharactersData');
 
-Route::get('/search/corporations/data', [
-    'as'   => 'support.search.corporations.data',
-    'uses' => 'SearchController@getSearchCorporationsData',
-]);
+Route::get('/search/corporations/data')
+    ->name('seatcore::support.search.corporations.data')
+    ->uses('SearchController@getSearchCorporationsData');
 
-Route::get('/search/mail/data', [
-    'as'   => 'support.search.mail.data',
-    'uses' => 'SearchController@getSearchMailData',
-]);
+Route::get('/search/mail/data')
+    ->name('seatcore::support.search.mail.data')
+    ->uses('SearchController@getSearchMailData');
 
-Route::get('/search/assets/data', [
-    'as'   => 'support.search.assets.data',
-    'uses' => 'SearchController@getSearchCharacterAssetsData',
-]);
+Route::get('/search/assets/data')
+    ->name('seatcore::support.search.assets.data')
+    ->uses('SearchController@getSearchCharacterAssetsData');
 
-Route::get('/search/skills/data', [
-    'as'   => 'support.search.skills.data',
-    'uses' => 'SearchController@getSearchCharacterSkillsData',
-]);
+Route::get('/search/skills/data')
+    ->name('seatcore::support.search.skills.data')
+    ->uses('SearchController@getSearchCharacterSkillsData');
+

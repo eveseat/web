@@ -13,7 +13,7 @@
             Summary
             @can('squads.edit', $squad)
               <div class="btn-group float-right" role="group">
-                <a href="{{ route('squads.edit', $squad) }}" class="btn btn-sm btn-warning">
+                <a href="{{ route('seatcore::squads.edit', $squad) }}" class="btn btn-sm btn-warning">
                   <i class="fas fa-edit"></i>
                   Edit
                 </a>
@@ -96,7 +96,7 @@
                 <div class="col-2">
                   @include('web::partials.character', ['character' => $moderator->main_character])
                   @can('squads.manage_moderators', $squad)
-                    <form method="post" action="{{ route('squads.moderators.destroy', ['squad' => $squad, 'user' => $moderator]) }}" class="float-right">
+                    <form method="post" action="{{ route('seatcore::squads.moderators.destroy', ['squad' => $squad, 'user' => $moderator]) }}" class="float-right">
                       {!! csrf_field() !!}
                       {!! method_field('DELETE') !!}
                       <button type="submit" class="btn btn-sm btn-danger">
@@ -111,7 +111,7 @@
           @endforeach
 
           @can('squads.manage_moderators', $squad)
-            <form method="post" action="{{ route('squads.moderators.store', $squad) }}" class="mt-3">
+            <form method="post" action="{{ route('seatcore::squads.moderators.store', $squad) }}" class="mt-3">
               {!! csrf_field() !!}
               <div class="row justify-content-end">
                 <div class="col-4">
@@ -127,7 +127,7 @@
                 </div>
               </div>
             </form>
-            <form method="post" action="{{ route('squads.destroy', $squad) }}" id="delete-squad">
+            <form method="post" action="{{ route('seatcore::squads.destroy', $squad) }}" id="delete-squad">
               {!! csrf_field() !!}
               {!! method_field('DELETE') !!}
             </form>
@@ -136,7 +136,7 @@
         @if($squad->type != 'auto' && auth()->user()->name !== 'admin')
           <div class="card-footer">
             @if($squad->is_member)
-              <form method="post" action="{{ route('squads.members.leave', $squad) }}" id="form-leave">
+              <form method="post" action="{{ route('seatcore::squads.members.leave', $squad) }}" id="form-leave">
                 {!! csrf_field() !!}
                 {!! method_field('DELETE') !!}
               </form>
@@ -145,7 +145,7 @@
               </button>
             @else
               @if($squad->is_candidate)
-                <form method="post" action="{{ route('squads.applications.cancel', $squad) }}" id="form-cancel">
+                <form method="post" action="{{ route('seatcore::squads.applications.cancel', $squad) }}" id="form-cancel">
                   {!! csrf_field() !!}
                   {!! method_field('DELETE') !!}
                 </form>
@@ -160,7 +160,7 @@
               @endif
               @if(! $squad->is_candidate && $squad->type == 'manual' && $squad->isEligible(auth()->user()))
                 @if($squad->moderators->isEmpty())
-                  <form method="post" action="{{ route('squads.applications.store', $squad) }}">
+                  <form method="post" action="{{ route('seatcore::squads.applications.store', $squad) }}">
                     {!! csrf_field() !!}
                     <button type="submit" class="btn btn-sm btn-success float-right">
                       <i class="fas fa-sign-in-alt"></i> {{ trans('web::squads.join') }}
@@ -199,7 +199,7 @@
             </table>
           </div>
           <div class="card-footer">
-            <form method="post" action="{{ route('squads.roles.store', $squad) }}" data-table="rolesTableBuilder" id="squad-role-form">
+            <form method="post" action="{{ route('seatcore::squads.roles.store', $squad) }}" data-table="rolesTableBuilder" id="squad-role-form">
               {!! csrf_field() !!}
               <div class="row justify-content-end">
                 <div class="col-4">
@@ -247,7 +247,7 @@
         </div>
         @can('squads.manage_members', $squad)
           <div class="card-footer">
-            <form method="post" action="{{ route('squads.members.store', $squad) }}" data-table="dataTableBuilder" id="squad-member-form">
+            <form method="post" action="{{ route('seatcore::squads.members.store', $squad) }}" data-table="dataTableBuilder" id="squad-member-form">
               {!! csrf_field() !!}
               <div class="row justify-content-end">
                 <div class="col-4">
@@ -314,7 +314,7 @@
         .select2({
             placeholder: 'Select a moderator to add to this Squad',
             ajax: {
-                url: '{{ route('squads.moderators.lookup', $squad) }}',
+                url: '{{ route('seatcore::squads.moderators.lookup', $squad) }}',
                 dataType: 'json',
                 cache: true,
                 processResults: function (data, params) {
@@ -329,7 +329,7 @@
       .select2({
           placeholder: 'Select a role to add to this Squad',
           ajax: {
-              url: '{{ route('squads.roles.lookup', $squad) }}',
+              url: '{{ route('seatcore::squads.roles.lookup', $squad) }}',
               dataType: 'json',
               cache: true,
               processResults: function (data, params) {
@@ -344,7 +344,7 @@
         .select2({
             placeholder: 'Select an user to add to this Squad',
             ajax: {
-                url: '{{ route('squads.members.lookup', $squad) }}',
+                url: '{{ route('seatcore::squads.members.lookup', $squad) }}',
                 dataType: 'json',
                 cache: true,
                 processResults: function (data, params) {
@@ -401,7 +401,7 @@
             serverSide: true,
             order: [[0, 'desc']],
             ajax: {
-                url: '{{ route('squads.members.index', $squad) }}',
+                url: '{{ route('seatcore::squads.members.index', $squad) }}',
                 type: 'POST',
                 headers: {
                     'X-HTTP-Method-Override': 'GET'
@@ -426,7 +426,7 @@
             serverSide: true,
             order: [[0, 'desc']],
             ajax: {
-                url: '{{ route('squads.applications.index', $squad) }}',
+                url: '{{ route('seatcore::squads.applications.index', $squad) }}',
                 type: 'POST',
                 headers: {
                     'X-HTTP-Method-Override': 'GET'
@@ -451,7 +451,7 @@
             serverSide: true,
             order: [[0, 'desc']],
             ajax: {
-                url: '{{ route('squads.roles.show', $squad) }}',
+                url: '{{ route('seatcore::squads.roles.show', $squad) }}',
                 type: 'POST',
                 headers: {
                     'X-HTTP-Method-Override': 'GET'

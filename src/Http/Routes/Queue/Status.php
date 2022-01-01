@@ -20,7 +20,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/short-status', [
-    'as'   => 'queue.status.short',
-    'uses' => 'QueueController@getShortStatus',
-]);
+Route::get('/short-status')
+    ->name('seatcore::queue.status.short')
+    ->uses('QueueController@getShortStatus');

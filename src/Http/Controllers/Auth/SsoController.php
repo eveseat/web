@@ -102,7 +102,7 @@ class SsoController extends Controller
 
         // Avoid self attachment
         if (auth()->check() && auth()->user()->id == $eve_data->id)
-            return redirect()->route('home')
+            return redirect()->route('seatcore::home')
                 ->with('error', 'You cannot add yourself. Did you forget to change character in Eve Online SSO form ?');
 
         // Get or create the User bound to this login.
@@ -115,7 +115,7 @@ class SsoController extends Controller
         $this->updateCharacterInfo($eve_data);
 
         if (! $this->loginUser($user))
-            return redirect()->route('auth.login')
+            return redirect()->route('seatcore::auth.login')
                 ->with('error', 'Login failed. Please contact your administrator.');
 
         return redirect()->intended();

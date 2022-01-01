@@ -99,7 +99,7 @@
         <dt>{{ trans('web::seat.current_ship') }}</dt>
         <dd>
           @can('character.asset', $character)
-            <a href="#" data-toggle="modal" data-target="#ship-detail" data-url="{{ route('character.view.ship', ['character' => $character]) }}"><i class="fas fa-wrench"></i></a>
+            <a href="#" data-toggle="modal" data-target="#ship-detail" data-url="{{ route('seatcore::character.view.ship', ['character' => $character]) }}"><i class="fas fa-wrench"></i></a>
           @endcan
           {{ $character->ship->type->typeName }} called <i>{{ $character->ship->ship_name }}</i>
         </dd>
@@ -153,7 +153,7 @@
     </span>
     @can('global.superuser')
       @if(! is_null($character->refresh_token))
-        <a href="{{ route('configuration.users.edit', $character->refresh_token->user_id) }}" class="btn btn-xs btn-secondary float-right">
+        <a href="{{ route('seatcore::configuration.users.edit', $character->refresh_token->user_id) }}" class="btn btn-xs btn-secondary float-right">
           <i class="fas fa-user"></i> {{ trans_choice('web::seat.user', 1) }}
         </a>
       @endif
