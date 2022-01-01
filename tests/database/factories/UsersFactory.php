@@ -20,21 +20,37 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+namespace Seat\Tests\Web\Database\Factories;
+
 use Faker\Generator;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Seat\Web\Models\User;
 
-$factory->define(User::class, function (Generator $faker) {
-    // exclude 1 which should be admin
-    static $id = 2;
+/**
+ * Class UsersFactory.
+ * @package Seat\Tests\Web\Database\Factories
+ */
+class UsersFactory extends Factory
+{
+    /**
+     * @var int
+     */
+    static int $id = 2; // exclude 1 which should be admin
 
-    return [
-        'id'                   => $id++,
-        'name'                 => $faker->name,
-        'active'               => $faker->boolean,
-        'admin'                => false,
-        'last_login'           => $faker->dateTime(),
-        'last_login_source'    => $faker->ipv4,
-        'remember_token'       => $faker->sha256,
-        'main_character_id'    => $faker->unique()->numberBetween(90000000, 90001000),
-    ];
-});
+    /**
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'id' => self::$id++,
+            'name' => $this->faker->name,
+            'active' => $this->faker->boolean,
+            'admin' => false,
+            'last_login' => $this->faker->dateTime(),
+            'last_login_source' => $this->faker->ipv4,
+            'remember_token' => $this->faker->sha256,
+            'main_character_id' => $this->faker->unique()->numberBetween(90000000, 90001000),
+        ];
+    }
+}
