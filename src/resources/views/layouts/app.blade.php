@@ -148,7 +148,7 @@
       (function worker() {
         $.ajax({
           type    : "get",
-          url     : "{{ route('queue.status.short') }}",
+          url     : "{{ route('seatcore::queue.status.short') }}",
           success : function (data) {
             $("span#queue_count").text(data.queue_count);
             $("span#error_count").text(data.error_count);

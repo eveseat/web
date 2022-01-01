@@ -8,7 +8,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form method="post" action="{{ route('tools.moons.store') }}" id="moon-report-form">
+        <form method="post" action="{{ route('seatcore::tools.moons.store') }}" id="moon-report-form">
           {{ csrf_field() }}
           <div class="form-group">
             <label for="moon-report" class="control-label">Report</label>

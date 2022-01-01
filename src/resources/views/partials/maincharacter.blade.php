@@ -4,7 +4,7 @@
 
 @else
 
-  <a href="{{ route('character.view.sheet', ['character' => $maincharacter]) }}">
+  <a href="{{ route('seatcore::character.view.sheet', ['character' => $maincharacter]) }}">
     {!! img('characters', 'portrait', $maincharacter->character_id, 64, ['class' => 'img-circle eve-icon small-icon'],false) !!}
     {{ $maincharacter->name }}
   </a>

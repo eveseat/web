@@ -74,7 +74,7 @@ class FastLookupController extends Controller
                 $images_array = $characters->map(function ($character) {
                     $attributes = [
                         'class' => 'img-circle eve-icon small-icon',
-                        'data-link' => route('character.view.sheet', ['character' => $character]),
+                        'data-link' => route('seatcore::character.view.sheet', ['character' => $character]),
                         'data-name' => $character->name,
                     ];
 
@@ -84,7 +84,7 @@ class FastLookupController extends Controller
                 if ($characters->isEmpty()) {
                     $attributes = [
                         'class' => 'img-circle eve-icon small-icon',
-                        'data-link' => route('character.view.sheet', ['character' => $user->main_character]),
+                        'data-link' => route('seatcore::character.view.sheet', ['character' => $user->main_character]),
                         'data-name' => $user->name,
                     ];
 
@@ -97,7 +97,7 @@ class FastLookupController extends Controller
                     'id' => $user->id,
                     'type' => 'characters',
                     'text' => $user->name,
-                    'href' => route('character.view.sheet', ['character' => $user->main_character]),
+                    'href' => route('seatcore::character.view.sheet', ['character' => $user->main_character]),
                     'character_id' => $user->main_character_id,
                     'img' => $images_array,
                 ];

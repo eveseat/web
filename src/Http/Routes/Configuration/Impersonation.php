@@ -20,7 +20,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/impersonate/stop', [
-    'as'   => 'configuration.users.impersonate.stop',
-    'uses' => 'UserController@getStopImpersonate',
-]);
+Route::get('/impersonate/stop')
+    ->name('seatcore::configuration.users.impersonate.stop')
+    ->uses('UserController@getStopImpersonate');

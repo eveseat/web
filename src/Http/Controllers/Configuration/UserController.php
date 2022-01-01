@@ -181,7 +181,7 @@ class UserController extends Controller
         // Login as the new user.
         auth()->login($user);
 
-        return redirect()->route('home')
+        return redirect()->route('seatcore::home')
             ->with('success',
                 trans('web::seat.impersonating', ['user' => $user->name]));
     }
@@ -208,7 +208,7 @@ class UserController extends Controller
         // Clear the session value
         session()->forget('impersonation_origin');
 
-        return redirect()->route('home')
+        return redirect()->route('seatcore::home')
             ->with('success', trans('web::seat.revert_impersonation'));
 
     }

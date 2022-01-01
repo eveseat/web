@@ -142,7 +142,7 @@
       searching   : false,
       ordering    : false,
       ajax        : {
-        url : '{{ route('character.view.intel.summary.journal.data', ['character' => $character]) }}',
+        url : '{{ route('seatcore::character.view.intel.summary.journal.data', ['character' => $character]) }}',
         data: function (d) {
           d.characters = $('#dt-character-selector').val();
         }
@@ -173,7 +173,7 @@
       searching   : false,
       ordering    : false,
       ajax        : {
-        url : '{{ route('character.view.intel.summary.transactions.data', ['character' => $character]) }}',
+        url : '{{ route('seatcore::character.view.intel.summary.transactions.data', ['character' => $character]) }}',
         data: function (d) {
           d.characters = $('#dt-character-selector').val();
         }
@@ -198,7 +198,7 @@
       searching   : false,
       ordering    : false,
       ajax        : {
-        url : '{{ route('character.view.intel.summary.mail.data', ['character' => $character]) }}',
+        url : '{{ route('seatcore::character.view.intel.summary.mail.data', ['character' => $character]) }}',
         data: function (d) {
           d.characters = $('#dt-character-selector').val();
         }

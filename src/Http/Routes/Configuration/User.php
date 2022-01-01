@@ -20,37 +20,31 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/', [
-    'as'   => 'configuration.users',
-    'uses' => 'UserController@index',
-]);
+Route::get('/')
+    ->name('seatcore::configuration.users')
+    ->uses('UserController@index');
 
-Route::get('/{user_id}', [
-    'as'   => 'configuration.users.edit',
-    'uses' => 'UserController@edit',
-]);
+Route::get('/{user_id}')
+    ->name('seatcore::configuration.users.edit')
+    ->uses('UserController@edit');
 
-Route::put('/{user_id}', [
-    'as'   => 'configuration.users.update',
-    'uses' => 'UserController@update',
-]);
+Route::put('/{user_id}')
+    ->name('seatcore::configuration.users.update')
+    ->uses('UserController@update');
 
 Route::put('/{user_id}/reassign')
     ->middleware('can:global.superuser')
-    ->name('configuration.users.reassign')
+    ->name('seatcore::configuration.users.reassign')
     ->uses('UserController@reassign');
 
-Route::delete('/{user_id}', [
-    'as'   => 'configuration.users.delete',
-    'uses' => 'UserController@delete',
-]);
+Route::delete('/{user_id}')
+    ->name('seatcore::configuration.users.delete')
+    ->uses('UserController@delete');
 
-Route::get('/edit/{user_id}/account_status', [
-    'as'   => 'configuration.users.edit.account_status',
-    'uses' => 'UserController@editUserAccountStatus',
-]);
+Route::get('/edit/{user_id}/account_status')
+    ->name('seatcore::configuration.users.edit.account_status')
+    ->uses('UserController@editUserAccountStatus');
 
-Route::post('/{user_id}/impersonate', [
-    'as'   => 'configuration.users.impersonate',
-    'uses' => 'UserController@impersonate',
-]);
+Route::post('/{user_id}/impersonate')
+    ->name('seatcore::configuration.users.impersonate')
+    ->uses('UserController@impersonate');

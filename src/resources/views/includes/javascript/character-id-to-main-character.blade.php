@@ -23,7 +23,7 @@
 
       $.ajax({
         type   : 'POST',
-        url    : "{{ route('support.main.resolve') }}",
+        url    : "{{ route('seatcore::support.main.resolve') }}",
         data   : {
           'ids': value.join(',')
         },

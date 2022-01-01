@@ -22,7 +22,7 @@
             <h3 class="card-title">{{ trans('web::seat.main_char_skills_coverage') }}</h3>
             <div class="card-tools">
               <div class="input-group input-group-sm">
-                <a href="{{ route('character.export.skills', ['character' => request()->character]) }}" class="btn btn-sm btn-light">
+                <a href="{{ route('seatcore::character.export.skills', ['character' => request()->character]) }}" class="btn btn-sm btn-light">
                   <i class="fas fa-file-export"></i>
                   Export Skills (Pyfa Format)
                 </a>
@@ -99,14 +99,14 @@
 
 @push('javascript')
   <script>
-    $.get("{{ route('character.view.skills.graph.level', ['character' => $character]) }}", function (data) {
+    $.get("{{ route('seatcore::character.view.skills.graph.level', ['character' => $character]) }}", function (data) {
       new Chart($("canvas#skills-level"), {
         type: 'pie',
         data: data
       });
     });
 
-    $.get("{{ route('character.view.skills.graph.coverage', ['character' => $character]) }}", function (data) {
+    $.get("{{ route('seatcore::character.view.skills.graph.coverage', ['character' => $character]) }}", function (data) {
       new Chart($('canvas#skills-coverage'), {
         type   : 'radar',
         data   : data,

@@ -114,7 +114,7 @@ class SquadsController extends Controller
             'logo'          => $request->file('logo'),
         ]);
 
-        return redirect()->route('squads.show', $squad->id)
+        return redirect()->route('seatcore::squads.show', $squad->id)
             ->with('success', 'Squad has successfully been created. Please complete its setup by providing roles & moderators.');
     }
 
@@ -146,7 +146,7 @@ class SquadsController extends Controller
         $squad->save();
 
         return redirect()
-            ->route('squads.show', $squad)
+            ->route('seatcore::squads.show', $squad)
             ->with('success', 'Squad has successfully been updated.');
     }
 
@@ -158,7 +158,7 @@ class SquadsController extends Controller
     {
         $squad->delete();
 
-        return redirect()->route('squads.index')
+        return redirect()->route('seatcore::squads.index')
             ->with('success', 'Squad has been deleted.');
     }
 }

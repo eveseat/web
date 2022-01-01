@@ -3,7 +3,7 @@
     <h4 class="card-title">{{ trans('web::seat.general') }}</h4>
   </div>
   <div class="card-body">
-    <form id="role-form" enctype="multipart/form-data" method="post" action="{{ route('configuration.access.roles.update', [$role->id]) }}">
+    <form id="role-form" enctype="multipart/form-data" method="post" action="{{ route('seatcore::configuration.access.roles.update', [$role->id]) }}">
       {{ csrf_field() }}
       {{ method_field('PUT') }}
       <div class="form-group row">
@@ -31,7 +31,7 @@
     </form>
   </div>
   <div class="card-footer">
-    <form method="post" action="{{ route('configuration.access.roles.delete', [$role->id]) }}" id="role-delete-form">
+    <form method="post" action="{{ route('seatcore::configuration.access.roles.delete', [$role->id]) }}" id="role-delete-form">
       {{ csrf_field() }}
       {{ method_field('DELETE') }}
     </form>

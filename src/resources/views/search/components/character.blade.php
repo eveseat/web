@@ -21,7 +21,7 @@
     $('table#characters').DataTable({
       processing  : true,
       serverSide  : true,
-      ajax        : '{{ route('support.search.characters.data') }}',
+      ajax        : '{{ route('seatcore::support.search.characters.data') }}',
       columns     : [
         {data: 'name', name: 'name'},
         {data: 'affiliation.corporation.name', name: 'affiliation.corporation.name'},

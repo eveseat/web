@@ -11,7 +11,7 @@
     </div>
     <div class="card-body">
 
-      <form role="form" action="{{ route('profile.update.settings') }}" method="post"
+      <form role="form" action="{{ route('seatcore::profile.update.settings') }}" method="post"
             class="form-horizontal" id="user-settings-form">
         {{ csrf_field() }}
 
@@ -237,7 +237,7 @@
     </div>
     <div class="card-body">
       <p>{{ trans('web::seat.user_sharelink_description') }}</p>
-      <form method="post" action="{{ route('profile.update.sharelink') }}" class="form-horizontal">
+      <form method="post" action="{{ route('seatcore::profile.update.sharelink') }}" class="form-horizontal">
         {{ csrf_field() }}
         <div class="form-group row align-items-center">
           <div class="col-md-7">
@@ -272,7 +272,7 @@
             <label class="col-md-2 col-form-label">{{ $sharelink->character->name }}</label>
           @endif
           <div class="col-md-5">
-            <input type="text" readonly="readonly" class="form-control" value="{{ route('auth.activate.sharelink', ['token' => $sharelink->token]) }}" />
+            <input type="text" readonly="readonly" class="form-control" value="{{ route('seatcore::auth.activate.sharelink', ['token' => $sharelink->token]) }}" />
           </div>
           <div class="col-md-2 text-center h-100 my-auto">
             <div class="align-middle">
@@ -296,7 +296,7 @@
               </button>
             </div>
           </div>
-          <form method="post" action="{{ route('profile.update.sharelink.remove') }}" id="form-sharelink-delete-{{ $loop->iteration }}">
+          <form method="post" action="{{ route('seatcore::profile.update.sharelink.remove') }}" id="form-sharelink-delete-{{ $loop->iteration }}">
             {{ csrf_field() }}
             {{ method_field('DELETE') }}
             <input type="hidden" name="token" value="{{ $sharelink->token }}" />
@@ -313,7 +313,7 @@
       <h3 class="card-title">{{ trans('web::seat.linked_characters') }}</h3>
       <div class="card-tools">
         <div class="input-group input-group-sm">
-          <a href="{{ route('auth.eve') }}" class="btn btn-sm btn-primary">
+          <a href="{{ route('seatcore::auth.eve') }}" class="btn btn-sm btn-primary">
             <i class="fas fa-link"></i>
             {{ trans('web::seat.link_another_character') }}
           </a>

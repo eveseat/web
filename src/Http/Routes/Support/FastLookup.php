@@ -20,73 +20,59 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/groups', [
-    'as'   => 'fastlookup.groups',
-    'uses' => 'FastLookupController@getGroups',
-]);
+Route::get('/groups')
+    ->name('seatcore::fastlookup.groups')
+    ->uses('FastLookupController@getGroups');
 
-Route::get('/titles', [
-    'as'   => 'fastlookup.titles',
-    'uses' => 'FastLookupController@getTitles',
-]);
+Route::get('/titles')
+    ->name('seatcore::fastlookup.titles')
+    ->uses('FastLookupController@getTitles');
 
-Route::get('/users', [
-    'as'   => 'fastlookup.users',
-    'uses' => 'FastLookupController@getUsers',
-]);
+Route::get('/users')
+    ->name('seatcore::fastlookup.users')
+    ->uses('FastLookupController@getUsers');
 
-Route::get('/characters', [
-    'as'   => 'fastlookup.characters',
-    'uses' => 'FastLookupController@getCharacters',
-]);
+Route::get('/characters')
+    ->name('seatcore::fastlookup.characters')
+    ->uses('FastLookupController@getCharacters');
 
-Route::get('/corporations', [
-    'as'   => 'fastlookup.corporations',
-    'uses' => 'FastLookupController@getCorporations',
-]);
+Route::get('/corporations')
+    ->name('seatcore::fastlookup.corporations')
+    ->uses('FastLookupController@getCorporations');
 
-Route::get('/alliances', [
-    'as'   => 'fastlookup.alliances',
-    'uses' => 'FastLookupController@getAlliances',
-]);
+Route::get('/alliances')
+    ->name('seatcore::fastlookup.alliances')
+    ->uses('FastLookupController@getAlliances');
 
-Route::get('/entities', [
-    'as'         => 'fastlookup.entities',
-    'uses'       => 'FastLookupController@getEntities',
-    'middleware' => 'can:global.superuser',
-]);
+Route::get('/entities')
+    ->name('seatcore::fastlookup.entities')
+    ->uses('FastLookupController@getEntities')
+    ->middleware('can:global.superuser');
 
-Route::get('/items', [
-    'as'   => 'fastlookup.items',
-    'uses' => 'FastLookupController@getItems',
-]);
+Route::get('/items')
+    ->name('seatcore::fastlookup.items')
+    ->uses('FastLookupController@getItems');
 
-Route::get('/scopes', [
-    'as'   => 'fastlookup.scopes',
-    'uses' => 'FastLookupController@getScopes',
-]);
+Route::get('/scopes')
+    ->name('seatcore::fastlookup.scopes')
+    ->uses('FastLookupController@getScopes');
 
-Route::get('/skills', [
-    'as'   => 'fastlookup.skills',
-    'uses' => 'FastLookupController@getSkills',
-]);
+Route::get('/skills')
+    ->name('seatcore::fastlookup.skills')
+    ->uses('FastLookupController@getSkills');
 
-Route::get('/regions', [
-    'as'   => 'fastlookup.regions',
-    'uses' => 'FastLookupController@getRegions',
-]);
+Route::get('/regions')
+    ->name('seatcore::fastlookup.regions')
+    ->uses('FastLookupController@getRegions');
 
-Route::get('/constellations', [
-    'as'   => 'fastlookup.constellations',
-    'uses' => 'FastLookupController@getConstellations',
-]);
+Route::get('/constellations')
+    ->name('seatcore::fastlookup.constellations')
+    ->uses('FastLookupController@getConstellations');
 
-Route::get('/systems', [
-    'as'   => 'fastlookup.systems',
-    'uses' => 'FastLookupController@getSystems',
-]);
+Route::get('/systems')
+    ->name('seatcore::fastlookup.systems')
+    ->uses('FastLookupController@getSystems');
 
-Route::get('/roles', [
-    'as'   => 'fastlookup.roles',
-    'uses' => 'FastLookupController@getCorporationRoles',
-]);
+Route::get('/roles')
+    ->name('seatcore::fastlookup.roles')
+    ->uses('FastLookupController@getCorporationRoles');

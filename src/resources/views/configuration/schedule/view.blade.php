@@ -11,7 +11,7 @@
     </div>
     <div class="card-body">
 
-      <form role="form" action="{{ route('configuration.schedule.new') }}" method="post">
+      <form role="form" action="{{ route('seatcore::configuration.schedule.new') }}" method="post">
         {{ csrf_field() }}
 
         <div class="box-body">
@@ -102,7 +102,7 @@
               <td>{{ $job->allow_overlap }}</td>
               <td>{{ $job->allow_maintenance }}</td>
               <td>
-                <a href="{{ route('configuration.schedule.delete', ['schedule_id' => $job->id]) }}" type="button"
+                <a href="{{ route('seatcore::configuration.schedule.delete', ['schedule_id' => $job->id]) }}" type="button"
                    class="btn btn-danger btn-sm confirmlink">
                   <i class="fas fa-trash-alt"></i>
                   {{ trans('web::seat.delete') }}

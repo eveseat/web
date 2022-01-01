@@ -4,7 +4,7 @@
       .select2({
         placeholder: '{{ trans('web::seat.select_item_add') }}',
         ajax: {
-            url: '{{ route('fastlookup.users') }}',
+            url: '{{ route('seatcore::fastlookup.users') }}',
             dataType: 'json',
             cache: true,
             processResults: function (data, params) {

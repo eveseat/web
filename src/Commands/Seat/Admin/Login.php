@@ -92,7 +92,7 @@ class Login extends Command
 
         $this->line('');
         $this->info('Your authentication URL is valid for 60 seconds.');
-        $this->line(route('auth.admin.login', ['token' => $token]));
+        $this->line(route('seatcore::auth.admin.login', ['token' => $token]));
 
         // Analytics
         $this->dispatch(new Analytics((new AnalyticsContainer)

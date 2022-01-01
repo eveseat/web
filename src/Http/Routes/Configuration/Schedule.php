@@ -20,17 +20,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/', [
-    'as'   => 'configuration.schedule',
-    'uses' => 'ScheduleController@listSchedule',
-]);
+Route::get('/')
+    ->name('seatcore::configuration.schedule')
+    ->uses('ScheduleController@listSchedule');
 
-Route::post('/new', [
-    'as'   => 'configuration.schedule.new',
-    'uses' => 'ScheduleController@newSchedule',
-]);
+Route::post('/new')
+    ->name('seatcore::configuration.schedule.new')
+    ->uses('ScheduleController@newSchedule');
 
-Route::get('/delete/{schedule_id}', [
-    'as'   => 'configuration.schedule.delete',
-    'uses' => 'ScheduleController@deleteSchedule',
-]);
+Route::get('/delete/{schedule_id}')
+    ->name('seatcore::configuration.schedule.delete')
+    ->uses('ScheduleController@deleteSchedule');

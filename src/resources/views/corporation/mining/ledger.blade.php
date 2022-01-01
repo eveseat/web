@@ -13,13 +13,13 @@
                 @foreach ($chunk as $ledger)
                     <li class="nav-item">
                         @if(date('Y', strtotime($ledger->year . '-01-01')) == (request()->route()->parameter('year') ?: carbon()->isoFormat('YYYY')) && date('m', strtotime($ledger->year . '-' . $ledger->month . '-01')) == (request()->route()->parameter('month') ?: carbon()->isoFormat('MM')))
-                            <a href="{{ route('corporation.view.mining_ledger', [
+                            <a href="{{ route('seatcore::corporation.view.mining_ledger', [
                                 $corporation,
                                 date('Y', strtotime($ledger->year. '-01-01')),
                                 date('m', strtotime($ledger->year . '-' . $ledger->month . '-01'))
                             ]) }}" class="nav-link active">{{ date('M Y', strtotime($ledger->year . "-" . $ledger->month . "-01")) }}</a>
                         @else
-                            <a href="{{ route('corporation.view.mining_ledger', [
+                            <a href="{{ route('seatcore::corporation.view.mining_ledger', [
                                 $corporation,
                                 date('Y', strtotime($ledger->year. '-01-01')),
                                 date('m', strtotime($ledger->year . '-' . $ledger->month . '-01'))

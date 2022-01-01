@@ -21,28 +21,28 @@
  */
 
 Route::get('/')
-    ->name('alliance.list')
+    ->name('seatcore::alliance.list')
     ->uses('AlliancesController@index');
 
 Route::get('/{alliance}')
-    ->name('alliance.view.default')
+    ->name('seatcore::alliance.view.default')
     ->uses('AlliancesController@show');
 
 Route::delete('/{alliance}')
-    ->name('alliance.destroy')
+    ->name('seatcore::alliance.destroy')
     ->uses('AlliancesController@destroy');
 
 Route::get('/{alliance}/contacts')
-    ->name('alliance.view.contacts')
+    ->name('seatcore::alliance.view.contacts')
     ->uses('AlliancesController@showContacts')
     ->middleware('can:alliance.contact,alliance');
 
 Route::get('/{alliance}/summary')
-    ->name('alliance.view.summary')
+    ->name('seatcore::alliance.view.summary')
     ->uses('AlliancesController@showSummary')
     ->middleware('can:alliance.summary,alliance');
 
 Route::get('/{alliance}/tracking')
-    ->name('alliance.view.tracking')
+    ->name('seatcore::alliance.view.tracking')
     ->uses('AlliancesController@showTracking')
     ->middleware('can:alliance.tracking,alliance');

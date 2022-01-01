@@ -21,39 +21,39 @@
  */
 
 Route::get('/')
-    ->name('corporation.list')
+    ->name('seatcore::corporation.list')
     ->uses('CorporationsController@index');
 
 Route::get('/{corporation}')
-    ->name('corporation.view.default')
+    ->name('seatcore::corporation.view.default')
     ->uses('CorporationsController@show');
 
 Route::delete('/{corporation}')
-    ->name('corporation.destroy')
+    ->name('seatcore::corporation.destroy')
     ->uses('CorporationsController@destroy');
 
 Route::get('/{corporation}/assets')
-    ->name('corporation.view.assets')
+    ->name('seatcore::corporation.view.assets')
     ->uses('AssetsController@getAssets')
     ->middleware('can:corporation.asset,corporation');
 
 Route::get('/{corporation}/assets/{item_id}/fitting')
-    ->name('corporation.view.assets.fitting')
+    ->name('seatcore::corporation.view.assets.fitting')
     ->uses('AssetsController@getFitting')
     ->middleware('can:corporation.asset,corporation');
 
 Route::get('/{corporation}/assets/{item_id}/container')
-    ->name('corporation.view.assets.container')
+    ->name('seatcore::corporation.view.assets.container')
     ->uses('AssetsController@getContainer')
     ->middleware('can:corporation.asset,corporation');
 
 Route::get('/{corporation}/contacts')
-    ->name('corporation.view.contacts')
+    ->name('seatcore::corporation.view.contacts')
     ->uses('ContactsController@index')
     ->middleware('can:corporation.contact,corporation');
 
 Route::get('/{corporation}/contracts')
-    ->name('corporation.view.contracts')
+    ->name('seatcore::corporation.view.contracts')
     ->uses('ContractsController@index')
     ->middleware('can:corporation.contract,corporation');
 
@@ -62,32 +62,32 @@ Route::post('/{corporation}/contracts/export')
     ->middleware('can:corporation.contract,corporation');
 
 Route::get('/{corporation}/contracts/{contract_id}')
-    ->name('corporation.view.contracts.items')
+    ->name('seatcore::corporation.view.contracts.items')
     ->uses('ContractsController@show')
     ->middleware('can:corporation.contract,corporation');
 
 Route::get('/{corporation}/industry')
-    ->name('corporation.view.industry')
+    ->name('seatcore::corporation.view.industry')
     ->uses('IndustryController@index')
     ->middleware('can:corporation.industry,corporation');
 
 Route::get('/{corporation}/blueprint')
-    ->name('corporation.view.blueprint')
+    ->name('seatcore::corporation.view.blueprint')
     ->uses('BlueprintController@index')
     ->middleware('can:corporation.blueprint,corporation');
 
 Route::get('/{corporation}/killmails')
-    ->name('corporation.view.killmails')
+    ->name('seatcore::corporation.view.killmails')
     ->uses('KillmailsController@index')
     ->middleware('can:corporation.killmail,corporation');
 
 Route::get('/{corporation}/killmails/{killmail}')
-    ->name('corporation.view.killmail')
+    ->name('seatcore::corporation.view.killmail')
     ->uses('KillmailsController@show')
     ->middleware('can:corporation.killmail,corporation');
 
 Route::get('/{corporation}/markets')
-    ->name('corporation.view.market')
+    ->name('seatcore::corporation.view.market')
     ->uses('MarketController@index')
     ->middleware('can:corporation.market,corporation');
 
@@ -96,100 +96,100 @@ Route::post('/{corporation}/markets/export')
     ->middleware('can:corporation.market,corporation');
 
 Route::get('/{corporation}/mining-ledger/{year?}/{month?}')
-    ->name('corporation.view.mining_ledger')
+    ->name('seatcore::corporation.view.mining_ledger')
     ->uses('MiningLedgerController@index')
     ->middleware('can:corporation.mining,corporation');
 
 Route::get('/{corporation}/customs-offices')
-    ->name('corporation.view.customs-offices')
+    ->name('seatcore::corporation.view.customs-offices')
     ->uses('CustomOfficeController@index')
     ->middleware('can:corporation.customs_office,corporation');
 
 Route::get('/{corporation}/extractions')
-    ->name('corporation.view.extractions')
+    ->name('seatcore::corporation.view.extractions')
     ->uses('ExtractionController@getExtractions')
     ->middleware('can:corporation.extraction,corporation');
 
 Route::group(['prefix' => '{corporation}/security', 'middleware' => 'can:corporation.security,corporation'], function () {
     Route::get('roles')
-        ->name('corporation.view.security.roles')
+        ->name('seatcore::corporation.view.security.roles')
         ->uses('SecurityController@getRoles');
 
     Route::get('titles')
-        ->name('corporation.view.security.titles')
+        ->name('seatcore::corporation.view.security.titles')
         ->uses('SecurityController@getTitles');
 
     Route::get('logs')
-        ->name('corporation.view.security.log')
+        ->name('seatcore::corporation.view.security.log')
         ->uses('SecurityController@getLogs');
 });
 
 Route::group(['prefix' => '{corporation}/ledger', 'middleware' => 'can:corporation.ledger,corporation'], function () {
     Route::get('summary')
-        ->name('corporation.view.ledger.summary')
+        ->name('seatcore::corporation.view.ledger.summary')
         ->uses('LedgerController@getWalletSummary');
 
     Route::get('bounty-prizes/{year?}/{month?}')
-        ->name('corporation.view.ledger.bounty_prizes')
+        ->name('seatcore::corporation.view.ledger.bounty_prizes')
         ->uses('LedgerController@getBountyPrizesByMonth');
 
     Route::get('planetary-interaction/{year?}/{month?}')
-        ->name('corporation.view.ledger.planetary_interaction')
+        ->name('seatcore::corporation.view.ledger.planetary_interaction')
         ->uses('LedgerController@getPlanetaryInteractionByMonth');
 
     Route::get('offices-rentals/{year?}/{month?}')
-        ->name('corporation.view.ledger.offices_rentals')
+        ->name('seatcore::corporation.view.ledger.offices_rentals')
         ->uses('LedgerController@getOfficesRentalsByMonth');
 
     Route::get('industry-facility/{year?}/{month?}')
-        ->name('corporation.view.ledger.industry_facility')
+        ->name('seatcore::corporation.view.ledger.industry_facility')
         ->uses('LedgerController@getIndustryFacilityByMonth');
 
     Route::get('reprocessing/{year?}/{month?}')
-        ->name('corporation.view.ledger.reprocessing')
+        ->name('seatcore::corporation.view.ledger.reprocessing')
         ->uses('LedgerController@getReprocessingByMonth');
 
     Route::get('jump-clones/{year?}/{month?}')
-        ->name('corporation.view.ledger.jump_clones')
+        ->name('seatcore::corporation.view.ledger.jump_clones')
         ->uses('LedgerController@getJumpClonesByMonth');
 
     Route::get('jump-bridges/{year?}/{month?}')
-        ->name('corporation.view.ledger.jump_bridges')
+        ->name('seatcore::corporation.view.ledger.jump_bridges')
         ->uses('LedgerController@getJumpBridgesByMonth');
 });
 
 Route::get('/{corporation}/summary')
-    ->name('corporation.view.summary')
+    ->name('seatcore::corporation.view.summary')
     ->uses('SummaryController@show')
     ->middleware('can:corporation.summary,corporation');
 
 Route::get('/{corporation}/standings')
-    ->name('corporation.view.standings')
+    ->name('seatcore::corporation.view.standings')
     ->uses('StandingsController@index')
     ->middleware('can:corporation.standing,corporation');
 
 Route::get('/{corporation}/starbases')
-    ->name('corporation.view.starbases')
+    ->name('seatcore::corporation.view.starbases')
     ->uses('StarbaseController@getStarbases')
     ->middleware('can:corporation.starbase,corporation');
 
 Route::post('/{corporation}/starbase/modules')
-    ->name('corporation.view.starbase.modules')
+    ->name('seatcore::corporation.view.starbase.modules')
     ->uses('StarbaseController@postStarbaseModules')
     ->middleware('can:corporation.starbase,corporation');
 
 Route::get('/{corporation}/structures')
-    ->name('corporation.view.structures')
+    ->name('seatcore::corporation.view.structures')
     ->uses('StructureController@getStructures')
     ->middleware('can:corporation.structure,corporation');
 
 Route::get('/{corporation}/structures/{structure_id}')
-    ->name('corporation.view.structures.show')
+    ->name('seatcore::corporation.view.structures.show')
     ->uses('StructureController@show')
     ->middleware('can:corporation.structure,corporation');
 
 Route::get('/{corporation}/tracking')
-    ->name('corporation.view.tracking')
+    ->name('seatcore::corporation.view.tracking')
     ->uses('TrackingController@getTracking')
     ->middleware('can:corporation.tracking,corporation');
 
@@ -198,7 +198,7 @@ Route::post('/{corporation}/tracking/export')
     ->middleware('can:corporation.tracking,corporation');
 
 Route::get('/{corporation}/journal')
-    ->name('corporation.view.journal')
+    ->name('seatcore::corporation.view.journal')
     ->uses('WalletController@journal')
     ->middleware('can:corporation.journal,corporation');
 
@@ -207,7 +207,7 @@ Route::post('/{corporation}/journal/export')
     ->middleware('can:corporation.journal,corporation');
 
 Route::get('/{corporation}/transactions')
-    ->name('corporation.view.transactions')
+    ->name('seatcore::corporation.view.transactions')
     ->uses('WalletController@transactions')
     ->middleware('can:corporation.transaction,corporation');
 

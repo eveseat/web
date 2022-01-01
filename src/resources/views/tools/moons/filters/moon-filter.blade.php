@@ -44,7 +44,7 @@ $('#dt-filters-region').select2({
     allowClear: true,
     placeholder: 'Filter by region',
     ajax: {
-        url: '{{ route('fastlookup.regions') }}',
+        url: '{{ route('seatcore::fastlookup.regions') }}',
         dataType: 'json'
     }
 });
@@ -53,7 +53,7 @@ $('#dt-filters-constellation').select2({
     allowClear: true,
     placeholder: 'Filter by constellation',
     ajax: {
-        url: '{{ route('fastlookup.constellations') }}',
+        url: '{{ route('seatcore::fastlookup.constellations') }}',
         dataType: 'json',
         data: function (params) {
             var region_selector = $('#dt-filters-region');
@@ -72,7 +72,7 @@ $('#dt-filters-system').select2({
     allowClear: true,
     placeholder: 'Filter by system',
     ajax: {
-        url: '{{ route('fastlookup.systems') }}',
+        url: '{{ route('seatcore::fastlookup.systems') }}',
         dataType: 'json',
         data: function (params) {
             var region_selector = $('#dt-filters-region');
@@ -100,7 +100,7 @@ $('#dt-filters-product').select2({
     closeOnSelect: false,
     multiple: true,
     ajax: {
-        url: '{{ route('fastlookup.items') }}',
+        url: '{{ route('seatcore::fastlookup.items') }}',
         dataType: 'json',
         data: function (params) {
             return {

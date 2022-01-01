@@ -26,7 +26,7 @@
     $('table#mail').DataTable({
       processing  : true,
       serverSide  : true,
-      ajax        : '{{ route('support.search.mail.data') }}',
+      ajax        : '{{ route('seatcore::support.search.mail.data') }}',
       columns     : [
         {data: 'timestamp', name: 'timestamp'},
         {data: 'sender.name', name: 'sender.name'},

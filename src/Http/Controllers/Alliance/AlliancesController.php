@@ -62,7 +62,7 @@ class AlliancesController extends Controller
     {
         // by default, redirect user to alliance summary
         if (Gate::allows('alliance.summary', $alliance))
-            return redirect()->route('alliance.view.summary', [
+            return redirect()->route('seatcore::alliance.view.summary', [
                 'alliance' => $alliance,
             ]);
 
@@ -87,7 +87,7 @@ class AlliancesController extends Controller
         event('security.log', [$message, 'authorization']);
 
         // Redirect away from the original request
-        return redirect()->route('auth.unauthorized');
+        return redirect()->route('seatcore::auth.unauthorized');
     }
 
     /**

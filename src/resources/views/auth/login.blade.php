@@ -17,7 +17,7 @@
 
     <!-- SSO Button! -->
     <!-- <div class="box-body text-center">
-      <a href="{{ route('auth.eve') }}">
+      <a href="{{ route('seatcore::auth.eve') }}">
         <img src="{{ asset('web/img/evesso.png') }}">
       </a>
     </div> -->

@@ -84,7 +84,7 @@ class LoginController extends Controller
         $custom_signin_message = setting('custom_signin_message', true);
         $signin_message = sprintf('%s<div class="box-body text-center"><a href="%s"><img src="%s" alt="LOG IN with EVE Online"></a></div>',
             trans('web::seat.login_welcome'),
-            route('auth.eve'),
+            route('seatcore::auth.eve'),
             asset('web/img/evesso.png'));
 
         if(! empty($custom_signin_message)) {
@@ -97,7 +97,7 @@ class LoginController extends Controller
 
                 $signin_message = preg_replace_callback($pattern, function ($matches) {
                     return sprintf('<div class="box-body text-center"><a href="%s"><img src="%s" alt="LOG IN with EVE Online"></a></div>',
-                        route('auth.eve.profile', $matches[1]),
+                        route('seatcore::auth.eve.profile', $matches[1]),
                         asset('web/img/evesso.png'));
                 }, $signin_message);
             }

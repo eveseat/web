@@ -20,37 +20,30 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/view', [
-    'as'   => 'seat.settings.view',
-    'uses' => 'SeatController@getView',
-]);
+Route::get('/view')
+    ->name('seatcore::seat.settings.view')
+    ->uses('SeatController@getView');
 
-Route::get('/about', [
-    'as'   => 'seat.settings.about',
-    'uses' => 'SeatController@getAbout',
-]);
+Route::get('/about')
+    ->name('seatcore::seat.settings.about')
+    ->uses('SeatController@getAbout');
 
-Route::post('/update/customlink', [
-    'as'   => 'seat.update.customlink',
-    'uses' => 'SeatController@postUpdateCustomLinks',
-]);
+Route::post('/update/customlink')
+    ->name('seatcore::seat.update.customlink')
+    ->uses('SeatController@postUpdateCustomLinks');
 
-Route::post('/update/settings', [
-    'as'   => 'seat.update.settings',
-    'uses' => 'SeatController@postUpdateSettings',
-]);
+Route::post('/update/settings')
+    ->name('seatcore::seat.update.settings')
+    ->uses('SeatController@postUpdateSettings');
 
-Route::get('/check/sde', [
-    'as'   => 'check.sde',
-    'uses' => 'SeatController@getApprovedSDE',
-]);
+Route::get('/check/sde')
+    ->name('seatcore::check.sde')
+    ->uses('SeatController@getApprovedSDE');
 
-Route::post('/packages/check', [
-    'as'   => 'packages.check',
-    'uses' => 'SeatController@postPackagesCheck',
-]);
+Route::post('/packages/check')
+    ->name('seatcore::packages.check')
+    ->uses('SeatController@postPackagesCheck');
 
-Route::post('/packages/changelog', [
-    'as'   => 'packages.changelog',
-    'uses' => 'SeatController@postPackagesChangelog',
-]);
+Route::post('/packages/changelog')
+    ->name('seatcore::packages.changelog')
+    ->uses('SeatController@postPackagesChangelog');

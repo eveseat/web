@@ -27,20 +27,20 @@ Route::group([
     'middleware' => 'can:moon.view_moon_reports',
 ], function () {
     Route::get('/')
-        ->name('tools.moons.index')
+        ->name('seatcore::tools.moons.index')
         ->uses('MoonsController@index');
 
     Route::get('/{id}')
-        ->name('tools.moons.show')
+        ->name('seatcore::tools.moons.show')
         ->uses('MoonsController@show');
 
     Route::post('/')
-        ->name('tools.moons.store')
+        ->name('seatcore::tools.moons.store')
         ->uses('MoonsController@store')
         ->middleware('can:moon.create_moon_reports');
 
     Route::delete('/{report}')
-        ->name('tools.moons.destroy')
+        ->name('seatcore::tools.moons.destroy')
         ->uses('MoonsController@destroy')
         ->middleware('can:moon.manage_moon_reports');
 });

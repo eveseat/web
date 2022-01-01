@@ -20,7 +20,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::post('/dispatch', [
-    'as'         => 'tools.jobs.dispatch',
-    'uses'       => 'JobController@getDispatchUpdateJob',
-]);
+Route::post('/dispatch')
+    ->name('seatcore::tools.jobs.dispatch')
+    ->uses('JobController@getDispatchUpdateJob');

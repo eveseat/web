@@ -109,7 +109,7 @@
 
               </div>
               <div class="timeline-footer">
-                <a href="{{ route('character.view.mail.timeline.read', ['message_id' => $message->mail_id]) }}"
+                <a href="{{ route('seatcore::character.view.mail.timeline.read', ['message_id' => $message->mail_id]) }}"
                    class="btn btn-primary btn-sm">
                   Read more
                 </a>

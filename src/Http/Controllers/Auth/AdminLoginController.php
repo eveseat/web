@@ -49,7 +49,7 @@ class AdminLoginController extends Controller
         $user = User::where('name', 'admin')->first();
 
         if (is_null($user))
-            return redirect()->route('auth.login')
+            return redirect()->route('seatcore::auth.login')
                 ->withErrors('The Admin user does not exist. Re-run the seat:admin:login command.');
 
         // Login and clear the token we just used.

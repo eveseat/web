@@ -1,5 +1,5 @@
 @can('global.superuser')
-  <form method="post" action="{{ route('corporation.destroy', ['corporation' => $row->corporation_id]) }}">
+  <form method="post" action="{{ route('seatcore::corporation.destroy', ['corporation' => $row->corporation_id]) }}">
     {!! csrf_field() !!}
     {!! method_field('delete') !!}
     <button class="btn btn-xs btn-danger confirmdelete" data-seat-entity="{{ trans('web::seat.corporation') }}">
