@@ -20,18 +20,32 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+namespace Seat\Tests\Web\Database\Factories;
+
 use Faker\Generator;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 
-$factory->define(CharacterInfo::class, function (Generator $faker) {
-    return [
-        'character_id'    => $faker->unique()->numberBetween(90000000, 90001000),
-        'name'            => $faker->name,
-        'description'     => $faker->sentences(5, true),
-        'birthday'        => $faker->dateTime(),
-        'gender'          => $faker->randomElement(['male', 'female']),
-        'race_id'         => $faker->randomElement([1, 2, 4, 8]),
-        'bloodline_id'    => $faker->randomElement([1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 13, 14]),
-        'security_status' => $faker->randomFloat(2, -10, 10),
-    ];
-});
+/**
+ * Class CharacterFactory.
+ * @package Seat\Tests\Web\Database\Factories
+ */
+class CharacterFactory extends Factory
+{
+    /**
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'character_id' => $this->faker->unique()->numberBetween(90000000, 90001000),
+            'name' => $this->faker->name,
+            'description' => $this->faker->sentences(5, true),
+            'birthday' => $this->faker->dateTime(),
+            'gender' => $this->faker->randomElement(['male', 'female']),
+            'race_id' => $this->faker->randomElement([1, 2, 4, 8]),
+            'bloodline_id' => $this->faker->randomElement([1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 13, 14]),
+            'security_status' => $this->faker->randomFloat(2, -10, 10),
+        ];
+    }
+}

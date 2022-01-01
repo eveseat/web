@@ -20,13 +20,27 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+namespace Seat\Tests\Web\Database\Factories;
+
 use Faker\Generator;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Seat\Eveapi\Models\Character\CharacterAffiliation;
 
-$factory->define(CharacterAffiliation::class, function (Generator $faker) {
-    return [
-        'corporation_id' => $faker->numberBetween(98541680, 98541699),
-        'alliance_id' => $faker->optional()->numberBetween(99000001, 99000049),
-        'faction_id' => null,
-    ];
-});
+/**
+ * Class CharacterAffiliationFactory.
+ * @package Seat\Tests\Web\Database\Factories
+ */
+class CharacterAffiliationFactory extends Factory
+{
+    /**
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'corporation_id' => $this->faker->numberBetween(98541680, 98541699),
+            'alliance_id' => $this->faker->optional()->numberBetween(99000001, 99000049),
+            'faction_id' => null,
+        ];
+    }
+}

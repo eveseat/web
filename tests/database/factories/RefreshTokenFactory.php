@@ -20,21 +20,35 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+namespace Seat\Tests\Web\Database\Factories;
+
 use Faker\Generator;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Seat\Eveapi\Models\RefreshToken;
 
-$factory->define(RefreshToken::class, function (Generator $faker) {
-    return [
-        'character_id'         => $faker->numberBetween(98000000, 98001794),
-        'version'              => $faker->numberBetween(1, RefreshToken::CURRENT_VERSION),
-        'user_id'              => $faker->numberBetween(1, 10),
-        'refresh_token'        => $faker->sha256,
-        'scopes'               => [
-            'esi-characters.read_agents_research.v1', 'esi-characters.read_blueprints.v1',
-            'esi-characters.read_fatigue.v1', ' esi-characters.read_medals.v1', 'esi-characters.read_notifications.v1',
-        ],
-        'expires_on'           => $faker->dateTime(),
-        'token'                => $faker->sha256,
-        'character_owner_hash' => $faker->sha256,
-    ];
-});
+/**
+ * Class RefreshTokenFactory.
+ * @package Seat\Tests\Web\Database\Factories
+ */
+class RefreshTokenFactory extends Factory
+{
+    /**
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'character_id' => $this->faker->numberBetween(98000000, 98001794),
+            'version' => $this->faker->numberBetween(1, RefreshToken::CURRENT_VERSION),
+            'user_id' => $this->faker->numberBetween(1, 10),
+            'refresh_token' => $this->faker->sha256,
+            'scopes' => [
+                'esi-characters.read_agents_research.v1', 'esi-characters.read_blueprints.v1',
+                'esi-characters.read_fatigue.v1', ' esi-characters.read_medals.v1', 'esi-characters.read_notifications.v1',
+            ],
+            'expires_on' => $this->faker->dateTime(),
+            'token' => $this->faker->sha256,
+            'character_owner_hash' => $this->faker->sha256,
+        ];
+    }
+}

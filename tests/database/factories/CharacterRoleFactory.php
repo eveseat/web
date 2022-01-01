@@ -20,19 +20,32 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+namespace Seat\Tests\Web\Database\Factories;
+
 use Faker\Generator;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Seat\Eveapi\Models\Character\CharacterRole;
 
-$factory->define(CharacterRole::class, function (Generator $faker) {
+/**
+ * Class CharacterRoleFactory.
+ * @package Seat\Tests\Web\Database\Factories
+ */
+class CharacterRoleFactory extends Factory
+{
+    /**
+     * @return array
+     */
+    public function definition()
+    {
+        $roles = [];
 
-    $roles = [];
+        for ($i = 1; $i <= 500; $i++) {
+            $roles[] = 'role_' . $i;
+        }
 
-    for ($i = 1; $i <= 500; $i++) {
-        $roles[] = 'role_' . $i;
+        return [
+            'role' => $this->faker->unique()->randomElement($roles),
+            'scope' => $this->faker->randomElement(['roles', 'roles_at_hq', 'roles_at_base', 'roles_at_other']),
+        ];
     }
-
-    return [
-        'role'  => $faker->unique()->randomElement($roles),
-        'scope' => $faker->randomElement(['roles', 'roles_at_hq', 'roles_at_base', 'roles_at_other']),
-    ];
-});
+}
