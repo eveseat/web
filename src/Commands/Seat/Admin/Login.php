@@ -100,5 +100,7 @@ class Login extends Command
             ->set('ec', 'admin')
             ->set('ea', 'password_reset')
             ->set('el', 'console')));
+
+        return $this::SUCCESS;
     }
 }
