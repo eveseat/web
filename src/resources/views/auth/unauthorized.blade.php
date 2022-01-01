@@ -21,7 +21,7 @@
         {{ trans('web::seat.unauthorized_request_logged') }}
       </p>
 
-      <a href="{{ route('home') }}" class="btn btn-block btn-primary">
+      <a href="{{ route('seatcore::home') }}" class="btn btn-block btn-primary">
         {{ trans('web::seat.home') }}
       </a>
 

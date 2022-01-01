@@ -178,7 +178,7 @@ class Squad extends Model
      */
     public function getLinkAttribute(): string
     {
-        return route('squads.show', $this->id);
+        return route('seatcore::squads.show', $this->id);
     }
 
     /**

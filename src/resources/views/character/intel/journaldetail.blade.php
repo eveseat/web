@@ -58,7 +58,7 @@
     $("span#comparison-result").html('<i class="fa fa-cog fa fa-spin"></i>');
 
     // Shitty hack so we can replace the id. Muhaha.
-    var url = "{{ route('character.view.intel.ajax.standingscomparison', ['character' => $request->character, 'profile_id' => ':id']) }}";
+    var url = "{{ route('seatcore::character.view.intel.ajax.standingscomparison', ['character' => $request->character, 'profile_id' => ':id']) }}";
     url = url.replace(':id', this.value);
 
     // Perform the AJAX request to get the comparison.

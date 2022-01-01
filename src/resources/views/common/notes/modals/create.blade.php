@@ -10,7 +10,7 @@
       </div>
       <div class="modal-body">
 
-        <form role="form" action="{{ route('tools.notes.store') }}" method="post" id="create-note-form">
+        <form role="form" action="{{ route('seatcore::tools.notes.store') }}" method="post" id="create-note-form">
           {{ csrf_field() }}
 
           <input type="hidden" name="object_type" id="create-note-object-type" />

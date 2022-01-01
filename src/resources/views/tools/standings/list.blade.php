@@ -12,7 +12,7 @@
     </div>
     <div class="card-body">
 
-      <form role="form" action="{{ route('tools.standings.new') }}" method="post">
+      <form role="form" action="{{ route('seatcore::tools.standings.new') }}" method="post">
         {{ csrf_field() }}
 
         <div class="box-body">
@@ -64,12 +64,12 @@
               <td>{{ $standing->entities->count() }}</td>
               <td>
                 <div class="btn-group btn-group-sm float-right">
-                  <a href="{{ route('tools.standings.edit', ['id' => $standing->id]) }}" type="button"
+                  <a href="{{ route('seatcore::tools.standings.edit', ['id' => $standing->id]) }}" type="button"
                      class="btn btn-warning">
                     <i class="fas fa-pencil-alt"></i>
                     {{ trans('web::seat.edit') }}
                   </a>
-                  <a href="{{ route('tools.standings.delete', ['profile_id' => $standing->id]) }}" type="button"
+                  <a href="{{ route('seatcore::tools.standings.delete', ['profile_id' => $standing->id]) }}" type="button"
                      class="btn btn-danger">
                     <i class="fas fa-trash-alt"></i>
                     {{ trans('web::seat.delete') }}
