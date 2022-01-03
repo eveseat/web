@@ -2,7 +2,7 @@
 
 @section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.mining'))
 
-@inject('request', Illuminate\Http\Request')
+@inject('request', 'Illuminate\Http\Request')
 
 @section('character_content')
   <div class="card">
