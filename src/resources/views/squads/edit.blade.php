@@ -63,7 +63,7 @@
                     <div>If a squad is classified, then only moderators and administrators will be able to see the member list</div>
                   </div>
                 </div>
-                <input type="hidden" name="description" value="{{ $squad->getOriginal('filters') }}" />
+                <input type="hidden" name="description" value="{{ $squad->getRawOriginal('filters') }}" />
                 <input type="hidden" name="filters" value="{{ $squad->filters }}" />
                 <input type="file" name="logo" accept="image/png, image/jpeg" id="file-image" class="d-none" />
                 <div id="squad-description"></div>
