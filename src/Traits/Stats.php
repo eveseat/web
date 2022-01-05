@@ -130,7 +130,7 @@ trait Stats
             ->where('parentGroupID', '?')// binding at [1]
             ->select(
                 'marketGroupName',
-                DB::raw('COUNT(invTypes.marketGroupID) * 5 as amount')
+                DB::raw('COUNT(*) * 5 as amount')
             )
             ->groupBy('marketGroupName')
             ->toSql();
@@ -148,7 +148,7 @@ trait Stats
             ->where('character_id', '?')// binding at [2]
             ->select(
                 'marketGroupName',
-                DB::raw('COUNT(invTypes.marketGroupID) * character_skills.trained_skill_level  as amount')
+                DB::raw('COUNT(*) * character_skills.trained_skill_level  as amount')
             )
             ->groupBy(['marketGroupName', 'trained_skill_level'])
             ->toSql();
