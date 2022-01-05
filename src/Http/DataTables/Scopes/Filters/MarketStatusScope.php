@@ -61,21 +61,21 @@ class MarketStatusScope implements DataTableScope
             if (in_array('pending', $this->status)) {
                 $sub_query->where(function ($query) {
                     $query->where('volume_remain', '>', 0)
-                        ->whereRaw('DATE_ADD(issued, INTERVAL duration DAY) >= NOW()');
+                        ->whereRaw('(issued + INTERVAL \'1\' day * duration) >= NOW()');
                 });
             }
 
             if (in_array('expired', $this->status)) {
                 $sub_query->orWhere(function ($query) {
                     $query->where('volume_remain', '>', 0)
-                        ->whereRaw('DATE_ADD(issued, INTERVAL duration DAY) < NOW()');
+                        ->whereRaw('(issued + INTERVAL \'1\' day * duration) < NOW()');
                 });
             }
 
             if (in_array('completed', $this->status)) {
                 $sub_query->orWhere(function ($query) {
                     $query->where('volume_remain', 0)
-                        ->whereRaw('DATE_ADD(issued, INTERVAL duration DAY) < NOW()');
+                        ->whereRaw('(issued + INTERVAL \'1\' day * duration) < NOW()');
                 });
             }
         });
