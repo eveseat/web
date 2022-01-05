@@ -163,8 +163,8 @@ trait Stats
             )
             ->select(
                 'a.marketGroupName',
-                DB::raw('a.amount AS gameAmount'),
-                DB::raw('SUM(b.amount) AS characterAmount')
+                DB::raw('a.amount AS game_amount'),
+                DB::raw('SUM(b.amount) AS character_amount')
             )
             ->groupBy(['a.marketGroupName', 'a.amount'])
             ->addBinding(150, 'select')// binding [1]
