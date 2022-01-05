@@ -705,22 +705,22 @@ class IntelController extends Controller
                     (SELECT s.stationName FROM staStations AS s
                       WHERE s.stationID=character_wallet_transactions.location_id-6000001)
                 when character_wallet_transactions.location_id BETWEEN 66014934 AND 67999999 then
-                    (SELECT d.name FROM `sovereignty_structures` AS c
+                    (SELECT d.name FROM sovereignty_structures AS c
                       JOIN universe_stations d ON c.structure_id = d.station_id
                       WHERE c.structure_id=character_wallet_transactions.location_id-6000000)
                 when character_wallet_transactions.location_id BETWEEN 60014861 AND 60014928 then
-                    (SELECT d.name FROM `sovereignty_structures` AS c
+                    (SELECT d.name FROM sovereignty_structures AS c
                       JOIN universe_stations d ON c.structure_id = d.station_id
                       WHERE c.structure_id=character_wallet_transactions.location_id)
                 when character_wallet_transactions.location_id BETWEEN 60000000 AND 61000000 then
                     (SELECT s.stationName FROM staStations AS s
                       WHERE s.stationID=character_wallet_transactions.location_id)
                 when character_wallet_transactions.location_id BETWEEN 61000000 AND 61001146 then
-                    (SELECT d.name FROM `sovereignty_structures` AS c
+                    (SELECT d.name FROM sovereignty_structures AS c
                       JOIN universe_stations d ON c.structure_id = d.station_id
                       WHERE c.structure_id=character_wallet_transactions.location_id)
                 when character_wallet_transactions.location_id > 61001146 then
-                    (SELECT name FROM `universe_structures` AS c
+                    (SELECT name FROM universe_structures AS c
                      WHERE c.structure_id = character_wallet_transactions.location_id)
                 else (SELECT m.itemName FROM mapDenormalize AS m
                     WHERE m.itemID=character_wallet_transactions.location_id) end
