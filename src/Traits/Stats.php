@@ -70,9 +70,10 @@ trait Stats
      */
     public function getTotalCharacterRattingIsk(array $character_ids): ?float
     {
-        return CharacterWalletJournal::select('amount')
-            ->whereIn('second_party_id', $character_ids)
+        return CharacterWalletJournal::whereIn('second_party_id', $character_ids)
             ->whereIn('ref_type', ['bounty_prizes', 'ess_escrow_transfer'])
+            ->whereYear('date', carbon()->year)
+            ->whereMonth('date', carbon()->month)
             ->sum('amount');
     }
 
