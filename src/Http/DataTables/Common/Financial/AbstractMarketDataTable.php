@@ -89,7 +89,7 @@ abstract class AbstractMarketDataTable extends DataTable
                     $sub_query->whereRaw('typeName LIKE ?', ["%$keyword%"]);
                 });
             })
-            ->orderColumn('expires', 'DATE_ADD(issued, INTERVAL duration DAY) $1')
+            ->orderColumn('expires', 'issued + INTERVAL \'1\' day * duration $1')
             ->orderColumn('total', '(price * volume_total) $1')
             ->orderColumn('volume', '(volume_total - volume_remain) $1')
             ->rawColumns(['issued', 'is_buy_order', 'expires', 'type.typeName'])
