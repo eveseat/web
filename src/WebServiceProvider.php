@@ -40,6 +40,7 @@ use Seat\Services\AbstractSeatPlugin;
 use Seat\Services\Settings\Profile;
 use Seat\Services\Settings\Seat;
 use Seat\Web\Commands\Seat\Admin\Login as AdminLogin;
+use Seat\Web\Database\Seeders\ScheduleSeeder;
 use Seat\Web\Events\Attempt;
 use Seat\Web\Events\Login;
 use Seat\Web\Events\Logout;
@@ -348,6 +349,7 @@ class WebServiceProvider extends AbstractSeatPlugin
         // Helper configurations
         $this->mergeConfigFrom(__DIR__ . '/Config/web.jobnames.php', 'web.jobnames');
         $this->mergeConfigFrom(__DIR__ . '/Config/seat.php', 'seat.config');
+        $this->registerDatabaseSeeders(ScheduleSeeder::class);
 
         // Permissions
         $this->registerPermissions(__DIR__ . '/Config/Permissions/character.php', 'character');
