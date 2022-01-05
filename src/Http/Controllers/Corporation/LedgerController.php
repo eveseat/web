@@ -216,7 +216,7 @@ class LedgerController extends Controller
      */
     private function getCorporationLedgerPeriods(int $corporation_id, array $ref_types)
     {
-        return CorporationWalletJournal::select(DB::raw('DISTINCT MONTH(date) as month, YEAR(date) as year'))
+        return CorporationWalletJournal::select(DB::raw('DISTINCT EXTRACT(MONTH FROM date) as month, EXTRACT(YEAR FROM date) as year'))
             ->where('corporation_id', $corporation_id)
             ->whereIn('ref_type', $ref_types)
             ->orderBy('year', 'desc')
