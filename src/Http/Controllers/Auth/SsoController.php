@@ -22,7 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Auth;
 
-use Laravel\Socialite\Contracts\Factory as Socialite;
+use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\User as SocialiteUser;
 use Seat\Eveapi\Jobs\Character\Affiliation;
 use Seat\Eveapi\Jobs\Character\Info;
@@ -41,13 +41,12 @@ class SsoController extends Controller
     /**
      * Redirect the user to the Eve Online authentication page.
      *
-     * @param  \Laravel\Socialite\Contracts\Factory  $social
      * @param  string  $profile
      * @return mixed
      *
      * @throws \Seat\Services\Exceptions\SettingException
      */
-    public function redirectToProvider($profile = null, Socialite $social)
+    public function redirectToProvider($profile = null)
     {
 
         $scopes_setting = collect(setting('sso_scopes', true));
@@ -82,7 +81,7 @@ class SsoController extends Controller
         // validate the JWT response contains the right scopes.
         session()->put('scopes', $used_scopes);
 
-        return $social->driver('eveonline')
+        return Socialite::driver('eveonline')
             ->scopes($used_scopes)
             ->redirect();
     }
@@ -90,15 +89,14 @@ class SsoController extends Controller
     /**
      * Obtain the user information from Eve Online.
      *
-     * @param  \Laravel\Socialite\Contracts\Factory  $social
      * @return \Illuminate\Http\RedirectResponse
      *
      * @throws \Seat\Services\Exceptions\SettingException
      */
-    public function handleProviderCallback(Socialite $social)
+    public function handleProviderCallback()
     {
 
-        $eve_data = $social->driver('eveonline')->user();
+        $eve_data = Socialite::driver('eveonline')->user();
 
         // Avoid self attachment
         if (auth()->check() && auth()->user()->id == $eve_data->id)
