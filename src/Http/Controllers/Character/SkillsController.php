@@ -95,8 +95,7 @@ class SkillsController extends Controller
                 [
                     'label'                => $character->name,
                     'data'                 => $data->map(function ($item) {
-
-                        return round($item->characterAmount / $item->gameAmount * 100, 2);  // character / in game rate
+                        return round($item->character_amount / $item->game_amount * 100, 2);  // character / in game rate
                     })->toArray(),
                     'fill'                 => true,
                     'backgroundColor'      => 'rgba(60,141,188,0.3)',
@@ -133,14 +132,12 @@ class SkillsController extends Controller
      */
     private function getEveSkillsGroups()
     {
-
         $groups = InvGroup::where('categoryID', 16)
             ->where('groupID', '<>', 505)
             ->orderBy('groupName')
             ->get();
 
         return $groups;
-
     }
 
     /**
@@ -151,7 +148,6 @@ class SkillsController extends Controller
      */
     private function getCharacterSkillsInformation(int $character_id): Collection
     {
-
         return CharacterSkill::join('invTypes',
             'character_skills.skill_id', '=',
             'invTypes.typeID')
