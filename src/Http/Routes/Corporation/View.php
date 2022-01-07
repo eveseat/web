@@ -193,6 +193,10 @@ Route::get('/{corporation}/tracking')
     ->uses('TrackingController@getTracking')
     ->middleware('can:corporation.tracking,corporation');
 
+Route::post('/{corporation}/tracking/export')
+    ->uses('TrackingController@getTracking')
+    ->middleware('can:corporation.tracking,corporation');
+
 Route::get('/{corporation}/journal')
     ->name('corporation.view.journal')
     ->uses('WalletController@journal')
