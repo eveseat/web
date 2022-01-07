@@ -9,7 +9,6 @@ class MembersTrackingDataTableExport extends DataTablesCollectionExport
 {
     public function collection()
     {
-        //dd($this->collection);
         $collection = $this->collection->map(function ($serialized_character){
             //for some reason, the model gets serialized again
             $character = CorporationMemberTracking::where("character_id",$serialized_character["character_id"])->with('character', 'refresh_token', 'ship')->first();
