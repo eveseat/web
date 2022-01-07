@@ -666,7 +666,7 @@ class IntelController extends Controller
             })
             ->where('character_wallet_journals.character_id', $character_id)
             ->where('standings_profile_standings.standings_profile_id', $profile_id)
-            ->groupBy('universe_names.entity_id', 'character_id', 'corporation_id', 'alliance_id', 'faction_id', 'standing', 'standings_profile_standings.category');
+            ->groupBy('universe_names.entity_id', 'character_affiliations.character_id', 'character_affiliations.corporation_id', 'character_affiliations.alliance_id', 'character_affiliations.faction_id', 'standing', 'standings_profile_standings.category');
 
     }
 
@@ -699,11 +699,11 @@ class IntelController extends Controller
             ->select(DB::raw('
             *, CASE
                 when character_wallet_transactions.location_id BETWEEN 66015148 AND 66015151 then
-                    (SELECT s.stationName FROM staStations AS s
-                      WHERE s.stationID=character_wallet_transactions.location_id-6000000)
+                    (SELECT s."stationName" FROM "staStations" AS s
+                      WHERE s."stationID"=character_wallet_transactions.location_id-6000000)
                 when character_wallet_transactions.location_id BETWEEN 66000000 AND 66014933 then
-                    (SELECT s.stationName FROM staStations AS s
-                      WHERE s.stationID=character_wallet_transactions.location_id-6000001)
+                    (SELECT s."stationName" FROM "staStations" AS s
+                      WHERE s."stationID"=character_wallet_transactions.location_id-6000001)
                 when character_wallet_transactions.location_id BETWEEN 66014934 AND 67999999 then
                     (SELECT d.name FROM sovereignty_structures AS c
                       JOIN universe_stations d ON c.structure_id = d.station_id
@@ -713,8 +713,8 @@ class IntelController extends Controller
                       JOIN universe_stations d ON c.structure_id = d.station_id
                       WHERE c.structure_id=character_wallet_transactions.location_id)
                 when character_wallet_transactions.location_id BETWEEN 60000000 AND 61000000 then
-                    (SELECT s.stationName FROM staStations AS s
-                      WHERE s.stationID=character_wallet_transactions.location_id)
+                    (SELECT s."stationName" FROM "staStations" AS s
+                      WHERE s."stationID"=character_wallet_transactions.location_id)
                 when character_wallet_transactions.location_id BETWEEN 61000000 AND 61001146 then
                     (SELECT d.name FROM sovereignty_structures AS c
                       JOIN universe_stations d ON c.structure_id = d.station_id
@@ -722,8 +722,8 @@ class IntelController extends Controller
                 when character_wallet_transactions.location_id > 61001146 then
                     (SELECT name FROM universe_structures AS c
                      WHERE c.structure_id = character_wallet_transactions.location_id)
-                else (SELECT m.itemName FROM mapDenormalize AS m
-                    WHERE m.itemID=character_wallet_transactions.location_id) end
+                else (SELECT m."itemName" FROM "mapDenormalize" AS m
+                    WHERE m."itemID"=character_wallet_transactions.location_id) end
                 AS locationName'
             ))
             ->whereIn('character_id', $character_ids)
