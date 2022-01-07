@@ -26,6 +26,7 @@ use Seat\Eveapi\Models\Corporation\CorporationMemberTracking;
 use Seat\Eveapi\Models\Sde\SolarSystem;
 use Seat\Eveapi\Models\Sde\StaStation;
 use Seat\Eveapi\Models\Universe\UniverseStructure;
+use Seat\Web\Http\DataTables\Exports\MembersTrackingDataTableExport;
 use Seat\Web\Models\User;
 use Yajra\DataTables\Services\DataTable;
 
@@ -36,6 +37,9 @@ use Yajra\DataTables\Services\DataTable;
  */
 class MembersTrackingDataTable extends DataTable
 {
+    protected $exportClass = MembersTrackingDataTableExport::class;
+
+
     /**
      * @return \Illuminate\Http\JsonResponse
      *
