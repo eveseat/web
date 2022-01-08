@@ -39,7 +39,6 @@ class MembersTrackingDataTable extends DataTable
 {
     protected $exportClass = MembersTrackingDataTableExport::class;
 
-
     /**
      * @return \Illuminate\Http\JsonResponse
      *
