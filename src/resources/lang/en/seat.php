@@ -603,6 +603,8 @@ return [
     'created_by_corporation'       => 'Created By Corporation',
     'starbase'                     => 'Starbase|Starbases',
     'structure'                    => 'Structure|Structures',
+    'warehouse'                    => 'Warehouse|Warehouses',
+    'upwell_structure'             => 'Upwell Structure|Upwell Structures',
     'reinforce_week_hour'          => 'Reinf. Week/Hour',
     'low_power'                    => 'Low Power',
     'state'                        => 'State',

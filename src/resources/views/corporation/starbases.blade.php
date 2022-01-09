@@ -1,4 +1,4 @@
-@extends('web::corporation.layouts.view', ['viewname' => 'starbases', 'breadcrumb' => trans_choice('web::seat.starbase', 2)])
+@extends('web::layouts.corporation', ['viewname' => 'starbases', 'breadcrumb' => trans_choice('web::seat.starbase', 2)])
 
 @section('page_description', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.starbase', 2))
 

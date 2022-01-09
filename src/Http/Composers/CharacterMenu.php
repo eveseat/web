@@ -92,7 +92,10 @@ class CharacterMenu extends AbstractMenu
 
         }));
 
-        $view->with('section_menu', $menu);
+        $view->with([
+            'section_menu' => $menu,
+            'entity_id'    => $this->character->character_id,
+        ]);
     }
 
     /**

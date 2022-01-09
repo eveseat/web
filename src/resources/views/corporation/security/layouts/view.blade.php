@@ -1,4 +1,4 @@
-@extends('web::corporation.layouts.view', ['viewname' => 'security'])
+@extends('web::layouts.corporation', ['viewname' => 'security'])
 
 @section('corporation_content')
 

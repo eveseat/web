@@ -1,6 +1,6 @@
-@extends('web::corporation.layouts.view', ['viewname' => 'structures', 'breadcrumb' => trans_choice('web::seat.structure', 2)])
+@extends('web::layouts.corporation', ['viewname' => 'structures', 'breadcrumb' => trans_choice('web::seat.structure', 2)])
 
-@section('page_description', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.structure', 2))
+@section('page_description', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.upwell_structure', 2))
 
 @inject('request', 'Illuminate\Http\Request')
 

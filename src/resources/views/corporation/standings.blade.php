@@ -1,4 +1,4 @@
-@extends('web::corporation.layouts.view', ['viewname' => 'standings', 'breadcrumb' => trans_choice('web::seat.standings', 0)])
+@extends('web::layouts.corporation', ['viewname' => 'standings', 'breadcrumb' => trans_choice('web::seat.standings', 0)])
 
 @section('page_description', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.standings', 0))
 

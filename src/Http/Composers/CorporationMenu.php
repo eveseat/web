@@ -89,7 +89,10 @@ class CorporationMenu extends AbstractMenu
             return $value['name'];
         }));
 
-        $view->with('menu', $menu);
+        $view->with([
+            'section_menu' => $menu,
+            'entity_id'    => $this->corporation->corporation_id,
+        ]);
     }
 
     /**

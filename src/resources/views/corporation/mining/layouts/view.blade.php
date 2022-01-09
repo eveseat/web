@@ -1,4 +1,4 @@
-@extends('web::corporation.layouts.view', ['viewname' => 'mining'])
+@extends('web::layouts.corporation', ['viewname' => 'mining'])
 
 @inject('request', 'Illuminate\Http\Request')
 

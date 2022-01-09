@@ -16,7 +16,7 @@
                 </a>
                 <div class="dropdown-menu">
                     @foreach($entry['entries'] as $sub_entry)
-                        <a href="{{ route($sub_entry['route'], $character) }}" class="dropdown-item @if(request()->route()->getName() == $sub_entry['route']) active @endif">
+                        <a href="{{ route($sub_entry['route'], $entity_id) }}" class="dropdown-item @if(request()->route()->getName() == $sub_entry['route']) active @endif">
                             @if(array_key_exists('icon', $sub_entry))
                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                                     <i class="{{ $sub_entry['icon'] }}"></i>
@@ -33,7 +33,7 @@
             </li>
         @else
             <li class="nav-item @if(request()->route()->getName() == $entry['route']) active @endif">
-                <a href="{{ route($entry['route'], $character) }}" class="nav-link">
+                <a href="{{ route($entry['route'], $entity_id) }}" class="nav-link">
                     @if(array_key_exists('icon', $entry))
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <i class="{{ $entry['icon'] }}"></i>

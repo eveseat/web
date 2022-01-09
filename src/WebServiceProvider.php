@@ -216,7 +216,7 @@ class WebServiceProvider extends AbstractSeatPlugin
 
         // Corporation menu composer
         $this->app['view']->composer([
-            'web::corporation.includes.menu',
+            'web::layouts.corporation',
         ], CorporationMenu::class);
 
         // Corporation layout breadcrumb
