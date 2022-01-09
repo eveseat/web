@@ -4,26 +4,26 @@
 
 @section('content')
 
-  <div class="login-logo">
-    S<b>e</b>AT | {{ trans('web::seat.sign_in') }}
+  <div class="text-center mb-4">
+    <a href="{{ config('app.url') }}" class="navbar-brand navbar-brand-autodark">
+      <span class="display-5">S<b>e</b>AT | {{ trans('web::seat.sign_in') }}</span>
+    </a>
   </div>
 
-  <hr>
-
-  <div class="login-box-body">
-    <p class="login-box-msg">
-      {!! $signin_message !!}
-    </p>
-
-    <!-- SSO Button! -->
-    <!-- <div class="box-body text-center">
-      <a href="{{ route('seatcore::auth.eve') }}">
-        <img src="{{ asset('web/img/evesso.png') }}">
-      </a>
-    </div> -->
-    <!-- /.box-footer -->
+  <div class="card card-md">
+    <div class="card-body">
+      <h2 class="card-title text-center mb-4">{{ trans('web::seat.login_welcome') }}</h2>
+      <div class="form-footer">
+        <!-- SSO Button! -->
+        <a href="{{ route('seatcore::auth.eve') }}" class="d-flex justify-content-center">
+          <img src="{{ asset('web/img/evesso.png') }}" alt="LOG IN with EVE Online" />
+        </a>
+      </div>
+      <!-- /.form-footer -->
+    </div>
+    <!-- ./card -->
 
   </div>
-  <!-- /.login-box-body -->
+  <!-- /.text-center -->
 
 @stop

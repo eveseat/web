@@ -1,141 +1,100 @@
 <!-- Header Navbar -->
-<nav class="main-header navbar navbar-expand navbar-dark navbar-gray">
-
-  <!-- Sidebar toggle button-->
-  <ul class="navbar-nav">
-    <li class="nav-item">
-      <a href="#" class="nav-link" data-widget="pushmenu">
-        <i class="fas fa-bars"></i>
-      </a>
-    </li>
-  </ul>
-
-  <!-- search form -->
-  <form action="{{ route('seatcore::support.search') }}" method="get" class="form-inline ml-3">
-    <div class="input-group input-group-sm">
-      <input type="text" name="q" class="form-control form-control-navbar" placeholder="{{ trans('web::seat.search') }}...">
-      <div class="input-group-append">
-        <button type="submit" id="search-btn" class="btn btn-navbar">
-          <i class="fas fa-search"></i>
-        </button>
-      </div>
-    </div>
-  </form>
-  <!-- /.search form -->
-
-  <!-- Navbar Right Menu -->
-  <ul class="navbar-nav ml-auto">
-
-    <!-- Impersonation information -->
-    @if(session('impersonation_origin', false))
-
-      <li class="nav-item dropdown">
-        <a href="{{ route('seatcore::configuration.users.impersonate.stop') }}"
-           class="nav-link" data-widget="dropdown" data-placement="bottom"
-           title="{{ trans('web::seat.stop_impersonation') }}">
-          <i class="fa fa-user-secret"></i>
+<header class="navbar navbar-expand-md navbar-light sticky-top d-lg-flex d-print-none">
+  <div class="container-xl">
+    <!-- sidebar-toggle-button -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#section-menu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- ./sidebar-toggle-button -->
+    <div class="navbar-nav flex-row order-md-last">
+      <!-- TODO : load character/corporation/alliance active menu entries into yield main-menu -->
+      <!-- job-queue -->
+      @can('global.queue_manager')
+      <div class="nav-item d-md-flex me-3">
+        <a href="{{ route('horizon.index') }}" class="nav-link px-0" tabindex="-1" aria-label="Show dashboard" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ trans('web::seat.queued') }}">
+          <i class="fas fa-hourglass-half fa-lg"></i>
+          <span class="position-absolute top-5 start-100 translate-middle badge rounded-pill bg-success" id="queue_count">0</span>
         </a>
-      </li>
-
-  @endif
-
-  <!-- Queue information -->
-  @can('global.queue_manager')
-    <li class="nav-item dropdown">
-      <a href="{{ route('horizon.index') }}" class="nav-link" data-widget="dropdown" data-placement="bottom"
-         title="{{ trans('web::seat.queued') }}" target="_blank">
-        <i class="fas fa-truck"></i>
-        <span class="badge badge-success navbar-badge" id="queue_count">0</span>
-      </a>
-    </li>
-    <li class="nav-item dropdown">
-      <a href="{{ route('horizon.index') }}" class="nav-link" data-widget="dropdown" data-placement="bottom"
-         title="{{ trans('web::seat.error') }}" target="_blank">
-        <i class="fas fa-exclamation"></i>
-        <span class="badge badge-danger navbar-badge" id="error_count">0</span>
-      </a>
-    </li>
-  @endcan
-
-    <!-- User Account Menu -->
-    <li class="nav-item dropdown">
-      <a class="nav-link" data-toggle="dropdown" href="#">
-        <i class="fas fa-cogs"></i>
-      </a>
-      <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-        @if(auth()->user()->name != 'admin')
-          <a href="{{ route('seatcore::profile.view') }}" class="dropdown-item">
-            <i class="fas fa-id-card"></i> {{ trans('web::seat.profile') }}
+      </div>
+      <div class="nav-item d-md-flex me-3">
+        <a href="{{ route('horizon.index') }}" class="nav-link px-0" tabindex="-1" aria-label="Show dashboard" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ trans('web::seat.error') }}">
+          <i class="fas fa-exclamation fa-lg"></i>
+          <span class="position-absolute top-5 start-100 translate-middle badge rounded-pill bg-danger" id="error_count">0</span>
+        </a>
+      </div>
+      @endcan
+      <!-- ./job-queue -->
+      <!-- impersonation -->
+      <div class="nav-item d-md-flex me-3">
+        <a href="{{ route('seatcore::configuration.users.impersonate.stop') }}" class="nav-link px-0" tabindex="-1" aria-label="{{ trans('web::seat.stop_impersonation') }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ trans('web::seat.stop_impersonation') }}">
+          <i class="fas fa-user-secret fa-lg"></i>
+        </a>
+      </div>
+      <!-- ./impersonation -->
+      <!-- user-card -->
+      <div class="nav-item dropdown">
+        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+          {!! img('characters', 'portrait', auth()->user()->main_character_id, 32, ['class' => 'avatar avatar-sm'], false) !!}
+          <div class="d-xl-block ps-2">
+            <div>{{ auth()->user()->name }}</div>
+            <div class="mt-1 small text-muted">{{ auth()->user()->characters->count() }} characters</div>
+          </div>
+        </a>
+        <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+          @if(auth()->user()->name != 'admin')
+          <!-- character-roster -->
+          @foreach(auth()->user()->characters as $character)
+          <a href="{{ route('seatcore::character.view.default', ['character' => $character->character_id]) }}" class="dropdown-item">
+            {!! img('characters', 'portrait', $character->character_id, 32, ['class' => 'avatar avatar-sm me-2'], false) !!}
+            {{ $character->name }}
           </a>
+          @endforeach
+          <!-- ./character-roster -->
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item" data-toggle="modal" data-target="#characterSwitchModal">
-            <i class="fas fa-exchange-alt"></i> {{ trans('web::seat.switch_character') }}
+            <span class="nav-link-icon">
+              <i class="fas fa-user-friends"></i>
+            </span>
+            <span class="nav-link-title">{{ trans('web::seat.switch_character') }}</span>
           </a>
-          <div class="dropdown-divider"></div>
           <a href="{{ route('seatcore::auth.eve') }}" class="dropdown-item">
-            <i class="fas fa-link"></i> {{ trans('web::seat.link_character') }}
+            <span class="nav-link-icon">
+              <i class="fas fa-link"></i>
+            </span>
+            <span class="nav-link-title">{{ trans('web::seat.link_character') }}</span>
           </a>
           <div class="dropdown-divider"></div>
-        @endif
-        <form action="{{ route('seatcore::auth.logout') }}" method="post">
-          {{ csrf_field() }}
-          <button type="submit" class="btn btn-link dropdown-item">
-            <i class="fas fa-sign-out-alt"></i>
-            {{ trans('web::seat.sign_out') }}
-          </button>
-        </form>
+          <a href="{{ route('seatcore::profile.view') }}" class="dropdown-item">
+            <span class="nav-link-icon">
+              <i class="fas fa-user-cog"></i>
+            </span>
+            <span class="nav-link-title">Profile</span>
+          </a>
+          @endif
+          <a href="{{ route('seatcore::auth.logout') }}" class="dropdown-item">
+            <span class="nav-link-icon">
+              <i class="fas fa-sign-out-alt"></i>
+            </span>
+            <span class="nav-link-title">{{ trans('web::seat.sign_out') }}</span>
+          </a>
+        </div>
       </div>
-    </li>
-
-  </ul>
-</nav>
-
-<!-- Character switching modal -->
-@if(auth()->user()->name != 'admin')
-<div class="modal fade off" id="characterSwitchModal" tabindex="-1" role="dialog"
-   aria-labelledby="characterSwitchModalLabel">
-<div class="modal-dialog" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h4 class="modal-title" id="characterSwitchModalLabel">{{ trans('web::seat.switch_character') }}</h4>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
+      <!-- ./user-card -->
     </div>
-    <div class="modal-body">
-
-      <table class="table datatable compact table-condensed table-hover table-striped">
-        <thead>
-          <tr>
-            <th>{{ trans_choice('web::seat.user', auth()->user()->characters->count()) }}</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-
-        @foreach(auth()->user()->characters as $character)
-
-          <tr>
-            <td>
-              {!! img('characters', 'portrait', $character->character_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
-              {{ $character->name }}
-            </td>
-            <td>
-              <form method="post" action="{{ route('seatcore::profile.change-character') }}">
-                {!! csrf_field() !!}
-                <input type="hidden" name="character_id" value="{{ $character->character_id }}" />
-                <button type="submit" class="btn btn-sm btn-link">{{ trans('web::seat.use_as_main_character') }}</button>
-              </form>
-            </td>
-          </tr>
-
-        @endforeach
-
-        </tbody>
-      </table>
-
+    <div class="collapse navbar-collapse" id="section-menu">
+      <!-- search-form -->
+      <form action="{{ route('seatcore::support.search') }}" method="get">
+        <div class="input-icon">
+          <span class="input-icon-addon">
+            <i class="fas fa-search"></i>
+          </span>
+          <input type="text" class="form-control" placeholder="{{ trans('web::seat.search') }}..." aria-label="Search in website" />
+        </div>
+      </form>
+      <!-- /.search-form -->
+      <!-- section-menu -->
+      @include('web::includes.section-menu')
+      <!-- /.section-menu -->
     </div>
   </div>
-</div>
-</div>
-@endif
+</header>

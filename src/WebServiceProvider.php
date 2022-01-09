@@ -146,10 +146,6 @@ class WebServiceProvider extends AbstractSeatPlugin
             __DIR__ . '/resources/img' => public_path('web/img'),
             __DIR__ . '/resources/js'  => public_path('web/js'),
 
-            // Bootstrap pulled from packagist
-            base_path('vendor/twbs/bootstrap/dist/css/bootstrap.min.css')                           => public_path('web/css/bootstrap.min.css'),
-            base_path('vendor/almasaeed2010/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') => public_path('web/js/bootstrap.bundle.min.js'),
-
             // Datatables pulled from packagist
             base_path('vendor/datatables.net/datatables.net/js/jquery.dataTables.min.js')                => public_path('web/js/jquery.dataTables.min.js'),
             base_path('vendor/datatables.net/datatables.net-bs5/css/dataTables.bootstrap5.min.css')      => public_path('web/css/dataTables.bootstrap5.min.css'),
@@ -157,10 +153,13 @@ class WebServiceProvider extends AbstractSeatPlugin
             base_path('vendor/datatables.net/datatables.net-buttons/js/dataTables.buttons.min.js')       => public_path('web/js/dataTables.buttons.min.js'),
             base_path('vendor/datatables.net/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css') => public_path('web/css/buttons.bootstrap5.min.css'),
             base_path('vendor/datatables.net/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js')   => public_path('web/js/buttons.bootstrap5.min.js'),
+            base_path('vendor/datatables.net/datatables.net-rowgroup/js/dataTables.rowGroup.min.js')       => public_path('web/js/dataTables.rowGroup.min.js'),
+            base_path('vendor/datatables.net/datatables.net-rowgroup-bs5/css/rowGroup.bootstrap5.min.css') => public_path('web/css/rowGroup.bootstrap5.min.css'),
+            base_path('vendor/datatables.net/datatables.net-rowgroup-bs5/js/rowGroup.bootstrap5.min.js')   => public_path('web/js/rowGroup.bootstrap5.min.js'),
 
-            // AdminLTE pulled from packagist
-            base_path('vendor/almasaeed2010/adminlte/dist/css/adminlte.min.css') => public_path('web/css/adminlte.min.css'),
-            base_path('vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js')   => public_path('web/js/adminlte.min.js'),
+            // Tabler pulled from packagist
+            base_path('vendor/tabler/tabler/dist/css/tabler.min.css') => public_path('web/css/tabler.min.css'),
+            base_path('vendor/tabler/tabler/dist/js/tabler.min.js')   => public_path('web/js/tabler.min.js'),
 
             // Font Awesome pulled from packagist
             base_path('vendor/fortawesome/font-awesome/css/all.min.css') => public_path('web/css/all.min.css'),
