@@ -1,7 +1,8 @@
 @extends('web::layouts.grids.12')
 
 @section('title', trans('web::seat.about'))
-@section('page_header', trans('web::seat.about'))
+@section('page_header', trans('web::seat.configuration'))
+@section('page_description', trans('web::seat.about'))
 
 @section('full')
   <div class="row">

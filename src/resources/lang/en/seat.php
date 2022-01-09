@@ -156,6 +156,7 @@ return [
     'use_as_main_character' => 'Use as Main Character',
     'link_character'        => 'Link Character',
     'characters_in_group'   => 'Character in group|Characters in group',
+    'list'                  => 'List',
 
     // Notifications
     'critical'              => 'Critical',
@@ -571,6 +572,9 @@ return [
     'skills_graph'                 => 'Skills Graph',
     'contract_items'               => 'Contract Items',
     'progress'                     => 'Progress',
+    'finance'                      => 'Finance',
+    'jobs'                         => 'Job|Jobs',
+    'military'                     => 'Military',
 
     // Character Intel
     'loading_journal'              => 'Loading Journal Entries ...',

@@ -1,7 +1,8 @@
 @extends('web::layouts.grids.6-6')
 
 @section('title', trans('web::seat.sso'))
-@section('page_header', trans('web::seat.sso'))
+@section('page_header', trans('web::seat.configuration'))
+@section('page_description', trans('web::seat.sso'))
 
 @section('left')
 

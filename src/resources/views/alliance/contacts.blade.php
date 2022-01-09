@@ -1,6 +1,6 @@
 @extends('web::alliance.layouts.view', ['viewname' => 'contacts', 'breadcrumb' => trans('web::seat.contacts')])
 
-@section('page_header', trans_choice('web::seat.alliance', 1) . ' ' . trans('web::seat.contacts'))
+@section('page_description', trans_choice('web::seat.alliance', 1) . ' ' . trans('web::seat.contacts'))
 
 @section('alliance_content')
 

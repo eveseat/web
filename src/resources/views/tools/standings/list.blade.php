@@ -1,7 +1,7 @@
 @extends('web::layouts.grids.4-8')
 
 @section('title', trans('web::seat.standings_builder'))
-@section('page_header', trans('web::seat.standings_builder'))
+@section('page_header', trans('web::seat.tools'))
 @section('page_description', trans('web::seat.standings_builder'))
 
 @section('left')

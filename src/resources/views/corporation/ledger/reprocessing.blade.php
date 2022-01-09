@@ -1,6 +1,6 @@
 @extends('web::corporation.ledger.layouts.view', ['sub_viewname' => 'reprocessing', 'breadcrumb' => trans('web::seat.seat.reprocessing')])
 
-@section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.reprocessing'))
+@section('page_description', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.reprocessing'))
 
 @section('ledger_content')
 

@@ -1,6 +1,6 @@
 @extends('web::corporation.layouts.view', ['viewname' => 'industry', 'breadcrumb' => trans('web::seat.industry')])
 
-@section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.industry'))
+@section('page_description', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.industry'))
 
 @inject('request', 'Illuminate\Http\Request')
 

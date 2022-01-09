@@ -1,6 +1,6 @@
 @extends('web::corporation.security.layouts.view', ['sub_viewname' => 'titles', 'breadcrumb' => trans_choice('web::seat.title', 2)])
 
-@section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.title', 2))
+@section('page_description', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.title', 2))
 
 @section('security_content')
 

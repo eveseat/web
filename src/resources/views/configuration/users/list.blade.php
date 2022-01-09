@@ -1,7 +1,8 @@
 @extends('web::layouts.grids.12')
 
 @section('title', trans('web::seat.user_management'))
-@section('page_header', trans('web::seat.user_management'))
+@section('page_header', trans('web::seat.configuration'))
+@section('page_description', trans('web::seat.user_management'))
 
 @section('full')
 

@@ -1,7 +1,8 @@
 @extends('web::layouts.grids.4-8')
 
 @section('title', trans('web::seat.access_mangement'))
-@section('page_header', trans('web::seat.access_mangement'))
+@section('page_header', trans('web::seat.configuration'))
+@section('page_description', trans('web::seat.access_mangement'))
 
 @section('left')
 

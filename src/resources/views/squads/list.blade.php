@@ -2,6 +2,7 @@
 
 @section('title', trans_choice('web::squads.squad', 0))
 @section('page_header', trans_choice('web::squads.squad', 0))
+@section('page_description', trans('web::seat.list'))
 
 @section('full')
   <form onsubmit="return false;">

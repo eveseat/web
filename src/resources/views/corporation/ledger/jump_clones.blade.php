@@ -1,6 +1,6 @@
 @extends('web::corporation.ledger.layouts.view', ['sub_viewname' => 'jump_clones', 'breadcrumb' => trans('web::seat.seat.jump_clones')])
 
-@section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.jump_clones'))
+@section('page_description', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.jump_clones'))
 
 @section('ledger_content')
 

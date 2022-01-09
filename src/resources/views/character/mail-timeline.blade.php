@@ -1,7 +1,8 @@
 @extends('web::layouts.grids.12')
 
 @section('title', trans('web::seat.mail_timeline'))
-@section('page_header', trans('web::seat.mail_timeline'))
+@section('page_header', trans_choice('web::seat.character', 2))
+@section('page_description', trans('web::seat.mail_timeline'))
 
 @section('full')
 

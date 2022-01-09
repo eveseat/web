@@ -1,6 +1,6 @@
 @extends('web::corporation.layouts.view', ['viewname' => 'extractions', 'breadcrumb' => trans_choice('web::seat.extraction', 0)])
 
-@section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.extraction', 0))
+@section('page_description', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.extraction', 0))
 
 @section('corporation_content')
 

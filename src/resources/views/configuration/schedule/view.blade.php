@@ -1,7 +1,8 @@
 @extends('web::layouts.grids.3-9')
 
 @section('title', trans('web::seat.schedule'))
-@section('page_header', trans('web::seat.schedule'))
+@section('page_header', trans('web::seat.configuration'))
+@section('page_description', trans('web::seat.schedule'))
 
 @section('left')
 

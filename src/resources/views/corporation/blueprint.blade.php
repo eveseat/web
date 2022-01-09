@@ -1,6 +1,6 @@
 @extends('web::corporation.layouts.view', ['viewname' => 'blueprint', 'breadcrumb' => trans('web::seat.blueprint')])
 
-@section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.blueprint'))
+@section('page_description', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.blueprint'))
 
 @inject('request', 'Illuminate\Http\Request')
 

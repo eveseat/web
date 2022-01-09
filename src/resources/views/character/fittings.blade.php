@@ -1,6 +1,6 @@
 @extends('web::character.layouts.view', ['viewname' => 'fittings', 'breadcrumb' => trans('web::seat.fittings')])
 
-@section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.fittings'))
+@section('page_description', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.fittings'))
 
 @inject('request', 'Illuminate\Http\Request')
 

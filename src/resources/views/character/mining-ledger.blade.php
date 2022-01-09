@@ -1,6 +1,6 @@
 @extends('web::character.layouts.view', ['viewname' => 'mining-ledger', 'breadcrumb' => trans('web::seat.mining')])
 
-@section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.mining'))
+@section('page_description', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.mining'))
 
 @inject('request', 'Illuminate\Http\Request')
 

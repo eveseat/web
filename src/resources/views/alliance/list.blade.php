@@ -1,7 +1,8 @@
 @extends('web::layouts.grids.12')
 
-@section('title', trans_choice('web::seat.alliance', 1) )
-@section('page_header', trans_choice('web::seat.alliance', 1))
+@section('title', trans_choice('web::seat.alliance', 2) )
+@section('page_header', trans_choice('web::seat.alliance', 2))
+@section('page_description', trans('web::seat.list'))
 
 @section('full')
 

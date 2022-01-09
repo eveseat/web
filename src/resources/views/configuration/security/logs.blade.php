@@ -1,7 +1,8 @@
 @extends('web::layouts.grids.12')
 
 @section('title', trans('web::seat.security_logs'))
-@section('page_header', trans('web::seat.security_logs'))
+@section('page_header', trans('web::seat.configuration'))
+@section('page_description', trans('web::seat.security_logs'))
 
 @section('full')
 

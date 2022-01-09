@@ -1,6 +1,6 @@
 @extends('web::corporation.ledger.layouts.view', ['sub_viewname' => 'industry_facility', 'breadcrumb' => trans('web::seat.industry_facility')])
 
-@section('page_header', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.industry_facility'))
+@section('page_description', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.industry_facility'))
 
 @section('ledger_content')
 
