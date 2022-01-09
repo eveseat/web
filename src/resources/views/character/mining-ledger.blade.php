@@ -1,4 +1,4 @@
-@extends('web::character.layouts.view', ['viewname' => 'mining-ledger', 'breadcrumb' => trans('web::seat.mining')])
+@extends('web::layouts.character', ['viewname' => 'mining-ledger', 'breadcrumb' => trans('web::seat.mining')])
 
 @section('page_description', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.mining'))
 

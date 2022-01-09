@@ -1,4 +1,4 @@
-@extends('web::character.layouts.view', ['viewname' => 'blueprint', 'breadcrumb' => trans('web::seat.blueprint')])
+@extends('web::layouts.character', ['viewname' => 'blueprint', 'breadcrumb' => trans('web::seat.blueprint')])
 
 @section('page_description', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.blueprint'))
 

@@ -1,4 +1,4 @@
-@extends('web::character.layouts.view', ['viewname' => 'calendar', 'breadcrumb' => trans('web::seat.calendar')])
+@extends('web::layouts.character', ['viewname' => 'calendar', 'breadcrumb' => trans('web::seat.calendar')])
 
 @section('page_description', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.calendar'))
 

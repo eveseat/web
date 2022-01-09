@@ -1,4 +1,4 @@
-@extends('web::character.layouts.view', ['viewname' => 'intel'])
+@extends('web::layouts.character', ['viewname' => 'intel'])
 
 @section('character_content')
 

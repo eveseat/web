@@ -60,11 +60,19 @@ abstract class AbstractMenu
         // Validate the package menu
         $this->validate_menu($package_name, $menu_data);
 
+        // determine permission required by entry inside this section
+        if (array_key_exists('entries', $menu_data)) {
+            $permissions = collect($menu_data['entries'])->pluck('permission')->toArray();
+        }
+
+        // determine permission required by this section
+        if (array_key_exists('permission', $menu_data)) {
+            $permissions = is_array($menu_data['permission']) ? $menu_data['permission'] : [$menu_data['permission']];
+        }
+
         // Check if the current user has the permission
         // required to see the menu
-        if (isset($menu_data['permission'])) {
-            $permissions = is_array($menu_data['permission']) ? $menu_data['permission'] : [$menu_data['permission']];
-
+        if (isset($permissions)) {
             if (! $this->userHasPermission($permissions))
                 return null;
         }

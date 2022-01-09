@@ -21,14 +21,14 @@
  */
 
 return [
-    '0home'       => [
-        'name'          => 'home',
+    [
+        'name'          => '0-home',
         'label'         => 'web::seat.home',
         'icon'          => 'fas fa-home',
         'route_segment' => 'home',
         'route'         => 'seatcore::home',
     ],
-    'alliance' => [
+    [
         'name'          => 'alliance',
         'label'         => 'web::seat.alliance',
         'plural'        => true,
@@ -43,7 +43,7 @@ return [
             ],
         ],
     ],
-    'corporation' => [
+    [
         'name'          => 'corporation',
         'label'         => 'web::seat.corporation',
         'plural'        => true,
@@ -58,7 +58,7 @@ return [
             ],
         ],
     ],
-    'character'   => [
+    [
         'name'          => 'character',
         'label'         => 'web::seat.character',
         'plural'        => true,
@@ -79,7 +79,7 @@ return [
             ],
         ],
     ],
-    'squads'      => [
+    [
         'name'          => 'squads',
         'label'         => 'web::squads.squad',
         'plural'        => true,
@@ -87,14 +87,13 @@ return [
         'route_segment' => 'squads',
         'route'         => 'seatcore::squads.index',
     ],
-    'settings'    => [
+    [
         'name'          => 'configuration',
         'label'         => 'web::seat.configuration',
         'permission'    => 'global.superuser',
         'icon'          => 'fas fa-cogs',
         'route_segment' => 'configuration',
         'entries'       => [
-
             [   // Access
                 'name'  => 'access',
                 'label' => 'web::seat.access',
@@ -141,7 +140,7 @@ return [
             ],
         ],
     ],
-    'tools'       => [
+    [
         'name'          => 'tools',
         'label'         => 'web::seat.tools',
         'icon'          => 'fas fa-wrench',

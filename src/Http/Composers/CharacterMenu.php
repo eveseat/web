@@ -55,7 +55,7 @@ class CharacterMenu extends AbstractMenu
     {
 
         return [
-            'name', 'permission', 'highlight_view', 'route',
+            'label', 'name',
         ];
     }
 
@@ -82,7 +82,6 @@ class CharacterMenu extends AbstractMenu
                 $prepared_menu = $this->load_plugin_menu('character', $menu_data, true);
                 if (! is_null($prepared_menu))
                     array_push($menu, $prepared_menu);
-
             }
         }
 
@@ -93,7 +92,7 @@ class CharacterMenu extends AbstractMenu
 
         }));
 
-        $view->with('menu', $menu);
+        $view->with('section_menu', $menu);
     }
 
     /**

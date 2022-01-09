@@ -55,7 +55,7 @@ class AllianceMenu extends AbstractMenu
     {
 
         return [
-            'name', 'permission', 'highlight_view', 'route',
+            'label', 'name',
         ];
     }
 

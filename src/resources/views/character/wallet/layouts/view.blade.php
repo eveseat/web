@@ -1,4 +1,4 @@
-@extends('web::character.layouts.view', ['viewname' => 'wallet'])
+@extends('web::layouts.character', ['viewname' => 'wallet'])
 
 @section('character_content')
 

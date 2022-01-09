@@ -206,7 +206,7 @@ class WebServiceProvider extends AbstractSeatPlugin
 
         // Character menu composer
         $this->app['view']->composer([
-            'web::character.includes.menu',
+            'web::layouts.character',
         ], CharacterMenu::class);
 
         // Character layout breadcrumb

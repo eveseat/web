@@ -1,4 +1,4 @@
-@extends('web::character.layouts.view', ['viewname' => 'mail', 'breadcrumb' => trans('web::seat.mail')])
+@extends('web::layouts.character', ['viewname' => 'mail', 'breadcrumb' => trans('web::seat.mail')])
 
 @section('page_description', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.mail'))
 
