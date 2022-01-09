@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- favicos -->
-    @include('web::includes.favico')
+    <!-- favicons -->
+    @include('web::includes.favicon')
 
     <title>SeAT | @yield('title', 'Eve Online API Tool')</title>
 

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- favicos -->
-    @include('web::includes.favico')
+    @include('web::includes.favicon')
 
     <title>SeAT | @yield('title', 'Eve Online API Tool')</title>
 
