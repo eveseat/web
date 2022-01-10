@@ -8,6 +8,8 @@
 
     <div class="col-6">
       @include('web::corporation.sheet.summary')
+
+      @include('web::corporation.sheet.description')
     </div>
     <div class="col-md-6">
       @include('web::corporation.sheet.divisions')

@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card mb-3">
     <div class="card-header">
         <h3 class="card-title">{{ trans('web::seat.summary') }}</h3>
     </div>
@@ -15,17 +15,6 @@
                 <dd>{{ $trackings }} / {{ $sheet->member_count }} ({{ number_format($trackings/$sheet->member_count * 100, 2) }}%) {{ trans_choice('web::seat.valid_token', $sheet->member_count) }}</dd>
             @endcan
         </dl>
-
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-header">
-        <h3 class="card-title">{{ trans('web::seat.description') }}</h3>
-    </div>
-    <div class="card-body">
-
-        {!! clean_ccp_html($sheet->description) !!}
 
     </div>
 </div>

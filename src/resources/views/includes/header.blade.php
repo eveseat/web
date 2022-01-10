@@ -83,7 +83,7 @@
     </div>
     <div class="collapse navbar-collapse" id="section-menu">
       <!-- search-form -->
-      <form action="{{ route('seatcore::support.search') }}" method="get">
+      <form action="{{ route('seatcore::support.search') }}" method="get" class="me-4">
         <div class="input-icon">
           <span class="input-icon-addon">
             <i class="fas fa-search"></i>

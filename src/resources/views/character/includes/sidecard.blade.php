@@ -1,5 +1,5 @@
 <div class="card mb-3">
-  {!! img('characters', 'portrait', $character->character_id, 512, ['class' => 'card-img-top']) !!}
+  {!! img('characters', 'portrait', $character->character_id, 512, ['class' => 'card-img-top bg-dark bg-gradient']) !!}
   <div class="card-body">
     <h5 class="card-title text-center">
       <span class="align-middle">{{ $character->name }}</span>
@@ -57,6 +57,15 @@
     <!-- ./affiliation -->
     <!-- information -->
     <dl class="row">
+      <dt class="col-5">Age:</dt>
+      <dd class="col-7">{{ carbon($character->birthday)->diffInYears() }}</dd>
+      <dt class="col-5">Birthday:</dt>
+      <dd class="col-7">
+        @if(carbon($character->birthday)->isBirthday())
+          <i class="fas fa-birthday-cake me-2 text-primary" data-bs-toggle="tooltip" title="This is his birthday !"></i>
+        @endif
+        {{ carbon($character->birthday)->format('jS \o\f F') }}
+      </dd>
       <dt class="col-5">Joined:</dt>
       <dd class="col-7">
         @if(!is_null($character->current_corporation))

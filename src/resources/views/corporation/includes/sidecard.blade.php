@@ -3,64 +3,81 @@
   <div class="card-body">
     <h5 class="card-title text-center">{{ $corporation->name }}</h5>
     <!-- affiliation -->
-    @if($corporation->alliance_id)
-      <div class="list-group list-group-flush list-group-hoverable mb-3">
-        <!-- ceo -->
-        <div class="list-group-item ps-0 pe-0">
-          <div class="row align-items-center">
-            <div class="col-auto">
-              {!! img('characters', 'portrait', $corporation->ceo_id, 128, ['class' => 'avatar']) !!}
-            </div>
-            <div class="col">
-              @if(\Seat\Eveapi\Models\Character\CharacterInfo::find($corporation->ceo_id))
-                <a href="{{ route('seatcore::character.view.default', $corporation->ceo_id) }}" class="text-body d-block stretched-link">{{ $corporation->ceo->name }}</a>
-              @else
-                <span class="text-body d-block id-to-name" data-id="{{ $corporation->ceo_id }}">{{ trans('web::seat.unknown') }}</span>
-              @endif
-              <span class="text-muted mt-n1">CEO</span>
-            </div>
+    <div class="list-group list-group-flush list-group-hoverable mb-3">
+      <!-- creator -->
+      <div class="list-group-item ps-0 pe-0">
+        <div class="row align-items-center">
+          <div class="col-auto">
+            {!! img('characters', 'portrait', $corporation->creator_id, 128, ['class' => 'avatar']) !!}
+          </div>
+          <div class="col">
+            @if(\Seat\Eveapi\Models\Character\CharacterInfo::find($corporation->creator_id))
+              <a href="{{ route('seatcore::character.view.default', $corporation->creator_id) }}" class="text-body d-block stretched-link">{{ $corporation->creator->name }}</a>
+            @else
+              <span class="text-body d-block id-to-name" data-id="{{ $corporation->creator_id }}">{{ trans('web::seat.unknown') }}</span>
+            @endif
+            <span class="text-muted mt-n1">Creator</span>
           </div>
         </div>
-        <!-- ./ceo -->
-        <!-- alliance -->
-        @if($corporation->alliance_id)
-        <div class="list-group-item ps-0 pe-0">
-          <div class="row align-items-center">
-            <div class="col-auto">
-              {!! img('alliances', 'logo', $corporation->alliance_id, 128, ['class' => 'avatar']) !!}
-            </div>
-            <div class="col">
-              <a href="{{ route('seatcore::alliance.view.default', $corporation->alliance_id) }}" class="text-body d-block stretched-link">
-                <span class="id-to-name" data-id="{{ $corporation->alliance_id }}">{{ trans('web::seat.unknown') }}</span>
-              </a>
-              <span class="text-muted mt-n1">Alliance</span>
-            </div>
-          </div>
-        </div>
-        @endif
-        <!-- ./alliance -->
-        <!-- faction -->
-        @if($corporation->faction_id)
-        <div class="list-group-item ps-0 pe-0">
-          <div class="row align-items-center">
-            <div class="col-auto">
-              {!! img('corporations', 'logo', $corporation->faction_id, 128, ['class' => 'avatar']) !!}
-            </div>
-            <div class="col">
-              <span class="text-body d-block id-to-name" data-id="{{ $corporation->faction_id }}">{{ trans('web::seat.unknown') }}</span>
-              <span class="text-muted mt-n1">Faction</span>
-            </div>
-          </div>
-        </div>
-        @endif
-        <!-- ./faction -->
       </div>
-    @endif
+      <!-- ./creator -->
+      <!-- ceo -->
+      <div class="list-group-item ps-0 pe-0">
+        <div class="row align-items-center">
+          <div class="col-auto">
+            {!! img('characters', 'portrait', $corporation->ceo_id, 128, ['class' => 'avatar']) !!}
+          </div>
+          <div class="col">
+            @if(\Seat\Eveapi\Models\Character\CharacterInfo::find($corporation->ceo_id))
+              <a href="{{ route('seatcore::character.view.default', $corporation->ceo_id) }}" class="text-body d-block stretched-link">{{ $corporation->ceo->name }}</a>
+            @else
+              <span class="text-body d-block id-to-name" data-id="{{ $corporation->ceo_id }}">{{ trans('web::seat.unknown') }}</span>
+            @endif
+            <span class="text-muted mt-n1">CEO</span>
+          </div>
+        </div>
+      </div>
+      <!-- ./ceo -->
+      <!-- alliance -->
+      @if($corporation->alliance_id)
+      <div class="list-group-item ps-0 pe-0">
+        <div class="row align-items-center">
+          <div class="col-auto">
+            {!! img('alliances', 'logo', $corporation->alliance_id, 128, ['class' => 'avatar']) !!}
+          </div>
+          <div class="col">
+            <a href="{{ route('seatcore::alliance.view.default', $corporation->alliance_id) }}" class="text-body d-block stretched-link">
+              <span class="id-to-name" data-id="{{ $corporation->alliance_id }}">{{ trans('web::seat.unknown') }}</span>
+            </a>
+            <span class="text-muted mt-n1">Alliance</span>
+          </div>
+        </div>
+      </div>
+      @endif
+      <!-- ./alliance -->
+      <!-- faction -->
+      @if($corporation->faction_id)
+      <div class="list-group-item ps-0 pe-0">
+        <div class="row align-items-center">
+          <div class="col-auto">
+            {!! img('corporations', 'logo', $corporation->faction_id, 128, ['class' => 'avatar']) !!}
+          </div>
+          <div class="col">
+            <span class="text-body d-block id-to-name" data-id="{{ $corporation->faction_id }}">{{ trans('web::seat.unknown') }}</span>
+            <span class="text-muted mt-n1">Faction</span>
+          </div>
+        </div>
+      </div>
+      @endif
+      <!-- ./faction -->
+    </div>
     <!-- ./affiliation -->
     <!-- information -->
     <dl class="row">
       <dt class="col-5">Ticker</dt>
       <dd class="col-7">{{ $corporation->ticker }}</dd>
+      <dt class="col-5">{{ trans('web::seat.created') }}</dt>
+      <dd class="col-7">{{ human_diff($corporation->date_founded) }}</dd>
       <dt class="col-5">Home Station</dt>
       <dd class="col-7">{{ optional($corporation->homeStation)->name }}</dd>
       <dt class="col-5">Url</dt>
