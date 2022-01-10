@@ -130,7 +130,7 @@
     var character_top_journal_table, character_top_transactions_table, character_top_mails_table,
         character_journal, character_transactions, character_mails;
 
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function () {
+    $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function () {
       character_top_journal_table.draw();
       character_top_transactions_table.draw();
       character_top_mails_table.draw();
@@ -238,7 +238,7 @@
                   {data: 'reason', name: 'reason', visible: false}
               ],
               drawCallback: function () {
-                  $("[data-toggle=tooltip]").tooltip();
+                  $("[data-bs-toggle=tooltip]").tooltip();
                   $('img').unveil(100);
                   ids_to_names();
               }
@@ -272,7 +272,7 @@
           drawCallback: function () {
               $('img').unveil(100);
               ids_to_names();
-              $('[data-toggle="tooltip"]').tooltip();
+              $('[data-bs-toggle="tooltip"]').tooltip();
           }
         });
       })
@@ -302,7 +302,7 @@
               drawCallback: function () {
                   $('img').unveil(100);
                   ids_to_names();
-                  $('[data-toggle="tooltip"]').tooltip();
+                  $('[data-bs-toggle="tooltip"]').tooltip();
               }
           });
       })

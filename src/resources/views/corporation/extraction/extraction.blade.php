@@ -8,7 +8,7 @@
 <div class="btn-toolbar">
   @can('moon.manage_moon_reports')
   <div class="btn-group pr-3">
-      <button type="button" data-toggle="modal" data-target="#moon-import" class="btn btn-success float-right" aria-label="Settings" title="Add a moon scan, used to populate ore information">
+      <button type="button" data-bs-toggle="modal" data-bs-target="#moon-import" class="btn btn-success float-right" aria-label="Settings" title="Add a moon scan, used to populate ore information">
         <i class="fas fa-plus-square pr-1"></i>Add Scan
       </button>
   </div>
@@ -16,7 +16,7 @@
 
 
   <div class="btn-group">
-    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".rate-collapse" title="Show/Hide the Moon Ore and Volume">
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target=".rate-collapse" title="Show/Hide the Moon Ore and Volume">
       <i class="fas fa-eye pr-1"></i>Toggle Ore
     </button>
   </div>

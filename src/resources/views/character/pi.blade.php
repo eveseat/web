@@ -37,7 +37,7 @@
 
             <tr>
               <td data-order="{{ $colony->last_update }}">
-                <span data-toggle="tooltip" title="" data-original-title="{{ $colony->last_update }}">
+                <span data-bs-toggle="tooltip" title="{{ $colony->last_update }}">
                   {{ human_diff($colony->last_update) }}
                 </span>
               </td>

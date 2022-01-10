@@ -24,7 +24,7 @@
               {{ $sheet->character_count() }} {{ trans_choice('web::seat.member', $sheet->character_count()) }}
               @if($alliance->members->count() > $alliance->corporations->count())
                 <span class="text-warning">
-                  <i class="fas fa-exclamation-triangle" data-toggle="tooltip" title="" data-original-title="This number may be inaccurate. SeAT is missing {{ $alliance->members->count() - $alliance->corporations->count() }} member corporations."></i>
+                  <i class="fas fa-exclamation-triangle" data-bs-toggle="tooltip" title="This number may be inaccurate. SeAT is missing {{ $alliance->members->count() - $alliance->corporations->count() }} member corporations."></i>
                 </span>
               @endif
             </dd>
@@ -51,7 +51,7 @@
   </div>
 
   <div class="row">
-    <div class="col-md-12"
+    <div class="col-md-12"></div>
   </div>
 
 

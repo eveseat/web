@@ -37,7 +37,7 @@
         {data: 'recipients', name: 'recipients', visible: false}
       ],
       drawCallback: function () {
-        $('[data-toggle="tooltip"]').tooltip();
+        $('[data-bs-toggle="tooltip"]').tooltip();
         $('img').unveil(100);
         ids_to_names();
       },

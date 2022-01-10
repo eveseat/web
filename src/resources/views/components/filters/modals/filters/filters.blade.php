@@ -3,9 +3,7 @@
     <div class="modal-content">
       <div class="modal-header bg-warning">
         <h4 class="modal-title">Filters</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="card" data-type="ruleset">
@@ -35,7 +33,7 @@
       </div>
       <div class="modal-footer bg-warning">
         <div class="btn-group">
-          <button type="button" data-dismiss="modal" class="btn btn-danger">
+          <button type="button" data-bs-dismiss="modal" class="btn btn-danger">
             <i class="fas fa-times"></i> Cancel
           </button>
           <button type="button" class="btn btn-success">
@@ -132,10 +130,10 @@
 
         $(e.target).closest('.card').find('.card-body').first().append(group);
       })
-      .on('click', 'button[data-dismiss="callout"]', function (e) {
+      .on('click', 'button[data-bs-dismiss="callout"]', function (e) {
         $(e.target).closest('.callout').remove();
       })
-      .on('click', 'button[data-dismiss="card"]', function (e) {
+      .on('click', 'button[data-bs-dismiss="card"]', function (e) {
         $(e.target).closest('.card').remove();
       })
       .on('click', '#filters-modal .btn-success', function () {

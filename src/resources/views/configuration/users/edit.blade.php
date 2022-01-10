@@ -104,11 +104,11 @@
             <li class="list-group-item">
 
               @if ($character->refresh_token)
-                <button data-toggle="tooltip" title="Valid Token" class="btn btn-sm btn-link">
+                <button data-bs-toggle="tooltip" title="Valid Token" class="btn btn-sm btn-link">
                   <i class="fa fa-check text-success"></i>
                 </button>
               @else
-                <button data-toggle="tooltip" title="Invalid Token" class="btn btn-sm btn-link">
+                <button data-bs-toggle="tooltip" title="Invalid Token" class="btn btn-sm btn-link">
                   <i class="fa fa-exclamation-triangle text-danger"></i>
                 </button>
               @endif
@@ -132,11 +132,11 @@
             <li class="list-group-item">
 
               @if ($character->refresh_token)
-                <button data-toggle="tooltip" title="Valid Token" class="btn btn-sm btn-link">
+                <button data-bs-toggle="tooltip" title="Valid Token" class="btn btn-sm btn-link">
                   <i class="fa fa-check text-success"></i>
                 </button>
               @else
-                <button data-toggle="tooltip" title="Invalid Token" class="btn btn-sm btn-link">
+                <button data-bs-toggle="tooltip" title="Invalid Token" class="btn btn-sm btn-link">
                   <i class="fa fa-exclamation-triangle text-danger"></i>
                 </button>
               @endif
@@ -276,13 +276,13 @@
 
                 <tr>
                   <td>
-                    <span data-toggle="tooltip" title="" data-original-title="{{ $history->created_at }}">
+                    <span data-bs-toggle="tooltip" title="" data-original-title="{{ $history->created_at }}">
                       {{ human_diff($history->created_at) }}
                     </span>
                   </td>
                   <td>{{ $history->source }}</td>
                   <td>
-                    <span data-toggle="tooltip" title="" data-original-title="{{ $history->user_agent }}">
+                    <span data-bs-toggle="tooltip" title="" data-original-title="{{ $history->user_agent }}">
                       {{ Str::limit($history->user_agent, 60, '...') }}
                     </span>
                   </td>

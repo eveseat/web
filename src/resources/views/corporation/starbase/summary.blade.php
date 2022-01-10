@@ -28,8 +28,8 @@
 
         <tr>
           <td data-order="{{ $starbase->updated_at }}">
-              <span data-toggle="tooltip"
-                    title="" data-original-title="Last Update: {{ $starbase->updated_at }}">
+              <span data-bs-toggle="tooltip"
+                    title="Last Update: {{ $starbase->updated_at }}">
                 <span class="badge
                   @if($starbase->state == 'online')
                   badge-success
@@ -43,8 +43,8 @@
               </span>
           </td>
           <td data-order="{{ $starbase->type->typeName }}">
-              <span data-toggle="tooltip"
-                    title="" data-original-title="{{ $starbase->type->typeName }}">
+              <span data-bs-toggle="tooltip"
+                    title="{{ $starbase->type->typeName }}">
                 @include('web::partials.type', ['type_id' => $starbase->type_id, 'type_name' => $starbase->type->typeName])
               </span>
             @if($starbase->solar_system->sovereignty->alliance_id == $sheet->alliance_id || $starbase->solar_system->sovereignty->corporation_id == $starbase->corporation_id)

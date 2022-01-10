@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="card-tools">
-      <button data-dismiss="card" class="btn btn-tool">
+      <button data-bs-dismiss="card" class="btn btn-tool">
         <i class="fas fa-times"></i>
       </button>
     </div>

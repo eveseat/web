@@ -1,5 +1,5 @@
 <div class="callout callout-info d-none" data-type="rule" id="rule-template">
-  <button data-dismiss="callout" class="close" type="button">&times;</button>
+  <button data-bs-dismiss="callout" class="btn-close" type="button"></button>
   <div class="form-row">
     <div class="form-group col-3">
       <label>Type</label>

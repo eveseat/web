@@ -3,9 +3,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">{{ trans('web::permissions.members_addition') }}</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form>
@@ -23,7 +21,7 @@
         </table>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('web::seat.close') }}</button>
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">{{ trans('web::seat.close') }}</button>
       </div>
     </div>
   </div>

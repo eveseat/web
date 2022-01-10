@@ -73,7 +73,7 @@
             @include('web::includes.notifications')
 
             <!-- Page Content Here -->
-            {{-- @yield('content') --}}
+            @yield('content')
 
           </div>
         </div>

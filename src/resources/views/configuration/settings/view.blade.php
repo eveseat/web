@@ -216,13 +216,13 @@
       </h3>
       <ul class="nav nav-pills ml-auto p-2">
         <li class="nav-item">
-          <a href="#core-packages" data-toggle="pill" aria-expanded="true" class="nav-link active">Core</a>
+          <a href="#core-packages" data-bs-toggle="pill" aria-expanded="true" class="nav-link active">Core</a>
         </li>
         <li class="nav-item">
-          <a href="#plugin-packages" data-toggle="pill" aria-expanded="false" class="nav-link">Plugins</a>
+          <a href="#plugin-packages" data-bs-toggle="pill" aria-expanded="false" class="nav-link">Plugins</a>
         </li>
         <li class="nav-item">
-          <a href="#" data-toggle="tooltip" title="Click to copy packages versions" id="copy-versions" class="nav-link">
+          <a href="#" data-bs-toggle="tooltip" title="Click to copy packages versions" id="copy-versions" class="nav-link">
             <i class="fas fa-copy"></i>
           </a>
         </li>
@@ -277,7 +277,7 @@
             data-vendor="ccp"
             data-name="eve_online_sde"
             data-version="{{ setting('installed_sde', true) }}"
-            data-toggle="tooltip"
+            data-bs-toggle="tooltip"
             title="Checking package status..."></i> Eve Online SDE</dt>
         <dd>
           <ul>

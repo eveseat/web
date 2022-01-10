@@ -4,9 +4,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="journalContentModalLabel">{{ trans('web::seat.wallet_journal') }}</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <table class="table table-condensed table-hover table-striped" id="character-journal" data-page-length=100>

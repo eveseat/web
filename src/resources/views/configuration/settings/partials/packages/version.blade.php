@@ -3,26 +3,26 @@
      data-vendor="{{ app()->getProvider($package)->getPackagistVendorName() }}"
      data-name="{{ app()->getProvider($package)->getPackagistPackageName() }}"
      data-version="{{ app()->getProvider($package)->getVersion() }}"
-     data-toggle="tooltip"
+     data-bs-toggle="tooltip"
      title="Checking package status..."></i> {{ app()->getProvider($package)->getName() }}
     @if (! is_null(app()->getProvider($package)->getChangelogUri()))
       @if(app()->getProvider($package)->isChangelogApi())
         <a href="#"
-           data-toggle="modal" data-target="#changelogModal"
+           data-bs-toggle="modal" data-bs-target="#changelogModal"
            data-uri="{{ app()->getProvider($package)->getChangelogUri() }}"
            data-name="{{ app()->getProvider($package)->getName() }}"
            data-tag="{{ app()->getProvider($package)->getChangelogTagAttribute() }}"
            data-body="{{ app()->getProvider($package)->getChangelogBodyAttribute() }}">
-          <span data-toggle="tooltip" title="Show the changelog">
+          <span data-bs-toggle="tooltip" title="Show the changelog">
             <i class="fas fa-history"></i>
           </span>
         </a>
       @else
         <a href="#"
-           data-toggle="modal" data-target="#changelogModal"
+           data-bs-toggle="modal" data-bs-target="#changelogModal"
            data-uri="{{ app()->getProvider($package)->getChangelogUri() }}"
            data-name="{{ app()->getProvider($package)->getName() }}">
-          <span data-toggle="tooltip" title="Show the changelog">
+          <span data-bs-toggle="tooltip" title="Show the changelog">
             <i class="fas fa-history"></i>
           </span>
         </a>

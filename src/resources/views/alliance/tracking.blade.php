@@ -11,8 +11,7 @@
       <div class="card-tools">
         <div class="input-group input-group-sm">
         <span class="text-warning">
-                  <i class="fas fa-exclamation-triangle" data-toggle="tooltip" title="" 
-                  data-original-title="SeAT is missing {{ $alliance->members->count() - $alliance->corporations->count() }} member corporations. These will not appear in the table below."></i>
+                  <i class="fas fa-exclamation-triangle" data-bs-toggle="tooltip" title="SeAT is missing {{ $alliance->members->count() - $alliance->corporations->count() }} member corporations. These will not appear in the table below."></i>
                 </span>
         </div>
       </div>

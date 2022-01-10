@@ -1,4 +1,4 @@
-<button data-toggle="modal" data-target="#killmail-detail"
+<button data-bs-toggle="modal" data-bs-target="#killmail-detail"
         @if(request()->character)
         data-url="{{ route('seatcore::character.view.killmail', ['character' => request()->character, 'killmail' => $row]) }}"
         @endif

@@ -38,7 +38,7 @@
       <tr>
         <td colspan="3">
           <input type="hidden" name="members" form="role-form" value="[]" />
-          <button type="button" data-toggle="modal" data-target="#member-modal" class="btn btn-xs btn-success float-right">
+          <button type="button" data-bs-toggle="modal" data-bs-target="#member-modal" class="btn btn-xs btn-success float-right">
             <i class="fas fa-plus"></i> {{ trans('web::seat.add') }}
           </button>
         </td>

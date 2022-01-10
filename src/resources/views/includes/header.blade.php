@@ -51,7 +51,7 @@
           @endforeach
           <!-- ./character-roster -->
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item" data-toggle="modal" data-target="#characterSwitchModal">
+          <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#characterSwitchModal">
             <span class="nav-link-icon">
               <i class="fas fa-user-friends"></i>
             </span>

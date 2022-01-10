@@ -328,11 +328,11 @@
           <li class="list-group-item">
 
             @if ($character->refresh_token)
-              <button data-toggle="tooltip" title="Valid Token" class="btn btn-sm btn-link">
+              <button data-bs-toggle="tooltip" title="Valid Token" class="btn btn-sm btn-link">
                 <i class="fa fa-check text-success"></i>
               </button>
             @else
-              <button data-toggle="tooltip" title="Invalid Token" class="btn btn-sm btn-link">
+              <button data-bs-toggle="tooltip" title="Invalid Token" class="btn btn-sm btn-link">
                 <i class="fa fa-exclamation-triangle text-danger"></i>
               </button>
             @endif

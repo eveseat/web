@@ -45,7 +45,7 @@
               {!! img('characters', 'portrait', $character_info->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
               {{ $character_info->name }}
             </a>
-            <button data-toggle="tooltip" title="Invalid Token" class="btn btn-sm btn-link">
+            <button data-bs-toggle="tooltip" title="Invalid Token" class="btn btn-sm btn-link">
                 <i class="fa fa-exclamation-triangle text-danger"></i>
               </button>
             @endif
@@ -99,7 +99,7 @@
         <dt>{{ trans('web::seat.current_ship') }}</dt>
         <dd>
           @can('character.asset', $character)
-            <a href="#" data-toggle="modal" data-target="#ship-detail" data-url="{{ route('seatcore::character.view.ship', ['character' => $character]) }}"><i class="fas fa-wrench"></i></a>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#ship-detail" data-url="{{ route('seatcore::character.view.ship', ['character' => $character]) }}"><i class="fas fa-wrench"></i></a>
           @endcan
           {{ $character->ship->type->typeName }} called <i>{{ $character->ship->ship_name }}</i>
         </dd>

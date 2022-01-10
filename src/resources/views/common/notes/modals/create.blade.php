@@ -4,9 +4,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="note-create-modal-label">Add a Note</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
 
@@ -31,7 +29,7 @@
 
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-light" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-light" data-bs-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary" form="create-note-form">Add</button>
       </div>
     </div>

@@ -50,7 +50,7 @@
                 href: $(entity.img[i]).data('link'),
                 target: '_blank',
                 title: $(entity.img[i]).data('name'),
-                'data-toggle': 'tooltip'
+                'data-bs-toggle': 'tooltip'
             });
             character.append(entity.img[i]);
             character.tooltip();

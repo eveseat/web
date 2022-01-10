@@ -12,7 +12,7 @@
       <div class="card-tools">
         <div class="input-group input-group-sm">
           <!-- Button trigger modal -->
-          <button type="button" data-toggle="modal" data-target="#note-create-modal"
+          <button type="button" data-bs-toggle="modal" data-bs-target="#note-create-modal"
                   data-object-type="{{ Seat\Eveapi\Models\Character\CharacterInfo::class }}"
                   data-object-id="{{ request()->character->character_id }}" class="btn btn-sm btn-success">
             <i class="fas fa-plus-square"></i>

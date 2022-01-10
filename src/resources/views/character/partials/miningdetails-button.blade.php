@@ -4,6 +4,7 @@
    data-system-name="{{ $row->solar_system->name }}"
    data-type-name="{{ $row->type->typeName }}"
    data-url="{{ route('seatcore::character.view.detailed_mining_ledger', [$row->character_id, $row->date, $row->solar_system_id, $row->type_id]) }}"
-   data-widget="modal" data-target="#detailed-ledger">
+   data-bs-toggle="modal"
+   data-bs-target="#detailed-ledger">
   <i class="fa fa-cubes"></i>
 </a>

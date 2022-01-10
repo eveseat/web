@@ -7,7 +7,7 @@
       <div class="card-header bg-light" id="heading-{{ $message->mail_id }}-{{ $thread_id }}">
         <h2 class="mb-0">
           <button class="btn btn-link @if(! $loop->first) collapsed @endif" type="button"
-                  data-toggle="collapse" data-target="#collapse-{{ $message->mail_id }}-{{ $thread_id }}"
+                  data-bs-toggle="collapse" data-bs-target="#collapse-{{ $message->mail_id }}-{{ $thread_id }}"
                   aria-expanded="{{ $loop->first ? 'true' : 'false' }}" aria-controls="collapse-{{ $message->mail_id }}-{{ $thread_id }}">
 
             @if($thread_message['headers_ok'] == true)

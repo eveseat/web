@@ -4,7 +4,7 @@
       <div class="col-md-4">
         <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
           @foreach(collect(config('seat.permissions'))->sortKeys() as $scope => $permissions)
-            <a class="nav-link mt-0 border-top-0 @if($loop->first) active show @endif" data-toggle="pill" href="#{{ $scope }}-permissions-content" role="tab" aria-controls="{{ $scope }}-permissions-content" aria-selected="{{ $loop->first ? 'active' : 'false' }}">
+            <a class="nav-link mt-0 border-top-0 @if($loop->first) active show @endif" data-bs-toggle="pill" href="#{{ $scope }}-permissions-content" role="tab" aria-controls="{{ $scope }}-permissions-content" aria-selected="{{ $loop->first ? 'active' : 'false' }}">
               {{ ucfirst($scope) }}
               <span class="active-permissions-counter">(<b id="scope-{{ $scope }}-counter">0</b>/{{ count($permissions) }})</span>
               <span class="float-right">

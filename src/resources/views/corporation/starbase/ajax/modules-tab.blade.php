@@ -28,8 +28,8 @@
               </td>
               <td>
                 @foreach($starbase_module->content as $content)
-                <span data-toggle="tooltip"
-                      title="" data-original-title="{{ $content->type->typeName }}">
+                <span data-bs-toggle="tooltip"
+                      title="{{ $content->type->typeName }}">
                   {!! img('types', 'icon', $content->type_id, 64, ['class' => 'img-circle eve-icon small-icon'], false) !!}
                 </span>
                 @endforeach
@@ -63,7 +63,7 @@
                 @if($starbase_module->content->count() > 0)
 
                 <!-- Button trigger modal -->
-                <a type="button" data-widget="modal" data-target="#assetModal{{ $starbase_module->item_id }}">
+                <a type="button" data-bs-toggle="modal" data-bs-target="#assetModal{{ $starbase_module->item_id }}">
                   <i class="fas fa-cube"></i>
                 </a>
 
@@ -73,9 +73,7 @@
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         <h4 class="modal-title" id="assetModalLabel">
                           {{ trans_choice('web::seat.detail', 2) }}:
                           {{ $starbase_module->type->typeName }}

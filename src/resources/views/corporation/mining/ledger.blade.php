@@ -59,7 +59,7 @@
                 $.ajax($(e.relatedTarget).data('url'))
                     .done(function (data) {
                         body.html(data);
-                        $("[data-toggle=tooltip]").tooltip();
+                        $("[data-bs-toggle=tooltip]").tooltip();
                     });
             });
         });

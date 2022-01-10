@@ -2,9 +2,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 <h4 class="modal-title">
                     {!! img('types', 'icon', 0, 32, ['class' => 'img-circle eve-icon'], false) !!} Detailed Ledger for
                     <span id="modal-ledger-system-name">{system_name}</span> on <span id="modal-ledger-date">{date}</span> -

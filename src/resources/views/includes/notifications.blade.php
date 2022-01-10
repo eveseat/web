@@ -1,6 +1,6 @@
 @if (count($errors->all()) > 0)
   <div class="alert alert-danger alert-dismissable">
-    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"></button>
     <h4><i class="fa fa-ban"></i> {{ trans('web::seat.error') }}</h4>
 
     <p class="message">
@@ -17,7 +17,7 @@
 
 @if ($message = session('success'))
   <div class="alert alert-success alert-block">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     <h4><i class="fa fa-check-circle"></i> {{ trans('web::seat.success') }}</h4>
 
     <p class="message">
@@ -34,7 +34,7 @@
 
 @if ($message = session('status'))
   <div class="alert alert-success alert-block">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     <h4><i class="fa fa-check-circle"></i> {{ trans('web::seat.success') }}</h4>
 
     <p class="message">
@@ -51,7 +51,7 @@
 
 @if ($message = session('error'))
   <div class="alert alert-danger alert-dismissable">
-    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"></button>
     <h4><i class="fa fa-ban"></i> {{ trans('web::seat.error') }}</h4>
 
     <p class="message">
@@ -68,7 +68,7 @@
 
 @if ($message = session('warning'))
   <div class="alert alert-warning alert-block">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     <h4><i class="fa fa-exclamation-circle"></i> {{ trans('web::seat.warning') }}</h4>
 
     <p class="message">
@@ -85,7 +85,7 @@
 
 @if ($message = session('notice'))
   <div class="alert alert-warning alert-block">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     <h4><i class="fa fa-exclamation-circle"></i> {{ trans('web::seat.notice') }}</h4>
 
     <p class="message">
@@ -102,7 +102,7 @@
 
 @if ($message = session('info'))
   <div class="alert alert-info alert-block">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     <h4><i class="fa fa-info-circle"></i> {{ trans('web::seat.info') }}</h4>
 
     <p class="message">

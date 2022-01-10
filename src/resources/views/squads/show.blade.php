@@ -167,7 +167,7 @@
                     </button>
                   </form>
                 @else
-                  <button data-toggle="modal" data-target="#application-create" class="btn btn-sm btn-success float-right">
+                  <button data-bs-toggle="modal" data-bs-target="#application-create" class="btn btn-sm btn-success float-right">
                     <i class="fas fa-sign-in-alt"></i> {{ trans('web::squads.join') }}
                   </button>
                 @endif
@@ -414,7 +414,7 @@
                 {defaultContent: "", data: "action", name: "action", title: "Action", "orderable": false, "searchable": false}
             ],
             "drawCallback": function() {
-                $("[data-toggle=tooltip]").tooltip();
+                $("[data-bs-toggle=tooltip]").tooltip();
             }
         });
     }
@@ -439,7 +439,7 @@
                 {defaultContent: "", data: "action", name: "action", title: "Action", "orderable": false, "searchable": false}
             ],
             "drawCallback": function() {
-                $("[data-toggle=tooltip]").tooltip();
+                $("[data-bs-toggle=tooltip]").tooltip();
             }
         });
     }

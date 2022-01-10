@@ -42,7 +42,7 @@
           $.ajax($(e.relatedTarget).data('url'))
               .done(function (data) {
                   body.html(data);
-                  $(document).find('span[data-toggle="tooltip"]').tooltip();
+                  $(document).find('span[data-bs-toggle="tooltip"]').tooltip();
               });
       });
 

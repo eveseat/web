@@ -88,20 +88,20 @@
                                                 <div class="row mt-3">
                                                     ${data.type === 'manual' ?
                                                     `<div class="col-4 text-center">
-                                                        <span class="badge badge-pill badge-light" data-toggle="tooltip" data-placement="top" title="Members">${data.members_count}</span>
+                                                        <span class="badge badge-pill badge-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Members">${data.members_count}</span>
                                                     </div>
                                                     <div class="col-4 text-center">
-                                                        <span class="badge badge-pill badge-warning" data-toggle="tooltip" data-placement="top" title="Moderators">${data.moderators_count}</span>
+                                                        <span class="badge badge-pill badge-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Moderators">${data.moderators_count}</span>
                                                     </div>
                                                     <div class="col-4 text-center">
-                                                        <span class="badge badge-pill badge-primary" data-toggle="tooltip" data-placement="top" title="Candidates">${data.applications_count}</span>
+                                                        <span class="badge badge-pill badge-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Candidates">${data.applications_count}</span>
                                                     </div>`
                                                     :
                                                    `<div class="col-6 text-center">
-                                                        <span class="badge badge-pill badge-light" data-toggle="tooltip" data-placement="top" title="Members">${data.members_count}</span>
+                                                        <span class="badge badge-pill badge-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Members">${data.members_count}</span>
                                                     </div>
                                                     <div class="col-6 text-center">
-                                                        <span class="badge badge-pill badge-warning" data-toggle="tooltip" data-placement="top" title="Moderators">${data.moderators_count}</span>
+                                                        <span class="badge badge-pill badge-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Moderators">${data.moderators_count}</span>
                                                     </div>`
                                                     }
                                                 </div>
@@ -189,9 +189,11 @@
           refreshSquadDeck(keyword, 1);
       });
 
+      /*
       $('body').tooltip({
-          selector: '[data-toggle="tooltip"]'
+          selector: '[data-bs-toggle="tooltip"]'
       });
+      */
 
       $('input[name="search-squad"]').on('keyup', searchHandlerDelay(function () {
           refreshSquadDeck(this.value, 1);

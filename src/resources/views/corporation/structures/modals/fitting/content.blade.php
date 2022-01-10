@@ -45,7 +45,7 @@
     <dl>
       <dt>Refuel Required in</dt>
       <dd>
-        <span data-toggle="tooltip" title="{{ $structure->fuel_expires }}">
+        <span data-bs-toggle="tooltip" title="{{ $structure->fuel_expires }}">
           @if(carbon()->addDay()->gte($structure->fuel_expires))
             <i class="fas fa-exclamation-circle text-danger"></i>
           @elseif(carbon()->addDays(2)->gte($structure->fuel_expires))

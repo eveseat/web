@@ -3,9 +3,7 @@
     <div class="modal-content">
       <div class="modal-header bg-blue">
         <h4 class="modal-title">Insurances</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body p-0"></div>
       <div class="modal-footer bg-blue">

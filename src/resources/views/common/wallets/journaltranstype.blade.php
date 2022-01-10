@@ -2,9 +2,9 @@
 
 <span class="float-right">
   @if(! empty($row->reason))
-    <i class="fa fa-comment" data-toggle="tooltip" title="" data-original-title="{{ $row->reason }}"></i>
+    <i class="fa fa-comment" data-bs-toggle="tooltip" title="{{ $row->reason }}"></i>
   @endif
   @if($row->description)
-    <i class="fa fa-info-circle" data-toggle="tooltip" title="" data-original-title="{{ $row->description }}"></i>
+    <i class="fa fa-info-circle" data-bs-toggle="tooltip" title="{{ $row->description }}"></i>
   @endif
 </span>

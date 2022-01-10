@@ -1,4 +1,4 @@
-<button data-toggle="modal" data-target="#fitting-detail" class="btn btn-sm btn-link"
+<button data-bs-toggle="modal" data-bs-target="#fitting-detail" class="btn btn-sm btn-link"
    @if(isset($character_id))
    data-url="{{ route('seatcore::character.view.fittings.items', ['character' => $character_id, 'fitting_id' => $fitting_id]) }}"
    @else

@@ -57,10 +57,12 @@
                     @foreach($character->skill_queue->where('finish_date', '>', carbon())->slice(1)->all() as $skill)
 
                       <li>
-                        <span class="col-md-8" data-toggle="tooltip" title=""
-                              @if($skill->finish_date != '0000-00-00 00:00:00')
-                              data-original-title="Ends {{ human_diff(carbon($skill->finish_date)->toDateString()) }} on {{ carbon($skill->finish_date)->toDateString() }} at {{ carbon($skill->finish_date)->toTimeString() }}"
-                            @endif>{{ $skill->type->typeName }}</span>
+                        <span class="col-md-8"
+                          @if($skill->finish_date != '0000-00-00 00:00:00')
+                            data-bs-toggle="tooltip"
+                            title="Ends {{ human_diff(carbon($skill->finish_date)->toDateString()) }} on {{ carbon($skill->finish_date)->toDateString() }} at {{ carbon($skill->finish_date)->toTimeString() }}"
+                          @endif
+                        >{{ $skill->type->typeName }}</span>
                         <span class="col-md-4">
                           @for($i = 1; $i <= $skill->finished_level; $i++)
                             @if($i == $skill->finished_level)

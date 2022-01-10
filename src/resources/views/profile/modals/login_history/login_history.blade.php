@@ -3,9 +3,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="historyModalLabel">{{ trans('web::seat.login_history') }}</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
 
@@ -22,8 +20,7 @@
             @foreach($history as $entry)
               <tr>
                 <td>
-                  <span data-toggle="tooltip" title=""
-                        data-original-title="{{ $entry->created_at }}">{{ human_diff($entry->created_at) }}</span>
+                  <span data-bs-toggle="tooltip" title="{{ $entry->created_at }}">{{ human_diff($entry->created_at) }}</span>
                 </td>
                 <td>{{ ucfirst($entry->action) }}</td>
                 <td>{{ $entry->source }}</td>
