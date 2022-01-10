@@ -63,7 +63,7 @@ class SummaryController extends Controller
             return is_null($char->refresh_token);
         })->count();
 
-        return view('web::corporation.summary',
+        return view('web::corporation.sheet.sheet',
             compact('corporation', 'sheet', 'asset_divisions', 'wallet_divisions', 'trackings'));
 
     }

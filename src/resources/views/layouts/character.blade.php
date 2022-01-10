@@ -7,13 +7,13 @@
 
     <div class="row">
 
-        <div class="col-md-3">
+        <div class="col-md-3 col-xxl-2">
 
             @include('web::character.includes.sidecard')
 
         </div>
 
-        <div class="col-md-9">
+        <div class="col-md-9 col-xxl-10">
 
             @yield('character_content')
 
