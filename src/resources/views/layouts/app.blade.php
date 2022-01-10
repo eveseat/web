@@ -48,7 +48,7 @@
       <div class="page-wrapper">
 
         <!-- Content Header (Page header) -->
-        <div class="container-xl">
+        <div class="container-fluid">
           <!-- Page title -->
           <div class="page-header d-print-none">
             <div class="row align-items-center">
@@ -64,7 +64,7 @@
 
         <!-- Main content -->
         <div class="page-body">
-          <div class="container-xl">
+          <div class="container-fluid">
 
             <!-- Disclaimer Configuration Alerts -->
             @include('web::includes.security-alert')
@@ -79,11 +79,10 @@
         </div>
         <!-- /.content -->
 
+        <!-- Main Footer -->
+        @include('web::includes.footer')
       </div>
       <!-- /.content-wrapper -->
-
-      <!-- Main Footer -->
-      @include('web::includes.footer')
 
       <!-- Right Sidebar Content -->
       {{-- @include('web::includes.right_sidebar') --}}

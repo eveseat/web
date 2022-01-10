@@ -1,6 +1,6 @@
 <!-- Header Navbar -->
 <header class="navbar navbar-expand-md navbar-light sticky-top d-lg-flex d-print-none">
-  <div class="container-xl">
+  <div class="container-fluid">
     <!-- sidebar-toggle-button -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#section-menu">
       <span class="navbar-toggler-icon"></span>
