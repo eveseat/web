@@ -9,7 +9,7 @@
 
         <div class="col-md-3">
 
-            @include('web::character.includes.summary')
+            @include('web::character.includes.sidecard')
 
         </div>
 
