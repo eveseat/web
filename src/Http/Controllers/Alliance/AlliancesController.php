@@ -127,7 +127,7 @@ class AlliancesController extends Controller
             })->count();
         });
 
-        return view('web::alliance.summary',
+        return view('web::alliance.sheet.sheet',
             compact('alliance', 'sheet', 'tracked'));
 
     }
