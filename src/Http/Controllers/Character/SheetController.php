@@ -38,6 +38,6 @@ class SheetController extends Controller
      */
     public function show(CharacterInfo $character)
     {
-        return view('web::character.sheet', compact('character'));
+        return view('web::character.sheet.sheet', compact('character'));
     }
 }
