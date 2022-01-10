@@ -22,24 +22,39 @@
 
 return [
     [
-        'name'           => 'contacts',
-        'label'          => 'web::seat.contacts',
-        'permission'     => 'alliance.contact',
-        'highlight_view' => 'contacts',
-        'route'          => 'seatcore::alliance.view.contacts',
+        'name'    => '0-alliance',
+        'label'   => 'web::seat.alliance',
+        'plural'  => false,
+        'icon'    => 'fas fa-city',
+        'entries' => [
+            [
+                'name'       => '0-summary',
+                'label'      => 'web::seat.summary',
+                'icon'       => 'fas fa-passport',
+                'permission' => 'alliance.summary',
+                'route'      => 'seatcore::alliance.view.summary',
+            ],
+            [
+                'name'       => '2-tracking',
+                'label'      => 'web::seat.tracking',
+                'icon'       => 'fas fa-user-shield',
+                'permission' => 'alliance.tracking',
+                'route'      => 'seatcore::alliance.view.tracking',
+            ],
+        ],
     ],
     [
-        'name'           => 'summary',
-        'label'          => 'web::seat.summary',
-        'permission'     => 'alliance.summary',
-        'highlight_view' => 'summary',
-        'route'          => 'seatcore::alliance.view.summary',
-    ],
-    [
-        'name'           => 'tracking',
-        'label'          => 'web::seat.tracking',
-        'permission'     => 'alliance.tracking',
-        'highlight_view' => 'tracking',
-        'route'          => 'seatcore::alliance.view.tracking',
+        'name'    => '1-military',
+        'label'   => 'web::seat.military',
+        'icon'    => 'fas fa-rocket',
+        'entries' => [
+            [
+                'name'       => '0-contacts',
+                'label'      => 'web::seat.contacts',
+                'icon'       => 'fas fa-address-book',
+                'permission' => 'alliance.contact',
+                'route'      => 'seatcore::alliance.view.contacts',
+            ],
+        ],
     ],
 ];

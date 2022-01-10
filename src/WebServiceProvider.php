@@ -226,7 +226,7 @@ class WebServiceProvider extends AbstractSeatPlugin
 
         // Alliance menu composer
         $this->app['view']->composer([
-            'web::alliance.includes.menu',
+            'web::layouts.alliance',
         ], AllianceMenu::class);
 
         // Alliance layout breadcrumb

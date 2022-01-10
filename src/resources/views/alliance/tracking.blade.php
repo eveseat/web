@@ -1,4 +1,4 @@
-@extends('web::alliance.layouts.view', ['viewname' => 'tracking', 'breadcrumb' => trans('web::seat.tracking')])
+@extends('web::layouts.alliance', ['viewname' => 'tracking', 'breadcrumb' => trans('web::seat.tracking')])
 
 @section('page_description', trans_choice('web::seat.alliance', 1) . ' ' . trans('web::seat.tracking'))
 
