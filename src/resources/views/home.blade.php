@@ -71,7 +71,7 @@
 
       <!-- Ore Badge -->
       <div class="info-box">
-        <span class="info-box-icon bg-yellow elevation-1"><i class="far fa-coins"></i></span>
+        <span class="info-box-icon bg-yellow elevation-1"><i class="fas fa-coins"></i></span>
         <div class="info-box-content">
           <span class="info-box-text">{{ trans('web::seat.total_character_ratted_isk') }} <small class="text-muted">({{ trans('web::seat.current_month') }})</small></span>
           <span class="info-box-number">

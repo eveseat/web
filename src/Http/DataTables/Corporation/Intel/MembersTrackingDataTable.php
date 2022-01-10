@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ use Seat\Eveapi\Models\Corporation\CorporationMemberTracking;
 use Seat\Eveapi\Models\Sde\SolarSystem;
 use Seat\Eveapi\Models\Sde\StaStation;
 use Seat\Eveapi\Models\Universe\UniverseStructure;
+use Seat\Web\Http\DataTables\Exports\MembersTrackingDataTableExport;
 use Seat\Web\Models\User;
 use Yajra\DataTables\Services\DataTable;
 
@@ -36,6 +37,8 @@ use Yajra\DataTables\Services\DataTable;
  */
 class MembersTrackingDataTable extends DataTable
 {
+    protected $exportClass = MembersTrackingDataTableExport::class;
+
     /**
      * @return \Illuminate\Http\JsonResponse
      *
@@ -122,6 +125,8 @@ class MembersTrackingDataTable extends DataTable
             ->orderBy(1, 'asc')
             ->parameters([
                 'drawCallback' => 'function() { ids_to_names(); $("[data-toggle=tooltip]").tooltip(); }',
+                'dom'          => '<"row"<"col-sm-12 col-md-4"l><"col-sm-12 col-md-4 text-center"B><"col-sm-12 col-md-4"f>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+                'buttons' => ['postCsv', 'postExcel'],
             ]);
     }
 

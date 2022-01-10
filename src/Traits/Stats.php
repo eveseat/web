@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@ use Seat\Eveapi\Models\Character\CharacterWalletJournal;
 use Seat\Eveapi\Models\Industry\CharacterMining;
 use Seat\Eveapi\Models\Killmails\KillmailDetail;
 use Seat\Eveapi\Models\Wallet\CharacterWalletBalance;
+use Seat\Eveapi\Models\Wallet\CharacterWalletJournal;
 
 /**
  * Class Stats.
@@ -70,9 +71,10 @@ trait Stats
      */
     public function getTotalCharacterRattingIsk(array $character_ids): ?float
     {
-        return CharacterWalletJournal::select('amount')
-            ->whereIn('second_party_id', $character_ids)
+        return CharacterWalletJournal::whereIn('second_party_id', $character_ids)
             ->whereIn('ref_type', ['bounty_prizes', 'ess_escrow_transfer', 'corporate_reward_payout'])
+            ->whereYear('date', carbon()->year)
+            ->whereMonth('date', carbon()->month)
             ->sum('amount');
     }
 

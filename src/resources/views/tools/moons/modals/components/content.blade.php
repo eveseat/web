@@ -1,5 +1,5 @@
 <h4>{{ $moon->name }}</h4>
-<p class="lead">Provided figures are based on a chunk of one hour with {{ number_format(20000, 2) }} m3. Reprocessed figures are based on a {{ (setting('reprocessing_yield') ?: 0.80) * 100 }}% reprocessing yield.</p>
+<p class="lead">Provided figures are based on a chunk of one hour with {{ number_format(40000, 2) }} m3. Reprocessed figures are based on a {{ (setting('reprocessing_yield') ?: 0.80) * 100 }}% reprocessing yield.</p>
 
 <h4>Raw Materials</h4>
 
@@ -19,11 +19,11 @@
         <td>
           @include('web::partials.type', ['type_id' => $type->typeID, 'type_name' => $type->typeName])
         </td>
-        {{-- let's assume a default chunk is 20 000m3 per hour | https://wiki.eveuniversity.org/Moon_mining --}}
+        {{-- let's assume a default chunk is 40 000m3 per hour | https://wiki.eveuniversity.org/Moon_mining --}}
         <td>{{ number_format($type->pivot->rate * 100, 2) }} %</td>
-        <td>{{ number_format($type->pivot->rate * 20000 * 720, 2) }} m3</td>
-        <td>{{ number_format(($type->pivot->rate * 20000 * 720) / $type->volume) }}</td>
-        <td>{{ number_format((($type->pivot->rate * 20000 * 720) / $type->volume) * $type->price->average, 2) }}</td>
+        <td>{{ number_format($type->pivot->rate * 40000 * 720, 2) }} m3</td>
+        <td>{{ number_format(($type->pivot->rate * 40000 * 720) / $type->volume) }}</td>
+        <td>{{ number_format((($type->pivot->rate * 40000 * 720) / $type->volume) * $type->price->average, 2) }}</td>
       </tr>
     @endforeach
       <tfoot>
@@ -53,7 +53,7 @@
         return $type->materials->map(function ($material) use ($type) {
           // composite quantity = (moon rate * chunk volume) / composite volume
           // reprocessed quantity = composite quantity * material quantity / 100
-          $material->pivot->quantity = intdiv(($type->pivot->rate * 20000 * 720) / $type->volume, 100) * $material->pivot->quantity * (setting('reprocessing_yield') ?: 0.80);
+          $material->pivot->quantity = intdiv(($type->pivot->rate * 40000 * 720) / $type->volume, 100) * $material->pivot->quantity * (setting('reprocessing_yield') ?: 0.80);
           return $material;
         });
       })->collapse()->groupBy('typeID') as $material
