@@ -93,7 +93,7 @@
       </form>
       <!-- /.search-form -->
       <!-- section-menu -->
-      @include('web::includes.section-menu')
+      @include('web::includes.menu.section.wrapper')
       <!-- /.section-menu -->
     </div>
   </div>
