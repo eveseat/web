@@ -1,8 +1,8 @@
-@extends('web::corporation.mining.layouts.view', ['sub_viewname' => 'ledger', 'breadcrumb' => trans('web::seat.mining')])
+@extends('web::layouts.corporation', ['viewname' => 'ledger', 'breadcrumb' => trans('web::seat.mining')])
 
 @section('page_description', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.mining') . ' ' . trans_choice('web::seat.mining_ledger', 2))
 
-@section('mining_content')
+@section('corporation_content')
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">{{ trans_choice('web::seat.available_ledger', $ledgers->count()) }}</h3>

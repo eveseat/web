@@ -1,8 +1,8 @@
-@extends('web::corporation.security.layouts.view', ['sub_viewname' => 'titles', 'breadcrumb' => trans_choice('web::seat.title', 2)])
+@extends('web::layouts.corporation', ['viewname' => 'titles', 'breadcrumb' => trans_choice('web::seat.title', 2)])
 
 @section('page_description', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.title', 2))
 
-@section('security_content')
+@section('corporation_content')
 
   <div class="card">
     <div class="card-header">

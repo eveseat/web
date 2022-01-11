@@ -132,9 +132,10 @@ abstract class AbstractMenu
                     throw new PackageMenuBuilderException(
                         'A sub menu entry failed to define an icon');
 
-                if (! array_key_exists('route', $entry))
-                    throw new PackageMenuBuilderException(
-                        'A sub menu entry failed to define a route');
+                if (! array_key_exists('entries', $menu_data))
+                    if (! array_key_exists('route', $entry))
+                        throw new PackageMenuBuilderException(
+                            'A sub menu entry failed to define a route');
 
                 if (isset($entry['entries'])) {
 

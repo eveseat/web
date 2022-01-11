@@ -1,8 +1,8 @@
-@extends('web::corporation.ledger.layouts.view', ['sub_viewname' => 'bounty_prizes', 'breadcrumb' => trans_choice('web::seat.bounty_prizes', 2)])
+@extends('web::layouts.corporation', ['viewname' => 'bounty_prizes', 'breadcrumb' => trans_choice('web::seat.bounty_prizes', 2)])
 
 @section('page_description', trans_choice('web::seat.corporation', 1) . ' ' . trans_choice('web::seat.bounty_prizes', 2))
 
-@section('ledger_content')
+@section('corporation_content')
 
   <div class="card">
     <div class="card-header">

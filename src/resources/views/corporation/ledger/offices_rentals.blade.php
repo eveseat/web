@@ -1,8 +1,8 @@
-@extends('web::corporation.ledger.layouts.view', ['sub_viewname' => 'offices_rentals', 'breadcrumb' => trans('web::seat.seat.offices_rentals')])
+@extends('web::layouts.corporation', ['viewname' => 'offices_rentals', 'breadcrumb' => trans('web::seat.seat.offices_rentals')])
 
 @section('page_description', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.offices_rentals'))
 
-@section('ledger_content')
+@section('corporation_content')
 
   <div class="card">
     <div class="card-header">
