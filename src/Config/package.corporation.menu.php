@@ -183,7 +183,7 @@ return [
                     [
                         'name'       => '0-journal',
                         'label'      => 'web::seat.journal',
-                        'icon'       => 'fas fa-funnel-dollar',
+                        'icon'       => 'fas fa-book',
                         'permission' => 'corporation.journal',
                         'route'      => 'seatcore::corporation.view.journal',
                     ],

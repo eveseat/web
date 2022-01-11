@@ -1,10 +1,10 @@
-@extends('web::character.intel.layouts.view', ['sub_viewname' => 'note', 'breadcrumb' => trans('web::seat.intel')])
+@extends('web::layouts.character', ['viewname' => 'note', 'breadcrumb' => trans('web::seat.intel')])
 
 @section('page_description', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.intel'))
 
 @inject('request', 'Illuminate\Http\Request')
 
-@section('intel_content')
+@section('character_content')
 
   <div class="card">
     <div class="card-header">
