@@ -6,6 +6,7 @@
 
 @section('character_content')
 
+  <!--
   <div class="row">
     <div class="col-md-12">
       <div class="card-deck">
@@ -36,68 +37,231 @@
       </div>
     </div>
   </div>
+  -->
 
-  @foreach($character->skills->groupBy('type.groupID')->chunk(2) as $skill_group_row)
-    <div class="row">
-      <div class="col-md-12 mt-3">
-        <div class="card-deck">
-
-          @foreach($skill_group_row as $skill_group)
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">{{ $skill_group->first()->type->group->groupName }}</h3>
-                @if($character->refresh_token)
-                <div class="card-tools">
-                  <div class="input-group input-group-sm">
-                    @include('web::components.jobs.buttons.update', ['type' => 'character', 'entity' => $character->character_id, 'job' => 'character.skills', 'label' => trans('web::seat.update_skills')])
+  <div class="d-flex align-items-start mb-3">
+    <div class="card me-3">
+      <ul class="nav nav-pills seat-nav-vertical-pills flex-sm-column" role="tablist" aria-orientation="vertical">
+        @foreach($skill_categories as $category)
+          <li class="nav-item" role="presentation">
+            <a href="#" @class(['nav-link', 'w-100', 'active' => $loop->first]) data-bs-toggle="pill" data-bs-target="#skills-category-{{ $category->groupID }}" type="button" role="tab" aria-selected="true">
+              <div class="col">
+                <div class="text-start mb-2">{{ $category->groupName }}</div>
+                <div class="progress progress-sm mb-2">
+                  <div class="progress-bar" role="progressbar" style="width: {{ round($character->skills->where('type.group.groupID', $category->groupID)->count() / $category->types->where('published', true)->count() * 100) }}%;" aria-valuenow="38" aria-valuemin="0" aria-valuemax="0">
+                    <span class="visually-hidden">{{ number_format($character->skills->where('type.group.groupID', $category->groupID)->count() / $category->types->where('published', true)->count() * 100, 2) }}% Complete</span>
                   </div>
                 </div>
-                @endif
               </div>
-              <div class="card-body p-0">
-                <table class="table table-striped table-hover table-condensed table-sm">
-                  @foreach($skill_group as $skill)
-                    <tr>
-                      <td><i class="fa fa-book"></i> {{ $skill->type->typeName }}</td>
-                      <td class="text-right">
-                        @if($skill->trained_skill_level == 0)
-                          <i class="fa fa-star-o"></i>
-                        @elseif($skill->trained_skill_level == 5)
-                          <span class="text-green">
-                            @for($i = 1; $i <= 5; $i++)
-                              <i class="fa fa-star"></i>
-                            @endfor
+            </a>
+          </li>
+        @endforeach
+      </ul>
+    </div>
+    <div class="tab-content flex-fill">
+      @foreach($skill_categories as $category)
+        <div @class(['tab-pane', 'fade', 'show' => $loop->first, 'active' => $loop->first]) role="tabpanel" id="skills-category-{{ $category->groupID }}">
+          <div class="row">
+            <div class="col">
+              <div class="card mb-3">
+                <div class="card-header">
+                  <h3 class="card-title">{{ $category->groupName }}</h3>
+                </div>
+                <ul class="list-group list-group-flush">
+                  @foreach($character->skills->where('type.groupID', $category->groupID)->sortBy('type.typeName') as $skill)
+                    <li class="list-group-item d-flex align-items-center">
+                      <div class="col">
+                        <div class="d-flex align-items-center">
+                          <span class="avatar me-1">
+                            <span class="h1 m-0">{{ $skill->trained_skill_level }}</span>
                           </span>
-                        @else
-                          @for($i = 1;  $i <= $skill->trained_skill_level; $i++)
-                            <i class="fa fa-star"></i>
-                          @endfor
-                        @endif
-                        | <i>{{ $skill->trained_skill_level }}</i>
-                      </td>
-                    </tr>
+                          <strong class="ms-2">{{ $skill->type->typeName }}</strong>
+                        </div>
+                      </div>
+                      <div class="col d-none d-xxl-block">
+                        <div>
+                          <b>{{ number_format($skill->skillpoints_in_skill) }} trained skillpoints</b>
+                        </div>
+                        <small class="text-muted fst-italic">{{ number_format($skill->type->maximum_skillpoints) }} total skillpoints</small>
+                      </div>
+                    </li>
                   @endforeach
-                </table>
-              </div>
-              <div class="card-footer">
-                <div class="float-left">
-                  <i class="text-muted">{{ $skill_group->count() }} skills</i>
-                </div>
-                <div class="float-right">
-                  <i class="text-muted">{{ number_format($skill_group->sum('skillpoints_in_skill'), 0) }} skillpoints</i>
-                </div>
+                </ul>
               </div>
             </div>
-          @endforeach
-
+            <div class="col-auto">
+              <!-- profile-coverage -->
+              <div class="card card-sm mb-3">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-auto">
+                      @switch(true)
+                        @case(in_array($category->groupID, $training_profiles->core->categories))
+                        <div class="chart-sparkline chart-sparkline-square profile-coverage" data-coverage-stats="{{ $training_profiles->core->stats }}"></div>
+                        @break
+                        @case(in_array($category->groupID, $training_profiles->leadership->categories))
+                        <div class="chart-sparkline chart-sparkline-square profile-coverage" data-coverage-stats="{{ $training_profiles->leadership->stats }}"></div>
+                        @break
+                        @case(in_array($category->groupID, $training_profiles->fighter->categories))
+                        <div class="chart-sparkline chart-sparkline-square profile-coverage" data-coverage-stats="{{ $training_profiles->fighter->stats }}"></div>
+                        @break
+                        @case(in_array($category->groupID, $training_profiles->industrial->categories))
+                        <div class="chart-sparkline chart-sparkline-square profile-coverage" data-coverage-stats="{{ $training_profiles->industrial->stats }}"></div>
+                        @break
+                      @endswitch
+                    </div>
+                    <div class="col">
+                      <div class="font-weight-bold">Profile coverage</div>
+                      @if($character->skills)
+                        @switch(true)
+                          @case(in_array($category->groupID, $training_profiles->core->categories))
+                            <div class="text-muted fst-italic">{{ trans($training_profiles->core->label) }} {{ number_format($training_profiles->core->stats, 2) }}%</div>
+                          @break
+                          @case(in_array($category->groupID, $training_profiles->leadership->categories))
+                            <div class="text-muted fst-italic">{{ trans($training_profiles->leadership->label) }} {{ number_format($training_profiles->leadership->stats, 2) }}%</div>
+                          @break
+                          @case(in_array($category->groupID, $training_profiles->fighter->categories))
+                            <div class="text-muted fst-italic">{{ trans($training_profiles->fighter->label) }} {{ number_format($training_profiles->fighter->stats, 2 ) }}%</div>
+                          @break
+                          @case(in_array($category->groupID, $training_profiles->industrial->categories))
+                            <div class="text-muted fst-italic">{{ trans($training_profiles->industrial->label) }} {{ number_format($training_profiles->industrial->stats, 2) }}%</div>
+                          @break
+                        @endswitch
+                      @else
+                        <div class="text-muted fst-italic">0.00 %</div>
+                      @endif
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- ./profile-coverage -->
+              <!-- section-completeness -->
+              <div class="card card-sm mb-3">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-auto">
+                      <div class="chart-sparkline chart-sparkline-square section-completeness" data-trained-skills="{{ $character->skills->where('type.groupID', $category->groupID)->count() }}" data-overall-skills="{{ $category->types_count }}"></div>
+                    </div>
+                    <div class="col">
+                      <div class="font-weight-bold">Section completeness</div>
+                      <div class="text-muted fst-italic">{{ $character->skills->where('type.groupID', $category->groupID)->count() }} / {{ $category->types_count }} skills</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- ./section-completeness -->
+              <!-- level-5 -->
+              <div class="card card-sm mb-3">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-auto">
+                    <span class="bg-azure text-white avatar">
+                      <span class="h1 m-0">V</span>
+                    </span>
+                    </div>
+                    <div class="col">
+                      <div class="font-weight-bold">{{ $character->skills->where('type.groupID', $category->groupID)->where('trained_skill_level', 5)->count() }} skills</div>
+                      <div class="text-muted fst-italic">{{ number_format($character->skills->where('type.groupID', $category->groupID)->where('trained_skill_level', 5)->sum('skillpoints_in_skill')) }} skillpoints</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- ./level-5 -->
+              <!-- level-4 -->
+              <div class="card card-sm mb-3">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-auto">
+                    <span class="bg-blue text-white avatar">
+                      <span class="h1 m-0">IV</span>
+                    </span>
+                    </div>
+                    <div class="col">
+                      <div class="font-weight-bold">{{ $character->skills->where('type.groupID', $category->groupID)->where('trained_skill_level', 4)->count() }} skills</div>
+                      <div class="text-muted fst-italic">{{ number_format($character->skills->where('type.groupID', $category->groupID)->where('trained_skill_level', 4)->sum('skillpoints_in_skill')) }} skillpoints</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- ./level-4 -->
+              <!-- level-3 -->
+              <div class="card card-sm mb-3">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-auto">
+                    <span class="bg-green text-white avatar">
+                      <span class="h1 m-0">III</span>
+                    </span>
+                    </div>
+                    <div class="col">
+                      <div class="font-weight-bold">{{ $character->skills->where('type.groupID', $category->groupID)->where('trained_skill_level', 3)->count() }} skills</div>
+                      <div class="text-muted fst-italic">{{ number_format($character->skills->where('type.groupID', $category->groupID)->where('trained_skill_level', 3)->sum('skillpoints_in_skill')) }} skillpoints</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- ./level-3 -->
+              <!-- level-2 -->
+              <div class="card card-sm mb-3">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-auto">
+                    <span class="bg-yellow text-white avatar">
+                      <span class="h1 m-0">II</span>
+                    </span>
+                    </div>
+                    <div class="col">
+                      <div class="font-weight-bold">{{ $character->skills->where('type.groupID', $category->groupID)->where('trained_skill_level', 2)->count() }} skills</div>
+                      <div class="text-muted fst-italic">{{ number_format($character->skills->where('type.groupID', $category->groupID)->where('trained_skill_level', 2)->sum('skillpoints_in_skill')) }} skillpoints</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- ./level-2 -->
+              <!-- level-1 -->
+              <div class="card card-sm mb-3">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-auto">
+                    <span class="bg-red text-white avatar">
+                      <span class="h1 m-0">I</span>
+                    </span>
+                    </div>
+                    <div class="col">
+                      <div class="font-weight-bold">{{ $character->skills->where('type.groupID', $category->groupID)->where('trained_skill_level', 1)->count() }} skills</div>
+                      <div class="text-muted fst-italic">{{ number_format($character->skills->where('type.groupID', $category->groupID)->where('trained_skill_level', 1)->sum('skillpoints_in_skill')) }} skillpoints</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- ./level-1 -->
+            </div>
+          </div>
         </div>
-      </div>
+      @endforeach
     </div>
-  @endforeach
-
+  </div>
 @stop
 
+@push('head')
+  <style>
+    .seat-nav-vertical-pills li {
+      position: relative;
+    }
+
+    .seat-nav-vertical-pills li .active::after {
+      position: absolute;
+      content: "";
+      top: 0;
+      right: -1px;
+      bottom: 0;
+      border-right: 1px solid var(--tblr-blue);
+    }
+  </style>
+@endpush
+
 @push('javascript')
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script>
     $.get("{{ route('seatcore::character.view.skills.graph.level', ['character' => $character]) }}", function (data) {
       new Chart($("canvas#skills-level"), {
@@ -123,6 +287,51 @@
           }
         }
       });
+    });
+
+    let widgetSectionConfig = {
+      chart: {
+        height: 40,
+        width: 40,
+        type: 'radialBar',
+        animations: {
+          enabled: false
+        },
+        sparkline: {
+          enabled: true
+        }
+      },
+      tooltip: {
+        enabled: false
+      },
+      plotOptions: {
+        radialBar: {
+          hollow: {
+            margin: 0,
+            size: '75%'
+          },
+          track: {
+            margin: 0
+          },
+          dataLabels: {
+            show: false
+          }
+        }
+      },
+      colors: ['#206bc4'],
+      series: [],
+    };
+
+    // profile coverage chart
+    document.querySelectorAll('.profile-coverage').forEach((node) => {
+      widgetSectionConfig.series = [node.dataset.coverageStats];
+      (new ApexCharts(node, widgetSectionConfig)).render();
+    });
+
+    // section completeness charts
+    document.querySelectorAll('.section-completeness').forEach((node) => {
+      widgetSectionConfig.series = [node.dataset.trainedSkills / node.dataset.overallSkills * 100];
+      (new ApexCharts(node, widgetSectionConfig)).render();
     });
   </script>
 @endpush

@@ -38,14 +38,59 @@ class SkillsController extends Controller
 {
     use Stats;
 
+    const CORE_PROFILE_CATEGORIES = [1210, 1216, 275, 1220, 269, 1209, 257];
+    const LEADERSHIP_PROFILE_CATEGORIES = [266, 258, 278, 1545];
+    const FIGHTER_PROFILE_CATEGORIES = [273, 272, 256, 255, 1240, 1213];
+    const INDUSTRIAL_PROFILE_CATEGORIES = [1241, 268, 1218, 1217, 270, 274];
+
     /**
      * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getSkills(CharacterInfo $character)
     {
+        $skill_categories = InvGroup::withCount([
+            'types' => function ($query) {
+                $query->where('published', true);
+            }])
+            ->where('published', true)
+            ->where('categoryID', InvGroup::SKILL_CATEGORY_ID)
+            ->orderBy('groupName')
+            ->get();
+
+        $training_profiles = (object) [
+            'core' => (object) [
+                'categories' => self::CORE_PROFILE_CATEGORIES,
+                'label' => 'web::seat.core',
+                'trained' => $character->skills->whereIn('type.groupID', self::CORE_PROFILE_CATEGORIES)->count(),
+                'overall' => $skill_categories->whereIn('groupID', self::CORE_PROFILE_CATEGORIES)->sum('types_count'),
+                'stats' => $character->skills->whereIn('type.groupID', self::CORE_PROFILE_CATEGORIES)->count() / $skill_categories->whereIn('groupID', self::CORE_PROFILE_CATEGORIES)->sum('types_count') * 100,
+            ],
+            'leadership' => (object) [
+                'categories' => self::LEADERSHIP_PROFILE_CATEGORIES,
+                'label' => 'web::seat.leadership',
+                'trained' => $character->skills->whereIn('type.groupID', self::LEADERSHIP_PROFILE_CATEGORIES)->count(),
+                'overall' => $skill_categories->whereIn('groupID', self::LEADERSHIP_PROFILE_CATEGORIES)->sum('types_count'),
+                'stats' => $character->skills->whereIn('type.groupID', self::LEADERSHIP_PROFILE_CATEGORIES)->count() / $skill_categories->whereIn('groupID', self::LEADERSHIP_PROFILE_CATEGORIES)->sum('types_count') * 100,
+            ],
+            'fighter' => (object) [
+                'categories' => self::FIGHTER_PROFILE_CATEGORIES,
+                'label' => 'web::seat.fighter',
+                'trained' => $character->skills->whereIn('type.groupID', self::FIGHTER_PROFILE_CATEGORIES)->count(),
+                'overall' => $skill_categories->whereIn('groupID', self::FIGHTER_PROFILE_CATEGORIES)->sum('types_count'),
+                'stats' => $character->skills->whereIn('type.groupID', self::FIGHTER_PROFILE_CATEGORIES)->count() / $skill_categories->whereIn('groupID', self::FIGHTER_PROFILE_CATEGORIES)->sum('types_count') * 100,
+            ],
+            'industrial' => (object) [
+                'categories' => self::INDUSTRIAL_PROFILE_CATEGORIES,
+                'label' => 'web::seat.industrial',
+                'trained' => $character->skills->whereIn('type.groupID', self::INDUSTRIAL_PROFILE_CATEGORIES)->count(),
+                'overall' => $skill_categories->whereIn('groupID', self::INDUSTRIAL_PROFILE_CATEGORIES)->sum('types_count'),
+                'stats' => $character->skills->whereIn('type.groupID', self::INDUSTRIAL_PROFILE_CATEGORIES)->count() / $skill_categories->whereIn('groupID', self::INDUSTRIAL_PROFILE_CATEGORIES)->sum('types_count') * 100,
+            ],
+        ];
+
         return view('web::character.skills',
-            compact('character'));
+            compact('character', 'skill_categories', 'training_profiles'));
     }
 
     /**
