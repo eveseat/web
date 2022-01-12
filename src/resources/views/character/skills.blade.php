@@ -39,6 +39,38 @@
   </div>
   -->
 
+  <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 mb-3">
+    <div class="col">
+      <div class="card h-100">
+        <div class="card-header">
+          <h3 class="card-title">Skills (?)</h3>
+        </div>
+        <div class="card-body">
+          <div id="skills-level-chart" data-level-zero="{{ $character->skills->where('trained_skill_level', 0)->count() }}" data-level-one="{{ $character->skills->where('trained_skill_level', 1)->count() }}" data-level-two="{{ $character->skills->where('trained_skill_level', 2)->count() }}" data-level-three="{{ $character->skills->where('trained_skill_level', 3)->count() }}" data-level-four="{{ $character->skills->where('trained_skill_level', 4)->count() }}" data-level-five="{{ $character->skills->where('trained_skill_level', 5)->count() }}"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100">
+        <div class="card-header">
+          <h3 class="card-title">Profile (doughnut)</h3>
+        </div>
+        <div class="card-body">
+          <div id="training-profile-chart" data-core-coverage="{{ $training_profiles->core->stats }}" data-leadership-coverage="{{ $training_profiles->leadership->stats }}" data-fighter-coverage="{{ $training_profiles->fighter->stats }}" data-industrial-coverage="{{ $training_profiles->industrial->stats }}"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100">
+        <div class="card-header">
+          <h3 class="card-title">Coverage (radar)</h3>
+        </div>
+        <div class="card-body">
+          <div id="skills-coverage-chart"></div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="d-flex align-items-start mb-3">
     <div class="card me-3">
       <ul class="nav nav-pills seat-nav-vertical-pills flex-sm-column" role="tablist" aria-orientation="vertical">
@@ -289,6 +321,43 @@
       });
     });
 
+    let skillsCoverageConfig = {
+      xaxis: {
+        categories: ['Injected', 'Level I', 'Level II', 'Level III', 'Level IV', 'Level V']
+      },
+      colors: ['rgb(98,105,118)', '#d63939', '#f59f00', '#2fb344', '#206bc4', '#4299e1'],
+      plotOptions: {
+        bar: {
+          distributed: true
+        }
+      },
+      chart: {
+        type: 'bar',
+        height: 250,
+        toolbar: {
+          show: false
+        }
+      },
+      tooltip: {
+        enabled: false
+      },
+    };
+
+    let profileCoverageConfig = {
+      labels: ['Core', 'Leadership', 'Fighter', 'Industrial'],
+      colors: ['#f59f00', '#74b816', '#d63939', '#4263eb'],
+      chart: {
+        type: 'donut',
+        height: 250,
+        toolbar: {
+          show: false
+        }
+      },
+      tooltip: {
+        enabled: false
+      },
+    };
+
     let widgetSectionConfig = {
       chart: {
         height: 40,
@@ -333,5 +402,65 @@
       widgetSectionConfig.series = [node.dataset.trainedSkills / node.dataset.overallSkills * 100];
       (new ApexCharts(node, widgetSectionConfig)).render();
     });
+
+    // skill per level chart
+    [document.querySelector('#skills-level-chart')].forEach((node) => {
+      skillsCoverageConfig.series = [{
+        data: [
+          parseInt(node.dataset.levelZero),
+          parseInt(node.dataset.levelOne),
+          parseInt(node.dataset.levelTwo),
+          parseInt(node.dataset.levelThree),
+          parseInt(node.dataset.levelFour),
+          parseInt(node.dataset.levelFive),
+        ]
+      }];
+
+      (new ApexCharts(node, skillsCoverageConfig)).render();
+    });
+
+    // training profile chart
+    [document.querySelector('#training-profile-chart')].forEach((node) => {
+      profileCoverageConfig.series = [
+        parseFloat(node.dataset.coreCoverage),
+        parseFloat(node.dataset.leadershipCoverage),
+        parseFloat(node.dataset.fighterCoverage),
+        parseFloat(node.dataset.industrialCoverage),
+      ];
+
+      (new ApexCharts(node, profileCoverageConfig)).render();
+    });
+
+    // skill coverage chart
+    (new ApexCharts(document.querySelector('#skills-coverage-chart'), {
+      series: [
+        {
+          name: 'Overall',
+          data: [92.31,20.0,74.07,100.0,100.0,82.35,47.62,84.62,100.0,62.50,100.0,91.67,90.0,100.0,57.14,80.49,92.31,22.22,68.24,100.0,25.0,100.0,64.29]
+        },
+      ],
+      xaxis: {
+        categories: ['Armor', 'Corporation Management', 'Drones', 'Electronic Systems', 'Engineering', 'Fleet Support', 'Gunnery', 'Missiles', 'Navigation', 'Neural Enhancement', 'Planet Management', 'Production', 'Resource Processing', 'Rigging', 'Scanning', 'Science', 'Shields', 'Social', 'Spaceship Command', 'Structure Management', 'Subsystems', 'Targeting', 'Trade']
+      },
+      yaxis: {
+        min: 0.0,
+        max: 100.0
+      },
+      chart: {
+        type: 'radar',
+        height: 250,
+        toolbar: {
+          show: false
+        }
+      },
+      grid: {
+        padding: {
+          top: -50,
+          right: -50,
+          bottom: -50,
+          left: -50
+        }
+      }
+    })).render();
   </script>
 @endpush
