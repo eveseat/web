@@ -43,7 +43,7 @@
     <div class="col">
       <div class="card h-100">
         <div class="card-header">
-          <h3 class="card-title">Skills (?)</h3>
+          <h3 class="card-title">Skills</h3>
         </div>
         <div class="card-body">
           <div id="skills-level-chart" data-level-zero="{{ $character->skills->where('trained_skill_level', 0)->count() }}" data-level-one="{{ $character->skills->where('trained_skill_level', 1)->count() }}" data-level-two="{{ $character->skills->where('trained_skill_level', 2)->count() }}" data-level-three="{{ $character->skills->where('trained_skill_level', 3)->count() }}" data-level-four="{{ $character->skills->where('trained_skill_level', 4)->count() }}" data-level-five="{{ $character->skills->where('trained_skill_level', 5)->count() }}"></div>
@@ -53,7 +53,7 @@
     <div class="col">
       <div class="card h-100">
         <div class="card-header">
-          <h3 class="card-title">Profile (doughnut)</h3>
+          <h3 class="card-title">Profile</h3>
         </div>
         <div class="card-body">
           <div id="training-profile-chart" data-core-coverage="{{ $training_profiles->core->stats }}" data-leadership-coverage="{{ $training_profiles->leadership->stats }}" data-fighter-coverage="{{ $training_profiles->fighter->stats }}" data-industrial-coverage="{{ $training_profiles->industrial->stats }}"></div>
@@ -63,7 +63,7 @@
     <div class="col">
       <div class="card h-100">
         <div class="card-header">
-          <h3 class="card-title">Coverage (radar)</h3>
+          <h3 class="card-title">Coverage</h3>
         </div>
         <div class="card-body">
           <div id="skills-coverage-chart"></div>
@@ -323,9 +323,9 @@
 
     let skillsCoverageConfig = {
       xaxis: {
-        categories: ['Injected', 'Level I', 'Level II', 'Level III', 'Level IV', 'Level V']
+        categories: ['Level I', 'Level II', 'Level III', 'Level IV', 'Level V']
       },
-      colors: ['rgb(98,105,118)', '#d63939', '#f59f00', '#2fb344', '#206bc4', '#4299e1'],
+      colors: ['#d63939', '#f59f00', '#2fb344', '#206bc4', '#4299e1'],
       plotOptions: {
         bar: {
           distributed: true
@@ -407,7 +407,6 @@
     [document.querySelector('#skills-level-chart')].forEach((node) => {
       skillsCoverageConfig.series = [{
         data: [
-          parseInt(node.dataset.levelZero),
           parseInt(node.dataset.levelOne),
           parseInt(node.dataset.levelTwo),
           parseInt(node.dataset.levelThree),
