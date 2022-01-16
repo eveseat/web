@@ -5,9 +5,9 @@
         <li class="list-inline-item">
             <span @class([
                 'avatar',
-                'bg-success' => $corporation->titles()->where('id', $title->id)->whereHas('roles', function ($q) use ($role) { $q->where('type', 'grantable_roles')->where('role', $role); })->exists(),
-                'bg-warning' => ! $corporation->titles()->where('id', $title->id)->whereHas('roles', function ($q) use ($role) { $q->where('type', 'grantable_roles')->where('role', $role); })->exists() && $corporation->titles()->where('id', $title->id)->whereHas('roles', function ($q) use ($role) { $q->where('type', 'roles')->where('role', $role); })->exists(),
-                'bg-muted' => ! $corporation->titles()->where('id', $title->id)->whereHas('roles', function ($q) use ($role) { $q->where('role', $role); })->exists(),
+                'bg-success' => $title->roles->where('type', 'grantable_roles')->where('role', $role)->isNotEmpty(),
+                'bg-warning' => $title->roles->where('type', 'grantable_roles')->where('role', $role)->isEmpty() && $title->roles->where('type', 'roles')->where('role', $role)->isNotEmpty(),
+                'bg-muted' => $title->roles->where('role', $role)->isEmpty(),
             ])></span>
         </li>
     @endforeach
@@ -18,14 +18,14 @@
         <div class="col ps-3 pe-3">
             <div class="font-weight-bold mb-2">
                 @include('web::corporation.security.partials.role-checkbox', ['role_name' => 'Account_Take_' . $i, 'role_type' => 'roles'])
-                {{ $corporation->divisions()->where('type', 'wallet')->where('division', $i)->first()->name }}
+                {{ $corporation->divisions->where('type', 'wallet')->where('division', $i)->first()->name }}
             </div>
         </div>
         @if($i + 4 < 8)
             <div class="col ps-3 pe-3">
                 <div class="font-weight-bold mb-2">
                     @include('web::corporation.security.partials.role-checkbox', ['role_name' => 'Account_Take_' . $i + 4, 'role_type' => 'roles'])
-                    {{ $corporation->divisions()->where('type', 'wallet')->where('division', $i + 4)->first()->name }}
+                    {{ $corporation->divisions->where('type', 'wallet')->where('division', $i + 4)->first()->name }}
                 </div>
             </div>
         @endif

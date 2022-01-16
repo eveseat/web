@@ -35,7 +35,7 @@
               <h3 class="display-6 mb-3" id="title-{{ $title->title_id }}-members">Members</h3>
 
               <div class="row">
-                @foreach($corporation->titles()->where('id', $title->id)->first()->characters as $character)
+                @foreach($title->characters as $character)
                   <div class="col-2 mb-3">
                     <div class="row align-items-center">
                       <div class="col-auto">
@@ -58,9 +58,9 @@
                   <li class="list-inline-item">
                     <span @class([
                         'avatar',
-                        'bg-success' => $corporation->titles()->where('id', $title->id)->whereHas('roles', function ($q) use ($role) { $q->where('type', 'grantable_roles')->where('role', $role); })->exists(),
-                        'bg-warning' => ! $corporation->titles()->where('id', $title->id)->whereHas('roles', function ($q) use ($role) { $q->where('type', 'grantable_roles')->where('role', $role); })->exists() && $corporation->titles()->where('id', $title->id)->whereHas('roles', function ($q) use ($role) { $q->where('type', 'roles')->where('role', $role); })->exists(),
-                        'bg-muted' => ! $corporation->titles()->where('id', $title->id)->whereHas('roles', function ($q) use ($role) { $q->where('role', $role); })->exists(),
+                        'bg-success' => $title->roles->where('type', 'grantable_roles')->where('role', $role)->isNotEmpty(),
+                        'bg-warning' => $title->roles->where('type', 'grantable_roles')->where('role', $role)->isEmpty() && $title->roles->where('type', 'roles')->where('role', $role)->isNotEmpty(),
+                        'bg-muted' => $title->roles->where('role', $role)->isEmpty(),
                     ])></span>
                   </li>
                 @endforeach
@@ -192,9 +192,9 @@
                   <li class="list-inline-item">
                     <span @class([
                         'avatar',
-                        'bg-success' => $corporation->titles()->where('id', $title->id)->whereHas('roles', function ($q) use ($role) { $q->where('type', 'grantable_roles')->where('role', $role); })->exists(),
-                        'bg-warning' => ! $corporation->titles()->where('id', $title->id)->whereHas('roles', function ($q) use ($role) { $q->where('type', 'grantable_roles')->where('role', $role); })->exists() && $corporation->titles()->where('id', $title->id)->whereHas('roles', function ($q) use ($role) { $q->where('type', 'roles')->where('role', $role); })->exists(),
-                        'bg-muted' => ! $corporation->titles()->where('id', $title->id)->whereHas('roles', function ($q) use ($role) { $q->where('role', $role); })->exists(),
+                        'bg-success' => $title->roles->where('type', 'grantable_roles')->where('role', $role)->isNotEmpty(),
+                        'bg-warning' => $title->roles->where('type', 'grantable_roles')->where('role', $role)->isEmpty() && $title->roles->where('type', 'roles')->where('role', $role)->isNotEmpty(),
+                        'bg-muted' => $title->roles->where('role', $role)->isEmpty(),
                     ])></span>
                   </li>
                 @endforeach

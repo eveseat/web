@@ -24,7 +24,6 @@ namespace Seat\Web\Http\Controllers\Corporation;
 
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Corporation\CorporationMemberTracking;
-use Seat\Eveapi\Models\Corporation\CorporationTitle;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Corporation\Intel\LogDataTable;
 use Seat\Web\Http\DataTables\Scopes\CorporationScope;
@@ -56,12 +55,9 @@ class SecurityController extends Controller
      */
     public function getTitles(CorporationInfo $corporation)
     {
+        $corporation->load('titles', 'titles.characters', 'titles.roles');
 
-        $titles = CorporationTitle::with('characters')
-            ->where('corporation_id', $corporation->corporation_id)
-            ->get();
-
-        return view('web::corporation.security.titles', compact('corporation', 'titles'));
+        return view('web::corporation.security.titles', compact('corporation'));
     }
 
     /**
