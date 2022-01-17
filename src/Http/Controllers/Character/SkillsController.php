@@ -49,10 +49,13 @@ class SkillsController extends Controller
      */
     public function getSkills(CharacterInfo $character)
     {
+        $character->load('skills', 'skills.type', 'skills.type.group', 'skills.type.dogma_attributes');
+
         $skill_categories = InvGroup::withCount([
             'types' => function ($query) {
                 $query->where('published', true);
             }])
+            ->with('types')
             ->where('published', true)
             ->where('categoryID', InvGroup::SKILL_CATEGORY_ID)
             ->orderBy('groupName')
