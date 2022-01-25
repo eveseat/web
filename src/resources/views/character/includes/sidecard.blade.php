@@ -68,8 +68,8 @@
       </dd>
       <dt class="col-5">Joined:</dt>
       <dd class="col-7">
-        @if(!is_null($character->current_corporation))
-          {{ human_diff($character->current_corporation->start_date) }}
+        @if(! is_null($character->corporation_history))
+          {{ human_diff($character->corporation_history->sortBy('start_date')->last()->start_date) }}
         @endif
       </dd>
       @can('character.skill', $character)
