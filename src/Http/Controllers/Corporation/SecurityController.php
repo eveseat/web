@@ -56,6 +56,7 @@ class SecurityController extends Controller
     public function getTitles(CorporationInfo $corporation)
     {
         $corporation->load('titles', 'titles.characters', 'titles.roles');
+        $corporation->titles->loadCount('characters');
 
         return view('web::corporation.security.titles', compact('corporation'));
     }
