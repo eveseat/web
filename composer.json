@@ -42,7 +42,6 @@
     "laravel/ui": "^3.0",
     "lasserafn/php-initial-avatar-generator": "^4.2",
     "socialiteproviders/manager": "^4.0",
-    "tabler/tabler": "^1.0",
     "yajra/laravel-datatables-oracle": "^9.10",
     "yajra/laravel-datatables-buttons": "^4.0",
     "zircote/swagger-php": "^3.0"
