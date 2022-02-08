@@ -27,6 +27,7 @@ use Illuminate\Auth\Events\Login as LoginEvent;
 use Illuminate\Auth\Events\Logout as LogoutEvent;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Horizon\Horizon;
@@ -180,6 +181,8 @@ class WebServiceProvider extends AbstractSeatPlugin
     {
 
         $this->loadViewsFrom(__DIR__ . '/resources/views', 'web');
+
+        Blade::componentNamespace('Seat\\Web\\Views\\Components', 'seat');
     }
 
     /**

@@ -57,26 +57,11 @@
             </span>
             <span class="nav-link-title">{{ trans('web::seat.switch_character') }}</span>
           </a>
-          <a href="{{ route('seatcore::auth.eve') }}" class="dropdown-item">
-            <span class="nav-link-icon">
-              <i class="fas fa-link"></i>
-            </span>
-            <span class="nav-link-title">{{ trans('web::seat.link_character') }}</span>
-          </a>
+          <x-seat::menus.drop-down href="{{ route('seatcore::auth.eve') }}" icon="fas fa-link" title="{{ trans('web::seat.link_character') }}" />
           <div class="dropdown-divider"></div>
-          <a href="{{ route('seatcore::profile.view') }}" class="dropdown-item">
-            <span class="nav-link-icon">
-              <i class="fas fa-user-cog"></i>
-            </span>
-            <span class="nav-link-title">Profile</span>
-          </a>
+          <x-seat::menus.drop-down href="{{ route('seatcore::profile.view') }}" icon="fas fa-user-cog" title="Profile" />
           @endif
-          <a href="{{ route('seatcore::auth.logout') }}" class="dropdown-item">
-            <span class="nav-link-icon">
-              <i class="fas fa-sign-out-alt"></i>
-            </span>
-            <span class="nav-link-title">{{ trans('web::seat.sign_out') }}</span>
-          </a>
+          <x-seat::menus.drop-down href="{{ route('seatcore::auth.logout') }}" icon="fas fa-sign-out-alt" title="{{ trans('web::seat.sign_out') }}" />
         </div>
       </div>
       <!-- ./user-card -->

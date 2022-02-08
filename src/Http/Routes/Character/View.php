@@ -249,13 +249,58 @@ Route::get('/{character}/skills/export')
 
 Route::get('/view/skills/graph/level/{character}')
     ->name('seatcore::character.view.skills.graph.level')
-    ->uses('SkillsController@getCharacterSkillsLevelChartData')
-    ->middleware('can:character.sheet,character');
+    ->uses('StatsController@getCharacterSkillsLevelChartData')
+    ->middleware('can:character.skill,character');
 
 Route::get('/view/skills/graph/coverage/{character}')
     ->name('seatcore::character.view.skills.graph.coverage')
-    ->uses('SkillsController@getCharacterSkillsCoverageChartData')
+    ->uses('StatsController@getCharacterSkillsCoverageChartData')
+    ->middleware('can:character.skill,character');
+
+Route::get('/view/skills/graph/profile/{character}')
+    ->name('seatcore::character.view.skills.graph.profile')
+    ->uses('StatsController@getCharacterTrainingProfileChartData')
+    ->middleware('can:character.skill,character');
+
+Route::get('/view/skills/graph/queue/{character}')
+    ->name('seatcore::character.view.skills.graph.queue')
+    ->uses('StatsController@getCharacterSkillQueueChartData')
+    ->middleware('can:character.skill,character');
+
+Route::get('/view/skills/graph/earnings/{character}')
+    ->name('seatcore::character.view.wallet.graph.earnings')
+    ->uses('StatsController@getCharacterWalletEarningsChartData')
+    ->middleware('can:character.journal,character');
+
+Route::get('/meters/count/{character}')
+    ->name('seatcore::meters.characters.count')
+    ->uses('StatsController@getCharactersCount')
     ->middleware('can:character.sheet,character');
+
+Route::get('/meters/skillpoints/{character}')
+    ->name('seatcore::meters.characters.skillpoints')
+    ->uses('StatsController@getCharacterSkillpoints')
+    ->middleware('can:character.skill,character');
+
+Route::get('/meters/balances/{character}')
+    ->name('seatcore::meters.characters.balances')
+    ->uses('StatsController@getCharactersBalance')
+    ->middleware('can:character.journal,character');
+
+Route::get('/meters/mining/{character}')
+    ->name('seatcore::meters.characters.mining')
+    ->uses('StatsController@getCharactersMining')
+    ->middleware('can:character.journal,character');
+
+Route::get('/meters/rating/{character}')
+    ->name('seatcore::meters.characters.rating')
+    ->uses('StatsController@getCharactersRating')
+    ->middleware('can:character.journal,character');
+
+Route::get('/meters/kills/{character}')
+    ->name('seatcore::meters.characters.kills')
+    ->uses('StatsController@getCharactersKills')
+    ->middleware('can:character.killmail,character');
 
 Route::get('/{character}/standings')
     ->name('seatcore::character.view.standings')

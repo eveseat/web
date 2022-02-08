@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of SeAT
  *
@@ -21,16 +20,6 @@
  */
 
 return [
-    'workers' => env('QUEUE_WORKERS', 4),
-    'balancing' => env('QUEUE_BALANCING_MODE', 'auto'),
-    'dashboards' => [
-        [
-            'label' => 'web::dashboards.admin',
-            'class' => \Seat\Web\Http\Composers\Dashboards\AdminDashboard::class,
-        ],
-        [
-            'label' => 'web::dashboards.character',
-            'class' => \Seat\Web\Http\Composers\Dashboards\CharacterDashboard::class,
-        ],
-    ],
+    'admin'     => 'Administrator Dashboard',
+    'character' => 'Character Dashboard',
 ];

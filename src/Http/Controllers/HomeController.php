@@ -22,9 +22,9 @@
 
 namespace Seat\Web\Http\Controllers;
 
-use Illuminate\View\View;
 use Seat\Eveapi\Models\Status\EsiStatus;
 use Seat\Eveapi\Models\Status\ServerStatus;
+use Seat\Web\Http\Composers\DashboardManager;
 use Seat\Web\Traits\Stats;
 
 /**
@@ -45,32 +45,13 @@ class HomeController extends Controller
     }
 
     /**
-     * @return \Illuminate\View\View
-     *
+     * @param  \Seat\Web\Http\Composers\DashboardManager  $dashboard
+     * @return \BladeView|false|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      * @throws \Seat\Services\Exceptions\SettingException
      */
-    public function getHome(): View
+    public function getHome(DashboardManager $dashboard)
     {
-
-        // Warn if the admin contact has not been set yet.
-        if (auth()->user()->isAdmin())
-            if (setting('admin_contact', true) === 'seatadmin@localhost.local')
-                session()->flash('warning', trans('web::seat.admin_contact_warning'));
-
-        // TODO : switch to ajax calls
-        $server_status = $this->getEveLastServerStatus();
-
-        $characterIds = auth()->user()->associatedCharacterIds();
-        $total_character_isk = $this->getTotalCharacterIsk($characterIds);
-        $total_character_skillpoints = $this->getTotalCharacterSkillpoints($characterIds);
-        $total_character_killmails = $this->getTotalCharacterKillmails($characterIds);
-        $total_character_mining = $this->getTotalCharacterMiningIsk($characterIds);
-        $total_character_ratting = $this->getTotalCharacterRattingIsk($characterIds);
-
-        return view('web::home', compact(
-            'server_status', 'total_character_isk', 'total_character_skillpoints',
-            'total_character_killmails', 'total_character_mining', 'total_character_ratting'
-        ));
+        return $dashboard->render();
     }
 
     /**

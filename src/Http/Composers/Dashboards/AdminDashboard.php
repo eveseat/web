@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of SeAT
  *
@@ -20,17 +19,23 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-return [
-    'workers' => env('QUEUE_WORKERS', 4),
-    'balancing' => env('QUEUE_BALANCING_MODE', 'auto'),
-    'dashboards' => [
-        [
-            'label' => 'web::dashboards.admin',
-            'class' => \Seat\Web\Http\Composers\Dashboards\AdminDashboard::class,
-        ],
-        [
-            'label' => 'web::dashboards.character',
-            'class' => \Seat\Web\Http\Composers\Dashboards\CharacterDashboard::class,
-        ],
-    ],
-];
+namespace Seat\Web\Http\Composers\Dashboards;
+
+use Seat\Web\Contracts\Dashboard;
+
+/**
+ * Class AdminDashboard.
+ * @package Seat\Web\Http\Composers\Dashboards
+ */
+class AdminDashboard implements Dashboard
+{
+    public function blade(): string
+    {
+        return 'web::dashboards.admin';
+    }
+
+    public function data(): array
+    {
+        return [];
+    }
+}

@@ -20,17 +20,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-return [
-    'workers' => env('QUEUE_WORKERS', 4),
-    'balancing' => env('QUEUE_BALANCING_MODE', 'auto'),
-    'dashboards' => [
-        [
-            'label' => 'web::dashboards.admin',
-            'class' => \Seat\Web\Http\Composers\Dashboards\AdminDashboard::class,
-        ],
-        [
-            'label' => 'web::dashboards.character',
-            'class' => \Seat\Web\Http\Composers\Dashboards\CharacterDashboard::class,
-        ],
-    ],
-];
+namespace Seat\Web\Contracts;
+
+/**
+ * Provide expected Dashboard structure.
+ */
+interface Dashboard
+{
+    public function blade(): string;
+
+    public function data(): array;
+}
