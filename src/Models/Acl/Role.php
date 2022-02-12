@@ -24,26 +24,22 @@ namespace Seat\Web\Models\Acl;
 
 use Illuminate\Database\Eloquent\Model;
 use Intervention\Image\Facades\Image;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 use Seat\Web\Models\Squads\Squad;
 use Seat\Web\Models\Squads\SquadRole;
 use Seat\Web\Models\User;
 
-/**
- * Class Role.
- *
- * @package Seat\Web\Models\Acl
- *
- * @OA\Schema(
- *     type="object",
- *     title="Role",
- *     description="Role",
- *     @OA\Property(property="id", type="integer", description="Role unique identifier"),
- *     @OA\Property(property="title", type="string", description="Role name"),
- *     @OA\Property(property="description", type="string", description="Role description"),
- *     @OA\Property(property="logo", type="string", format="byte", description="Role logo"),
- * )
- */
+#[OA\Schema(
+    title: 'Role',
+    description: 'Role',
+    properties: [
+        new OA\Property(property: 'id', description: 'Role unique identifier', type: 'integer'),
+        new OA\Property(property: 'title', description: 'Role name', type: 'string'),
+        new OA\Property(property: 'description', description: 'Role description', type: 'string'),
+        new OA\Property(property: 'logo', description: 'Role logo', type: 'string', format: 'byte')
+    ],
+    type: 'object'
+)]
 class Role extends Model
 {
     /**
