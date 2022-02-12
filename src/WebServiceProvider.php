@@ -158,8 +158,9 @@ class WebServiceProvider extends AbstractSeatPlugin
             base_path('vendor/datatables.net/datatables.net-rowgroup-bs5/js/rowGroup.bootstrap5.min.js')   => public_path('web/js/rowGroup.bootstrap5.min.js'),
 
             // Tabler pulled from packagist
-            base_path('vendor/tabler/tabler/dist/css/tabler.min.css') => public_path('web/css/tabler.min.css'),
-            base_path('vendor/tabler/tabler/dist/js/tabler.min.js')   => public_path('web/js/tabler.min.js'),
+            __DIR__ . '/resources/css/tabler.min.css' => public_path('web/css/tabler.min.css'),
+            __DIR__ . '/resources/js/tabler.min.js' => public_path('web/js/tabler.min.js'),
+            __DIR__ . '/resources/fonts' => public_path('web/fonts'),
 
             // Font Awesome pulled from packagist
             base_path('vendor/fortawesome/font-awesome/css/all.min.css') => public_path('web/css/all.min.css'),
