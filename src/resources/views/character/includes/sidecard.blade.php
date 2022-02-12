@@ -11,17 +11,19 @@
     <!-- affiliation -->
     <div class="list-group list-group-flush list-group-hoverable mb-3">
       <!-- corporation -->
-      <div class="list-group-item ps-0 pe-0">
-        <div class="row align-items-center">
-          <div class="col-auto">
-            {!! img('corporations', 'logo', $character->affiliation->corporation_id, 128, ['class' => 'avatar']) !!}
-          </div>
-          <div class="col">
-            <a href="{{ route('seatcore::corporation.view.default', $character->affiliation->corporation_id) }}" class="text-body d-block stretched-link">{{ $character->affiliation->corporation->name }}</a>
-            <small class="text-muted mt-n1">Corporation</small>
+      @if($character->affiliation->corporation_id)
+        <div class="list-group-item ps-0 pe-0">
+          <div class="row align-items-center">
+            <div class="col-auto">
+              {!! img('corporations', 'logo', $character->affiliation->corporation_id, 128, ['class' => 'avatar']) !!}
+            </div>
+            <div class="col">
+              <a href="{{ route('seatcore::corporation.view.default', $character->affiliation->corporation_id) }}" class="text-body d-block stretched-link">{{ $character->affiliation->corporation->name }}</a>
+              <small class="text-muted mt-n1">Corporation</small>
+            </div>
           </div>
         </div>
-      </div>
+      @endif
       <!-- ./corporation -->
       <!-- alliance -->
       @if($character->affiliation->alliance_id)
@@ -39,14 +41,14 @@
       @endif
       <!-- ./alliance -->
       <!-- faction -->
-      @if($character->faction_id)
+      @if($character->affiliation->faction_id)
         <div class="list-group-item ps-0 pe-0">
           <div class="row align-items-center">
             <div class="col-auto">
-              {!! img('corporations', 'logo', $character->faction_id, 128, ['class' => 'avatar']) !!}
+              {!! img('corporations', 'logo', $character->affiliation->faction_id, 128, ['class' => 'avatar']) !!}
             </div>
             <div class="col">
-              <span class="text-body d-block id-to-name" data-id="{{ $character->faction_id }}">{{ trans('web::seat.unknown') }}</span>
+              <span class="text-body d-block id-to-name" data-id="{{ $character->affiliation->faction_id }}">{{ trans('web::seat.unknown') }}</span>
               <span class="text-muted mt-n1">Faction</span>
             </div>
           </div>
@@ -68,7 +70,7 @@
       </dd>
       <dt class="col-5">Joined:</dt>
       <dd class="col-7">
-        @if(! is_null($character->corporation_history))
+        @if($character->corporation_history->isNotEmpty())
           {{ human_diff($character->corporation_history->sortBy('start_date')->last()->start_date) }}
         @endif
       </dd>
@@ -83,8 +85,12 @@
       @can('character.asset', $character)
       <dt class="col-5">Ship:</dt>
       <dd class="col-7">
-        <a href="#" data-bs-toggle="modal" data-bs-target="#ship-detail" data-url="{{ route('seatcore::character.view.ship', ['character' => $character]) }}"><i class="fas fa-wrench"></i></a>
-        {{ $character->ship->ship_name }}
+        @if($character->ship)
+          <a href="#" data-bs-toggle="modal" data-bs-target="#ship-detail" data-url="{{ route('seatcore::character.view.ship', ['character' => $character]) }}"><i class="fas fa-wrench"></i></a>
+          {{ $character->ship->ship_name }}
+        @else
+          {{ trans('web::seat.unknown') }}
+        @endif
       </dd>
       @endcan
       <dt class="col-5">Location:</dt>
