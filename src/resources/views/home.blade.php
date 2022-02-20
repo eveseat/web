@@ -13,7 +13,7 @@
       <div class="info-box">
         <span class="info-box-icon bg-aqua elevation-1"><i class="fa fa-server"></i></span>
         <div class="info-box-content">
-          <span class="info-box-text">{{ trans('web::seat.online_layers') }}</span>
+          <span class="info-box-text">{{ trans('web::seat.online_players') }}</span>
           <span class="info-box-number">
             {{ $server_status['players'] ?? trans('web::seat.unknown') }}
           </span>

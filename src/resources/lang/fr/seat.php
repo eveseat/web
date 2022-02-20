@@ -175,7 +175,7 @@ return [
 
     // Dashboard
     'home_page'                   => 'Page d\'accueil',
-    'online_layers'               => 'Joueurs connectés',
+    'online_players'              => 'Joueurs connectés',
     'owned_api_keys'              => 'Clés API possédées',
     'concurrent_player_count'     => 'Nombre de joueurs simultanés',
     'esi_response_time'           => 'Temps de réponse d\'ESI',

@@ -201,7 +201,7 @@ return [
     // Dashboard
     'home_page'                   => 'Стартовая страница',
     'dashboard'                   => 'Аналитика',
-    'online_layers'               => 'Игроки онлайн',
+    'online_players'              => 'Игроки онлайн',
     'owned_api_keys'              => 'Введеные API ключи',
     'total_character_isk'         => 'Итого (ISK)',
     'total_character_skillpoints' => 'Итого очков умения (SP)',
