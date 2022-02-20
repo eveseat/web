@@ -26,6 +26,7 @@ use Illuminate\View\Component;
 
 /**
  * Class Badge.
+ *
  * @package Seat\Web\View\Components\Widgets
  */
 class Badge extends Component

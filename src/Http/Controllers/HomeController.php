@@ -47,6 +47,7 @@ class HomeController extends Controller
     /**
      * @param  \Seat\Web\Http\Composers\DashboardManager  $dashboard
      * @return \BladeView|false|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     *
      * @throws \Seat\Services\Exceptions\SettingException
      */
     public function getHome(DashboardManager $dashboard)

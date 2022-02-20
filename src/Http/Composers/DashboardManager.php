@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -28,6 +29,7 @@ use Seat\Web\Http\Composers\Dashboards\CharacterDashboard;
 
 /**
  * Class DashboardManager.
+ *
  * @package Seat\Web\Http\Composers
  */
 class DashboardManager
@@ -55,6 +57,7 @@ class DashboardManager
 
     /**
      * @return \BladeView|false|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     *
      * @throws \Seat\Services\Exceptions\SettingException|\Seat\Web\Exceptions\InvalidDashboardException
      */
     public function render()

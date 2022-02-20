@@ -26,6 +26,7 @@ use Illuminate\View\Component;
 
 /**
  * Class DropDown.
+ *
  * @package Seat\Web\Views\Components\Menus
  */
 class DropDown extends Component

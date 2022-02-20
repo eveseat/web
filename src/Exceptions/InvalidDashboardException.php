@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -25,6 +26,7 @@ use Exception;
 
 /**
  * Class InvalidDashboardException.
+ *
  * @package Seat\Web\Exceptions
  */
 class InvalidDashboardException extends Exception

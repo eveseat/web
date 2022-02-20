@@ -1,8 +1,9 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2020 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +22,6 @@
 
 namespace Seat\Web\Http\Controllers\Character;
 
-use Illuminate\Support\Facades\DB;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Sde\InvGroup;
 use Seat\Web\Http\Controllers\Controller;
@@ -172,7 +172,7 @@ class StatsController extends Controller
         $skill_categories = InvGroup::withCount([
             'types' => function ($query) {
                 $query->where('published', true);
-            }])
+            }, ])
             ->with('types')
             ->where('published', true)
             ->where('categoryID', InvGroup::SKILL_CATEGORY_ID)
@@ -248,7 +248,7 @@ class StatsController extends Controller
                 [
                     'data' => $data->pluck('aggregate'),
                     'categories' => $data->pluck('period'),
-                ]
+                ],
             ],
         ]);
     }

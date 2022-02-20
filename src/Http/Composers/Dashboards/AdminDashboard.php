@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -25,6 +26,7 @@ use Seat\Web\Contracts\Dashboard;
 
 /**
  * Class AdminDashboard.
+ *
  * @package Seat\Web\Http\Composers\Dashboards
  */
 class AdminDashboard implements Dashboard

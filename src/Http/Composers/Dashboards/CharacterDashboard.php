@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SeAT
  *
@@ -26,6 +27,7 @@ use Seat\Web\Traits\Stats;
 
 /**
  * Class CharacterDashboard.
+ *
  * @package Seat\Web\Http\Composers\Dashboards
  */
 class CharacterDashboard implements Dashboard
