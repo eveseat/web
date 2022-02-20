@@ -25,11 +25,13 @@
       @endcan
       <!-- ./job-queue -->
       <!-- impersonation -->
+      @if(session('impersonation_origin', false))
       <div class="nav-item d-md-flex me-3">
         <a href="{{ route('seatcore::configuration.users.impersonate.stop') }}" class="nav-link px-0" tabindex="-1" aria-label="{{ trans('web::seat.stop_impersonation') }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ trans('web::seat.stop_impersonation') }}">
           <i class="fas fa-user-secret fa-lg"></i>
         </a>
       </div>
+      @endif
       <!-- ./impersonation -->
       <!-- user-card -->
       <div class="nav-item dropdown">
