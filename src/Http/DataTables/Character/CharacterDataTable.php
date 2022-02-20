@@ -59,6 +59,9 @@ class CharacterDataTable extends DataTable
 
                 return '';
             })
+            ->editColumn('security_status', function ($row) {
+                return number_format($row->security_status, 2,);
+            })
             ->editColumn('refresh_token.expires_on', function ($row) {
                 return view('web::character.partials.token_status', ['refresh_token' => $row->refresh_token])->render();
             })
