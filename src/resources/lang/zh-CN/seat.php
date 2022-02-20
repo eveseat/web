@@ -198,7 +198,7 @@ return [
     // Dashboard
     'home_page'                   => '首页',
     'dashboard'                   => '仪表盘',
-    'online_layers'               => '在线玩家',
+    'online_players'              => '在线玩家',
     'owned_api_keys'              => '拥有的API数量',
     'total_character_isk'         => '总角色ISK',
     'total_character_skillpoints' => '总角色技能点',

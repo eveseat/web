@@ -160,7 +160,7 @@ return [
 
     // Dashboard
     'home_page'                   => 'Die Tuisblad',
-    'online_layers'               => 'Spelers Aanlyn',
+    'online_players'              => 'Spelers Aanlyn',
     'owned_api_keys'              => 'Besitte API Sleutels',
     'concurrent_player_count'     => 'Gelyktydige speler telling',
     'esi_response_time'           => 'ESI Response Times',
