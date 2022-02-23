@@ -49,7 +49,7 @@ class TrackingDataTable extends DataTable
             })
             ->editColumn('member_count', function ($row) {
                 if ($row->member_limit->limit < 1)
-                    return sprintf('%d/%d (100.00%%)', $row->member_count, $row->member_count);
+                    return sprintf('%d', $row->member_count);
 
                 return sprintf('%d/%d (%s%%)',
                     $row->member_count, $row->member_limit->limit, number($row->member_count / $row->member_limit->limit * 100));
@@ -58,8 +58,6 @@ class TrackingDataTable extends DataTable
                 return view('web::partials.character', ['character' => $row->ceo])->render();
             })
             ->editColumn('tracking', function ($row) {
-                // <dd>{{ $trackings }} / {{ $sheet->member_count }} ({{ number_format($trackings/$sheet->member_count * 100, 2) }}%) {{ trans_choice('web::seat.valid_token', $sheet->member_count) }}</dd>
-
                 $trackings = $row->characters->reject(function ($char) {
                     return is_null($char->refresh_token);
                 })->count();
@@ -93,7 +91,9 @@ class TrackingDataTable extends DataTable
      */
     public function query()
     {
-        return CorporationInfo::player()->with('member_limit', 'ceo', 'alliance')
+        return CorporationInfo::player()
+            ->with('member_limit', 'ceo', 'alliance')
+            ->withCount('characters')
             ->select('corporation_infos.*');
     }
 
