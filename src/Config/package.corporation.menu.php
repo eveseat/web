@@ -151,7 +151,7 @@ return [
                         'icon'       => 'fas fa-book-open',
                         'permission' => 'corporation.mining',
                         'route'      => 'seatcore::corporation.view.mining_ledger',
-                    ]
+                    ],
                 ],
             ],
         ],
@@ -193,7 +193,7 @@ return [
                         'icon'       => 'fas fa-cash-register',
                         'permission' => 'corporation.transaction',
                         'route'      => 'seatcore::corporation.view.transactions',
-                    ]
+                    ],
                 ],
             ],
             [

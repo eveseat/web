@@ -91,7 +91,7 @@ return [
                 'permission'     => 'character.research',
                 'route'          => 'seatcore::character.view.research',
             ],
-        ]
+        ],
     ],
     [
         'name'    => '3-finance',
