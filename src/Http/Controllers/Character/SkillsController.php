@@ -102,24 +102,62 @@ class SkillsController extends Controller
      */
     public function getCharacterSkillsLevelChartData(CharacterInfo $character)
     {
-        $data = $this->getCharacterSkillsAmountPerLevel($character->character_id);
-
         return response()->json([
             'labels'   => [
-                'Level 0', 'Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5',
+                'Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5',
             ],
             'datasets' => [
                 [
-                    'data'            => $data,
-                    'backgroundColor' => [
-                        '#00c0ef',
-                        '#39cccc',
-                        '#00a65a',
-                        '#605ca8',
-                        '#001f3f',
-                        '#3c8dbc',
-                    ],
+                    'data' => $this->getCharacterSkillsAmountPerLevel($character->character_id)->pluck('total'),
                 ],
+            ],
+        ]);
+    }
+
+    /**
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getCharacterProfileChartData(CharacterInfo $character)
+    {
+        $skill_categories = InvGroup::withCount([
+            'types' => function ($query) {
+                $query->where('published', true);
+            }])
+            ->with('types')
+            ->where('published', true)
+            ->where('categoryID', InvGroup::SKILL_CATEGORY_ID)
+            ->orderBy('groupName')
+            ->get();
+
+        return response()->json([
+            'core' => (object) [
+                'categories' => self::CORE_PROFILE_CATEGORIES,
+                'label' => 'web::seat.core',
+                'trained' => $character->skills->whereIn('type.groupID', self::CORE_PROFILE_CATEGORIES)->count(),
+                'overall' => $skill_categories->whereIn('groupID', self::CORE_PROFILE_CATEGORIES)->sum('types_count'),
+                'stats' => $character->skills->whereIn('type.groupID', self::CORE_PROFILE_CATEGORIES)->count() / $skill_categories->whereIn('groupID', self::CORE_PROFILE_CATEGORIES)->sum('types_count') * 100,
+            ],
+            'leadership' => (object) [
+                'categories' => self::LEADERSHIP_PROFILE_CATEGORIES,
+                'label' => 'web::seat.leadership',
+                'trained' => $character->skills->whereIn('type.groupID', self::LEADERSHIP_PROFILE_CATEGORIES)->count(),
+                'overall' => $skill_categories->whereIn('groupID', self::LEADERSHIP_PROFILE_CATEGORIES)->sum('types_count'),
+                'stats' => $character->skills->whereIn('type.groupID', self::LEADERSHIP_PROFILE_CATEGORIES)->count() / $skill_categories->whereIn('groupID', self::LEADERSHIP_PROFILE_CATEGORIES)->sum('types_count') * 100,
+            ],
+            'fighter' => (object) [
+                'categories' => self::FIGHTER_PROFILE_CATEGORIES,
+                'label' => 'web::seat.fighter',
+                'trained' => $character->skills->whereIn('type.groupID', self::FIGHTER_PROFILE_CATEGORIES)->count(),
+                'overall' => $skill_categories->whereIn('groupID', self::FIGHTER_PROFILE_CATEGORIES)->sum('types_count'),
+                'stats' => $character->skills->whereIn('type.groupID', self::FIGHTER_PROFILE_CATEGORIES)->count() / $skill_categories->whereIn('groupID', self::FIGHTER_PROFILE_CATEGORIES)->sum('types_count') * 100,
+            ],
+            'industrial' => (object) [
+                'categories' => self::INDUSTRIAL_PROFILE_CATEGORIES,
+                'label' => 'web::seat.industrial',
+                'trained' => $character->skills->whereIn('type.groupID', self::INDUSTRIAL_PROFILE_CATEGORIES)->count(),
+                'overall' => $skill_categories->whereIn('groupID', self::INDUSTRIAL_PROFILE_CATEGORIES)->sum('types_count'),
+                'stats' => $character->skills->whereIn('type.groupID', self::INDUSTRIAL_PROFILE_CATEGORIES)->count() / $skill_categories->whereIn('groupID', self::INDUSTRIAL_PROFILE_CATEGORIES)->sum('types_count') * 100,
             ],
         ]);
     }

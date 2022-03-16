@@ -89,25 +89,20 @@ trait Stats
     }
 
     /**
-     * Get the numer of skills per Level for a character.
+     * Get the number of skills per Level for a character.
      *
      * @param  int  $character_id
-     * @return array
+     * @return mixed
      */
-    public function getCharacterSkillsAmountPerLevel(int $character_id): array
+    public function getCharacterSkillsAmountPerLevel(int $character_id)
     {
 
-        $skills = CharacterSkill::where('character_id', $character_id)
+        return CharacterSkill::selectRaw('count(*) as total, trained_skill_level')
+            ->where('character_id', $character_id)
+            ->where('trained_skill_level', '<>', 0)
+            ->groupBy('trained_skill_level')
+            ->orderBy('trained_skill_level')
             ->get();
-
-        return [
-            $skills->where('trained_skill_level', 0)->count(),
-            $skills->where('trained_skill_level', 1)->count(),
-            $skills->where('trained_skill_level', 2)->count(),
-            $skills->where('trained_skill_level', 3)->count(),
-            $skills->where('trained_skill_level', 4)->count(),
-            $skills->where('trained_skill_level', 5)->count(),
-        ];
     }
 
     /**

@@ -250,12 +250,17 @@ Route::get('/{character}/skills/export')
 Route::get('/view/skills/graph/level/{character}')
     ->name('seatcore::character.view.skills.graph.level')
     ->uses('SkillsController@getCharacterSkillsLevelChartData')
-    ->middleware('can:character.sheet,character');
+    ->middleware('can:character.skill,character');
+
+Route::get('/view/skills/graph/profile/{character}')
+    ->name('seatcore::character.view.skills.graph.profile')
+    ->uses('SkillsController@getCharacterProfileChartData')
+    ->middleware('can:character.skill,character');
 
 Route::get('/view/skills/graph/coverage/{character}')
     ->name('seatcore::character.view.skills.graph.coverage')
     ->uses('SkillsController@getCharacterSkillsCoverageChartData')
-    ->middleware('can:character.sheet,character');
+    ->middleware('can:character.skill,character');
 
 Route::get('/{character}/standings')
     ->name('seatcore::character.view.standings')

@@ -79,22 +79,16 @@ class HomeController extends Controller
     public function getServerStatusChartData()
     {
 
-        $data = $this->getEveServerStatuses(50);
+        $data = $this->getEveServerStatuses(30);
 
         return response()->json([
-            'labels'   => $data->map(function ($item) {
-
+            'labels' => $data->map(function ($item) {
                 return $item->created_at->toDateTimeString();
             })->toArray(),
             'datasets' => [
                 [
-                    'label'           => 'Concurrent Player Count',
-                    'fill'            => false,
-                    'lineTension'     => 0.1,
-                    'backgroundColor' => 'rgba(60,141,188,0.9)',
-                    'borderColor'     => 'rgba(60,141,188,0.8)',
-                    'data'            => $data->map(function ($item) {
-
+                    'name' => trans('web::seat.concurrent_player_count'),
+                    'data' => $data->map(function ($item) {
                         return $item->players;
                     })->toArray(),
                 ],
@@ -108,22 +102,16 @@ class HomeController extends Controller
     public function getEsiResponseTimeChartData()
     {
 
-        $data = $this->getEsiResponseTimes(50);
+        $data = $this->getEsiResponseTimes(30);
 
         return response()->json([
-            'labels'   => $data->map(function ($item) {
-
-                return '"' . $item->status . '" @ ' . $item->created_at->toDateTimeString();
+            'labels' => $data->map(function ($item) {
+                return $item->created_at->toDateTimeString();
             })->toArray(),
             'datasets' => [
                 [
-                    'label'           => 'Response Time',
-                    'fill'            => false,
-                    'lineTension'     => 0.1,
-                    'backgroundColor' => 'rgba(60,141,188,0.9)',
-                    'borderColor'     => 'rgba(60,141,188,0.8)',
-                    'data'            => $data->map(function ($item) {
-
+                    'name' => 'Response Time',
+                    'data' => $data->map(function ($item) {
                         return $item->request_time;
                     })->toArray(),
                 ],
