@@ -36,7 +36,7 @@ use Seat\Web\Models\User;
         new OA\Property(property: 'id', description: 'Role unique identifier', type: 'integer'),
         new OA\Property(property: 'title', description: 'Role name', type: 'string'),
         new OA\Property(property: 'description', description: 'Role description', type: 'string'),
-        new OA\Property(property: 'logo', description: 'Role logo', type: 'string', format: 'byte')
+        new OA\Property(property: 'logo', description: 'Role logo', type: 'string', format: 'byte'),
     ],
     type: 'object'
 )]
