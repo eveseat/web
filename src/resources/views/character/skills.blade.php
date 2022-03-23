@@ -6,39 +6,6 @@
 
 @section('character_content')
 
-  <!--
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card-deck">
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">{{ trans('web::seat.main_char_skills_per_level') }}</h3>
-          </div>
-          <div class="card-body">
-            <canvas id="skills-level" height="200"></canvas>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">{{ trans('web::seat.main_char_skills_coverage') }}</h3>
-            <div class="card-tools">
-              <div class="input-group input-group-sm">
-                <a href="{{ route('seatcore::character.export.skills', ['character' => request()->character]) }}" class="btn btn-sm btn-light">
-                  <i class="fas fa-file-export"></i>
-                  Export Skills (Pyfa Format)
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="card-body">
-            <canvas id="skills-coverage" height="200"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  -->
-
   <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 mb-3">
     <div class="col">
       <div class="card h-100">
@@ -295,32 +262,6 @@
 @push('javascript')
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script>
-    $.get("{{ route('seatcore::character.view.skills.graph.level', ['character' => $character]) }}", function (data) {
-      new Chart($("canvas#skills-level"), {
-        type: 'pie',
-        data: data
-      });
-    });
-
-    $.get("{{ route('seatcore::character.view.skills.graph.coverage', ['character' => $character]) }}", function (data) {
-      new Chart($('canvas#skills-coverage'), {
-        type   : 'radar',
-        data   : data,
-        options: {
-          scale : {
-            ticks: {
-              beginAtZero: true,
-              showLabelBackdrop: false,
-              max        : 100
-            }
-          },
-          legend: {
-            display: false
-          }
-        }
-      });
-    });
-
     let skillsCoverageConfig = {
       xaxis: {
         categories: ['Level I', 'Level II', 'Level III', 'Level IV', 'Level V']
