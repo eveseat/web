@@ -112,6 +112,14 @@ ul.dropdown-menu li.user-character.new-character a h3 {
 /*
  * Datatables
  */
+table.dataTable {
+    margin-top: 0 !important;
+}
+
+div.dataTables_wrapper div.dataTables_info {
+    padding-top: 0;
+}
+
 table.dataTable tr.dtrg-group td {
     background-color: #f8f9fa;
 }

@@ -6,101 +6,101 @@
 
 @section('character_content')
 
-  <div class="card">
-    <div class="card-header">
-      <h3 class="card-title">
-        {{ trans('web::seat.pi') }}
-      </h3>
-      @if($character->refresh_token)
-      <div class="card-tools">
-        <div class="input-group input-group-sm">
-          @include('web::components.jobs.buttons.update', ['type' => 'character', 'entity' => $character->character_id, 'job' => 'character.pi', 'label' => trans('web::seat.update_pi')])
+  <div class="row row-cards">
+
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">
+            {{ trans('web::seat.pi') }}
+          </h3>
+          @if($character->refresh_token)
+          <div class="card-actions btn-actions">
+              @include('web::components.jobs.buttons.update', ['type' => 'character', 'entity' => $character->character_id, 'job' => 'character.pi', 'label' => trans('web::seat.update_pi')])
+          </div>
+          @endif
         </div>
-      </div>
-      @endif
-    </div>
-    <div class="card-body">
 
-      <table class="table datatable table-sm table-condensed table-striped table-hover">
-        <thead>
-          <tr>
-            <th>{{ trans('web::seat.updated') }}</th>
-            <th>{{ trans('web::seat.system') }}</th>
-            <th>{{ trans('web::seat.planet') }}</th>
-            <th>{{ trans('web::seat.upgrade_level') }}</th>
-            <th>{{ trans('web::seat.no_pins') }}</th>
-          </tr>
-        </thead>
-        <tbody>
-
-          @foreach($character->colonies as $colony)
-
+        <table class="table card-table table-vcenter table-hover table-striped text-nowrap datatable">
+          <thead>
             <tr>
-              <td data-order="{{ $colony->last_update }}">
-                <span data-bs-toggle="tooltip" title="{{ $colony->last_update }}">
-                  {{ human_diff($colony->last_update) }}
-                </span>
-              </td>
-              <td>{{ $colony->solar_system->name }}</td>
-              <td>
-                @include('web::partials.type', ['type_id' => $colony->planet->type->typeID, 'type_name' => ucwords($colony->planet_type)])
-              </td>
-              <td>{{ $colony->upgrade_level }}</td>
-              <td>{{ $colony->num_pins }}</td>
+              <th>{{ trans('web::seat.updated') }}</th>
+              <th>{{ trans('web::seat.system') }}</th>
+              <th>{{ trans('web::seat.planet') }}</th>
+              <th>{{ trans('web::seat.upgrade_level') }}</th>
+              <th>{{ trans('web::seat.no_pins') }}</th>
             </tr>
+          </thead>
+          <tbody>
 
-          @endforeach
-
-        </tbody>
-      </table>
-
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-header">
-      <h3 class="card-title">Extractors</h3>
-    </div>
-    <div class="card-body">
-
-      <table class="table datatable table-sm table-condensed table-striped table-hover">
-        <thead>
-          <tr>
-            <th>{{ trans('web::seat.planet') }}</th>
-            <th>{{ trans('web::seat.system') }}</th>
-            <th>{{ trans('web::seat.product') }}</th>
-            <th>{{ trans('web::seat.progress') }}</th>
-            <th>{{ trans('web::seat.expiry') }}</th>
-          </tr>
-        </thead>
-        <tbody>
-
-          @foreach($character->colonies as $colony)
-            @foreach($colony->extractors as $extractor)
+            @foreach($character->colonies as $colony)
 
               <tr>
+                <td data-order="{{ $colony->last_update }}">
+                  <span data-bs-toggle="tooltip" title="{{ $colony->last_update }}">
+                    {{ human_diff($colony->last_update) }}
+                  </span>
+                </td>
+                <td>{{ $colony->solar_system->name }}</td>
                 <td>
                   @include('web::partials.type', ['type_id' => $colony->planet->type->typeID, 'type_name' => ucwords($colony->planet_type)])
                 </td>
-                <td>{{ $colony->planet->name }}</td>
-                <td>
-                  @include('web::partials.type', ['type_id' => $extractor->product->typeID, 'type_name' => $extractor->product->typeName])
-                </td>
-                <td>
-                  <div class="countdown-progressbar" data-expiry-time="{{ $extractor->pin->expiry_time }}"
-                       data-install-time="{{ $extractor->pin->install_time }}"></div>
-                </td>
-                <td>
-                  <div class="countdown" data-expiry-time="{{ $extractor->pin->expiry_time }}">{{ $extractor->pin->expiry_time }}</div>
-                </td>
+                <td>{{ $colony->upgrade_level }}</td>
+                <td>{{ $colony->num_pins }}</td>
               </tr>
 
             @endforeach
-          @endforeach
 
-        </tbody>
-      </table>
+          </tbody>
+        </table>
 
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Extractors</h3>
+        </div>
+
+        <table class="table card-table table-vcenter table-hover table-striped text-nowrap datatable">
+          <thead>
+            <tr>
+              <th>{{ trans('web::seat.planet') }}</th>
+              <th>{{ trans('web::seat.system') }}</th>
+              <th>{{ trans('web::seat.product') }}</th>
+              <th>{{ trans('web::seat.progress') }}</th>
+              <th>{{ trans('web::seat.expiry') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            @foreach($character->colonies as $colony)
+              @foreach($colony->extractors as $extractor)
+
+                <tr>
+                  <td>
+                    @include('web::partials.type', ['type_id' => $colony->planet->type->typeID, 'type_name' => ucwords($colony->planet_type)])
+                  </td>
+                  <td>{{ $colony->planet->name }}</td>
+                  <td>
+                    @include('web::partials.type', ['type_id' => $extractor->product->typeID, 'type_name' => $extractor->product->typeName])
+                  </td>
+                  <td>
+                    <div class="countdown-progressbar" data-expiry-time="{{ $extractor->pin->expiry_time }}"
+                         data-install-time="{{ $extractor->pin->install_time }}"></div>
+                  </td>
+                  <td>
+                    <div class="countdown" data-expiry-time="{{ $extractor->pin->expiry_time }}">{{ $extractor->pin->expiry_time }}</div>
+                  </td>
+                </tr>
+
+              @endforeach
+            @endforeach
+
+          </tbody>
+        </table>
+
+      </div>
     </div>
   </div>
 

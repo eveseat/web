@@ -83,7 +83,8 @@ $(document).ready(function () {
 $.extend(true, $.fn.dataTable.defaults, {
     responsive: true,
     autoWidth: false,
-    order: [[0, 'desc']]
+    order: [[0, 'desc']],
+    dom: '<"card-body border-bottom py-3"<"d-flex"<"text-muted"l><"ms-auto text-muted"f>>><"table-responsive"t><"card-footer d-flex align-items-center"i<"m-0 ms-auto"p>>'
 });
 
 // put some animation on the caret neat to the user dropdown

@@ -14,12 +14,11 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('web/css/all.min.css') }}">
-    <!-- Select2 -->
-    <link rel="stylesheet" href="{{ asset('web/css/select2.min.css') }}">
     <!-- DataTables -->
     <link rel="stylesheet" href="{{ asset('web/css/dataTables.bootstrap5.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('web/css/tabler.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('web/css/tabler-vendors.min.css') }}">
     <!-- SeAT CSS -->
     <link rel="stylesheet" href="{{ asset('web/css/seat.css') }}">
     <!-- SeAT Skins CSS -->
@@ -91,8 +90,8 @@
 
     <!-- jQuery -->
     <script src="{{ asset('web/js/jquery.min.js') }}"></script>
-    <!-- Select2 -->
-    <script src="{{ asset('web/js/select2.full.min.js') }}"></script>
+    <!-- Tom Select -->
+    <script src="{{ asset('web/js/tom-select.base.js') }}"></script>
     <!-- Bootbox -->
     <script src="{{ asset('web/js/bootbox.min.js') }}"></script>
     <!-- jQuery Unveil -->

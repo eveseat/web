@@ -6,99 +6,110 @@
 
 @section('character_content')
 
-  <div class="card">
-    <div class="card-header">
-      <h3 class="card-title">
-        {{ trans_choice('web::seat.character', 2) }}
-      </h3>
-    </div>
-    <div class="card-body">
-      <div class="mb-3">
-        <select multiple="multiple" id="dt-character-selector" class="form-control" style="width: 100%;">
-          @if($character->refresh_token)
-            @foreach($character->refresh_token->user->characters as $character_info)
-              @if($character_info->character_id == $character->character_id)
-                <option selected="selected" value="{{ $character_info->character_id }}">{{ $character_info->name }}</option>
+  <div class="row row-cards">
+
+    <div class="col-12">
+
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">
+            {{ trans_choice('web::seat.character', 2) }}
+          </h3>
+        </div>
+        <div class="card-body">
+          <div class="mb-3">
+            <select multiple="multiple" id="dt-character-selector" class="form-control" style="width: 100%;">
+              @if($character->refresh_token)
+                @foreach($character->refresh_token->user->characters as $character_info)
+                  @if($character_info->character_id == $character->character_id)
+                    <option selected="selected" value="{{ $character_info->character_id }}">{{ $character_info->name }}</option>
+                  @else
+                    <option value="{{ $character_info->character_id }}">{{ $character_info->name }}</option>
+                  @endif
+                @endforeach
               @else
-                <option value="{{ $character_info->character_id }}">{{ $character_info->name }}</option>
+                <option selected="selected" value="{{ $character->character_id }}">{{ $character->name }}</option>
               @endif
-            @endforeach
-          @else
-            <option selected="selected" value="{{ $character->character_id }}">{{ $character->name }}</option>
-          @endif
-        </select>
+            </select>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-header">
-      <h3 class="card-title">Top Wallet Journal Interactions</h3>
-    </div>
-    <div class="card-body">
-
-      <table class="table table-condensed table-hover table-striped"
-             id="character-top-journal-interactions" data-page-length=10>
-        <thead>
-          <tr>
-            <th>Total</th>
-            <th>Type</th>
-            <th>Party Name</th>
-            <th>Party Corp</th>
-            <th>Party Alliance</th>
-            <th>Party Faction</th>
-            <th></th>
-          </tr>
-        </thead>
-      </table>
 
     </div>
-  </div>
+    <div class="col-12">
 
-  <div class="card">
-    <div class="card-header">
-      <h3 class="card-title">Top Wallet Transaction Interactions</h3>
-    </div>
-    <div class="card-body">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Top Wallet Journal Interactions</h3>
+        </div>
 
-      <table class="table table-condensed table-hover table-striped"
-             id="character-top-transaction-interactions" data-page-length=10>
-        <thead>
-          <tr>
-            <th>Total</th>
-            <th>Party Name</th>
-            <th>Party Corp</th>
-            <th>Party Alliance</th>
-            <th>Party Faction</th>
-            <th></th>
-          </tr>
-        </thead>
-      </table>
+          <table class="table card-table table-vcenter table-hover table-striped text-nowrap"
+                 id="character-top-journal-interactions" data-page-length=10>
+            <thead>
+              <tr>
+                <th>Total</th>
+                <th>Type</th>
+                <th>Party Name</th>
+                <th>Party Corp</th>
+                <th>Party Alliance</th>
+                <th>Party Faction</th>
+                <th></th>
+              </tr>
+            </thead>
+          </table>
 
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-header">
-      <h3 class="card-title">Top Mail Interactions</h3>
-    </div>
-    <div class="card-body">
-
-      <table class="table table-condensed table-hover table-striped"
-             id="character-top-mail-interactions" data-page-length=10>
-        <thead>
-          <tr>
-            <th>Total</th>
-            <th>Character Name</th>
-            <th>Character Corp</th>
-            <th>Character Alliance</th>
-            <th>Character Faction</th>
-            <th></th>
-          </tr>
-        </thead>
-      </table>
+      </div>
 
     </div>
+    <div class="col-12">
+
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Top Wallet Transaction Interactions</h3>
+        </div>
+
+          <table class="table card-table table-vcenter table-hover table-striped text-nowrap"
+                 id="character-top-transaction-interactions" data-page-length=10>
+            <thead>
+              <tr>
+                <th>Total</th>
+                <th>Party Name</th>
+                <th>Party Corp</th>
+                <th>Party Alliance</th>
+                <th>Party Faction</th>
+                <th></th>
+              </tr>
+            </thead>
+          </table>
+
+      </div>
+
+    </div>
+    <div class="col-12">
+
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Top Mail Interactions</h3>
+        </div>
+
+          <table class="table card-table table-vcenter table-hover table-striped text-nowrap"
+                 id="character-top-mail-interactions" data-page-length=10>
+            <thead>
+              <tr>
+                <th>Total</th>
+                <th>Character Name</th>
+                <th>Character Corp</th>
+                <th>Character Alliance</th>
+                <th>Character Faction</th>
+                <th></th>
+              </tr>
+            </thead>
+          </table>
+
+      </div>
+
+    </div>
+
   </div>
 
   <!-- Transaction Content Modal -->

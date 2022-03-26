@@ -7,38 +7,21 @@
 @section('character_content')
 
   <div class="card">
-    <div class="card-header">
-      <h3 class="card-title">
-        {{ trans('web::seat.calendar_events') }}
-      </h3>
-      @if($character->refresh_token)
-      <div class="card-tools">
-        <div class="input-group input-group-sm">
-          @include('web::components.jobs.buttons.update', ['type' => 'character', 'entity' => $character->character_id, 'job' => 'character.calendar', 'label' => trans('web::seat.update_calendar')])
-        </div>
-      </div>
-      @endif
-    </div>
-    <div class="card-body">
-      <div class="mb-3">
-        <select multiple="multiple" id="dt-character-selector" class="form-control" style="width: 100%;">
-          @if($character->refresh_token)
-            @foreach($character->refresh_token->user->characters as $character_info)
-              @if($character_info->character_id == $character->character_id)
-                <option selected="selected" value="{{ $character_info->character_id }}">{{ $character_info->name }}</option>
-              @else
-                <option value="{{ $character_info->character_id }}">{{ $character_info->name }}</option>
+      <div class="card-header d-flex align-items-center">
+          <div class="col-auto me-5">
+              <h3 class="card-title">{{ trans('web::seat.calendar_events') }}</h3>
+          </div>
+          <div class="col-6">
+              @include('web::character.includes.dt-character-selector')
+          </div>
+          <div class="ms-auto">
+              @if($character->refresh_token)
+                  @include('web::components.jobs.buttons.update', ['type' => 'character', 'entity' => $character->character_id, 'job' => 'character.calendar', 'label' => trans('web::seat.update_calendar')])
               @endif
-            @endforeach
-          @else
-            <option selected="selected" value="{{ $character->character_id }}">{{ $character->name }}</option>
-          @endif
-        </select>
+          </div>
       </div>
 
-      {{ $dataTable->table() }}
-
-    </div>
+      {{ $dataTable->table(['class' => 'table card-table table-vcenter table-hover table-striped text-nowrap']) }}
   </div>
 
 @stop

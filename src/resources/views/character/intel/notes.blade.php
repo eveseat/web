@@ -9,23 +9,20 @@
   <div class="card">
     <div class="card-header">
       <h3 class="card-title">Notes</h3>
-      <div class="card-tools">
-        <div class="input-group input-group-sm">
-          <!-- Button trigger modal -->
-          <button type="button" data-bs-toggle="modal" data-bs-target="#note-create-modal"
-                  data-object-type="{{ Seat\Eveapi\Models\Character\CharacterInfo::class }}"
-                  data-object-id="{{ request()->character->character_id }}" class="btn btn-sm btn-success">
-            <i class="fas fa-plus-square"></i>
-            Add Note
-          </button>
-        </div>
+      <div class="card-actions">
+        <!-- Button trigger modal -->
+        <button type="button" data-bs-toggle="modal" data-bs-target="#note-create-modal"
+                data-object-type="{{ Seat\Eveapi\Models\Character\CharacterInfo::class }}"
+                data-object-id="{{ request()->character->character_id }}"
+                class="btn btn-success">
+          <i class="fas fa-plus-square me-2"></i>
+          Add Note
+        </button>
       </div>
     </div>
-    <div class="card-body">
 
-      {!! $dataTable->table() !!}
+    {!! $dataTable->table(['class' => 'table card-table table-vcenter table-hover table-striped text-nowrap']) !!}
 
-    </div>
   </div>
 
   {{-- include the note creation modal --}}

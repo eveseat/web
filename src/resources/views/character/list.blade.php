@@ -6,15 +6,11 @@
 
 @section('full')
 
-  <div class="card card-default">
-
+  <div class="card">
     <div class="card-header">
       <h3 class="card-title">{{ trans_choice('web::seat.character', 2) }}</h3>
     </div>
-    <div class="card-body">
-      {{ $dataTable->table() }}
-    </div>
-
+    {{ $dataTable->table(['class' => 'table card-table table-vcenter table-hover table-striped text-nowrap']) }}
   </div>
 
 @stop

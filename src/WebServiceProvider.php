@@ -159,6 +159,7 @@ class WebServiceProvider extends AbstractSeatPlugin
 
             // Tabler pulled from packagist
             __DIR__ . '/resources/css/tabler.min.css' => public_path('web/css/tabler.min.css'),
+            __DIR__ . '/resources/css/tabler-vendors.min.css' => public_path('web/css/tabler-vendors.min.css'),
             __DIR__ . '/resources/js/tabler.min.js' => public_path('web/js/tabler.min.js'),
             __DIR__ . '/resources/fonts' => public_path('web/fonts'),
 

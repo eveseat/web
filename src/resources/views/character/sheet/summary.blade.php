@@ -5,10 +5,8 @@
                 {{ trans('web::seat.skills_summary') }}
             </h3>
             @if($character->refresh_token)
-                <div class="card-tools">
-                    <div class="input-group input-group-sm">
-                        @include('web::components.jobs.buttons.update', ['type' => 'character', 'entity' => $character->character_id, 'job' => 'character.skillqueue', 'label' => trans('web::seat.update_skill_queue')])
-                    </div>
+                <div class="card-actions btn-actions">
+                    @include('web::components.jobs.buttons.update', ['type' => 'character', 'entity' => $character->character_id, 'job' => 'character.skillqueue', 'label' => trans('web::seat.update_skill_queue')])
                 </div>
             @endif
         </div>
