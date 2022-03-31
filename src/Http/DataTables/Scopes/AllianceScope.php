@@ -107,6 +107,6 @@ class AllianceScope implements DataTableScope
 
         $alliance_ids = $map->pluck('alliances')->flatten()->toArray();
 
-        return $query->whereIn($table . '.alliance_id', $alliance_ids);
+        return $query->whereIntegerInRaw($table . '.alliance_id', $alliance_ids);
     }
 }

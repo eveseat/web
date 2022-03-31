@@ -124,6 +124,6 @@ class CorporationScope implements DataTableScope
         // merge all collected characters IDs in a single array and apply filter
         $corporation_ids = array_merge($owner_range, $corporations_range, $alliances_range, $director_range);
 
-        return $query->whereIn($table . '.corporation_id', $corporation_ids);
+        return $query->whereIntegerInRaw($table . '.corporation_id', $corporation_ids);
     }
 }
