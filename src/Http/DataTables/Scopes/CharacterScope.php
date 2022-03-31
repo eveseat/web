@@ -145,6 +145,6 @@ class CharacterScope implements DataTableScope
         // merge all collected characters IDs in a single array and apply filter
         $character_ids = array_merge($characters_range, $corporations_range, $alliances_range, $owned_range, $sharelink, $ceo_range, $director_range);
 
-        return $query->whereIn($table . '.character_id', $character_ids);
+        return $query->whereIntegerInRaw($table . '.character_id', $character_ids);
     }
 }
