@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,9 +34,9 @@ abstract class AbstractEntityPolicy extends AbstractPolicy
     /**
      * Determine if the requested entity is granted by the specified permission filter.
      *
-     * @param stdClass $filters
-     * @param string $entity_type
-     * @param int $entity_id
+     * @param  stdClass  $filters
+     * @param  string  $entity_type
+     * @param  int  $entity_id
      * @return bool
      */
     protected function isGrantedByFilter(stdClass $filters, string $entity_type, ?int $entity_id): bool

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ use Seat\Web\Models\User;
 class CharacterRoleObserver extends AbstractSquadObserver
 {
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterRole $role
+     * @param  \Seat\Eveapi\Models\Character\CharacterRole  $role
      */
     public function created(CharacterRole $role)
     {
@@ -63,7 +63,7 @@ class CharacterRoleObserver extends AbstractSquadObserver
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterRole $role
+     * @param  \Seat\Eveapi\Models\Character\CharacterRole  $role
      */
     public function updated(CharacterRole $role)
     {
@@ -71,7 +71,7 @@ class CharacterRoleObserver extends AbstractSquadObserver
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterRole $role
+     * @param  \Seat\Eveapi\Models\Character\CharacterRole  $role
      */
     public function deleted(CharacterRole $role)
     {

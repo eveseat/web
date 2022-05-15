@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@ class MiningCorporationScope implements DataTableScope
     /**
      * MiningCorporationScope constructor.
      *
-     * @param array $corporation_ids
+     * @param  array  $corporation_ids
      */
     public function __construct(array $corporation_ids, int $year, int $month)
     {
@@ -62,7 +62,7 @@ class MiningCorporationScope implements DataTableScope
     /**
      * Apply a query scope.
      *
-     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder  $query
      * @return mixed
      */
     public function apply($query)
@@ -71,7 +71,7 @@ class MiningCorporationScope implements DataTableScope
             $sub_query->where('year', $this->year)
                 ->where('month', $this->month)
                 ->whereHas('character.affiliation', function ($query) {
-                    $query->whereIn('corporation_id', $this->corporation_ids);
+                    $query->whereIntegerInRaw('corporation_id', $this->corporation_ids);
                 });
         });
     }

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,8 +36,8 @@ use Seat\Web\Models\Squads\SquadApplication;
 class ApplicationsController extends Controller
 {
     /**
-     * @param \Seat\Web\Http\DataTables\Squads\CandidatesDataTable $dataTable
-     * @param \Seat\Web\Models\Squads\Squad $squad
+     * @param  \Seat\Web\Http\DataTables\Squads\CandidatesDataTable  $dataTable
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
      * @return mixed
      */
     public function index(CandidatesDataTable $dataTable, Squad $squad)
@@ -46,8 +46,8 @@ class ApplicationsController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Models\Squads\Squad $squad
-     * @param int $id
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
+     * @param  int  $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Squad $squad, int $id)
@@ -58,8 +58,8 @@ class ApplicationsController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param \Seat\Web\Models\Squads\Squad $squad
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request, Squad $squad)
@@ -98,9 +98,10 @@ class ApplicationsController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Models\Squads\Squad $squad
-     * @param int $id
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
+     * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Exception
      */
     public function approve(Squad $squad, int $id)
@@ -120,8 +121,8 @@ class ApplicationsController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Models\Squads\Squad $squad
-     * @param int $id
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
+     * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function reject(Squad $squad, int $id)
@@ -139,7 +140,7 @@ class ApplicationsController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Models\Squads\Squad $squad
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
      * @return \Illuminate\Http\RedirectResponse
      */
     public function cancel(Squad $squad)

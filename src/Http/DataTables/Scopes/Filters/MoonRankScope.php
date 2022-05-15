@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ class MoonRankScope implements DataTableScope
     /**
      * MoonRankScope constructor.
      *
-     * @param int[] $groups
+     * @param  int[]  $groups
      */
     public function __construct(array $groups)
     {
@@ -49,7 +49,7 @@ class MoonRankScope implements DataTableScope
     /**
      * Apply a query scope.
      *
-     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder  $query
      * @return mixed
      **/
     public function apply($query) {

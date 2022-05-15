@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,13 +33,14 @@ use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 
 /**
  * Class AssetsController.
+ *
  * @package Seat\Web\Http\Controllers\Corporation
  */
 class AssetsController extends Controller
 {
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
-     * @param \Seat\Web\Http\DataTables\Corporation\Intel\Assets\DataTable $dataTable
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
+     * @param  \Seat\Web\Http\DataTables\Corporation\Intel\Assets\DataTable  $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getAssets(CorporationInfo $corporation, DataTable $dataTable)
@@ -63,8 +64,8 @@ class AssetsController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
-     * @param int $item_id
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
+     * @param  int  $item_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getFitting(CorporationInfo $corporation, int $item_id)
@@ -75,8 +76,8 @@ class AssetsController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
-     * @param int $item_id
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
+     * @param  int  $item_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getContainer(CorporationInfo $corporation, int $item_id)

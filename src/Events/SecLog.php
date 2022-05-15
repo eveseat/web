@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,8 +29,8 @@ class SecLog
     /**
      * Write an entry in the security log.
      *
-     * @param string $message
-     * @param string $category
+     * @param  string  $message
+     * @param  string  $category
      */
     public static function handle($message, $category = null)
     {

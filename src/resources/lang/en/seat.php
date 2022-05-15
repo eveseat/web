@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -229,6 +229,7 @@ return [
     'total_character_isk'         => 'Total Character ISK',
     'total_character_skillpoints' => 'Total Character Skillpoints',
     'total_character_mined_isk'   => 'Total Mined ISK',
+    'total_character_ratted_isk'   => 'Total Ratted ISK',
     'total_killmails'             => 'Total Killmails',
     'main_char_skills'            => ':character_name\'s Skills',
     'main_char_skills_per_level'  => 'Skills Per Level',
@@ -639,8 +640,11 @@ return [
     'faction'                      => 'Faction',
 
     'start_at'                     => 'Start at',
+    'drill_start'                  => 'Drill Start',
     'chunk_arrival'                => 'Chunk Arrival',
+    'chunk_age'                    => 'Extraction Length',
     'self_destruct'                => 'Self-Destruct',
+    'auto_fracture'                => 'Auto Fracture',
     'rarity'                       => 'Rarity',
     'rate'                         => 'Rate',
 

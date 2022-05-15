@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@ use Seat\Web\Models\UserLoginHistory;
 
 /**
  * Class Logout.
+ *
  * @package Seat\Web\Events
  */
 class Logout
@@ -35,7 +36,7 @@ class Logout
     /**
      * Write a logout history item for this user.
      *
-     * @param \Illuminate\Auth\Events\Logout $event
+     * @param  \Illuminate\Auth\Events\Logout  $event
      */
     public static function handle(LogoutEvent $event)
     {

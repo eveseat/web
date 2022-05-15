@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,13 +31,14 @@ use Seat\Web\Http\DataTables\Scopes\Filters\MarketStatusScope;
 
 /**
  * Class MarketController.
+ *
  * @package Seat\Web\Http\Controllers\Character
  */
 class MarketController extends Controller
 {
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterInfo $character
-     * @param \Seat\Web\Http\DataTables\Character\Financial\MarketDataTable $dataTable
+     * @param  \Seat\Eveapi\Models\Character\CharacterInfo  $character
+     * @param  \Seat\Web\Http\DataTables\Character\Financial\MarketDataTable  $dataTable
      * @return mixed
      */
     public function index(CharacterInfo $character, MarketDataTable $dataTable)

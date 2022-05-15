@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,9 +33,8 @@ use Seat\Web\Models\User;
 class GlobalPolicy extends AbstractPolicy
 {
     /**
-     * @param string $method
-     * @param array $args
-     *
+     * @param  string  $method
+     * @param  array  $args
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function __call(string $method, array $args)
@@ -63,8 +62,7 @@ class GlobalPolicy extends AbstractPolicy
     }
 
     /**
-     * @param \Seat\Web\Models\User $user
-     *
+     * @param  \Seat\Web\Models\User  $user
      * @return \Illuminate\Auth\Access\Response
      */
     public function superuser(User $user)

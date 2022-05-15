@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ class KillMailCharacterScope implements DataTableScope
     /**
      * KillMailCharacterScope constructor.
      *
-     * @param int[]|null $character_ids
+     * @param  int[]|null  $character_ids
      */
     public function __construct(?array $character_ids = null)
     {
@@ -53,7 +53,7 @@ class KillMailCharacterScope implements DataTableScope
     /**
      * Apply a query scope.
      *
-     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder  $query
      * @return mixed
      */
     public function apply($query)
@@ -123,9 +123,9 @@ class KillMailCharacterScope implements DataTableScope
 
         return $query->where(function ($sub_query) use ($character_ids) {
             $sub_query->whereHas('attackers', function ($query) use ($character_ids) {
-                $query->whereIn('killmail_attackers.character_id', $character_ids);
+                $query->whereIntegerInRaw('killmail_attackers.character_id', $character_ids);
             })->orWhereHas('victim', function ($query) use ($character_ids) {
-                $query->whereIn('killmail_victims.character_id', $character_ids);
+                $query->whereIntegerInRaw('killmail_victims.character_id', $character_ids);
             });
         });
     }

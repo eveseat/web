@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,12 +27,14 @@ use Yajra\DataTables\Services\DataTable;
 
 /**
  * Class StructureDataTable.
+ *
  * @package Seat\Web\Http\DataTables\Corporation\Military
  */
 class StructureDataTable extends DataTable
 {
     /**
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Exception
      */
     public function ajax()

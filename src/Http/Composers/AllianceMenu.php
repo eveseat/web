@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\Gate;
 
 /**
  * Class CorporationMenu.
+ *
  * @package Seat\Web\Http\Composers
  */
 class AllianceMenu extends AbstractMenu
@@ -61,9 +62,9 @@ class AllianceMenu extends AbstractMenu
     /**
      * Bind data to the view.
      *
-     * @param  View $view
-     *
+     * @param  View  $view
      * @return void
+     *
      * @throws \Seat\Web\Exceptions\PackageMenuBuilderException
      */
     public function compose(View $view)
@@ -94,7 +95,7 @@ class AllianceMenu extends AbstractMenu
     /**
      * Return true if the current user can see menu entry.
      *
-     * @param array $permissions
+     * @param  array  $permissions
      * @return bool
      */
     protected function userHasPermission(array $permissions): bool

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ return [
         'label'         => 'web::seat.alliance',
         'plural'        => true,
         'icon'          => 'fas fa-city',
-        'route_segment' => 'alliance',
+        'route_segment' => 'alliances',
         'entries'       => [
             [
                 'name'  => 'all alliances',
@@ -48,7 +48,7 @@ return [
         'label'         => 'web::seat.corporation',
         'plural'        => true,
         'icon'          => 'fas fa-building',
-        'route_segment' => 'corporation',
+        'route_segment' => 'corporations',
         'entries'       => [
             [
                 'name'  => 'all corporations',
@@ -63,7 +63,7 @@ return [
         'label'         => 'web::seat.character',
         'plural'        => true,
         'icon'          => 'fas fa-user',
-        'route_segment' => 'character',
+        'route_segment' => 'characters',
         'entries'       => [
             [
                 'name'  => 'all characters',

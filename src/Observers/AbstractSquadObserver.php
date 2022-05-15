@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ abstract class AbstractSquadObserver
     /**
      * Return the User owning the model which fired the catch event.
      *
-     * @param \Illuminate\Database\Eloquent\Model $fired_model The model which fired the catch event
+     * @param  \Illuminate\Database\Eloquent\Model  $fired_model  The model which fired the catch event
      * @return \Seat\Web\Models\User|null The user owning this model
      */
     abstract protected function findRelatedUser(Model $fired_model): ?User;
@@ -44,7 +44,7 @@ abstract class AbstractSquadObserver
     /**
      * Update squads to which the user owning model firing the event is member.
      *
-     * @param \Illuminate\Database\Eloquent\Model $fired_model The model which fired the catch event
+     * @param  \Illuminate\Database\Eloquent\Model  $fired_model  The model which fired the catch event
      */
     protected function updateUserSquads(Model $fired_model)
     {

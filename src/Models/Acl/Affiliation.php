@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ use Seat\Web\Models\User;
 
 /**
  * Class Affiliation.
+ *
  * @package Seat\Web\Models\Acl
  */
 class Affiliation extends Model
@@ -62,8 +63,7 @@ class Affiliation extends Model
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return mixed
      */
     public function scopeChar($query)
@@ -73,8 +73,7 @@ class Affiliation extends Model
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return mixed
      */
     public function scopeCorp($query)

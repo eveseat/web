@@ -130,7 +130,7 @@
                  for="reprocessing_yield">{{ trans('web::seat.reprocessing_yield') }}</label>
           <div class="col-md-6">
             <div class="form-inline input-group">
-              <input type="number" min="0" max="1" step="0.05" name="reprocessing_yield" value="{{ setting('reprocessing_yield') ?: 0.80 }}" class="form-control" id="reprocessing_yield" />
+              <input type="number" min="0" max="1" step="0.0001" name="reprocessing_yield" value="{{ setting('reprocessing_yield') ?: 0.80 }}" class="form-control" id="reprocessing_yield" />
             </div>
           </div>
         </div>

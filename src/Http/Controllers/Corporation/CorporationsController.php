@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,13 +31,13 @@ use Seat\Web\Http\DataTables\Scopes\CorporationScope;
 
 /**
  * Class CorporationsController.
+ *
  * @package Seat\Web\Http\Controllers\Corporation
  */
 class CorporationsController extends Controller
 {
     /**
-     * @param \Seat\Web\Http\DataTables\Corporation\CorporationDataTable $dataTable
-     *
+     * @param  \Seat\Web\Http\DataTables\Corporation\CorporationDataTable  $dataTable
      * @return mixed
      */
     public function index(CorporationDataTable $dataTable)
@@ -51,7 +51,7 @@ class CorporationsController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
      * @return \Illuminate\Http\RedirectResponse
      */
     public function show(CorporationInfo $corporation)
@@ -87,9 +87,9 @@ class CorporationsController extends Controller
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Corporation\CorporationInfo $corporation
-     *
+     * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Exception
      */
     public function destroy(CorporationInfo $corporation)

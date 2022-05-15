@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ class ConstellationScope implements DataTableScope
     /**
      * ConstellationScope constructor.
      *
-     * @param int $constellation_id
+     * @param  int  $constellation_id
      */
     public function __construct(int $constellation_id) {
         $this->constellation_id = $constellation_id;
@@ -48,7 +48,7 @@ class ConstellationScope implements DataTableScope
     /**
      * Apply a query scope.
      *
-     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
      */
     public function apply($query) {

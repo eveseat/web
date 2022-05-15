@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,8 +36,8 @@ use Seat\Web\Models\User;
 class ModeratorsController extends Controller
 {
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param \Seat\Web\Models\Squads\Squad $squad
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
      * @return \Illuminate\Http\JsonResponse
      */
     public function lookup(Request $request, Squad $squad)
@@ -67,8 +67,8 @@ class ModeratorsController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param \Seat\Web\Models\Squads\Squad $squad
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request, Squad $squad)
@@ -85,8 +85,8 @@ class ModeratorsController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Models\Squads\Squad $squad
-     * @param \Seat\Web\Models\User $user
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
+     * @param  \Seat\Web\Models\User  $user
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Squad $squad, User $user)
