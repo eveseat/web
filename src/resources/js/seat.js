@@ -8,6 +8,7 @@ $.ajaxSetup({
 
 // Generic 'confirm' dialog code for forms.
 // Make your submit button part of class confirmform, and viola
+// Optional: You can describe the action by adding a "data-seat-action" attribute.
 var currentForm;
 $(document).on("click", ".confirmform", function (e) {
     if ($(this).attr('form') === undefined) {
@@ -16,7 +17,13 @@ $(document).on("click", ".confirmform", function (e) {
         currentForm = $('#'.concat($(this).attr('form')))
     }
     e.preventDefault();
-    bootbox.confirm("Are you sure you want to continue?", function (confirmed) {
+    var action = $(this).data('seat-action');
+    if (typeof action !== 'undefined') {
+        message = `Are you sure you want to ${action}?`;
+    } else {
+        message = 'Are you sure you want to continue?';
+    }
+    bootbox.confirm(message, function (confirmed) {
         if (confirmed) {
             currentForm.submit();
         }
