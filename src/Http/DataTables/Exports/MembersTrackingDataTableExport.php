@@ -29,9 +29,9 @@ class MembersTrackingDataTableExport extends DataTablesCollectionExport
 {
     public function collection()
     {
-        $collection = $this->collection->map(function ($serialized_character) {
-            //for some reason, the model gets serialized again
-            $character = CorporationMemberTracking::where('character_id', $serialized_character['character_id'])->with('character', 'refresh_token', 'ship')->first();
+        return $this->collection->map(function ($row) {
+
+            $character = CorporationMemberTracking::with('character', 'refresh_token', 'ship')->find($row['id']);
 
             return [
                 'token' => self::isValidToken($character->refresh_token),
@@ -42,8 +42,6 @@ class MembersTrackingDataTableExport extends DataTablesCollectionExport
                 'last_login' => $character->logon_date,
             ];
         });
-
-        return $collection;
     }
 
     public function headings(): array {
@@ -58,10 +56,6 @@ class MembersTrackingDataTableExport extends DataTablesCollectionExport
     }
 
     private static function isValidToken($token) {
-        if ($token == null){
-            return 'invalid';
-        }
-
-        return 'valid';
+        return ($token == null) ? 'invalid' : 'valid';
     }
 }
