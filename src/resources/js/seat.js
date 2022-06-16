@@ -41,10 +41,9 @@ $(document).on("click", ".confirmdelete", function (e) {
     }
     e.preventDefault();
     entity = $(this).data('seat-entity');
+    var message = 'Are you sure you want to delete this?';
     if (typeof entity !== 'undefined') {
         message = `Are you sure you want to delete this ${entity}?`;
-    } else {
-        message = 'Are you sure you want to delete this?';
     }
     bootbox.confirm(message, function (confirmed) {
         if (confirmed) {
