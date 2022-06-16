@@ -18,10 +18,9 @@ $(document).on("click", ".confirmform", function (e) {
     }
     e.preventDefault();
     var action = $(this).data('seat-action');
+    var message = 'Are you sure you want to continue?';
     if (typeof action !== 'undefined') {
         message = `Are you sure you want to ${action}?`;
-    } else {
-        message = 'Are you sure you want to continue?';
     }
     bootbox.confirm(message, function (confirmed) {
         if (confirmed) {
