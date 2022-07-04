@@ -37,7 +37,7 @@ class LoyaltyPointsDataTable extends DataTable
      */
     public function query()
     {
-        return CharacterLoyaltyPoints::with("character","corporation");
+        return CharacterLoyaltyPoints::with('character', 'corporation');
     }
 
     /**
@@ -53,12 +53,12 @@ class LoyaltyPointsDataTable extends DataTable
                 return view('web::partials.corporation', ['corporation' => $row->corporation])->render();
             })
             ->editColumn('loyalty_points', function ($row) {
-                return number($row->loyalty_points,0);
+                return number($row->loyalty_points, 0);
             })
             ->addColumn('fuzzworks', function ($row) {
                 return view('web::character.partials.fuzzwork-lp-prices', ['corporation' => $row->corporation])->render();
             })
-            ->rawColumns(['character_id','corporation_id', 'fuzzworks'])
+            ->rawColumns(['character_id', 'corporation_id', 'fuzzworks'])
             ->make(true);
     }
 
