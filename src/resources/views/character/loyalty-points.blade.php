@@ -1,6 +1,6 @@
 @extends('web::character.layouts.view', ['viewname' => 'loyalty-points', 'breadcrumb' => trans('web::seat.loyalty_points')])
 
-@section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.calendar'))
+@section('page_header', trans_choice('web::seat.character', 1) . ' ' . trans('web::seat.loyalty_points'))
 
 @inject('request', 'Illuminate\Http\Request')
 
