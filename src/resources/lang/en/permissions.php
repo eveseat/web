@@ -94,6 +94,8 @@ return [
     'character_journal_description'      => 'Displays a characters Wallet Journal',
     'character_transaction_label'        => 'Grant access to Character Wallet Transaction',
     'character_transaction_description'  => 'Displays a characters Wallet Transactions.',
+    'character_loyalty_points_label'     => 'Grant access to Loyalty Points',
+    'character_loyalty_points_description' => 'Displays a characters Loyalty Points.',
 
     // Corporation Scope
     'corporation_asset_label'                         => 'Grant access to Corporation Assets',

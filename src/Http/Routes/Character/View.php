@@ -92,6 +92,11 @@ Route::get('/{character}/industry')
     ->uses('IndustryController@index')
     ->middleware('can:character.industry,character');
 
+Route::get('/{character}/loyalty-points')
+    ->name('character.view.loyalty_points')
+    ->uses('LoyaltyPointsController@index')
+    ->middleware('can:character.loyalty_points,character');
+
 Route::group(['prefix' => '{character}/intel'], function () {
 
     Route::get('summary')
