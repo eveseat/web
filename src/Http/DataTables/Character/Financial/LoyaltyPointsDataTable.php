@@ -47,7 +47,7 @@ class LoyaltyPointsDataTable extends DataTable
      */
     public function ajax()
     {
-        $market_region = setting('market_prices_region_id',true);
+        $market_region = setting('market_prices_region_id', true);
 
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
