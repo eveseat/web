@@ -49,16 +49,19 @@ class LoyaltyPointsDataTable extends DataTable
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
-            ->editColumn('corporation_id', function ($row) {
+            ->editColumn('character', function ($row) {
+                return view('web::partials.character', ['character' => $row->character])->render();
+            })
+            ->editColumn('corporation', function ($row) {
                 return view('web::partials.corporation', ['corporation' => $row->corporation])->render();
             })
-            ->editColumn('loyalty_points', function ($row) {
-                return number($row->loyalty_points, 0);
+            ->editColumn('amount', function ($row) {
+                return number($row->amount, 0);
             })
             ->addColumn('fuzzworks', function ($row) {
                 return view('web::character.partials.fuzzwork-lp-prices', ['corporation' => $row->corporation])->render();
             })
-            ->rawColumns(['character_id', 'corporation_id', 'fuzzworks'])
+            ->rawColumns(['character','corporation', 'amount', 'fuzzworks'])
             ->make(true);
     }
 
@@ -78,9 +81,10 @@ class LoyaltyPointsDataTable extends DataTable
     public function getColumns()
     {
         return [
-            ['data' => 'corporation_id', 'title' => trans('web::seat.corporation_name')],
-            ['data' => 'loyalty_points', 'title' => trans('web::seat.loyalty_points')],
-            ['data' => 'fuzzworks', 'title' => trans('web::seat.loyalty_point_prices')],
+            ['data' => 'character', 'title' => trans('web::seat.character_name'),'sortable'=>false,'name'=>'character.name'],
+            ['data' => 'corporation', 'title' => trans('web::seat.corporation_name'),'sortable'=>false,'name'=>'corporation.name'],
+            ['data' => 'amount', 'title' => trans('web::seat.loyalty_points'),'searchable'=>false],
+            ['data' => 'fuzzworks', 'title' => trans('web::seat.loyalty_point_prices'),'sortable'=>false,'searchable'=>false],
         ];
     }
 }
