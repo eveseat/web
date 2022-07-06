@@ -47,6 +47,8 @@ class LoyaltyPointsDataTable extends DataTable
      */
     public function ajax()
     {
+        $market_region = setting('market_prices_region_id',true);
+
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('character.name', function ($row) {
@@ -58,8 +60,8 @@ class LoyaltyPointsDataTable extends DataTable
             ->editColumn('amount', function ($row) {
                 return number($row->amount, 0);
             })
-            ->addColumn('fuzzworks', function ($row) {
-                return view('web::character.partials.fuzzwork-lp-prices', ['corporation' => $row->corporation])->render();
+            ->addColumn('fuzzworks', function ($row) use ($market_region) {
+                return view('web::character.partials.fuzzwork-lp-prices', ['corporation' => $row->corporation, 'region'=>$market_region])->render();
             })
             ->rawColumns(['character.name', 'corporation.name', 'amount', 'fuzzworks'])
             ->make(true);
