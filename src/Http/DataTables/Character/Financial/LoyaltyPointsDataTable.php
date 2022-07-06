@@ -49,10 +49,10 @@ class LoyaltyPointsDataTable extends DataTable
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
-            ->editColumn('character', function ($row) {
+            ->editColumn('character.name', function ($row) {
                 return view('web::partials.character', ['character' => $row->character])->render();
             })
-            ->editColumn('corporation', function ($row) {
+            ->editColumn('corporation.name', function ($row) {
                 return view('web::partials.corporation', ['corporation' => $row->corporation])->render();
             })
             ->editColumn('amount', function ($row) {
@@ -61,7 +61,7 @@ class LoyaltyPointsDataTable extends DataTable
             ->addColumn('fuzzworks', function ($row) {
                 return view('web::character.partials.fuzzwork-lp-prices', ['corporation' => $row->corporation])->render();
             })
-            ->rawColumns(['character', 'corporation', 'amount', 'fuzzworks'])
+            ->rawColumns(['character.name', 'corporation.name', 'amount', 'fuzzworks'])
             ->make(true);
     }
 
@@ -83,8 +83,8 @@ class LoyaltyPointsDataTable extends DataTable
     public function getColumns()
     {
         return [
-            ['data' => 'character', 'title' => trans('web::seat.character_name'), 'sortable'=>false, 'name'=>'character.name'],
-            ['data' => 'corporation', 'title' => trans('web::seat.corporation_name'), 'sortable'=>false, 'name'=>'corporation.name'],
+            ['data' => 'character.name', 'title' => trans('web::seat.character_name')],
+            ['data' => 'corporation.name', 'title' => trans('web::seat.corporation_name')],
             ['data' => 'amount', 'title' => trans('web::seat.loyalty_points'), 'searchable'=>false],
             ['data' => 'fuzzworks', 'title' => trans('web::seat.loyalty_point_prices'), 'sortable'=>false, 'searchable'=>false],
         ];
