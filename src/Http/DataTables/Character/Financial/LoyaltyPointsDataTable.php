@@ -61,7 +61,7 @@ class LoyaltyPointsDataTable extends DataTable
             ->addColumn('fuzzworks', function ($row) {
                 return view('web::character.partials.fuzzwork-lp-prices', ['corporation' => $row->corporation])->render();
             })
-            ->rawColumns(['character','corporation', 'amount', 'fuzzworks'])
+            ->rawColumns(['character', 'corporation', 'amount', 'fuzzworks'])
             ->make(true);
     }
 
@@ -83,10 +83,10 @@ class LoyaltyPointsDataTable extends DataTable
     public function getColumns()
     {
         return [
-            ['data' => 'character', 'title' => trans('web::seat.character_name'),'sortable'=>false,'name'=>'character.name'],
-            ['data' => 'corporation', 'title' => trans('web::seat.corporation_name'),'sortable'=>false,'name'=>'corporation.name'],
-            ['data' => 'amount', 'title' => trans('web::seat.loyalty_points'),'searchable'=>false],
-            ['data' => 'fuzzworks', 'title' => trans('web::seat.loyalty_point_prices'),'sortable'=>false,'searchable'=>false],
+            ['data' => 'character', 'title' => trans('web::seat.character_name'), 'sortable'=>false, 'name'=>'character.name'],
+            ['data' => 'corporation', 'title' => trans('web::seat.corporation_name'), 'sortable'=>false, 'name'=>'corporation.name'],
+            ['data' => 'amount', 'title' => trans('web::seat.loyalty_points'), 'searchable'=>false],
+            ['data' => 'fuzzworks', 'title' => trans('web::seat.loyalty_point_prices'), 'sortable'=>false, 'searchable'=>false],
         ];
     }
 }
