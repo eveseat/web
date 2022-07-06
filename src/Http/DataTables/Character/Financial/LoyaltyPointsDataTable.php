@@ -72,7 +72,9 @@ class LoyaltyPointsDataTable extends DataTable
     {
         return parent::html()
             ->columns($this->getColumns())
-            ->postAjax();
+            ->postAjax([
+                'data' => 'function(d) { d.characters = $("#dt-character-selector").val(); }',
+            ]);
     }
 
     /**
