@@ -83,6 +83,8 @@ return [
     'character_journal_description'      => 'Zeigt das Journal des Kontos eines Charakters an.',
     'character_transaction_label'        => 'Zugriff auf Charakter Kontentransaktionen gewähren.',
     'character_transaction_description'  => 'Zeigt die Transaktionen des Kontos eines Charakters an.',
+    'character_loyalty_points_label'     => 'Zugriff auf Charakter Loyalitätspunkte gewähren.',
+    'character_loyalty_points_description' => 'Zeigt die Loyalitätspunkte des Kontos eines Charakters an.',
 
     // Corporation Scope
     'corporation_asset_label'                         => 'Zugriff auf Corp Besitz gewähren.',

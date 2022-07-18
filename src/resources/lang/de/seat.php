@@ -94,6 +94,11 @@ return [
     'mfa_welcome'         => 'Bitte geben Sie Ihren Authentifizierungscode ein um fortzufahren.',
     'mfa'                 => 'Multifaktor-Authentifizierung',
 
+    //Loyalty Points
+    'update_loyalty_points' => 'Loyalitätspunkte neu laden',
+    'loyalty_points'               =>   'Loyalitätspunkte',
+    'loyalty_point_prices'         => 'Fuzzwork LP Preise',
+
     // Registration
     'new_account'         => 'Neuer Benutzeraccount',
     'register_welcome'    => 'Bitte wählen Sie einen Benutzernamen und ein sicheres Kennwort.',

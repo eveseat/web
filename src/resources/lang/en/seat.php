@@ -482,6 +482,7 @@ return [
     'update_structures'            => 'Update Structures',
     'update_transactions'          => 'Update Transactions',
     'update_wallet'                => 'Update Wallet',
+    'update_loyalty_points'        => 'Update Loyalty Points',
 
     // Character
     'joined_curr_corp'             => 'Joined Current Corporation',
@@ -492,6 +493,8 @@ return [
     'security_status'              => 'Security Status',
     'items_taking'                 => 'items taking',
     'calendar_events'              => 'Calendar Events',
+    'loyalty_points'               =>   'Loyalty Points',
+    'loyalty_point_prices'         => 'Fuzzwork LP Prices',
     'positive_standings'           => 'Positive Standings',
     'neutral_standings'            => 'Neutral Standings',
     'negative_standings'           => 'Negative Standings',
