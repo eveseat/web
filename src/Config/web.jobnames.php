@@ -55,6 +55,7 @@ return [
         'standings'        => \Seat\Eveapi\Jobs\Character\Standings::class,
         'journals'         => \Seat\Eveapi\Jobs\Wallet\Character\Journal::class,
         'transactions'     => \Seat\Eveapi\Jobs\Wallet\Character\Transactions::class,
+        'loyalty_points'  => \Seat\Eveapi\Jobs\Character\LoyaltyPoints::class,
     ],
     'corporation' => [
         'assets'           => \Seat\Eveapi\Jobs\Assets\Corporation\Assets::class,

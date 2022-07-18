@@ -115,4 +115,9 @@ return [
         'description' => 'web::permissions.character_fitting_description',
         'division'    => 'military',
     ],
+    'loyalty_points' => [
+        'label'       => 'web::permissions.character_loyalty_points_label',
+        'description' => 'web::permissions.character_loyalty_points_description',
+        'division'    => 'financial',
+    ],
 ];

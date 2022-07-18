@@ -227,4 +227,11 @@ return [
             ],
         ],
     ],
+    [
+        'name'           => 'loyalty-points',
+        'label'          => 'web::seat.loyalty_points',
+        'permission'     => ['character.loyalty_points'],
+        'highlight_view' => 'loyalty-points',
+        'route'          => 'character.view.loyalty_points',
+    ],
 ];
