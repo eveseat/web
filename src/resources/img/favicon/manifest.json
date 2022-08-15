@@ -3,7 +3,7 @@
   "short_name": "SeAT",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
+  "background_color": "#1b2434",
   "description": "A Simple, EVE Online API Tool and Corporation Manager",
   "icons": [{
       "src": "\/web\/img\/favicon\/android-icon-36x36.png",

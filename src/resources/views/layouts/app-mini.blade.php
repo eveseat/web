@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="{{ asset('web/css/all.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('web/css/tabler.min.css') }}">
+    <!-- SeAT style -->
+    <link rel="stylesheet" href="{{ asset('web/css/seat.css') }}">
 
     <!-- Custom layout CSS -->
     @if(file_exists(public_path('custom-layout-mini.css')))

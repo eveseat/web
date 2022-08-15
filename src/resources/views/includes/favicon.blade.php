@@ -12,8 +12,10 @@
 <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('web/img/favicon/favicon-32x32.png') }}">
 <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('web/img/favicon/favicon-96x96.png') }}">
 <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('web/img/favicon/favicon-16x16.png') }}">
+<link rel="mask-icon" href="{{ asset('web/img/favicon/safari-pinned-tab.svg') }}">
 <link rel="manifest" href="{{ asset('web/img/favicon/manifest.json') }}">
-<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileColor" content="#1b2434">
 <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
 <meta name="msapplication-TileImage" content="{{ asset('web/img/favicon/ms-icon-144x144.png') }}">
-<meta name="theme-color" content="#ffffff">
+<meta name="msapplication-config" content="{{ asset('web/img/favicon/browserconfig.xml') }}" />
+<meta name="theme-color" content="#1b2434">
