@@ -328,203 +328,244 @@
     $(ele).parent().parent().remove();
   }
 
-  $(document).ready(function () {
-    var market_prices_region = $('#market_prices_region');
-    market_prices_region.select2({
-        ajax: {
-            url: '{{ route('seatcore::fastlookup.regions') }}',
-            dataType: 'json'
+  document.addEventListener('DOMContentLoaded', function() {
+
+    window.TomSelect && (new TomSelect(document.getElementById('market_prices_region'), {
+      copyClassesToDropdown: false,
+      dropdownClass: 'dropdown-menu',
+      optionClass: 'dropdown-item',
+      valueField: 'id',
+      labelField: 'text',
+      searchField: ['text'],
+      load: function(query, callback) {
+        var self = this;
+        if( self.loading > 1 ){
+          callback();
+          return;
         }
-    });
 
-    $.ajax({
-        type: 'get',
-        url: '{{ route('seatcore::fastlookup.regions') }}?_type=find&q={{ setting('market_prices_region_id', true) ?: 0 }}'
-    }).then(function (data) {
-        var option = new Option(data.text, data.id, true, true);
-        market_prices_region.append(option).trigger('change');
-
-        market_prices_region.trigger({
-            type: 'select2:select',
-            params: {
-                data: data
-            }
-        });
-    });
-
-    var installedPackages = {
-      "vendor": ["Vendor"],
-      "name": ["Package Name"],
-      "version": ["Installed Version"]
-    };
-
-    var copyVersions = $('#copy-versions');
-
-    jQuery.get("{{ route('seatcore::check.sde') }}", function (data) {
-      var live_sde = "error";
-      if (data != null) {
-        live_sde = data.version;
-      }
-      $('#live-sde-version img').attr('src', 'https://img.shields.io/badge/version-' + live_sde.replace(/-/g, '--') + '-blue.svg?style=flat-square');
-      if (live_sde != "error") {
-        var liveSdeStatus = $('#live-sde-status');
-        var liveSdeOutdated = (live_sde != liveSdeStatus.attr('data-version'));
-
-        // remove pending state from the status
-        liveSdeStatus.removeClass('fa-question-circle');
-        liveSdeStatus.removeClass('text-orange');
-
-        // update state according to result
-        liveSdeStatus.addClass(liveSdeOutdated ? 'fa-times-circle' : 'fa-check-circle');
-        liveSdeStatus.addClass(liveSdeOutdated ? 'text-red' : 'text-green');
-        liveSdeStatus.attr('title', liveSdeOutdated ? 'At least one new version has been released !' : 'The package is up-to-date.');
-        liveSdeStatus.attr('data-original-title', liveSdeOutdated ? 'At least one new version has been released !' : 'The package is up-to-date.');
-      }
-    });
-
-    copyVersions.on('click', function() {
-      var buffer = "```\r\n";
-
-      var colVendorSize = getLongestString(installedPackages.vendor);
-      var colNameSize = getLongestString(installedPackages.name);
-      var colVersionSize = getLongestString(installedPackages.version);
-
-      // loop over the versions object and build a markdown formatted table
-      $.each(installedPackages.vendor, function(index) {
-        var row = formatTableRow({
-          "vendor": {
-            "value": installedPackages.vendor[index],
-            "size": colVendorSize
-          },
-          "name": {
-            "value": installedPackages.name[index],
-            "size": colNameSize
-          },
-          "version": {
-            "value": installedPackages.version[index],
-            "size": colVersionSize
-          }
-        });
-
-        // append the generated row to the buffer
-        buffer += row;
-
-        // in case the generated row is the header, append a dash line of the row length (minus carriage-return
-        if (index === 0)
-          buffer += '| ' + padString('', '-', colVendorSize) + ' | ' + padString('', '-', colNameSize) + ' | ' +
-              padString('', '-', colVersionSize) + " |\r\n";
-      });
-
-      buffer += "```";
-
-      // copy the formatted markdown list to the clipboard
-      $('body').append('<textarea id="copiedVersions"></textarea>');
-      $('#copiedVersions').val(buffer);
-      document.getElementById('copiedVersions').select();
-      document.execCommand('copy');
-      document.getElementById('copiedVersions').remove();
-
-      copyVersions.attr('data-original-title', 'Copied!').tooltip('show');
-    }).on('mouseleave', function(){
-      copyVersions.attr('data-original-title', 'Click to copy packages versions');
-    });
-
-    $('.version-check').each(function(index, item) {
-      var toCheckPackage = $(item);
-
-      // fill the packages global variable
-      installedPackages.vendor.push(toCheckPackage.attr('data-vendor'));
-      installedPackages.name.push(toCheckPackage.attr('data-name'));
-      installedPackages.version.push(toCheckPackage.attr('data-version'));
-
-      // skip third party checks
-      if (toCheckPackage.attr('data-vendor') == 'ccp')
-        return false;
-
-      // send a request to check if or not a package is up-to-date
-      $.ajax({
-        url: '{{ route('seatcore::packages.check') }}',
-        method: 'POST',
-        data: {
-            'vendor': toCheckPackage.attr('data-vendor'),
-            'package': toCheckPackage.attr('data-name'),
-            'version': toCheckPackage.attr('data-version')
-        }
-      }).done(function (data) {
-        // remove pending state from the package
-        toCheckPackage.removeClass('fa-question-circle');
-        toCheckPackage.removeClass('text-orange');
-        // update package state according to result
-        toCheckPackage.addClass(data.outdated ? 'fa-times-circle' : 'fa-check-circle');
-        toCheckPackage.addClass(data.outdated ? 'text-red' : 'text-green');
-        toCheckPackage.attr('title', data.outdated ? 'At least one new version has been released !' : 'The package is up-to-date.');
-        toCheckPackage.attr('data-original-title', data.outdated ? 'At least one new version has been released !' : 'The package is up-to-date.');
-
-        // updating counters
-        $('#checking-packages').text(parseInt($('#checking-packages').text()) - 1);
-        if (data.outdated)
-          $('#outdated-packages').text(parseInt($('#outdated-packages').text()) + 1);
-        else
-          $('#updated-packages').text(parseInt($('#updated-packages').text()) + 1);
-
-      });
-    });
-
-    $('#changelogModal').on('show.bs.modal', function (e) {
-      var changelogMetadata = $(e.relatedTarget);
-      var changelogModal = $(this);
-      var changelogName = changelogMetadata.data('name');
-
-      changelogModal.find('.modal-title span').text(changelogName);
-      changelogModal.find('.modal-body').html('');
-
-      $.ajax({
-        url: '{{ route('seatcore::packages.changelog') }}',
-        method: 'POST',
-        data: changelogMetadata.data(),
-        beforeSend: function () {
-          changelogModal.find('.modal-content').append('<div class="overlay dark d-flex justify-content-center align-items-center"><i class="fas fa-2x fa-sync-alt fa-spin"></i> Loading...</div>');
+        var url = '{{ route('seatcore::fastlookup.regions') }}';
+        fetch(url)
+          .then(response => response.json())
+          .then(json => {
+            callback(json.results);
+            self.settings.load = null;
+          }).catch(()=>{
+            callback();
+          });
         },
-        success: function (data) {
-          var body = $(data);
-
-          // format tables
-          body.find('table').addClass('table');
-
-          // load modal content
-          changelogModal.find('.modal-body').html(body);
-          changelogModal.find('.overlay').remove();
-        },
-        error: function(xhr) { // if error occured
-          alert("Error occured. please try again");
-          changelogModal.find('.modal-body').html(xhr.statusText + xhr.responseText);
+      render: {
+        option: function(item, escape) {
+          return `<div class="py-2 d-flex">
+							<div class="mb-1">
+								<span class="h5">
+									${ escape(item.text) }
+								</span>
+							</div>
+					 		<div class="ms-auto">${ escape(item.id) }</div>
+						</div>`
         }
-      });
-    });
+      }
+    })
+    );
 
-    function getLongestString(column) {
-      // clone the column in order to keep it unchanged
-      var buffer = JSON.parse(JSON.stringify(column));
-      // return the longest size
-      return buffer.sort(function (a, b) { return b.length - a.length; }).shift().length;
-    }
 
-    function padString(string, char, size) {
-      if (string.length >= size) return string;
+    // var market_prices_region = $('#market_prices_region');
+    // market_prices_region.select2({
+    //     ajax: {
+    //         url: '{{ route('seatcore::fastlookup.regions') }}',
+    //         dataType: 'json'
+    //     }
+    // });
 
-      var end = string.length;
-      for (i = 0; i < size - end; i++)
-          string += char;
+    // $.ajax({
+    //     type: 'get',
+    //     url: '{{ route('seatcore::fastlookup.regions') }}?_type=find&q={{ setting('market_prices_region_id', true) ?: 0 }}'
+    // }).then(function (data) {
+    //     var option = new Option(data.text, data.id, true, true);
+    //     market_prices_region.append(option).trigger('change');
 
-      return string;
-    }
+    //     market_prices_region.trigger({
+    //         type: 'select2:select',
+    //         params: {
+    //             data: data
+    //         }
+    //     });
+    // });
 
-    function formatTableRow(row) {
-      return '| ' +
-        padString(row.vendor.value, ' ', row.vendor.size) + ' | ' +
-        padString(row.name.value, ' ', row.name.size) + ' | ' +
-        padString(row.version.value, ' ', row.version.size) + " |\r\n";
-    }
+  //   var installedPackages = {
+  //     "vendor": ["Vendor"],
+  //     "name": ["Package Name"],
+  //     "version": ["Installed Version"]
+  //   };
+
+  //   var copyVersions = $('#copy-versions');
+
+  //   jQuery.get("{{ route('seatcore::check.sde') }}", function (data) {
+  //     var live_sde = "error";
+  //     if (data != null) {
+  //       live_sde = data.version;
+  //     }
+  //     $('#live-sde-version img').attr('src', 'https://img.shields.io/badge/version-' + live_sde.replace(/-/g, '--') + '-blue.svg?style=flat-square');
+  //     if (live_sde != "error") {
+  //       var liveSdeStatus = $('#live-sde-status');
+  //       var liveSdeOutdated = (live_sde != liveSdeStatus.attr('data-version'));
+
+  //       // remove pending state from the status
+  //       liveSdeStatus.removeClass('fa-question-circle');
+  //       liveSdeStatus.removeClass('text-orange');
+
+  //       // update state according to result
+  //       liveSdeStatus.addClass(liveSdeOutdated ? 'fa-times-circle' : 'fa-check-circle');
+  //       liveSdeStatus.addClass(liveSdeOutdated ? 'text-red' : 'text-green');
+  //       liveSdeStatus.attr('title', liveSdeOutdated ? 'At least one new version has been released !' : 'The package is up-to-date.');
+  //       liveSdeStatus.attr('data-original-title', liveSdeOutdated ? 'At least one new version has been released !' : 'The package is up-to-date.');
+  //     }
+  //   });
+
+  //   copyVersions.on('click', function() {
+  //     var buffer = "```\r\n";
+
+  //     var colVendorSize = getLongestString(installedPackages.vendor);
+  //     var colNameSize = getLongestString(installedPackages.name);
+  //     var colVersionSize = getLongestString(installedPackages.version);
+
+  //     // loop over the versions object and build a markdown formatted table
+  //     $.each(installedPackages.vendor, function(index) {
+  //       var row = formatTableRow({
+  //         "vendor": {
+  //           "value": installedPackages.vendor[index],
+  //           "size": colVendorSize
+  //         },
+  //         "name": {
+  //           "value": installedPackages.name[index],
+  //           "size": colNameSize
+  //         },
+  //         "version": {
+  //           "value": installedPackages.version[index],
+  //           "size": colVersionSize
+  //         }
+  //       });
+
+  //       // append the generated row to the buffer
+  //       buffer += row;
+
+  //       // in case the generated row is the header, append a dash line of the row length (minus carriage-return
+  //       if (index === 0)
+  //         buffer += '| ' + padString('', '-', colVendorSize) + ' | ' + padString('', '-', colNameSize) + ' | ' +
+  //             padString('', '-', colVersionSize) + " |\r\n";
+  //     });
+
+  //     buffer += "```";
+
+  //     // copy the formatted markdown list to the clipboard
+  //     $('body').append('<textarea id="copiedVersions"></textarea>');
+  //     $('#copiedVersions').val(buffer);
+  //     document.getElementById('copiedVersions').select();
+  //     document.execCommand('copy');
+  //     document.getElementById('copiedVersions').remove();
+
+  //     copyVersions.attr('data-original-title', 'Copied!').tooltip('show');
+  //   }).on('mouseleave', function(){
+  //     copyVersions.attr('data-original-title', 'Click to copy packages versions');
+  //   });
+
+  //   $('.version-check').each(function(index, item) {
+  //     var toCheckPackage = $(item);
+
+  //     // fill the packages global variable
+  //     installedPackages.vendor.push(toCheckPackage.attr('data-vendor'));
+  //     installedPackages.name.push(toCheckPackage.attr('data-name'));
+  //     installedPackages.version.push(toCheckPackage.attr('data-version'));
+
+  //     // skip third party checks
+  //     if (toCheckPackage.attr('data-vendor') == 'ccp')
+  //       return false;
+
+  //     // send a request to check if or not a package is up-to-date
+  //     $.ajax({
+  //       url: '{{ route('seatcore::packages.check') }}',
+  //       method: 'POST',
+  //       data: {
+  //           'vendor': toCheckPackage.attr('data-vendor'),
+  //           'package': toCheckPackage.attr('data-name'),
+  //           'version': toCheckPackage.attr('data-version')
+  //       }
+  //     }).done(function (data) {
+  //       // remove pending state from the package
+  //       toCheckPackage.removeClass('fa-question-circle');
+  //       toCheckPackage.removeClass('text-orange');
+  //       // update package state according to result
+  //       toCheckPackage.addClass(data.outdated ? 'fa-times-circle' : 'fa-check-circle');
+  //       toCheckPackage.addClass(data.outdated ? 'text-red' : 'text-green');
+  //       toCheckPackage.attr('title', data.outdated ? 'At least one new version has been released !' : 'The package is up-to-date.');
+  //       toCheckPackage.attr('data-original-title', data.outdated ? 'At least one new version has been released !' : 'The package is up-to-date.');
+
+  //       // updating counters
+  //       $('#checking-packages').text(parseInt($('#checking-packages').text()) - 1);
+  //       if (data.outdated)
+  //         $('#outdated-packages').text(parseInt($('#outdated-packages').text()) + 1);
+  //       else
+  //         $('#updated-packages').text(parseInt($('#updated-packages').text()) + 1);
+
+  //     });
+  //   });
+
+  //   $('#changelogModal').on('show.bs.modal', function (e) {
+  //     var changelogMetadata = $(e.relatedTarget);
+  //     var changelogModal = $(this);
+  //     var changelogName = changelogMetadata.data('name');
+
+  //     changelogModal.find('.modal-title span').text(changelogName);
+  //     changelogModal.find('.modal-body').html('');
+
+  //     $.ajax({
+  //       url: '{{ route('seatcore::packages.changelog') }}',
+  //       method: 'POST',
+  //       data: changelogMetadata.data(),
+  //       beforeSend: function () {
+  //         changelogModal.find('.modal-content').append('<div class="overlay dark d-flex justify-content-center align-items-center"><i class="fas fa-2x fa-sync-alt fa-spin"></i> Loading...</div>');
+  //       },
+  //       success: function (data) {
+  //         var body = $(data);
+
+  //         // format tables
+  //         body.find('table').addClass('table');
+
+  //         // load modal content
+  //         changelogModal.find('.modal-body').html(body);
+  //         changelogModal.find('.overlay').remove();
+  //       },
+  //       error: function(xhr) { // if error occured
+  //         alert("Error occured. please try again");
+  //         changelogModal.find('.modal-body').html(xhr.statusText + xhr.responseText);
+  //       }
+  //     });
+  //   });
+
+  //   function getLongestString(column) {
+  //     // clone the column in order to keep it unchanged
+  //     var buffer = JSON.parse(JSON.stringify(column));
+  //     // return the longest size
+  //     return buffer.sort(function (a, b) { return b.length - a.length; }).shift().length;
+  //   }
+
+  //   function padString(string, char, size) {
+  //     if (string.length >= size) return string;
+
+  //     var end = string.length;
+  //     for (i = 0; i < size - end; i++)
+  //         string += char;
+
+  //     return string;
+  //   }
+
+  //   function formatTableRow(row) {
+  //     return '| ' +
+  //       padString(row.vendor.value, ' ', row.vendor.size) + ' | ' +
+  //       padString(row.name.value, ' ', row.name.size) + ' | ' +
+  //       padString(row.version.value, ' ', row.version.size) + " |\r\n";
+  //   }
   });
 </script>
 @endpush

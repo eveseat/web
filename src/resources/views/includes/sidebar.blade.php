@@ -4,7 +4,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- logo -->
-        <h1 class="navbar-brand navbar-brand-autodark">
+        <h1 class="navbar-brand navbar-brand-autodark seat-font">
             <a href=".">S<b>e</b>AT</a>
         </h1>
         <!-- ./logo -->
