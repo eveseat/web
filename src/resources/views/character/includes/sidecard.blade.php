@@ -1,10 +1,18 @@
 <div class="card mb-3">
+  @if(! is_null($character->refresh_token))
+    @if($character->refresh_token->updated_at->lt(carbon()->subDay()))
+      <div class="ribbon bg-warning" data-bs-toggle="tooltip" title="Token has not been updated since more than a day, you should check your jobs.">Outdated</div>
+    @else
+      <div class="ribbon bg-success" data-bs-toggle="tooltip" title="This character has a valid registered token.">Valid</div>
+    @endif
+  @else
+    <div class="ribbon bg-red" data-bs-toggle="tooltip" title="You don't own any valid token for this character.">Revoked</div>
+  @endif
   {!! img('characters', 'portrait', $character->character_id, 512, ['class' => 'card-img-top bg-dark bg-gradient']) !!}
   <div class="card-body">
     <h5 class="card-title text-center">
       <span class="align-middle">{{ $character->name }}</span>
       @if(! is_null($character->refresh_token))
-        @include('web::character.partials.token_status', ['refresh_token' => $character->refresh_token])
         <span class="badge rounded-pill badge-secondary align-middle">{{ $character->refresh_token->user->characters->count() }}</span>
       @endif
     </h5>
