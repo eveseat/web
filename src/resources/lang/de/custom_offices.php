@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 
 return [
     'planet'            => 'Planet',
-    'reinforcement'     => 'Rf. Periode', // in lack of a good german translation, I leave this here, because the translation of reinforcement makes no sense in german for that matter.
+    'reinforcement'     => 'Rf. Periode',
     'alliance'          => 'Erlaube Zugruff durch Allianz',
     'standings'         => 'Erlaube Zugriff durch Ansehen',
     'standing_level'    => 'Minimales Ansehen',

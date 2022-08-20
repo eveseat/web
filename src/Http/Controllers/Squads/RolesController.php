@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,8 +36,8 @@ use Seat\Web\Models\Squads\Squad;
 class RolesController extends Controller
 {
     /**
-     * @param \Seat\Web\Http\DataTables\Squads\RolesDataTable $dataTable
-     * @param \Seat\Web\Models\Squads\Squad $squad
+     * @param  \Seat\Web\Http\DataTables\Squads\RolesDataTable  $dataTable
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
      * @return mixed
      */
     public function show(RolesDataTable $dataTable, Squad $squad)
@@ -46,8 +46,8 @@ class RolesController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param \Seat\Web\Models\Squads\Squad $squad
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
      * @return \Illuminate\Http\JsonResponse
      */
     public function lookup(Request $request, Squad $squad)
@@ -69,8 +69,8 @@ class RolesController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param \Seat\Web\Models\Squads\Squad $squad
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request, Squad $squad)
@@ -87,8 +87,8 @@ class RolesController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param \Seat\Web\Models\Squads\Squad $squad
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Request $request, Squad $squad)

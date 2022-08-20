@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -114,5 +114,10 @@ return [
         'label'       => 'web::permissions.character_fitting_label',
         'description' => 'web::permissions.character_fitting_description',
         'division'    => 'military',
+    ],
+    'loyalty_points' => [
+        'label'       => 'web::permissions.character_loyalty_points_label',
+        'description' => 'web::permissions.character_loyalty_points_description',
+        'division'    => 'financial',
     ],
 ];

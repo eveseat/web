@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ use Illuminate\Database\Migrations\Migration;
 
 /**
  * Class UpgradeSquadsMaj4Min3Hf1.
+ *
  * @deprecated since 4.4.1
  */
 class UpgradeSquadsMaj4Min3Hf1 extends Migration

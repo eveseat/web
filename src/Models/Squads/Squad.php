@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -215,7 +215,7 @@ class Squad extends Model
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeCandidate($query)
@@ -226,7 +226,7 @@ class Squad extends Model
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeMember($query)
@@ -237,7 +237,7 @@ class Squad extends Model
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeModerator($query)
@@ -248,7 +248,7 @@ class Squad extends Model
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeModerated($query)
@@ -257,8 +257,8 @@ class Squad extends Model
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param array $types
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  array  $types
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeOfType($query, $types)

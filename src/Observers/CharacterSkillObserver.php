@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ use Seat\Web\Models\User;
 class CharacterSkillObserver extends AbstractSquadObserver
 {
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterSkill $skill
+     * @param  \Seat\Eveapi\Models\Character\CharacterSkill  $skill
      */
     public function created(CharacterSkill $skill)
     {
@@ -42,7 +42,7 @@ class CharacterSkillObserver extends AbstractSquadObserver
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterSkill $skill
+     * @param  \Seat\Eveapi\Models\Character\CharacterSkill  $skill
      */
     public function updated(CharacterSkill $skill)
     {
@@ -50,7 +50,7 @@ class CharacterSkillObserver extends AbstractSquadObserver
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterSkill $skill
+     * @param  \Seat\Eveapi\Models\Character\CharacterSkill  $skill
      */
     public function deleted(CharacterSkill $skill)
     {

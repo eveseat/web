@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ abstract class AbstractColumn implements IColumn
     /**
      * AbstractColumn constructor.
      *
-     * @param \Yajra\DataTables\Services\DataTable $table
+     * @param  \Yajra\DataTables\Services\DataTable  $table
      */
     public function __construct($table)
     {
@@ -50,8 +50,8 @@ abstract class AbstractColumn implements IColumn
     /**
      * Handle a column business flow.
      *
-     * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder $row
-     * @param string $keyword
+     * @param  \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder  $row
+     * @param  string  $keyword
      * @return string|void
      */
     public function __invoke($row, $keyword = '')
@@ -65,8 +65,8 @@ abstract class AbstractColumn implements IColumn
     /**
      * Search in a column cell.
      *
-     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder $query
-     * @param string $keyword
+     * @param  \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder  $query
+     * @param  string  $keyword
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
      */
     public function search($query, string $keyword)

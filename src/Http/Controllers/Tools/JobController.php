@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ namespace Seat\Web\Http\Controllers\Tools;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Seat\Eveapi\Jobs\AbstractAuthAllianceJob;
 use Seat\Eveapi\Jobs\AbstractAuthCharacterJob;
 use Seat\Eveapi\Jobs\AbstractAuthCorporationJob;
 use Seat\Eveapi\Models\RefreshToken;
@@ -31,14 +32,15 @@ use Seat\Web\Http\Controllers\Controller;
 
 /**
  * Class JobController.
+ *
  * @package Seat\Web\Http\Controllers
  */
 class JobController extends Controller
 {
     /**
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
+     *
      * @deprecated will be replaced by postDispatchJob
      */
     public function getDispatchUpdateJob(Request $request)
@@ -47,14 +49,13 @@ class JobController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function postDispatchJob(Request $request)
     {
         $request->validate([
-            'type' => 'in:character,corporation|required',
+            'type' => 'in:character,corporation,alliance|required',
             'entity_id' => 'integer|required',
             'job_name' => sprintf('in:%s.%s|required',
                 $request->input('type'),
@@ -83,9 +84,8 @@ class JobController extends Controller
     }
 
     /**
-     * @param \Illuminate\Support\Collection $job_classes
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Support\Collection  $job_classes
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     private function handleJobDispatch(Collection $job_classes, Request $request)
@@ -107,6 +107,13 @@ class JobController extends Controller
                             'message' => 'Unable to retrieve a suitable token.',
                         ], 400);
                     break;
+                // process corporation job
+                case is_subclass_of($class, AbstractAuthAllianceJob::class):
+                    if (! $this->handleAllianceJobsDispatch($class, $request->input('entity_id')))
+                        return response()->json([
+                            'message' => 'Unable to retrieve a suitable token.',
+                        ], 400);
+                    break;
                 // process public job
                 default:
                     $class::dispatch($request->input('entity_id'))->onQueue('high');
@@ -121,9 +128,8 @@ class JobController extends Controller
     }
 
     /**
-     * @param string $class
-     * @param int $character_id
-     *
+     * @param  string  $class
+     * @param  int  $character_id
      * @return bool
      */
     private function handleCharacterJobsDispatch(string $class, int $character_id)
@@ -139,9 +145,8 @@ class JobController extends Controller
     }
 
     /**
-     * @param string $class
-     * @param int $corporation_id
-     *
+     * @param  string  $class
+     * @param  int  $corporation_id
      * @return false
      */
     private function handleCorporationJobsDispatch(string $class, int $corporation_id)
@@ -162,6 +167,33 @@ class JobController extends Controller
             return false;
 
         $class::dispatch($refresh_token->affiliation->corporation_id, $refresh_token)->onQueue('high');
+
+        return true;
+    }
+
+    /**
+     * @param  string  $class
+     * @param  int  $alliance_id
+     * @return false
+     */
+    private function handleAllianceJobsDispatch(string $class, int $alliance_id)
+    {
+        // generate a dummy job - so we can pickup the required roles
+        $dummy_job = new $class(0, new RefreshToken());
+
+        $refresh_token = RefreshToken::whereHas('character.affiliation', function ($query) use ($alliance_id) {
+            $query->where('alliance_id', $alliance_id);
+        })->when(! empty($dummy_job->getRoles()), function ($sub_query) use ($dummy_job) {
+            $sub_query->whereHas('character.corporation_roles', function ($query) use ($dummy_job) {
+                $query->where('scope', 'roles');
+                $query->whereIn('role', $dummy_job->getRoles());
+            });
+        })->first();
+
+        if (! $refresh_token)
+            return false;
+
+        $class::dispatch($refresh_token->affiliation->alliance_id, $refresh_token)->onQueue('high');
 
         return true;
     }

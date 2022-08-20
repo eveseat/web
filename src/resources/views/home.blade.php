@@ -7,7 +7,7 @@
 @section('full')
 
   <div class="row">
-    <div class="col-md-6 col-sm-3 col-xs-6">
+    <div class="col-md-4 col-sm-6">
 
       <!-- Online Badge -->
       <div class="info-box">
@@ -22,7 +22,7 @@
 
     </div>
 
-    <div class="col-md-6 col-sm-3 col-xs-6">
+    <div class="col-md-4 col-sm-6">
 
       <!-- Characters Badge -->
       <div class="info-box">
@@ -36,10 +36,8 @@
       </div><!-- /.info-box -->
 
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-6 col-sm-3 col-xs-6">
+    
+    <div class="col-md-4 col-sm-6">
 
       <!-- Wallet Badge -->
       <div class="info-box">
@@ -54,7 +52,7 @@
 
     </div>
 
-    <div class="col-md-6 col-sm-3 col-xs-6">
+    <div class="col-md-4 col-sm-6">
 
       <!-- Ore Badge -->
       <div class="info-box">
@@ -68,10 +66,23 @@
       </div><!-- /.info-box -->
 
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-md-6 col-sm-3 col-xs-6">
+    <div class="col-md-4 col-sm-6">
+
+      <!-- Ore Badge -->
+      <div class="info-box">
+        <span class="info-box-icon bg-yellow elevation-1"><i class="fas fa-coins"></i></span>
+        <div class="info-box-content">
+          <span class="info-box-text">{{ trans('web::seat.total_character_ratted_isk') }} <small class="text-muted">({{ trans('web::seat.current_month') }})</small></span>
+          <span class="info-box-number">
+            {{ number_format($total_character_ratting) }}
+          </span>
+        </div><!-- /.info-box-content -->
+      </div><!-- /.info-box -->
+
+    </div>
+    
+    <div class="col-md-4 col-sm-6">
 
       <!-- Skills Badge -->
       <div class="info-box">
@@ -86,7 +97,7 @@
 
     </div>
 
-    <div class="col-md-6 col-sm-3 col-xs-6">
+    <div class="col-md-4 col-sm-6">
 
       <!-- Kills Badge -->
       <div class="info-box">
@@ -103,8 +114,9 @@
   </div>
 
   <div class="row">
+    
     <!-- player count -->
-    <div class="col-md-6 col-sm-3 col-xs-6">
+    <div class="col-xs-12 col-sm-6">
 
       <div class="card">
         <div class="card-header border-0">
@@ -122,7 +134,7 @@
     </div>
 
     <!-- response times -->
-    <div class="col-md-6 col-sm-3 col-xs-6">
+    <div class="col-xs-12 col-sm-6">
 
       <div class="card">
         <div class="card-header border-0">
@@ -138,14 +150,11 @@
         <!-- /.box-body -->
       </div>
     </div>
-
-  </div>
-
-  <div class="row">
+    
 
     <!-- skills graphs -->
     @if(auth()->user()->name != 'admin')
-      <div class="col-md-6 col-sm-3 col-xs-6">
+      <div class="col-xs-12 col-sm-6">
 
         <div class="card">
           <div class="card-header border-0">
@@ -165,7 +174,7 @@
         </div>
       </div>
 
-      <div class="col-md-6 col-sm-3 col-xs-6">
+      <div class="col-xs-12 col-sm-6">
 
         <div class="card">
           <div class="card-header border-0">
@@ -249,6 +258,7 @@
             scale : {
               ticks: {
                 beginAtZero: true,
+                showLabelBackdrop: false,
                 max        : 100
               }
             },

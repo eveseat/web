@@ -43,7 +43,7 @@
     @endif
     @if($mail->recipients->where('recipient_type', 'alliance')->isNotEmpty())
       <li>
-        <b>{{ trans('web::seat.alliance') }}: </b>
+        <b>{{ trans_choice('web::seat.alliance', 1) }}: </b>
         @foreach($mail->recipients->where('recipient_type', 'alliance') as $alliance)
           @include('web::partials.alliance', ['alliance' => $alliance->entity])
         @endforeach

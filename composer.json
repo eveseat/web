@@ -45,7 +45,7 @@
     "lasserafn/php-initial-avatar-generator": "^4.0",
     "socialiteproviders/manager": "^3.0",
     "twbs/bootstrap": "^4.3",
-    "yajra/laravel-datatables-oracle": "^9.10",
+    "yajra/laravel-datatables-oracle": "^9.10 <9.21",
     "yajra/laravel-datatables-buttons": "^4.0"
   },
   "require-dev": {

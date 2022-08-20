@@ -22,7 +22,55 @@
               .done(function (data) {
                   body.html(data);
 
-                  $('table.datatable').DataTable();
+                  $('#rawMaterials').DataTable({
+                    "footerCallback": function( row, data, start, end, display) {
+                      var api = this.api(), data;
+                      // converting to interger to find total
+                      var intVal = function ( i ) {
+                          return typeof i === 'string' ?
+                              i.replace(/[\$,]/g, '')*1 :
+                              typeof i === 'number' ?
+                                  i : 0;
+                      };
+
+                      total = api
+                        .column(4)
+                        .data()
+                        .reduce( function (a, b){
+                          return intVal(a) + intVal(b)
+                        }, 0);
+
+                      $(api.column(4).footer() ).html(
+                        (total).toLocaleString(undefined, {minimumFractionDigits: 2})
+                      );
+                    }
+                  });
+
+                  $('#refinedMaterials').DataTable({
+                    "footerCallback": function( row, data, start, end, display) {
+                      var api = this.api(), data;
+                      // converting to interger to find total
+                      var intVal = function ( i ) {
+                          return typeof i === 'string' ?
+                              i.replace(/[\$,]/g, '')*1 :
+                              typeof i === 'number' ?
+                                  i : 0;
+                      };
+
+                      total = api
+                        .column(3)
+                        .data()
+                        .reduce( function (a, b){
+                          return intVal(a) + intVal(b)
+                        }, 0);
+
+                      $(api.column(3).footer() ).html(
+                        (total).toLocaleString(undefined, {minimumFractionDigits: 2})
+                      );
+                    }
+                  });
+
+                  $('#reactionsCandidates').DataTable();
               });
       });
   </script>

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -101,14 +101,19 @@ return [
 
     // Requirements
     'requirements'          => '需求',
-    'requirements_message'  => '以下列表列出了缺省的 PHP 拓展，请在继续之前先安装它们。',
+    'requirements_message'  => 'The following list shows missing PHP extensions. Please install' .
+        ' them first before you can continue.',
     'php_version'           => 'PHP 版本',
-    'php_version_message'   => '当前安装的 PHP 版本未达到 SeAT 的最低版本要求，请升级 PHP。',
+    'php_version_message'   => 'The installed version of PHP does not meet the minimum version' .
+        ' requirement for SeAT. Please upgrade your PHP installation.',
     'installed_version'     => '已安装的版本',
     'min_version'           => '最低版本',
-    'admin_contact_warning' => '管理员联系方式尚未设置，因此队列不会添加任务，请先在 SeAT 选项中设置。',
-    'refresh_token_warning' => '你的帐号中没有一个有效的令牌.请登出后以正确方式登入',
-    'sso_config_warning'    => 'SSO 目前尚未设置. 目前只有管理员可以登录',
+    'admin_contact_warning' => 'An administrative contact for this install has not been set.' .
+        ' No jobs will be queued because of this. Please configure it in the SeAT settings.',
+    'refresh_token_warning' => 'Your account does not have a valid refresh token recorded. ' .
+        'Please logout and back in to correct this as soon as possible.',
+    'sso_config_warning'    => 'SSO does not appear to have been configured yet. Only administrative ' .
+        'logins are possible.',
     'sso_activation'        => 'SSO 激活',
     'sso_confirmation'      => '似乎你已经拥有了一个帐号. 请验证你的帐号信息以启用SSO.',
 
@@ -148,6 +153,7 @@ return [
     'sign_out'              => '登出',
     'stop_impersonation'    => '停止模拟',
     'switch_character'      => '切换角色',
+    'use_as_main_character' => 'Use as Main Character',
     'link_character'        => '添加新角色',
     'characters_in_group'   => '在分组中的角色',
 
@@ -168,6 +174,7 @@ return [
     'all_char'              => '所有角色',
     'mail_timeline'         => '邮件时间线',
     'all_corp'              => '所有公司',
+    'all_alliance'          => 'All Alliances',
     'configuration'         => '设置',
     'access'                => '权限管理',
     'other'                 => '其它',
@@ -213,7 +220,6 @@ return [
     'insert_error_probe_report'    => '提交探测报告时遇到问题。请与您的管理员联系。',
     'probe_report_posted'          => '您的探测报告已成功发布。 :lines 卫星信息已更新。',
 
-
     // Dashboard
     'home_page'                   => '首页',
     'dashboard'                   => '仪表盘',
@@ -222,6 +228,7 @@ return [
     'total_character_isk'         => '总角色ISK',
     'total_character_skillpoints' => '总角色技能点',
     'total_character_mined_isk'   => '总角色挖矿价值',
+    'total_character_ratted_isk'   => 'Total Ratted ISK',
     'total_killmails'             => '总击杀报告数量',
     'main_char_skills'            => ':character_name 的技能',
     'main_char_skills_per_level'  => '每级的技能',
@@ -252,6 +259,7 @@ return [
     'api_job_update'              => '增加更新任务',
     'owner_info'                  => '所有人信息',
     'no_owner'                    => '这个 API Key 没有持有人',
+    'member_since'                => 'Member Since',
     'last_login'                  => '上次登录',
     'account_status'              => '账户状态',
     'transfer_ownership'          => '转移所有权',
@@ -326,6 +334,7 @@ return [
     'unauthorized_request_logged' => '本次尝试已被记录.',
 
     'role_added'                   => '角色已被添加',
+    'role_updated'                 => 'Role has been updated - :added new permissions, :removed removed permissions, :filtered filtered permissions',
     'role_removed'                 => '角色已被移除',
     'permissions_granted'          => '权限已经赋予',
     'permission_revoked'           => '权限已经删除',
@@ -346,7 +355,8 @@ return [
     'csv_format_explained'         => 'CSV 文件格式为 keyID,vCode 以下为样例',
     'important_notes'              => '重要事项',
     'curr_user_becomes_owner'      => '当前用户 (:user) 会变更为 API Key 的拥有者',
-    'only_format_is_checked'       => 'API Key 的格式只会在这里得到检查，以确保设置为最小的 Mask',
+    'only_format_is_checked'       => 'Only API key format is checked here. No checking is done to ensure that ' .
+        'minimum api masks are configured.',
     'update_with_next_job'         => 'Key 数据会在下次任务或手动更新时变更',
 
     // Schedule
@@ -369,11 +379,11 @@ return [
 
     // Ledger
     'ledger'                       => '钱包账户',
-    'bountyprizesbymonth'          => '月赏金数',
+    'bounty_prizes'                => '月赏金数',
     'offices_rentals'              => '办公室租金',
     'industry_facility'            => '工业设施使用费',
-    'bountyprizetotal'             => '全部赏金数',
-    'pitotals'                     => '全部行星开发税',
+    'reprocessing'                 => 'Reprocessing',
+    'jump_bridges'                 => 'Jump Bridges',
     'wallet_division_name'         => '钱包部门名称',
     'wallet_summary'               => '钱包概览',
 
@@ -390,12 +400,16 @@ return [
     'registration'                 => '注册',
     'maintenance'                  => '维护',
     'cleanup_data'                 => '清理陈旧数据',
-    'cleanup_data_help'            => '当设置为清理陈旧数据时, SeAT 的定时任务将会清除非有效用户和公司的陈旧数据.',
+    'cleanup_data_help'            => 'When configured to cleanup stale data, the SeAT maintenance job ' .
+        'will delete stale data such as users and corporations without valid users from this ' .
+        'instance.',
     'single_signon'                => 'SSO 登录',
-    'admin_warn_sso'               => '请仔细检查你在 .env 文件中的的 EVE_CLIENT_ID, EVE_CLIENT_SECRET and EVE_CALLBACK_URL ，他们可能是错误的或者是空的，这会导致 SSO 失败',
+    'admin_warn_sso'               => 'Double check you EVE_CLIENT_ID, EVE_CLIENT_SECRET and EVE_CALLBACK_URL' .
+        ' values in the .env file as they may be empty or invalid. SSO can fail because of this!',
     'allow_sso'                    => '允许 SSO',
     'allow_registration'           => '允许注册',
     'allow_user_character_unlink'  => '允许用户移除与角色的关联',
+    'unlink'                       => 'Unlink',
     'email_activation'             => '邮件激活',
     'require_activation'           => '需要邮件激活',
     'module_versions'              => 'SeAT 模块版本',
@@ -435,7 +449,8 @@ return [
     'custom_signin_page_desc'      => '您可以在登录页面上自定义内容，并插入指向自定义 SSO 范围配置文件的链接。保留空白以使用默认值。如果您在下面输入内容，则必须确保至少显示一个按钮。',
 
     // Updaters
-    'update_dispatched'            => '更新任务已被推送. 请稍后再看',
+    'update_dispatched'            => 'Update job has successfully been dispatched. Please check back again ' .
+        'in a few moments.',
     'update_failed'                => '更新任务推送失败. 请联系SeAT管理员.',
     'update_skill_queue'           => '更新技能队列',
     'update_blueprints'            => '更新蓝图',
@@ -455,7 +470,31 @@ return [
     'update_standings'             => '更新声望',
     'update_wallet'                => '更新钱包',
     'update_assets'                => '更新个人资产',
+    'update_blueprints'            => 'Update Blueprints',
+    'update_calendar'              => 'Update Calendar',
+    'update_contacts'              => 'Update Contacts',
+    'update_contracts'             => 'Update Contracts',
     'update_corp_history'          => '更新雇佣记录',
+    'update_customs_offices'       => 'Update Customs Offices',
+    'update_divisions'             => 'Update Divisions',
+    'update_fittings'              => 'Update Fittings',
+    'update_industry'              => 'Update Industry Jobs',
+    'update_journals'              => 'Update Journals',
+    'update_killmails'             => 'Update Killmails',
+    'update_mail'                  => 'Update Mail',
+    'update_market'                => 'Update Market',
+    'update_members_tracking'      => 'Update Members Tracking',
+    'update_mining'                => 'Update Mining Ledger',
+    'update_notifications'         => 'Update Notifications',
+    'update_pi'                    => 'Update Planetary Interaction',
+    'update_research'              => 'Update Agents Research',
+    'update_skills'                => 'Update Skills',
+    'update_standings'             => 'Update Standings',
+    'update_starbase'              => 'Update Starbase',
+    'update_structures'            => 'Update Structures',
+    'update_transactions'          => 'Update Transactions',
+    'update_wallet'                => 'Update Wallet',
+    'update_loyalty_points'        => 'Update Loyalty Points',
 
     // Character
     'joined_curr_corp'             => '已加入当前公司',
@@ -466,6 +505,8 @@ return [
     'security_status'              => '安全等级',
     'items_taking'                 => '持有的资产',
     'calendar_events'              => '日历事件',
+    'loyalty_points'               =>   'Loyalty Points',
+    'loyalty_point_prices'         => 'Fuzzwork LP Prices',
     'positive_standings'           => '正面声望',
     'neutral_standings'            => '中立声望',
     'negative_standings'           => '负面声望',
@@ -474,6 +515,7 @@ return [
     'terrible_standings'           => '较差声望',
     'bad_standings'                => '糟糕声望',
     'start'                        => '开始',
+    'end'                          => 'End',
     'installer'                    => '建筑',
     'system'                       => '星系',
     'constellation'                => '星座',
@@ -538,7 +580,7 @@ return [
     'client'                       => '客户',
     'qty'                          => '#',
     'unknown_character'            => '未知角色，是否已提交 SSO ?',
-    'no_account_info'              => '无可用账户信息',
+    'deleted_refresh_token'        => 'A refresh token for this character was deleted about :time. As a result, information displayed may be out of date.',
     'channel_members'              => '频道成员',
     'motd'                         => 'MoTD',
     'coordinates'                  => '坐标',
@@ -554,6 +596,8 @@ return [
 
     // Corporation
     'alliance'                     => '联盟',
+    'corporation_count'            => 'Corporation Count',
+    'executor'                     => 'Executor',
     'ticker'                       => '缩写',
     'ceo'                          => 'CEO',
     'home_station'                 => '基地空间站',
@@ -573,12 +617,13 @@ return [
     'structure'                    => '晟威建筑',
     'reinforce_week_hour'          => '增强时间',
     'low_power'                    => '低能量',
+    'created_by_corporation'       => 'Created By Corporation',
     'state'                        => '状态',
     'fuel_level'                   => '燃料水平',
     'offline'                      => '预计下线于.',
     'cargo_usage'                  => '货柜使用',
     'onlined_at'                   => '上线于',
-    'services'                     => '服务',
+    'services'                     => '服务|服务',
     'moon'                         => '卫星',
     'use_standings_from'           => '使用声望模式',
     'attack_on_agression'          => '攻击攻击者',
@@ -607,6 +652,15 @@ return [
     'no_storage'                   => '此处没有存储',
     'member'                       => '成员',
     'faction'                      => '势力',
+
+    'start_at'                     => 'Start at',
+    'drill_start'                  => 'Drill Start',
+    'chunk_arrival'                => 'Chunk Arrival',
+    'chunk_age'                    => 'Extraction Length',
+    'self_destruct'                => 'Self-Destruct',
+    'auto_fracture'                => 'Auto Fracture',
+    'rarity'                       => 'Rarity',
+    'rate'                         => 'Rate',
 
     // Mining Ledger
     'mining'                       => '挖矿',
@@ -637,10 +691,12 @@ return [
     'email_notifications'          => '邮件通知',
     'setup_token_now'              => '现在设置令牌',
     'owned_keys'                   => '持有 Key',
-    'account_help'                 => '关于查询、权限的信息，请联系 SeAT 管理员。',
+    'account_help'                 => 'For any account related enquiries, including permissions amendments, ' .
+        'please contact the SeAT administrator.',
     'current_email'                => '当前邮箱',
     'new_email'                    => '新邮箱',
     'confirm_new_email'            => '确认新邮箱',
+    'email_in_use'                 => 'The e-mail address :mail is already in use.',
     'scan_qr'                      => '扫描 QR Code',
     'scan_qr_help1'                => '请使用你的认证器应用扫描 QR Code',
     'scan_qr_help2'                => '本页面每次重新加载时，Token 和 QR Code 都会刷新',
@@ -668,11 +724,14 @@ return [
     'complete'                     => ' 完成.',
     'history'                      => '历史',
     'submit_jobs'                  => '提交任务',
-    'job_submit_desc'              => '这些按钮允许你手工将任务加入队列，和在 CLI 模式下使用队列工具效果一样',
+    'job_submit_desc'              => 'These buttons allow you to manually queue jobs into the scheduler. It ' .
+        'runs exactly the same commands as you would on the commandline or via the scheduler.',
     'no_working'                   => '这些是未工作的任务',
     'no_queue'                     => '这些是未加入队列的任务',
     'job_error_detail'             => '任务错误详细信息',
-    'error_details_desc'           => '这是此任务的错误详细调用堆栈，如果你不能离家以下内容请拷贝至 pastebin 发送链接给开发人员',
+    'error_details_desc'           => 'This is a full stack trace for this job error. If this is not something ' .
+        'that you understand, or a developer has asked for this, please copy the entire section below ' .
+        'and paste it on a site such as pastebin and send the link along.',
     'full_job_error'               => '所有任务错误详细信息',
     'job_id'                       => '任务 ID',
     'api'                          => 'Api',
@@ -702,6 +761,7 @@ return [
 
     // Footer
     'web_version'                  => '网页版',
+    'docker_version'               => 'Docker Version',
     'sde_version'                  => 'SDE 版本',
     'render_in'                    => '渲染于',
     'copyright'                    => '版权信息',

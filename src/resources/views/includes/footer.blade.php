@@ -24,5 +24,5 @@
   </div>
 
   <!-- Default to the left -->
-  <strong>{{ trans('web::seat.copyright') }} &copy; {{ date('Y') }} | <a href="https://github.com/eveseat/seat">SeAT</a></strong>
+  <strong>{{ trans('web::seat.copyright') }} &copy; {{ date('Y') }} | <a href="https://github.com/eveseat/seat" target="_blank">SeAT</a></strong>
 </footer>

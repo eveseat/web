@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ use Seat\Web\Models\User;
 class CharacterAffiliationObserver extends AbstractSquadObserver
 {
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterAffiliation $affiliation
+     * @param  \Seat\Eveapi\Models\Character\CharacterAffiliation  $affiliation
      */
     public function created(CharacterAffiliation $affiliation)
     {
@@ -42,7 +42,7 @@ class CharacterAffiliationObserver extends AbstractSquadObserver
     }
 
     /**
-     * @param \Seat\Eveapi\Models\Character\CharacterAffiliation $affiliation
+     * @param  \Seat\Eveapi\Models\Character\CharacterAffiliation  $affiliation
      */
     public function updated(CharacterAffiliation $affiliation)
     {

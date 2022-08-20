@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@ abstract class AbstractContactDataTable extends DataTable
 {
     /**
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Exception
      */
     public function ajax()
@@ -117,7 +118,7 @@ abstract class AbstractContactDataTable extends DataTable
         return [
             ['data' => 'entity.name', 'title' => trans_choice('web::seat.name', 1)],
             ['data' => 'entity.affiliation.corporation.name', 'title' => trans_choice('web::seat.corporation', 1), 'orderable' => false],
-            ['data' => 'entity.affiliation.alliance.name', 'title' => trans('web::seat.alliance'), 'orderable' => false],
+            ['data' => 'entity.affiliation.alliance.name', 'title' => trans_choice('web::seat.alliance', 1), 'orderable' => false],
             ['data' => 'contact_type', 'title' => trans_choice('web::seat.type', 1)],
             ['data' => 'standing', 'title' => trans_choice('web::seat.standings', 1)],
             ['data' => 'labels', 'title' => trans('web::seat.labels')],

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -91,6 +91,11 @@ Route::get('/{character}/industry')
     ->name('character.view.industry')
     ->uses('IndustryController@index')
     ->middleware('can:character.industry,character');
+
+Route::get('/{character}/loyalty-points')
+    ->name('character.view.loyalty_points')
+    ->uses('LoyaltyPointsController@index')
+    ->middleware('can:character.loyalty_points,character');
 
 Route::group(['prefix' => '{character}/intel'], function () {
 

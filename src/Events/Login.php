@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ class Login
      * Update the last login values and write a new
      * login history item.
      *
-     * @param \Illuminate\Auth\Events\Login $event
+     * @param  \Illuminate\Auth\Events\Login  $event
      */
     public static function handle(LoginEvent $event)
     {

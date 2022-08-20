@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +34,7 @@ class CharacterDataTable extends DataTable
 {
     /**
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Exception
      */
     public function ajax()
@@ -105,7 +106,7 @@ class CharacterDataTable extends DataTable
         return [
             ['data' => 'name', 'title' => trans_choice('web::seat.name', 1)],
             ['data' => 'affiliation.corporation.name', 'title' => trans_choice('web::seat.corporation', 1)],
-            ['data' => 'affiliation.alliance.name', 'title' => trans('web::seat.alliance')],
+            ['data' => 'affiliation.alliance.name', 'title' => trans_choice('web::seat.alliance', 1)],
             ['data' => 'affiliation.faction.name', 'title' => trans('web::seat.faction')],
             ['data' => 'security_status', 'title' => trans('web::seat.security_status')],
             ['data' => 'refresh_token.expires_on', 'title' => trans('web::seat.token_status'), 'sortable' => false, 'searchable' => false],

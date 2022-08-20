@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ use Seat\Web\Models\User;
 class SquadPolicy
 {
     /**
-     * @param \Seat\Web\Models\User $user
+     * @param  \Seat\Web\Models\User  $user
      * @return bool
      */
     public function create(User $user)
@@ -42,7 +42,7 @@ class SquadPolicy
     }
 
     /**
-     * @param \Seat\Web\Models\User $user
+     * @param  \Seat\Web\Models\User  $user
      * @return bool
      */
     public function edit(User $user, Squad $squad)
@@ -51,8 +51,8 @@ class SquadPolicy
     }
 
     /**
-     * @param \Seat\Web\Models\User $user
-     * @param \Seat\Web\Models\Squads\Squad $squad
+     * @param  \Seat\Web\Models\User  $user
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
      * @return bool
      */
     public function delete(User $user, Squad $squad)
@@ -61,9 +61,9 @@ class SquadPolicy
     }
 
     /**
-     * @param \Seat\Web\Models\User $user
-     * @param \Seat\Web\Models\Squads\Squad $squad
-     * @param \Seat\Web\Models\User $member
+     * @param  \Seat\Web\Models\User  $user
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
+     * @param  \Seat\Web\Models\User  $member
      * @return bool
      */
     public function kick(User $user, Squad $squad, User $member)
@@ -72,8 +72,8 @@ class SquadPolicy
     }
 
     /**
-     * @param \Seat\Web\Models\User $user
-     * @param \Seat\Web\Models\Squads\Squad $squad
+     * @param  \Seat\Web\Models\User  $user
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
      * @return bool
      */
     public function manage_candidates(User $user, Squad $squad)
@@ -82,8 +82,8 @@ class SquadPolicy
     }
 
     /**
-     * @param \Seat\Web\Models\User $user
-     * @param \Seat\Web\Models\Squads\Squad $squad
+     * @param  \Seat\Web\Models\User  $user
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
      * @return bool
      */
     public function manage_members(User $user, Squad $squad)
@@ -92,8 +92,8 @@ class SquadPolicy
     }
 
     /**
-     * @param \Seat\Web\Models\User $user
-     * @param \Seat\Web\Models\Squads\Squad $squad
+     * @param  \Seat\Web\Models\User  $user
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
      * @return bool
      */
     public function manage_moderators(User $user, Squad $squad)
@@ -102,8 +102,8 @@ class SquadPolicy
     }
 
     /**
-     * @param \Seat\Web\Models\User $user
-     * @param \Seat\Web\Models\Squads\Squad $squad
+     * @param  \Seat\Web\Models\User  $user
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
      * @return bool
      */
     public function manage_roles(User $user, Squad $squad)
@@ -112,8 +112,8 @@ class SquadPolicy
     }
 
     /**
-     * @param \Seat\Web\Models\User $user
-     * @param \Seat\Web\Models\Squads\Squad $squad
+     * @param  \Seat\Web\Models\User  $user
+     * @param  \Seat\Web\Models\Squads\Squad  $squad
      * @return bool
      */
     public function show_members(User $user, Squad $squad)
@@ -124,8 +124,8 @@ class SquadPolicy
     }
 
     /**
-     * @param \Seat\Web\Models\User $user
-     * @param string $ability
+     * @param  \Seat\Web\Models\User  $user
+     * @param  string  $ability
      * @return bool|void
      */
     public function before(User $user, string $ability)

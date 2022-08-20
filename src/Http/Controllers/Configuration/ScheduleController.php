@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@ use Seat\Web\Http\Validation\NewSchedule;
 
 /**
  * Class ScheduleController.
+ *
  * @package Seat\Web\Http\Controllers\Configuration
  */
 class ScheduleController extends Controller
@@ -59,7 +60,7 @@ class ScheduleController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Http\Validation\NewSchedule $request
+     * @param  \Seat\Web\Http\Validation\NewSchedule  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function newSchedule(NewSchedule $request)
@@ -73,7 +74,7 @@ class ScheduleController extends Controller
     }
 
     /**
-     * @param int $schedule_id
+     * @param  int  $schedule_id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function deleteSchedule(int $schedule_id)

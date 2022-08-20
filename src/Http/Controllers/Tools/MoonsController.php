@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ use Seat\Web\Models\UniverseMoonReport;
 class MoonsController extends Controller
 {
     /**
-     * @param \Seat\Web\Http\DataTables\Tools\MoonsDataTable $dataTable
+     * @param  \Seat\Web\Http\DataTables\Tools\MoonsDataTable  $dataTable
      * @return mixed
      */
     public function index(MoonsDataTable $dataTable)
@@ -82,7 +82,7 @@ class MoonsController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(int $id)
@@ -96,7 +96,7 @@ class MoonsController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Http\Validation\ProbeReport $request
+     * @param  \Seat\Web\Http\Validation\ProbeReport  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(ProbeReport $request)
@@ -146,8 +146,9 @@ class MoonsController extends Controller
     }
 
     /**
-     * @param \Seat\Web\Models\UniverseMoonReport $report
+     * @param  \Seat\Web\Models\UniverseMoonReport  $report
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Exception
      */
     public function destroy(UniverseMoonReport $report)

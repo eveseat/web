@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -86,6 +86,15 @@ Route::group([
         ], function () {
 
             include __DIR__ . '/Routes/Queue/Status.php';
+        });
+
+        // Alliance Routes
+        Route::group([
+            'namespace' => 'Alliance',
+            'prefix'    => 'alliances',
+        ], function () {
+
+            include __DIR__ . '/Routes/Alliance/View.php';
         });
 
         // Corporation Routes

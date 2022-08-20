@@ -11,7 +11,7 @@
             @lang('web::about.disclaimer_pane_content', [
                 'eve_online' => '<strong><a href="https://www.eveonline.com" target="_blank">EVE Online</a></strong>',
                 'ccp_enterprise' => '<strong><a href="https://www.ccpgames.com" target="_blank">CCP hf</a></strong>',
-                'seat' => '<strong><a href="http://github.com/eveseat/seat/">SeAT</a></strong>'
+                'seat' => '<strong><a href="http://github.com/eveseat/seat/"  target="_blank">SeAT</a></strong>'
             ])
         </p>
     </div>

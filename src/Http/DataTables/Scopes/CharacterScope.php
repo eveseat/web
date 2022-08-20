@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,8 +51,8 @@ class CharacterScope implements DataTableScope
     /**
      * CharacterScope constructor.
      *
-     * @param string|null $ability
-     * @param int[]|null $character_id
+     * @param  string|null  $ability
+     * @param  int[]|null  $character_id
      */
     public function __construct(?string $ability = null, ?array $character_id = null)
     {
@@ -63,7 +63,7 @@ class CharacterScope implements DataTableScope
     /**
      * Apply a query scope.
      *
-     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder  $query
      * @return mixed
      */
     public function apply($query)
@@ -145,6 +145,6 @@ class CharacterScope implements DataTableScope
         // merge all collected characters IDs in a single array and apply filter
         $character_ids = array_merge($characters_range, $corporations_range, $alliances_range, $owned_range, $sharelink, $ceo_range, $director_range);
 
-        return $query->whereIn($table . '.character_id', $character_ids);
+        return $query->whereIntegerInRaw($table . '.character_id', $character_ids);
     }
 }

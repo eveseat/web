@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -106,6 +106,9 @@ return [
     'duel_wager_refund' => 'Duel Wager Refund',
     'ess_escrow_transfer' => 'ESS Escrow Transfer',
     'factory_slot_rental_fee' => 'Factory Slot Rental Fee',
+    'flux_payout' => 'HyperNode Payout',
+    'flux_tax' => 'HyperNode Tax',
+    'flux_ticket_sale' => 'HyperNode Ticket Sale',
     'gm_cash_transfer' => 'Gm Cash Transfer',
     'industry_job_tax' => 'Industry Job Tax',
     'infrastructure_hub_maintenance' => 'Infrastructure Hub Maintenance',

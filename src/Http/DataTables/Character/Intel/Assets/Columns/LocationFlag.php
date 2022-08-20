@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ class LocationFlag extends AbstractColumn
     /**
      * Draw a column cell.
      *
-     * @param \Illuminate\Database\Eloquent\Model $row
+     * @param  \Illuminate\Database\Eloquent\Model  $row
      * @return string;
      */
     public function draw(Model $row)

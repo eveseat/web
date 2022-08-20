@@ -8,11 +8,44 @@ $.ajaxSetup({
 
 // Generic 'confirm' dialog code for forms.
 // Make your submit button part of class confirmform, and viola
+// Optional: You can describe the action by adding a "data-seat-action" attribute.
 var currentForm;
 $(document).on("click", ".confirmform", function (e) {
-    currentForm = $(this).closest("form");
+    if ($(this).attr('form') === undefined) {
+        currentForm = $(this).closest("form");
+    } else {
+        currentForm = $('#'.concat($(this).attr('form')))
+    }
     e.preventDefault();
-    bootbox.confirm("Are you sure you want to continue?", function (confirmed) {
+    var action = $(this).data('seat-action');
+    var message = 'Are you sure you want to continue?';
+    if (typeof action !== 'undefined') {
+        message = `Are you sure you want to ${action}?`;
+    }
+    bootbox.confirm(message, function (confirmed) {
+        if (confirmed) {
+            currentForm.submit();
+        }
+    });
+});
+
+// Deletion 'confirm' dialog.
+// Make your submit button part of class confirmdelete, and viola.
+// You can add an entity name by adding a "data-seat-entity" attribute.
+var currentForm;
+$(document).on("click", ".confirmdelete", function (e) {
+    if ($(this).attr('form') === undefined) {
+        currentForm = $(this).closest("form");
+    } else {
+        currentForm = $('#'.concat($(this).attr('form')))
+    }
+    e.preventDefault();
+    entity = $(this).data('seat-entity');
+    var message = 'Are you sure you want to delete this?';
+    if (typeof entity !== 'undefined') {
+        message = `Are you sure you want to delete this ${entity}?`;
+    }
+    bootbox.confirm(message, function (confirmed) {
         if (confirmed) {
             currentForm.submit();
         }

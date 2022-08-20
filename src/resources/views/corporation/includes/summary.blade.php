@@ -25,7 +25,7 @@
     <dl>
 
       @if($corporation->alliance_id)
-        <dt>{{ trans('web::seat.alliance') }}</dt>
+        <dt>{{ trans_choice('web::seat.alliance', 1) }}</dt>
         <dd><span class="id-to-name" data-id="{{ $corporation->alliance_id }}">{{ trans('web::seat.unknown') }}</span></dd>
       @endif
 

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,8 +47,8 @@ class UserRoleRemoved
     /**
      * UserRoleRemoved constructor.
      *
-     * @param int $user_id
-     * @param \Seat\Web\Models\Acl\Role $role
+     * @param  int  $user_id
+     * @param  \Seat\Web\Models\Acl\Role  $role
      */
     public function __construct(int $user_id, Role $role)
     {

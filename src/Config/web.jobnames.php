@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,6 +55,7 @@ return [
         'standings'        => \Seat\Eveapi\Jobs\Character\Standings::class,
         'journals'         => \Seat\Eveapi\Jobs\Wallet\Character\Journal::class,
         'transactions'     => \Seat\Eveapi\Jobs\Wallet\Character\Transactions::class,
+        'loyalty_points'  => \Seat\Eveapi\Jobs\Character\LoyaltyPoints::class,
     ],
     'corporation' => [
         'assets'           => \Seat\Eveapi\Jobs\Assets\Corporation\Assets::class,
@@ -75,5 +76,11 @@ return [
         'transactions'     => \Seat\Eveapi\Jobs\Wallet\Corporation\Transactions::class,
         'starbases'        => \Seat\Eveapi\Jobs\Corporation\Starbases::class,
         'structures'       => \Seat\Eveapi\Jobs\Corporation\Structures::class,
+    ],
+    'alliance' => [
+        'contacts'         => [
+            \Seat\Eveapi\Jobs\Contacts\Alliance\Contacts::class,
+            \Seat\Eveapi\Jobs\Contacts\Alliance\Labels::class,
+        ],
     ],
 ];

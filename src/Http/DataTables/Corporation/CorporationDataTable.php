@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +34,7 @@ class CorporationDataTable extends DataTable
 {
     /**
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Exception
      */
     public function ajax()
@@ -102,7 +103,7 @@ class CorporationDataTable extends DataTable
             ['data' => 'name', 'title' => trans_choice('web::seat.name', 1)],
             ['data' => 'ticker', 'title' => trans('web::seat.ticker')],
             ['data' => 'ceo.name', 'title' => trans('web::seat.ceo')],
-            ['data' => 'alliance.name', 'title' => trans('web::seat.alliance')],
+            ['data' => 'alliance.name', 'title' => trans_choice('web::seat.alliance', 1)],
             ['data' => 'tax_rate', 'title' => trans('web::seat.tax_rate')],
             ['data' => 'member_count', 'title' => trans('web::seat.member_count')],
         ];

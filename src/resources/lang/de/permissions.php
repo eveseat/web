@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2021 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,10 +37,21 @@ return [
     // Global Scope
     'global_standing_builder_label'             => 'Gewähre Zugriff auf den Standings Builder',
     'global_standing_builder_description'       => 'Der Standings Builder zeigt eine Übersicht Ihrer Charakter-, Corporation- und Allianzansehen. Es wird hauptsächlich zum Austausch von Ansehen zwischen Bündnissen einer Allianz oder Corps innerhalb einer Allianz verwendet. Auch nützlich für Charakter Intel.',
+    'global_invalid_tokens_label'             => 'Grant access to see invalidated tokens',
+    'global_invalid_tokens_description'       => 'Showing invalid tokens allows you to see the characters associated with an account that are now invalid. Normally they are hidden.',
     'global_moons_reporter_label'               => 'Mondreporter',
     'global_moons_reporter_description'         => 'Der Mondreporter kann alle Monde von New Eden und ihre registrierten Kompositionsberichte anzeigen.',
     'global_moons_reporter_manager_label'       => 'Mondreporter Manager',
     'global_moons_reporter_manager_description' => 'Mondreporter Manager kann Mondreporte erstellen und aktualisieren.',
+    'global_queue_manager_label'                => 'Queue Manager',
+
+    // Moon Reporter Scope
+    'view_moon_reports_label'           => 'View Moon Reports',
+    'view_moon_reports_description'     => 'Displays all moons in eve, and any resources within the moon, if that data is available.',
+    'create_moon_reports_label'         => 'Create new Moon Reports',
+    'create_moon_reports_description'   => 'Allows a user to submit moon probe results.',
+    'manage_moon_reports_label'         => 'Manage Moon Reports',
+    'manage_moon_reports_description'   => 'Allows a user to edit and/or delete moon reports.',
 
     // Character Scope
     'character_asset_label'              => 'Zugriff auf Charakter Besitz gewähren.',
@@ -68,7 +79,7 @@ return [
     'character_mining_label'             => 'Zugriff auf Charakter Bergbau gewähren.',
     'character_mining_description'       => 'Zeigt Statistiken zu den Bergbauaktivitäten eines Charakters an. Dies basiert auf der persönlichen Bergbauauswertung im Spiel und zeigt Datum, System, Erz, Menge, Volumen und geschätzten Preis an.',
     'character_notification_label'       => 'Zugriff auf Charakter Mitteilungen gewähren.',
-    'cgaracter_notification_description' => 'Zeigt die Mitteilungen eines Charakters an. Inklusive DED Auszahlungen oder Änderungen im Ansehen zu NPC Fraktionen.',
+    'character_notification_description' => 'Displays a characters notifications like DED payout grants or standings update notifiers',
     'character_planetary_label'          => 'Zugriff auf Charakter Planetare Interaktionen gewähren.',
     'character_planetary_description'    => 'Zeigt die Planeten an auf denen ein Charakter Command Center aufgestellt hat und die dazugehörigen verlinkten Installationen.',
     'character_research_label'           => 'Zugriff auf Charakter Forschungsagenten gewähren.',
@@ -83,6 +94,8 @@ return [
     'character_journal_description'      => 'Zeigt das Journal des Kontos eines Charakters an.',
     'character_transaction_label'        => 'Zugriff auf Charakter Kontentransaktionen gewähren.',
     'character_transaction_description'  => 'Zeigt die Transaktionen des Kontos eines Charakters an.',
+    'character_loyalty_points_label'     => 'Zugriff auf Charakter Loyalitätspunkte gewähren.',
+    'character_loyalty_points_description' => 'Zeigt die Loyalitätspunkte des Kontos eines Charakters an.',
 
     // Corporation Scope
     'corporation_asset_label'                         => 'Zugriff auf Corp Besitz gewähren.',
@@ -151,4 +164,31 @@ return [
     'corporation_journal_description'                 => 'Zeigt das Journal des Corp Kontos an.',
     'corporation_transaction_label'                   => 'Zugriff auf die Corp Konto Transaktionen gewähren.',
     'corporation_transaction_description'             => 'Zeigt die Transaktionen des Corp Kontos an.',
+
+    // Alliance Scope
+    'alliance_contact_label'         => 'Grant access to Alliance Contacts',
+    'alliance_contact_description'   => 'Displays alliance contacts including name, standing and link to third-party platforms (like zkillboard).',
+    'alliance_summary_label'         => 'Grant access to Alliance Summary Sheet',
+    'alliance_summary_description'   => 'The Alliance Sheet contains basic information like the alliance name, founder, member corporations, etc...',
+    'alliance_tracking_label'        => 'Grant access to Alliance Tracking',
+    'alliance_tracking_description'  => 'Displays a report of users registered on SeAT in comparison to all members.',
+
+    // Mail Scope
+    'mail_bodies_label'   => 'Read Mail Bodies',
+    'mail_subjects_label' => 'Read Mail Subjects',
+
+    // People Scope
+    'people_create_label' => 'Create People',
+    'people_edit_label'   => 'Edit People',
+    'people_view_label'   => 'View People',
+
+    // Search Scope
+    'search_character_assets_label'        => 'Search Character Assets',
+    'search_character_contact_lists_label' => 'Search Character Contact Lists',
+    'search_character_mail_label'          => 'Search Character Mail',
+    'search_characters_label'              => 'Search Characters',
+    'search_character_skills_label'        => 'Search Character Skills',
+    'search_character_standings_label'     => 'Search Character Standings',
+    'search_corporation_assets_label'      => 'Search Corporation Assets',
+    'search_corporation_standings_label'   => 'Search Corporation Standings',
 ];
