@@ -22,9 +22,9 @@
 
 return [
     'name'            => 'Name',
-    'type'            => 'Typ',
-    'items'           => 'Gegenstände',
-    'hull_estimated_value' => 'Geschätzter Preis der Hülle',
-    'fitting_estimated_value' => 'Geschätzter Preis der Gegenstände',
-    'full_estimated_value' => 'Geschätzter Preis komplett',
+    'type'            => 'Type',
+    'items'           => 'Items',
+    'hull_estimated_value' => 'Hull Estimated Value',
+    'fitting_estimated_value' => 'Fitting Estimated Value',
+    'full_estimated_value' => 'Full Estimated Value',
 ];
