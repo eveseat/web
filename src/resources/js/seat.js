@@ -32,24 +32,35 @@ $(document).on("click", ".confirmform", function (e) {
 // Deletion 'confirm' dialog.
 // Make your submit button part of class confirmdelete, and viola.
 // You can add an entity name by adding a "data-seat-entity" attribute.
-var currentForm;
-$(document).on("click", ".confirmdelete", function (e) {
-    if ($(this).attr('form') === undefined) {
-        currentForm = $(this).closest("form");
-    } else {
-        currentForm = $('#'.concat($(this).attr('form')))
+document.addEventListener('click', function (e) {
+    if (e.target.matches('.confirmdelete')) {
+        let entity = e.target.dataset.seatEntity;
+        let currentForm = (e.target.getAttribute('form') === null) ?
+            e.target.closest('form') :
+            document.querySelector('#'.concat(e.target.getAttribute('form')));
+
+        e.preventDefault();
+
+        bootbox.confirm({
+            size: 'small',
+            message: `<div class="modal-status bg-danger"></div><div class="modal-body text-center py-4"><i class="fas fa-2x fa-exclamation-triangle text-danger"></i><h3>Are you sure?</h3><div class="text-muted">Do you really want to remove this ${ typeof entity === undefined ? 'item' : entity }? What you've done cannot be undone.</div></div>`,
+            closeButton: false,
+            centerVertical: true,
+            buttons: {
+                confirm: {
+                    label: 'Delete item',
+                    className: 'btn-danger'
+                },
+                cancel: {
+                    label: 'Cancel',
+                    className: 'btn-default'
+                },
+            },
+            callback: function (result) {
+                if (result) currentForm.submit();
+            }
+        });
     }
-    e.preventDefault();
-    entity = $(this).data('seat-entity');
-    var message = 'Are you sure you want to delete this?';
-    if (typeof entity !== 'undefined') {
-        message = `Are you sure you want to delete this ${entity}?`;
-    }
-    bootbox.confirm(message, function (confirmed) {
-        if (confirmed) {
-            currentForm.submit();
-        }
-    });
 });
 
 // Generic 'confirm' dialog code for links.
@@ -85,11 +96,17 @@ $(document).ready(function () {
 });
 
 // Configure some defaults for Datatables
-$.extend(true, $.fn.dataTable.defaults, {
+$.extend(true, DataTable.defaults, {
     responsive: true,
     autoWidth: false,
     order: [[0, 'desc']],
-    dom: '<"card-body border-bottom py-3"<"d-flex"<"text-muted"l><"ms-auto text-muted"f>>><"table-responsive"t><"card-footer d-flex align-items-center"i<"m-0 ms-auto"p>>'
+    dom: '<"card-body border-bottom py-3"<"d-flex"<"text-muted"l><"ms-auto text-muted"f>>><"table-responsive"t><"card-footer d-flex align-items-center"i<"m-0 ms-auto"p>>',
+    language: {
+        paginate: {
+            previous: '<i class="fas fa-chevron-left me-1"></i> ' + DataTable.defaults.oLanguage.oPaginate.sPrevious.toLowerCase(),
+            next: DataTable.defaults.oLanguage.oPaginate.sNext.toLowerCase() + ' <i class="fas fa-chevron-right ms-1"></i>'
+        }
+    }
 });
 
 // put some animation on the caret neat to the user dropdown
