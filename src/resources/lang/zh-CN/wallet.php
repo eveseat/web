@@ -21,20 +21,20 @@
  */
 
 return [
-    'date'       => 'Date',
-    'ref_type'   => 'Type',
-    'from_party' => 'From Party',
-    'to_party'   => 'To Party',
-    'amount'     => 'Amount',
-    'balance'    => 'Balance',
+    'date'       => '日期',
+    'ref_type'   => '类型',
+    'from_party' => '转出方',
+    'to_party'   => '转入方',
+    'amount'     => '交易金额',
+    'balance'    => '余额',
 
-    'order'      => 'Order',
-    'type'       => 'Type',
-    'location'   => 'Location',
-    'price'      => 'Price',
-    'quantity'   => 'Quantity',
-    'total'      => 'Total',
-    'party'      => 'Party',
+    'order'      => '订单',
+    'type'       => '类型',
+    'location'   => '地点',
+    'price'      => '价格',
+    'quantity'   => '数量',
+    'total'      => '总计',
+    'party'      => '交易人',
 
     'acceleration_gate_fee' => 'Acceleration Gate Fee',
     'advertisement_listing_fee' => 'Advertisement Listing Fee',

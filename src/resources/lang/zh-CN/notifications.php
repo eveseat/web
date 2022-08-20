@@ -21,7 +21,7 @@
  */
 
 return [
-    'date'   => 'Date',
-    'type'   => 'Type',
-    'sender' => 'Sender',
+    'date'   => '日期',
+    'type'   => '类型',
+    'sender' => '发送人',
 ];

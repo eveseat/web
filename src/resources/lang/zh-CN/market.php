@@ -21,14 +21,14 @@
  */
 
 return [
-    'issued'  => 'Issued',
-    'expires' => 'Expires',
-    'buy'     => 'Buy',
-    'sell'    => 'Sell',
-    'order'   => 'Order',
-    'range'   => 'Range',
-    'volume'  => 'Volume',
-    'price'   => 'Price',
-    'total'   => 'Total',
-    'type'    => 'Type',
+    'issued'  => '已提交',
+    'expires' => '已超时',
+    'buy'     => '求购',
+    'sell'    => '出售',
+    'order'   => '物品',
+    'range'   => '范围',
+    'volume'  => '体积',
+    'price'   => '价格',
+    'total'   => '总价',
+    'type'    => '类型',
 ];

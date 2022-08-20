@@ -21,9 +21,9 @@
  */
 
 return [
-    'start'         => 'Start',
-    'agent'         => 'Agent',
-    'skill'         => 'Skill',
-    'point_per_day' => 'Point per day|Points per day',
-    'remainder'     => 'Remainder',
+    'start'         => '开始',
+    'agent'         => '代理人',
+    'skill'         => '技能',
+    'point_per_day' => '每天获得的研究点数',
+    'remainder'     => '剩余',
 ];

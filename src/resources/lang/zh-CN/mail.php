@@ -21,12 +21,12 @@
  */
 
 return [
-    'read'         => 'Read',
-    'date'         => 'Date',
-    'sender'       => 'Sender',
-    'subject'      => 'Subject',
-    'mailing_list' => 'Mailing List',
-    'sent'         => 'Sent',
-    'author'       => 'Author',
-    'recipients'   => 'Recipients',
+    'read'         => '阅读',
+    'date'         => '日期',
+    'sender'       => '发件人',
+    'subject'      => '主题',
+    'mailing_list' => '邮件列表',
+    'sent'         => '发送',
+    'author'       => '作者',
+    'recipients'   => '收件者',
 ];
