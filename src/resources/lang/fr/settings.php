@@ -21,9 +21,9 @@
  */
 
 return [
-    'jobs'                      => 'Job|Jobs',
-    'market_prices_region'      => 'Market Prices Region',
-    'market_prices_region_help' => 'This will be used by SeAT to collect market average prices from ESI. Those prices might be used in different place, like in contracts, fittings or mining ledgers.',
-    'admin'                     => 'Administrator|Administrators',
-    'admin_assist_edit'         => 'Attention, if you check this box, this user will get access to all settings, users and permissions. They will also bypass all the security layers because of this status. Proceed with caution.',
+    'jobs'                      => 'Tâche|Tâches',
+    'market_prices_region'      => 'Région des prix du marché',
+    'market_prices_region_help' => 'Ceci sera utilisé par SeAT pour collecter les prix moyens du marché auprès d\'ESI. Ces prix peuvent être utilisés à des endroits différents, comme dans les contrats, les raccords ou les relevés miniers.',
+    'admin'                     => 'Administrateur|Administrateurs',
+    'admin_assist_edit'         => 'Attention, si vous cochez cette case, cet utilisateur aura accès à tous les paramètres, utilisateurs et autorisations. Ils contourneront également toutes les couches de sécurité en raison de cet état. Procédez avec prudence.',
 ];
