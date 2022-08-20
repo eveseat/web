@@ -23,10 +23,10 @@
 return [
     'read'         => 'Read',
     'date'         => 'Date',
-    'sender'       => 'Sender',
-    'subject'      => 'Subject',
-    'mailing_list' => 'Mailing List',
-    'sent'         => 'Sent',
-    'author'       => 'Author',
-    'recipients'   => 'Recipients',
+    'sender'       => 'Expéditeur',
+    'subject'      => 'Objet',
+    'mailing_list' => 'Liste de diffusion',
+    'sent'         => 'Envoyé',
+    'author'       => 'Auteur',
+    'recipients'   => 'Destinataires',
 ];
