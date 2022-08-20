@@ -21,12 +21,12 @@
  */
 
 return [
-    'read'         => 'Lesen',
-    'date'         => 'Datum',
-    'sender'       => 'Absender',
-    'subject'      => 'Betreff',
-    'mailing_list' => 'Mailing Liste',
-    'sent'         => 'Gesendet',
-    'author'       => 'Autor',
-    'recipients'   => 'Empfänger', // This is singular and plural, so don't worrie about it
+    'read'         => 'Read',
+    'date'         => 'Date',
+    'sender'       => 'Sender',
+    'subject'      => 'Subject',
+    'mailing_list' => 'Mailing List',
+    'sent'         => 'Sent',
+    'author'       => 'Author',
+    'recipients'   => 'Recipients',
 ];
