@@ -24,7 +24,7 @@ return [
     //
     // Licences Pane
     //
-    'licences_pane_title' => 'Licenses',
+    'licences_pane_title' => 'Lisensies',
     'licences_pane_third_party_used_licences' => 'SeAT uses many components which use the following licenses :',
     'licences_pane_seat_used_licence' => 'SeAT itself is published under the :licence_link.',
     'licences_pane_ccp_third_party_licence' => 'Third Party License Agreement',
@@ -50,7 +50,7 @@ return [
     //
 
     // questions
-    'contact_pane_title' => 'Contacts',
+    'contact_pane_title' => 'Kontakte',
     'contact_pane_question_discord_first_line' => 'Have a question ? Want to say thank you ? Need to express your opinion on SeAT ?',
     'contact_pane_question_discord_second_line' => 'Find us on Discord !',
     'contact_pane_question_forum' => 'Alternatively, you also can track the conversation on the official :link',
