@@ -5,7 +5,9 @@
         </button>
         <!-- logo -->
         <h1 class="navbar-brand navbar-brand-autodark seat-font">
-            <a href=".">S<b>e</b>AT</a>
+            <a href="{{ url('/') }}">
+                <img src="{{ asset('web/img/logo.png') }}" width="110px" height="110px" alt="{{ config('app.name') }}" />
+            </a>
         </h1>
         <!-- ./logo -->
         <!-- sidebar-menu-entries -->
