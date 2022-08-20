@@ -21,13 +21,13 @@
  */
 
 return [
-    'date'          => 'Date',
-    'owner'         => 'Owner',
-    'description'   => 'Description',
+    'date'          => 'Datum',
+    'owner'         => 'Eienaar',
+    'description'   => 'Beskrywing',
     'status'        => 'Status',
 
     'not_responded' => 'Not responded',
-    'accepted'      => 'Accepted',
-    'tentative'     => 'Tentative',
-    'declined'      => 'Declined',
+    'accepted'      => 'Aanvaar',
+    'tentative'     => 'Tentatief',
+    'declined'      => 'Afgekeur',
 ];

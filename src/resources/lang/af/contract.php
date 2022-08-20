@@ -21,16 +21,16 @@
  */
 
 return [
-    'created'             => 'Created',
-    'type'                => 'Type',
-    'issuer'              => 'Issuer',
-    'assignee'            => 'Assignee',
+    'created'             => 'Skep',
+    'type'                => 'Tipe',
+    'issuer'              => 'Uitreiker',
+    'assignee'            => 'Gedelegeerde',
     'acceptor'            => 'Acceptor',
     'status'              => 'Status',
-    'price'               => 'Price',
-    'reward'              => 'Reward',
+    'price'               => 'Prys',
+    'reward'              => 'Beloning',
 
-    'unknown'             => 'Unknown',
+    'unknown'             => 'Onbekend',
     'item_exchange'       => 'Item Exchange',
     'auction'             => 'Auction',
     'courier'             => 'Courier',

@@ -22,7 +22,7 @@
 
 return [
     'name'            => 'Name',
-    'type'            => 'Type',
+    'type'            => 'Tipe',
     'items'           => 'Items',
     'hull_estimated_value' => 'Hull Estimated Value',
     'fitting_estimated_value' => 'Fitting Estimated Value',

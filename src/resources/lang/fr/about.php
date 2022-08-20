@@ -24,26 +24,26 @@ return [
     //
     // Licences Pane
     //
-    'licences_pane_title' => 'Licenses',
-    'licences_pane_third_party_used_licences' => 'SeAT uses many components which use the following licenses :',
-    'licences_pane_seat_used_licence' => 'SeAT itself is published under the :licence_link.',
-    'licences_pane_ccp_third_party_licence' => 'Third Party License Agreement',
+    'licences_pane_title' => 'Licences',
+    'licences_pane_third_party_used_licences' => 'SeAT utilise de nombreux composants qui utilisent les licences suivantes :',
+    'licences_pane_seat_used_licence' => 'SeAT lui-même est publié sous le lien :licence_link.',
+    'licences_pane_ccp_third_party_licence' => 'Contrat de licence de tiers',
 
     //
     // CCP Disclaimer pane
     //
-    'disclaimer_pane_title' => 'CCP Disclaimer',
-    'disclaimer_pane_content' => ':eve_online and the EVE logo are the
-            registered trademarks of :ccp_enterprise.
-            All rights are reserved worldwide. All other trademarks are the property of their respective owners.
-            EVE Online, the EVE logo, EVE and all associated logos and designs are the intellectual property of CCP hf.
-            All artwork, screenshots, characters, vehicles, storylines, world facts or other recognizable features of
-            the intellectual property relating to these trademarks are likewise the intellectual property of CCP hf.
-            CCP hf. has granted permission to :seat
-            to use EVE Online and all associated logos and designs for promotional and information purposes on
-            its project but does not endorse, and is not in any way affiliated with, SeAT. CCP is in no way responsible
-            for the content on or functioning of this software, nor can it be liable for any damage arising from the use
-            of this system.',
+    'disclaimer_pane_title' => 'CCP Clause de non-responsabilité',
+    'disclaimer_pane_content' => ':eve_online et le logo EVE sont les
+            marques déposées de :ccp_enterprise.
+            Tous les droits sont réservés dans le monde entier. Toutes les autres marques de commerce sont la propriété de leurs propriétaires respectifs.
+            EVE Online, le logo EVE, EVE et tous les logos et dessins associés sont la propriété intellectuelle de CCP hf.
+            Toutes les œuvres d\'art, captures d\'écran, personnages, véhicules, contours les faits du monde ou autres caractéristiques reconnaissables de
+            la propriété intellectuelle relative à ces marques de commerce sont également la propriété intellectuelle de CCP hf.
+            CCP hf. a accordé l\'autorisation de :seat
+            d\'utiliser EVE Online et tous les logos et dessins associés à des fins de promotion et d\'information sur
+            son projet mais n\'endosse pas, et n\'est en aucune manière affilié avec, SeAT. Le PCC n\'est en aucun cas responsable
+            du contenu ou du fonctionnement de ce logiciel, Elle ne peut pas non plus être tenue responsable de tout dommage résultant de l\'utilisation de ce système
+.',
 
     //
     // contacts pane
@@ -51,36 +51,36 @@ return [
 
     // questions
     'contact_pane_title' => 'Contacts',
-    'contact_pane_question_discord_first_line' => 'Have a question ? Want to say thank you ? Need to express your opinion on SeAT ?',
-    'contact_pane_question_discord_second_line' => 'Find us on Discord !',
-    'contact_pane_question_forum' => 'Alternatively, you also can track the conversation on the official :link',
-    'contact_pane_question_github' => 'Do you have a bug to report ? Please use our Github issue board :link.',
-    'contact_pane_question_eve_online_forums_placeholder' => 'Eve Online Forums',
-    'contact_pane_question_github_here_placeholder' => 'here',
+    'contact_pane_question_discord_first_line' => 'Vous avez une question ? Vous souhaitez nous remercier ? Vous avez une idée que vous souhaitez partager à propos de SeAT ?',
+    'contact_pane_question_discord_second_line' => 'Rejoignez-nous sur Discord !',
+    'contact_pane_question_forum' => 'Vous pouvez également suivre la conversation sur le :link officiel',
+    'contact_pane_question_github' => 'Vous avez un bug à signaler ? Veuillez utiliser notre portail GitHub :link.',
+    'contact_pane_question_eve_online_forums_placeholder' => 'Forums Eve Online',
+    'contact_pane_question_github_here_placeholder' => 'ici',
 
     // widgets
-    'contact_widget_active_members' => ':count active members',
-    'contact_widget_join_us' => 'Join us !',
+    'contact_widget_active_members' => ':count membres actifs',
+    'contact_widget_join_us' => 'Rejoignez-nous !',
     'contact_widget_documentation' => 'Documentation',
     'contact_widget_updated_at' => 'Updated :date_time',
-    'contact_widget_read_me' => 'Read me !',
-    'contact_widget_github_issues' =>  ':count Issues',
-    'contact_widget_github_contribute' => 'Contribute !',
+    'contact_widget_read_me' => 'Lisez-moi !',
+    'contact_widget_github_issues' =>  ':count Tickets',
+    'contact_widget_github_contribute' => 'Contribuez !',
 
     //
     // Donate Pane
     //
 
-    'donate_pane_title' => 'Donations',
-    'donate_pane_first_line' => 'If you like :seat_project and want to tips the community behind it, you can send ISK to
+    'donate_pane_title' => 'Faire un don',
+    'donate_pane_first_line' => 'Si vous aimez :seat_project et que vous voulez récompenser la communauté derrière lui, vous pouvez envoyer des ISK à
                     :seat_holding corporation.
-                    This holding corporation is used to split donations monthly across all contributors.',
+                    Cette holding est utilisée pour scinder les dons mensuels entre tous les contributeurs.',
     'donate_pane_second_line' => 'Some of it will be held as a prize pool for contents :icon.',
 
     //
     // Security Pane
     //
-    'security_pane_title' => 'Security Concerns',
-    'security_pane_content' => 'If you find any security vulnerabilities within SeAT, please send an email to
-            :contact_email to address instead of creating a public Github issue.',
+    'security_pane_title' => 'Problèmes de sécurité',
+    'security_pane_content' => 'Si vous trouvez des vulnérabilités de sécurité dans SeAT, veuillez envoyer un e-mail 
+            à l\'adresse :contact_email au lieu de créer une Issue public sur GitHub.',
 ];
