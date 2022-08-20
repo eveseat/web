@@ -25,5 +25,7 @@ return [
     'ship'         => 'Schiff',
     'solar_system' => 'Sonnensystem',
     'victim'       => 'Opfer',
-    'killer'       => 'Killer', // I leave this here, "Killer" is by now pretty much common in german. The translation would actually be "Mörder" but that doesn't really fit here.
+    'killer'       => 'Killer',
+    'attackers'    => 'Attacker|Attackers',
+    'items'        => 'Item|Items',
 ];
