@@ -21,10 +21,10 @@
  */
 
 return [
-    'name'            => 'Name',
+    'name'            => 'Nom',
     'type'            => 'Type',
-    'items'           => 'Items',
-    'hull_estimated_value' => 'Hull Estimated Value',
-    'fitting_estimated_value' => 'Fitting Estimated Value',
-    'full_estimated_value' => 'Full Estimated Value',
+    'items'           => 'Éléments',
+    'hull_estimated_value' => 'Valeur estimée de la coque',
+    'fitting_estimated_value' => 'Valeur estimée de l\'équipement',
+    'full_estimated_value' => 'Valeur estimée totale',
 ];
