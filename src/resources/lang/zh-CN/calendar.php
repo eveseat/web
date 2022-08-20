@@ -21,13 +21,13 @@
  */
 
 return [
-    'date'          => 'Datum',
-    'owner'         => 'Ersteller',
-    'description'   => 'Beschreibung',
+    'date'          => 'Date',
+    'owner'         => 'Owner',
+    'description'   => 'Description',
     'status'        => 'Status',
 
-    'not_responded' => 'Keine Rückmeldung',
-    'accepted'      => 'Akzeptiert',
-    'tentative'     => 'Ungewiss',
-    'declined'      => 'Abgelehnt',
+    'not_responded' => 'Not responded',
+    'accepted'      => 'Accepted',
+    'tentative'     => 'Tentative',
+    'declined'      => 'Declined',
 ];
