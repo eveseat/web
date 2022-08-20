@@ -28,5 +28,5 @@ return [
     'mailing_list' => 'Mailing Liste',
     'sent'         => 'Gesendet',
     'author'       => 'Autor',
-    'recipients'   => 'Empfänger', // This is singular and plural, so don't worrie about it
+    'recipients'   => 'Empfänger',
 ];
