@@ -21,8 +21,8 @@
  */
 
 return [
-    'read'         => 'Read',
-    'date'         => 'Date',
+    'read'         => 'Lees',
+    'date'         => 'Datum',
     'sender'       => 'Sender',
     'subject'      => 'Subject',
     'mailing_list' => 'Mailing List',
