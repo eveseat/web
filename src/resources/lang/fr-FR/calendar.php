@@ -22,12 +22,12 @@
 
 return [
     'date'          => 'Date',
-    'owner'         => 'Owner',
+    'owner'         => 'Propriétaire',
     'description'   => 'Description',
-    'status'        => 'Status',
+    'status'        => 'Statut',
 
-    'not_responded' => 'Not responded',
-    'accepted'      => 'Accepted',
-    'tentative'     => 'Tentative',
-    'declined'      => 'Declined',
+    'not_responded' => 'Pas de réponse',
+    'accepted'      => 'Accepté',
+    'tentative'     => 'Provisoire',
+    'declined'      => 'Refusé',
 ];
