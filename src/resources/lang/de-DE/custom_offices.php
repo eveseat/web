@@ -22,10 +22,10 @@
 
 return [
     'planet'            => 'Planet',
-    'reinforcement'     => 'Rf. Periode', // in lack of a good german translation, I leave this here, because the translation of reinforcement makes no sense in german for that matter.
-    'alliance'          => 'Erlaube Zugruff durch Allianz',
-    'standings'         => 'Erlaube Zugriff durch Ansehen',
-    'standing_level'    => 'Minimales Ansehen',
-    'tax_alliance_corp' => 'Steuern Allianz/Corp',
-    'tax_standings'     => 'Steuern Ansehen',
+    'reinforcement'     => 'Rf. Period',
+    'alliance'          => 'Allow Ally.',
+    'standings'         => 'Allow Std.',
+    'standing_level'    => 'Min. Std. Lvl.',
+    'tax_alliance_corp' => 'Tax Alliance/Corp',
+    'tax_standings'     => 'Tax Standings',
 ];
