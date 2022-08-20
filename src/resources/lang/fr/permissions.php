@@ -186,9 +186,9 @@ return [
     'search_character_assets_label'        => 'Rechercher des immobilisations de personnage',
     'search_character_contact_lists_label' => 'Rechercher dans la liste des contacts du personnage',
     'search_character_mail_label'          => 'Rechercher dans les mails de personnage',
-    'search_characters_label'              => 'Search Characters',
-    'search_character_skills_label'        => 'Search Character Skills',
-    'search_character_standings_label'     => 'Search Character Standings',
+    'search_characters_label'              => 'Rechercher dans les personnages',
+    'search_character_skills_label'        => 'Rechercher dans les compétences de personnage',
+    'search_character_standings_label'     => 'Rechercher dans la réputation des personnages',
     'search_corporation_assets_label'      => 'Rechercher dans les immobilisations de corporation',
     'search_corporation_standings_label'   => 'Rechercher dans les réputations de corporation',
 ];
