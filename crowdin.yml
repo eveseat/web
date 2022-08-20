@@ -1,1 +1,3 @@
-files: []
+files:
+  - source: /src/resources/lang/
+    translation: /src/resources/lang/%locale%/%original_file_name%
