@@ -21,16 +21,16 @@
  */
 
 return [
-    'region'        => 'Region|Regions',
+    'region'        => 'Région|Régions',
     'constellation' => 'Constellation|Constellations',
-    'system'        => 'Solar System|Solar Systems',
-    'planet'        => 'Planet|Planets',
-    'moon'          => 'Moon|Moons',
-    'indicator'     => 'Indicator|Indicators',
-    'sovereignty'   => 'Sovereignty|Sovereignties',
+    'system'        => 'Système solaire|Systèmes solaires',
+    'planet'        => 'Planète|Planètes',
+    'moon'          => 'Lune|Lunes',
+    'indicator'     => 'Indicateur|Indicateurs',
+    'sovereignty'   => 'Souveraineté|Souverainetés',
     'ubiquitous'    => 'Ubiquitous',
-    'common'        => 'Common',
-    'uncommon'      => 'Uncommon',
+    'common'        => 'Commun',
+    'uncommon'      => 'Inhabituel',
     'rare'          => 'Rare',
-    'exceptional'   => 'Exceptional',
+    'exceptional'   => 'Exceptionnel',
 ];
