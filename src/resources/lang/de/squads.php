@@ -41,4 +41,5 @@ return [
     'join'         => 'Beitreten',
     'message'      => 'Nachricht',
     'remove'       => 'Entfernen',
+    'cancel'       => 'Cancel',
 ];
