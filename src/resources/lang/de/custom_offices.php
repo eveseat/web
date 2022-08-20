@@ -22,7 +22,7 @@
 
 return [
     'planet'            => 'Planet',
-    'reinforcement'     => 'Rf. Periode', // in lack of a good german translation, I leave this here, because the translation of reinforcement makes no sense in german for that matter.
+    'reinforcement'     => 'Rf. Periode',
     'alliance'          => 'Erlaube Zugruff durch Allianz',
     'standings'         => 'Erlaube Zugriff durch Ansehen',
     'standing_level'    => 'Minimales Ansehen',
