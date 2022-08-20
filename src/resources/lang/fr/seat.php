@@ -55,7 +55,7 @@ return [
     'volume'                => 'Volume',
     'group'                 => 'Groupe',
     'owner'                 => 'Propriétaire',
-    'general'               => 'General',
+    'general'               => 'Général',
     'description'           => 'Désignation',
     'labels'                => 'Libellés',
     'created'               => 'Crée',
@@ -71,7 +71,7 @@ return [
     'filter'                => 'Filtre|Filtres',
     'clear'                 => 'Vider',
     'none'                  => 'Aucun',
-    'permission'            => 'Permission|Permissions',
+    'permission'            => 'Autorisation|Autorisations',
     'affiliation'           => 'Affiliation|Affiliations',
     'role'                  => 'Rôle|Rôles',
     'edit'                  => 'Modifier',
@@ -86,11 +86,11 @@ return [
     'item'                  => 'Article|Articles',
     'usage'                 => 'Utilisation',
     'unit'                  => 'Unité|Unités',
-    'add'                   => 'Add',
-    'all'                   => 'All',
+    'add'                   => 'Ajouter',
+    'all'                   => 'Tout',
     'inverse'               => 'Inverse',
-    'read'                  => 'Read',
-    'level'                 => 'Level',
+    'read'                  => 'Lire',
+    'level'                 => 'Niveau',
     'token'                 => 'Token',
     'token_status'          => 'Token Status',
     'token_valid'           => 'Valid Token|Valid Tokens',
@@ -108,14 +108,14 @@ return [
         'requise pour SeAT. Veuillez mettre votre installation de PHP à jour.',
     'installed_version'     => 'Version installée',
     'min_version'           => 'Version minimum',
-    'admin_contact_warning' => 'An administrative contact for this install has not been set.' .
-        ' No jobs will be queued because of this. Please configure it in the SeAT settings.',
-    'refresh_token_warning' => 'Your account does not have a valid refresh token recorded. ' .
-        'Please logout and back in to correct this as soon as possible.',
-    'sso_config_warning'    => 'SSO does not appear to have been configured yet. Only administrative ' .
+    'admin_contact_warning' => 'Un contact administratif pour cette installation n\'a pas été défini.' .
+        ' Aucune tâche ne sera mise en file d\'attente à cause de cela. Veuillez le définir dans les paramètres SeAT.',
+    'refresh_token_warning' => 'Votre compte n\'a pas de jeton de rafraîchissement valide enregistré. ' .
+        'Veuillez vous déconnecter et revenir pour corriger cela dès que possible.',
+    'sso_config_warning'    => 'SSO ne semble pas encore avoir été configuré. Seuls les administrateurs ' .
         'logins are possible.',
     'sso_activation'        => 'SSO Activation',
-    'sso_confirmation'      => 'It appears you already own an account. Please confirm your credentials in order to enable SSO.',
+    'sso_confirmation'      => 'Il semble que vous possédiez déjà un compte. Veuillez confirmer vos identifiants afin d\'activer SSO.',
 
     // Auth
     'failed'                => 'Ces identifiants ne correspondent pas à nos informations.',
@@ -128,7 +128,7 @@ return [
     'register'              => 'S\'inscrire',
     'sign_in'               => 'Se connecter',
     'email_verify'          => 'Email Verification',
-    'email_verify_welcome'  => 'Please enter a valid email address for your account.',
+    'email_verify_welcome'  => 'Veuillez entrer une adresse e-mail valide pour votre compte.',
 
     // Registration
     'new_account'           => 'Nouveau compte',
@@ -149,22 +149,22 @@ return [
     'queued'                => 'En attente',
     'working'               => 'En cours',
     'joined'                => 'Rejoint',
-    'profile'               => 'Profile',
+    'profile'               => 'Profil',
     'sign_out'              => 'Se déconnecter',
-    'stop_impersonation'    => 'Stop Impersonation',
-    'switch_character'      => 'Change Main Character',
-    'use_as_main_character' => 'Use as Main Character',
-    'link_character'        => 'Link Character',
-    'characters_in_group'   => 'Character in group|Characters in group',
+    'stop_impersonation'    => 'Arrêter l\'usurpation d\'identité',
+    'switch_character'      => 'Changer le personnage principal',
+    'use_as_main_character' => 'Utiliser comme personnage principal',
+    'link_character'        => 'Lier un personnage',
+    'characters_in_group'   => 'Personnage dans le groupe|Personnages dans le groupe',
 
     // Notifications
-    'critical'              => 'Critical',
+    'critical'              => 'Critique',
     'error'                 => 'Erreur',
     'success'               => 'Succès',
     'warning'               => 'Avertissement',
     'notice'                => 'Notification',
     'info'                  => 'Information',
-    'debug_disclaimer'      => 'It looks like <b>debug mode</b> is currently <b>enabled</b>.<br/>This is an extremely dangerous configuration state that leaves your instance vulnerable to easily exploitable security issues via the debug features that are now enabled.</p><hr/><p>Unless you are developing for SeAT, or debugging a problem, <b>it is highly recommended that you disable this</b> as soon as possible.<br/>You can do so by setting the <kbd>APP_DEBUG</kbd> value to <kbd>false</kbd> in your <kbd>.env</kbd> file.<br/>After doing that, run <kbd>php artisan config:cache.</kbd>',
+    'debug_disclaimer'      => 'On dirait que le <b>mode debug</b> est actuellement <b>activé</b>.<br/>Ceci est un état de configuration extrêmement dangereux qui rend votre instance vulnérable à des problèmes de sécurité facilement exploitables via les fonctionnalités de débogage qui sont maintenant activées.</p><hr/><p>Sauf si vous développez pour SeAT, ou si vous déboguez un problème, <b>il est fortement recommandé de désactiver ceci</b> dès que possible.<br/>Vous pouvez le faire en définissant la valeur <kbd>APP_DEBUG</kbd> à <kbd>false</kbd> dans votre fichier <kbd>.env</kbd>.<br/>Après cela, exécutez <kbd>php artisan config:cache.</kbd>',
     'warning_disclaimer'    => 'There is a critical warning that requires administrator attention!<br/>Please contact your SeAT administrators as soon as possible and ask them to login using an account with superuser privileges.',
 
     // Menu
