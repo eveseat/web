@@ -2,8 +2,10 @@
 
     <div class="card-header with-border">
         <h3 class="card-title">
-            <i class="fas fa-building"></i>
-            @lang('web::about.disclaimer_pane_title')
+            <div class="ribbon ribbon-start bg-dark">
+                <i class="fas fa-building fa-lg"></i>
+            </div>
+            <span class="ms-4">@lang('web::about.disclaimer_pane_title')</span>
         </h3>
     </div>
     <div class="card-body">
