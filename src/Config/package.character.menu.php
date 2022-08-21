@@ -113,7 +113,15 @@ return [
                 'route'          => 'seatcore::character.view.market',
             ],
             [
-                'name'           => '2-wallet',
+                'name'           => '2-loyalty-points',
+                'label'          => 'web::seat.loyalty_points',
+                'icon'           => 'fas fa-crown',
+                'permission'     => ['character.loyalty_points'],
+                'highlight_view' => 'loyalty-points',
+                'route'          => 'character.view.loyalty_points',
+            ],
+            [
+                'name'           => '3-wallet',
                 'label'          => 'web::seat.wallet',
                 'icon'           => 'fas fa-money-bill-alt',
                 'entries'        => [
@@ -226,12 +234,5 @@ return [
                 'route'          => 'seatcore::character.view.standings',
             ],
         ],
-    ],
-    [
-        'name'           => 'loyalty-points',
-        'label'          => 'web::seat.loyalty_points',
-        'permission'     => ['character.loyalty_points'],
-        'highlight_view' => 'loyalty-points',
-        'route'          => 'character.view.loyalty_points',
     ],
 ];
