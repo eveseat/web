@@ -2,8 +2,10 @@
 
     <div class="card-header with-border">
         <h3 class="card-title">
-            <i class="fas fa-user-secret"></i>
-            @lang('web::about.security_pane_title')
+            <div class="ribbon ribbon-start bg-dark">
+                <i class="fas fa-user-secret fa-lg"></i>
+            </div>
+            <span class="ms-4">@lang('web::about.security_pane_title')</span>
         </h3>
     </div>
     <div class="card-body">

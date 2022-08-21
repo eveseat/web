@@ -1,9 +1,11 @@
 <div class="card">
 
-    <div class="card-header with-border">
+    <div class="card-header">
         <h3 class="card-title">
-            <i class="fas fa-file-alt"></i>
-            @lang('web::about.licences_pane_title')
+            <div class="ribbon ribbon-start bg-dark">
+                <i class="fas fa-balance-scale fa-lg"></i>
+            </div>
+            <span class="ms-4">@lang('web::about.licences_pane_title')</span>
         </h3>
     </div>
     <div class="card-body">
@@ -11,7 +13,7 @@
         <ul>
             <li>jQuery ~ <a href="https://opensource.org/licenses/mit-license.html"  target="_blank">MIT License</a></li>
             <li>Laravel ~ <a href="https://opensource.org/licenses/mit-license.html"  target="_blank">MIT License</a></li>
-            <li>Admin LTE ~ <a href="https://opensource.org/licenses/mit-license.html"  target="_blank">MIT License</a></li>
+            <li>Tabler ~ <a href="https://opensource.org/licenses/mit-license.html"  target="_blank">MIT License</a></li>
             <li>Datatables ~ <a href="https://opensource.org/licenses/mit-license.html"  target="_blank">MIT License</a></li>
             <li>Fontawesome ~ <a href="https://opensource.org/licenses/mit-license.html"  target="_blank">MIT License</a></li>
             <li>JSONPath for PHP ~ <a href="https://opensource.org/licenses/mit-license.html"  target="_blank">MIT License</a></li>
