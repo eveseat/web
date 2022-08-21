@@ -37,8 +37,8 @@ return [
     // Global Scope
     'global_standing_builder_label'             => 'Gewähre Zugriff auf den Standings Builder',
     'global_standing_builder_description'       => 'Der Standings Builder zeigt eine Übersicht Ihrer Charakter-, Corporation- und Allianzansehen. Es wird hauptsächlich zum Austausch von Ansehen zwischen Bündnissen einer Allianz oder Corps innerhalb einer Allianz verwendet. Auch nützlich für Charakter Intel.',
-    'global_invalid_tokens_label'             => 'Grant access to see invalidated tokens',
-    'global_invalid_tokens_description'       => 'Showing invalid tokens allows you to see the characters associated with an account that are now invalid. Normally they are hidden.',
+    'global_invalid_tokens_label'             => 'Zugriff gewähren, ungültige Token zu sehen',
+    'global_invalid_tokens_description'       => 'Die Anzeige ungültiger Token ermöglicht es Ihnen, die mit einem Konto verknüpften Charaktere zu sehen, die nun ungültig sind. Normalerweise werden sie ausgeblendet.',
     'global_moons_reporter_label'               => 'Mondreporter',
     'global_moons_reporter_description'         => 'Der Mondreporter kann alle Monde von New Eden und ihre registrierten Kompositionsberichte anzeigen.',
     'global_moons_reporter_manager_label'       => 'Mondreporter Manager',
@@ -46,10 +46,10 @@ return [
     'global_queue_manager_label'                => 'Queue Manager',
 
     // Moon Reporter Scope
-    'view_moon_reports_label'           => 'View Moon Reports',
-    'view_moon_reports_description'     => 'Displays all moons in eve, and any resources within the moon, if that data is available.',
-    'create_moon_reports_label'         => 'Create new Moon Reports',
-    'create_moon_reports_description'   => 'Allows a user to submit moon probe results.',
+    'view_moon_reports_label'           => 'Mondberichte ansehen',
+    'view_moon_reports_description'     => 'Zeigt alle Monde in EVE und die enthaltenen Ressourcen, falls dazu Daten verfügbar sind.',
+    'create_moon_reports_label'         => 'Erstelle neue Mondberichte',
+    'create_moon_reports_description'   => 'Erlaubt einem Nutzer, die Resultate einer Mondprobe einzurechen.',
     'manage_moon_reports_label'         => 'Manage Moon Reports',
     'manage_moon_reports_description'   => 'Allows a user to edit and/or delete moon reports.',
 
