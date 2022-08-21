@@ -100,13 +100,30 @@ $.extend(true, DataTable.defaults, {
     responsive: true,
     autoWidth: false,
     order: [[0, 'desc']],
-    dom: '<"card-body border-bottom py-3"<"d-flex"<"text-muted"l><"ms-auto text-muted"f>>><"table-responsive"t><"card-footer d-flex align-items-center"i<"m-0 ms-auto"p>>',
+    dom: '<"card-body border-bottom py-3"<"d-flex"<"text-muted"l><"ms-auto"B><"ms-auto text-muted"f>>><"table-responsive"t><"card-footer d-flex align-items-center"i<"m-0 ms-auto"p>>',
     language: {
         paginate: {
             previous: '<i class="fas fa-chevron-left me-1"></i> ' + DataTable.defaults.oLanguage.oPaginate.sPrevious.toLowerCase(),
             next: DataTable.defaults.oLanguage.oPaginate.sNext.toLowerCase() + ' <i class="fas fa-chevron-right ms-1"></i>'
         }
     }
+});
+
+$.extend(true, DataTable.Buttons.defaults, {
+    dom: {
+        container: {
+            className: 'dt-buttons btn-group btn-group-sm flex-wrap',
+        }
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('click', function (e) {
+        if (e.target.matches('.dt-filters')) {
+            e.target.classList.contains('active') ? e.target.classList.remove('active') : e.target.classList.add('active');
+            window.LaravelDataTables['dataTableBuilder'].ajax.reload();
+        }
+    });
 });
 
 // put some animation on the caret neat to the user dropdown

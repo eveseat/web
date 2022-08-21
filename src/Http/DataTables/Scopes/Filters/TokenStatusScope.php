@@ -45,7 +45,7 @@ class TokenStatusScope implements DataTableScope
      */
     public function __construct(?array $status)
     {
-        $this->status = $status ?: ['valid', 'invalid'];
+        $this->status = $status ?: [];
     }
 
     /**
@@ -57,6 +57,9 @@ class TokenStatusScope implements DataTableScope
     public function apply($query)
     {
         return $query->where(function ($sub_query) {
+            if (empty($this->status))
+                return $sub_query->whereRaw('TRUE = FALSE'); // dummy filter to prevent render when filters are empty
+
             $sub_query->whereHas('refresh_token', function ($query) {
                 if (in_array('valid', $this->status))
                     $query->where('expires_on', '>=', carbon());

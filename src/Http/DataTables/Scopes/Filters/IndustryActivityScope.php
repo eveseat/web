@@ -57,9 +57,6 @@ class IndustryActivityScope implements DataTableScope
      */
     public function apply($query)
     {
-        if (empty($this->activities))
-            return $query;
-
         return $query->whereIn('activity_id', $this->activities);
     }
 }

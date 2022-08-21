@@ -57,9 +57,6 @@ class IndustryStatusScope implements DataTableScope
      */
     public function apply($query)
     {
-        if (empty($this->status))
-            return $query;
-
         return $query->whereIn('status', $this->status);
     }
 }

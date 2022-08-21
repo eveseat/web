@@ -99,6 +99,9 @@
     <!-- DataTables -->
     <script src="{{ asset('web/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('web/js/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('web/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('web/js/buttons.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
     <script src="{{ asset('web/js/dataTables.rowGroup.min.js') }}"></script>
     <script src="{{ asset('web/js/rowGroup.bootstrap5.min.js') }}"></script>
     <!-- MomentJS -->
