@@ -29,16 +29,5 @@
 @stop
 
 @push('javascript')
-
   {!! $dataTable->scripts() !!}
-
-  <script>
-      $(document).ready(function() {
-          $('#dt-character-selector')
-              .select2()
-              .on('change', function () {
-                  window.LaravelDataTables['dataTableBuilder'].ajax.reload();
-              });
-      });
-  </script>
 @endpush

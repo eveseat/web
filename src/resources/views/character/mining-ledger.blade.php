@@ -31,12 +31,6 @@
 
   <script>
       $(document).ready(function() {
-          $('#dt-character-selector')
-              .select2()
-              .on('change', function () {
-                  window.LaravelDataTables['dataTableBuilder'].ajax.reload();
-              });
-
           $('#mining-detail').on('show.bs.modal', function (e) {
               var body = $(e.target).find('.modal-body');
               body.html('Loading...');

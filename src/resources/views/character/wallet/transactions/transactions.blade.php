@@ -36,14 +36,4 @@
   {!! $dataTable->scripts() !!}
 
   @include('web::includes.javascript.id-to-name')
-
-  <script>
-      $(document).ready(function() {
-          $('#dt-character-selector')
-              .select2()
-              .on('change', function () {
-                  window.LaravelDataTables['dataTableBuilder'].ajax.reload();
-              });
-      });
-  </script>
 @endpush

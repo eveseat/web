@@ -52,16 +52,6 @@
 @push('javascript')
   {!! $dataTable->scripts() !!}
 
-  <script>
-      $(document).ready(function() {
-          $('#dt-character-selector')
-              .select2()
-              .on('change', function () {
-                  window.LaravelDataTables['dataTableBuilder'].ajax.reload();
-              });
-      });
-  </script>
-
   <script type="text/javascript">
     // ChartJS Spending Graph
     $.get("{{ route('seatcore::character.view.journal.graph.balance', ['character' => $request->character]) }}", function (data) {

@@ -32,14 +32,6 @@
   {!! $dataTable->scripts() !!}
 
   <script>
-      $(document).ready(function() {
-          $('#dt-character-selector')
-              .select2()
-              .on('change', function () {
-                  window.LaravelDataTables['dataTableBuilder'].ajax.reload();
-              });
-      });
-
       function updateProgressBar() {
         $(".countdown-progressbar").each(function () {
           var expiry_time = moment.utc($(this).attr('data-expiry-time'), "YYYY-MM-DD hh:mm:ss").valueOf();
