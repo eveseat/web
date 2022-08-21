@@ -62,7 +62,7 @@ return [
     'contact_widget_active_members' => ':count membres actifs',
     'contact_widget_join_us' => 'Rejoignez-nous !',
     'contact_widget_documentation' => 'Documentation',
-    'contact_widget_updated_at' => 'Updated :date_time',
+    'contact_widget_updated_at' => 'mis à jour il y a :date_time',
     'contact_widget_read_me' => 'Lisez-moi !',
     'contact_widget_github_issues' =>  ':count Tickets',
     'contact_widget_github_contribute' => 'Contribuez !',
@@ -75,7 +75,7 @@ return [
     'donate_pane_first_line' => 'Si vous aimez :seat_project et que vous voulez récompenser la communauté derrière lui, vous pouvez envoyer des ISK à
                     :seat_holding corporation.
                     Cette holding est utilisée pour scinder les dons mensuels entre tous les contributeurs.',
-    'donate_pane_second_line' => 'Some of it will be held as a prize pool for contents :icon.',
+    'donate_pane_second_line' => 'Une partie sera utilisée comme une cagnotte pour récompenser du nouveau contenu :icon.',
 
     //
     // Security Pane

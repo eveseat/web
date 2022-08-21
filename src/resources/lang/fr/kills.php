@@ -22,10 +22,10 @@
 
 return [
     'date'         => 'Date',
-    'ship'         => 'Ship',
-    'solar_system' => 'Solar System',
-    'victim'       => 'Victim',
-    'killer'       => 'Killer',
-    'attackers'    => 'Attacker|Attackers',
-    'items'        => 'Item|Items',
+    'ship'         => 'Vaisseau',
+    'solar_system' => 'Système solaire',
+    'victim'       => 'Victime',
+    'killer'       => 'Assassin',
+    'attackers'    => 'Attaquant|Attaquants',
+    'items'        => 'Élément|Éléments',
 ];

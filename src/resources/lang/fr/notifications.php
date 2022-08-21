@@ -23,5 +23,5 @@
 return [
     'date'   => 'Date',
     'type'   => 'Type',
-    'sender' => 'Sender',
+    'sender' => 'Expéditeur',
 ];
