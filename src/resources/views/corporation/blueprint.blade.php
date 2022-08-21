@@ -7,34 +7,22 @@
 @section('corporation_content')
 
   <div class="card">
-    <div class="card-header">
-      <h3 class="card-title">{{ trans('web::seat.blueprint') }}</h3>
-      <div class="card-tools">
-        <div class="input-group input-group-sm">
-          @include('web::components.jobs.buttons.update', ['type' => 'corporation', 'entity' => $corporation->corporation_id, 'job' => 'corporation.blueprints', 'label' => trans('web::seat.update_blueprints')])
-        </div>
+    <div class="card-header d-flex align-items-center">
+      <div class="col-auto me-5">
+        <h3 class="card-title">{{ trans('web::seat.blueprint') }}</h3>
+      </div>
+      <div class="ms-auto">
+        @include('web::components.jobs.buttons.update', ['type' => 'corporation', 'entity' => $corporation->corporation_id, 'job' => 'corporation.blueprints', 'label' => trans('web::seat.update_blueprints')])
       </div>
     </div>
-    <div class="card-body">
 
-      @include('web::common.blueprints.buttons.filters')
+    @include('web::common.blueprints.buttons.filters')
 
-      {{ $dataTable->table() }}
-    </div>
+    {{ $dataTable->table(['class' => 'table card-table table-vcenter table-hover table-striped text-nowrap']) }}
   </div>
 
 @stop
 
 @push('javascript')
-
   {!! $dataTable->scripts() !!}
-
-  <script>
-      $(document).ready(function() {
-          $('#dt-filters-bpc, #dt-filters-bpo').on('click', function () {
-              $(this).hasClass('active') ? $(this).removeClass('active') : $(this).addClass('active');
-              window.LaravelDataTables['dataTableBuilder'].ajax.reload();
-          });
-      });
-  </script>
 @endpush

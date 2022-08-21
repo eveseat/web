@@ -5,12 +5,13 @@
 @section('corporation_content')
 
   <div class="card">
-    <div class="card-header">
-      <h3 class="card-title">{{ trans('web::seat.roles_change_log') }}</h3>
+    <div class="card-header d-flex align-items-center">
+      <div class="col-auto me-5">
+        <h3 class="card-title">{{ trans('web::seat.roles_change_log') }}</h3>
+      </div>
     </div>
-    <div class="card-body">
-      {!! $dataTable->table() !!}
-    </div>
+
+    {{ $dataTable->table(['class' => 'table card-table table-vcenter table-hover table-striped text-nowrap']) }}
   </div>
 
 @stop

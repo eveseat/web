@@ -6,52 +6,32 @@
 
 @section('corporation_content')
 
-  <div class="card card-gray card-outline card-outline-tabs">
-    <div class="card-header">
-      <h3 class="card-title">{{ trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.tracking') }}</h3>
-      <div class="card-tools">
-        <div class="input-group input-group-sm">
-          @include('web::components.jobs.buttons.update', ['type' => 'corporation', 'entity' => $corporation->corporation_id, 'job' => 'corporation.members_tracking', 'label' => trans('web::seat.update_members_tracking')])
-        </div>
+  <div class="card">
+    <div class="card-header d-flex align-items-center">
+      <div class="col-auto me-5">
+        <h3 class="card-title">{{ trans('web::seat.tracking') }}</h3>
+      </div>
+      <div class="ms-auto">
+        @include('web::components.jobs.buttons.update', ['type' => 'corporation', 'entity' => $corporation->corporation_id, 'job' => 'corporation.members_tracking', 'label' => trans('web::seat.update_members_tracking')])
       </div>
     </div>
-    <div class="card-body">
 
-      <div class="mb-3">
-        <div class="btn-group d-flex">
-          <button type="button"  data-filter-field="type" data-filter-value="valid" class="btn btn-success dt-filters active">
-            <i class="fas fa-check-circle"></i>
-            {{ trans_choice('web::seat.valid_token', 2) }}
-          </button>
-          <button type="button" data-filter-field="type" data-filter-value="invalid" class="btn btn-danger dt-filters active">
-            <i class="fas fa-times-circle"></i>
-            {{ trans_choice('web::seat.invalid_token', 2) }}
-          </button>
-        </div>
-      </div>
-
-      {{ $dataTable->table() }}
-
+    <div class="btn-group d-flex">
+      <button type="button"  data-filter-field="type" data-filter-value="valid" class="btn btn-square btn-outline-success d-sm-inline-block dt-filters active">
+        <i class="fas fa-check-circle"></i>
+        {{ trans_choice('web::seat.valid_token', 2) }}
+      </button>
+      <button type="button" data-filter-field="type" data-filter-value="invalid" class="btn btn-square btn-outline-danger d-sm-inline-block dt-filters active">
+        <i class="fas fa-times-circle"></i>
+        {{ trans_choice('web::seat.invalid_token', 2) }}
+      </button>
     </div>
+
+    {{ $dataTable->table(['class' => 'table card-table table-vcenter table-hover table-striped text-nowrap']) }}
   </div>
 
 @stop
 
 @push('javascript')
-  <script src="{{ asset('web/js/dataTables.buttons.min.js') }}"></script>
-  <script src="{{ asset('web/js/buttons.bootstrap5.min.js') }}"></script>
-  <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
-
   {!! $dataTable->scripts() !!}
-
-  <script>
-    $(document).ready(function () {
-      $('.dt-filters')
-        .on('click', function () {
-          $(this).hasClass('active') ? $(this).removeClass('active') : $(this).addClass('active');
-            window.LaravelDataTables['dataTableBuilder'].ajax.reload();
-          });
-    });
-  </script>
-
 @endpush

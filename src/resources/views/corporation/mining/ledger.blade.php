@@ -3,42 +3,47 @@
 @section('page_description', trans_choice('web::seat.corporation', 1) . ' ' . trans('web::seat.mining') . ' ' . trans_choice('web::seat.mining_ledger', 2))
 
 @section('corporation_content')
+
     <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">{{ trans_choice('web::seat.available_ledger', $ledgers->count()) }}</h3>
+        <div class="card-header d-flex align-items-center">
+            <div class="col-auto me-5">
+                <h3 class="card-title">{{ trans_choice('web::seat.available_ledger', $ledgers->count()) }}</h3>
+            </div>
         </div>
+
         <div class="card-body p-2">
             @foreach($ledgers->chunk(12) as $chunk)
-            <ul class="nav nav-pills justify-content-between">
-                @foreach ($chunk as $ledger)
-                    <li class="nav-item">
-                        @if(date('Y', strtotime($ledger->year . '-01-01')) == (request()->route()->parameter('year') ?: carbon()->isoFormat('YYYY')) && date('m', strtotime($ledger->year . '-' . $ledger->month . '-01')) == (request()->route()->parameter('month') ?: carbon()->isoFormat('MM')))
-                            <a href="{{ route('seatcore::corporation.view.mining_ledger', [
+                <ul class="nav nav-pills justify-content-between">
+                    @foreach ($chunk as $ledger)
+                        <li class="nav-item">
+                            @if(date('Y', strtotime($ledger->year . '-01-01')) == (request()->route()->parameter('year') ?: carbon()->isoFormat('YYYY')) && date('m', strtotime($ledger->year . '-' . $ledger->month . '-01')) == (request()->route()->parameter('month') ?: carbon()->isoFormat('MM')))
+                                <a href="{{ route('seatcore::corporation.view.mining_ledger', [
                                 $corporation,
                                 date('Y', strtotime($ledger->year. '-01-01')),
                                 date('m', strtotime($ledger->year . '-' . $ledger->month . '-01'))
                             ]) }}" class="nav-link active">{{ date('M Y', strtotime($ledger->year . "-" . $ledger->month . "-01")) }}</a>
-                        @else
-                            <a href="{{ route('seatcore::corporation.view.mining_ledger', [
+                            @else
+                                <a href="{{ route('seatcore::corporation.view.mining_ledger', [
                                 $corporation,
                                 date('Y', strtotime($ledger->year. '-01-01')),
                                 date('m', strtotime($ledger->year . '-' . $ledger->month . '-01'))
                             ]) }}" class="nav-link">{{ date('M Y', strtotime($ledger->year . "-" . $ledger->month . "-01")) }}</a>
-                        @endif
-                    </li>
-                @endforeach
-            </ul>
+                            @endif
+                        </li>
+                    @endforeach
+                </ul>
             @endforeach
         </div>
     </div>
 
     <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">{{ trans_choice('web::seat.mining_ledger', 1) }}</h3>
+        <div class="card-header d-flex align-items-center">
+            <div class="col-auto me-5">
+                <h3 class="card-title">{{ trans_choice('web::seat.mining_ledger', 1) }}</h3>
+            </div>
         </div>
-        <div class="card-body">
-            {{ $dataTable->table() }}
-        </div>
+
+        {{ $dataTable->table(['class' => 'table card-table table-vcenter table-hover table-striped text-nowrap']) }}
     </div>
 
     @include('web::common.minings.modals.details.details')
