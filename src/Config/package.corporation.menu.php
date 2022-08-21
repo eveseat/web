@@ -144,15 +144,8 @@ return [
                 'name'           => '3-mining',
                 'label'          => 'web::seat.mining',
                 'icon'           => 'fas fa-gem',
-                'entries'        => [
-                    [
-                        'name'       => '0-ledger',
-                        'label'      => 'web::seat.ledger',
-                        'icon'       => 'fas fa-book-open',
-                        'permission' => 'corporation.mining',
-                        'route'      => 'seatcore::corporation.view.mining_ledger',
-                    ],
-                ],
+                'permission'     => 'corporation.mining',
+                'route'          => 'seatcore::corporation.view.mining_ledger',
             ],
         ],
     ],
