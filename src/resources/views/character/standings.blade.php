@@ -7,7 +7,7 @@
   <div class="card">
       <div class="card-header d-flex align-items-center">
           <div class="col-auto me-5">
-              <h3 class="card-title">{{ trans('web::seat.standings') }}</h3>
+              <h3 class="card-title">{{ trans_choice('web::seat.standings', 2) }}</h3>
           </div>
           <div class="col-6">
               @include('web::character.includes.dt-character-selector')
@@ -26,14 +26,4 @@
 
 @push('javascript')
   {!! $dataTable->scripts() !!}
-
-  <script>
-      $(document).ready(function() {
-          $('#dt-character-selector')
-              .select2()
-              .on('change', function () {
-                  window.LaravelDataTables['dataTableBuilder'].ajax.reload();
-              });
-      });
-  </script>
 @endpush
