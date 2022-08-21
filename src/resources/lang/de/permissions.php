@@ -51,7 +51,7 @@ return [
     'create_moon_reports_label'         => 'Erstelle neue Mondberichte',
     'create_moon_reports_description'   => 'Erlaubt einem Nutzer, die Resultate einer Mondprobe einzurechen.',
     'manage_moon_reports_label'         => 'Manage Moon Reports',
-    'manage_moon_reports_description'   => 'Allows a user to edit and/or delete moon reports.',
+    'manage_moon_reports_description'   => 'Erlaubt einem Nutzer Mondberichte zu bearbeiten und zu löschen.',
 
     // Character Scope
     'character_asset_label'              => 'Zugriff auf Charakter Besitz gewähren.',
@@ -168,14 +168,14 @@ return [
     // Alliance Scope
     'alliance_contact_label'         => 'Grant access to Alliance Contacts',
     'alliance_contact_description'   => 'Displays alliance contacts including name, standing and link to third-party platforms (like zkillboard).',
-    'alliance_summary_label'         => 'Grant access to Alliance Summary Sheet',
-    'alliance_summary_description'   => 'The Alliance Sheet contains basic information like the alliance name, founder, member corporations, etc...',
-    'alliance_tracking_label'        => 'Grant access to Alliance Tracking',
-    'alliance_tracking_description'  => 'Displays a report of users registered on SeAT in comparison to all members.',
+    'alliance_summary_label'         => 'Erlaube Zugriff auf die Allianzübersichtsseite',
+    'alliance_summary_description'   => 'Die Allianzübersichtsseite enthält grundlegende Informationen wie Allianzname, Gründer, Mitglieder und mehr.',
+    'alliance_tracking_label'        => 'Zugriff auf Allianz Tracking gewähren.',
+    'alliance_tracking_description'  => 'Zeigt an welche Piloten einer Corp sich im SeAT registriert haben und welche nicht.',
 
     // Mail Scope
-    'mail_bodies_label'   => 'Read Mail Bodies',
-    'mail_subjects_label' => 'Read Mail Subjects',
+    'mail_bodies_label'   => 'E-Mails lesen',
+    'mail_subjects_label' => 'E-Mail-Betreff lesen',
 
     // People Scope
     'people_create_label' => 'Create People',
@@ -183,10 +183,10 @@ return [
     'people_view_label'   => 'View People',
 
     // Search Scope
-    'search_character_assets_label'        => 'Search Character Assets',
-    'search_character_contact_lists_label' => 'Search Character Contact Lists',
-    'search_character_mail_label'          => 'Search Character Mail',
-    'search_characters_label'              => 'Search Characters',
+    'search_character_assets_label'        => 'Durchsuche Charakter-Eigentum',
+    'search_character_contact_lists_label' => 'Durchsuche Charakter-Kontaktliste',
+    'search_character_mail_label'          => 'Durchsuche Charakter-Mails',
+    'search_characters_label'              => 'Charaktere durchsuchen',
     'search_character_skills_label'        => 'Search Character Skills',
     'search_character_standings_label'     => 'Search Character Standings',
     'search_corporation_assets_label'      => 'Search Corporation Assets',
