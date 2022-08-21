@@ -73,12 +73,11 @@ return [
 
     'donate_pane_title' => 'Spenden',
     'donate_pane_first_line' => 'Falls du :seat_project magst und du der Community dahinter etwas spenden willst, kannst du ISK zur :seat_holding Corporation senden. Diese Corporation wird verwendent, um die Spenden monatlich an alle Helfer zu spenden.',
-    'donate_pane_second_line' => 'Some of it will be held as a prize pool for contents :icon.',
+    'donate_pane_second_line' => 'Ein Teil davon wird als Preis-Pool verwendet :icon.',
 
     //
     // Security Pane
     //
-    'security_pane_title' => 'Security Concerns',
-    'security_pane_content' => 'If you find any security vulnerabilities within SeAT, please send an email to
-            :contact_email to address instead of creating a public Github issue.',
+    'security_pane_title' => 'Sicherheitsprobleme',
+    'security_pane_content' => 'Falls Sie Sicherheitslücken in SeAT finden, bitte senden Sie eine E-Mail an :contact_email anstatt einen öffentlichen Fehlerbericht auf Github zu erstellen.',
 ];
