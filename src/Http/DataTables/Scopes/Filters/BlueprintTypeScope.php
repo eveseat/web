@@ -52,6 +52,9 @@ class BlueprintTypeScope implements DataTableScope
     public function apply($query)
     {
         return $query->where(function ($sub_query) {
+            if (empty($this->type))
+                $sub_query->whereRaw('TRUE = FALSE'); // dummy filter to prevent render when filters are empty
+
             if (in_array('bpo', $this->type))
                 $sub_query->where('runs', -1);
 

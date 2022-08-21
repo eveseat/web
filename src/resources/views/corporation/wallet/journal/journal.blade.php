@@ -29,9 +29,5 @@
 @stop
 
 @push('javascript')
-  <script src="{{ asset('web/js/dataTables.buttons.min.js') }}"></script>
-  <script src="{{ asset('web/js/buttons.bootstrap5.min.js') }}"></script>
-  <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
-
   {!! $dataTable->scripts() !!}
 @endpush

@@ -58,6 +58,9 @@ class MarketStatusScope implements DataTableScope
     public function apply($query)
     {
         return $query->where(function ($sub_query) {
+            if (empty($this->status))
+                $sub_query->whereRaw('TRUE = FALSE'); // dummy filter to prevent render when filters are empty
+
             if (in_array('pending', $this->status)) {
                 $sub_query->where(function ($query) {
                     $query->where('volume_remain', '>', 0)
