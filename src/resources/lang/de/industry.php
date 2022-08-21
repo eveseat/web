@@ -28,6 +28,6 @@ return [
     'runs'                => 'Durchläufe',
     'blueprint'           => 'Bauplan',
     'product'             => 'Produkt',
-    'material_efficiency' => 'Material Efficiency',
-    'time_efficiency'     => 'Time Efficiency',
+    'material_efficiency' => 'Materialeffizienz',
+    'time_efficiency'     => 'Zeiteffizienz',
 ];
