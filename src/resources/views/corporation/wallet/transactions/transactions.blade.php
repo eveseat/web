@@ -10,17 +10,16 @@
     <div class="col-md-12">
 
       <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">{{ trans('web::seat.wallet_transactions') }}</h3>
-          <div class="card-tools">
-            <div class="input-group input-group-sm">
-              @include('web::components.jobs.buttons.update', ['type' => 'corporation', 'entity' => $corporation->corporation_id, 'job' => 'corporation.transactions', 'label' => trans('web::seat.update_transactions')])
-            </div>
+        <div class="card-header d-flex align-items-center">
+          <div class="col-auto me-5">
+            <h3 class="card-title">{{ trans('web::seat.wallet_transactions') }}</h3>
+          </div>
+          <div class="ms-auto">
+            @include('web::components.jobs.buttons.update', ['type' => 'corporation', 'entity' => $corporation->corporation_id, 'job' => 'corporation.transactions', 'label' => trans('web::seat.update_transactions')])
           </div>
         </div>
-        <div class="card-body">
-          {{ $dataTable->table() }}
-        </div>
+
+        {{ $dataTable->table(['class' => 'table card-table table-vcenter table-hover table-striped text-nowrap']) }}
       </div>
 
     </div>

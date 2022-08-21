@@ -5,8 +5,10 @@
 @section('corporation_content')
 
   <div class="card">
-    <div class="card-header">
-      <h3 class="card-title">Available Ledgers</h3>
+    <div class="card-header d-flex align-items-center">
+      <div class="col-auto me-5">
+        <h3 class="card-title">{{ trans_choice('web::seat.available_ledger', $periods->count()) }}</h3>
+      </div>
     </div>
     <div class="card-body">
 
@@ -33,52 +35,56 @@
 
         </ul>
       @endforeach
-
     </div>
   </div>
 
   <div class="card">
-    <div class="card-header">
-      <h3 class="card-title">{{ trans_choice('web::seat.pi', 2) }}
-        - {{ date("M Y", strtotime(sprintf('%d-%d-01', $year, $month))) }}</h3>
+    <div class="card-header d-flex align-items-center">
+      <div class="col-auto me-5">
+        <h3 class="card-title">{{ trans_choice('web::seat.pi', 2) }} - {{ date("M Y", strtotime(sprintf('%d-%d-01', $year, $month))) }}</h3>
+      </div>
     </div>
-    <div class="card-body">
-      <table class="table datatable table-sm table-condensed table-hover table-striped">
-        <thead>
-          <tr>
-            <th>{{ trans_choice('web::seat.name', 1) }}</th>
-            <th>{{ trans_choice('web::seat.total', 1) }}</th>
-          </tr>
-        </thead>
-        <tbody>
 
-        @foreach ($entries as $entry)
+    <table class="table datatable card-table table-vcenter table-hover table-striped text-nowrap">
+      <thead>
+      <tr>
+        <th>{{ trans_choice('web::seat.name', 1) }}</th>
+        <th>{{ trans_choice('web::seat.total', 1) }}</th>
+      </tr>
+      </thead>
+      <tbody>
 
-          <tr>
-            <td data-order="{{ $entry->first_party->name }}">
-              @switch($entry->first_party->category)
-                @case('character')
-                  @include('web::partials.character', ['character' => $entry->first_party])
-                @break
-                @case('corporation')
-                  @include('web::partials.corporation', ['corporation' => $entry->first_party])
-                @break
-                @case('alliance')
-                  @include('web::partials.alliance', ['alliance' => $entry->first_party])
-                @break
-              @endswitch
-            </td>
-            <td data-order="{{ number_format($entry->total) }}">{{ number_format($entry->total) }}</td>
-          </tr>
+      @foreach ($entries as $entry)
+        <tr>
+          <td data-order="{{ $entry->first_party->name }}">
+            @switch($entry->first_party->category)
+              @case('character')
+              @include('web::partials.character', ['character' => $entry->first_party])
+              @break
+              @case('corporation')
+              @include('web::partials.corporation', ['corporation' => $entry->first_party])
+              @break
+              @case('alliance')
+              @include('web::partials.alliance', ['alliance' => $entry->first_party])
+              @break
+            @endswitch
+          </td>
+          <td data-order="{{ $entry->total }}">{{ number_format($entry->total) }}</td>
+        </tr>
+      @endforeach
 
-        @endforeach
+      </tbody>
+    </table>
 
-        </tbody>
-      </table>
-    </div>
     <div class="card-footer">
       <i>Total: {{ number_format($entries->sum('total')) }}</i>
     </div>
   </div>
 
 @stop
+
+@push('javascript')
+  <script>
+    ids_to_names();
+  </script>
+@endpush

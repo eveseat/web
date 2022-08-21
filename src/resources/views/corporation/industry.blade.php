@@ -6,22 +6,20 @@
 
 @section('corporation_content')
 
-  <div class="card">
-    <div class="card-header">
-      <h3 class="card-title">{{ trans('web::seat.industry') }}</h3>
-      <div class="card-tools">
-        <div class="input-group input-group-sm">
-            @include('web::components.jobs.buttons.update', ['type' => 'corporation', 'entity' => $corporation->corporation_id, 'job' => 'corporation.jobs', 'label' => trans('web::seat.update_industry')])
+    <div class="card">
+        <div class="card-header d-flex align-items-center">
+            <div class="col-auto me-5">
+                <h3 class="card-title">{{ trans('web::seat.industry') }}</h3>
+            </div>
+            <div class="ms-auto">
+                @include('web::components.jobs.buttons.update', ['type' => 'corporation', 'entity' => $corporation->corporation_id, 'job' => 'corporation.jobs', 'label' => trans('web::seat.update_industry')])
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="card-body">
 
-      @include('web::common.industries.buttons.filters')
+        @include('web::common.industries.buttons.filters')
 
-      {{ $dataTable->table() }}
+        {{ $dataTable->table(['class' => 'table card-table table-vcenter table-hover table-striped text-nowrap']) }}
     </div>
-  </div>
 
 @stop
 
