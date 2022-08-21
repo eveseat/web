@@ -123,7 +123,7 @@ class SkillsController extends Controller
         $skill_categories = InvGroup::withCount([
             'types' => function ($query) {
                 $query->where('published', true);
-            }])
+            }, ])
             ->with('types')
             ->where('published', true)
             ->where('categoryID', InvGroup::SKILL_CATEGORY_ID)
