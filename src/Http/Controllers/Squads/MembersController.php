@@ -58,17 +58,18 @@ class MembersController extends Controller
                 $query->where('id', $squad->id);
             })
             ->where(function ($query) use ($request) {
-                $query->where('name', 'like', ["%{$request->query('q', '')}%"]);
+                $query->where('name', 'ilike', ["%{$request->query('q', '')}%"]);
                 $query->orWhereHas('characters', function ($sub_query) use ($request) {
-                    $sub_query->where('name', 'like', ["%{$request->query('q', '')}%"]);
+                    $sub_query->where('name', 'ilike', ["%{$request->query('q', '')}%"]);
                 });
             })
             ->orderBy('name')
             ->get()
             ->map(function ($user) {
                 return [
-                    'id'   => $user->id,
-                    'text' => $user->name,
+                    'id'                => $user->id,
+                    'text'              => $user->name,
+                    'main_character_id' => $user->main_character_id,
                 ];
             });
 

@@ -66,10 +66,10 @@ class SquadsController extends Controller
             $keyword = $request->query('query');
 
             $squads->where(function ($query) use ($keyword) {
-                $query->where('name', 'like', ["%$keyword%"]);
-                $query->orWhere('description', 'like', ["%$keyword%"]);
+                $query->where('name', 'ilike', ["%{$keyword}%"]);
+                $query->orWhere('description', 'ilike', ["%{$keyword}%"]);
                 $query->orWhereHas('moderators', function ($sub_query) use ($keyword) {
-                    $sub_query->where('name', 'like', "%$keyword%");
+                    $sub_query->where('name', 'ilike', "%{$keyword}%");
                 });
             });
         }
@@ -88,7 +88,7 @@ class SquadsController extends Controller
      */
     public function show(Squad $squad)
     {
-        return view('web::squads.show', compact('squad'));
+        return view('web::squads.sheet.sheet', compact('squad'));
     }
 
     /**

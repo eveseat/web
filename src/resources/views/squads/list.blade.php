@@ -13,33 +13,33 @@
       <div class="col">
         <div class="btn-group d-flex">
           @can('squads.create')
-            <a href="{{ route('seatcore::squads.create') }}" class="btn btn-default">
+            <a href="{{ route('seatcore::squads.create') }}" class="btn btn-square btn-light d-sm-inline-block">
               <i class="fas fa-plus"></i>
               Create
             </a>
           @endcan
-          <button data-filter-field="type" data-filter-value="manual" type="button" class="btn btn-success deck-filters active">
+          <button data-filter-field="type" data-filter-value="manual" type="button" class="btn btn-square btn-success d-sm-inline-block deck-filters active">
             <i class="fas fa-check-circle"></i>
             Manual
           </button>
-          <button data-filter-field="type" data-filter-value="auto" type="button" class="btn btn-info deck-filters active">
+          <button data-filter-field="type" data-filter-value="auto" type="button" class="btn btn-square btn-info d-sm-inline-block deck-filters active">
             <i class="fas fa-check-circle"></i>
             Auto
           </button>
-          <button data-filter-field="type" data-filter-value="hidden" type="button" class="btn btn-dark deck-filters active">
+          <button data-filter-field="type" data-filter-value="hidden" type="button" class="btn btn-square btn-dark d-sm-inline-block deck-filters active">
             <i class="fas fa-check-circle"></i>
             Hidden
           </button>
-          <button data-filter-field="candidates" data-filter-value="{{ auth()->user()->id }}" type="button" class="btn btn-primary deck-filters">
+          <button data-filter-field="candidates" data-filter-value="{{ auth()->user()->id }}" type="button" class="btn btn-square btn-primary d-sm-inline-block deck-filters">
             Candidate
           </button>
-          <button data-filter-field="members" data-filter-value="{{ auth()->user()->id }}" type="button" class="btn btn-light deck-filters">
+          <button data-filter-field="members" data-filter-value="{{ auth()->user()->id }}" type="button" class="btn btn-square btn-secondary d-sm-inline-block deck-filters">
             Member
           </button>
-          <button data-filter-field="moderators" data-filter-value="{{ auth()->user()->id }}" type="button" class="btn btn-warning deck-filters">
+          <button data-filter-field="moderators" data-filter-value="{{ auth()->user()->id }}" type="button" class="btn btn-square btn-warning d-sm-inline-block deck-filters">
             Moderator
           </button>
-          <button data-filter-field="is_moderated" data-filter-value="true" type="button" class="btn btn-danger deck-filters">
+          <button data-filter-field="is_moderated" data-filter-value="true" type="button" class="btn btn-square btn-danger d-sm-inline-block deck-filters">
             Moderated Only
           </button>
         </div>
@@ -63,51 +63,42 @@
           );
 
       const card_factory = (data) => `<div class="col mb-4">
-                                        <div class="card h-100" data-link="${data.link}" style="cursor: pointer";>
+                                        <div class="card h-100">
                                             <img src="${data.logo}" alt="${data.name}" width="128" class="card-img-top" />
                                             <div class="card-body pb-0">
                                                 <h5 class="card-title">${data.name}</h5>
                                                 <p class="card-text">${data.summary}</p>
                                                 <ul class="list-group list-group-flush">
                                                     <li class="list-group-item">
-                                                        ${data.is_moderated ? '<i class="fas fa-check text-success"></i>' : '<i class="fas fa-times text-danger"></i>'}
+                                                        ${data.is_moderated ? '<i class="fas fa-check text-success me-3"></i>' : '<i class="fas fa-times text-danger me-3"></i>'}
                                                         Moderated
                                                     </li>
                                                     <li class="list-group-item">
-                                                        ${data.is_moderator ? '<i class="fas fa-check text-success"></i>' : '<i class="fas fa-times text-danger"></i>'}
+                                                        ${data.is_moderator ? '<i class="fas fa-check text-success me-3"></i>' : '<i class="fas fa-times text-danger me-3"></i>'}
                                                         Moderator
                                                     </li>
                                                     <li class="list-group-item">
-                                                        ${data.is_member ? '<i class="fas fa-check text-success"></i>' : '<i class="fas fa-times text-danger"></i>'}
+                                                        ${data.is_member ? '<i class="fas fa-check text-success me-3"></i>' : '<i class="fas fa-times text-danger me-3"></i>'}
                                                         Member
                                                     </li>
                                                     <li class="list-group-item">
-                                                        ${data.type === 'manual' ? (data.is_candidate ? '<i class="fas fa-check text-success"></i> Candidate' : '<i class="fas fa-times text-danger"></i> Candidate') : ''}
+                                                        ${data.type === 'manual' ? (data.is_candidate ? '<i class="fas fa-check text-success me-3"></i> Candidate' : '<i class="fas fa-times text-danger me-3"></i> Candidate') : ''}
                                                     </li>
                                                 </ul>
-                                                <div class="row mt-3">
+                                                <div class="d-flex justify-content-around my-3">
                                                     ${data.type === 'manual' ?
-                                                    `<div class="col-4 text-center">
-                                                        <span class="badge badge-pill badge-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Members">${data.members_count}</span>
-                                                    </div>
-                                                    <div class="col-4 text-center">
-                                                        <span class="badge badge-pill badge-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Moderators">${data.moderators_count}</span>
-                                                    </div>
-                                                    <div class="col-4 text-center">
-                                                        <span class="badge badge-pill badge-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Candidates">${data.applications_count}</span>
-                                                    </div>`
+                                                    `<span class="badge badge-pill bg-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="Members">${data.members_count}</span>
+                                                    <span class="badge badge-pill bg-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Moderators">${data.moderators_count}</span>
+                                                    <span class="badge badge-pill bg-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Candidates">${data.applications_count}</span>`
                                                     :
-                                                   `<div class="col-6 text-center">
-                                                        <span class="badge badge-pill badge-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Members">${data.members_count}</span>
-                                                    </div>
-                                                    <div class="col-6 text-center">
-                                                        <span class="badge badge-pill badge-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Moderators">${data.moderators_count}</span>
-                                                    </div>`
+                                                   `<span class="badge badge-pill bg-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="Members">${data.members_count}</span>
+                                                    <span class="badge badge-pill bg-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Moderators">${data.moderators_count}</span>`
                                                     }
                                                 </div>
+                                                <a href="${data.link}" class="btn btn-link stretched-link"></a>
                                             </div>
                                             <div class="card-footer">
-                                                <span class="badge ${data.type === 'hidden' ? 'badge-dark' : data.type === 'auto' ? 'badge-info' : 'badge-success' }">${data.type.substr(0, 1).toUpperCase() + data.type.substr(1).toLowerCase()}</span>
+                                                <span class="badge ${data.type === 'hidden' ? 'bg-dark' : data.type === 'auto' ? 'bg-info' : 'bg-success' }">${data.type.substr(0, 1).toUpperCase() + data.type.substr(1).toLowerCase()}</span>
                                             </div>
                                         </div>
                                     </div>`;
@@ -189,12 +180,6 @@
           refreshSquadDeck(keyword, 1);
       });
 
-      /*
-      $('body').tooltip({
-          selector: '[data-bs-toggle="tooltip"]'
-      });
-      */
-
       $('input[name="search-squad"]').on('keyup', searchHandlerDelay(function () {
           refreshSquadDeck(this.value, 1);
       }, 500));
@@ -216,15 +201,6 @@
               $(this).hasClass('active') ? $(this).prepend('<i class="fas fa-check-circle">') : $(this).find('i').remove();
 
               refreshSquadDeck(keyword, 1);
-          })
-          .on('mouseover', '.card', function () {
-              $(this).fadeTo('fast', 0.6);
-          })
-          .on('mouseleave', '.card', function () {
-              $(this).fadeTo('fast', 1.0);
-          })
-          .on('click', '.card', function () {
-              window.location.href = this.dataset.link;
           });
   </script>
 @endpush

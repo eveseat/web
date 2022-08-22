@@ -53,7 +53,7 @@ class RolesController extends Controller
     public function lookup(Request $request, Squad $squad)
     {
         $roles = Role::whereNotIn('id', $squad->roles->pluck('id'))
-            ->where('title', 'like', ["%{$request->query('q', '')}%"])
+            ->where('title', 'ilike', ["%{$request->query('q', '')}%"])
             ->orderBy('title')
             ->get()
             ->map(function ($role) {
