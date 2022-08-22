@@ -22,12 +22,12 @@
 
 return [
     'date'          => '日期',
-    'owner'         => '所有人',
-    'description'   => '简介',
+    'owner'         => '所有者',
+    'description'   => '描述',
     'status'        => '状态',
 
-    'not_responded' => '未响应',
+    'not_responded' => '尚未回应',
     'accepted'      => '已接受',
-    'tentative'     => '尝试',
+    'tentative'     => '暂定',
     'declined'      => '已拒绝',
 ];
