@@ -22,10 +22,10 @@
 
 return [
     'date'         => '日期',
-    'ship'         => '船只',
+    'ship'         => '舰船',
     'solar_system' => '星系',
-    'victim'       => '受害者',
-    'killer'       => '最后一击',
+    'victim'       => '受害人',
+    'killer'       => '击杀者',
     'attackers'    => '攻击者',
-    'items'        => '物品',
+    'items'        => '物品|物品',
 ];
