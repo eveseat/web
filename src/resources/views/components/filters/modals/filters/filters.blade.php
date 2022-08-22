@@ -1,4 +1,4 @@
-<div class="modal fade in show" tabindex="-1" role="dialog" id="filters-modal" aria-modal="true">
+<div class="modal fade" tabindex="-1" role="dialog" id="filters-modal" aria-modal="true">
   <div class="modal-dialog modal-lg modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header bg-warning">
@@ -21,10 +21,10 @@
           <div class="card-body pb-0"></div>
           <div class="card-footer">
             <div class="btn-group d-flex">
-              <button class="btn btn-light btn-rule">
+              <button class="btn btn-light btn-rule d-sm-inline-block">
                 <i class="fas fa-filter"></i> Add Rule
               </button>
-              <button class="btn btn-light btn-ruleset">
+              <button class="btn btn-light btn-ruleset d-sm-inline-block">
                 <i class="fas fa-clone"></i> Add Group
               </button>
             </div>
@@ -33,10 +33,10 @@
       </div>
       <div class="modal-footer bg-warning">
         <div class="btn-group">
-          <button type="button" data-bs-dismiss="modal" class="btn btn-danger">
+          <button type="button" data-bs-dismiss="modal" class="btn btn-danger d-sm-inline-block">
             <i class="fas fa-times"></i> Cancel
           </button>
-          <button type="button" class="btn btn-success">
+          <button type="button" class="btn btn-success d-sm-inline-block">
             <i class="fas fa-check"></i> Update
           </button>
         </div>
@@ -52,220 +52,178 @@
 @push('javascript')
   <script>
     function isUrl(s) {
-      var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+      let regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
       return regexp.test(s);
     }
 
-    function buildFilters(source)
-    {
-        var filters = {};
-
-        source.each(function (i, ruleset) {
-            var match = $(ruleset).find('.match-kind').first();
-            filters[match.val()] = [];
-
-            $(ruleset).find('> .card-body > [data-type="rule"], > .card-body > [data-type="ruleset"]').each(function (j, rule) {
-                switch ($(rule).data('type')) {
+    function buildFilters(source) {
+        let filters = {};
+        (Array.isArray(source) ? source : [source]).forEach(ruleset => {
+            let match = ruleset.querySelector('.match-kind');
+            let rules = ruleset.querySelectorAll(':scope > .card-body > [data-type="rule"], :scope > .card-body > [data-type="ruleset"]');
+            filters[match.value] = [];
+            rules.forEach(rule => {
+                switch (rule.dataset.type) {
                     case 'rule':
-                        filters[match.val()].push({
-                            name: $(rule).find('.rule-type').val(),
-                            path: $('option:selected', $(rule).find('.rule-type')).data('path'),
-                            field: $('option:selected', $(rule).find('.rule-type')).data('field'),
-                            operator: $(rule).find('.rule-operator').val(),
-                            criteria: $(rule).find('.rule-criteria').val(),
-                            text: $('option:selected', $(rule).find('.rule-criteria')).text()
+                        let ruleTypeField = rule.querySelector('.rule-type');
+                        let ruleTypeActive = ruleTypeField.selectedOptions[0];
+                        let ruleOperator = rule.querySelector('.rule-operator');
+                        let ruleCriteria = rule.querySelector('.rule-criteria');
+
+                        filters[match.value].push({
+                            name: ruleTypeField.value,
+                            path: ruleTypeActive.dataset.path,
+                            field: ruleTypeActive.dataset.field,
+                            operator: ruleOperator.value,
+                            criteria: ruleCriteria.value,
+                            text: ruleCriteria.selectedOptions[0].text,
                         });
                         break;
                     case 'ruleset':
-                        filters[match.val()].push(buildFilters($(rule)));
+                        filters[match.value].push(buildFilters([rule]));
                         break;
                 }
             });
         });
-
         return filters;
     }
 
-    $('body')
-      .on('click', '.btn-rule', function (e) {
-        var rule = $('#rule-template').clone();
-        rule.removeAttr('id');
-        rule.removeClass('d-none');
+    function makeSelectorField(target, linkedToElement) {
+        return new TomSelect(target, {
+            valueField: 'id',
+            labelField: 'text',
+            searchField: 'text',
+            copyClassesToDropdown: false,
+            dropdownClass: 'dropdown-menu',
+            optionClass:'dropdown-item',
+            maxItems: 1,
+            preload: true,
+            persist: false,
+            openOnFocus: true,
+            loadThrottle: null,
+            dropdownParent: document.getElementById('filters-modal').querySelector('.modal-content'),
+            shouldLoad: function (query) {
+                return query.length > 0;
+            },
+            load: function (query, callback) {
+                this.clearOptions();
+                let dataSource = linkedToElement.selectedOptions[0].dataset.src;
+                isUrl(dataSource) ?
+                    fetch(dataSource)
+                        .then(response => response.json())
+                        .then(json => { callback(json.results); })
+                        .catch(() => { callback(); })
+                    : callback(JSON.parse(dataSource));
+            },
+        });
+    }
 
-        rule.find('.rule-criteria').select2({
-            dropdownParent: $('#filters-modal'),
-            ajax: {
-                url: function () {
-                    return $('option:selected', $(this).closest('.form-row').find('.rule-type')).data('src');
+    function makeRuleContainer(target, ruleObject) {
+        let newRuleNode = document.getElementById('rule-template').cloneNode(true);
+        newRuleNode.removeAttribute('id');
+        newRuleNode.classList.remove('d-none');
+        newRuleNode.querySelector('.rule-operator').value = ruleObject.operator;
+
+        let type = newRuleNode.querySelector('.rule-type');
+        let criteria = newRuleNode.querySelector('.rule-criteria');
+        type.value = ruleObject.name;
+
+        // init a new selector field on criteria field attached to type field
+        makeSelectorField(criteria, type);
+
+        criteria.tomselect.addOption({
+            id: ruleObject.criteria,
+            text: ruleObject.text,
+        });
+        criteria.tomselect.setValue(ruleObject.criteria);
+        criteria.tomselect.setTextboxValue(ruleObject.text);
+
+        target.appendChild(newRuleNode);
+    }
+
+    document.addEventListener('change', function (e) {
+        if (e.target.matches('.rule-type')) {
+            let selectorField = e.target.closest('.form-row').querySelector('select.rule-criteria');
+            selectorField.tomselect.clear();
+            selectorField.tomselect.clearOptions();
+        }
+    });
+
+    document.addEventListener('click', function (e) {
+        switch (true) {
+            case e.target.matches('.btn-ruleset'):
+                let group = document.getElementById('ruleset-template').cloneNode(true);
+                group.removeAttribute('id');
+                group.classList.remove('d-none');
+                e.target.closest('.card').querySelector('.card-body').appendChild(group);
+                break;
+            case e.target.matches('.btn-rule'):
+                let rule = document.getElementById('rule-template').cloneNode(true);
+                rule.removeAttribute('id');
+                rule.classList.remove('d-none');
+
+                // init a new selector field on criteria field attached to type field
+                makeSelectorField(rule.querySelector('.rule-criteria'), rule.querySelector('.rule-type'));
+
+                e.target.closest('.card').querySelector('.card-body').appendChild(rule);
+                break;
+            case e.target.matches('button[data-bs-dismiss="callout"]'):
+                let filterBlock = e.target.closest('.callout');
+                filterBlock.parentNode.removeChild(filterBlock);
+                break;
+            case e.target.matches('button[data-bs-dismiss="card"]'):
+                let filtersContainer = e.target.closest('.card');
+                filtersContainer.parentNode.removeChild(filtersContainer);
+                break;
+            case e.target.matches('#filters-modal .btn-success'):
+                document.getElementById('filters-btn').dataset.filters =
+                    JSON.stringify(buildFilters(document.querySelector('#filters-modal .modal-body [data-type="ruleset"]')));
+                bootstrap.Modal.getOrCreateInstance(document.getElementById('filters-modal')).toggle();
+                break;
+        }
+    });
+
+    document.addEventListener('show.bs.modal', function (e) {
+        if (e.target.matches('#filters-modal')) {
+            if (! e.relatedTarget.dataset.filters || e.relatedTarget.dataset.filters === '{}') return;
+
+            // extract rules JSON object from the modal trigger (button)
+            // retrieve the modal itself and clear its content from any remaining nodes
+            let rules = JSON.parse(e.relatedTarget.dataset.filters);
+            let modal = document.querySelector('#filters-modal .modal-body > .card > .card-body');
+            while (modal.firstChild) modal.removeChild(modal.firstChild);
+
+            // init the container with global match-kind value (AND / OR operator)
+            document.querySelector('#filters-modal .modal-body > .card > .card-header .match-kind').value = rules.hasOwnProperty('and') ? 'and' : 'or';
+            // update rules variable with global rule's container (AND / OR operator)
+            rules = rules.hasOwnProperty('and') ? rules.and : rules.or;
+            if (! rules) return;
+
+            // loop over each rule
+            // when the rule is a wrapper, spawn a new ruleset container
+            // otherwise, spawn a new rule container
+            rules.forEach((rule) => {
+                if (rule.hasOwnProperty('name')) {
+                    makeRuleContainer(modal, rule);
                 }
-            }});
 
-        $(e.target).closest('.card').find('.card-body').first().append(rule);
-      })
-      .on('change', '.rule-type', function () {
-          let criteria = $(this).closest('.form-row').find('.rule-criteria');
-          let src = $('option:selected', $(this)).data('src');
+                if (rule.hasOwnProperty('and') || rule.hasOwnProperty('or')) {
+                    let ruleset_rules = rule.hasOwnProperty('and') ? rule.and : rule.or;
+                    let ruleset = document.getElementById('ruleset-template').cloneNode(true);
+                    ruleset.removeAttribute('id');
+                    ruleset.classList.remove('d-none');
+                    ruleset.querySelector('.match-kind').value = rule.hasOwnProperty('and') ? 'and': 'or';
 
-          // determine the filter type (closed list or lookup)
-          if (isUrl(src)) {
-              criteria.select2({
-                  dropdownParent: $('#filters-modal'),
-                  ajax: {
-                      url: function () {
-                          return src;
-                      }
-                  }
-              });
-          } else {
-              criteria.select2({
-                  dropdownParent: $('#filters-modal'),
-                  data: src
-              });
-          }
-      })
-      .on('click', '.btn-ruleset', function (e) {
-        var group = $('#ruleset-template').clone();
-        group.removeAttr('id');
-        group.removeClass('d-none');
+                    if (ruleset_rules) {
+                        ruleset_rules.forEach((ruleset_rule) => {
+                            makeRuleContainer(ruleset.querySelector('.card-body'), ruleset_rule);
+                        });
+                    }
 
-        $(e.target).closest('.card').find('.card-body').first().append(group);
-      })
-      .on('click', 'button[data-bs-dismiss="callout"]', function (e) {
-        $(e.target).closest('.callout').remove();
-      })
-      .on('click', 'button[data-bs-dismiss="card"]', function (e) {
-        $(e.target).closest('.card').remove();
-      })
-      .on('click', '#filters-modal .btn-success', function () {
-          document.getElementById('filters-btn').dataset.filters =
-              JSON.stringify(buildFilters($('#filters-modal .modal-body').children('[data-type="ruleset"]')));
-          $('#filters-modal').modal('toggle');
-      })
-      .on('show.bs.modal', '#filters-modal', function (e) {
-          if (! e.relatedTarget.dataset.filters || e.relatedTarget.dataset.filters === '{}')
-              return;
-
-          var rules = JSON.parse(e.relatedTarget.dataset.filters);
-          var modal = $('#filters-modal .modal-body > .card > .card-body');
-
-          modal.empty();
-
-          $('#filters-modal .modal-body > .card > .card-header .match-kind').val(rules.hasOwnProperty('and') ? 'and' : 'or');
-
-          rules = rules.hasOwnProperty('and') ? rules.and : rules.or;
-
-          if (! rules)
-              return;
-
-          rules.forEach((rule) => {
-              if (rule.hasOwnProperty('name')) {
-                  node = $('#rule-template').clone();
-                  node.removeAttr('id');
-                  node.removeClass('d-none');
-
-                  node.find('.rule-operator').val(rule.operator);
-
-                  let type = node.find('.rule-type');
-                  let criteria = node.find('.rule-criteria');
-
-                  type.val(rule.name);
-
-                  // determine the filter type (closed list or lookup)
-                  if (isUrl($('option:selected', type).data('src'))) {
-                      criteria.select2({
-                          dropdownParent: $('#filters-modal'),
-                          ajax: {
-                              url: function () {
-                                  return $('option:selected', type).data('src');
-                              }
-                          }
-                      });
-
-                      criteria.append(new Option(rule.text, rule.criteria, true, true)).trigger('change');
-
-                      criteria.trigger({
-                          type: 'select2:select',
-                          params: {
-                              data: {
-                                  text: rule.text,
-                                  id: rule.criteria
-                              },
-                          }
-                      });
-                  } else {
-                      criteria.select2({
-                          dropdownParent: $('#filters-modal'),
-                          data: $('option:selected', type).data('src')
-                      });
-
-                      criteria.val(rule.criteria);
-                      criteria.trigger('change');
-                  }
-
-                  modal.append(node);
-              }
-
-              if (rule.hasOwnProperty('and') || rule.hasOwnProperty('or')) {
-                  ruleset = $('#ruleset-template').clone();
-                  ruleset.removeAttr('id');
-                  ruleset.removeClass('d-none');
-
-                  ruleset.find('.match-kind').val(rule.hasOwnProperty('and') ? 'and': 'or');
-
-                  ruleset_rules = rule.hasOwnProperty('and') ? rule.and : rule.or;
-
-                  if (ruleset_rules) {
-                      ruleset_rules.forEach((ruleset_rule) => {
-                          node = $('#rule-template').clone();
-                          node.removeAttr('id');
-                          node.removeClass('d-none');
-
-                          node.find('.rule-operator').val(ruleset_rule.operator);
-
-                          let type = node.find('.rule-type');
-                          let criteria = node.find('.rule-criteria');
-
-                          type.val(ruleset_rule.name);
-
-                          // determine the filter type (closed list or lookup)
-                          if (isUrl($('option:selected', type).data('src'))) {
-                              criteria.select2({
-                                  dropdownParent: $('#filters-modal'),
-                                  ajax: {
-                                      url: function () {
-                                          return $('option:selected', type).data('src');
-                                      }
-                                  }
-                              });
-
-                              criteria.append(new Option(ruleset_rule.text, ruleset_rule.criteria, true, true)).trigger('change');
-
-                              criteria.trigger({
-                                  type: 'select2:select',
-                                  params: {
-                                      data: {
-                                          text: ruleset_rule.text,
-                                          id: ruleset_rule.criteria
-                                      },
-                                  }
-                              });
-                          } else {
-                              criteria.select2({
-                                  dropdownParent: $('#filters-modal'),
-                                  data: $('option:selected', type).data('src')
-                              });
-
-                              criteria.val(ruleset_rule.criteria);
-                              criteria.trigger('change');
-                          }
-
-                          ruleset.find('.card-body').append(node);
-                      });
-                  }
-
-                  modal.append(ruleset);
-              }
-          });
-      });
+                    modal.appendChild(ruleset);
+                }
+            });
+        }
+    });
   </script>
 @endpush
