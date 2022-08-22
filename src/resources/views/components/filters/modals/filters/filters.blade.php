@@ -1,24 +1,29 @@
 <div class="modal fade" tabindex="-1" role="dialog" id="filters-modal" aria-modal="true">
   <div class="modal-dialog modal-lg modal-dialog-scrollable">
     <div class="modal-content">
-      <div class="modal-header bg-warning">
+      <div class="modal-status bg-success"></div>
+      <div class="modal-header">
         <h4 class="modal-title">Filters</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="card" data-type="ruleset">
           <div class="card-header">
-            <div class="form-inline">
-              <div class="form-group">
-                <label class="mr-2">Match Kind</label>
-                <select class="form-control match-kind">
-                  <option value="and">All</option>
-                  <option value="or">Any</option>
-                </select>
+              <div class="row row-cols-auto g-3 align-items-center">
+                  <div class="col-12">
+                      <div class="input-group">
+                          <div class="input-group-text">Match Kind</div>
+                          <select class="form-select match-kind">
+                              <option value="and">All</option>
+                              <option value="or">Any</option>
+                          </select>
+                      </div>
+                  </div>
               </div>
-            </div>
           </div>
-          <div class="card-body pb-0"></div>
+          <div class="card-body">
+              <div class="row row-cards"></div>
+          </div>
           <div class="card-footer">
             <div class="btn-group d-flex">
               <button class="btn btn-light btn-rule d-sm-inline-block">
@@ -31,15 +36,13 @@
           </div>
         </div>
       </div>
-      <div class="modal-footer bg-warning">
-        <div class="btn-group">
-          <button type="button" data-bs-dismiss="modal" class="btn btn-danger d-sm-inline-block">
-            <i class="fas fa-times"></i> Cancel
+      <div class="modal-footer">
+          <button type="button" data-bs-dismiss="modal" class="btn d-sm-inline-block me-auto">
+              <i class="fas fa-times"></i> Cancel
           </button>
           <button type="button" class="btn btn-success d-sm-inline-block">
-            <i class="fas fa-check"></i> Update
+              <i class="fas fa-check"></i> Update
           </button>
-        </div>
       </div>
     </div>
   </div>
@@ -60,7 +63,7 @@
         let filters = {};
         (Array.isArray(source) ? source : [source]).forEach(ruleset => {
             let match = ruleset.querySelector('.match-kind');
-            let rules = ruleset.querySelectorAll(':scope > .card-body > [data-type="rule"], :scope > .card-body > [data-type="ruleset"]');
+            let rules = ruleset.querySelectorAll(':scope > .card-body > .row-cards > [data-type="rule"], :scope > .card > .card-body > .row-cards > [data-type="rule"], :scope > .card-body > .row-cards > [data-type="ruleset"]');
             filters[match.value] = [];
             rules.forEach(rule => {
                 switch (rule.dataset.type) {
@@ -143,43 +146,48 @@
 
     document.addEventListener('change', function (e) {
         if (e.target.matches('.rule-type')) {
-            let selectorField = e.target.closest('.form-row').querySelector('select.rule-criteria');
+            let selectorField = e.target.closest('.row').querySelector('select.rule-criteria');
             selectorField.tomselect.clear();
             selectorField.tomselect.clearOptions();
+            selectorField.tomselect.load();
+            selectorField.tomselect.render();
         }
     });
 
     document.addEventListener('click', function (e) {
-        switch (true) {
-            case e.target.matches('.btn-ruleset'):
-                let group = document.getElementById('ruleset-template').cloneNode(true);
-                group.removeAttribute('id');
-                group.classList.remove('d-none');
-                e.target.closest('.card').querySelector('.card-body').appendChild(group);
-                break;
-            case e.target.matches('.btn-rule'):
-                let rule = document.getElementById('rule-template').cloneNode(true);
-                rule.removeAttribute('id');
-                rule.classList.remove('d-none');
+        if (e.target.closest('button[data-dismiss="rule"], button[data-dismiss="ruleset"]')) {
+            let targetType = e.target.closest('button').dataset.dismiss;
+            let filterBlock = e.target.closest(`[data-type="${ targetType }"]`);
+            filterBlock.parentNode.removeChild(filterBlock);
+        }
 
-                // init a new selector field on criteria field attached to type field
-                makeSelectorField(rule.querySelector('.rule-criteria'), rule.querySelector('.rule-type'));
+        if (e.target.closest('.btn-ruleset')) {
+            let group = document.getElementById('ruleset-template').cloneNode(true);
+            group.removeAttribute('id');
+            group.classList.remove('d-none');
+            e.target.closest('.card').querySelector('.card-body > .row-cards').appendChild(group);
+        }
 
-                e.target.closest('.card').querySelector('.card-body').appendChild(rule);
-                break;
-            case e.target.matches('button[data-bs-dismiss="callout"]'):
-                let filterBlock = e.target.closest('.callout');
-                filterBlock.parentNode.removeChild(filterBlock);
-                break;
-            case e.target.matches('button[data-bs-dismiss="card"]'):
-                let filtersContainer = e.target.closest('.card');
-                filtersContainer.parentNode.removeChild(filtersContainer);
-                break;
-            case e.target.matches('#filters-modal .btn-success'):
-                document.getElementById('filters-btn').dataset.filters =
-                    JSON.stringify(buildFilters(document.querySelector('#filters-modal .modal-body [data-type="ruleset"]')));
-                bootstrap.Modal.getOrCreateInstance(document.getElementById('filters-modal')).toggle();
-                break;
+        if (e.target.closest('.btn-rule')) {
+            let rule = document.getElementById('rule-template').cloneNode(true);
+            rule.removeAttribute('id');
+            rule.classList.remove('d-none');
+
+            // init a new selector field on criteria field attached to type field
+            makeSelectorField(rule.querySelector('.rule-criteria'), rule.querySelector('.rule-type'));
+
+            e.target.closest('.card').querySelector('.card-body > .row-cards').appendChild(rule);
+        }
+
+        if (e.target.closest('#filters-modal .btn-success')) {
+            document.getElementById('filters-btn').dataset.filters =
+                JSON.stringify(buildFilters(document.querySelector('#filters-modal .modal-body [data-type="ruleset"]')));
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('filters-modal')).toggle();
+        }
+
+        if (e.target.matches('button[data-bs-dismiss="card"]')) {
+            let filtersContainer = e.target.closest('.card');
+            filtersContainer.parentNode.removeChild(filtersContainer);
         }
     });
 
@@ -190,8 +198,8 @@
             // extract rules JSON object from the modal trigger (button)
             // retrieve the modal itself and clear its content from any remaining nodes
             let rules = JSON.parse(e.relatedTarget.dataset.filters);
-            let modal = document.querySelector('#filters-modal .modal-body > .card > .card-body');
-            while (modal.firstChild) modal.removeChild(modal.firstChild);
+            let filtersContainer = document.querySelector('#filters-modal .modal-body > .card > .card-body > .row-cards');
+            while (filtersContainer.firstChild) filtersContainer.removeChild(filtersContainer.firstChild);
 
             // init the container with global match-kind value (AND / OR operator)
             document.querySelector('#filters-modal .modal-body > .card > .card-header .match-kind').value = rules.hasOwnProperty('and') ? 'and' : 'or';
@@ -204,7 +212,7 @@
             // otherwise, spawn a new rule container
             rules.forEach((rule) => {
                 if (rule.hasOwnProperty('name')) {
-                    makeRuleContainer(modal, rule);
+                    makeRuleContainer(filtersContainer, rule);
                 }
 
                 if (rule.hasOwnProperty('and') || rule.hasOwnProperty('or')) {
@@ -216,11 +224,11 @@
 
                     if (ruleset_rules) {
                         ruleset_rules.forEach((ruleset_rule) => {
-                            makeRuleContainer(ruleset.querySelector('.card-body'), ruleset_rule);
+                            makeRuleContainer(ruleset.querySelector('.card-body .row-cards'), ruleset_rule);
                         });
                     }
 
-                    modal.appendChild(ruleset);
+                    filtersContainer.appendChild(ruleset);
                 }
             });
         }
