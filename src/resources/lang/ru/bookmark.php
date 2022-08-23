@@ -21,9 +21,9 @@
  */
 
 return [
-    'created'     => 'Created',
-    'label'       => 'Label',
-    'location'    => 'Location',
-    'notes'       => 'Notes',
-    'coordinates' => 'Coordinates',
+    'created'     => 'Создано',
+    'label'       => 'Метка',
+    'location'    => 'Место',
+    'notes'       => 'Заметка',
+    'coordinates' => 'Координаты',
 ];
