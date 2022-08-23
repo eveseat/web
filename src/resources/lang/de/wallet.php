@@ -33,7 +33,7 @@ return [
     'location'   => 'Ort',
     'price'      => 'Preis',
     'quantity'   => 'Menge',
-    'total'      => 'Total',
+    'total'      => 'Gesamt',
     'party'      => 'Gruppe',
 
     'acceleration_gate_fee' => 'Beschleunigungstorgebühr',
