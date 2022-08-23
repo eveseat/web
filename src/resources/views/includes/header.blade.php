@@ -36,7 +36,11 @@
       <!-- user-card -->
       <div class="nav-item dropdown">
         <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+          @if(auth()->user()->name != 'admin')
           {!! img('characters', 'portrait', auth()->user()->main_character_id, 32, ['class' => 'avatar avatar-sm'], false) !!}
+          @else
+          <img src="{{ asset('web/img/logo.png') }}" width="32px" height="32px" alt="{{ config('app.name') }}" />
+          @endif
           <div class="d-xl-block ps-2">
             <div>{{ auth()->user()->name }}</div>
             <div class="mt-1 small text-muted">{{ auth()->user()->characters->count() }} characters</div>
