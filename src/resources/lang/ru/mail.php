@@ -21,12 +21,12 @@
  */
 
 return [
-    'read'         => 'Read',
-    'date'         => 'Date',
-    'sender'       => 'Sender',
-    'subject'      => 'Subject',
-    'mailing_list' => 'Mailing List',
-    'sent'         => 'Sent',
-    'author'       => 'Author',
-    'recipients'   => 'Recipients',
+    'read'         => 'Прочитать',
+    'date'         => 'Дата',
+    'sender'       => 'Отправитель',
+    'subject'      => 'Тема',
+    'mailing_list' => 'Список рассылки',
+    'sent'         => 'Отправлено',
+    'author'       => 'Автор',
+    'recipients'   => 'Получатели',
 ];
