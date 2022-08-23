@@ -21,7 +21,7 @@
  */
 
 return [
-    'region'        => 'Region|Regions',
+    'region'        => 'Регион|Регионы',
     'constellation' => 'Constellation|Constellations',
     'system'        => 'Solar System|Solar Systems',
     'planet'        => 'Planet|Planets',
