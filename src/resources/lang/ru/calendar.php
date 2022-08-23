@@ -21,13 +21,13 @@
  */
 
 return [
-    'date'          => 'Date',
-    'owner'         => 'Owner',
-    'description'   => 'Description',
-    'status'        => 'Status',
+    'date'          => 'Дата',
+    'owner'         => 'Владелец',
+    'description'   => 'Описание',
+    'status'        => 'Статус',
 
-    'not_responded' => 'Not responded',
-    'accepted'      => 'Accepted',
-    'tentative'     => 'Tentative',
-    'declined'      => 'Declined',
+    'not_responded' => 'Нет ответа',
+    'accepted'      => 'Принято',
+    'tentative'     => 'Возможно',
+    'declined'      => 'Отклонено',
 ];
