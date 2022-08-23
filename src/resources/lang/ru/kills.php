@@ -21,11 +21,11 @@
  */
 
 return [
-    'date'         => 'Date',
-    'ship'         => 'Ship',
-    'solar_system' => 'Solar System',
-    'victim'       => 'Victim',
+    'date'         => 'Дата',
+    'ship'         => 'Корабль',
+    'solar_system' => 'Солнечная система',
+    'victim'       => 'Жертва',
     'killer'       => 'Killer',
-    'attackers'    => 'Attacker|Attackers',
-    'items'        => 'Item|Items',
+    'attackers'    => 'Атакующий | Атакующие',
+    'items'        => 'Предмет|Предметы',
 ];
