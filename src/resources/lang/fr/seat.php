@@ -380,13 +380,13 @@ return [
 
     // Ledger
     'ledger'                       => 'Bilan',
-    'bounty_prizes'                => 'Bounty Prizes',
-    'offices_rentals'              => 'Offices Rentals',
-    'industry_facility'            => 'Industry Facility',
-    'reprocessing'                 => 'Reprocessing',
-    'jump_bridges'                 => 'Jump Bridges',
-    'wallet_division_name'         => 'Wallet Division Name',
-    'wallet_summary'               => 'Wallet Summary|Wallet Summaries',
+    'bounty_prizes'                => 'Récompenses de prime',
+    'offices_rentals'              => 'Frais de location',
+    'industry_facility'            => 'Frais industriels',
+    'reprocessing'                 => 'Retraitement',
+    'jump_bridges'                 => 'Pont hyperspatial',
+    'wallet_division_name'         => 'Nom de la division du portefeuille',
+    'wallet_summary'               => 'Synthèse du portefeuille',
 
     // Users
     'user_management'              => 'Gestion utilisateur',
@@ -604,7 +604,7 @@ return [
     'created_by_corporation'       => 'Créée par la corporation',
     'starbase'                     => 'Tour de contrôle|Tours de contrôle',
     'structure'                    => 'Structure|Structures',
-    'reinforce_week_hour'          => 'Reinf. Week/Hour',
+    'reinforce_week_hour'          => 'Période de renforts',
     'low_power'                    => 'Faible puissance',
     'state'                        => 'Statut',
     'fuel_level'                   => 'Niveau de carburant',
@@ -637,7 +637,7 @@ return [
     'standing_level'               => 'Niveau de réputation',
     'tax_alliance_corp'            => 'Taxes: Alliance/Corp',
     'tax_standings'                => 'Taxes: Réputations',
-    'no_storage'                   => 'There is no storage',
+    'no_storage'                   => 'Il n\'y a pas de stockage',
     'member'                       => 'Membre|Membres',
     'faction'                      => 'Faction',
 
@@ -679,7 +679,7 @@ return [
     'email_notifications'          => 'Notification par mail',
     'setup_token_now'              => 'Paramétrer un jeton maintenant',
     'owned_keys'                   => 'Clés possédées',
-    'account_help'                 => 'For any account related enquiries, including permissions amendments, ' .
+    'account_help'                 => 'Pour toute demande relative à un compte, y compris les modifications des autorisations, ' .
         'veuillez contacter l\'administrateur SeAT.',
     'current_email'                => 'Courriel actuel',
     'new_email'                    => 'Nouvelle adresse de courriel',
@@ -701,8 +701,8 @@ return [
     'view_third_party_access'      => 'Consulter les applications sur eveonline.com',
     'third_party_access'           => 'Vérifiez les accès qu\'ont les applications tierces (comme celle-ci) ' .
         'sur votre compte EVE Online régulièrement.',
-    'user_sharelink'               => 'User Sharing',
-    'user_sharelink_description'   => 'You can generate a sharing link that can be shared with other SeAT users to allow them to view your linked characters information.',
+    'user_sharelink'               => 'Partage d\'accès',
+    'user_sharelink_description'   => 'Vous pouvez générer un lien de partage qui peut être utilisé par un autre utilisateur de SeAT pour leur permettre d\'accéder aux informations de vos différents personnages.',
     'user_sharelink_generate'      => 'Générer un lien',
 
     // Queue
