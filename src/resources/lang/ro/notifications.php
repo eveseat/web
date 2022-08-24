@@ -21,7 +21,7 @@
  */
 
 return [
-    'date'   => 'Date',
-    'type'   => 'Type',
-    'sender' => 'Sender',
+    'date'   => 'Dată',
+    'type'   => 'Tip',
+    'sender' => 'Expeditor',
 ];
