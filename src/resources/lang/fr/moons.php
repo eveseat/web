@@ -30,7 +30,7 @@ return [
     'sovereignty'   => 'Souveraineté|Souverainetés',
     'ubiquitous'    => 'Ubiquitous',
     'common'        => 'Commun',
-    'uncommon'      => 'Inhabituel',
+    'uncommon'      => 'Peu commun',
     'rare'          => 'Rare',
     'exceptional'   => 'Exceptionnel',
 ];
