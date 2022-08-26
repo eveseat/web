@@ -1,5 +1,5 @@
 @if ($user->name != 'admin' && $user->main_character_id && $user->main_character_id >= 90000000)
-    {!! img('characters', 'portrait', $user->main_character_id, 32, ['class' => 'avatar avatar-sm'], false) !!}
+    {!! img('characters', 'portrait', $user->main_character_id, 32, ['class' => 'avatar avatar-sm eve-icon small-icon'], false) !!}
     @if(\Seat\Eveapi\Models\Character\CharacterInfo::find($user->main_character_id))
       <a href="{{ route('seatcore::character.view.default', ['character' => $user->main_character_id ]) }}">
         {{ $user->name }}
