@@ -26,7 +26,7 @@ return [
     'issuer'              => 'Issuer',
     'assignee'            => 'Assignee',
     'acceptor'            => 'Acceptor',
-    'status'              => 'Status',
+    'status'              => '상태',
     'price'               => 'Price',
     'reward'              => 'Reward',
 
