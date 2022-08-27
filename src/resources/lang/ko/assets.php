@@ -21,6 +21,6 @@
  */
 
 return [
-    'division' => 'Division|Divisions',
-    'station_or_structure' => 'Station / Structure',
+    'division' => '부서',
+    'station_or_structure' => '정거장 / 구조물',
 ];
