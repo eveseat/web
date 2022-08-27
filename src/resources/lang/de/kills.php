@@ -27,5 +27,5 @@ return [
     'victim'       => 'Opfer',
     'killer'       => 'Killer',
     'attackers'    => 'Angreifer|Angreifer',
-    'items'        => 'Item|Items',
+    'items'        => 'Gegenstände',
 ];
