@@ -29,8 +29,8 @@ return [
     'indicator'     => 'Indikator(en)',
     'sovereignty'   => 'Souveränität',
     'ubiquitous'    => 'Ubiquitous',
-    'common'        => 'Common',
-    'uncommon'      => 'Uncommon',
-    'rare'          => 'Rare',
-    'exceptional'   => 'Exceptional',
+    'common'        => 'Gewöhnlich',
+    'uncommon'      => 'Ungewöhnlich',
+    'rare'          => 'Selten',
+    'exceptional'   => 'Außergewöhnlich',
 ];
