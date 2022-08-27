@@ -27,7 +27,7 @@ return [
     'licences_pane_title' => 'Lizenzen',
     'licences_pane_third_party_used_licences' => 'SeAT nutzt verschiedene Komponenten unter den folgenden Lizenen:',
     'licences_pane_seat_used_licence' => 'SeAT selbst wird unter :licence_link veröffentlicht.',
-    'licences_pane_ccp_third_party_licence' => 'Third Party License Agreement',
+    'licences_pane_ccp_third_party_licence' => 'Drittanbieter-Lizenzvereinbarung',
 
     //
     // CCP Disclaimer pane
