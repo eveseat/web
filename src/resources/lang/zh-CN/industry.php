@@ -21,13 +21,13 @@
  */
 
 return [
-    'start'               => '开始',
-    'end'                 => '结束',
-    'location'            => '位置',
-    'activity'            => '活动',
-    'runs'                => '周期',
-    'blueprint'           => '蓝图',
-    'product'             => '产品',
+    'start'               => 'Start',
+    'end'                 => 'End',
+    'location'            => 'Location',
+    'activity'            => 'Activity',
+    'runs'                => 'Runs',
+    'blueprint'           => 'Blueprint',
+    'product'             => 'Product',
     'material_efficiency' => '材料效率',
     'time_efficiency'     => '时间效率',
 ];
