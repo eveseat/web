@@ -24,10 +24,10 @@ return [
     //
     // Licences Pane
     //
-    'licences_pane_title' => 'Lizenzen',
-    'licences_pane_third_party_used_licences' => 'SeAT nutzt verschiedene Komponenten unter den folgenden Lizenen:',
-    'licences_pane_seat_used_licence' => 'SeAT selbst wird unter :licence_link veröffentlicht.',
-    'licences_pane_ccp_third_party_licence' => 'Drittanbieter-Lizenzvereinbarung',
+    'licences_pane_title' => 'Licențe',
+    'licences_pane_third_party_used_licences' => 'SeAT uses many components which use the following licenses :',
+    'licences_pane_seat_used_licence' => 'SeAT itself is published under the :licence_link.',
+    'licences_pane_ccp_third_party_licence' => 'Third Party License Agreement',
 
     //
     // CCP Disclaimer pane
@@ -50,34 +50,37 @@ return [
     //
 
     // questions
-    'contact_pane_title' => 'Kontakte',
-    'contact_pane_question_discord_first_line' => 'Haben Sie Fragen? Wollen Sie sich bedanken? Wollen Sie uns Ihre Meinung mitteilen?',
-    'contact_pane_question_discord_second_line' => 'Finde uns auf Discord!',
-    'contact_pane_question_forum' => 'Alternativ können Sie die Unterhaltung auf dem offiziellen :link verfolgen.',
-    'contact_pane_question_github' => 'Hast du einen Fehler oder Bug gefunden? Bitte öffne eine Issue auf unserem Github-Issue-Board :link.',
-    'contact_pane_question_eve_online_forums_placeholder' => 'Eve Online Foren',
-    'contact_pane_question_github_here_placeholder' => 'hier',
+    'contact_pane_title' => 'Contacts',
+    'contact_pane_question_discord_first_line' => 'Have a question ? Want to say thank you ? Need to express your opinion on SeAT ?',
+    'contact_pane_question_discord_second_line' => 'Găsește-ne pe Discord !',
+    'contact_pane_question_forum' => 'Alternatively, you also can track the conversation on the official :link',
+    'contact_pane_question_github' => 'Do you have a bug to report ? Please use our Github issue board :link.',
+    'contact_pane_question_eve_online_forums_placeholder' => 'Eve Online Forums',
+    'contact_pane_question_github_here_placeholder' => 'here',
 
     // widgets
-    'contact_widget_active_members' => ':count aktive Mitglieder',
-    'contact_widget_join_us' => 'Tritt uns bei!',
-    'contact_widget_documentation' => 'Dokumentation',
-    'contact_widget_updated_at' => 'Zuletzt aktualisiert um :date_time',
-    'contact_widget_read_me' => 'Lesen',
+    'contact_widget_active_members' => ':count active members',
+    'contact_widget_join_us' => 'Join us !',
+    'contact_widget_documentation' => 'Documentaţie',
+    'contact_widget_updated_at' => 'Updated :date_time',
+    'contact_widget_read_me' => 'Citeşte-mă !',
     'contact_widget_github_issues' =>  ':count Issues',
-    'contact_widget_github_contribute' => 'Beitragen',
+    'contact_widget_github_contribute' => 'Contribuie !',
 
     //
     // Donate Pane
     //
 
-    'donate_pane_title' => 'Spenden',
-    'donate_pane_first_line' => 'Falls du :seat_project magst und du der Community dahinter etwas spenden willst, kannst du ISK zur :seat_holding Corporation senden. Diese Corporation wird verwendent, um die Spenden monatlich an alle Helfer zu spenden.',
-    'donate_pane_second_line' => 'Ein Teil davon wird als Preis-Pool verwendet :icon.',
+    'donate_pane_title' => 'Donații',
+    'donate_pane_first_line' => 'If you like :seat_project and want to tips the community behind it, you can send ISK to
+                    :seat_holding corporation.
+                    This holding corporation is used to split donations monthly across all contributors.',
+    'donate_pane_second_line' => 'Some of it will be held as a prize pool for contents :icon.',
 
     //
     // Security Pane
     //
-    'security_pane_title' => 'Sicherheitsprobleme',
-    'security_pane_content' => 'Falls Sie Sicherheitslücken in SeAT finden, bitte senden Sie eine E-Mail an :contact_email anstatt einen öffentlichen Fehlerbericht auf Github zu erstellen.',
+    'security_pane_title' => 'Security Concerns',
+    'security_pane_content' => 'If you find any security vulnerabilities within SeAT, please send an email to
+            :contact_email to address instead of creating a public Github issue.',
 ];

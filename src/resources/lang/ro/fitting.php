@@ -21,11 +21,10 @@
  */
 
 return [
-    'date'         => 'Datum',
-    'ship'         => 'Schiff',
-    'solar_system' => 'Sonnensystem',
-    'victim'       => 'Opfer',
-    'killer'       => 'Killer',
-    'attackers'    => 'Angreifer|Angreifer',
-    'items'        => 'Gegenstände',
+    'name'            => 'Name',
+    'type'            => 'Type',
+    'items'           => 'Items',
+    'hull_estimated_value' => 'Hull Estimated Value',
+    'fitting_estimated_value' => 'Fitting Estimated Value',
+    'full_estimated_value' => 'Full Estimated Value',
 ];

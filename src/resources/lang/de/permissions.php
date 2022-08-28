@@ -50,8 +50,8 @@ return [
     'view_moon_reports_description'     => 'Zeigt alle Monde in EVE und die enthaltenen Ressourcen, falls dazu Daten verfügbar sind.',
     'create_moon_reports_label'         => 'Erstelle neue Mondberichte',
     'create_moon_reports_description'   => 'Erlaubt einem Nutzer, die Resultate einer Mondprobe einzurechen.',
-    'manage_moon_reports_label'         => 'Manage Moon Reports',
-    'manage_moon_reports_description'   => 'Allows a user to edit and/or delete moon reports.',
+    'manage_moon_reports_label'         => 'Verwalte Mondberichte',
+    'manage_moon_reports_description'   => 'Erlaubt einem Nutzer Mondberichte zu bearbeiten und zu löschen.',
 
     // Character Scope
     'character_asset_label'              => 'Zugriff auf Charakter Besitz gewähren.',
@@ -79,7 +79,7 @@ return [
     'character_mining_label'             => 'Zugriff auf Charakter Bergbau gewähren.',
     'character_mining_description'       => 'Zeigt Statistiken zu den Bergbauaktivitäten eines Charakters an. Dies basiert auf der persönlichen Bergbauauswertung im Spiel und zeigt Datum, System, Erz, Menge, Volumen und geschätzten Preis an.',
     'character_notification_label'       => 'Zugriff auf Charakter Mitteilungen gewähren.',
-    'character_notification_description' => 'Displays a characters notifications like DED payout grants or standings update notifiers',
+    'character_notification_description' => 'Zeigt eine Benachrichtung wie DED-Auszahlungen oder Änderungen des Ansehens',
     'character_planetary_label'          => 'Zugriff auf Charakter Planetare Interaktionen gewähren.',
     'character_planetary_description'    => 'Zeigt die Planeten an auf denen ein Charakter Command Center aufgestellt hat und die dazugehörigen verlinkten Installationen.',
     'character_research_label'           => 'Zugriff auf Charakter Forschungsagenten gewähren.',
@@ -166,29 +166,29 @@ return [
     'corporation_transaction_description'             => 'Zeigt die Transaktionen des Corp Kontos an.',
 
     // Alliance Scope
-    'alliance_contact_label'         => 'Grant access to Alliance Contacts',
-    'alliance_contact_description'   => 'Displays alliance contacts including name, standing and link to third-party platforms (like zkillboard).',
-    'alliance_summary_label'         => 'Grant access to Alliance Summary Sheet',
-    'alliance_summary_description'   => 'The Alliance Sheet contains basic information like the alliance name, founder, member corporations, etc...',
-    'alliance_tracking_label'        => 'Grant access to Alliance Tracking',
-    'alliance_tracking_description'  => 'Displays a report of users registered on SeAT in comparison to all members.',
+    'alliance_contact_label'         => 'Gewährt Zugriff auf Allianzverträge',
+    'alliance_contact_description'   => 'Zeigt Allianzkontake an. Inkludiert sind Name, Ansehen und Links zu Drittanbieter-Platformen wie zkillboard.',
+    'alliance_summary_label'         => 'Erlaube Zugriff auf die Allianzübersichtsseite',
+    'alliance_summary_description'   => 'Die Allianzübersichtsseite enthält grundlegende Informationen wie Allianzname, Gründer, Mitglieder und mehr.',
+    'alliance_tracking_label'        => 'Zugriff auf Allianz Tracking gewähren.',
+    'alliance_tracking_description'  => 'Zeigt an welche Piloten einer Corp sich im SeAT registriert haben und welche nicht.',
 
     // Mail Scope
-    'mail_bodies_label'   => 'Read Mail Bodies',
-    'mail_subjects_label' => 'Read Mail Subjects',
+    'mail_bodies_label'   => 'E-Mails lesen',
+    'mail_subjects_label' => 'E-Mail-Betreff lesen',
 
     // People Scope
-    'people_create_label' => 'Create People',
-    'people_edit_label'   => 'Edit People',
-    'people_view_label'   => 'View People',
+    'people_create_label' => 'Erstelle einen Nutzer',
+    'people_edit_label'   => 'Bearbeite einen Nutzer',
+    'people_view_label'   => 'Betrachte Nutzer',
 
     // Search Scope
-    'search_character_assets_label'        => 'Search Character Assets',
-    'search_character_contact_lists_label' => 'Search Character Contact Lists',
-    'search_character_mail_label'          => 'Search Character Mail',
-    'search_characters_label'              => 'Search Characters',
-    'search_character_skills_label'        => 'Search Character Skills',
-    'search_character_standings_label'     => 'Search Character Standings',
-    'search_corporation_assets_label'      => 'Search Corporation Assets',
-    'search_corporation_standings_label'   => 'Search Corporation Standings',
+    'search_character_assets_label'        => 'Durchsuche Charakter-Eigentum',
+    'search_character_contact_lists_label' => 'Durchsuche Charakter-Kontaktliste',
+    'search_character_mail_label'          => 'Durchsuche Charakter-Mails',
+    'search_characters_label'              => 'Charaktere durchsuchen',
+    'search_character_skills_label'        => 'Durchsuche Charakter-Skills',
+    'search_character_standings_label'     => 'Durchsuche Charakter-Ansehen',
+    'search_corporation_assets_label'      => 'Durchsuche Corporation-Gegenstände',
+    'search_corporation_standings_label'   => 'Durchsuche Corporation-Ansehen',
 ];

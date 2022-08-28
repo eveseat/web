@@ -22,10 +22,10 @@
 
 return [
     'planet'            => '行星',
-    'reinforcement'     => '增强时间',
-    'alliance'          => '被许可的联盟',
-    'standings'         => '被许可所需声望',
-    'standing_level'    => '所需声望等级',
-    'tax_alliance_corp' => '联盟公司税',
-    'tax_standings'     => '声望税',
+    'reinforcement'     => 'Rf. Period',
+    'alliance'          => 'Allow Ally.',
+    'standings'         => 'Allow Std.',
+    'standing_level'    => 'Min. Std. Lvl.',
+    'tax_alliance_corp' => 'Tax Alliance/Corp',
+    'tax_standings'     => 'Tax Standings',
 ];

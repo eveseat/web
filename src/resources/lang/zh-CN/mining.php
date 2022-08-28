@@ -21,16 +21,16 @@
  */
 
 return [
-    'date'            => '日期',
-    'time'            => '时间',
-    'system'          => '星系',
-    'ore'             => '矿石',
-    'type'            => '类型',
+    'date'            => 'Date',
+    'time'            => 'Time',
+    'system'          => 'System',
+    'ore'             => 'ORE',
+    'type'            => 'Type',
     'quantity'        => '数量',
-    'volume'          => '体积',
-    'estimated_value' => '预估价值',
-    'details'         => '细节',
-    'metadata'        => '元数据',
-    'compounds'       => '产物',
-    'history'         => '历史',
+    'volume'          => 'Volume',
+    'estimated_value' => 'Estimated Value',
+    'details'         => 'Details',
+    'metadata'        => 'Metadata',
+    'compounds'       => 'Compounds',
+    'history'         => 'History',
 ];

@@ -21,7 +21,7 @@
  */
 
 return [
-    'read'         => 'Read',
+    'read'         => 'Lire',
     'date'         => 'Date',
     'sender'       => 'Expéditeur',
     'subject'      => 'Objet',

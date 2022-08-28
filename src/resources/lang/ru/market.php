@@ -21,14 +21,14 @@
  */
 
 return [
-    'issued'  => 'Issued',
-    'expires' => 'Expires',
-    'buy'     => 'Buy',
-    'sell'    => 'Sell',
-    'order'   => 'Order',
-    'range'   => 'Range',
-    'volume'  => 'Volume',
-    'price'   => 'Price',
-    'total'   => 'Total',
-    'type'    => 'Type',
+    'issued'  => 'Выпущен',
+    'expires' => 'Срок истекает',
+    'buy'     => 'Купить',
+    'sell'    => 'Продать',
+    'order'   => 'Заказ',
+    'range'   => 'Дистанция',
+    'volume'  => 'Объем',
+    'price'   => 'Цена',
+    'total'   => 'Всего',
+    'type'    => 'Тип',
 ];

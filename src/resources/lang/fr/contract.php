@@ -33,7 +33,7 @@ return [
     'unknown'             => 'Inconnu',
     'item_exchange'       => 'Échange d\'objets',
     'auction'             => 'Enchère',
-    'courier'             => 'Courier',
+    'courier'             => 'Livraison',
     'loan'                => 'Caution',
 
     'outstanding'         => 'En attente',
@@ -45,7 +45,7 @@ return [
     'rejected'            => 'Rejeté',
     'failed'              => 'Échec',
     'deleted'             => 'Supprimé',
-    'reversed'            => 'Reversed',
+    'reversed'            => 'Annulé',
 
     'not_accepted'        => 'Non accepté',
 ];

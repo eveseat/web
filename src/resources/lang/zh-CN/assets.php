@@ -21,6 +21,6 @@
  */
 
 return [
-    'division' => '分类|分类',
-    'station_or_structure' => '空间站或晟威建筑',
+    'division' => '部门|部门',
+    'station_or_structure' => '空间站 / 建筑',
 ];

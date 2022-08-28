@@ -28,9 +28,9 @@ return [
     'moon'          => 'Lune|Lunes',
     'indicator'     => 'Indicateur|Indicateurs',
     'sovereignty'   => 'Souveraineté|Souverainetés',
-    'ubiquitous'    => 'Ubiquitous',
+    'ubiquitous'    => 'Répandus',
     'common'        => 'Commun',
-    'uncommon'      => 'Inhabituel',
+    'uncommon'      => 'Peu commun',
     'rare'          => 'Rare',
     'exceptional'   => 'Exceptionnel',
 ];

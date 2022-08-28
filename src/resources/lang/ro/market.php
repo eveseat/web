@@ -21,11 +21,14 @@
  */
 
 return [
-    'date'         => 'Datum',
-    'ship'         => 'Schiff',
-    'solar_system' => 'Sonnensystem',
-    'victim'       => 'Opfer',
-    'killer'       => 'Killer',
-    'attackers'    => 'Angreifer|Angreifer',
-    'items'        => 'Gegenstände',
+    'issued'  => 'Issued',
+    'expires' => 'Expires',
+    'buy'     => 'Buy',
+    'sell'    => 'Sell',
+    'order'   => 'Order',
+    'range'   => 'Range',
+    'volume'  => 'Volume',
+    'price'   => 'Price',
+    'total'   => 'Total',
+    'type'    => 'Type',
 ];

@@ -30,7 +30,7 @@ return [
     'moderator'    => 'Moderator(en)',
     'candidate'    => 'Kandidat(en)',
     'member_since' => 'Mitglied seit',
-    'applied_at'   => 'Applied At',
+    'applied_at'   => 'Beworben',
     'character'    => 'Charakter(e)',
     'show'         => 'Zeige',
     'delete'       => 'Löschen',
@@ -41,5 +41,5 @@ return [
     'join'         => 'Beitreten',
     'message'      => 'Nachricht',
     'remove'       => 'Entfernen',
-    'cancel'       => 'Cancel',
+    'cancel'       => 'Abbrechen',
 ];

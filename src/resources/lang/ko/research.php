@@ -22,8 +22,8 @@
 
 return [
     'start'         => 'Start',
-    'agent'         => 'Agent',
-    'skill'         => 'Skill',
-    'point_per_day' => 'Point per day|Points per day',
+    'agent'         => '에이전트',
+    'skill'         => '스킬',
+    'point_per_day' => '일 당 포인트',
     'remainder'     => 'Remainder',
 ];

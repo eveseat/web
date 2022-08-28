@@ -21,7 +21,7 @@
  */
 
 return [
-    'squad'        => 'Escouade|Escouades',
+    'squad'        => 'Brigade|Brigades',
     'name'         => 'Nom|Noms',
     'description'  => 'Description',
     'type'         => 'Type',

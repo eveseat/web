@@ -21,11 +21,9 @@
  */
 
 return [
-    'date'         => 'Datum',
-    'ship'         => 'Schiff',
-    'solar_system' => 'Sonnensystem',
-    'victim'       => 'Opfer',
-    'killer'       => 'Killer',
-    'attackers'    => 'Angreifer|Angreifer',
-    'items'        => 'Gegenstände',
+    'created'     => 'Created',
+    'label'       => 'Label',
+    'location'    => 'Location',
+    'notes'       => 'Notes',
+    'coordinates' => 'Coordinates',
 ];

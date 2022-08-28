@@ -21,11 +21,16 @@
  */
 
 return [
-    'date'         => 'Datum',
-    'ship'         => 'Schiff',
-    'solar_system' => 'Sonnensystem',
-    'victim'       => 'Opfer',
-    'killer'       => 'Killer',
-    'attackers'    => 'Angreifer|Angreifer',
-    'items'        => 'Gegenstände',
+    'region'        => 'Region|Regions',
+    'constellation' => 'Constellation|Constellations',
+    'system'        => 'Solar System|Solar Systems',
+    'planet'        => 'Planet|Planets',
+    'moon'          => 'Moon|Moons',
+    'indicator'     => 'Indicator|Indicators',
+    'sovereignty'   => 'Sovereignty|Sovereignties',
+    'ubiquitous'    => 'Ubiquitous',
+    'common'        => 'Common',
+    'uncommon'      => 'Uncommon',
+    'rare'          => 'Rare',
+    'exceptional'   => 'Exceptional',
 ];

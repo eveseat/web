@@ -22,5 +22,5 @@
 
 return [
     'division' => 'Division|Divisions',
-    'station_or_structure' => 'Station / Structure',
+    'station_or_structure' => 'Station / Struktur',
 ];

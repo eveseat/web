@@ -21,11 +21,9 @@
  */
 
 return [
-    'date'         => 'Datum',
-    'ship'         => 'Schiff',
-    'solar_system' => 'Sonnensystem',
-    'victim'       => 'Opfer',
-    'killer'       => 'Killer',
-    'attackers'    => 'Angreifer|Angreifer',
-    'items'        => 'Gegenstände',
+    'start'         => 'Start',
+    'agent'         => 'Agent',
+    'skill'         => 'Skill',
+    'point_per_day' => 'Point per day|Points per day',
+    'remainder'     => 'Remainder',
 ];

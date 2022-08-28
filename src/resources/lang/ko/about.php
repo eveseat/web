@@ -24,15 +24,15 @@ return [
     //
     // Licences Pane
     //
-    'licences_pane_title' => 'Licenses',
+    'licences_pane_title' => '라이선스',
     'licences_pane_third_party_used_licences' => 'SeAT uses many components which use the following licenses :',
     'licences_pane_seat_used_licence' => 'SeAT itself is published under the :licence_link.',
-    'licences_pane_ccp_third_party_licence' => 'Third Party License Agreement',
+    'licences_pane_ccp_third_party_licence' => '서드 파티 라이선스 계약',
 
     //
     // CCP Disclaimer pane
     //
-    'disclaimer_pane_title' => 'CCP Disclaimer',
+    'disclaimer_pane_title' => 'CCP 면책 조항',
     'disclaimer_pane_content' => ':eve_online and the EVE logo are the
             registered trademarks of :ccp_enterprise.
             All rights are reserved worldwide. All other trademarks are the property of their respective owners.

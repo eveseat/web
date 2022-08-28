@@ -21,11 +21,13 @@
  */
 
 return [
-    'date'         => 'Datum',
-    'ship'         => 'Schiff',
-    'solar_system' => 'Sonnensystem',
-    'victim'       => 'Opfer',
-    'killer'       => 'Killer',
-    'attackers'    => 'Angreifer|Angreifer',
-    'items'        => 'Gegenstände',
+    'start'               => 'Start',
+    'end'                 => 'End',
+    'location'            => 'Location',
+    'activity'            => 'Activity',
+    'runs'                => 'Runs',
+    'blueprint'           => 'Blueprint',
+    'product'             => 'Product',
+    'material_efficiency' => 'Material Efficiency',
+    'time_efficiency'     => 'Time Efficiency',
 ];

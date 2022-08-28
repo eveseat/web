@@ -21,11 +21,11 @@
  */
 
 return [
-    'date'         => 'Datum',
-    'ship'         => 'Schiff',
-    'solar_system' => 'Sonnensystem',
-    'victim'       => 'Opfer',
-    'killer'       => 'Killer',
-    'attackers'    => 'Angreifer|Angreifer',
-    'items'        => 'Gegenstände',
+    'planet'            => 'Planet',
+    'reinforcement'     => 'Rf. Period',
+    'alliance'          => 'Allow Ally.',
+    'standings'         => 'Allow Std.',
+    'standing_level'    => 'Min. Std. Lvl.',
+    'tax_alliance_corp' => 'Tax Alliance/Corp',
+    'tax_standings'     => 'Tax Standings',
 ];

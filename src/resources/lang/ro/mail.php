@@ -21,11 +21,12 @@
  */
 
 return [
-    'date'         => 'Datum',
-    'ship'         => 'Schiff',
-    'solar_system' => 'Sonnensystem',
-    'victim'       => 'Opfer',
-    'killer'       => 'Killer',
-    'attackers'    => 'Angreifer|Angreifer',
-    'items'        => 'Gegenstände',
+    'read'         => 'Read',
+    'date'         => 'Date',
+    'sender'       => 'Sender',
+    'subject'      => 'Subject',
+    'mailing_list' => 'Mailing List',
+    'sent'         => 'Sent',
+    'author'       => 'Author',
+    'recipients'   => 'Recipients',
 ];

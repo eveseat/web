@@ -21,11 +21,9 @@
  */
 
 return [
-    'date'         => 'Datum',
-    'ship'         => 'Schiff',
-    'solar_system' => 'Sonnensystem',
-    'victim'       => 'Opfer',
-    'killer'       => 'Killer',
-    'attackers'    => 'Angreifer|Angreifer',
-    'items'        => 'Gegenstände',
+    'jobs'                      => 'Job|Jobs',
+    'market_prices_region'      => 'Market Prices Region',
+    'market_prices_region_help' => 'This will be used by SeAT to collect market average prices from ESI. Those prices might be used in different place, like in contracts, fittings or mining ledgers.',
+    'admin'                     => 'Administrator|Administrators',
+    'admin_assist_edit'         => 'Attention, if you check this box, this user will get access to all settings, users and permissions. They will also bypass all the security layers because of this status. Proceed with caution.',
 ];
