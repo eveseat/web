@@ -44,6 +44,14 @@ return [
             'full'  => 'French',
         ],
         [
+            'short' => 'ko',
+            'full'  => 'Korean',
+        ],
+        [
+            'short' => 'ro',
+            'full'  => 'Romanian',
+        ],
+        [
             'short' => 'ru',
             'full'  => 'Russian',
         ],
