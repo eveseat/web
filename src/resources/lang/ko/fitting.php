@@ -21,10 +21,10 @@
  */
 
 return [
-    'name'            => 'Name',
-    'type'            => 'Type',
-    'items'           => 'Items',
-    'hull_estimated_value' => 'Hull Estimated Value',
-    'fitting_estimated_value' => 'Fitting Estimated Value',
-    'full_estimated_value' => 'Full Estimated Value',
+    'name'            => '이름',
+    'type'            => '종류',
+    'items'           => '항목',
+    'hull_estimated_value' => '선체 예상 가치',
+    'fitting_estimated_value' => '피팅 예상 가치',
+    'full_estimated_value' => '총 예상 가치',
 ];
