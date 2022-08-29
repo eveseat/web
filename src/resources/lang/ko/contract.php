@@ -21,7 +21,7 @@
  */
 
 return [
-    'created'             => '개설 시점',
+    'created'             => '생성일',
     'type'                => '종류',
     'issuer'              => '생성자',
     'assignee'            => 'Assignee',
