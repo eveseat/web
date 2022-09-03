@@ -21,7 +21,7 @@
  */
 
 Route::get('/view')
-    ->name('seatcore::seat.settings.view')
+    ->name('seatcore::seat.configuration.settings')
     ->uses('SeatController@getView');
 
 Route::get('/about')

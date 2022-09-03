@@ -140,7 +140,6 @@ class WebServiceProvider extends AbstractSeatPlugin
      */
     private function add_publications()
     {
-
         $this->publishes([
             __DIR__ . '/resources/css' => public_path('web/css'),
             __DIR__ . '/resources/img' => public_path('web/img'),
@@ -336,6 +335,13 @@ class WebServiceProvider extends AbstractSeatPlugin
             __DIR__ . '/Config/web.config.php', 'web.config');
         $this->mergeConfigFrom(
             __DIR__ . '/Config/web.locale.php', 'web.locale');
+
+        if ($this->app->configurationIsCached()) {
+            $config = $this->app->make('config');
+
+            $config->set('log-viewer.middleware', array_merge($config->get('log-viewer.middleware'), ['can:global.superuser']));
+            $config->set('log-viewer.include_files', array_merge($config->get('log-viewer.include_files'), ['eseye/*.log']));
+        }
 
         // Menu Configurations
         $this->mergeConfigFrom(

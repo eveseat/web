@@ -123,13 +123,19 @@ return [
                 'name'  => 'settings',
                 'label' => 'web::seat.settings',
                 'icon'  => 'fas fa-cog',
-                'route' => 'seatcore::seat.settings.view',
+                'route' => 'seatcore::seat.configuration.settings',
             ],
             [   // Security
                 'name'  => 'security logs',
                 'label' => 'web::seat.security_logs',
                 'icon'  => 'fas fa-list',
-                'route' => 'seatcore::configuration.security.logs',
+                'route' => 'seatcore::configuration.logs.security',
+            ],
+            [   // System
+                'name'  => 'system logs',
+                'label' => 'web::seat.system_logs',
+                'icon'  => 'fas fa-stream',
+                'route' => 'blv.index',
             ],
             [
                 // About

@@ -21,9 +21,9 @@
  */
 
 Route::get('/logs')
-    ->name('seatcore::configuration.security.logs')
+    ->name('seatcore::configuration.logs.security')
     ->uses('SecurityController@getLogs');
 
 Route::get('/logs/data')
-    ->name('seatcore::configuration.security.logs.data')
+    ->name('seatcore::configuration.logs.security.data')
     ->uses('SecurityController@getLogsData');
