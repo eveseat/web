@@ -1,7 +1,7 @@
 @extends('web::layouts.app')
 
 @section('content')
-<div class="container-fluid">
+<div>
   <div class="row">
     <div class="col-md-6">
 
