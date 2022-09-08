@@ -35,7 +35,7 @@
     $('table#logs').DataTable({
       processing: true,
       serverSide: true,
-      ajax      : '{{ route('seatcore::configuration.security.logs.data') }}',
+      ajax      : '{{ route('seatcore::configuration.logs.security.data') }}',
       columns   : [
         {data: 'created_at', name: 'created_at', render: human_readable},
         {data: 'user', name: 'user', orderable: false, searchable: false},
