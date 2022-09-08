@@ -68,7 +68,7 @@ class AlliancesController extends Controller
             return redirect()->back()
                 ->with('error', 'Your main character does not yet have affiliation data');
         }
-        
+
         $alliance = Alliance::find(auth()->user()->main_character->affiliation->alliance_id);
 
         if ($alliance == null) {
