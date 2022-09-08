@@ -24,6 +24,10 @@ Route::get('/')
     ->name('seatcore::alliance.list')
     ->uses('AlliancesController@index');
 
+Route::get('/mine')
+    ->name('seatcore::alliance.mine')
+    ->uses('AlliancesController@mine');
+
 Route::get('/{alliance}')
     ->name('seatcore::alliance.view.default')
     ->uses('AlliancesController@show');

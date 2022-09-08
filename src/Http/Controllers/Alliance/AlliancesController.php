@@ -55,6 +55,33 @@ class AlliancesController extends Controller
     }
 
     /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function mine()
+    {
+        if (auth()->user()->main_character == null) {
+            return redirect()->back()
+                ->with('error', 'You need to define a main character');
+        }
+
+        if (auth()->user()->main_character->affiliation == null) {
+            return redirect()->back()
+                ->with('error', 'Your main character does not yet have affiliation data');
+        }
+        
+        $alliance = Alliance::find(auth()->user()->main_character->affiliation->alliance_id);
+
+        if ($alliance == null) {
+                return redirect()->back()
+                    ->with('error', 'Unable to determine your alliance, are you in one?');
+        }
+
+        return redirect()->route('seatcore::alliance.view.default', [
+            'alliance' => $alliance,
+        ]);
+    }
+
+    /**
      * @param  \Seat\Eveapi\Models\Alliances\Alliance  $alliance
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -127,9 +154,10 @@ class AlliancesController extends Controller
             })->count();
         });
 
-        return view('web::alliance.sheet.sheet',
-            compact('alliance', 'sheet', 'tracked'));
-
+        return view(
+            'web::alliance.sheet.sheet',
+            compact('alliance', 'sheet', 'tracked')
+        );
     }
 
     /**
