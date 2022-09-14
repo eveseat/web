@@ -214,3 +214,8 @@ Route::get('/{corporation}/transactions')
 Route::post('/{corporation}/transactions/export')
     ->uses('WalletController@transactions')
     ->middleware('can:corporation.transaction,corporation');
+
+Route::get('/{corporation}/monitoring')
+    ->name('seatcore::corporation.view.monitoring')
+    ->uses('MonitoringController@show')
+    ->middleware('can:global.queue_manager');

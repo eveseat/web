@@ -46,3 +46,8 @@ Route::get('/{alliance}/tracking')
     ->name('seatcore::alliance.view.tracking')
     ->uses('AlliancesController@showTracking')
     ->middleware('can:alliance.tracking,alliance');
+
+Route::get('/{alliance}/monitoring')
+    ->name('seatcore::alliance.view.monitoring')
+    ->uses('MonitoringController@show')
+    ->middleware('can:global.queue_manager');

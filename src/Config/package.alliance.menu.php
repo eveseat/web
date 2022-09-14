@@ -57,4 +57,11 @@ return [
             ],
         ],
     ],
+    [
+        'name'       => '6-monitoring',
+        'label'      => 'web::seat.monitoring',
+        'icon'       => 'fas fa-heartbeat',
+        'permission' => 'global.queue_manager',
+        'route'      => 'seatcore::alliance.view.monitoring',
+    ],
 ];

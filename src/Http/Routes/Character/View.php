@@ -280,3 +280,8 @@ Route::get('/{character}/transactions')
 Route::post('/{character}/transactions/export')
     ->uses('WalletController@transactions')
     ->middleware('can:character.transaction,character');
+
+Route::get('/{character}/monitoring')
+    ->name('seatcore::character.view.monitoring')
+    ->uses('MonitoringController@show')
+    ->middleware('can:global.queue_manager');

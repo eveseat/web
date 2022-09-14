@@ -282,6 +282,7 @@ return [
     [
         'name' => '5-other',
         'label' => 'web::seat.other',
+        'icon'  => 'fas fa-random',
         'entries' => [
             [
                 'name'           => '0-standings',
@@ -293,4 +294,11 @@ return [
             ],
         ],
     ],
+    [
+        'name'       => '6-monitoring',
+        'label'      => 'web::seat.monitoring',
+        'icon'       => 'fas fa-heartbeat',
+        'permission' => 'global.queue_manager',
+        'route'      => 'seatcore::corporation.view.monitoring',
+    ]
 ];

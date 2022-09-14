@@ -65,6 +65,7 @@ use Seat\Web\Observers\CharacterAssetObserver;
 use Seat\Web\Observers\CharacterRoleObserver;
 use Seat\Web\Observers\CharacterSkillObserver;
 use Seat\Web\Observers\CharacterTitleObserver;
+use Seat\Web\Observers\EsiJobSubscriber;
 use Seat\Web\Observers\RefreshTokenObserver;
 use Seat\Web\Observers\SquadMemberObserver;
 use Seat\Web\Observers\SquadRoleObserver;
@@ -284,6 +285,9 @@ class WebServiceProvider extends AbstractSeatPlugin
 
         // Custom Events
         $this->app->events->listen('security.log', SecLog::class);
+
+        // Esi Jobs Events
+        $this->app->events->subscribe(EsiJobSubscriber::class);
 
         // Characters / Corporations first auth - Jobs Events
         CharacterRole::observe(CharacterRoleObserver::class);
