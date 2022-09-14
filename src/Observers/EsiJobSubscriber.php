@@ -30,6 +30,7 @@ use Seat\Web\Models\JobsTracking;
 
 /**
  * Class EsiJobSubscriber.
+ *
  * @package Seat\Web\Observers
  */
 class EsiJobSubscriber

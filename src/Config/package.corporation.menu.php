@@ -300,5 +300,5 @@ return [
         'icon'       => 'fas fa-heartbeat',
         'permission' => 'global.queue_manager',
         'route'      => 'seatcore::corporation.view.monitoring',
-    ]
+    ],
 ];

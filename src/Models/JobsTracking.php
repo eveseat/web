@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class JobsTracking.
+ *
  * @package Seat\Web\Models
  */
 class JobsTracking extends Model

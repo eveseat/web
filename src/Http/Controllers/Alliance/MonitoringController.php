@@ -28,6 +28,7 @@ use Seat\Web\Models\JobsTracking;
 
 /**
  * Class MonitoringController.
+ *
  * @package Seat\Web\Http\Controllers\Alliance
  */
 class MonitoringController extends Controller
