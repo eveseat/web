@@ -21,12 +21,12 @@
  */
 
 return [
-    'date'       => 'Date',
-    'ref_type'   => 'Type',
+    'date'       => '날짜',
+    'ref_type'   => '타입',
     'from_party' => 'From Party',
     'to_party'   => 'To Party',
-    'amount'     => 'Amount',
-    'balance'    => 'Balance',
+    'amount'     => '금액',
+    'balance'    => '잔액',
 
     'order'      => 'Order',
     'type'       => 'Type',

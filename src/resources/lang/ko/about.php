@@ -25,8 +25,8 @@ return [
     // Licences Pane
     //
     'licences_pane_title' => '라이선스',
-    'licences_pane_third_party_used_licences' => 'SeAT uses many components which use the following licenses :',
-    'licences_pane_seat_used_licence' => 'SeAT itself is published under the :licence_link.',
+    'licences_pane_third_party_used_licences' => 'SeAT는 다음 라이선스를 사용하는 많은 구성 요소를 사용합니다',
+    'licences_pane_seat_used_licence' => 'SeAT 자체는 :licence_link 에 따라 게시됩니다 .',
     'licences_pane_ccp_third_party_licence' => '서드 파티 라이선스 계약',
 
     //
@@ -50,9 +50,9 @@ return [
     //
 
     // questions
-    'contact_pane_title' => 'Contacts',
-    'contact_pane_question_discord_first_line' => 'Have a question ? Want to say thank you ? Need to express your opinion on SeAT ?',
-    'contact_pane_question_discord_second_line' => 'Find us on Discord !',
+    'contact_pane_title' => '연락처',
+    'contact_pane_question_discord_first_line' => '문의가 있습니까? 고맙다고 말하고 싶습니까? SeAT에 대한 의견을 보내고싶습니까?',
+    'contact_pane_question_discord_second_line' => '저희를 디스코드에서 찾으세요!',
     'contact_pane_question_forum' => 'Alternatively, you also can track the conversation on the official :link',
     'contact_pane_question_github' => 'Do you have a bug to report ? Please use our Github issue board :link.',
     'contact_pane_question_eve_online_forums_placeholder' => 'Eve Online Forums',

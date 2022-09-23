@@ -417,7 +417,7 @@ return [
     'tp_versions'                  => 'Third Party Versions',
     'installed'                    => 'Geïnstalleer',
     'current'                      => 'Huidige',
-    'url'                          => 'Skakeling',
+    'url'                          => 'URL',
     'google_analytics'             => 'Google Analytics',
     'allow_tracking'               => 'Allow Tracking',
     'tracking_id'                  => 'Unique Tracking ID',

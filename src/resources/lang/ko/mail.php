@@ -22,10 +22,10 @@
 
 return [
     'read'         => 'Read',
-    'date'         => 'Date',
-    'sender'       => 'Sender',
-    'subject'      => 'Subject',
-    'mailing_list' => 'Mailing List',
+    'date'         => '날짜',
+    'sender'       => '발신자',
+    'subject'      => '제목',
+    'mailing_list' => '메일링 리스트',
     'sent'         => 'Sent',
     'author'       => 'Author',
     'recipients'   => 'Recipients',

@@ -21,11 +21,11 @@
  */
 
 return [
-    'created'             => '개설 시점',
+    'created'             => '생성일',
     'type'                => '종류',
     'issuer'              => '생성자',
-    'assignee'            => 'Assignee',
-    'acceptor'            => 'Acceptor',
+    'assignee'            => '양수인',
+    'acceptor'            => '인수인',
     'status'              => '상태',
     'price'               => '가격',
     'reward'              => '보상',
