@@ -417,7 +417,7 @@ return [
     'tp_versions'                  => '第三方版本',
     'installed'                    => '已安装',
     'current'                      => '当前',
-    'url'                          => 'Url',
+    'url'                          => 'URL',
     'google_analytics'             => 'Google Analytics',
     'allow_tracking'               => '允许追踪',
     'tracking_id'                  => 'Unique Tracking ID',

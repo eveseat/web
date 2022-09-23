@@ -417,7 +417,7 @@ return [
     'tp_versions'                  => 'Версии сторонних разработчиков',
     'installed'                    => 'Установлено',
     'current'                      => 'Текущее',
-    'url'                          => 'Url',
+    'url'                          => 'URL',
     'google_analytics'             => 'Google аналатика',
     'allow_tracking'               => 'Позволить отслеживать',
     'tracking_id'                  => 'Уникальные ID отслеживания',
