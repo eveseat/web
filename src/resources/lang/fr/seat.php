@@ -417,7 +417,7 @@ return [
     'tp_versions'                  => 'Versions des composants tiers',
     'installed'                    => 'Installée',
     'current'                      => 'Actuelle',
-    'url'                          => 'Url',
+    'url'                          => 'URL',
     'google_analytics'             => 'Google Analytics',
     'allow_tracking'               => 'Autorisez le suivi',
     'tracking_id'                  => 'ID de suivi unique',
