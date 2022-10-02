@@ -21,13 +21,13 @@
  */
 
 return [
-    'region'        => '지역|지역',
-    'constellation' => '별자리|별자리',
-    'system'        => '성계|성계',
+    'region'        => '지역',
+    'constellation' => '성좌',
+    'system'        => '항성계',
     'planet'        => '행성|행성',
-    'moon'          => '달|달',
-    'indicator'     => '지표|지표',
-    'sovereignty'   => '주권|주권',
+    'moon'          => '위성',
+    'indicator'     => '지표',
+    'sovereignty'   => '소버린티',
     'ubiquitous'    => 'Ubiquitous',
     'common'        => 'Common',
     'uncommon'      => 'Uncommon',
