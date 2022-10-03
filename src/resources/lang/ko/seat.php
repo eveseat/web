@@ -83,7 +83,7 @@ return [
     'key'                   => 'Key',
     'log'                   => 'Log|Logs',
     'view'                  => 'View',
-    'item'                  => 'Item|Items',
+    'item'                  => '아이템',
     'usage'                 => 'Usage',
     'unit'                  => 'Unit|Units',
     'add'                   => 'Add',

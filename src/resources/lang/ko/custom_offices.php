@@ -23,9 +23,9 @@
 return [
     'planet'            => '행성',
     'reinforcement'     => '강화 기간',
-    'alliance'          => '얼라이언스에 접근허용',
-    'standings'         => '평판에따른 접근 허용',
+    'alliance'          => '얼라이언스에 접근 허용',
+    'standings'         => '평판에 따른 접근 허용',
     'standing_level'    => '최소 평판 수치',
     'tax_alliance_corp' => '얼라이언스/콥 세금',
-    'tax_standings'     => '평판에따른 세금',
+    'tax_standings'     => '평판에 따른 세금',
 ];

@@ -55,17 +55,17 @@ return [
     'contact_pane_question_discord_second_line' => '저희를 디스코드에서 찾으세요!',
     'contact_pane_question_forum' => 'Alternatively, you also can track the conversation on the official :link',
     'contact_pane_question_github' => 'Do you have a bug to report ? Please use our Github issue board :link.',
-    'contact_pane_question_eve_online_forums_placeholder' => 'Eve Online Forums',
+    'contact_pane_question_eve_online_forums_placeholder' => 'Eve Online 포럼',
     'contact_pane_question_github_here_placeholder' => 'here',
 
     // widgets
     'contact_widget_active_members' => ':count active members',
-    'contact_widget_join_us' => 'Join us !',
-    'contact_widget_documentation' => 'Documentation',
+    'contact_widget_join_us' => '가입하기',
+    'contact_widget_documentation' => '문서',
     'contact_widget_updated_at' => 'Updated :date_time',
     'contact_widget_read_me' => 'Read me !',
     'contact_widget_github_issues' =>  ':count Issues',
-    'contact_widget_github_contribute' => 'Contribute !',
+    'contact_widget_github_contribute' => '기여하기',
 
     //
     // Donate Pane

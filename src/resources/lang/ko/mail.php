@@ -27,6 +27,6 @@ return [
     'subject'      => '제목',
     'mailing_list' => '메일링 리스트',
     'sent'         => 'Sent',
-    'author'       => 'Author',
-    'recipients'   => 'Recipients',
+    'author'       => '작성자',
+    'recipients'   => '수신사',
 ];
