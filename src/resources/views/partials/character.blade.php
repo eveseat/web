@@ -1,4 +1,7 @@
-@if ($character->name && $character->name !== trans('web::seat.unknown'))
+@if($character === null)
+  {!! img('characters', 'portrait', null, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
+  <span>{{ trans('web::seat.unknown') }}</span>
+@elseif ($character->name && $character->name !== trans('web::seat.unknown'))
   @if(\Seat\Eveapi\Models\Character\CharacterInfo::find($character->character_id ?? $character->entity_id))
     <a href="{{ route('character.view.default', ['character' => $character->character_id ?? $character->entity_id]) }}">
       {!! img('characters', 'portrait', $character->character_id ?? $character->entity_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
