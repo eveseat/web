@@ -21,6 +21,6 @@
  */
 
 return [
-    'division' => 'Division|Divisions',
-    'station_or_structure' => 'Station / Structure',
+    'division' => 'Раздел|Разделы',
+    'station_or_structure' => 'Станция / Структура',
 ];
