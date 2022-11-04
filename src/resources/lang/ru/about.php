@@ -24,15 +24,15 @@ return [
     //
     // Licences Pane
     //
-    'licences_pane_title' => 'Licenses',
-    'licences_pane_third_party_used_licences' => 'SeAT uses many components which use the following licenses :',
-    'licences_pane_seat_used_licence' => 'SeAT itself is published under the :licence_link.',
-    'licences_pane_ccp_third_party_licence' => 'Third Party License Agreement',
+    'licences_pane_title' => 'Лицензии',
+    'licences_pane_third_party_used_licences' => 'SeAT работает на компонентах, использующих следующие лицензии:',
+    'licences_pane_seat_used_licence' => 'SeAT работает основываясь на :licence_link.',
+    'licences_pane_ccp_third_party_licence' => 'Лицензионное соглашение',
 
     //
     // CCP Disclaimer pane
     //
-    'disclaimer_pane_title' => 'CCP Disclaimer',
+    'disclaimer_pane_title' => 'Отказ от ответственности CCP',
     'disclaimer_pane_content' => ':eve_online and the EVE logo are the
             registered trademarks of :ccp_enterprise.
             All rights are reserved worldwide. All other trademarks are the property of their respective owners.
@@ -50,18 +50,18 @@ return [
     //
 
     // questions
-    'contact_pane_title' => 'Contacts',
-    'contact_pane_question_discord_first_line' => 'Have a question ? Want to say thank you ? Need to express your opinion on SeAT ?',
-    'contact_pane_question_discord_second_line' => 'Find us on Discord !',
+    'contact_pane_title' => 'Контакты',
+    'contact_pane_question_discord_first_line' => 'Есть вопросы? Хотите сказать спасибо? Нужно выразить свое мнение о SeAT ?',
+    'contact_pane_question_discord_second_line' => 'Найдите нас в Discord !',
     'contact_pane_question_forum' => 'Alternatively, you also can track the conversation on the official :link',
     'contact_pane_question_github' => 'Do you have a bug to report ? Please use our Github issue board :link.',
     'contact_pane_question_eve_online_forums_placeholder' => 'Eve Online Forums',
-    'contact_pane_question_github_here_placeholder' => 'here',
+    'contact_pane_question_github_here_placeholder' => 'сюда',
 
     // widgets
     'contact_widget_active_members' => ':count active members',
-    'contact_widget_join_us' => 'Join us !',
-    'contact_widget_documentation' => 'Documentation',
+    'contact_widget_join_us' => 'Присоединяйтесь к нам!',
+    'contact_widget_documentation' => 'Документация',
     'contact_widget_updated_at' => 'Updated :date_time',
     'contact_widget_read_me' => 'Read me !',
     'contact_widget_github_issues' =>  ':count Issues',
@@ -71,7 +71,7 @@ return [
     // Donate Pane
     //
 
-    'donate_pane_title' => 'Donations',
+    'donate_pane_title' => 'Пожертвования',
     'donate_pane_first_line' => 'If you like :seat_project and want to tips the community behind it, you can send ISK to
                     :seat_holding corporation.
                     This holding corporation is used to split donations monthly across all contributors.',
