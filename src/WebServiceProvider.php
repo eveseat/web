@@ -298,6 +298,7 @@ class WebServiceProvider extends AbstractSeatPlugin
     {
 
         Validator::extend('cron', 'Seat\Web\Http\Validation\Custom\Cron@validate');
+        Validator::extend('artisan', 'Seat\Web\Http\Validation\Custom\ArtisanCommand@validate');
     }
 
     /**
