@@ -55,6 +55,10 @@ return [
             'short' => 'ru',
             'full'  => 'Russian',
         ],
+        [
+            'short' => 'ja',
+            'full'  => 'Japanese',
+        ],
     ],
 
 ];
