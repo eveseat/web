@@ -21,16 +21,16 @@
  */
 
 return [
-    'region'        => 'Region|Regions',
-    'constellation' => 'Constellation|Constellations',
-    'system'        => 'Solar System|Solar Systems',
-    'planet'        => 'Planet|Planets',
-    'moon'          => 'Moon|Moons',
-    'indicator'     => 'Indicator|Indicators',
-    'sovereignty'   => 'Sovereignty|Sovereignties',
-    'ubiquitous'    => 'Ubiquitous',
-    'common'        => 'Common',
-    'uncommon'      => 'Uncommon',
-    'rare'          => 'Rare',
-    'exceptional'   => 'Exceptional',
+    'region'        => '地域',
+    'constellation' => 'コンステレーション|一覧',
+    'system'        => 'ソーラーシステム | 一覧',
+    'planet'        => '惑星 | 一覧',
+    'moon'          => '衛星 | 一覧',
+    'indicator'     => '表示 | 一覧',
+    'sovereignty'   => '支配者 | 一覧',
+    'ubiquitous'    => 'レア度: ユビキタス',
+    'common'        => 'レア度: コモン',
+    'uncommon'      => 'レア度: アンコモン',
+    'rare'          => 'レア度: レア',
+    'exceptional'   => 'レア度：エクセプショナル',
 ];
