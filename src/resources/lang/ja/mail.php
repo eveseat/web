@@ -21,12 +21,12 @@
  */
 
 return [
-    'read'         => 'Read',
-    'date'         => 'Date',
-    'sender'       => 'Sender',
-    'subject'      => 'Subject',
-    'mailing_list' => 'Mailing List',
-    'sent'         => 'Sent',
-    'author'       => 'Author',
-    'recipients'   => 'Recipients',
+    'read'         => '読み込む',
+    'date'         => '日時',
+    'sender'       => '送信者',
+    'subject'      => '件名',
+    'mailing_list' => 'メーリングリスト',
+    'sent'         => '送信済み',
+    'author'       => '作成者',
+    'recipients'   => '受信者',
 ];
