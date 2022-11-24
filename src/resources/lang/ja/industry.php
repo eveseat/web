@@ -21,13 +21,13 @@
  */
 
 return [
-    'start'               => 'Start',
-    'end'                 => 'End',
-    'location'            => 'Location',
-    'activity'            => 'Activity',
-    'runs'                => 'Runs',
-    'blueprint'           => 'Blueprint',
-    'product'             => 'Product',
-    'material_efficiency' => 'Material Efficiency',
-    'time_efficiency'     => 'Time Efficiency',
+    'start'               => '開始',
+    'end'                 => '終了',
+    'location'            => '場所',
+    'activity'            => 'アクティビティ',
+    'runs'                => '実行済み',
+    'blueprint'           => 'ブループリント',
+    'product'             => '製品',
+    'material_efficiency' => '素材効率',
+    'time_efficiency'     => '時間効率',
 ];
