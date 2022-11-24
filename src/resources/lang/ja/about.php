@@ -33,54 +33,53 @@ return [
     // CCP Disclaimer pane
     //
     'disclaimer_pane_title' => 'CCPによる免責条項',
-    'disclaimer_pane_content' => ':eve_online and the EVE logo are the
-            registered trademarks of :ccp_enterprise.
-            All rights are reserved worldwide. All other trademarks are the property of their respective owners.
-            EVE Online, the EVE logo, EVE and all associated logos and designs are the intellectual property of CCP hf.
-            All artwork, screenshots, characters, vehicles, storylines, world facts or other recognizable features of
-            the intellectual property relating to these trademarks are likewise the intellectual property of CCP hf.
-            CCP hf. has granted permission to :seat
-            to use EVE Online and all associated logos and designs for promotional and information purposes on
-            its project but does not endorse, and is not in any way affiliated with, SeAT. CCP is in no way responsible
-            for the content on or functioning of this software, nor can it be liable for any damage arising from the use
-            of this system.',
+    'disclaimer_pane_content' => ':eve_online 及びEVEロゴは
+            :ccp_enterprise の登録商標である。
+            全権利はCCPに帰属する。その他の全商標は各所有者の財産である。
+            EVE Online, EVE ロゴ, EVE及び関連するすべてのロゴ又はデザインは、全てCCPの知的財産である。
+            同様に、全てのアートワーク、スクリーンショット、キャラクター、乗物、物語設定、世界設定又はその他すべての認知可能な特徴は、全てCCPに帰属する知的財産である。
+            CCPはEVE Online及び関連するロゴ、又はデザインを本プロジェクトを促進するために使用することを許諾しているが、これはCCPがSeATと如何なる形態でも連携している、又はSeATを支持していることを意味しない。
+            CCPは本ソフトウェアの機能および内容に一切の責任を負わず、また本ソフトウェアの使用に伴って発生した損害についていかなる場合でも責任を負わないものとする。
+            
+            
+            
+            ',
 
     //
     // contacts pane
     //
 
     // questions
-    'contact_pane_title' => 'Contacts',
-    'contact_pane_question_discord_first_line' => 'Have a question ? Want to say thank you ? Need to express your opinion on SeAT ?',
-    'contact_pane_question_discord_second_line' => 'Find us on Discord !',
-    'contact_pane_question_forum' => 'Alternatively, you also can track the conversation on the official :link',
-    'contact_pane_question_github' => 'Do you have a bug to report ? Please use our Github issue board :link.',
-    'contact_pane_question_eve_online_forums_placeholder' => 'Eve Online Forums',
-    'contact_pane_question_github_here_placeholder' => 'here',
+    'contact_pane_title' => '連絡先',
+    'contact_pane_question_discord_first_line' => 'SeATについて質問がある、又はSeATに関して意見又は感謝を伝えたい場合、',
+    'contact_pane_question_discord_second_line' => 'Discordから我々とコンタクトしてください。',
+    'contact_pane_question_forum' => 'また、公式フォーラムにてこれまでの議論を見ることができます。 :link',
+    'contact_pane_question_github' => '報告すべきバグを発見した場合、Githubのissueを活用してください :link',
+    'contact_pane_question_eve_online_forums_placeholder' => 'Eve Online フォーラム',
+    'contact_pane_question_github_here_placeholder' => 'こちら',
 
     // widgets
-    'contact_widget_active_members' => ':count active members',
-    'contact_widget_join_us' => 'Join us !',
-    'contact_widget_documentation' => 'Documentation',
-    'contact_widget_updated_at' => 'Updated :date_time',
-    'contact_widget_read_me' => 'Read me !',
-    'contact_widget_github_issues' =>  ':count Issues',
+    'contact_widget_active_members' => ':count アクティブメンバー',
+    'contact_widget_join_us' => 'ご参加ください！',
+    'contact_widget_documentation' => 'ドキュメンテーション',
+    'contact_widget_updated_at' => ':date_timeを更新しました',
+    'contact_widget_read_me' => '最初に読んでください!',
+    'contact_widget_github_issues' =>  ':count issues',
     'contact_widget_github_contribute' => 'Contribute !',
 
     //
     // Donate Pane
     //
 
-    'donate_pane_title' => 'Donations',
-    'donate_pane_first_line' => 'If you like :seat_project and want to tips the community behind it, you can send ISK to
-                    :seat_holding corporation.
-                    This holding corporation is used to split donations monthly across all contributors.',
-    'donate_pane_second_line' => 'Some of it will be held as a prize pool for contents :icon.',
+    'donate_pane_title' => '寄付',
+    'donate_pane_first_line' => 'もし, SeATプロジェクトを気に入って, コミュニティを支援したい場合には, 以下にISKを送って下さい!
+                    : seatが保有するコーポレーションです. 
+                    このコーポレーションは, 月ごとに全てのコントリビューターに寄付を分割するために使用されます.',
+    'donate_pane_second_line' => '寄付の一部はコンテストの賞品プールとして保持されます. :icon.',
 
     //
     // Security Pane
     //
-    'security_pane_title' => 'Security Concerns',
-    'security_pane_content' => 'If you find any security vulnerabilities within SeAT, please send an email to
-            :contact_email to address instead of creating a public Github issue.',
+    'security_pane_title' => 'セキュリティに関する心配事',
+    'security_pane_content' => 'もしSeAT内でセキュリティに関する脆弱性を発見した場合には, Githubのpublicでissueを立てる代わりに            :contact_emal 当てにメールを送ってください.',
 ];
