@@ -21,9 +21,9 @@
  */
 
 return [
-    'start'         => 'Start',
-    'agent'         => 'Agent',
-    'skill'         => 'Skill',
-    'point_per_day' => 'Point per day|Points per day',
-    'remainder'     => 'Remainder',
+    'start'         => '開始',
+    'agent'         => '代理人',
+    'skill'         => 'スキル',
+    'point_per_day' => '1日あたりのポイント|一覧',
+    'remainder'     => '残り',
 ];
