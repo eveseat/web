@@ -21,11 +21,11 @@
  */
 
 return [
-    'planet'            => 'Planet',
-    'reinforcement'     => 'Rf. Period',
-    'alliance'          => 'Allow Ally.',
-    'standings'         => 'Allow Std.',
-    'standing_level'    => 'Min. Std. Lvl.',
-    'tax_alliance_corp' => 'Tax Alliance/Corp',
-    'tax_standings'     => 'Tax Standings',
+    'planet'            => '惑星',
+    'reinforcement'     => 'Rf期間',
+    'alliance'          => '許可アライアンス',
+    'standings'         => '許可スタンデイング',
+    'standing_level'    => '最低スタンデイング',
+    'tax_alliance_corp' => '税率　アライアンス/コーポレーション',
+    'tax_standings'     => '税率 スタンディング',
 ];
