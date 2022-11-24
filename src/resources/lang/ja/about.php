@@ -81,5 +81,6 @@ return [
     // Security Pane
     //
     'security_pane_title' => 'セキュリティに関する心配事',
-    'security_pane_content' => 'もしSeAT内でセキュリティに関する脆弱性を発見した場合には, Githubのpublicでissueを立てる代わりに            :contact_emal 当てにメールを送ってください.',
+    'security_pane_content' => 'もしSeAT内でセキュリティに関する脆弱性を発見した場合には, Githubのpublicでissueを立てる代わりに
+            :contact_emal 当てにメールを送ってください.',
 ];
