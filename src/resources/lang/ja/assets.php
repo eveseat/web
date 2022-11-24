@@ -21,6 +21,6 @@
  */
 
 return [
-    'division' => 'Division|Divisions',
-    'station_or_structure' => 'Station / Structure',
+    'division' => '部門 | 一覧',
+    'station_or_structure' => 'ステーション | ストラクチャ',
 ];
