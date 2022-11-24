@@ -21,9 +21,9 @@
  */
 
 return [
-    'created'     => 'Created',
-    'label'       => 'Label',
-    'location'    => 'Location',
-    'notes'       => 'Notes',
-    'coordinates' => 'Coordinates',
+    'created'     => '作成済み',
+    'label'       => 'ラベル',
+    'location'    => '位置',
+    'notes'       => '備考',
+    'coordinates' => '座標',
 ];
