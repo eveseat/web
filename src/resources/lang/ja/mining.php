@@ -21,16 +21,16 @@
  */
 
 return [
-    'date'            => 'Date',
-    'time'            => 'Time',
-    'system'          => 'System',
-    'ore'             => 'ORE',
-    'type'            => 'Type',
-    'quantity'        => 'Quantity',
-    'volume'          => 'Volume',
-    'estimated_value' => 'Estimated Value',
-    'details'         => 'Details',
-    'metadata'        => 'Metadata',
-    'compounds'       => 'Compounds',
-    'history'         => 'History',
+    'date'            => '日時',
+    'time'            => '時間',
+    'system'          => 'システム',
+    'ore'             => '鉱石',
+    'type'            => 'タイプ',
+    'quantity'        => '量',
+    'volume'          => '体積',
+    'estimated_value' => '推定価格',
+    'details'         => '詳細',
+    'metadata'        => 'メタデータ',
+    'compounds'       => '化合物',
+    'history'         => '履歴',
 ];
