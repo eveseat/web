@@ -21,13 +21,13 @@
  */
 
 return [
-    'date'          => 'Date',
-    'owner'         => 'Owner',
-    'description'   => 'Description',
-    'status'        => 'Status',
+    'date'          => '日時',
+    'owner'         => '所有者',
+    'description'   => '説明',
+    'status'        => 'ステータス',
 
-    'not_responded' => 'Not responded',
-    'accepted'      => 'Accepted',
-    'tentative'     => 'Tentative',
-    'declined'      => 'Declined',
+    'not_responded' => '応答なし',
+    'accepted'      => '承認',
+    'tentative'     => '仮承諾',
+    'declined'      => '拒否',
 ];
