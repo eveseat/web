@@ -21,6 +21,11 @@
  */
 
 return [
-    'division' => 'Раздел|Разделы',
-    'station_or_structure' => 'Станция / Структура',
+    'date'         => '日時',
+    'ship'         => '船',
+    'solar_system' => 'ソーラーシステム',
+    'victim'       => '犠牲者',
+    'killer'       => '殺害者',
+    'attackers'    => '攻撃者 | 一覧',
+    'items'        => 'アイテム | 一覧',
 ];

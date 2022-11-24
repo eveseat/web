@@ -21,6 +21,13 @@
  */
 
 return [
-    'division' => 'Раздел|Разделы',
-    'station_or_structure' => 'Станция / Структура',
+    'start'               => '開始',
+    'end'                 => '終了',
+    'location'            => '場所',
+    'activity'            => 'アクティビティ',
+    'runs'                => '実行済み',
+    'blueprint'           => 'ブループリント',
+    'product'             => '製品',
+    'material_efficiency' => '素材効率',
+    'time_efficiency'     => '時間効率',
 ];

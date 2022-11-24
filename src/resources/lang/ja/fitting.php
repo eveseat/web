@@ -21,6 +21,10 @@
  */
 
 return [
-    'division' => 'Раздел|Разделы',
-    'station_or_structure' => 'Станция / Структура',
+    'name'            => '名前',
+    'type'            => 'タイプ',
+    'items'           => '項目',
+    'hull_estimated_value' => '船体推定価格',
+    'fitting_estimated_value' => 'Fit推定価格',
+    'full_estimated_value' => '合計推定価格',
 ];

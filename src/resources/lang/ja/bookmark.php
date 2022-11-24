@@ -21,6 +21,9 @@
  */
 
 return [
-    'division' => 'Раздел|Разделы',
-    'station_or_structure' => 'Станция / Структура',
+    'created'     => '作成済み',
+    'label'       => 'ラベル',
+    'location'    => '位置',
+    'notes'       => '備考',
+    'coordinates' => '座標',
 ];

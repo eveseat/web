@@ -21,6 +21,11 @@
  */
 
 return [
-    'division' => 'Раздел|Разделы',
-    'station_or_structure' => 'Станция / Структура',
+    'planet'            => '惑星',
+    'reinforcement'     => 'Rf期間',
+    'alliance'          => '許可アライアンス',
+    'standings'         => '許可スタンデイング',
+    'standing_level'    => '最低スタンデイング',
+    'tax_alliance_corp' => '税率　アライアンス/コーポレーション',
+    'tax_standings'     => '税率 スタンディング',
 ];

@@ -21,6 +21,12 @@
  */
 
 return [
-    'division' => 'Раздел|Разделы',
-    'station_or_structure' => 'Станция / Структура',
+    'read'         => '読み込む',
+    'date'         => '日時',
+    'sender'       => '送信者',
+    'subject'      => '件名',
+    'mailing_list' => 'メーリングリスト',
+    'sent'         => '送信済み',
+    'author'       => '作成者',
+    'recipients'   => '受信者',
 ];

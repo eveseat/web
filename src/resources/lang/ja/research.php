@@ -21,6 +21,9 @@
  */
 
 return [
-    'division' => 'Раздел|Разделы',
-    'station_or_structure' => 'Станция / Структура',
+    'start'         => '開始',
+    'agent'         => '代理人',
+    'skill'         => 'スキル',
+    'point_per_day' => '1日あたりのポイント|一覧',
+    'remainder'     => '残り',
 ];

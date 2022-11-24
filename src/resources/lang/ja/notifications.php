@@ -21,6 +21,7 @@
  */
 
 return [
-    'division' => 'Раздел|Разделы',
-    'station_or_structure' => 'Станция / Структура',
+    'date'   => '日時',
+    'type'   => 'タイプ',
+    'sender' => '送信者',
 ];
