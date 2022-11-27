@@ -24,6 +24,10 @@ Route::get('/')
     ->name('seatcore::corporation.list')
     ->uses('CorporationsController@index');
 
+Route::get('/mine')
+    ->name('seatcore::corporation.mine')
+    ->uses('CorporationsController@mine');
+
 Route::get('/{corporation}')
     ->name('seatcore::corporation.view.default')
     ->uses('CorporationsController@show');

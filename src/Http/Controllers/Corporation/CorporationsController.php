@@ -51,6 +51,33 @@ class CorporationsController extends Controller
     }
 
     /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function mine()
+    {
+        if (auth()->user()->main_character == null) {
+            return redirect()->back()
+                ->with('error', 'You need to define a main character');
+        }
+
+        if (auth()->user()->main_character->affiliation == null) {
+            return redirect()->back()
+                ->with('error', 'Your main character does not yet have affiliation data');
+        }
+
+        $corporation = CorporationInfo::find(auth()->user()->main_character->affiliation->corporation_id);
+
+        if ($corporation == null) {
+            return redirect()->back()
+                ->with('error', 'Unable to determine your corporation');
+        }
+
+        return redirect()->route('seatcore::corporation.view.default', [
+            'corporation' => $corporation,
+        ]);
+    }
+
+    /**
      * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
      * @return \Illuminate\Http\RedirectResponse
      */

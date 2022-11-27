@@ -41,6 +41,12 @@ return [
                 'icon'  => 'fab fa-fort-awesome',
                 'route' => 'seatcore::alliance.list',
             ],
+            [
+                'name'  => 'my alliance',
+                'label' => 'web::seat.my_alliance',
+                'icon'  => 'fas fa-chess-rook',
+                'route' => 'seatcore::alliance.mine',
+            ],
         ],
     ],
     [
@@ -55,6 +61,12 @@ return [
                 'label' => 'web::seat.all_corp',
                 'icon'  => 'fas fa-hotel',
                 'route' => 'seatcore::corporation.list',
+            ],
+            [
+                'name'  => 'my corporation',
+                'label' => 'web::seat.my_corporation',
+                'icon'  => 'fas fa-jedi',
+                'route' => 'seatcore::corporation.mine',
             ],
         ],
     ],
