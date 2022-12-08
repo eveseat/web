@@ -24,6 +24,7 @@ namespace Seat\Web\Models\Acl;
 
 use Illuminate\Database\Eloquent\Model;
 use Intervention\Image\Facades\Image;
+use OpenApi\Annotations as OA;
 use Seat\Web\Models\Squads\Squad;
 use Seat\Web\Models\Squads\SquadRole;
 use Seat\Web\Models\User;
