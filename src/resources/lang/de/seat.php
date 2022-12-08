@@ -224,7 +224,7 @@ return [
     // Dashboard
     'home_page'                   => 'Home',
     'dashboard'                   => 'Übersichtsseite',
-    'online_layers'               => 'Spieler Online',
+    'online_players'              => 'Spieler Online',
     'owned_api_keys'              => 'Eigene API Keys',
     'total_character_isk'         => 'Akkumulierte ISK',
     'total_character_skillpoints' => 'Akkumulierte Skillpunkte',
