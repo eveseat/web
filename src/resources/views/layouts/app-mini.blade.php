@@ -16,6 +16,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('web/css/all.min.css') }}">
     <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('web/css/seat.css') }}">
     <link rel="stylesheet" href="{{ asset('web/css/adminlte.min.css') }}">
     <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
