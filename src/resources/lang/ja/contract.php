@@ -33,10 +33,10 @@ return [
     'unknown'             => '不明',
     'item_exchange'       => 'アイテム交換',
     'auction'             => 'オークション',
-    'courier'             => '搬送',
+    'courier'             => '輸送',
     'loan'                => 'ローン',
 
-    'outstanding'         => '未処理',
+    'outstanding'         => '未締結',
     'in_progress'         => '進行中',
     'finished_issuer'     => '完了した発行者',
     'finished_contractor' => '完了した契約者',
