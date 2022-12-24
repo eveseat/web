@@ -122,6 +122,10 @@
           </span>
         @endif
       </dd>
+      @if(! is_null($character->title))
+      <dt>{{ trans_choice('web::seat.title', 1) }}</dt>
+      <dd>{{ $character->title }}</dd>
+      @endif
 
     </dl>
   </div>
