@@ -77,7 +77,7 @@ class LoginController extends Controller
     {
 
         // Warn if SSO has not been configured yet.
-        if (strlen(config('eseye.esi.auth.client_secret')) < 5 || strlen(config('eeseye.esi.auth.client_id')) < 5)
+        if (strlen(config('eseye.esi.auth.client_secret')) < 5 || strlen(config('eseye.esi.auth.client_id')) < 5)
             session()->flash('warning', trans('web::seat.sso_config_warning'));
 
         // Sign in message text
