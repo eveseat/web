@@ -57,7 +57,9 @@ class UserSharelink extends Model
     /**
      * @var array
      */
-    protected $dates = ['expires_on'];
+    protected $casts = [
+        'expires_on' => 'datetime',
+    ];
 
     /**
      * Each sharelink item belongs to a user.

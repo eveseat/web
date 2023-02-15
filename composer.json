@@ -36,7 +36,7 @@
     "eveseat/services": "5.0.x-dev",
     "guzzlehttp/guzzle": "^7.0",
     "intervention/image": "^2.0",
-    "laravel/framework": "^9.0",
+    "laravel/framework": "^10.0",
     "laravel/horizon": "^5.0",
     "laravel/socialite": "^5.0",
     "laravel/ui": "^3.0",
