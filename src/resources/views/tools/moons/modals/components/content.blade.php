@@ -1,5 +1,5 @@
 <h4>{{ $moon->name }}</h4>
-<p class="lead">Provided figures are based on a chunk of one hour with {{ number_format(40000, 2) }} m3. Reprocessed figures are based on a {{ (setting('reprocessing_yield') ?: 0.80) * 100 }}% reprocessing yield.</p>
+<p class="lead">Provided figures are based on a chunk of one hour with {{ number_format(Seat\Eveapi\Models\Industry\CorporationIndustryMiningExtraction::BASE_DRILLING_VOLUME, 2) }} m3. Reprocessed figures are based on a {{ (setting('reprocessing_yield') ?: 0.80) * 100 }}% reprocessing yield.</p>
 
 <h4>Raw Materials</h4>
 
@@ -52,7 +52,7 @@
         return $type->materials->map(function ($material) use ($type) {
           // composite quantity = (moon rate * chunk volume) / composite volume
           // reprocessed quantity = composite quantity * material quantity / 100
-          $material->pivot->quantity = intdiv(($type->pivot->rate * 40000 * 720) / $type->volume, 100) * $material->pivot->quantity * (setting('reprocessing_yield') ?: 0.80);
+          $material->pivot->quantity = intdiv(($type->pivot->rate * Seat\Eveapi\Models\Industry\CorporationIndustryMiningExtraction::BASE_DRILLING_VOLUME * 720) / $type->volume, 100) * $material->pivot->quantity * (setting('reprocessing_yield') ?: 0.80);
           return $material;
         });
       })->collapse()->groupBy('typeID') as $material
