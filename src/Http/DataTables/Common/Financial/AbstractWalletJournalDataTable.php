@@ -24,6 +24,7 @@ namespace Seat\Web\Http\DataTables\Common\Financial;
 
 use Illuminate\Support\Facades\Lang;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Http\JsonResponse;
 
 /**
  * Class AbstractWalletJournalDataTable.
@@ -37,7 +38,7 @@ abstract class AbstractWalletJournalDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax() : JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -87,7 +88,7 @@ abstract class AbstractWalletJournalDataTable extends DataTable
                 $query->whereIn('ref_type', $ref_types);
             })
             ->rawColumns(['date', 'first_party.name', 'second_party.name'])
-            ->make(true);
+            ->toJson();
     }
 
     /**

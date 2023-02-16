@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\DataTables\Common\Military;
 
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Http\JsonResponse;
 
 /**
  * Class AbstractStandingDataTable.
@@ -36,7 +37,7 @@ abstract class AbstractStandingDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax() : JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -71,7 +72,7 @@ abstract class AbstractStandingDataTable extends DataTable
                     return '<span class="label label-danger">' . $row->standing . '</span>';
             })
             ->rawColumns(['from.name', 'standing'])
-            ->make(true);
+            ->toJson();
     }
 
     /**

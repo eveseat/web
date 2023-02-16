@@ -25,6 +25,7 @@ namespace Seat\Web\Http\DataTables\Configuration;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Web\Models\User;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Http\JsonResponse;
 
 /**
  * Class UsersDataTable.
@@ -36,7 +37,7 @@ class UsersDataTable extends DataTable
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function ajax()
+    public function ajax() : JsonResponse
     {
         return datatables()->eloquent($this->query())
             ->editColumn('users.name', function ($row) {
@@ -86,7 +87,7 @@ class UsersDataTable extends DataTable
                 });
             })
             ->rawColumns(['users.name', 'characters.name', 'created_at', 'last_login', 'admin', 'roles', 'action'])
-            ->make(true);
+            ->toJson();
     }
 
     /**

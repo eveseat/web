@@ -24,6 +24,7 @@ namespace Seat\Web\Http\DataTables\Corporation\Intel;
 
 use Seat\Eveapi\Models\Corporation\CorporationRoleHistory;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Http\JsonResponse;
 
 /**
  * Class LogDataTable.
@@ -32,7 +33,7 @@ use Yajra\DataTables\Services\DataTable;
  */
 class LogDataTable extends DataTable
 {
-    public function ajax()
+    public function ajax() : JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -49,7 +50,7 @@ class LogDataTable extends DataTable
                 return str_replace('_', ' ', $row->role);
             })
             ->rawColumns(['changed_at', 'issuer.name', 'character.name'])
-            ->make(true);
+            ->toJson();
     }
 
     public function html()

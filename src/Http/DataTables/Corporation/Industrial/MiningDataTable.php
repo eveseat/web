@@ -24,6 +24,7 @@ namespace Seat\Web\Http\DataTables\Corporation\Industrial;
 
 use Seat\Eveapi\Models\Industry\CharacterMining;
 use Seat\Web\Http\DataTables\Common\Industrial\AbstractMiningDataTable;
+use Illuminate\Http\JsonResponse;
 
 /**
  * Class IndustryDataTable.
@@ -32,14 +33,14 @@ use Seat\Web\Http\DataTables\Common\Industrial\AbstractMiningDataTable;
  */
 class MiningDataTable extends AbstractMiningDataTable
 {
-    public function ajax()
+    public function ajax() : JsonResponse
     {
         return $this->data()
             ->editColumn('character.name', function ($row) {
                 return view('web::partials.character', ['character' => $row->character])->render();
             })
             ->rawColumns(['date', 'action', 'solar_system.name', 'type.typeName', 'character.name'])
-            ->make(true);
+            ->toJson();
     }
 
     /**

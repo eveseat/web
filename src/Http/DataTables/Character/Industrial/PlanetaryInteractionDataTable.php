@@ -24,6 +24,7 @@ namespace Seat\Web\Http\DataTables\Character\Industrial;
 
 use Seat\Eveapi\Models\PlanetaryInteraction\CharacterPlanet;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Http\JsonResponse;
 
 /**
  * Class PlanetaryInteractionDataTable.
@@ -37,11 +38,11 @@ class PlanetaryInteractionDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax() : JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
-            ->make(true);
+            ->toJson();
     }
 
     /**

@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\DataTables\Common\Financial;
 
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Http\JsonResponse;
 
 /**
  * Class AbstractWalletTransactionDataTable.
@@ -36,7 +37,7 @@ abstract class AbstractWalletTransactionDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax() : JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -92,7 +93,7 @@ abstract class AbstractWalletTransactionDataTable extends DataTable
             })
             ->orderColumn('total', '(unit_price * quantity) $1')
             ->rawColumns(['date', 'is_buy', 'type.typeName', 'party.name'])
-            ->make(true);
+            ->toJson();
     }
 
     /**

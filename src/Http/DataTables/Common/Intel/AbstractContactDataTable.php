@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\DataTables\Common\Intel;
 
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Http\JsonResponse;
 
 /**
  * Class AbstractContactDataTable.
@@ -36,7 +37,7 @@ abstract class AbstractContactDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax() : JsonResponse
     {
 
         return datatables()
@@ -88,7 +89,7 @@ abstract class AbstractContactDataTable extends DataTable
                 'standing', 'entity.name', 'entity.affiliation.corporation.name', 'entity.affiliation.alliance.name',
                 'action',
             ])
-            ->make(true);
+            ->toJson();
     }
 
     /**
