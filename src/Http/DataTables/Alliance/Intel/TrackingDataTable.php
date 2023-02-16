@@ -24,6 +24,7 @@ namespace Seat\Web\Http\DataTables\Alliance\Intel;
 
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Http\JsonResponse;
 
 /**
  * Class CorporationDataTable.
@@ -37,7 +38,7 @@ class TrackingDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax() : JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -68,7 +69,7 @@ class TrackingDataTable extends DataTable
                 return view('web::corporation.partials.delete', compact('row'));
             })
             ->rawColumns(['name', 'ceo.name'])
-            ->make(true);
+            ->toJson();
     }
 
     /**
