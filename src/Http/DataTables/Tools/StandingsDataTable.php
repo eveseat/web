@@ -24,6 +24,7 @@ namespace Seat\Web\Http\DataTables\Tools;
 
 use Seat\Web\Models\StandingsProfileStanding;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Http\JsonResponse;
 
 /**
  * Class StandingsDataTable.
@@ -35,7 +36,7 @@ class StandingsDataTable extends DataTable
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function ajax()
+    public function ajax() : JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -75,7 +76,7 @@ class StandingsDataTable extends DataTable
                 return view('web::tools.standings.partials.delete_button', ['id' => $row->standings_profile_id, 'entity_id' => $row->entity_id])->render();
             })
             ->rawColumns(['action', 'entity_name.name', 'standing', 'category'])
-            ->make(true);
+            ->toJson();
     }
 
     /**

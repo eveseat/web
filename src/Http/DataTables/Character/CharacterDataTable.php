@@ -24,6 +24,7 @@ namespace Seat\Web\Http\DataTables\Character;
 
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Http\JsonResponse;
 
 /**
  * Class CharacterDataTable.
@@ -37,7 +38,7 @@ class CharacterDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax() : JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -71,8 +72,7 @@ class CharacterDataTable extends DataTable
             ->rawColumns([
                 'name', 'affiliation.corporation.name', 'affiliation.alliance.name', 'affiliation.faction.name',
                 'refresh_token.expires_on',
-            ])
-            ->make(true);
+            ])->toJson();
     }
 
     /**

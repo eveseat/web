@@ -24,6 +24,7 @@ namespace Seat\Web\Http\DataTables\Character\Intel;
 
 use Seat\Eveapi\Models\Character\CharacterNotification;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Http\JsonResponse;
 
 /**
  * Class NotificationDataTable.
@@ -37,7 +38,7 @@ class NotificationDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax() : JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -60,7 +61,7 @@ class NotificationDataTable extends DataTable
                 return $row->sender->name;
             })
             ->rawColumns(['timestamp', 'type', 'sender.name'])
-            ->make(true);
+            ->toJson();
     }
 
     /**

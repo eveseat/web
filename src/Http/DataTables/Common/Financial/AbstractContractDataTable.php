@@ -24,6 +24,7 @@ namespace Seat\Web\Http\DataTables\Common\Financial;
 
 use Illuminate\Support\Facades\Lang;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Http\JsonResponse;
 
 /**
  * Class AbstractContractDataTable.
@@ -37,7 +38,7 @@ abstract class AbstractContractDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax() : JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -127,7 +128,7 @@ abstract class AbstractContractDataTable extends DataTable
                 'action', 'detail.date_issued', 'detail.issuer.name', 'detail.assignee.name', 'detail.acceptor.name',
                 'detail.status', 'detail.price', 'detail.reward',
             ])
-            ->make(true);
+            ->toJson();
     }
 
     /**

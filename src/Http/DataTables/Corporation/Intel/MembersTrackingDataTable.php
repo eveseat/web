@@ -29,6 +29,7 @@ use Seat\Eveapi\Models\Universe\UniverseStructure;
 use Seat\Web\Http\DataTables\Exports\MembersTrackingDataTableExport;
 use Seat\Web\Models\User;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Http\JsonResponse;
 
 /**
  * Class MembersTrackingDataTable.
@@ -44,7 +45,7 @@ class MembersTrackingDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax() : JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -109,7 +110,7 @@ class MembersTrackingDataTable extends DataTable
                     });
             })
             ->rawColumns(['refresh_token.expires_on', 'character.name', 'ship.typeName', 'start_date', 'logon_date'])
-            ->make(true);
+            ->toJson();
     }
 
     /**

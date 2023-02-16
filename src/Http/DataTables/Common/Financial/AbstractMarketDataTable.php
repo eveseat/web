@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\DataTables\Common\Financial;
 
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Http\JsonResponse;
 
 /**
  * Class AbstractMarketDataTable.
@@ -36,7 +37,7 @@ abstract class AbstractMarketDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax() : JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -93,7 +94,7 @@ abstract class AbstractMarketDataTable extends DataTable
             ->orderColumn('total', '(price * volume_total) $1')
             ->orderColumn('volume', '(volume_total - volume_remain) $1')
             ->rawColumns(['issued', 'is_buy_order', 'expires', 'type.typeName'])
-            ->make(true);
+            ->toJson();
     }
 
     /**

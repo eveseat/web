@@ -24,6 +24,7 @@ namespace Seat\Web\Http\DataTables\Common\Intel;
 
 use Seat\Web\Http\DataTables\Common\IColumn;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Http\JsonResponse;
 
 /**
  * Class AbstractAssetDataTable.
@@ -37,7 +38,7 @@ abstract class AbstractAssetDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax() : JsonResponse
     {
         $location_column = $this->getLocationFlagColumn($this);
         $station_column = $this->getStationColumn($this);
@@ -95,7 +96,7 @@ abstract class AbstractAssetDataTable extends DataTable
             $ajax->addColumn($name, $column);
         }
 
-        return $ajax->make(true);
+        return $ajax->toJson();
     }
 
     /**
