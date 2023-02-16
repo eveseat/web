@@ -1,6 +1,6 @@
 <h4>{{ $moon->moon->name }}</h4>
 <p class="lead">
-  {{ trans('web::moons.yield_explanation',['volume'=>number_format(40000, 2),'yield'=>(setting('reprocessing_yield') ?: 0.80) * 100]) }}
+  {{ trans('web::moons.yield_explanation',['volume'=>number_format(Seat\Eveapi\Models\Industry\CorporationIndustryMiningExtraction::BASE_DRILLING_VOLUME, 2),'yield'=>(setting('reprocessing_yield') ?: 0.80) * 100]) }}
 </p>
 
 @if(carbon($moon->last_updated) < \Carbon\Carbon::create(2020,3,27))
@@ -79,7 +79,7 @@
         return $type->materials->map(function ($material) use ($type) {
           // composite quantity = (moon rate * chunk volume) / composite volume
           // reprocessed quantity = composite quantity * material quantity / 100
-          $material->pivot->quantity = intdiv(($type->pivot->rate * 40000 * 720) / $type->volume, 100) * $material->pivot->quantity * (setting('reprocessing_yield') ?: 0.80);
+          $material->pivot->quantity = intdiv(($type->pivot->rate * Seat\Eveapi\Models\Industry\CorporationIndustryMiningExtraction::BASE_DRILLING_VOLUME * 720) / $type->volume, 100) * $material->pivot->quantity * (setting('reprocessing_yield') ?: 0.80);
           return $material;
         });
       })->collapse()->groupBy('typeID') as $material
