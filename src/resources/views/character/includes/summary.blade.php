@@ -127,10 +127,6 @@
   </div>
   <div class="card-footer">
     <span class="text-center center-block">
-      <a href="http://eveskillboard.com/pilot/{{ $character->name }}"
-         target="_blank">
-        <img src="{{ asset('web/img/eveskillboard.png') }}">
-      </a>
       <a href="https://forums.eveonline.com/u/{{ str_replace(' ', '_', $character->name) }}/summary"
          target="_blank">
         <img src="{{ asset('web/img/evelogo.png') }}">
@@ -139,11 +135,11 @@
          target="_blank">
         <img src="{{ asset('web/img/evesearch.png') }}">
       </a>
-      <a href="http://evewho.com/pilot/{{ $character->name }}"
+      <a href="http://evewho.com/pilot/{{ $character->id }}"
          target="_blank">
         <img src="{{ asset('web/img/evewho.png') }}">
       </a>
-      <a href="https://zkillboard.com/character/{{ $character->name }}"
+      <a href="https://zkillboard.com/character/{{ $character->id }}"
          target="_blank">
         <img src="{{ asset('web/img/zkillboard.png') }}">
       </a>
