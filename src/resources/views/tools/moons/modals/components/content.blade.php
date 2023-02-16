@@ -19,11 +19,10 @@
         <td>
           @include('web::partials.type', ['type_id' => $type->typeID, 'type_name' => $type->typeName])
         </td>
-        {{-- let's assume a default chunk is 40 000m3 per hour | https://wiki.eveuniversity.org/Moon_mining --}}
         <td>{{ number_format($type->pivot->rate * 100, 2) }} %</td>
-        <td>{{ number_format($type->pivot->rate * 40000 * 720, 2) }} m3</td>
-        <td>{{ number_format(($type->pivot->rate * 40000 * 720) / $type->volume) }}</td>
-        <td>{{ number_format((($type->pivot->rate * 40000 * 720) / $type->volume) * $type->price->adjusted_price, 2) }}</td>
+        <td>{{ number_format($type->pivot->rate * Seat\Eveapi\Models\Industry\CorporationIndustryMiningExtraction::BASE_DRILLING_VOLUME * 720, 2) }} m3</td>
+        <td>{{ number_format(($type->pivot->rate * Seat\Eveapi\Models\Industry\CorporationIndustryMiningExtraction::BASE_DRILLING_VOLUME * 720) / $type->volume) }}</td>
+        <td>{{ number_format((($type->pivot->rate * Seat\Eveapi\Models\Industry\CorporationIndustryMiningExtraction::BASE_DRILLING_VOLUME * 720) / $type->volume) * $type->price->adjusted_price, 2) }}</td>
       </tr>
     @endforeach
       <tfoot>
