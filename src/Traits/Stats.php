@@ -55,7 +55,7 @@ trait Stats
      */
     public function getTotalCharacterMiningIsk(array $character_ids): ?float
     {
-        return CharacterMining::selectRaw('SUM(quantity * average) as total_mined_value')
+        return CharacterMining::selectRaw('SUM(quantity * adjusted_price) as total_mined_value')
             ->leftJoin('market_prices', 'character_minings.type_id', '=', 'market_prices.type_id')
             ->whereIn('character_id', $character_ids)
             ->where('year', carbon()->year)
