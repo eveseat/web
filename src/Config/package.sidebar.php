@@ -161,6 +161,12 @@ return [
                 'permission' => 'moon.view_moon_reports',
                 'route'      => 'seatcore::tools.moons.index',
             ],
+            [
+                'name'       => 'market browser',
+                'label'      => 'web::seat.market_browser',
+                'icon'       => 'fas fa-chart-line',
+                'route'      => 'tools.market.browser',
+            ],
         ],
     ],
 ];
