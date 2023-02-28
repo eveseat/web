@@ -40,6 +40,12 @@ class MarketOrderDataTable extends DataTable
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
+            ->editColumn('solar_system', function ($row) {
+                return view('web::partials.location', ['location' => $row]);
+            })
+            ->editColumn('location_id', function ($row) {
+                return view('web::partials.building', ['building' => $row]);
+            })
             ->make(true);
     }
 
@@ -72,7 +78,7 @@ class MarketOrderDataTable extends DataTable
      */
     public function query()
     {
-        return MarketOrder::with("type","solar_system");
+        return MarketOrder::with("type","station","solar_system","structure");
     }
 
     /**
@@ -80,9 +86,10 @@ class MarketOrderDataTable extends DataTable
      */
     public function getColumns() {
         return [
-            ['data' => 'solar_system.name', 'title' => "System"],
+            ['data' => 'solar_system', 'title' => "System"],
             ['data' => 'volume_remaining', 'title' => "Quantity"],
             ['data' => 'price', 'title' => "Price"],
+            ['data' => 'location_id','title'=>'Location']
         ];
     }
 }
