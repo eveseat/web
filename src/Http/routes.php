@@ -191,6 +191,7 @@ Route::group([
             include __DIR__ . '/Routes/Tools/Standings.php';
             include __DIR__ . '/Routes/Tools/Notes.php';
             include __DIR__ . '/Routes/Tools/Moons.php';
+            include __DIR__ . '/Routes/Tools/Market.php';
         });
 
     });
