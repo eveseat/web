@@ -46,6 +46,9 @@ class MarketOrderDataTable extends DataTable
             ->editColumn('location_id', function ($row) {
                 return view('web::partials.building', ['building' => $row]);
             })
+            ->editColumn('expiry', function ($row) {
+                return carbon($row->issued)->addDays($row->duration);
+            })
             ->make(true);
     }
 
@@ -89,7 +92,8 @@ class MarketOrderDataTable extends DataTable
             ['data' => 'solar_system', 'title' => "System"],
             ['data' => 'volume_remaining', 'title' => "Quantity"],
             ['data' => 'price', 'title' => "Price"],
-            ['data' => 'location_id','title'=>'Location']
+            ['data' => 'location_id','title'=>'Location'],
+            ['data' => 'expiry','title'=>'Expiry'],
         ];
     }
 }
