@@ -143,7 +143,7 @@
          target="_blank">
         <img src="{{ asset('web/img/evesearch.png') }}">
       </a>
-      <a href="http://evewho.com/pilot/{{ $character->name }}"
+      <a href="http://evewho.com/character/{{ $character->character_id }}"
          target="_blank">
         <img src="{{ asset('web/img/evewho.png') }}">
       </a>
