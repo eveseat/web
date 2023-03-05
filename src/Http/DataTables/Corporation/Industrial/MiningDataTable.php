@@ -22,9 +22,9 @@
 
 namespace Seat\Web\Http\DataTables\Corporation\Industrial;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Eveapi\Models\Industry\CharacterMining;
 use Seat\Web\Http\DataTables\Common\Industrial\AbstractMiningDataTable;
-use Illuminate\Http\JsonResponse;
 
 /**
  * Class IndustryDataTable.
@@ -33,7 +33,7 @@ use Illuminate\Http\JsonResponse;
  */
 class MiningDataTable extends AbstractMiningDataTable
 {
-    public function ajax() : JsonResponse
+    public function ajax(): JsonResponse
     {
         return $this->data()
             ->editColumn('character.name', function ($row) {

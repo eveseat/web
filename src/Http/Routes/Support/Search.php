@@ -43,4 +43,3 @@ Route::get('/search/assets/data')
 Route::get('/search/skills/data')
     ->name('seatcore::support.search.skills.data')
     ->uses('SearchController@getSearchCharacterSkillsData');
-

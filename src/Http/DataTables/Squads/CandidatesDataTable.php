@@ -22,9 +22,9 @@
 
 namespace Seat\Web\Http\DataTables\Squads;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Web\Models\Squads\SquadApplication;
 use Yajra\DataTables\Services\DataTable;
-use Illuminate\Http\JsonResponse;
 
 /**
  * Class CandidatesDataTable.
@@ -36,7 +36,7 @@ class CandidatesDataTable extends DataTable
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function ajax() : JsonResponse
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->query())

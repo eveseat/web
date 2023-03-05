@@ -22,9 +22,9 @@
 
 namespace Seat\Web\Http\DataTables\Common\Industrial;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Web\Http\DataTables\Common\IColumn;
 use Yajra\DataTables\Services\DataTable;
-use Illuminate\Http\JsonResponse;
 
 /**
  * Class AbstractBlueprintDataTable.
@@ -38,7 +38,7 @@ abstract class AbstractBlueprintDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax() : JsonResponse
+    public function ajax(): JsonResponse
     {
         $station_column = $this->getStationColumn($this);
         $location_column = $this->getLocationFlagColumn($this);

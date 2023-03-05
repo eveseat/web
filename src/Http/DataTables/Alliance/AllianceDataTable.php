@@ -22,9 +22,9 @@
 
 namespace Seat\Web\Http\DataTables\Alliance;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Eveapi\Models\Alliances\Alliance;
 use Yajra\DataTables\Services\DataTable;
-use Illuminate\Http\JsonResponse;
 
 /**
  * Class CorporationDataTable.
@@ -38,7 +38,7 @@ class AllianceDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax() : JsonResponse
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
