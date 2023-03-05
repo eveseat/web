@@ -22,9 +22,9 @@
 
 namespace Seat\Web\Http\DataTables\Corporation\Intel;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Eveapi\Models\Corporation\CorporationRoleHistory;
 use Yajra\DataTables\Services\DataTable;
-use Illuminate\Http\JsonResponse;
 
 /**
  * Class LogDataTable.
@@ -33,7 +33,7 @@ use Illuminate\Http\JsonResponse;
  */
 class LogDataTable extends DataTable
 {
-    public function ajax() : JsonResponse
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))

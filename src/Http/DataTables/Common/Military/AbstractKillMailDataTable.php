@@ -22,9 +22,9 @@
 
 namespace Seat\Web\Http\DataTables\Common\Military;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Eveapi\Models\Killmails\Killmail;
 use Yajra\DataTables\Services\DataTable;
-use Illuminate\Http\JsonResponse;
 
 /**
  * Class AbstractKillMailDataTable.
@@ -38,7 +38,7 @@ abstract class AbstractKillMailDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax() : JsonResponse
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))

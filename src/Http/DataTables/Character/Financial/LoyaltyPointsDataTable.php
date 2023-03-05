@@ -22,9 +22,9 @@
 
 namespace Seat\Web\Http\DataTables\Character\Financial;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Eveapi\Models\Character\CharacterLoyaltyPoints;
 use Yajra\DataTables\Services\DataTable;
-use Illuminate\Http\JsonResponse;
 
 /**
  * Class MarketDataTable.
@@ -46,7 +46,7 @@ class LoyaltyPointsDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax() : JsonResponse
+    public function ajax(): JsonResponse
     {
         $market_region = setting('market_prices_region_id', true);
 

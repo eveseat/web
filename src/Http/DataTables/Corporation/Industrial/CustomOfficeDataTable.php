@@ -22,9 +22,9 @@
 
 namespace Seat\Web\Http\DataTables\Corporation\Industrial;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Eveapi\Models\PlanetaryInteraction\CorporationCustomsOffice;
 use Yajra\DataTables\Services\DataTable;
-use Illuminate\Http\JsonResponse;
 
 /**
  * Class CustomOfficeDataTable.
@@ -38,7 +38,7 @@ class CustomOfficeDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax() : JsonResponse
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))

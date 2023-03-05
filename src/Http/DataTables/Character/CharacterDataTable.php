@@ -22,9 +22,9 @@
 
 namespace Seat\Web\Http\DataTables\Character;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Yajra\DataTables\Services\DataTable;
-use Illuminate\Http\JsonResponse;
 
 /**
  * Class CharacterDataTable.
@@ -38,7 +38,7 @@ class CharacterDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax() : JsonResponse
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -61,7 +61,7 @@ class CharacterDataTable extends DataTable
                 return '';
             })
             ->editColumn('security_status', function ($row) {
-                return number_format($row->security_status, 2,);
+                return number_format($row->security_status, 2);
             })
             ->editColumn('refresh_token.expires_on', function ($row) {
                 return view('web::character.partials.token_status', ['refresh_token' => $row->refresh_token])->render();

@@ -22,9 +22,9 @@
 
 namespace Seat\Web\Http\DataTables\Alliance\Intel;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Yajra\DataTables\Services\DataTable;
-use Illuminate\Http\JsonResponse;
 
 /**
  * Class CorporationDataTable.
@@ -38,7 +38,7 @@ class TrackingDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax() : JsonResponse
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
