@@ -31,7 +31,7 @@
     "datatables.net/datatables.net-buttons-bs4": "dev-master",
     "doctrine/dbal": "^3.0",
     "erusev/parsedown": "^1.7",
-    "eveseat/eseye": "dev-master",
+    "eveseat/eseye": "3.x-dev",
     "eveseat/eveapi": "5.0.x-dev",
     "eveseat/services": "5.0.x-dev",
     "guzzlehttp/guzzle": "^7.0",
