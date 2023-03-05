@@ -52,6 +52,6 @@ class SellOrderScope implements DataTableScope
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
      */
     public function apply($query) {
-        return $query->where('is_buy_order', !$this->sell_orders);
+        return $query->where('is_buy_order', ! $this->sell_orders);
     }
 }

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2023 Leon Jacobs
+ * Copyright (C) 2015 to 2022 Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,16 +37,16 @@ class MarketController extends Controller
 {
     const DEFAULT_ITEM = 4358;
 
-    public function browser(MarketOrderDataTable $dataTable){
+    public function browser(MarketOrderDataTable $dataTable) {
         $type_id = intval(request()->input('type_id', 0));
         //for some reason the bool is turned into a string
-        $sell_orders = request()->input('sell_orders','true')=='true';
+        $sell_orders = request()->input('sell_orders', 'true') == 'true';
 
         $dataTable->addScope(new TypeScope($type_id));
         $dataTable->addScope(new SellOrderScope($sell_orders));
 
         $default_item = InvType::find(self::DEFAULT_ITEM);
 
-        return $dataTable->render("web::tools.market.browser",compact("default_item"));
+        return $dataTable->render('web::tools.market.browser', compact('default_item'));
     }
 }
