@@ -65,13 +65,13 @@ class MarketOrderDataTable extends DataTable
             ->parameters([
                 'order' => [
                     2, // here is the column number
-                    'asc'
+                    'asc',
                 ],
                 'pageLength'=>100,
             ])
             ->postAjax([
                 'data' => 'function (d) {
-                    d.type_id = $("#dt-item-selector").val() === null ? '.$default_item.' : $("#dt-item-selector").val();
+                    d.type_id = $("#dt-item-selector").val() === null ? ' . $default_item . ' : $("#dt-item-selector").val();
                     d.sell_orders = $("#sellOrdersRadio").prop("checked")
                 }',
             ]);
@@ -82,7 +82,7 @@ class MarketOrderDataTable extends DataTable
      */
     public function query()
     {
-        return MarketOrder::with("type:typeName","station:station_id,name","solar_system:system_id,name,security","structure:structure_id,name");
+        return MarketOrder::with('type:typeName', 'station:station_id,name', 'solar_system:system_id,name,security', 'structure:structure_id,name');
     }
 
     /**
@@ -90,11 +90,11 @@ class MarketOrderDataTable extends DataTable
      */
     public function getColumns() {
         return [
-            ['data' => 'system_id', 'title' => "System"],
-            ['data' => 'volume_remaining', 'title' => "Quantity"],
-            ['data' => 'price', 'title' => "Price"],
-            ['data' => 'location_id','title'=>'Location'],
-            ['data' => 'expiry','title'=>'Expiry'],
+            ['data' => 'system_id', 'title' => 'System'],
+            ['data' => 'volume_remaining', 'title' => 'Quantity'],
+            ['data' => 'price', 'title' => 'Price'],
+            ['data' => 'location_id', 'title'=>'Location'],
+            ['data' => 'expiry', 'title'=>'Expiry'],
         ];
     }
 }
