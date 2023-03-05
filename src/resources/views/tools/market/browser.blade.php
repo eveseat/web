@@ -1,13 +1,13 @@
 @extends('web::layouts.grids.12')
 
-@section('title', trans('web::seat.moons_reporter'))
-@section('page_header', trans('web::seat.tools'))
-@section('page_description', trans('web::seat.moons_reporter'))
+@section('title', trans('web::seat.market_browser'))
+@section('page_header', trans('web::seat.market_browser'))
+@section('page_description', trans('web::seat.market_browser'))
 
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Market Browser</h4>
+            <h4 class="card-title">{{ trans('web::seat.market_browser') }}</h4>
         </div>
         <div class="card-body">
             <div class="form-group">
@@ -19,10 +19,10 @@
             <div class="form-group">
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-secondary active">
-                        <input type="radio" name="options" id="sellOrdersRadio" checked> Sell
+                        <input type="radio" name="options" id="sellOrdersRadio" checked>{{ trans('web::market.sell') }}
                     </label>
                     <label class="btn btn-secondary">
-                        <input type="radio" name="options" id="buyOrdersRadio"> Buy
+                        <input type="radio" name="options" id="buyOrdersRadio">{{ trans('web::market.buy') }}
                     </label>
                 </div>
             </div>

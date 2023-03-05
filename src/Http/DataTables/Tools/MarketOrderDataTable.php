@@ -40,14 +40,14 @@ class MarketOrderDataTable extends DataTable
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
-            ->editColumn('solar_system', function ($row) {
+            ->editColumn('system_id', function ($row) {
                 return view('web::partials.location', ['location' => $row]);
             })
             ->editColumn('location_id', function ($row) {
                 return view('web::partials.building', ['building' => $row]);
             })
             ->editColumn('expiry', function ($row) {
-                return carbon($row->issued)->addDays($row->duration);
+                return carbon($row->expiry)->shortAbsoluteDiffForHumans(now(), 3);
             })
             ->make(true);
     }
@@ -66,7 +66,8 @@ class MarketOrderDataTable extends DataTable
                 'order' => [
                     2, // here is the column number
                     'asc'
-                ]
+                ],
+                'pageLength'=>100,
             ])
             ->postAjax([
                 'data' => 'function (d) {
@@ -81,7 +82,7 @@ class MarketOrderDataTable extends DataTable
      */
     public function query()
     {
-        return MarketOrder::with("type","station","solar_system","structure");
+        return MarketOrder::with("type:typeName","station:station_id,name","solar_system:system_id,name,security","structure:structure_id,name");
     }
 
     /**
@@ -89,7 +90,7 @@ class MarketOrderDataTable extends DataTable
      */
     public function getColumns() {
         return [
-            ['data' => 'solar_system', 'title' => "System"],
+            ['data' => 'system_id', 'title' => "System"],
             ['data' => 'volume_remaining', 'title' => "Quantity"],
             ['data' => 'price', 'title' => "Price"],
             ['data' => 'location_id','title'=>'Location'],
