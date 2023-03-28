@@ -167,6 +167,12 @@ return [
                 'icon'       => 'fas fa-chart-line',
                 'route'      => 'tools.market.browser',
             ],
+            [
+                'name'       => 'market browser',
+                'label'      => 'web::seat.market_browser',
+                'icon'       => 'fas fa-chart-line',
+                'route'      => 'tools.market.browser',
+            ],
         ],
     ],
 ];
