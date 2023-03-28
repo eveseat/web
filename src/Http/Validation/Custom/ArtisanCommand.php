@@ -24,7 +24,6 @@ namespace Seat\Web\Http\Validation\Custom;
 
 use Artisan;
 use Symfony\Component\Console\Input\ArgvInput;
-use Symfony\Component\Console\Exception\RuntimeException;
 
 /**
  * Class ArtisanCommand.
@@ -66,7 +65,7 @@ class ArtisanCommand
             //create an argument parser and supply it with the provided arguments.
             // Also supply the argument definition to check if it complies with the command
             // ArgvInput ignores the first element of the array(usually the executable name when calling it from the console), so just supply an empty string
-            $input = new ArgvInput(["", ...$argv], $argumentDefinition);
+            $input = new ArgvInput(['', ...$argv], $argumentDefinition);
             //I guess this validates the input?
             $input->validate();
         }
