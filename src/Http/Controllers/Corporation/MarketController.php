@@ -55,7 +55,7 @@ class MarketController extends Controller
             $ability = sprintf('corporation.%s', $permission);
 
             if (Gate::allows($ability, $corporation))
-                array_push($division_ids, ($key + 1));
+                array_push($division_ids, $key + 1);
         }
 
         return $dataTable->addScope(new CorporationScope('corporation.market', [$corporation->corporation_id]))
