@@ -22,10 +22,10 @@
 
 namespace Seat\Web\Http\DataTables\Tools;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Eveapi\Models\Market\MarketOrder;
 use Seat\Web\Http\Controllers\Tools\MarketController;
 use Yajra\DataTables\Services\DataTable;
-use Illuminate\Http\JsonResponse;
 
 /**
  * Class MoonsDataTable.
