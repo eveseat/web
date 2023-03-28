@@ -53,7 +53,7 @@
             $('#dt-item-selector')
                 .select2({
                     ajax: {
-                        url: "{{ route("fastlookup.items") }}",
+                        url: "{{ route("seatcore::fastlookup.items") }}",
                         dataType: 'json'
                     },
                 })

@@ -25,6 +25,7 @@ namespace Seat\Web\Http\DataTables\Tools;
 use Seat\Eveapi\Models\Market\MarketOrder;
 use Seat\Web\Http\Controllers\Tools\MarketController;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Http\JsonResponse;
 
 /**
  * Class MoonsDataTable.
@@ -36,7 +37,7 @@ class MarketOrderDataTable extends DataTable
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))

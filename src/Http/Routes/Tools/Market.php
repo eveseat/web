@@ -26,6 +26,6 @@ Route::group([
     'prefix' => '/market/',
 ], function () {
     Route::get('/')
-        ->name('tools.market.browser')
+        ->name('seatcore::tools.market.browser')
         ->uses('MarketController@browser');
 });
