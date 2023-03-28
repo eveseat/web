@@ -26,7 +26,7 @@ return [
     'system'          => 'システム',
     'ore'             => '鉱石',
     'type'            => 'タイプ',
-    'quantity'        => '数量',
+    'quantity'        => '量',
     'volume'          => '体積',
     'estimated_value' => '推定価格',
     'details'         => '詳細',

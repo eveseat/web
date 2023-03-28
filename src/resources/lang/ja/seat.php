@@ -315,7 +315,7 @@ return [
     'current_users'               => '現在のユーザー',
     'current_groups'              => '現在のグループ|現在の複数のグループ',
     'select_item_add'             => '追加するアイテムを選択',
-    'impersonate'                 => 'このユーザーで閲覧する',
+    'impersonate'                 => 'このユーザーになりすます',
     'edit_user'                   => 'ユーザーを編集',
     'activate_user'               => 'ユーザーを有効化',
     'reassign_user'               => 'ユーザーを再割り当て',

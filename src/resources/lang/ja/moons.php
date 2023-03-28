@@ -21,11 +21,11 @@
  */
 
 return [
-    'region'        => 'リージョン|リージョン一覧',
-    'constellation' => 'コンステレーション|コンステレーション一覧',
-    'system'        => 'ソーラーシステム|ソーラーシステム一覧',
-    'planet'        => '惑星|惑星一覧',
-    'moon'          => '衛星 | 衛星一覧',
+    'region'        => '地域',
+    'constellation' => 'コンステレーション|一覧',
+    'system'        => 'ソーラーシステム | 一覧',
+    'planet'        => '惑星 | 一覧',
+    'moon'          => '衛星 | 一覧',
     'indicator'     => '表示 | 一覧',
     'sovereignty'   => '支配者 | 一覧',
     'ubiquitous'    => 'レア度: ユビキタス',

@@ -22,10 +22,10 @@
 
 return [
     'planet'            => '惑星',
-    'reinforcement'     => 'リインフォース時間',
-    'alliance'          => 'アライアンス所属企業に使用を許可する。',
-    'standings'         => 'スタンディングに基づいて使用を許可する。',
-    'standing_level'    => '必要最低スタンディングレベル。',
-    'tax_alliance_corp' => 'アライアンス/コーポレーションに対する税率',
-    'tax_standings'     => '各スタンディングに対する税率',
+    'reinforcement'     => 'Rf期間',
+    'alliance'          => '許可アライアンス',
+    'standings'         => '許可スタンデイング',
+    'standing_level'    => '最低スタンデイング',
+    'tax_alliance_corp' => '税率　アライアンス/コーポレーション',
+    'tax_standings'     => '税率 スタンディング',
 ];
