@@ -41,7 +41,7 @@ class SellOrderScope implements DataTableScope
      *
      * @param  bool  $sell_orders
      */
-    public function __construct(int $sell_orders) {
+    public function __construct(bool $sell_orders) {
         $this->sell_orders = $sell_orders;
     }
 

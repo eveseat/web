@@ -38,7 +38,7 @@ class MarketController extends Controller
     const DEFAULT_ITEM = 4358;
 
     public function browser(MarketOrderDataTable $dataTable) {
-        $type_id = intval(request()->input('type_id', 0));
+        $type_id = intval(request()->input('type_id', self::DEFAULT_ITEM));
         //for some reason the bool is turned into a string
         $sell_orders = request()->input('sell_orders', 'true') == 'true';
 
