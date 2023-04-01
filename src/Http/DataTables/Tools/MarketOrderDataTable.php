@@ -50,6 +50,12 @@ class MarketOrderDataTable extends DataTable
             ->editColumn('expiry', function ($row) {
                 return carbon($row->expiry)->shortAbsoluteDiffForHumans(now(), 3);
             })
+            ->editColumn('volume_remaining', function ($row) {
+                return number($row->volume_remaining,0);
+            })
+            ->editColumn('price', function ($row) {
+                return number($row->price,2) . " ISK";
+            })
             ->make(true);
     }
 
