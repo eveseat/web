@@ -193,6 +193,7 @@ return [
     'sso'                   => 'Single Sign-on',
     'tracking'              => 'Tracking',
     'about'                 => 'About',
+    'market_browser'        => 'Market Browser',
 
     'assets'                       => 'Assets',
     'location_flag'                => 'Location Flag',
