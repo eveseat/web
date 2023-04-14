@@ -22,7 +22,6 @@
 
 namespace Seat\Web\Http\Validation;
 
-use Artisan;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
@@ -79,11 +78,9 @@ class NewSchedule extends FormRequest
     public function rules()
     {
 
-        $available_commands = implode(',', array_keys(Artisan::all()));
-
         return [
 
-            'command'    => 'required|in:' . $available_commands,
+            'command'    => 'required|artisan',
             'expression' => 'required|cron|unique:schedules,expression,NULL,NULL,command,' .
                 $this->request->get('command'),
         ];
