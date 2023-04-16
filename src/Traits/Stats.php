@@ -55,7 +55,7 @@ trait Stats
      */
     public function getTotalCharacterMiningIsk(array $character_ids): ?float
     {
-        return CharacterMining::selectRaw('SUM(quantity * average) as total_mined_value')
+        return CharacterMining::selectRaw('SUM(quantity * adjusted_price) as total_mined_value')
             ->leftJoin('market_prices', 'character_minings.type_id', '=', 'market_prices.type_id')
             ->whereIn('character_id', $character_ids)
             ->where('year', carbon()->year)
@@ -132,7 +132,7 @@ trait Stats
             ->where('parentGroupID', '?') // binding at [1]
             ->select(
                 'marketGroupName',
-                DB::raw('COUNT(invTypes.marketGroupID) * 5 as amount')
+                DB::raw('COUNT(*) * 5 as amount')
             )
             ->groupBy('marketGroupName')
             ->toSql();
@@ -152,7 +152,7 @@ trait Stats
             ->where('character_id', '?') // binding at [2]
             ->select(
                 'marketGroupName',
-                DB::raw('COUNT(invTypes.marketGroupID) * character_skills.trained_skill_level  as amount')
+                DB::raw('COUNT(*) * character_skills.trained_skill_level  as amount')
             )
             ->groupBy(['marketGroupName', 'trained_skill_level'])
             ->toSql();
@@ -167,8 +167,8 @@ trait Stats
             )
             ->select(
                 'a.marketGroupName',
-                DB::raw('a.amount AS gameAmount'),
-                DB::raw('SUM(b.amount) AS characterAmount')
+                DB::raw('a.amount AS game_amount'),
+                DB::raw('SUM(b.amount) AS character_amount')
             )
             ->groupBy(['a.marketGroupName', 'a.amount'])
             ->addBinding(150, 'select') // binding [1]

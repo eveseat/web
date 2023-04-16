@@ -10,7 +10,7 @@
       </div>
       <div class="modal-body">
 
-        <form role="form" action="{{ route('tools.notes.update', ['id' => ':note_id']) }}" method="post" id="edit-note-form">
+        <form role="form" action="{{ route('seatcore::tools.notes.update', ['id' => ':note_id']) }}" method="post" id="edit-note-form">
           {{ csrf_field() }}
           {{ method_field('PUT') }}
 

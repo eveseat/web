@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- favicos -->
-    @include('web::includes.favico')
+    <!-- favicons -->
+    @include('web::includes.favicon')
 
     <title>SeAT | @yield('title', 'Eve Online API Tool')</title>
 
@@ -128,7 +128,6 @@
   <script src="{{ asset('web/js/jquery.unveil.js') }}"></script>
   <!-- DataTables -->
   <script src="{{ asset('web/js/jquery.dataTables.min.js') }}"></script>
-  <script src="{{ asset('web/js/dataTables.dataTables.min.js') }}"></script>
   <script src="{{ asset('web/js/dataTables.bootstrap4.min.js') }}"></script>
   <script src="{{ asset('web/js/dataTables.rowGroup.js') }}"></script>
   <script src="{{ asset('web/js/rowGroup.bootstrap4.js') }}"></script>
@@ -148,7 +147,7 @@
       (function worker() {
         $.ajax({
           type    : "get",
-          url     : "{{ route('queue.status.short') }}",
+          url     : "{{ route('seatcore::queue.status.short') }}",
           success : function (data) {
             $("span#queue_count").text(data.queue_count);
             $("span#error_count").text(data.error_count);

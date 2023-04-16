@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Corporation\Military;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Eveapi\Models\Corporation\CorporationStructure;
 use Yajra\DataTables\Services\DataTable;
 
@@ -37,7 +38,7 @@ class StructureDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -68,7 +69,7 @@ class StructureDataTable extends DataTable
                 });
             })
             ->rawColumns(['action', 'type.typeName', 'fuel_expires', 'offline_estimate', 'reinforce_hour', 'services'])
-            ->make(true);
+            ->toJson();
     }
 
     /**

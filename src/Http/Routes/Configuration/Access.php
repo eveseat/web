@@ -22,19 +22,18 @@
 
 Route::resource('roles', 'AccessController', [
     'names' => [
-        'index' => 'configuration.access.roles',
-        'create' => 'configuration.access.roles.add',
-        'store' => 'configuration.access.roles.store',
-        'edit' => 'configuration.access.roles.edit',
-        'update' => 'configuration.access.roles.update',
-        'destroy' => 'configuration.access.roles.delete',
+        'index' => 'seatcore::configuration.access.roles',
+        'create' => 'seatcore::configuration.access.roles.add',
+        'store' => 'seatcore::configuration.access.roles.store',
+        'edit' => 'seatcore::configuration.access.roles.edit',
+        'update' => 'seatcore::configuration.access.roles.update',
+        'destroy' => 'seatcore::configuration.access.roles.delete',
     ],
     'except' => [
         'show',
     ],
 ]);
 
-Route::delete('/roles/{role_id}/members/{user_id}', [
-    'as'   => 'configuration.access.roles.edit.remove.user',
-    'uses' => 'AccessController@removeUser',
-]);
+Route::delete('/roles/{role_id}/members/{user_id}')
+    ->name('seatcore::configuration.access.roles.edit.remove.user')
+    ->uses('AccessController@removeUser');

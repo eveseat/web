@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Squads;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Web\Models\User;
 use Yajra\DataTables\Services\DataTable;
@@ -36,7 +37,7 @@ class MembersDataTable extends DataTable
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->query())
@@ -71,7 +72,7 @@ class MembersDataTable extends DataTable
                 }
             })
             ->rawColumns(['characters', 'name', 'member_since', 'action'])
-            ->make(true);
+            ->toJson();
     }
 
     /**

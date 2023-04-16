@@ -120,6 +120,6 @@ class MembersController extends Controller
     {
         $squad->members()->detach(auth()->user()->id);
 
-        return redirect()->route('squads.index');
+        return redirect()->route('seatcore::squads.index');
     }
 }

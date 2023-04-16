@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Corporation\Intel;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Eveapi\Models\Corporation\CorporationMemberTracking;
 use Seat\Eveapi\Models\Sde\SolarSystem;
 use Seat\Eveapi\Models\Sde\StaStation;
@@ -44,7 +45,7 @@ class MembersTrackingDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -109,7 +110,7 @@ class MembersTrackingDataTable extends DataTable
                     });
             })
             ->rawColumns(['refresh_token.expires_on', 'character.name', 'ship.typeName', 'start_date', 'logon_date'])
-            ->make(true);
+            ->toJson();
     }
 
     /**

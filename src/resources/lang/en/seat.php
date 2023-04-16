@@ -193,6 +193,7 @@ return [
     'sso'                   => 'Single Sign-on',
     'tracking'              => 'Tracking',
     'about'                 => 'About',
+    'market_browser'        => 'Market Browser',
 
     'assets'                       => 'Assets',
     'location_flag'                => 'Location Flag',
@@ -224,7 +225,7 @@ return [
     // Dashboard
     'home_page'                   => 'The Home Page',
     'dashboard'                   => 'Dashboard',
-    'online_layers'               => 'Online Players',
+    'online_players'              => 'Online Players',
     'owned_api_keys'              => 'Owned API Keys',
     'total_character_isk'         => 'Total Character ISK',
     'total_character_skillpoints' => 'Total Character Skillpoints',
@@ -411,8 +412,6 @@ return [
     'allow_registration'           => 'Allow Registration',
     'allow_user_character_unlink'  => 'Allow user to unlink their characters',
     'unlink'                       => 'Unlink',
-    'email_activation'             => 'Email Activation',
-    'require_activation'           => 'Require Email Activation',
     'module_versions'              => 'SeAT Module Versions',
     'tp_versions'                  => 'Third Party Versions',
     'installed'                    => 'Installed',

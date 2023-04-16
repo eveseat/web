@@ -20,14 +20,31 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+namespace Seat\Tests\Web\Database\Factories;
+
 use Faker\Generator;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Seat\Eveapi\Models\Corporation\CorporationTitle;
 
-$factory->define(CorporationTitle::class, function (Generator $faker) {
-    static $id = 1;
+/**
+ * Class CorporationTitleFactory.
+ * @package Seat\Tests\Web\Database\Factories
+ */
+class CorporationTitleFactory extends Factory
+{
+    /**
+     * @var int
+     */
+    static int $id = 1;
 
-    return [
-        'title_id'       => (2 * $id++),
-        'name' => $faker->name,
-    ];
-});
+    /**
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'title_id' => (2 * self::$id++),
+            'name' => $this->faker->name,
+        ];
+    }
+}

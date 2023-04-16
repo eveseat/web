@@ -20,22 +20,21 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/', [
-    'as'   => 'squads.index',
-    'uses' => 'SquadsController@index',
-]);
+Route::get('/')
+    ->name('seatcore::squads.index')
+    ->uses('SquadsController@index');
 
 Route::group([
     'middleware' => 'can:squads.create',
 ], function () {
     // squad creation form
     Route::get('/create')
-        ->name('squads.create')
+        ->name('seatcore::squads.create')
         ->uses('SquadsController@create');
 
     // create a squad
     Route::post('/')
-        ->name('squads.store')
+        ->name('seatcore::squads.store')
         ->uses('SquadsController@store');
 });
 
@@ -44,24 +43,24 @@ Route::prefix('/{squad}')
 
         // squad card
         Route::get('/')
-            ->name('squads.show')
+            ->name('seatcore::squads.show')
             ->uses('SquadsController@show');
 
         // squad update form
         Route::get('/edit')
-            ->name('squads.edit')
+            ->name('seatcore::squads.edit')
             ->uses('SquadsController@edit')
             ->middleware('can:squads.edit,squad');
 
         // update a squad
         Route::put('/')
-            ->name('squads.update')
+            ->name('seatcore::squads.update')
             ->uses('SquadsController@update')
             ->middleware('can:squads.edit,squad');
 
         // remove a squad
         Route::delete('/')
-            ->name('squads.destroy')
+            ->name('seatcore::squads.destroy')
             ->uses('SquadsController@destroy')
             ->middleware('can:squads.delete,squad');
     });
@@ -70,31 +69,31 @@ Route::prefix('/{squad}/members')->group(function () {
 
     // select2 squad member (not already part of active squad)
     Route::get('/lookup')
-        ->name('squads.members.lookup')
+        ->name('seatcore::squads.members.lookup')
         ->uses('MembersController@lookup')
         ->middleware('can:squads.manage_members,squad');
 
     // add member to a squad
     Route::post('/')
-        ->name('squads.members.store')
+        ->name('seatcore::squads.members.store')
         ->uses('MembersController@store')
         ->middleware('can:squads.manage_members,squad');
 
     // remove member from a squad
     Route::delete('/{member}')
-        ->name('squads.members.kick')
+        ->name('seatcore::squads.members.kick')
         ->uses('MembersController@destroy')
         ->middleware('can:squads.kick,squad,member');
 
     // show squad members
     Route::get('/')
-        ->name('squads.members.index')
+        ->name('seatcore::squads.members.index')
         ->uses('MembersController@index')
         ->middleware('can:squads.show_members,squad');
 
     // leave a squad
     Route::delete('/')
-        ->name('squads.members.leave')
+        ->name('seatcore::squads.members.leave')
         ->uses('MembersController@leave');
 });
 
@@ -104,17 +103,17 @@ Route::prefix('/{squad}/moderators')
 
         // select2 squad moderators (not part of active squad)
         Route::get('/lookup')
-            ->name('squads.moderators.lookup')
+            ->name('seatcore::squads.moderators.lookup')
             ->uses('ModeratorsController@lookup');
 
         // add moderator to a squad
         Route::post('/')
-            ->name('squads.moderators.store')
+            ->name('seatcore::squads.moderators.store')
             ->uses('ModeratorsController@store');
 
         // remove moderator from a squad
         Route::delete('/{user}')
-            ->name('squads.moderators.destroy')
+            ->name('seatcore::squads.moderators.destroy')
             ->uses('ModeratorsController@destroy');
     });
 
@@ -124,22 +123,22 @@ Route::prefix('/{squad}/roles')
 
         // show squad roles
         Route::get('/')
-            ->name('squads.roles.show')
+            ->name('seatcore::squads.roles.show')
             ->uses('RolesController@show');
 
         // select2 squad roles (not part of active squad)
         Route::get('/lookup')
-            ->name('squads.roles.lookup')
+            ->name('seatcore::squads.roles.lookup')
             ->uses('RolesController@lookup');
 
         // add a role to a squad
         Route::post('/')
-            ->name('squads.roles.store')
+            ->name('seatcore::squads.roles.store')
             ->uses('RolesController@store');
 
         // remove a role from a squad
         Route::delete('/')
-            ->name('squads.roles.destroy')
+            ->name('seatcore::squads.roles.destroy')
             ->uses('RolesController@destroy');
     });
 
@@ -148,35 +147,35 @@ Route::prefix('/{squad}/applications')
 
         // show squad applications
         Route::get('/')
-            ->name('squads.applications.index')
+            ->name('seatcore::squads.applications.index')
             ->uses('ApplicationsController@index')
             ->middleware('can:squads.manage_members,squad');
 
         // apply to a squad
         Route::post('/')
-            ->name('squads.applications.store')
+            ->name('seatcore::squads.applications.store')
             ->uses('ApplicationsController@store');
 
         // revoke squad application
         Route::delete('/')
-            ->name('squads.applications.cancel')
+            ->name('seatcore::squads.applications.cancel')
             ->uses('ApplicationsController@cancel');
 
         // show squad application details
         Route::get('/{id}')
-            ->name('squads.applications.show')
+            ->name('seatcore::squads.applications.show')
             ->uses('ApplicationsController@show')
             ->middleware('can:squads.manage_members,squad');
 
         // approve a squad application
         Route::post('/{id}')
-            ->name('squads.applications.approve')
+            ->name('seatcore::squads.applications.approve')
             ->uses('ApplicationsController@approve')
             ->middleware('can:squads.manage_members,squad');
 
         // reject a squad application
         Route::delete('/{id}')
-            ->name('squads.applications.reject')
+            ->name('seatcore::squads.applications.reject')
             ->uses('ApplicationsController@reject')
             ->middleware('can:squads.manage_members,squad');
     });

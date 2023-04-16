@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Character\Intel;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Lang;
 use Seat\Eveapi\Models\Calendar\CharacterCalendarEvent;
 use Yajra\DataTables\Services\DataTable;
@@ -38,7 +39,7 @@ class CalendarDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -72,7 +73,7 @@ class CalendarDataTable extends DataTable
                 $query->whereIn('event_response', $status);
             })
             ->rawColumns(['event_date', 'title', 'owner.name'])
-            ->make(true);
+            ->toJson();
     }
 
     /**

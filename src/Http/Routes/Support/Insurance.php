@@ -20,7 +20,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/insurances/{type_id}', [
-    'as'   => 'insurances.show',
-    'uses' => 'InsuranceController@show',
-]);
+Route::get('/insurances/{type_id}')
+    ->name('seatcore::insurances.show')
+    ->uses('InsuranceController@show');

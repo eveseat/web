@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Character\Intel;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Eveapi\Models\Mail\MailHeader;
 use Yajra\DataTables\Services\DataTable;
 
@@ -37,7 +38,7 @@ class MailDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -70,7 +71,7 @@ class MailDataTable extends DataTable
                 });
             })
             ->rawColumns(['timestamp', 'action', 'sender.name', 'recipients'])
-            ->make(true);
+            ->toJson();
     }
 
     /**

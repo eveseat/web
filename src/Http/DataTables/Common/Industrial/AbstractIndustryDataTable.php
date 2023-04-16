@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Common\Industrial;
 
+use Illuminate\Http\JsonResponse;
 use Yajra\DataTables\Services\DataTable;
 
 /**
@@ -36,7 +37,7 @@ abstract class AbstractIndustryDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -104,7 +105,7 @@ abstract class AbstractIndustryDataTable extends DataTable
                 'start_date', 'end_date', 'progress', 'runs', 'activity.activityName',
                 'blueprint.typeName', 'product.typeName',
             ])
-            ->make(true);
+            ->toJson();
     }
 
     /**
