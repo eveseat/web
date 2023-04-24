@@ -336,6 +336,8 @@ class WebServiceProvider extends AbstractSeatPlugin
             __DIR__ . '/Config/web.config.php', 'web.config');
         $this->mergeConfigFrom(
             __DIR__ . '/Config/web.locale.php', 'web.locale');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/web.skins.php', 'web.skins');
 
         // Menu Configurations
         $this->mergeConfigFrom(
@@ -572,7 +574,7 @@ class WebServiceProvider extends AbstractSeatPlugin
 
         // UI
         Profile::define('sidebar', 'sidebar-full');
-        Profile::define('skin', 'skin-black');
+        Profile::define('skin', 'default');
         Profile::define('language', 'en');
         Profile::define('mail_threads', 'yes');
 
