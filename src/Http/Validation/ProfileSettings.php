@@ -46,7 +46,7 @@ class ProfileSettings extends FormRequest
     public function rules()
     {
 
-        $allowed_skins = implode(',', Profile::$options['skins']);
+        $allowed_skins = implode(',', config('web.skins'));
         $allowed_languages = implode(',', array_map(function ($entry) {
             return $entry['short'];
         }, config('web.locale.languages')));

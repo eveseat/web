@@ -63,7 +63,7 @@ class ProfileController extends Controller
         $languages = config('web.locale.languages');
 
         // available options
-        $skins = Profile::$options['skins'];
+        $skins = config('web.skins');
         $sidebar = Profile::$options['sidebar'];
         $thousand = Profile::$options['thousand_seperator'];
         $decimal = Profile::$options['decimal_seperator'];
