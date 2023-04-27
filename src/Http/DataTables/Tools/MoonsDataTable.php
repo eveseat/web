@@ -64,9 +64,6 @@ class MoonsDataTable extends DataTable
                         return '';
                 }
             })
-            ->editColumn('updated_at', function ($row) {
-                return view('web::partials.date', ['datetime' => $row->updated_at]);
-            })
             ->editColumn('indicators', function ($row) {
                 return view('web::tools.moons.partials.indicators', compact('row'))->render();
             })
@@ -128,7 +125,6 @@ class MoonsDataTable extends DataTable
             ['data' => 'moon.solar_system.name', 'title' => trans_choice('web::moons.system', 1)],
             ['data' => 'moon.planet.name', 'title' => trans_choice('web::moons.planet', 1)],
             ['data' => 'moon.solar_system.sovereignty', 'title' => trans_choice('web::moons.sovereignty', 1), 'orderable' => false, 'searchable' => false],
-            ['data' => 'updated_at', 'title' => trans('web::seat.last_update')],
             ['data' => 'indicators', 'title' => trans_choice('web::moons.indicator', 0), 'orderable' => false, 'searchable' => false],
         ];
     }

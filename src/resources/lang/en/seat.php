@@ -28,6 +28,7 @@ return [
     'corporation'           => 'Corporation|Corporations',
     'user'                  => 'User|Users',
     'last_update'           => 'Last Update',
+    'last_updated'           => 'Last Updated',
     'unknown'               => 'Unknown',
     'note'                  => 'Note',
     'name'                  => 'Name|Names',

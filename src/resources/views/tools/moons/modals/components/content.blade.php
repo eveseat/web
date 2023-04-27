@@ -1,6 +1,24 @@
 <h4>{{ $moon->name }}</h4>
 <p class="lead">Provided figures are based on a chunk of one hour with {{ number_format(Seat\Eveapi\Models\Industry\CorporationIndustryMiningExtraction::BASE_DRILLING_VOLUME, 2) }} m3. Reprocessed figures are based on a {{ (setting('reprocessing_yield') ?: 0.80) * 100 }}% reprocessing yield.</p>
 
+<h4>Details</h4>
+<dl>
+  <dt>{{ trans_choice('web::moons.moon', 1) }}</dt>
+  <dd>{{ $moon->moon->name }}</dd>
+
+  <dt>{{trans_choice('web::moons.region', 1)}}</dt>
+  <dd>{{ $moon->moon->region->name }}</dd>
+
+  <dt>{{trans_choice('web::moons.constellation', 1)}}</dt>
+  <dd>{{ $moon->moon->constellation->name }}</dd>
+
+  <dt>{{ trans_choice('web::moons.sovereignty', 1) }}</dt>
+  <dd>@include('web::partials.sovereignty', ['sovereignty' => $moon->moon->solar_system->sovereignty])</dd>
+
+  <dt>{{ trans('web::seat.last_updated') }}</dt>
+  <dd>@include('web::partials.date', ['datetime' => $moon->updated_at])</dd>
+</dl>
+
 <h4>Raw Materials</h4>
 
 <table class="table datatable table-striped" id="rawMaterials">
@@ -110,3 +128,4 @@
     @endforeach
   </tbody>
 </table>
+
