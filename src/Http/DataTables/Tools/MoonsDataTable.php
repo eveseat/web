@@ -53,22 +53,16 @@ class MoonsDataTable extends DataTable
                 return $row->moon->planet->name;
             })
             ->editColumn('moon.solar_system.sovereignty', function ($row) {
-                switch (true) {
-                    case ! is_null($row->moon->solar_system->sovereignty->faction_id):
-                        return view('web::partials.faction', ['faction' => $row->moon->solar_system->sovereignty->faction])->render();
-                    case ! is_null($row->moon->solar_system->sovereignty->alliance_id):
-                        return view('web::partials.alliance', ['alliance' => $row->moon->solar_system->sovereignty->alliance])->render();
-                    case ! is_null($row->moon->solar_system->sovereignty->corporation_id):
-                        return view('web::partials.corporation', ['corporation' => $row->moon->solar_system->sovereignty->corporation])->render();
-                    default:
-                        return '';
-                }
+                return view('web::partials.sovereignty', ['sovereignty'=>$row->moon->solar_system->sovereignty])->render();
             })
             ->editColumn('indicators', function ($row) {
                 return view('web::tools.moons.partials.indicators', compact('row'))->render();
             })
             ->editColumn('action', function ($row) {
                 return view('web::tools.moons.buttons.action', compact('row'))->render();
+            })
+            ->addColumn('price',function ($row){
+                return number_format($row->content->map(function ($type){return (($type->pivot->rate * 40000 * 720) / $type->volume) * $type->price->average;})->sum(),2)." ISK";
             })
             ->rawColumns(['moon.solar_system.sovereignty', 'indicators', 'action'])
             ->with('stats', [
@@ -126,6 +120,7 @@ class MoonsDataTable extends DataTable
             ['data' => 'moon.planet.name', 'title' => trans_choice('web::moons.planet', 1)],
             ['data' => 'moon.solar_system.sovereignty', 'title' => trans_choice('web::moons.sovereignty', 1), 'orderable' => false, 'searchable' => false],
             ['data' => 'indicators', 'title' => trans_choice('web::moons.indicator', 0), 'orderable' => false, 'searchable' => false],
+            ['data' => 'price','title' => trans_choice('web::seat.value', 1),'orderable' => false, 'searchable' => false]
         ];
     }
 }
