@@ -79,10 +79,7 @@ class UniverseMoonReport extends Model
                 })->count(),
                 'exceptional' => $this->content->filter(function ($type) {
                     return $type->marketGroupID == Moon::EXCEPTIONAL;
-                })->count(),
-                'standard' => $this->content->filter(function ($type) {
-                    return ! in_array($type->marketGroupID, [Moon::UBIQUITOUS, Moon::COMMON, Moon::UNCOMMON, Moon::RARE, Moon::EXCEPTIONAL]);
-                })->count(),
+                })->count()
             ];
         }
 
@@ -92,7 +89,6 @@ class UniverseMoonReport extends Model
             'uncommon' => 0,
             'rare' => 0,
             'exceptional' => 0,
-            'standard' => 0,
         ];
     }
 
@@ -148,17 +144,6 @@ class UniverseMoonReport extends Model
     {
         return $query->whereHas('content', function ($sub_query) {
             $sub_query->where('marketGroupID', Moon::EXCEPTIONAL);
-        });
-    }
-
-    /**
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeStandard($query)
-    {
-        return $query->whereHas('content', function ($sub_query) {
-            $sub_query->whereNotIn('marketGroupID', [Moon::UBIQUITOUS, Moon::COMMON, Moon::UNCOMMON, Moon::RARE, Moon::EXCEPTIONAL]);
         });
     }
 
