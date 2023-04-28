@@ -25,6 +25,7 @@ namespace Seat\Web\Http\DataTables\Tools;
 use Illuminate\Http\JsonResponse;
 use Seat\Web\Models\UniverseMoonReport;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class MoonsDataTable.
@@ -61,8 +62,8 @@ class MoonsDataTable extends DataTable
             ->editColumn('action', function ($row) {
                 return view('web::tools.moons.buttons.action', compact('row'))->render();
             })
-            ->addColumn('price',function ($row){
-                return number_format($row->content->map(function ($type){return (($type->pivot->rate * 40000 * 720) / $type->volume) * $type->price->average;})->sum(),2)." ISK";
+            ->editColumn('price',function ($row){
+                return number_format($row->price,2)." ISK";
             })
             ->rawColumns(['moon.solar_system.sovereignty', 'indicators', 'action'])
             ->with('stats', [
@@ -105,7 +106,10 @@ class MoonsDataTable extends DataTable
     {
         return UniverseMoonReport::with('moon', 'moon.planet', 'moon.solar_system', 'moon.constellation', 'moon.region',
                 'moon.solar_system.sovereignty', 'moon.solar_system.sovereignty.faction',
-                'moon.solar_system.sovereignty.alliance', 'moon.solar_system.sovereignty.corporation', 'content');
+                'moon.solar_system.sovereignty.alliance', 'moon.solar_system.sovereignty.corporation', 'content','content.price')
+            ->select()
+            //->join('universe_moon_contents','universe_moon_contents.moon_id','universe_moon_reports.moon_id')
+            ->addSelect(DB::raw("(SELECT SUM(rate * 40000 * 720/invTypes.volume*market_prices.average) FROM universe_moon_contents JOIN invTypes ON invTypes.typeID=universe_moon_contents.type_id JOIN market_prices ON market_prices.type_id=universe_moon_contents.type_id WHERE moon_id=universe_moon_reports.moon_id) as price"));
     }
 
     /**
@@ -120,7 +124,7 @@ class MoonsDataTable extends DataTable
             ['data' => 'moon.planet.name', 'title' => trans_choice('web::moons.planet', 1)],
             ['data' => 'moon.solar_system.sovereignty', 'title' => trans_choice('web::moons.sovereignty', 1), 'orderable' => false, 'searchable' => false],
             ['data' => 'indicators', 'title' => trans_choice('web::moons.indicator', 0), 'orderable' => false, 'searchable' => false],
-            ['data' => 'price','title' => trans_choice('web::seat.value', 1),'orderable' => false, 'searchable' => false]
+            ['data' => 'price','title' => trans_choice('web::seat.value', 1), 'searchable' => false]
         ];
     }
 }
