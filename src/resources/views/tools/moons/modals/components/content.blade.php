@@ -1,6 +1,13 @@
 <h4>{{ $moon->name }}</h4>
 <p class="lead">Provided figures are based on a chunk of one hour with {{ number_format(Seat\Eveapi\Models\Industry\CorporationIndustryMiningExtraction::BASE_DRILLING_VOLUME, 2) }} m3. Reprocessed figures are based on a {{ (setting('reprocessing_yield') ?: 0.80) * 100 }}% reprocessing yield.</p>
 
+@if(carbon($moon->last_updated) < \Carbon\Carbon::create(2020,3,27))
+  <div class="alert alert-warning">
+    This moon report contains data from before a path that removes normal ore from moon. Please consider rescanning this moon or refer to th
+    <a href="https://www.eveonline.com/news/view/moon-mineral-distribution-update" target="_blank">CCP Devblog</a>.
+  </div>
+@endif
+
 <h4>Details</h4>
 <dl>
   <dt>{{ trans_choice('web::moons.moon', 1) }}</dt>
