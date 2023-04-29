@@ -62,8 +62,11 @@ class MoonsDataTable extends DataTable
             ->editColumn('action', function ($row) {
                 return view('web::tools.moons.buttons.action', compact('row'))->render();
             })
-            ->editColumn('price',function ($row){
-                return number_format($row->price,2)." ISK";
+            ->editColumn('raw_value',function ($row){
+                return number_format($row->raw_value,2)." ISK";
+            })
+            ->editColumn('refined_value',function ($row){
+                return number_format($row->refined_value,2)." ISK";
             })
             ->rawColumns(['moon.solar_system.sovereignty', 'indicators', 'action'])
             ->with('stats', [
@@ -108,8 +111,8 @@ class MoonsDataTable extends DataTable
                 'moon.solar_system.sovereignty', 'moon.solar_system.sovereignty.faction',
                 'moon.solar_system.sovereignty.alliance', 'moon.solar_system.sovereignty.corporation', 'content','content.price')
             ->select()
-            //->join('universe_moon_contents','universe_moon_contents.moon_id','universe_moon_reports.moon_id')
-            ->addSelect(DB::raw("(SELECT SUM(rate * 40000 * 720/invTypes.volume*market_prices.average) FROM universe_moon_contents JOIN invTypes ON invTypes.typeID=universe_moon_contents.type_id JOIN market_prices ON market_prices.type_id=universe_moon_contents.type_id WHERE moon_id=universe_moon_reports.moon_id) as price"));
+            ->addSelect(DB::raw("(SELECT SUM(rate * 40000 * 720/invTypes.volume*market_prices.average) FROM universe_moon_contents JOIN invTypes ON invTypes.typeID=universe_moon_contents.type_id JOIN market_prices ON market_prices.type_id=universe_moon_contents.type_id WHERE moon_id=universe_moon_reports.moon_id) as raw_value"))
+            ->addSelect(DB::raw("(select SUM((select SUM(invTypeMaterials.quantity*market_prices.average) from invTypeMaterials join market_prices on market_prices.type_id=invTypeMaterials.materialTypeID where invTypeMaterials.typeID=universe_moon_contents.type_id) * universe_moon_contents.rate * 40000 * 720 / invTypes.volume * 0.8 / 100) from universe_moon_contents join invTypes on invTypes.typeID=universe_moon_contents.type_id where universe_moon_contents.moon_id=universe_moon_reports.moon_id) as refined_value"));
     }
 
     /**
@@ -124,7 +127,8 @@ class MoonsDataTable extends DataTable
             ['data' => 'moon.planet.name', 'title' => trans_choice('web::moons.planet', 1)],
             ['data' => 'moon.solar_system.sovereignty', 'title' => trans_choice('web::moons.sovereignty', 1), 'orderable' => false, 'searchable' => false],
             ['data' => 'indicators', 'title' => trans_choice('web::moons.indicator', 0), 'orderable' => false, 'searchable' => false],
-            ['data' => 'price','title' => trans_choice('web::seat.value', 1), 'searchable' => false]
+            ['data' => 'raw_value','title' => trans('web::moons.raw_value'), 'searchable' => false],
+            ['data' => 'refined_value','title' => trans('web::moons.refined_value'), 'searchable' => false]
         ];
     }
 }
