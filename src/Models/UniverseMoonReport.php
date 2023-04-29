@@ -79,7 +79,7 @@ class UniverseMoonReport extends Model
                 })->count(),
                 'exceptional' => $this->content->filter(function ($type) {
                     return $type->marketGroupID == Moon::EXCEPTIONAL;
-                })->count()
+                })->count(),
             ];
         }
 

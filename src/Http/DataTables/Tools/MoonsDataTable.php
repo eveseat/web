@@ -22,10 +22,10 @@
 
 namespace Seat\Web\Http\DataTables\Tools;
 
+use Illuminate\Support\Facades\DB;
 use Seat\Eveapi\Models\Industry\CorporationIndustryMiningExtraction;
 use Seat\Web\Models\UniverseMoonReport;
 use Yajra\DataTables\Services\DataTable;
-use Illuminate\Support\Facades\DB;
 
 /**
  * Class MoonsDataTable.
@@ -62,11 +62,11 @@ class MoonsDataTable extends DataTable
             ->editColumn('action', function ($row) {
                 return view('web::tools.moons.buttons.action', compact('row'))->render();
             })
-            ->editColumn('raw_value',function ($row){
-                return number_format($row->raw_value,2).' ISK';
+            ->editColumn('raw_value', function ($row) {
+                return number_format($row->raw_value, 2) . ' ISK';
             })
-            ->editColumn('refined_value',function ($row){
-                return number_format($row->refined_value,2).' ISK';
+            ->editColumn('refined_value', function ($row) {
+                return number_format($row->refined_value, 2) . ' ISK';
             })
             ->rawColumns(['moon.solar_system.sovereignty', 'indicators', 'action'])
             ->with('stats', [
@@ -130,8 +130,8 @@ class MoonsDataTable extends DataTable
             ['data' => 'moon.planet.name', 'title' => trans_choice('web::moons.planet', 1)],
             ['data' => 'moon.solar_system.sovereignty', 'title' => trans_choice('web::moons.sovereignty', 1), 'orderable' => false, 'searchable' => false],
             ['data' => 'indicators', 'title' => trans_choice('web::moons.indicator', 0), 'orderable' => false, 'searchable' => false],
-            ['data' => 'raw_value','title' => trans('web::moons.raw_value'), 'searchable' => false],
-            ['data' => 'refined_value','title' => trans('web::moons.refined_value'), 'searchable' => false]
+            ['data' => 'raw_value', 'title' => trans('web::moons.raw_value'), 'searchable' => false],
+            ['data' => 'refined_value', 'title' => trans('web::moons.refined_value'), 'searchable' => false],
         ];
     }
 }

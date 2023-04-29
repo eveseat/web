@@ -54,5 +54,5 @@ return [
     'probe_report_instruction'      => 'Use the <code>Copy to Clipboard</code> button from your <code>Moon Probe and Analysis</code> window in order to copy your moon-mining report. Then, paste into the textarea in order to retrieve information.',
     'filter_by_constellation'       => 'Filter by constellation',
     'filter_by_system'              => 'Filter by system',
-    'import'                        => 'Import'
+    'import'                        => 'Import',
 ];
