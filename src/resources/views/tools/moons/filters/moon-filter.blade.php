@@ -42,7 +42,7 @@
 <script>
 $('#dt-filters-region').select2({
     allowClear: true,
-    placeholder: '{{ trans("web::moons.filter_by_region") }}',
+    placeholder: '{{ trans('web::moons.filter_by_region') }}',
     ajax: {
         url: '{{ route('fastlookup.regions') }}',
         dataType: 'json'
@@ -51,7 +51,7 @@ $('#dt-filters-region').select2({
 
 $('#dt-filters-constellation').select2({
     allowClear: true,
-    placeholder: '{{ trans("web::moons.filter_by_constellation") }}',
+    placeholder: '{{ trans('web::moons.filter_by_constellation') }}',
     ajax: {
         url: '{{ route('fastlookup.constellations') }}',
         dataType: 'json',
@@ -70,7 +70,7 @@ $('#dt-filters-constellation').select2({
 
 $('#dt-filters-system').select2({
     allowClear: true,
-    placeholder: '{{ trans("web::moons.filter_by_system") }}',
+    placeholder: '{{ trans('web::moons.filter_by_system') }}',
     ajax: {
         url: '{{ route('fastlookup.systems') }}',
         dataType: 'json',
