@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\DataTables\Tools;
 
 use Illuminate\Http\JsonResponse;
+use Seat\Eveapi\Models\Industry\CorporationIndustryMiningExtraction;
 use Seat\Web\Models\UniverseMoonReport;
 use Yajra\DataTables\Services\DataTable;
 use Illuminate\Support\Facades\DB;
@@ -107,12 +108,15 @@ class MoonsDataTable extends DataTable
      */
     public function query()
     {
+        $mining_volume = CorporationIndustryMiningExtraction::BASE_DRILLING_VOLUME;
+
         return UniverseMoonReport::with('moon', 'moon.planet', 'moon.solar_system', 'moon.constellation', 'moon.region',
                 'moon.solar_system.sovereignty', 'moon.solar_system.sovereignty.faction',
                 'moon.solar_system.sovereignty.alliance', 'moon.solar_system.sovereignty.corporation', 'content')
             ->select()
-            ->addSelect(DB::raw("(SELECT SUM(rate * 40000 * 720/invTypes.volume*market_prices.average) FROM universe_moon_contents JOIN invTypes ON invTypes.typeID=universe_moon_contents.type_id JOIN market_prices ON market_prices.type_id=universe_moon_contents.type_id WHERE moon_id=universe_moon_reports.moon_id) as raw_value"))
-            ->addSelect(DB::raw("(select SUM((select SUM(invTypeMaterials.quantity*market_prices.average) from invTypeMaterials join market_prices on market_prices.type_id=invTypeMaterials.materialTypeID where invTypeMaterials.typeID=universe_moon_contents.type_id) * universe_moon_contents.rate * 40000 * 720 / invTypes.volume * 0.8 / 100) from universe_moon_contents join invTypes on invTypes.typeID=universe_moon_contents.type_id where universe_moon_contents.moon_id=universe_moon_reports.moon_id) as refined_value"));
+            //this is  not an SQL injection since $mining_volume is a constant int on a class
+            ->addSelect(DB::raw("(SELECT SUM(rate * $mining_volume * 720/invTypes.volume*market_prices.average) FROM universe_moon_contents JOIN invTypes ON invTypes.typeID=universe_moon_contents.type_id JOIN market_prices ON market_prices.type_id=universe_moon_contents.type_id WHERE moon_id=universe_moon_reports.moon_id) as raw_value"))
+            ->addSelect(DB::raw("(select SUM((select SUM(invTypeMaterials.quantity*market_prices.average) from invTypeMaterials join market_prices on market_prices.type_id=invTypeMaterials.materialTypeID where invTypeMaterials.typeID=universe_moon_contents.type_id) * universe_moon_contents.rate * $mining_volume * 720 / invTypes.volume * 0.8 / 100) from universe_moon_contents join invTypes on invTypes.typeID=universe_moon_contents.type_id where universe_moon_contents.moon_id=universe_moon_reports.moon_id) as refined_value"));
     }
 
     /**
