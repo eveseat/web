@@ -44,5 +44,15 @@ return [
     'monthly_quantity'=>'Quantity (monthly)',
     'monthly_estimated_value'=>'Estimated Value (monthly)',
     'reactions_candidates'=>'Reactions Candidates',
-    'components'=>'Components'
+    'components'=>'Components',
+    'probe_report'=>'Moon probe and analysis report',
+    'post_report'=>'Post report',
+    'report'=>'Report',
+    'moon_rank'=>'Moon Rank',
+    'producing'=>'Producing',
+    'filter_by_region'=>'Filter by region',
+    'probe_report_instruction'=>'Use the <code>Copy to Clipboard</code> button from your <code>Moon Probe and Analysis</code> window in order to copy your moon-mining report. Then, paste into the textarea in order to retrieve information.',
+    'filter_by_constellation'=>'Filter by constellation',
+    'filter_by_system'=>'Filter by system',
+    'import'=>'Import'
 ];
