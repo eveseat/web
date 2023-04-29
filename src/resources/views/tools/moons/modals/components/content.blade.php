@@ -4,9 +4,9 @@
 </p>
 
 @if(carbon($moon->last_updated) < \Carbon\Carbon::create(2020,3,27))
-  <div class="alert alert-warning">
+  <div class='alert alert-warning'>
     {{ trans('web::moons.outdated_data_warning') }}
-    <a href="https://www.eveonline.com/news/view/moon-mineral-distribution-update" target="_blank">{{ trans("web::moons.outdated_data_devblog_link") }}</a>
+    <a href='https://www.eveonline.com/news/view/moon-mineral-distribution-update' target='_blank'>{{ trans('web::moons.outdated_data_devblog_link') }}</a>
   </div>
 @endif
 

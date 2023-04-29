@@ -64,10 +64,10 @@ class MoonsDataTable extends DataTable
                 return view('web::tools.moons.buttons.action', compact('row'))->render();
             })
             ->editColumn('raw_value',function ($row){
-                return number_format($row->raw_value,2)." ISK";
+                return number_format($row->raw_value,2).' ISK';
             })
             ->editColumn('refined_value',function ($row){
-                return number_format($row->refined_value,2)." ISK";
+                return number_format($row->refined_value,2).' ISK';
             })
             ->rawColumns(['moon.solar_system.sovereignty', 'indicators', 'action'])
             ->with('stats', [
