@@ -33,4 +33,6 @@ return [
     'uncommon'      => 'Uncommon',
     'rare'          => 'Rare',
     'exceptional'   => 'Exceptional',
+    'raw_value'     => 'Raw Value',
+    'refined_value' => 'Refined Value'
 ];
