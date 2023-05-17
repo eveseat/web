@@ -23,7 +23,6 @@
 namespace Seat\Web\Http\DataTables\Tools;
 
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
 use Seat\Eveapi\Models\Industry\CorporationIndustryMiningExtraction;
 use Seat\Web\Models\UniverseMoonReport;
 use Yajra\DataTables\Services\DataTable;
@@ -116,8 +115,8 @@ class MoonsDataTable extends DataTable
                 'moon.solar_system.sovereignty.alliance', 'moon.solar_system.sovereignty.corporation', 'content')
             ->select()
             //this is  not an SQL injection since $mining_volume is a constant int on a class
-            ->selectRaw("(SELECT SUM(rate * ? * 720/invTypes.volume*market_prices.adjusted_price) FROM universe_moon_contents JOIN invTypes ON invTypes.typeID=universe_moon_contents.type_id JOIN market_prices ON market_prices.type_id=universe_moon_contents.type_id WHERE moon_id=universe_moon_reports.moon_id) as raw_value",[$mining_volume])
-            ->selectRaw("(select SUM((select SUM(invTypeMaterials.quantity*market_prices.adjusted_price) from invTypeMaterials join market_prices on market_prices.type_id=invTypeMaterials.materialTypeID where invTypeMaterials.typeID=universe_moon_contents.type_id) * universe_moon_contents.rate * ? * 720 / invTypes.volume * ? / 100) from universe_moon_contents join invTypes on invTypes.typeID=universe_moon_contents.type_id where universe_moon_contents.moon_id=universe_moon_reports.moon_id) as refined_value",[$mining_volume,$reprocessing_yield]);
+            ->selectRaw('(SELECT SUM(rate * ? * 720/invTypes.volume*market_prices.adjusted_price) FROM universe_moon_contents JOIN invTypes ON invTypes.typeID=universe_moon_contents.type_id JOIN market_prices ON market_prices.type_id=universe_moon_contents.type_id WHERE moon_id=universe_moon_reports.moon_id) as raw_value', [$mining_volume])
+            ->selectRaw('(select SUM((select SUM(invTypeMaterials.quantity*market_prices.adjusted_price) from invTypeMaterials join market_prices on market_prices.type_id=invTypeMaterials.materialTypeID where invTypeMaterials.typeID=universe_moon_contents.type_id) * universe_moon_contents.rate * ? * 720 / invTypes.volume * ? / 100) from universe_moon_contents join invTypes on invTypes.typeID=universe_moon_contents.type_id where universe_moon_contents.moon_id=universe_moon_reports.moon_id) as refined_value', [$mining_volume, $reprocessing_yield]);
     }
 
     /**
