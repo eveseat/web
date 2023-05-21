@@ -35,7 +35,7 @@ abstract class AbstractColumn implements IColumn
     /**
      * @var \Yajra\DataTables\Services\DataTable
      */
-    private $table;
+    protected $table;
 
     /**
      * AbstractColumn constructor.

@@ -38,7 +38,7 @@ use Yajra\DataTables\Services\DataTable;
  */
 class MembersTrackingDataTable extends DataTable
 {
-    protected $exportClass = MembersTrackingDataTableExport::class;
+    protected string $exportClass = MembersTrackingDataTableExport::class;
 
     /**
      * @return \Illuminate\Http\JsonResponse
