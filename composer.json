@@ -49,8 +49,7 @@
   },
   "require-dev": {
     "josiasmontag/laravel-redis-mock": "^1.0",
-    "orchestra/testbench": "^7.0",
-    "orchestra/database": "^7.0"
+    "orchestra/testbench": "^8.0"
   },
   "extra": {
     "laravel": {
