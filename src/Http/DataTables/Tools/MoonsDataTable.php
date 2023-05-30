@@ -109,7 +109,7 @@ class MoonsDataTable extends DataTable
     {
         $mining_volume = CorporationIndustryMiningExtraction::BASE_DRILLING_VOLUME;
         $reprocessing_yield = floatval(setting('reprocessing_yield') ?: 0.80);
-        $hours_per_month = 30*24;
+        $hours_per_month = 30 * 24;
 
         return UniverseMoonReport::with('moon', 'moon.planet', 'moon.solar_system', 'moon.constellation', 'moon.region',
                 'moon.solar_system.sovereignty', 'moon.solar_system.sovereignty.faction',
