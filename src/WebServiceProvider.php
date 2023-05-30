@@ -442,6 +442,13 @@ class WebServiceProvider extends AbstractSeatPlugin
         Gate::define('squads.manage_roles', 'Seat\Web\Acl\Policies\SquadPolicy@manage_roles');
         Gate::define('squads.show_members', 'Seat\Web\Acl\Policies\SquadPolicy@show_members');
 
+        // Logs
+        Gate::define('viewLogViewer', 'Seat\Web\Acl\Policies\GlobalPolicy@superuser');
+        Gate::define('downloadLogFile', 'Seat\Web\Acl\Policies\GlobalPolicy@superuser');
+        Gate::define('downloadLogFolder', 'Seat\Web\Acl\Policies\GlobalPolicy@superuser');
+        Gate::define('deleteLogFile', 'Seat\Web\Acl\Policies\GlobalPolicy@superuser');
+        Gate::define('deleteLogFolder', 'Seat\Web\Acl\Policies\GlobalPolicy@superuser');
+
         foreach ($permissions as $scope => $scope_permissions) {
             foreach ($scope_permissions as $permission => $definition) {
                 $ability = sprintf('%s.%s', $scope, $permission);

@@ -133,6 +133,13 @@ return [
                 'route' => 'seatcore::configuration.security.logs',
             ],
             [
+                // System Logs
+                'name'  => 'system logs',
+                'label' => 'web::seat.system_logs',
+                'icon'  => 'fas fa-archive',
+                'route' => 'log-viewer.index',
+            ],
+            [
                 // About
                 'name'  => 'about',
                 'label' => 'web::seat.about',
