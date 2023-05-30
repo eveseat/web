@@ -41,6 +41,7 @@
     "laravel/socialite": "^5.0",
     "laravel/ui": "^4.0",
     "lasserafn/php-initial-avatar-generator": "^4.2",
+    "opcodesio/log-viewer": "^2.0",
     "socialiteproviders/manager": "^4.0",
     "twbs/bootstrap": "^4.3",
     "yajra/laravel-datatables-oracle": "^10.4.0",

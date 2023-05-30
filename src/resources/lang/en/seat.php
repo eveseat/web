@@ -181,6 +181,7 @@ return [
     'other'                 => 'Other',
     'tools'                 => 'Tools',
     'security_logs'         => 'Security Logs',
+    'system_logs'           => 'System Logs',
     'import'                => 'Import API Keys',
     'settings'              => 'SeAT Settings',
     'schedule'              => 'Schedule',
