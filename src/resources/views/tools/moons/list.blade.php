@@ -7,7 +7,7 @@
 @section('content')
   <div class="card">
     <div class="card-header">
-      <h4 class="card-title">{{ trans_choice('web::moons.moon',2) }}</h4>
+      <h4 class="card-title">{{ trans_choice('web::moons.moon', 2) }}</h4>
       <div class="card-tools">
         <div class="input-group input-group-sm">
           @can('moon.create_moon_reports')

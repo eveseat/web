@@ -3,15 +3,15 @@
         <div class="form-group container">
             <div class="row">
                 <div class="col-sm py-2">
-                    <label for="dt-filters-region">{{ trans_choice('web::moons.region',1) }}</label>
+                    <label for="dt-filters-region">{{ trans_choice('web::moons.region', 1) }}</label>
                     <select class="form-control" id="dt-filters-region"></select>
                 </div>
                 <div class="col-sm py-2">
-                    <label for="dt-filters-constellation">{{ trans_choice('web::moons.constellation',1) }}</label>
+                    <label for="dt-filters-constellation">{{ trans_choice('web::moons.constellation', 1) }}</label>
                     <select class="form-control" id="dt-filters-constellation"></select>
                 </div>
                 <div class="col-sm py-2">
-                    <label for="dt-filters-system">{{ trans_choice('web::moons.system',1) }}</label>
+                    <label for="dt-filters-system">{{ trans_choice('web::moons.system', 1) }}</label>
                     <select class="form-control" id="dt-filters-system"></select>
                 </div> 
             </div>

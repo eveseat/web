@@ -3,7 +3,8 @@
   {{ trans('web::moons.yield_explanation',['volume'=>number_format(Seat\Eveapi\Models\Industry\CorporationIndustryMiningExtraction::BASE_DRILLING_VOLUME, 2),'yield'=>(setting('reprocessing_yield') ?: 0.80) * 100]) }}
 </p>
 
-@if(carbon($moon->last_updated) < \Carbon\Carbon::create(2020,3,27))
+{{-- https://www.eveonline.com/news/view/moon-mineral-distribution-update --}}
+@if(carbon($moon->last_updated)->lt(carbon('2020-03-30')))
   <div class='alert alert-warning'>
     {{ trans('web::moons.outdated_data_warning') }}
     <a href='https://www.eveonline.com/news/view/moon-mineral-distribution-update' target='_blank'>{{ trans('web::moons.outdated_data_devblog_link') }}</a>
@@ -33,7 +34,7 @@
 <table class="table datatable table-striped" id="rawMaterials">
   <thead>
     <tr>
-      <th>{{ trans_choice('web::seat.type',1) }}</th>
+      <th>{{ trans_choice('web::seat.type', 1) }}</th>
       <th>{{ trans('web::seat.rate') }}</th>
       <th>{{ trans('web::moons.monthly_volume') }}</th>
       <th>{{ trans('web::moons.monthly_quantity') }}</th>
@@ -67,7 +68,7 @@
 <table class="table datatable table-striped" id="refinedMaterials">
   <thead>
     <tr>
-      <th>{{ trans_choice('web::seat.type',1) }}</th>
+      <th>{{ trans_choice('web::seat.type', 1) }}</th>
       <th>{{ trans('web::moons.monthly_volume') }}</th>
       <th>{{ trans('web::moons.monthly_quantity') }}</th>
       <th>{{ trans('web::moons.monthly_estimated_value') }}</th>
@@ -107,7 +108,7 @@
 <table class="table datatable table-striped" id="reactionsCandidates">
   <thead>
     <tr>
-      <th>{{ trans_choice('web::seat.type',1) }}</th>
+      <th>{{ trans_choice('web::seat.type', 1) }}</th>
       <th>{{ trans('web::moons.components') }}</th>
     </tr>
   </thead>
