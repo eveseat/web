@@ -1,16 +1,44 @@
-<h4>{{ $moon->name }}</h4>
-<p class="lead">Provided figures are based on a chunk of one hour with {{ number_format(Seat\Eveapi\Models\Industry\CorporationIndustryMiningExtraction::BASE_DRILLING_VOLUME, 2) }} m3. Reprocessed figures are based on a {{ (setting('reprocessing_yield') ?: 0.80) * 100 }}% reprocessing yield.</p>
+<h4>{{ $moon->moon->name }}</h4>
+<p class="lead">
+  {{ trans('web::moons.yield_explanation',['volume'=>number_format(Seat\Eveapi\Models\Industry\CorporationIndustryMiningExtraction::BASE_DRILLING_VOLUME, 2),'yield'=>(setting('reprocessing_yield') ?: 0.80) * 100]) }}
+</p>
 
-<h4>Raw Materials</h4>
+{{-- https://www.eveonline.com/news/view/moon-mineral-distribution-update --}}
+@if(carbon($moon->last_updated)->lt(carbon('2020-03-30')))
+  <div class='alert alert-warning'>
+    {{ trans('web::moons.outdated_data_warning') }}
+    <a href='https://www.eveonline.com/news/view/moon-mineral-distribution-update' target='_blank'>{{ trans('web::moons.outdated_data_devblog_link') }}</a>
+  </div>
+@endif
+
+<h4>Details</h4>
+<dl>
+  <dt>{{ trans_choice('web::moons.moon', 1) }}</dt>
+  <dd>{{ $moon->moon->name }}</dd>
+
+  <dt>{{trans_choice('web::moons.region', 1)}}</dt>
+  <dd>{{ $moon->moon->region->name }}</dd>
+
+  <dt>{{trans_choice('web::moons.constellation', 1)}}</dt>
+  <dd>{{ $moon->moon->constellation->name }}</dd>
+
+  <dt>{{ trans_choice('web::moons.sovereignty', 1) }}</dt>
+  <dd>@include('web::partials.sovereignty', ['sovereignty' => $moon->moon->solar_system->sovereignty])</dd>
+
+  <dt>{{ trans('web::seat.last_updated') }}</dt>
+  <dd>@include('web::partials.date', ['datetime' => $moon->updated_at])</dd>
+</dl>
+
+<h4>{{ trans('web::moons.raw_materials') }}</h4>
 
 <table class="table datatable table-striped" id="rawMaterials">
   <thead>
     <tr>
-      <th>Type</th>
-      <th>Rate</th>
-      <th>Volume (monthly)</th>
-      <th>Quantity (monthly)</th>
-      <th>Estimated Value (monthly)</th>
+      <th>{{ trans_choice('web::seat.type', 1) }}</th>
+      <th>{{ trans('web::seat.rate') }}</th>
+      <th>{{ trans('web::moons.monthly_volume') }}</th>
+      <th>{{ trans('web::moons.monthly_quantity') }}</th>
+      <th>{{ trans('web::moons.monthly_estimated_value') }}</th>
     </tr>
   </thead>
   <tbody>
@@ -35,15 +63,15 @@
   </tbody>
 </table>
 
-<h4>Refined Materials</h4>
+<h4>{{ trans('web::moons.refined_materials') }}</h4>
 
 <table class="table datatable table-striped" id="refinedMaterials">
   <thead>
     <tr>
-      <th>Type</th>
-      <th>Volume (monthly)</th>
-      <th>Quantity (monthly)</th>
-      <th>Estimated Value (monthly)</th>
+      <th>{{ trans_choice('web::seat.type', 1) }}</th>
+      <th>{{ trans('web::moons.monthly_volume') }}</th>
+      <th>{{ trans('web::moons.monthly_quantity') }}</th>
+      <th>{{ trans('web::moons.monthly_estimated_value') }}</th>
     </tr>
   </thead>
   <tbody>
@@ -75,13 +103,13 @@
   </tbody>
 </table>
 
-<h4>Reactions Candidates</h4>
+<h4>{{ trans('web::moons.reactions_candidates') }}</h4>
 
 <table class="table datatable table-striped" id="reactionsCandidates">
   <thead>
     <tr>
-      <th>Type</th>
-      <th>Components</th>
+      <th>{{ trans_choice('web::seat.type', 1) }}</th>
+      <th>{{ trans('web::moons.components') }}</th>
     </tr>
   </thead>
   <tbody>
@@ -110,3 +138,4 @@
     @endforeach
   </tbody>
 </table>
+
