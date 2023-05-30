@@ -23,7 +23,7 @@
     $('table#corporations').DataTable({
       processing  : true,
       serverSide  : true,
-      ajax        : '{{ route('support.search.corporations.data') }}',
+      ajax        : '{{ route('seatcore::support.search.corporations.data') }}',
       columns     : [
         {data: 'name', name: 'name'},
         {data: 'ceo.name', name: 'ceo.name'},

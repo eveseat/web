@@ -20,24 +20,38 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+namespace Seat\Tests\Web\Database\Factories;
+
 use Faker\Generator;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 
-$factory->define(CorporationInfo::class, function (Generator $faker) {
-    return [
-        'corporation_id'  => $faker->numberBetween(98000000, 98001794),
-        'name'            => $faker->company,
-        'ticker'          => $faker->currencyCode,
-        'member_count'    => $faker->numberBetween(5, 200),
-        'ceo_id'          => $faker->unique()->numberBetween(90000000, 90001000),
-        'alliance_id'     => $faker->numberBetween(99000000, 99000010),
-        'description'     => $faker->sentences(5, true),
-        'tax_rate'        => $faker->randomFloat(2, 0, 1),
-        'date_founded'    => $faker->dateTime(),
-        'creator_id'      => $faker->unique()->numberBetween(90000000, 90001000),
-        'url'             => $faker->url,
-        'faction_id'      => $faker->randomElement([null, 500002, 500003, 500004]),
-        'home_station_id' => $faker->numberBetween(60000004, 60015151),
-        'shares'          => $faker->numberBetween(1),
-    ];
-});
+/**
+ * Class CorporationFactory.
+ * @package Seat\Tests\Web\Database\Factories
+ */
+class CorporationFactory extends Factory
+{
+    /**
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'corporation_id' => $this->faker->numberBetween(98000000, 98001794),
+            'name' => $this->faker->company,
+            'ticker' => $this->faker->currencyCode,
+            'member_count' => $this->faker->numberBetween(5, 200),
+            'ceo_id' => $this->faker->unique()->numberBetween(90000000, 90001000),
+            'alliance_id' => $this->faker->numberBetween(99000000, 99000010),
+            'description' => $this->faker->sentences(5, true),
+            'tax_rate' => $this->faker->randomFloat(2, 0, 1),
+            'date_founded' => $this->faker->dateTime(),
+            'creator_id' => $this->faker->unique()->numberBetween(90000000, 90001000),
+            'url' => $this->faker->url,
+            'faction_id' => $this->faker->randomElement([null, 500002, 500003, 500004]),
+            'home_station_id' => $this->faker->numberBetween(60000004, 60015151),
+            'shares' => $this->faker->numberBetween(1),
+        ];
+    }
+}

@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Character\Financial;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Eveapi\Models\Character\CharacterLoyaltyPoints;
 use Yajra\DataTables\Services\DataTable;
 
@@ -45,7 +46,7 @@ class LoyaltyPointsDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         $market_region = setting('market_prices_region_id', true);
 
@@ -64,7 +65,7 @@ class LoyaltyPointsDataTable extends DataTable
                 return view('web::character.partials.fuzzwork-lp-prices', ['corporation' => $row->corporation, 'region'=>$market_region])->render();
             })
             ->rawColumns(['character.name', 'corporation.name', 'amount', 'fuzzworks'])
-            ->make(true);
+            ->toJson();
     }
 
     /**

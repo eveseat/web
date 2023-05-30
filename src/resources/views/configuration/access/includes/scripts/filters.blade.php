@@ -54,7 +54,7 @@
     $('#permission-entity-lookup').select2({
       placeholder: '{{ trans('web::seat.select_item_add') }}',
       ajax: {
-        url: '{{ route('fastlookup.entities') }}',
+        url: '{{ route('seatcore::fastlookup.entities') }}',
         dataType: 'json',
         cache: true,
         processResults: function (data, params) {

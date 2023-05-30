@@ -12,7 +12,7 @@
       <div class="col">
         <div class="btn-group d-flex">
           @can('squads.create')
-            <a href="{{ route('squads.create') }}" class="btn btn-default">
+            <a href="{{ route('seatcore::squads.create') }}" class="btn btn-default">
               <i class="fas fa-plus"></i>
               Create
             </a>

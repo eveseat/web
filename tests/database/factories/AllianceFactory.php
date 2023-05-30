@@ -20,18 +20,32 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+namespace Seat\Tests\Web\Database\Factories;
+
 use Faker\Generator;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Seat\Eveapi\Models\Alliances\Alliance;
 
-$factory->define(Alliance::class, function (Generator $faker) {
-    return [
-        'alliance_id'               => $faker->numberBetween(99000000, 99010010),
-        'name'                      => $faker->company,
-        'creator_id'                => $faker->unique()->numberBetween(90000000, 90001000),
-        'creator_corporation_id'    => $faker->numberBetween(98000000, 98001794),
-        'ticker'                    => $faker->currencyCode,
-        'executor_corporation_id'   => $faker->numberBetween(98000000, 98001794),
-        'date_founded'              => $faker->dateTime(),
-        'faction_id'                => $faker->randomElement([null, 500002, 500003, 500004]),
-    ];
-});
+/**
+ * Class AllianceFactory.
+ * @package Seat\Tests\Web\Database\Factories
+ */
+class AllianceFactory extends Factory
+{
+    /**
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'alliance_id' => $this->faker->numberBetween(99000000, 99010010),
+            'name' => $this->faker->company,
+            'creator_id' => $this->faker->unique()->numberBetween(90000000, 90001000),
+            'creator_corporation_id' => $this->faker->numberBetween(98000000, 98001794),
+            'ticker' => $this->faker->currencyCode,
+            'executor_corporation_id' => $this->faker->numberBetween(98000000, 98001794),
+            'date_founded' => $this->faker->dateTime(),
+            'faction_id' => $this->faker->randomElement([null, 500002, 500003, 500004]),
+        ];
+    }
+}

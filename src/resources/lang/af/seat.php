@@ -223,9 +223,9 @@ return [
 
     // Dashboard
     'home_page'                   => 'Die Tuisblad',
+    'online_players'              => 'Spelers Aanlyn',
+    'owned_api_keys'              => 'Besitte API Sleutels',
     'dashboard'                   => 'Dashboard',
-    'online_layers'               => 'Spelers Aanlyn',
-    'owned_api_keys'              => 'Sleutels Besit',
     'total_character_isk'         => 'Total Character ISK',
     'total_character_skillpoints' => 'Total Character Skillpoints',
     'total_character_mined_isk'   => 'Total Mined ISK',
@@ -234,6 +234,7 @@ return [
     'main_char_skills'            => ':character_name\'s Skills',
     'main_char_skills_per_level'  => 'Skills Per Level',
     'main_char_skills_coverage'   => 'Skills Coverage (in percent)',
+    'owned_api_keys'              => 'Sleutels Besit',
     'concurrent_player_count'     => 'Gelyktydige speler telling',
     'esi_response_time'           => 'ESI Response Times',
     'current_month'               => 'this month',

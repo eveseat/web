@@ -223,8 +223,8 @@ return [
 
     // Dashboard
     'home_page'                   => 'Page d\'accueil',
+    'online_players'              => 'Joueurs connectés',
     'dashboard'                   => 'Tableau de bord',
-    'online_layers'               => 'Joueurs connectés',
     'owned_api_keys'              => 'Clés API possédées',
     'total_character_isk'         => 'Total ISK du personnage',
     'total_character_skillpoints' => 'Total des points de compétence du personnage',

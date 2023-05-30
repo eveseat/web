@@ -7,7 +7,7 @@
 @section('content')
   <div class="card">
     <div class="card-header">
-      <h4 class="card-title">Moons</h4>
+      <h4 class="card-title">{{ trans_choice('web::moons.moon', 2) }}</h4>
       <div class="card-tools">
         <div class="input-group input-group-sm">
           @can('moon.create_moon_reports')
@@ -23,7 +23,7 @@
     <div class="card-footer">
       <ul class="list-inline moon-stats">
         <li class="list-inline-item col-2">
-          <span class="badge badge-success">0</span> Gas
+          <span class="badge badge-success">0</span> R4
         </li>
         <li class="list-inline-item col-2">
           <span class="badge badge-primary">0</span> R8
@@ -36,9 +36,6 @@
         </li>
         <li class="list-inline-item col-2">
           <span class="badge badge-danger">0</span> R64
-        </li>
-        <li class="list-inline-item">
-          <span class="badge badge-default">0</span> ORE
         </li>
       </ul>
     </div>

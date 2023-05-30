@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Character\Industrial;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Eveapi\Models\Character\CharacterAgentResearch;
 use Yajra\DataTables\Services\DataTable;
 
@@ -37,7 +38,7 @@ class ResearchDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -56,7 +57,7 @@ class ResearchDataTable extends DataTable
                 });
             })
             ->rawColumns(['started_at', 'agent.name', 'skill.typeName'])
-            ->make(true);
+            ->toJson();
     }
 
     /**

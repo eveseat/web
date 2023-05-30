@@ -20,12 +20,10 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/logs', [
-    'as'   => 'configuration.security.logs',
-    'uses' => 'SecurityController@getLogs',
-]);
+Route::get('/logs')
+    ->name('seatcore::configuration.security.logs')
+    ->uses('SecurityController@getLogs');
 
-Route::get('/logs/data', [
-    'as'   => 'configuration.security.logs.data',
-    'uses' => 'SecurityController@getLogsData',
-]);
+Route::get('/logs/data')
+    ->name('seatcore::configuration.security.logs.data')
+    ->uses('SecurityController@getLogsData');

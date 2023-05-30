@@ -1,7 +1,7 @@
 <div class="text-right">
   @can('squads.kick', [request()->squad, $row])
     @if($row->id != auth()->user()->id)
-      <form method="post" action="{{ route('squads.members.kick', ['squad' => request()->squad, 'member' => $row]) }}">
+      <form method="post" action="{{ route('seatcore::squads.members.kick', ['squad' => request()->squad, 'member' => $row]) }}">
         {!! csrf_field() !!}
         {!! method_field('DELETE') !!}
         <button type="submit" class="btn btn-danger btn-sm confirmform">

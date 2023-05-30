@@ -99,7 +99,7 @@
         <dt>{{ trans('web::seat.current_ship') }}</dt>
         <dd>
           @can('character.asset', $character)
-            <a href="#" data-toggle="modal" data-target="#ship-detail" data-url="{{ route('character.view.ship', ['character' => $character]) }}"><i class="fas fa-wrench"></i></a>
+            <a href="#" data-toggle="modal" data-target="#ship-detail" data-url="{{ route('seatcore::character.view.ship', ['character' => $character]) }}"><i class="fas fa-wrench"></i></a>
           @endcan
           {{ $character->ship->type->typeName }} called <i>{{ $character->ship->ship_name }}</i>
         </dd>
@@ -131,10 +131,6 @@
   </div>
   <div class="card-footer">
     <span class="text-center center-block">
-      <a href="http://eveskillboard.com/pilot/{{ $character->name }}"
-         target="_blank">
-        <img src="{{ asset('web/img/eveskillboard.png') }}">
-      </a>
       <a href="https://forums.eveonline.com/u/{{ str_replace(' ', '_', $character->name) }}/summary"
          target="_blank">
         <img src="{{ asset('web/img/evelogo.png') }}">
@@ -147,7 +143,7 @@
          target="_blank">
         <img src="{{ asset('web/img/evewho.png') }}">
       </a>
-      <a href="https://zkillboard.com/character/{{ $character->name }}"
+      <a href="https://zkillboard.com/character/{{ $character->id }}"
          target="_blank">
         <img src="{{ asset('web/img/zkillboard.png') }}">
       </a>
@@ -157,7 +153,7 @@
     </span>
     @can('global.superuser')
       @if(! is_null($character->refresh_token))
-        <a href="{{ route('configuration.users.edit', $character->refresh_token->user_id) }}" class="btn btn-xs btn-secondary float-right">
+        <a href="{{ route('seatcore::configuration.users.edit', $character->refresh_token->user_id) }}" class="btn btn-xs btn-secondary float-right">
           <i class="fas fa-user"></i> {{ trans_choice('web::seat.user', 1) }}
         </a>
       @endif

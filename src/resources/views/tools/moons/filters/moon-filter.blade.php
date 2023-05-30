@@ -3,21 +3,21 @@
         <div class="form-group container">
             <div class="row">
                 <div class="col-sm py-2">
-                    <label for="dt-filters-region">Region:</label>
+                    <label for="dt-filters-region">{{ trans_choice('web::moons.region', 1) }}</label>
                     <select class="form-control" id="dt-filters-region"></select>
                 </div>
                 <div class="col-sm py-2">
-                    <label for="dt-filters-constellation">Constellation:</label>
+                    <label for="dt-filters-constellation">{{ trans_choice('web::moons.constellation', 1) }}</label>
                     <select class="form-control" id="dt-filters-constellation"></select>
                 </div>
                 <div class="col-sm py-2">
-                    <label for="dt-filters-system">System:</label>
+                    <label for="dt-filters-system">{{ trans_choice('web::moons.system', 1) }}</label>
                     <select class="form-control" id="dt-filters-system"></select>
                 </div> 
             </div>
             <div class="row">
                 <div class="col-sm py-2">
-                    <label for="dt-filters-rank">Moon Rank:</label>
+                    <label for="dt-filters-rank">{{ trans('web::moons.moon_rank') }}</label>
                     <div class="input-group">
                         <select class="form-control" name="dt-filters-rank[]" id="dt-filters-rank" multiple="multiple">
                             @foreach ($groups as $group_id => $group)
@@ -27,13 +27,13 @@
                     </div>
                 </div>
                 <div class="col-sm py-2">
-                    <label for="dt-filters-product">Producing:</label>
+                    <label for="dt-filters-product">{{ trans('web::moons.producing') }}</label>
                     <select class="form-control" name="dt-filters-product[]" id="dt-filters-product" multiple="multiple"></select>
                 </div>
             </div>
             <button type="button" class="btn btn-primary" id="dt-filters-search">
                 <i class="fas fa-search"></i>
-                Search
+                {{ trans('web::seat.search') }}
             </button>
         </div>
     </div>
@@ -42,18 +42,18 @@
 <script>
 $('#dt-filters-region').select2({
     allowClear: true,
-    placeholder: 'Filter by region',
+    placeholder: '{{ trans('web::moons.filter_by_region') }}',
     ajax: {
-        url: '{{ route('fastlookup.regions') }}',
+        url: '{{ route('seatcore::fastlookup.regions') }}',
         dataType: 'json'
     }
 });
 
 $('#dt-filters-constellation').select2({
     allowClear: true,
-    placeholder: 'Filter by constellation',
+    placeholder: '{{ trans('web::moons.filter_by_constellation') }}',
     ajax: {
-        url: '{{ route('fastlookup.constellations') }}',
+        url: '{{ route('seatcore::fastlookup.constellations') }}',
         dataType: 'json',
         data: function (params) {
             var region_selector = $('#dt-filters-region');
@@ -70,9 +70,9 @@ $('#dt-filters-constellation').select2({
 
 $('#dt-filters-system').select2({
     allowClear: true,
-    placeholder: 'Filter by system',
+    placeholder: '{{ trans('web::moons.filter_by_system') }}',
     ajax: {
-        url: '{{ route('fastlookup.systems') }}',
+        url: '{{ route('seatcore::fastlookup.systems') }}',
         dataType: 'json',
         data: function (params) {
             var region_selector = $('#dt-filters-region');
@@ -100,7 +100,7 @@ $('#dt-filters-product').select2({
     closeOnSelect: false,
     multiple: true,
     ajax: {
-        url: '{{ route('fastlookup.items') }}',
+        url: '{{ route('seatcore::fastlookup.items') }}',
         dataType: 'json',
         data: function (params) {
             return {

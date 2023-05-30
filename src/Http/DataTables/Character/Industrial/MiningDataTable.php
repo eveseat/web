@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Character\Industrial;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Eveapi\Models\Industry\CharacterMining;
 use Seat\Web\Http\DataTables\Common\Industrial\AbstractMiningDataTable;
 
@@ -37,11 +38,11 @@ class MiningDataTable extends AbstractMiningDataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         return $this->data()
             ->rawColumns(['date', 'action', 'solar_system.name', 'type.typeName'])
-            ->make(true);
+            ->toJson();
     }
 
     /**

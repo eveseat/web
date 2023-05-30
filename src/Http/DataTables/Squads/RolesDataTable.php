@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Squads;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Seat\Web\Models\Acl\Role;
 use Yajra\DataTables\Services\DataTable;
@@ -36,7 +37,7 @@ class RolesDataTable extends DataTable
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->query())
@@ -59,7 +60,7 @@ class RolesDataTable extends DataTable
                     ->groupBy('id', 'title', 'description');
             })
             ->rawColumns(['permissions', 'action'])
-            ->make(true);
+            ->toJson();
     }
 
     /**

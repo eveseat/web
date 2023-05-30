@@ -58,7 +58,7 @@ class CorporationsController extends Controller
     {
         // by default, redirect user to corporation sheet
         if (Gate::allows('corporation.summary', $corporation))
-            return redirect()->route('corporation.view.summary', [
+            return redirect()->route('seatcore::corporation.view.summary', [
                 'corporation' => $corporation,
             ]);
 
@@ -83,7 +83,7 @@ class CorporationsController extends Controller
         event('security.log', [$message, 'authorization']);
 
         // Redirect away from the original request
-        return redirect()->route('auth.unauthorized');
+        return redirect()->route('seatcore::auth.unauthorized');
     }
 
     /**

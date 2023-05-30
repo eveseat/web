@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Alliance;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Eveapi\Models\Alliances\Alliance;
 use Yajra\DataTables\Services\DataTable;
 
@@ -37,7 +38,7 @@ class AllianceDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -48,7 +49,7 @@ class AllianceDataTable extends DataTable
                 return view('web::alliance.partials.delete', compact('row'));
             })
             ->rawColumns(['name', 'action'])
-            ->make(true);
+            ->toJson();
     }
 
     /**
