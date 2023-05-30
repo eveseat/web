@@ -122,6 +122,10 @@
           </span>
         @endif
       </dd>
+      @if(! is_null($character->title))
+      <dt>{{ trans_choice('web::seat.title', 1) }}</dt>
+      <dd>{{ $character->title }}</dd>
+      @endif
 
     </dl>
   </div>
@@ -135,7 +139,7 @@
          target="_blank">
         <img src="{{ asset('web/img/evesearch.png') }}">
       </a>
-      <a href="http://evewho.com/pilot/{{ $character->id }}"
+      <a href="http://evewho.com/character/{{ $character->character_id }}"
          target="_blank">
         <img src="{{ asset('web/img/evewho.png') }}">
       </a>

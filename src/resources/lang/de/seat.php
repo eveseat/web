@@ -442,9 +442,9 @@ return [
     'client_id_not_ok'             => 'Die Client-ID ist nicht OK. Bitte überprüfen sie ihre .env-Datei',
     'client_secret_status'         => 'Client-Secret Status',
     'client_secret_ok'             => 'Client Secret OK',
-    'client_secret_not_ok'         => 'Client Secret not OK. Check .env file',
+    'client_secret_not_ok'         => 'Client Secret FEHLER. Überprüfe die .env Datei',
     'callback_url_status'          => 'Callback URL Status',
-    'callback_url_ok'              => 'Callback URL OK as :url',
+    'callback_url_ok'              => 'Callback URL OK :url',
     'callback_maybe_wrong'         => 'Callback URL set but might be incorrect. Currently set as :current ' .
         'and should maybe be :suggested',
     'client_callback_not_ok'       => 'Callback URL not set. Check .env and set as :url',
