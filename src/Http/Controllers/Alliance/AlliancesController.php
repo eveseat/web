@@ -101,7 +101,7 @@ class AlliancesController extends Controller
         $alliance->delete();
 
         return redirect()->back()
-            ->with('success', sprintf('Alliance %s has been successfully removed.', $corporation->name));
+            ->with('success', sprintf('Alliance %s has been successfully removed.', $alliance->name));
     }
 
     /**

@@ -145,6 +145,7 @@ class WebServiceProvider extends AbstractSeatPlugin
             __DIR__ . '/resources/css' => public_path('web/css'),
             __DIR__ . '/resources/img' => public_path('web/img'),
             __DIR__ . '/resources/js'  => public_path('web/js'),
+            __DIR__ . '/resources/fonts' => public_path('web/fonts'),
 
             // Bootstrap pulled from packagist
             base_path('vendor/twbs/bootstrap/dist/css/bootstrap.min.css')                           => public_path('web/css/bootstrap.min.css'),
