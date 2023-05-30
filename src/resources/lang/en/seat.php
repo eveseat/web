@@ -493,7 +493,7 @@ return [
     'security_status'              => 'Security Status',
     'items_taking'                 => 'items taking',
     'calendar_events'              => 'Calendar Events',
-    'loyalty_points'               =>  'Loyalty Points',
+    'loyalty_points'               => 'Loyalty Points',
     'loyalty_point_prices'         => 'Fuzzwork LP Prices',
     'positive_standings'           => 'Positive Standings',
     'neutral_standings'            => 'Neutral Standings',
