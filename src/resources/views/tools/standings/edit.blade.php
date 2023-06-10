@@ -136,7 +136,7 @@
       url     : '{{ route("seatcore::tools.standings.ajax.element") }}',
       dataType: 'json',
       type    : 'POST',
-      delay   : 250,
+      delay   : 1000,
       cache   : true,
       data    : function(params){
           return {
