@@ -52,21 +52,21 @@ class SsoController extends Controller
         $scopes_setting = collect(setting('sso_scopes', true));
 
         // Get the scopes that are marked as the default.
-        $scopes = $scopes_setting->first(function ($item) {
+        $scopes_profile = $scopes_setting->first(function ($item) {
             return $item->default == true;
         });
 
         if(! is_null($profile)) {
-            $scopes = $scopes_setting->first(function ($item) use ($profile) {
+            $scopes_profile = $scopes_setting->first(function ($item) use ($profile) {
                 return $item->name == $profile;
             });
 
             // Invalid profile name?
-            if(is_null($scopes))
+            if(is_null($scopes_profile))
                 abort(400);
         }
 
-        $used_scopes = $scopes->scopes;
+        $used_scopes = $scopes_profile->scopes;
 
         // in case the user is already authenticated - we're in a link flow
         if (auth()->check()) {
@@ -80,6 +80,7 @@ class SsoController extends Controller
         // Store the scopes we are sending to CCP in the session so we can
         // validate the JWT response contains the right scopes.
         session()->put('scopes', $used_scopes);
+        session()->put('scopes_profile_id', $scopes_profile->id ?? 0);
 
         return Socialite::driver('eveonline')
             ->scopes($used_scopes)
@@ -207,6 +208,7 @@ class SsoController extends Controller
         ])->fill([
             'user_id'              => $seat_user->id,
             'refresh_token'        => $eve_user->refreshToken,
+            'scopes_profile'       => session()->get('scopes_profile_id', 0),
             'scopes'               => $eve_user->scopes,
             'token'                => $eve_user->token,
             'character_owner_hash' => $eve_user->character_owner_hash,
