@@ -22,7 +22,6 @@
 
 namespace Seat\Tests\Web\Database\Factories;
 
-use Faker\Generator;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Seat\Web\Models\Acl\Role;
 
@@ -32,14 +31,16 @@ use Seat\Web\Models\Acl\Role;
  */
 class RoleFactory extends Factory
 {
+    protected $model = Role::class;
+
     /**
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
-            'id' => $this->faker->numberBetween(1, 10),
-            'title' => $this->faker->name,
+            'id' => fake()->numberBetween(1, 10),
+            'title' => fake()->name,
         ];
     }
 }

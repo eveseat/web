@@ -22,9 +22,12 @@
 
 namespace Seat\Web\Models\Acl;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Intervention\Image\Facades\Image;
 use OpenApi\Attributes as OA;
+use Seat\Tests\Web\Database\Factories\RoleFactory;
 use Seat\Web\Models\Squads\Squad;
 use Seat\Web\Models\Squads\SquadRole;
 use Seat\Web\Models\User;
@@ -42,6 +45,8 @@ use Seat\Web\Models\User;
 )]
 class Role extends Model
 {
+    use HasFactory;
+
     /**
      * @var bool
      */
@@ -51,6 +56,14 @@ class Role extends Model
      * @var array
      */
     protected $fillable = ['title'];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory(): Factory
+    {
+        return RoleFactory::new();
+    }
 
     /**
      * Make sure we cleanup on delete.

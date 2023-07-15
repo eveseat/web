@@ -22,25 +22,36 @@
 
 namespace Seat\Tests\Web\Database\Factories;
 
-use Faker\Generator;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Seat\Eveapi\Models\Character\CharacterAffiliation;
+use Seat\Web\Models\User;
 
 /**
- * Class CharacterAffiliationFactory.
+ * Class UserFactory.
  * @package Seat\Tests\Web\Database\Factories
  */
-class CharacterAffiliationFactory extends Factory
+class UserFactory extends Factory
 {
+    /**
+     * @var int
+     */
+    static int $id = 2; // exclude 1 which should be admin
+
+    protected $model = User::class;
+
     /**
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
-            'corporation_id' => $this->faker->numberBetween(98541680, 98541699),
-            'alliance_id' => $this->faker->optional()->numberBetween(99000001, 99000049),
-            'faction_id' => null,
+            'id' => self::$id++,
+            'name' => fake()->name,
+            'active' => fake()->boolean,
+            'admin' => false,
+            'last_login' => fake()->dateTime(),
+            'last_login_source' => fake()->ipv4,
+            'remember_token' => fake()->sha256,
+            'main_character_id' => fake()->unique()->numberBetween(90000000, 90001000),
         ];
     }
 }

@@ -26,6 +26,8 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
@@ -33,6 +35,7 @@ use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\Models\UserSetting;
 use Seat\Services\Settings\Profile;
+use Seat\Tests\Web\Database\Factories\UserFactory;
 use Seat\Web\Models\Acl\Role;
 use Seat\Web\Models\Squads\Squad;
 use Seat\Web\Models\Squads\SquadMember;
@@ -44,7 +47,7 @@ use Seat\Web\Models\Squads\SquadMember;
  */
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
-    use Authenticatable, Authorizable, CanResetPassword, Notifiable;
+    use Authenticatable, Authorizable, CanResetPassword, HasFactory, Notifiable;
 
     /**
      * @var bool
@@ -81,6 +84,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $appends = ['email'];
+
+    /**
+     * @return \Seat\Tests\Web\Database\Factories\UserFactory
+     */
+    protected static function newFactory(): Factory
+    {
+        return UserFactory::new();
+    }
 
     /**
      * Make sure we cleanup on delete.

@@ -69,8 +69,6 @@ class GlobalPolicyTest extends TestCase
         parent::setUp();
 
         $this->loadMigrationsFrom(realpath(__DIR__ . '/../database/migrations'));
-
-        $this->withFactories(__DIR__ . '/../database/factories');
     }
 
     /**
@@ -80,7 +78,7 @@ class GlobalPolicyTest extends TestCase
     {
         $permissions = array_keys(require __DIR__ . '/../../src/Config/Permissions/global.php');
 
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         foreach ($permissions as $permission) {
             Redis::flushdb();
@@ -97,7 +95,7 @@ class GlobalPolicyTest extends TestCase
     {
         $permissions = array_keys(require __DIR__ . '/../../src/Config/Permissions/global.php');
 
-        $user = factory(User::class)->create([
+        $user = User::factory()->create([
             'admin' => true,
         ]);
 
@@ -111,9 +109,9 @@ class GlobalPolicyTest extends TestCase
 
     public function testVanillaSuperuser()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
-        $role = factory(Role::class)->create();
+        $role = Role::factory()->create();
         $role->users()->save($user);
 
         $role_permission = Permission::create([
@@ -141,9 +139,9 @@ class GlobalPolicyTest extends TestCase
 
         $permissions = array_keys(require __DIR__ . '/../../src/Config/Permissions/global.php');
 
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
-        $role = factory(Role::class)->create();
+        $role = Role::factory()->create();
         $role->users()->save($user);
 
         foreach ($permissions as $permission) {

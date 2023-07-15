@@ -71,22 +71,20 @@ class SkillRuleTest extends TestCase
 
         $this->loadMigrationsFrom(realpath(__DIR__ . '/../database/migrations'));
 
-        $this->withFactories(__DIR__ . '/../database/factories');
-
         Event::fake();
 
-        factory(CharacterInfo::class, 50)
+        CharacterInfo::factory(50)
             ->create()
             ->each(function ($character) {
-                $character->skills()->saveMany(factory(CharacterSkill::class, 20)->make());
+                $character->skills()->saveMany(CharacterSkill::factory(20)->make());
             });
 
-        factory(User::class, 10)
+        User::factory(10)
             ->create()
             ->each(function ($user) {
                 CharacterInfo::whereDoesntHave('refresh_token')->get()
                     ->random(rand(1, 5))->each(function ($character) use ($user) {
-                        factory(RefreshToken::class)->create([
+                        RefreshToken::factory()->create([
                             'character_id' => $character->character_id,
                             'user_id' => $user->id,
                         ]);
