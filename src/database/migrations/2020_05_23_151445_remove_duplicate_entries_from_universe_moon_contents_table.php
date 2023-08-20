@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,8 +30,19 @@ class RemoveDuplicateEntriesFromUniverseMoonContentsTable extends Migration
 {
     public function up()
     {
-        // remove any duplicated entry base on moon_id and type_id
-        DB::statement('DELETE a FROM universe_moon_contents a INNER JOIN universe_moon_contents b WHERE a.id < b.id AND a.moon_id = b.moon_id AND a.type_id = b.type_id');
+        $engine = DB::getDriverName();
+
+        switch ($engine) {
+            case 'mysql':
+                // remove any duplicated entry base on moon_id and type_id
+                DB::statement('DELETE a FROM universe_moon_contents a INNER JOIN universe_moon_contents b WHERE a.id < b.id AND a.moon_id = b.moon_id AND a.type_id = b.type_id');
+                break;
+            case 'pgsql':
+            case 'postgresql':
+                // remove any duplicated entry base on moon_id and type_id
+                DB::statement('DELETE FROM universe_moon_contents a USING universe_moon_contents b WHERE a.id < b.id AND a.moon_id = b.moon_id AND a.type_id = b.type_id');
+                break;
+        }
     }
 
     public function down()
