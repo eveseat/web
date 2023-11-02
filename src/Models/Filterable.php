@@ -85,6 +85,12 @@ trait Filterable
             $query->whereHas($rule->path, function ($inner_query) use ($rule) {
                 $inner_query->where($rule->field,$rule->operator, $rule->criteria);
             });
+        } else if ($rule->operator === '<>') {
+            $query->where(function (Builder $inner_query) use ($rule) {
+               $inner_query->whereDoesntHave($rule->path, function ($final_query) use ($rule) {
+                   $final_query->where($rule->field, $rule->criteria);
+               });
+            });
         } else {
             throw new \Exception('not implemented');
         }
