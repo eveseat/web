@@ -52,8 +52,10 @@ trait Filterable
 
         // make sure we only allow results of the entity we are checking
         $query->where($member->getKeyName(),$member->getKey());
-
-        $this->applyGroup($query, $this->getFilters());
+        // wrap this in an inner query to ensure we have the correct entity and the filter applies
+        $query->where(function ($inner_query){
+            $this->applyGroup($inner_query, $this->getFilters());
+        });
 
         //return dd($query->toRawSql(), $query->exists());
         return $query->exists();
