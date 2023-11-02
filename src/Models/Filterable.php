@@ -44,140 +44,47 @@ trait Filterable
      */
     final public function isEligible(Model $member): bool
     {
-        // in case no filters exists, bypass check
-        if (! property_exists($this->getFilters(), 'and') && ! property_exists($this->getFilters(), 'or'))
-            return true;
+        // in case no filters exists, bypass check and return not eligible
+        if (!property_exists($this->getFilters(), 'and') && !property_exists($this->getFilters(), 'or'))
+            return false;
 
-        // init a new object based on parameter
-        $class = get_class($member);
+        $query = $member->newQuery();
 
-        return (new $class)::where($member->getKeyName(), $member->id)
-            ->where(function ($query) {
+        // make sure we only allow results of the entity we are checking
+        $query->where($member->getKeyName(),$member->getKey());
 
-                // verb will determine what kind of method we have to use (simple andWhere or orWhere)
-                $verb = property_exists($this->getFilters(), 'and') ? 'whereHas' : 'orWhereHas';
+        $this->applyGroup($query, $this->getFilters());
 
-                // rules will determine all objects and ruleset in the current object root
-                $rules = property_exists($this->getFilters(), 'and') ? $this->getFilters()->and : $this->getFilters()->or;
-
-                // sort rules by path
-                $sorted_rules = $this->sortFiltersByRelations($rules);
-
-                // TODO: find a way to handle this using recursive loop and determine common patterns
-                $sorted_rules->each(function ($rules_group, $path) use ($query, $verb) {
-
-                    if (is_int($path)) {
-
-                        $parent_verb = $verb == 'whereHas' ? 'where' : 'orWhere';
-
-                        $query->$parent_verb(function ($q2) use ($rules_group, $parent_verb) {
-
-                            // all pairs will be group in distinct collection due to previous group by
-                            // as a result, we have to iterate over each members
-                            $rules_group->each(function ($rules) use ($parent_verb, $q2) {
-
-                                // determine the match kind for the current pair
-                                // sort all rules from this pair in order to ensure relationship consistency
-                                $group_verb = property_exists($rules, 'and') ? 'whereHas' : 'orWhereHas';
-                                $rules_group = $this->sortFiltersByRelations(property_exists($rules, 'and') ?
-                                    $rules->and : $rules->or);
-
-                                $rules_group->each(function ($rules, $path) use ($parent_verb, $group_verb, $q2) {
-
-                                    // prepare query from current pair group
-                                    $q2->$parent_verb(function ($q3) use ($rules, $path, $group_verb) {
-                                        $q3->$group_verb($path, function ($q4) use ($rules, $group_verb) {
-
-                                            // prevent dummy query by encapsulating rules outside relations
-                                            $q4->where(function ($q5) use ($rules, $group_verb) {
-                                                $this->applyRules($q5, $group_verb, $rules);
-                                            });
-                                        });
-                                    });
-                                });
-                            });
-                        });
-
-                    } else {
-
-                        $rules = $rules_group;
-
-                        // using group by, we've pair all relationships by their top level relation
-                        // $query->whereHas('characters(.*)', function ($sub_query) { ... }
-                        $query->$verb($path, function ($q2) use ($rules, $verb) {
-
-                            // override the complete rule group with a global where.
-                            // doing it so will prevent SQL query like
-                            // (users.id = tokens.user_id OR character_id = ? OR character_id = ?)
-                            // when multiple rules are applied on same path.
-                            $q2->where(function ($q3) use ($rules, $verb) {
-                                $this->applyRules($q3, $verb, $rules);
-                            });
-                        });
-                    }
-                });
-            })->exists();
+        //return dd($query->toRawSql(), $query->exists());
+        return $query->exists();
     }
 
-    /**
-     * @param  array  $rules
-     * @return \Illuminate\Support\Collection
-     */
-    private function sortFiltersByRelations(array $rules)
+    private function applyGroup(Builder $query, object $group): void
     {
-        return collect($rules)->sortBy('path')->groupBy(function ($rule) {
-            if (! property_exists($rule, 'path'))
-                return false;
+        $query_group = new QueryGroupBuilder($query, property_exists($group, 'and'));
 
-            $relation_members = explode('.', $rule->path);
+        $rules = $query_group->isAndGroup() ? $group->and : $group->or;
 
-            return $relation_members[0];
-        });
-    }
-
-    /**
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $group_verb
-     * @param  array|\Illuminate\Support\Collection  $rules
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    private function applyRules(Builder $query, string $group_verb, $rules)
-    {
-        $query_operator = $group_verb == 'whereHas' ? 'where' : 'orWhere';
-
-        if (is_array($rules))
-            $rules = collect($rules);
-
-        $rules->sortBy('path')->groupBy('path')->each(function ($relation_rules, $relation) use ($query, $query_operator) {
-            if (strpos($relation, '.') !== false) {
-                $relation = substr($relation, strpos($relation, '.') + 1);
-
-                $query->whereHas($relation, function ($q2) use ($query_operator, $relation_rules) {
-                    $q2->where(function ($q3) use ($relation_rules, $query_operator) {
-                        foreach ($relation_rules as $index => $rule) {
-                            if ($rule->operator == 'contains') {
-                                $json_operator = $query_operator == 'where' ? 'whereJsonContains' : 'orWhereJsonContains';
-                                $q3->$json_operator($rule->field, $rule->criteria);
-                            } else {
-                                $q3->$query_operator($rule->field, $rule->operator, $rule->criteria);
-                            }
-                        }
-                    });
-                });
+        foreach ($rules as $rule){
+            if(property_exists($rule,'path')){
+                $this->applyRule($query_group, $rule);
             } else {
-                $query->where(function ($q2) use ($relation_rules, $query_operator) {
-                    foreach ($relation_rules as $index => $rule) {
-                        if ($rule->operator == 'contains') {
-                            $json_operator = $query_operator == 'where' ? 'whereJsonContains' : 'orWhereJsonContains';
-                            $q2->$json_operator($rule->field, $rule->criteria);
-                        } else {
-                            $q2->$query_operator($rule->field, $rule->operator, $rule->criteria);
-                        }
-                    }
+                // this is a nested group
+                $query->where(function ($group_query) use ($group) {
+                    $this->applyGroup($group_query, $group);
                 });
             }
-        });
+        }
+    }
 
-        return $query;
+    private function applyRule(QueryGroupBuilder $query, object $rule): void {
+        // 'is' operator
+        if($rule->operator === '='){
+            $query->whereHas($rule->path, function ($inner_query) use ($rule) {
+                $inner_query->where($rule->field,$rule->operator, $rule->criteria);
+            });
+        } else {
+            throw new \Exception('not implemented');
+        }
     }
 }
