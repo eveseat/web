@@ -85,7 +85,7 @@ trait Filterable
                 $this->applyRule($query_group, $rule);
             } else {
                 // this is a nested group
-                $query->where(function ($group_query) use ($rule) {
+                $query_group->where(function ($group_query) use ($rule) {
                     $this->applyGroup($group_query, $rule);
                 });
             }
