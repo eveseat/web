@@ -1,11 +1,32 @@
 <?php
 
+/*
+ * This file is part of SeAT
+ *
+ * Copyright (C) 2015 to present Leon Jacobs
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
 namespace Seat\Web\Models;
+
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * Helper to build query where clauses that are either connected by AND or by OR
+ * Helper to build query where clauses that are either connected by AND or by OR.
  */
 class QueryGroupBuilder
 {
@@ -20,10 +41,10 @@ class QueryGroupBuilder
     protected Builder $query;
 
     /**
-     * @param Builder $query The query builder to add the where clauses to
-     * @param bool $is_and_group Whether the where clauses should be linked by AND
+     * @param  Builder  $query  The query builder to add the where clauses to
+     * @param  bool  $is_and_group  Whether the where clauses should be linked by AND
      */
-    public function __construct(Builder $query, bool $is_and_group){
+    public function __construct(Builder $query, bool $is_and_group) {
         $this->query = $query;
         $this->is_and_group = $is_and_group;
     }
@@ -44,9 +65,11 @@ class QueryGroupBuilder
     }
 
     /**
-     * Either adds a 'where' or 'orWhere' to the query, depending on if it is an AND linked group or not
-     * @param Closure $callback a callback to add constraints
+     * Either adds a 'where' or 'orWhere' to the query, depending on if it is an AND linked group or not.
+     *
+     * @param  Closure  $callback  a callback to add constraints
      * @return $this
+     *
      * @see Builder::where
      * @see Builder::orWhere
      */
@@ -56,14 +79,17 @@ class QueryGroupBuilder
         } else {
            $this->query->orWhere($callback);
         }
+
         return $this;
     }
 
     /**
-     * Either adds a 'whereHas' or 'orWhereHas' to the query, depending on if it is an AND linked group or not
-     * @param string $relation the relation to check for existence
-     * @param Closure $callback a callback to add more constraints
+     * Either adds a 'whereHas' or 'orWhereHas' to the query, depending on if it is an AND linked group or not.
+     *
+     * @param  string  $relation  the relation to check for existence
+     * @param  Closure  $callback  a callback to add more constraints
      * @return $this
+     *
      * @see Builder::whereHas
      * @see Builder::orWhereHas
      */
@@ -73,14 +99,17 @@ class QueryGroupBuilder
         } else {
             $this->query->orWhereHas($relation, $callback);
         }
+
         return $this;
     }
 
     /**
-     * Either adds a 'whereDoesntHave' or 'orWhereDoesntHave' to the query, depending on if it is an AND linked group or not
-     * @param string $relation the relation to check for absence
-     * @param Closure $callback a callback to add more constraints
+     * Either adds a 'whereDoesntHave' or 'orWhereDoesntHave' to the query, depending on if it is an AND linked group or not.
+     *
+     * @param  string  $relation  the relation to check for absence
+     * @param  Closure  $callback  a callback to add more constraints
      * @return $this
+     *
      * @see Builder::whereDoesntHave
      * @see Builder::orWhereDoesntHave
      */
@@ -90,6 +119,7 @@ class QueryGroupBuilder
         } else {
             $this->query->orWhereDoesntHave($relation, $callback);
         }
+
         return $this;
     }
 }
