@@ -24,6 +24,7 @@ namespace Seat\Web\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Seat\Web\Exceptions\InvalidFilterException;
 use stdClass;
 
 /**
@@ -34,65 +35,88 @@ use stdClass;
 trait Filterable
 {
     /**
+     * The filters to use.
      * @return \stdClass
      */
     abstract public function getFilters(): stdClass;
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Model  $member
-     * @return bool
+     * Check if an entity is eligible
+     * @param Model $member The entity to check
+     * @return bool Whether the entity is eligible
+     * @throws InvalidFilterException If a invalid filter configuration is used
      */
     final public function isEligible(Model $member): bool
     {
         // in case no filters exists, bypass check and return not eligible
         if (!property_exists($this->getFilters(), 'and') && !property_exists($this->getFilters(), 'or'))
-            return false;
+            throw new InvalidFilterException('root filter configuration is not a rule group');
 
-        $query = $member->newQuery();
+        $query = new QueryGroupBuilder($member->newQuery(), true);
 
-        // make sure we only allow results of the entity we are checking
-        $query->where($member->getKeyName(),$member->getKey());
-        // wrap this in an inner query to ensure we have the correct entity and the filter applies
+        // make sure we only allow results of the entity we are checking count
+        $query->where(function (Builder $inner_query) use ($member) {
+            $inner_query->where($member->getKeyName(),$member->getKey());
+        });
+
+        // wrap this in an inner query to ensure it is '(correct_entity_check) AND (rule1 AND/OR rule2)'
         $query->where(function ($inner_query){
             $this->applyGroup($inner_query, $this->getFilters());
         });
 
-        //return dd($query->toRawSql(), $query->exists());
-        return $query->exists();
+        return $query->getUnderlyingQuery()->exists();
     }
 
-    private function applyGroup(Builder $query, object $group): void
+    /**
+     * Applies a filter group to $query
+     * @param Builder $query the query to add the filter group to
+     * @param stdClass $group the filter group configuration
+     * @throws InvalidFilterException
+     */
+    private function applyGroup(Builder $query, stdClass $group): void
     {
         $query_group = new QueryGroupBuilder($query, property_exists($group, 'and'));
 
         $rules = $query_group->isAndGroup() ? $group->and : $group->or;
 
         foreach ($rules as $rule){
+            // check if this is a nested group or not
             if(property_exists($rule,'path')){
                 $this->applyRule($query_group, $rule);
             } else {
                 // this is a nested group
-                $query->where(function ($group_query) use ($group) {
-                    $this->applyGroup($group_query, $group);
+                $query->where(function ($group_query) use ($rule) {
+                    $this->applyGroup($group_query, $rule);
                 });
             }
         }
     }
 
-    private function applyRule(QueryGroupBuilder $query, object $rule): void {
+    /**
+     * Applies a rule to a query group
+     * @param QueryGroupBuilder $query the query to add the rule to
+     * @param  stdClass $rule the rule configuration
+     * @throws InvalidFilterException
+     */
+    private function applyRule(QueryGroupBuilder $query, stdClass $rule): void {
         // 'is' operator
-        if($rule->operator === '='){
-            $query->whereHas($rule->path, function ($inner_query) use ($rule) {
+        if($rule->operator === '=' || $rule->operator === '<' || $rule->operator==='>'){
+            // normal comparison operations need to relation to exist
+            $query->whereHas($rule->path, function (Builder $inner_query) use ($rule) {
                 $inner_query->where($rule->field,$rule->operator, $rule->criteria);
             });
-        } else if ($rule->operator === '<>') {
-            $query->where(function (Builder $inner_query) use ($rule) {
-               $inner_query->whereDoesntHave($rule->path, function ($final_query) use ($rule) {
-                   $final_query->where($rule->field, $rule->criteria);
-               });
+        } else if ($rule->operator === '<>' || $rule->operator === '!=') {
+            // not equal is special cased since a missing relation is the same as not equal
+            $query->whereDoesntHave($rule->path, function (Builder $inner_query) use ($rule) {
+                $inner_query->where($rule->field, $rule->criteria);
+            });
+        } else if($rule->operator === 'contains'){
+            // contains is maybe a misleading name, since it actually checks if json contains a value
+            $query->whereHas($rule->path, function (Builder $inner_query) use ($rule) {
+                $inner_query->whereJsonContains($rule->field,$rule->criteria);
             });
         } else {
-            throw new \Exception('not implemented');
+            throw new InvalidFilterException(sprintf('Unknown rule operator: \'%s\'',$rule->operator));
         }
     }
 }
