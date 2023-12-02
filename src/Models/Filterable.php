@@ -51,9 +51,10 @@ trait Filterable
      */
     final public function isEligible(Model $member): bool
     {
-        // in case no filters exists, bypass check and return not eligible
+        // in case no filters exists, everyone should be allowed
+        // this is the case with manual squads
         if (! property_exists($this->getFilters(), 'and') && ! property_exists($this->getFilters(), 'or'))
-            throw new InvalidFilterException('root filter configuration is not a rule group');
+            return true;
 
         $query = new QueryGroupBuilder($member->newQuery(), true);
 
