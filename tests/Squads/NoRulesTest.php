@@ -102,10 +102,8 @@ class NoRulesTest extends TestCase
         // pickup users
         $user = User::first();
 
-        $this->expectException(InvalidFilterException::class);
-
         // ensure no users are eligible
-        $squad->isEligible($user);
+        $this->assertTrue($squad->isEligible($user), 'Squad without filter is open to anyone');
 
     }
 }
