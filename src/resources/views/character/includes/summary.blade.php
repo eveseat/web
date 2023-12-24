@@ -27,9 +27,9 @@
     </p>
 
     <ul class="list-group list-group-unbordered mb-3">
-      @if(! is_null($character->refresh_token))
+      @if($character->refresh_token()->withTrashed()->exists())
         @can('global.invalid_tokens')
-          @foreach($character->refresh_token->user->all_characters()->where('character_id', '<>', $character->character_id)->sortBy('name') as $character_info)
+          @foreach($character->refresh_token()->withTrashed()->first()->user->all_characters()->where('character_id', '<>', $character->character_id)->sortBy('name') as $character_info)
 
           <li class="list-group-item">
 
@@ -55,7 +55,7 @@
 
           @endforeach
         @else
-          @foreach($character->refresh_token->user->characters->where('character_id', '<>', $character->character_id)->sortBy('name') as $character_info)
+          @foreach($character->refresh_token()->withTrashed()->first()->user->characters->where('character_id', '<>', $character->character_id)->sortBy('name') as $character_info)
 
           <li class="list-group-item">
 
