@@ -3,4 +3,8 @@
 .env.php
 .env
 .idea/
+
+# testing
 vendor/
+composer.lock
+.phpunit.cache/test-results
