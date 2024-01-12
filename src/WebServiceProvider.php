@@ -148,28 +148,28 @@ class WebServiceProvider extends AbstractSeatPlugin
         $this->publishes([
             __DIR__ . '/resources/css' => public_path('web/css'),
             __DIR__ . '/resources/img' => public_path('web/img'),
-            __DIR__ . '/resources/js'  => public_path('web/js'),
+            __DIR__ . '/resources/js' => public_path('web/js'),
             __DIR__ . '/resources/fonts' => public_path('web/fonts'),
 
             // Bootstrap pulled from packagist
-            base_path('vendor/twbs/bootstrap/dist/css/bootstrap.min.css')                           => public_path('web/css/bootstrap.min.css'),
+            base_path('vendor/twbs/bootstrap/dist/css/bootstrap.min.css') => public_path('web/css/bootstrap.min.css'),
             base_path('vendor/almasaeed2010/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') => public_path('web/js/bootstrap.bundle.min.js'),
 
             // Datatables pulled from packagist
-            base_path('vendor/datatables.net/datatables.net/js/jquery.dataTables.min.js')       => public_path('web/js/jquery.dataTables.min.js'),
+            base_path('vendor/datatables.net/datatables.net/js/jquery.dataTables.min.js') => public_path('web/js/jquery.dataTables.min.js'),
             base_path('vendor/datatables.net/datatables.net-bs4/css/dataTables.bootstrap4.min.css') => public_path('web/css/dataTables.bootstrap4.min.css'),
-            base_path('vendor/datatables.net/datatables.net-bs4/js/dataTables.bootstrap4.min.js')   => public_path('web/js/dataTables.bootstrap4.min.js'),
-            base_path('vendor/datatables.net/datatables.net-buttons/js/dataTables.buttons.min.js')   => public_path('web/js/dataTables.buttons.min.js'),
-            base_path('vendor/datatables.net/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css')   => public_path('web/css/buttons.bootstrap4.min.css'),
-            base_path('vendor/datatables.net/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js')   => public_path('web/js/buttons.bootstrap4.min.js'),
+            base_path('vendor/datatables.net/datatables.net-bs4/js/dataTables.bootstrap4.min.js') => public_path('web/js/dataTables.bootstrap4.min.js'),
+            base_path('vendor/datatables.net/datatables.net-buttons/js/dataTables.buttons.min.js') => public_path('web/js/dataTables.buttons.min.js'),
+            base_path('vendor/datatables.net/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') => public_path('web/css/buttons.bootstrap4.min.css'),
+            base_path('vendor/datatables.net/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js') => public_path('web/js/buttons.bootstrap4.min.js'),
 
             // AdminLTE pulled from packagist
             base_path('vendor/almasaeed2010/adminlte/dist/css/adminlte.min.css') => public_path('web/css/adminlte.min.css'),
-            base_path('vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js')   => public_path('web/js/adminlte.min.js'),
+            base_path('vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js') => public_path('web/js/adminlte.min.js'),
 
             // Font Awesome pulled from packagist
             base_path('vendor/components/font-awesome/css/all.min.css') => public_path('web/css/all.min.css'),
-            base_path('vendor/components/font-awesome/webfonts')        => public_path('web/webfonts'),
+            base_path('vendor/components/font-awesome/webfonts') => public_path('web/webfonts'),
         ], ['public', 'seat']);
 
         // publish horizon override for queues setup
@@ -189,7 +189,7 @@ class WebServiceProvider extends AbstractSeatPlugin
 
     /**
      * Configure illuminate/pagination to use bootstrap 4 since the new default is tailwind
-     * See https://laravel.com/docs/10.x/pagination#using-bootstrap
+     * See https://laravel.com/docs/10.x/pagination#using-bootstrap.
      */
     private function configure_pagination(): void {
         Paginator::useBootstrapFour();
@@ -518,10 +518,10 @@ class WebServiceProvider extends AbstractSeatPlugin
         // Default Scopes asked for SSO Authentication
         Seat::define('sso_scopes', [
             [
-                'id'      => 0,
-                'name'    => 'default',
+                'id' => 0,
+                'name' => 'default',
                 'default' => true,
-                'scopes'  => [
+                'scopes' => [
                     'publicData',
                     'esi-alliances.read_contacts.v1',
                     'esi-assets.read_assets.v1',
