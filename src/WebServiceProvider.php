@@ -26,6 +26,7 @@ use Illuminate\Auth\Events\Attempting;
 use Illuminate\Auth\Events\Login as LoginEvent;
 use Illuminate\Auth\Events\Logout as LogoutEvent;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
@@ -124,6 +125,9 @@ class WebServiceProvider extends AbstractSeatPlugin
 
         // Configure API
         $this->configure_api();
+
+        // Configure pagination settings
+        $this->configure_pagination();
     }
 
     /**
@@ -181,6 +185,14 @@ class WebServiceProvider extends AbstractSeatPlugin
     {
 
         $this->loadViewsFrom(__DIR__ . '/resources/views', 'web');
+    }
+
+    /**
+     * Configure illuminate/pagination to use bootstrap 4 since the new default is tailwind
+     * See https://laravel.com/docs/10.x/pagination#using-bootstrap
+     */
+    private function configure_pagination(): void {
+        Paginator::useBootstrapFour();
     }
 
     /**
