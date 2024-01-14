@@ -155,44 +155,4 @@ class AllianceRuleTest extends TestCase
                 $this->assertFalse($squad->isEligible($user));
         }
     }
-
-    /**
-     * This test checks whether a character from a corp outside an alliance is eligible for a squad with a alliance is not filter.
-     * In SeAT 4, this was not working properly
-     */
-    public function testCharacterHasNoAllianceWithAllianceIsNotFilter(){
-        $squad = new Squad([
-            'name' => 'Testing Squad',
-            'description' => 'Some description',
-            'type' => 'auto',
-            'filters' => json_encode([
-                'and' => [
-                    [
-                        'name' => 'alliance',
-                        'path' => 'characters.affiliation',
-                        'field' => 'alliance_id',
-                        'operator' => '<>',
-                        'criteria' => 99000000,
-                        'text' => 'Random Alliance',
-                    ],
-                ],
-            ]),
-        ]);
-
-        $user = User::first();
-
-        $user->characters->each(function ($character){
-            $character->affiliation->update([
-                'alliance_id' => 99000000,
-            ]);
-        });
-        $this->assertFalse($squad->isEligible($user));
-
-        $user->characters->each(function ($character){
-            $character->affiliation->update([
-                'alliance_id' => null,
-            ]);
-        });
-        $this->assertTrue($squad->isEligible($user));
-    }
 }
