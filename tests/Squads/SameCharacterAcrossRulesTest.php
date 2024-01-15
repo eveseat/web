@@ -139,4 +139,70 @@ class SameCharacterAcrossRulesTest extends TestCase
 
         $this->assertFalse($squad->isEligible($user));
     }
+
+    public function testSquadUsesSameCharacterAcrossGroups() {
+        $CORPORATION_ID = 98681714;
+        $ROLE = 'Director';
+
+        // STEP: spawn test squad
+        $squad = new Squad([
+            'name' => 'Testing Squad',
+            'description' => 'Some description',
+            'type' => 'auto',
+            'filters' => json_encode([
+                'and' => [
+                    [
+                        'name'=>'corporation',
+                        'path'=>'characters.affiliation',
+                        'field'=>'corporation_id',
+                        'criteria'=>strval($CORPORATION_ID),
+                        'operator'=>'=',
+                        'text'=>'Backbone Trading Inc'
+                    ],
+                    [
+                        'and'=>[
+                            [
+                                'name'=>'role',
+                                'path'=>'characters.corporation_roles',
+                                'field'=>'role',
+                                'criteria'=>$ROLE,
+                                'operator'=>'=',
+                                'text'=>$ROLE
+                            ],
+                        ],
+                    ],
+                ]
+            ]),
+        ]);
+
+        // STEP: Create user with characters
+        // get a user with two or more character
+        $user = User::factory()->create();
+        // get two characters
+        $character_1 = CharacterInfo::factory()->create();
+        $character_2 = CharacterInfo::factory()->create();
+        // attach character to user
+        RefreshToken::factory()->create([
+            'character_id' => $character_1->character_id,
+            'user_id' => $user->id,
+        ]);
+        RefreshToken::factory()->create([
+            'character_id' => $character_2->character_id,
+            'user_id' => $user->id,
+        ]);
+
+        // attach affiliation to first character
+        CharacterAffiliation::factory()->create([
+            'corporation_id' => $CORPORATION_ID,
+            'character_id' => $character_1->character_id
+        ]);
+
+        // attach role to second character
+        CharacterRole::factory()->create([
+            'role' => $ROLE,
+            'character_id' => $character_2->character_id
+        ]);
+
+        $this->assertFalse($squad->isEligible($user));
+    }
 }
