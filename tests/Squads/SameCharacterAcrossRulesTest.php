@@ -77,6 +77,15 @@ class SameCharacterAcrossRulesTest extends TestCase
         Event::fake();
     }
 
+    /**
+     * The goal of this test is to prevent a CVE that was discovered in SeAT 5. If a group has two rules and is linked
+     * by AND, a user with two characters shall be checked. One character fulfills the first rule, the second fulfills
+     * the second rule. As the UI in SeAT asks the user to specify the rules for one character and then SeAT checks
+     * the user character by character, this user should not be eligible. He has no character that fulfills both
+     * rules. This test ensures that a user in this situation doesn't have access.
+     *
+     * @return void
+     */
     public function testGroupUsesSameCharacterForAllRules()
     {
         $CORPORATION_ID = 98681714;
@@ -140,6 +149,14 @@ class SameCharacterAcrossRulesTest extends TestCase
         $this->assertFalse($squad->isEligible($user));
     }
 
+    /**
+     * This test build upon Seat\Tests\Web\Squads\SameCharacterAcrossRulesTest::testGroupUsesSameCharacterForAllRules
+     * and additionally check that this also happens across rule groups. For a filter with one rule and another rule
+     * wrapped inside a group, all linked by AND, the user needs to have a character that fulfills both rules. It is not
+     * sufficient to have a user with two characters, where each character only fulfills one of the rules.
+     *
+     * @return void
+     */
     public function testSquadUsesSameCharacterAcrossGroups() {
         $CORPORATION_ID = 98681714;
         $ROLE = 'Director';
