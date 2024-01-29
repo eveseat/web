@@ -101,7 +101,7 @@ class AllianceScope implements DataTableScope
             $filters = json_decode($permission->pivot->filters);
 
             return [
-                'alliances'    => collect($filters->alliance ?? [])->pluck('id')->toArray(),
+                'alliances' => collect($filters->alliance ?? [])->pluck('id')->toArray(),
             ];
         });
 

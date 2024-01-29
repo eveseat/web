@@ -74,7 +74,7 @@ class MarketOrderDataTable extends DataTable
                     2, // here is the column number
                     'asc',
                 ],
-                'pageLength'=>100,
+                'pageLength' => 100,
             ])
             ->postAjax([
                 'data' => 'function (d) {
@@ -100,8 +100,8 @@ class MarketOrderDataTable extends DataTable
             ['data' => 'solar_system.name', 'title' => 'System'],
             ['data' => 'volume_remaining', 'title' => 'Quantity'],
             ['data' => 'price', 'title' => 'Price'],
-            ['data' => 'location_id', 'title'=>'Location'],
-            ['data' => 'expiry', 'title'=>'Expiry'],
+            ['data' => 'location_id', 'title' => 'Location'],
+            ['data' => 'expiry', 'title' => 'Expiry'],
         ];
     }
 }

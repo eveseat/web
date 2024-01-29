@@ -21,11 +21,11 @@
  */
 
 return [
-    'planet'            => 'Planète',
-    'reinforcement'     => 'Période de renf.',
-    'alliance'          => 'Autoriser alliance',
-    'standings'         => 'Autoriser rép.',
-    'standing_level'    => 'Niveau rép. min.',
+    'planet' => 'Planète',
+    'reinforcement' => 'Période de renf.',
+    'alliance' => 'Autoriser alliance',
+    'standings' => 'Autoriser rép.',
+    'standing_level' => 'Niveau rép. min.',
     'tax_alliance_corp' => 'Taxe alliance/corp',
-    'tax_standings'     => 'Taxes réputations',
+    'tax_standings' => 'Taxes réputations',
 ];

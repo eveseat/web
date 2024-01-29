@@ -92,7 +92,7 @@ class EmailVerification extends Notification
     {
 
         return [
-            'id'               => $notifiable->id,
+            'id' => $notifiable->id,
             'activation_token' => $notifiable->activation_token,
         ];
     }

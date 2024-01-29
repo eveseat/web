@@ -21,20 +21,20 @@
  */
 
 return [
-    'date'       => 'Date',
-    'ref_type'   => 'Type',
+    'date' => 'Date',
+    'ref_type' => 'Type',
     'from_party' => 'Du tiers',
-    'to_party'   => 'Au tiers',
-    'amount'     => 'Montant',
-    'balance'    => 'Solde',
+    'to_party' => 'Au tiers',
+    'amount' => 'Montant',
+    'balance' => 'Solde',
 
-    'order'      => 'Achat/Vente',
-    'type'       => 'Type',
-    'location'   => 'Emplacement',
-    'price'      => 'Prix',
-    'quantity'   => 'Quantité',
-    'total'      => 'Total',
-    'party'      => 'Tiers',
+    'order' => 'Achat/Vente',
+    'type' => 'Type',
+    'location' => 'Emplacement',
+    'price' => 'Prix',
+    'quantity' => 'Quantité',
+    'total' => 'Total',
+    'party' => 'Tiers',
 
     'acceleration_gate_fee' => 'Frais de portail d\'accélération',
     'advertisement_listing_fee' => 'Frais d\'annonces',

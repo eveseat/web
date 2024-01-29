@@ -59,7 +59,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected $casts = [
         'active' => 'boolean',
-        'admin'  => 'boolean',
+        'admin' => 'boolean',
     ];
 
     /**

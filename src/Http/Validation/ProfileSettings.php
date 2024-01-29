@@ -60,13 +60,13 @@ class ProfileSettings extends FormRequest
             $this->request->set('thousand_seperator', ' ');
 
         return [
-            'skin'                => 'required|in:' . $allowed_skins,
-            'language'            => 'required|in:' . $allowed_languages,
-            'sidebar'             => 'required|in:' . $allowed_sidebar,
-            'mail_threads'        => 'required|in:' . $mail_threads,
-            'thousand_seperator'  => 'nullable|in:" ",",","."|size:1',
-            'decimal_seperator'   => 'required|in:",","."|size:1',
-            'reprocessing_yield'  => 'required|numeric|min:0|max:1',
+            'skin' => 'required|in:' . $allowed_skins,
+            'language' => 'required|in:' . $allowed_languages,
+            'sidebar' => 'required|in:' . $allowed_sidebar,
+            'mail_threads' => 'required|in:' . $mail_threads,
+            'thousand_seperator' => 'nullable|in:" ",",","."|size:1',
+            'decimal_seperator' => 'required|in:",","."|size:1',
+            'reprocessing_yield' => 'required|numeric|min:0|max:1',
             'email_notifications' => 'required|in:yes,no',
         ];
     }

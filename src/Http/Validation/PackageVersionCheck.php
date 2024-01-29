@@ -45,7 +45,7 @@ class PackageVersionCheck extends FormRequest
     public function rules()
     {
         return [
-            'vendor'  => 'required|string',
+            'vendor' => 'required|string',
             'package' => 'required|string',
             'version' => 'required|string',
         ];

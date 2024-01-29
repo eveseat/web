@@ -54,7 +54,7 @@ class Requirements
         $requirements = collect(array_map(function ($extension) {
 
             return [
-                'name'   => $extension,
+                'name' => $extension,
                 'loaded' => extension_loaded($extension),
             ];
 

@@ -21,9 +21,9 @@
  */
 
 return [
-    'created'     => '생성일',
-    'label'       => '라벨',
-    'location'    => '위치',
-    'notes'       => '메모',
+    'created' => '생성일',
+    'label' => '라벨',
+    'location' => '위치',
+    'notes' => '메모',
     'coordinates' => '좌표',
 ];

@@ -60,7 +60,7 @@ CCP对本软件的内容或功能概不负责，也不对因使用本系统而�
     'contact_widget_documentation' => '文档',
     'contact_widget_updated_at' => '更新于 :date_time',
     'contact_widget_read_me' => '使用说明！',
-    'contact_widget_github_issues' =>  ':count 个问题',
+    'contact_widget_github_issues' => ':count 个问题',
     'contact_widget_github_contribute' => '贡献者！',
 
     //

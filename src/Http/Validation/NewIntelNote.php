@@ -52,7 +52,7 @@ class NewIntelNote extends FormRequest
 
         return [
             'title' => 'required',
-            'note'  => 'required',
+            'note' => 'required',
         ];
     }
 }

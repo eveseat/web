@@ -21,20 +21,20 @@
  */
 
 return [
-    'date'       => 'Date',
-    'ref_type'   => 'Type',
+    'date' => 'Date',
+    'ref_type' => 'Type',
     'from_party' => 'From Party',
-    'to_party'   => 'To Party',
-    'amount'     => 'Amount',
-    'balance'    => 'Balance',
+    'to_party' => 'To Party',
+    'amount' => 'Amount',
+    'balance' => 'Balance',
 
-    'order'      => 'Order',
-    'type'       => 'Type',
-    'location'   => 'Location',
-    'price'      => 'Price',
-    'quantity'   => 'Quantity',
-    'total'      => 'Total',
-    'party'      => 'Party',
+    'order' => 'Order',
+    'type' => 'Type',
+    'location' => 'Location',
+    'price' => 'Price',
+    'quantity' => 'Quantity',
+    'total' => 'Total',
+    'party' => 'Party',
 
     'acceleration_gate_fee' => 'Acceleration Gate Fee',
     'advertisement_listing_fee' => 'Advertisement Listing Fee',

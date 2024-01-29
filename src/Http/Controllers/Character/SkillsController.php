@@ -57,12 +57,12 @@ class SkillsController extends Controller
         $data = $this->getCharacterSkillsAmountPerLevel($character->character_id);
 
         return response()->json([
-            'labels'   => [
+            'labels' => [
                 'Level 0', 'Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5',
             ],
             'datasets' => [
                 [
-                    'data'            => $data,
+                    'data' => $data,
                     'backgroundColor' => [
                         '#00c0ef',
                         '#39cccc',
@@ -87,21 +87,21 @@ class SkillsController extends Controller
         $character = CharacterInfo::where('character_id', $character->character_id)->first();
 
         return response()->json([
-            'labels'   => $data->map(function ($item) {
+            'labels' => $data->map(function ($item) {
 
                 return $item->marketGroupName;
             })->toArray(), // skills category
             'datasets' => [
                 [
-                    'label'                => $character->name,
-                    'data'                 => $data->map(function ($item) {
+                    'label' => $character->name,
+                    'data' => $data->map(function ($item) {
                         return round($item->character_amount / $item->game_amount * 100, 2);  // character / in game rate
                     })->toArray(),
-                    'fill'                 => true,
-                    'backgroundColor'      => 'rgba(60,141,188,0.3)',
-                    'borderColor'          => '#3c8dbc',
+                    'fill' => true,
+                    'backgroundColor' => 'rgba(60,141,188,0.3)',
+                    'borderColor' => '#3c8dbc',
                     'pointBackgroundColor' => '#3c8dbc',
-                    'pointBorderColor'     => '#fff',
+                    'pointBorderColor' => '#fff',
                 ],
             ],
         ]);

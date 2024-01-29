@@ -21,16 +21,16 @@
  */
 
 return [
-    'region'        => '지역',
+    'region' => '지역',
     'constellation' => '성좌',
-    'system'        => '항성계',
-    'planet'        => '행성|행성',
-    'moon'          => '위성',
-    'indicator'     => '지표',
-    'sovereignty'   => '소버린티',
-    'ubiquitous'    => 'Ubiquitous',
-    'common'        => 'Common',
-    'uncommon'      => 'Uncommon',
-    'rare'          => 'Rare',
-    'exceptional'   => 'Exceptional',
+    'system' => '항성계',
+    'planet' => '행성|행성',
+    'moon' => '위성',
+    'indicator' => '지표',
+    'sovereignty' => '소버린티',
+    'ubiquitous' => 'Ubiquitous',
+    'common' => 'Common',
+    'uncommon' => 'Uncommon',
+    'rare' => 'Rare',
+    'exceptional' => 'Exceptional',
 ];

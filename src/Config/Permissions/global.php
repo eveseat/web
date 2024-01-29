@@ -25,11 +25,11 @@ return [
         'label' => 'web::permissions.global_queue_manager_label',
     ],
     'standing_builder' => [
-        'label'       => 'web::permissions.global_standing_builder_label',
+        'label' => 'web::permissions.global_standing_builder_label',
         'description' => 'web::permissions.global_standing_builder_description',
     ],
     'invalid_tokens' => [
-        'label'       => 'web::permissions.global_invalid_tokens_label',
+        'label' => 'web::permissions.global_invalid_tokens_label',
         'description' => 'web::permissions.global_invalid_tokens_description',
     ],
 ];

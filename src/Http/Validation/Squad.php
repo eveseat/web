@@ -45,10 +45,10 @@ class Squad extends FormRequest
                     Rule::unique('squads', 'name'),
                 'max:255',
             ],
-            'type'        => 'required|in:manual,auto,hidden',
+            'type' => 'required|in:manual,auto,hidden',
             'description' => 'required',
-            'logo'        => 'mimes:jpeg,jpg,png|max:2000',
-            'filters'     => 'json',
+            'logo' => 'mimes:jpeg,jpg,png|max:2000',
+            'filters' => 'json',
         ];
     }
 }

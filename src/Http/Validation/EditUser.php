@@ -52,7 +52,7 @@ class EditUser extends FormRequest
 
         return [
             'user_id' => 'required|exists:users,id',
-            'admin'   => 'boolean',
+            'admin' => 'boolean',
         ];
     }
 }

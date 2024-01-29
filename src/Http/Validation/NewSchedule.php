@@ -80,7 +80,7 @@ class NewSchedule extends FormRequest
 
         return [
 
-            'command'    => 'required|artisan',
+            'command' => 'required|artisan',
             'expression' => 'required|cron|unique:schedules,expression,NULL,NULL,command,' .
                 $this->request->get('command'),
         ];

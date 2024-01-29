@@ -21,13 +21,13 @@
  */
 
 return [
-    'date'          => '날짜',
-    'owner'         => '소유자',
-    'description'   => '설명',
-    'status'        => '상태',
+    'date' => '날짜',
+    'owner' => '소유자',
+    'description' => '설명',
+    'status' => '상태',
 
     'not_responded' => '응답 없음',
-    'accepted'      => '수락됨',
-    'tentative'     => '미정',
-    'declined'      => '거절됨',
+    'accepted' => '수락됨',
+    'tentative' => '미정',
+    'declined' => '거절됨',
 ];

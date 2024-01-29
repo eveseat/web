@@ -64,7 +64,7 @@ return [
     'contact_widget_documentation' => '문서',
     'contact_widget_updated_at' => 'Updated :date_time',
     'contact_widget_read_me' => 'Read me !',
-    'contact_widget_github_issues' =>  ':count Issues',
+    'contact_widget_github_issues' => ':count Issues',
     'contact_widget_github_contribute' => '기여하기',
 
     //

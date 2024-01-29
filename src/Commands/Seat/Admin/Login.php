@@ -69,9 +69,9 @@ class Login extends Command
             $this->warn('User \'admin\' does not exist. It will be created.');
 
             $admin->fill([
-                'name'              => 'admin',
+                'name' => 'admin',
                 'main_character_id' => 0,
-                'admin'             => true,
+                'admin' => true,
             ]);
             $admin->id = 1; // Needed as id is not fillable
             $admin->save();

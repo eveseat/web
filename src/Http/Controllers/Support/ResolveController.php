@@ -160,8 +160,8 @@ class ResolveController extends Controller
             ->get()
             ->map(function ($entity) {
                 return collect([
-                    'id'       => $entity->entity_id,
-                    'name'     => $entity->name,
+                    'id' => $entity->entity_id,
+                    'name' => $entity->name,
                     'category' => $entity->category,
                 ]);
             });
@@ -186,7 +186,7 @@ class ResolveController extends Controller
                 return collect([
                     'id' => $entity->entity_id,
                     'name' => $entity->name,
-                    'category' =>$entity->category,
+                    'category' => $entity->category,
                 ]);
             });
 
@@ -256,8 +256,8 @@ class ResolveController extends Controller
             ->get()
             ->map(function ($alliance) {
                 return collect([
-                    'id'       => $alliance->alliance_id,
-                    'name'     => $alliance->name,
+                    'id' => $alliance->alliance_id,
+                    'name' => $alliance->name,
                     'category' => 'alliance',
                 ]);
             });
@@ -294,8 +294,8 @@ class ResolveController extends Controller
                 UniverseName::firstOrCreate([
                     'entity_id' => $name->id,
                 ], [
-                    'name'      => $name->name,
-                    'category'  => $name->category,
+                    'name' => $name->name,
+                    'category' => $name->category,
                 ]);
             });
         } catch (Exception $e) {
@@ -335,8 +335,8 @@ class ResolveController extends Controller
             UniverseName::firstOrCreate([
                 'entity_id' => $name['id'],
             ], [
-                'name'      => $name['name'],
-                'category'  => $name['category'],
+                'name' => $name['name'],
+                'category' => $name['category'],
             ]);
         });
 

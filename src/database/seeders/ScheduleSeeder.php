@@ -37,12 +37,12 @@ class ScheduleSeeder extends Seeder
      */
     protected $schedules = [
         [   // Horizon Metrics | Every Five Minutes
-            'command'           => 'horizon:snapshot',
-            'expression'        => '*/5 * * * *',
-            'allow_overlap'     => false,
+            'command' => 'horizon:snapshot',
+            'expression' => '*/5 * * * *',
+            'allow_overlap' => false,
             'allow_maintenance' => false,
-            'ping_before'       => null,
-            'ping_after'        => null,
+            'ping_before' => null,
+            'ping_after' => null,
         ],
     ];
 

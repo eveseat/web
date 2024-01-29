@@ -64,7 +64,7 @@ return [
     'contact_widget_documentation' => 'Documentaţie',
     'contact_widget_updated_at' => 'Updated :date_time',
     'contact_widget_read_me' => 'Citeşte-mă !',
-    'contact_widget_github_issues' =>  ':count Issues',
+    'contact_widget_github_issues' => ':count Issues',
     'contact_widget_github_contribute' => 'Contribuie !',
 
     //

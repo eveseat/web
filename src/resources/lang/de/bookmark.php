@@ -21,9 +21,9 @@
  */
 
 return [
-    'created'     => 'Erstellt',
-    'label'       => 'Bezeichnung',
-    'location'    => 'Ort',
-    'notes'       => 'Notizen',
+    'created' => 'Erstellt',
+    'label' => 'Bezeichnung',
+    'location' => 'Ort',
+    'notes' => 'Notizen',
     'coordinates' => 'Koordinaten',
 ];

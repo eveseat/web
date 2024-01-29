@@ -51,7 +51,7 @@ class CustomSignin extends FormRequest
     {
 
         return [
-            'message'   => [
+            'message' => [
                 'nullable',
                 function ($attribute, $value, $fail) {
                     $pattern = '/([[]{2})([a-zA-Z0-9-_]+)([]]{2})/';

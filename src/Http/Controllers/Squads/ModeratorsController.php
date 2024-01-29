@@ -56,7 +56,7 @@ class ModeratorsController extends Controller
             ->get()
             ->map(function ($user) {
                 return [
-                    'id'   => $user->id,
+                    'id' => $user->id,
                     'text' => $user->name,
                 ];
             });

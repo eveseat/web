@@ -21,11 +21,11 @@
  */
 
 return [
-    'date'         => '날짜',
-    'ship'         => '함선',
+    'date' => '날짜',
+    'ship' => '함선',
     'solar_system' => '항성계',
-    'victim'       => '피해자',
-    'killer'       => '살해자',
-    'attackers'    => '공격자',
-    'items'        => '아이템',
+    'victim' => '피해자',
+    'killer' => '살해자',
+    'attackers' => '공격자',
+    'items' => '아이템',
 ];

@@ -21,16 +21,16 @@
  */
 
 return [
-    'date'            => 'Date',
-    'time'            => 'Heure',
-    'system'          => 'Système',
-    'ore'             => 'Minerai',
-    'type'            => 'Type',
-    'quantity'        => 'Quantité',
-    'volume'          => 'Volume',
+    'date' => 'Date',
+    'time' => 'Heure',
+    'system' => 'Système',
+    'ore' => 'Minerai',
+    'type' => 'Type',
+    'quantity' => 'Quantité',
+    'volume' => 'Volume',
     'estimated_value' => 'Valeur estimée',
-    'details'         => 'Détails',
-    'metadata'        => 'Métadonnées',
-    'compounds'       => 'Composition',
-    'history'         => 'Historique',
+    'details' => 'Détails',
+    'metadata' => 'Métadonnées',
+    'compounds' => 'Composition',
+    'history' => 'Historique',
 ];

@@ -25,39 +25,39 @@ return [
     'languages' => [
         [
             'short' => 'af',
-            'full'  => 'Afrikaans',
+            'full' => 'Afrikaans',
         ],
         [
             'short' => 'zh-CN',
-            'full'  => 'Chinese (Simplified)',
+            'full' => 'Chinese (Simplified)',
         ],
         [
             'short' => 'en',
-            'full'  => 'English',
+            'full' => 'English',
         ],
         [
             'short' => 'de',
-            'full'  => 'German',
+            'full' => 'German',
         ],
         [
             'short' => 'fr',
-            'full'  => 'French',
+            'full' => 'French',
         ],
         [
             'short' => 'ko',
-            'full'  => 'Korean',
+            'full' => 'Korean',
         ],
         [
             'short' => 'ro',
-            'full'  => 'Romanian',
+            'full' => 'Romanian',
         ],
         [
             'short' => 'ru',
-            'full'  => 'Russian',
+            'full' => 'Russian',
         ],
         [
             'short' => 'ja',
-            'full'  => 'Japanese',
+            'full' => 'Japanese',
         ],
     ],
 

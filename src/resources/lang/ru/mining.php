@@ -21,16 +21,16 @@
  */
 
 return [
-    'date'            => 'Дата',
-    'time'            => 'Время',
-    'system'          => 'Система',
-    'ore'             => 'РУДА',
-    'type'            => 'Тип',
-    'quantity'        => 'Количество',
-    'volume'          => 'Объем',
+    'date' => 'Дата',
+    'time' => 'Время',
+    'system' => 'Система',
+    'ore' => 'РУДА',
+    'type' => 'Тип',
+    'quantity' => 'Количество',
+    'volume' => 'Объем',
     'estimated_value' => 'Ориентировочная стоимость',
-    'details'         => 'Детали',
-    'metadata'        => 'Метаданные',
-    'compounds'       => 'Compounds',
-    'history'         => 'История',
+    'details' => 'Детали',
+    'metadata' => 'Метаданные',
+    'compounds' => 'Compounds',
+    'history' => 'История',
 ];

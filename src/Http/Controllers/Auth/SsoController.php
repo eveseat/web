@@ -204,18 +204,18 @@ class SsoController extends Controller
         }
 
         RefreshToken::withTrashed()->firstOrNew([
-            'character_id'         => $eve_user->id,
+            'character_id' => $eve_user->id,
         ])->fill([
-            'user_id'              => $seat_user->id,
-            'refresh_token'        => $eve_user->refreshToken,
-            'scopes_profile'       => session()->get('scopes_profile_id', 0),
-            'scopes'               => $eve_user->scopes,
-            'token'                => $eve_user->token,
+            'user_id' => $seat_user->id,
+            'refresh_token' => $eve_user->refreshToken,
+            'scopes_profile' => session()->get('scopes_profile_id', 0),
+            'scopes' => $eve_user->scopes,
+            'token' => $eve_user->token,
             'character_owner_hash' => $eve_user->character_owner_hash,
-            'expires_on'           => $eve_user->expires_on,
+            'expires_on' => $eve_user->expires_on,
             // enforce version since restore action will not use default field value
             // the version from an authenticate token is always latest.
-            'version'              => RefreshToken::CURRENT_VERSION,
+            'version' => RefreshToken::CURRENT_VERSION,
         ])->save();
 
         // restore soft deleted token if any
@@ -234,10 +234,10 @@ class SsoController extends Controller
         CharacterInfo::firstOrCreate([
             'character_id' => $eve_user->id,
         ], [
-            'name'         => $eve_user->name,
-            'birthday'     => carbon(),
-            'gender'       => 'male',
-            'race_id'      => 0,
+            'name' => $eve_user->name,
+            'birthday' => carbon(),
+            'gender' => 'male',
+            'race_id' => 0,
             'bloodline_id' => 0,
         ]);
 

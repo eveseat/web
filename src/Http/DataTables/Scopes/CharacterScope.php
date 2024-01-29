@@ -104,9 +104,9 @@ class CharacterScope implements DataTableScope
             $filters = json_decode($permission->pivot->filters);
 
             return [
-                'characters'   => collect($filters->character ?? [])->pluck('id')->toArray(),
+                'characters' => collect($filters->character ?? [])->pluck('id')->toArray(),
                 'corporations' => collect($filters->corporation ?? [])->pluck('id')->toArray(),
-                'alliances'    => collect($filters->alliance ?? [])->pluck('id')->toArray(),
+                'alliances' => collect($filters->alliance ?? [])->pluck('id')->toArray(),
             ];
         });
 

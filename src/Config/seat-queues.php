@@ -22,11 +22,11 @@
 
 return [
     'pool-1' => [
-        'connection'   => 'redis',
-        'queue'        => ['default', 'high', 'characters', 'corporations', 'public', 'notifications'],
-        'balance'      => 'auto', // valid values are simple, auto or false
-        'tries'        => 3,
-        'timeout'      => 900, // 15 minutes,
+        'connection' => 'redis',
+        'queue' => ['default', 'high', 'characters', 'corporations', 'public', 'notifications'],
+        'balance' => 'auto', // valid values are simple, auto or false
+        'tries' => 3,
+        'timeout' => 900, // 15 minutes,
         // the minimum workers which must be spawn per queue in the pool - in auto balancing mode
         // this is the worker amount set on an idle queue
         // this value must be greater than 0

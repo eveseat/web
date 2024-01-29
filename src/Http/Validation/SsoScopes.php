@@ -52,9 +52,9 @@ class SsoScopes extends FormRequest
     {
 
         return [
-            'profile_id'   => 'required|integer',
+            'profile_id' => 'required|integer',
             'profile_name' => 'required|alpha_dash',
-            'scopes.*'     => ['required', Rule::in(config('eveapi.scopes'))],
+            'scopes.*' => ['required', Rule::in(config('eveapi.scopes'))],
         ];
     }
 }

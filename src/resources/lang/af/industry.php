@@ -21,13 +21,13 @@
  */
 
 return [
-    'start'               => 'Begin',
-    'end'                 => 'Einde',
-    'location'            => 'Plek',
-    'activity'            => 'Aktiwiteit',
-    'runs'                => 'Hardloop',
-    'blueprint'           => 'Bouplan',
-    'product'             => 'Produk',
+    'start' => 'Begin',
+    'end' => 'Einde',
+    'location' => 'Plek',
+    'activity' => 'Aktiwiteit',
+    'runs' => 'Hardloop',
+    'blueprint' => 'Bouplan',
+    'product' => 'Produk',
     'material_efficiency' => 'Material Efficiency',
-    'time_efficiency'     => 'Time Efficiency',
+    'time_efficiency' => 'Time Efficiency',
 ];

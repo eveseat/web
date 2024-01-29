@@ -54,7 +54,7 @@ class MoonsDataTable extends DataTable
                 return $row->moon->planet->name;
             })
             ->editColumn('moon.solar_system.sovereignty', function ($row) {
-                return view('web::partials.sovereignty', ['sovereignty'=>$row->moon->solar_system->sovereignty])->render();
+                return view('web::partials.sovereignty', ['sovereignty' => $row->moon->solar_system->sovereignty])->render();
             })
             ->editColumn('indicators', function ($row) {
                 return view('web::tools.moons.partials.indicators', compact('row'))->render();

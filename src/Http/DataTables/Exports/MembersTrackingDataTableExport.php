@@ -37,7 +37,7 @@ class MembersTrackingDataTableExport extends DataTablesCollectionExport
                 'token' => self::isValidToken($character->refresh_token),
                 'name' => $character->character->name,
                 'location' => $character->location->name,
-                'ship'=>$character->ship->typeName,
+                'ship' => $character->ship->typeName,
                 'joined' => $character->start_date,
                 'last_login' => $character->logon_date,
             ];

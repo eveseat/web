@@ -21,9 +21,9 @@
  */
 
 return [
-    'name'            => '名称',
-    'type'            => '类型',
-    'items'           => '物品',
+    'name' => '名称',
+    'type' => '类型',
+    'items' => '物品',
     'hull_estimated_value' => '船体估计值',
     'fitting_estimated_value' => '装配预估值',
     'full_estimated_value' => '整体预估值',

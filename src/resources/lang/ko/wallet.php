@@ -21,20 +21,20 @@
  */
 
 return [
-    'date'       => '날짜',
-    'ref_type'   => '타입',
+    'date' => '날짜',
+    'ref_type' => '타입',
     'from_party' => 'From Party',
-    'to_party'   => 'To Party',
-    'amount'     => '금액',
-    'balance'    => '잔액',
+    'to_party' => 'To Party',
+    'amount' => '금액',
+    'balance' => '잔액',
 
-    'order'      => 'Order',
-    'type'       => 'Type',
-    'location'   => 'Location',
-    'price'      => 'Price',
-    'quantity'   => 'Quantity',
-    'total'      => 'Total',
-    'party'      => 'Party',
+    'order' => 'Order',
+    'type' => 'Type',
+    'location' => 'Location',
+    'price' => 'Price',
+    'quantity' => 'Quantity',
+    'total' => 'Total',
+    'party' => 'Party',
 
     'acceleration_gate_fee' => 'Acceleration Gate Fee',
     'advertisement_listing_fee' => 'Advertisement Listing Fee',

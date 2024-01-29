@@ -134,7 +134,7 @@ class StandingsController extends Controller
                 $this->esi->setVersion('v3');
                 $this->esi->setQueryString([
                     'categories' => $request->input('type'),
-                    'search'     => $request->input('search'),
+                    'search' => $request->input('search'),
                 ]);
 
                 $response = $this->esi->invoke('get', '/characters/{character_id}/search/', [
@@ -156,7 +156,7 @@ class StandingsController extends Controller
                         if ($cached_entry = cache(sprintf('%s:%d', self::ENTITY_CACHE_PREFIX, $id))) {
 
                             $payload['results'][] = [
-                                'id'   => $id,
+                                'id' => $id,
                                 'text' => $cached_entry,
                             ];
 
@@ -183,7 +183,7 @@ class StandingsController extends Controller
                                 now()->addHour());
 
                             $payload['results'][] = [
-                                'id'   => $name->id,
+                                'id' => $name->id,
                                 'text' => $name->name,
                             ];
                         });
@@ -232,7 +232,7 @@ class StandingsController extends Controller
         UniverseName::firstOrCreate([
             'entity_id' => $entity_id,
         ], [
-            'name'     => $entity_name,
+            'name' => $entity_name,
             'category' => $entity_type,
         ]);
 
@@ -240,7 +240,7 @@ class StandingsController extends Controller
 
         $standing = new StandingsProfileStanding([
             'entity_id' => $entity_id,
-            'standing' =>$standing,
+            'standing' => $standing,
             'category' => $entity_type,
         ]);
         $standings_profile->entities()->save($standing);
