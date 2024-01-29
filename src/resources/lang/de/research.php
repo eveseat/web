@@ -21,9 +21,9 @@
  */
 
 return [
-    'start'         => 'Beginn',
-    'agent'         => 'Agent',
-    'skill'         => 'Skill',
+    'start' => 'Beginn',
+    'agent' => 'Agent',
+    'skill' => 'Skill',
     'point_per_day' => 'Punkte je Tag',
-    'remainder'     => 'Verbleibend',
+    'remainder' => 'Verbleibend',
 ];

@@ -21,12 +21,12 @@
  */
 
 return [
-    'read'         => 'Lesen',
-    'date'         => 'Datum',
-    'sender'       => 'Absender',
-    'subject'      => 'Betreff',
+    'read' => 'Lesen',
+    'date' => 'Datum',
+    'sender' => 'Absender',
+    'subject' => 'Betreff',
     'mailing_list' => 'Mailing Liste',
-    'sent'         => 'Gesendet',
-    'author'       => 'Autor',
-    'recipients'   => 'Empfänger',
+    'sent' => 'Gesendet',
+    'author' => 'Autor',
+    'recipients' => 'Empfänger',
 ];

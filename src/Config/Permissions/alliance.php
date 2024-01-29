@@ -22,16 +22,16 @@
 
 return [
     'summary' => [
-        'label'       => 'web::permissions.alliance_summary_label',
+        'label' => 'web::permissions.alliance_summary_label',
         'description' => 'web::permissions.alliance_summary_description',
     ],
     'contact' => [
-        'label'       => 'web::permissions.alliance_contact_label',
+        'label' => 'web::permissions.alliance_contact_label',
         'description' => 'web::permissions.alliance_contact_description',
-        'division'    => 'military',
+        'division' => 'military',
     ],
     'tracking' => [
-        'label'       => 'web::permissions.alliance_tracking_label',
+        'label' => 'web::permissions.alliance_tracking_label',
         'description' => 'web::permissions.alliance_tracking_description',
     ],
 ];

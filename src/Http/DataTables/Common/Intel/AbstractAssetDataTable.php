@@ -47,7 +47,7 @@ abstract class AbstractAssetDataTable extends DataTable
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('type.typeName', function ($row) {
                 return view('web::partials.type', [
-                    'type_id'   => $row->type->typeID,
+                    'type_id' => $row->type->typeID,
                     'type_name' => $row->name ? sprintf('%s (%s)', $row->name, $row->type->typeName) : $row->type->typeName,
                     'variation' => $row->type->group->categoryID == 9 ? 'bpc' : 'icon',
                 ])->render();

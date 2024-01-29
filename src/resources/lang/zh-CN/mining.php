@@ -21,16 +21,16 @@
  */
 
 return [
-    'date'            => 'Date',
-    'time'            => 'Time',
-    'system'          => 'System',
-    'ore'             => 'ORE',
-    'type'            => 'Type',
-    'quantity'        => '数量',
-    'volume'          => 'Volume',
+    'date' => 'Date',
+    'time' => 'Time',
+    'system' => 'System',
+    'ore' => 'ORE',
+    'type' => 'Type',
+    'quantity' => '数量',
+    'volume' => 'Volume',
     'estimated_value' => 'Estimated Value',
-    'details'         => 'Details',
-    'metadata'        => 'Metadata',
-    'compounds'       => 'Compounds',
-    'history'         => 'History',
+    'details' => 'Details',
+    'metadata' => 'Metadata',
+    'compounds' => 'Compounds',
+    'history' => 'History',
 ];

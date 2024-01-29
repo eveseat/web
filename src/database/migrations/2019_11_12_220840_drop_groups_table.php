@@ -306,12 +306,12 @@ class DropGroupsTable extends Migration
 
         // init auto-increment field (1 is lock for admin)
         DB::table('users')->insert([
-            'id'                => 1,
-            'name'              => 'admin',
-            'active'            => true,
+            'id' => 1,
+            'name' => 'admin',
+            'active' => true,
             'main_character_id' => 0,
-            'created_at'        => carbon(),
-            'updated_at'        => carbon(),
+            'created_at' => carbon(),
+            'updated_at' => carbon(),
         ]);
 
         DB::table('users')

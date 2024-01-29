@@ -46,11 +46,11 @@ class StandingsElementAdd extends FormRequest
     {
 
         return [
-            'id'        => 'required|exists:standings_profiles,id',
+            'id' => 'required|exists:standings_profiles,id',
             'entity_id' => 'required|numeric',
-            'name'      => 'required|string',
-            'type'      => 'required|in:character,corporation,alliance',
-            'standing'  => 'required|between:-10,10',
+            'name' => 'required|string',
+            'type' => 'required|in:character,corporation,alliance',
+            'standing' => 'required|between:-10,10',
         ];
     }
 }

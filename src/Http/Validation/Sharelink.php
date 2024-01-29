@@ -38,7 +38,7 @@ class Sharelink extends FormRequest
     {
         return [
             'user_sharelink_character_id' => 'integer|min:0|required',
-            'user_sharelink_expiry'       => 'integer|min:1|required',
+            'user_sharelink_expiry' => 'integer|min:1|required',
         ];
     }
 }

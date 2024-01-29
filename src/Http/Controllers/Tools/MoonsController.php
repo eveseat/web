@@ -49,10 +49,10 @@ class MoonsController extends Controller
     public function index(MoonsDataTable $dataTable)
     {
         $groups = [
-            Moon::UBIQUITOUS  => trans('web::moons.ubiquitous'),
-            Moon::COMMON      => trans('web::moons.common'),
-            Moon::UNCOMMON    => trans('web::moons.uncommon'),
-            Moon::RARE        => trans('web::moons.rare'),
+            Moon::UBIQUITOUS => trans('web::moons.ubiquitous'),
+            Moon::COMMON => trans('web::moons.common'),
+            Moon::UNCOMMON => trans('web::moons.uncommon'),
+            Moon::RARE => trans('web::moons.rare'),
             Moon::EXCEPTIONAL => trans('web::moons.exceptional'),
         ];
 

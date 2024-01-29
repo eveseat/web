@@ -21,14 +21,14 @@
  */
 
 return [
-    'issued'  => '発行済み',
+    'issued' => '発行済み',
     'expires' => '有効期限',
-    'buy'     => '購入',
-    'sell'    => '売却',
-    'order'   => '注文',
-    'range'   => 'ジャンプ',
-    'volume'  => '数量',
-    'price'   => '価格',
-    'total'   => '合計',
-    'type'    => '種類',
+    'buy' => '購入',
+    'sell' => '売却',
+    'order' => '注文',
+    'range' => 'ジャンプ',
+    'volume' => '数量',
+    'price' => '価格',
+    'total' => '合計',
+    'type' => '種類',
 ];

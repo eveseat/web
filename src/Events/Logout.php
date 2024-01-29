@@ -46,9 +46,9 @@ class Logout
             return;
 
         $event->user->login_history()->save(new UserLoginHistory([
-            'source'     => Request::getClientIp(),
+            'source' => Request::getClientIp(),
             'user_agent' => Request::header('User-Agent'),
-            'action'     => 'logout',
+            'action' => 'logout',
         ]));
 
         $message = 'User logged out from ' . Request::getClientIp();

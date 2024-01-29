@@ -21,11 +21,11 @@
  */
 
 return [
-    'planet'            => 'Planet',
-    'reinforcement'     => 'Rf. Period',
-    'alliance'          => 'Allow Ally.',
-    'standings'         => 'Allow Std.',
-    'standing_level'    => 'Min. Std. Lvl.',
+    'planet' => 'Planet',
+    'reinforcement' => 'Rf. Period',
+    'alliance' => 'Allow Ally.',
+    'standings' => 'Allow Std.',
+    'standing_level' => 'Min. Std. Lvl.',
     'tax_alliance_corp' => 'Tax Alliance/Corp',
-    'tax_standings'     => 'Tax Standings',
+    'tax_standings' => 'Tax Standings',
 ];

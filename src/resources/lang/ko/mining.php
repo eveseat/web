@@ -21,16 +21,16 @@
  */
 
 return [
-    'date'            => '날짜',
-    'time'            => '시간',
-    'system'          => '성계',
-    'ore'             => '오어',
-    'type'            => '종류',
-    'quantity'        => '수량',
-    'volume'          => '부피',
+    'date' => '날짜',
+    'time' => '시간',
+    'system' => '성계',
+    'ore' => '오어',
+    'type' => '종류',
+    'quantity' => '수량',
+    'volume' => '부피',
     'estimated_value' => '추정 가치',
-    'details'         => '세부정보',
-    'metadata'        => '메타데이터',
-    'compounds'       => 'Compounds',
-    'history'         => '내역',
+    'details' => '세부정보',
+    'metadata' => '메타데이터',
+    'compounds' => 'Compounds',
+    'history' => '내역',
 ];

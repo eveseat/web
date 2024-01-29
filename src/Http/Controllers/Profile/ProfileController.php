@@ -176,7 +176,7 @@ class ProfileController extends Controller
         // Find the new user to login as.
         auth()->user()->fill([
             'main_character_id' => $requested_character->character_id,
-            'name'              => $requested_character->name,
+            'name' => $requested_character->name,
         ])->save();
 
         // Log the character change login event.

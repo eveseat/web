@@ -21,9 +21,9 @@
  */
 
 return [
-    'created'     => '创建于',
-    'label'       => '标签',
-    'location'    => '位置',
-    'notes'       => '备注',
+    'created' => '创建于',
+    'label' => '标签',
+    'location' => '位置',
+    'notes' => '备注',
     'coordinates' => '坐标',
 ];

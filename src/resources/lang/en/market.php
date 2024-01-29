@@ -21,14 +21,14 @@
  */
 
 return [
-    'issued'  => 'Issued',
+    'issued' => 'Issued',
     'expires' => 'Expires',
-    'buy'     => 'Buy',
-    'sell'    => 'Sell',
-    'order'   => 'Order',
-    'range'   => 'Range',
-    'volume'  => 'Volume',
-    'price'   => 'Price',
-    'total'   => 'Total',
-    'type'    => 'Type',
+    'buy' => 'Buy',
+    'sell' => 'Sell',
+    'order' => 'Order',
+    'range' => 'Range',
+    'volume' => 'Volume',
+    'price' => 'Price',
+    'total' => 'Total',
+    'type' => 'Type',
 ];

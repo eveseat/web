@@ -50,9 +50,9 @@ class NotesController extends Controller
     {
         Note::create([
             'object_type' => $request->input('object_type'),
-            'object_id'   => $request->input('object_id'),
-            'title'       => $request->input('title'),
-            'note'        => $request->input('note'),
+            'object_id' => $request->input('object_id'),
+            'title' => $request->input('title'),
+            'note' => $request->input('note'),
         ]);
 
         return redirect()->back()

@@ -21,11 +21,11 @@
  */
 
 return [
-    'planet'            => 'Planet',
-    'reinforcement'     => 'Rf. Periode',
-    'alliance'          => 'Erlaube Zugruff durch Allianz',
-    'standings'         => 'Erlaube Zugriff durch Ansehen',
-    'standing_level'    => 'Minimales Ansehen',
+    'planet' => 'Planet',
+    'reinforcement' => 'Rf. Periode',
+    'alliance' => 'Erlaube Zugruff durch Allianz',
+    'standings' => 'Erlaube Zugriff durch Ansehen',
+    'standing_level' => 'Minimales Ansehen',
     'tax_alliance_corp' => 'Steuern Allianz/Corp',
-    'tax_standings'     => 'Steuern Ansehen',
+    'tax_standings' => 'Steuern Ansehen',
 ];

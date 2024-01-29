@@ -106,12 +106,12 @@ class SquadsController extends Controller
     public function store(SquadValidation $request)
     {
         $squad = Squad::create([
-            'name'          => $request->input('name'),
-            'type'          => $request->input('type'),
-            'description'   => $request->input('description'),
-            'filters'       => $request->input('filters'),
+            'name' => $request->input('name'),
+            'type' => $request->input('type'),
+            'description' => $request->input('description'),
+            'filters' => $request->input('filters'),
             'is_classified' => $request->input('classified') == 'on',
-            'logo'          => $request->file('logo'),
+            'logo' => $request->file('logo'),
         ]);
 
         return redirect()->route('seatcore::squads.show', $squad->id)

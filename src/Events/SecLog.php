@@ -36,9 +36,9 @@ class SecLog
     {
 
         SecurityLog::create([
-            'message'  => $message,
+            'message' => $message,
             'category' => $category,
-            'user_id'  => auth()->user() ?
+            'user_id' => auth()->user() ?
                 auth()->user()->id : null,
         ]);
 

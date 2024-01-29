@@ -45,9 +45,9 @@ class PackageChangelog extends FormRequest
     public function rules()
     {
         return [
-            'uri'  => 'required:url',
+            'uri' => 'required:url',
             'body' => 'string',
-            'tag'  => 'string',
+            'tag' => 'string',
         ];
     }
 }

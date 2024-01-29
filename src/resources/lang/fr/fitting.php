@@ -21,9 +21,9 @@
  */
 
 return [
-    'name'            => 'Nom',
-    'type'            => 'Type',
-    'items'           => 'Éléments',
+    'name' => 'Nom',
+    'type' => 'Type',
+    'items' => 'Éléments',
     'hull_estimated_value' => 'Valeur estimée de la coque',
     'fitting_estimated_value' => 'Valeur estimée de l\'équipement',
     'full_estimated_value' => 'Valeur estimée totale',

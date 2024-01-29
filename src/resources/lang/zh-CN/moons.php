@@ -21,16 +21,16 @@
  */
 
 return [
-    'region'        => '星域',
+    'region' => '星域',
     'constellation' => '星座',
-    'system'        => '星系',
-    'planet'        => '行星',
-    'moon'          => '卫星',
-    'indicator'     => '类型',
-    'sovereignty'   => '主权',
-    'ubiquitous'    => '普通卫星矿石',
-    'common'        => '常见卫星矿石',
-    'uncommon'      => '罕见卫星矿石',
-    'rare'          => '稀有卫星矿石',
-    'exceptional'   => '非凡卫星矿石',
+    'system' => '星系',
+    'planet' => '行星',
+    'moon' => '卫星',
+    'indicator' => '类型',
+    'sovereignty' => '主权',
+    'ubiquitous' => '普通卫星矿石',
+    'common' => '常见卫星矿石',
+    'uncommon' => '罕见卫星矿石',
+    'rare' => '稀有卫星矿石',
+    'exceptional' => '非凡卫星矿石',
 ];

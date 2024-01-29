@@ -202,7 +202,7 @@ class AccessController extends Controller
 
         return redirect()->route('seatcore::configuration.access.roles.edit', [$role->id])
             ->with('success', trans('web::seat.role_updated', [
-                'added'   => $added_counter,
+                'added' => $added_counter,
                 'removed' => $removed_counter,
                 'filtered' => $filter_counter,
             ]));

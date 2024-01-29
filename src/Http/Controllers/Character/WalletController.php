@@ -74,29 +74,29 @@ class WalletController extends Controller
             ->get();
 
         return response()->json([
-            'labels'   => $data->map(function ($item) {
+            'labels' => $data->map(function ($item) {
 
                 return $item->date;
             })->toArray(),
             'datasets' => [
                 [
-                    'label'           => 'Balance',
-                    'fill'            => false,
-                    'lineTension'     => 0.1,
+                    'label' => 'Balance',
+                    'fill' => false,
+                    'lineTension' => 0.1,
                     'backgroundColor' => 'rgba(60,141,188,0.9)',
-                    'borderColor'     => 'rgba(60,141,188,0.8)',
-                    'data'            => $data->map(function ($item) {
+                    'borderColor' => 'rgba(60,141,188,0.8)',
+                    'data' => $data->map(function ($item) {
 
                         return $item->balance;
                     })->toArray(),
                 ],
                 [
-                    'label'           => 'Amount',
-                    'fill'            => false,
-                    'lineTension'     => 0.1,
+                    'label' => 'Amount',
+                    'fill' => false,
+                    'lineTension' => 0.1,
                     'backgroundColor' => 'rgba(210, 214, 222, 1)',
-                    'borderColor'     => 'rgba(210, 214, 222, 1)',
-                    'data'            => $data->map(function ($item) {
+                    'borderColor' => 'rgba(210, 214, 222, 1)',
+                    'data' => $data->map(function ($item) {
 
                         return $item->amount;
                     })->toArray(),

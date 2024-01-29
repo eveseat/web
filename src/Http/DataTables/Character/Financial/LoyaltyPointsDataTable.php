@@ -62,7 +62,7 @@ class LoyaltyPointsDataTable extends DataTable
                 return number($row->amount, 0);
             })
             ->addColumn('fuzzworks', function ($row) use ($market_region) {
-                return view('web::character.partials.fuzzwork-lp-prices', ['corporation' => $row->corporation, 'region'=>$market_region])->render();
+                return view('web::character.partials.fuzzwork-lp-prices', ['corporation' => $row->corporation, 'region' => $market_region])->render();
             })
             ->rawColumns(['character.name', 'corporation.name', 'amount', 'fuzzworks'])
             ->toJson();
@@ -88,8 +88,8 @@ class LoyaltyPointsDataTable extends DataTable
         return [
             ['data' => 'character.name', 'title' => trans('web::seat.character_name')],
             ['data' => 'corporation.name', 'title' => trans('web::seat.corporation_name')],
-            ['data' => 'amount', 'title' => trans('web::seat.loyalty_points'), 'searchable'=>false],
-            ['data' => 'fuzzworks', 'title' => trans('web::seat.loyalty_point_prices'), 'sortable'=>false, 'searchable'=>false],
+            ['data' => 'amount', 'title' => trans('web::seat.loyalty_points'), 'searchable' => false],
+            ['data' => 'fuzzworks', 'title' => trans('web::seat.loyalty_point_prices'), 'sortable' => false, 'searchable' => false],
         ];
     }
 }

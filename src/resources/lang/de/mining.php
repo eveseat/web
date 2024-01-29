@@ -21,16 +21,16 @@
  */
 
 return [
-    'date'            => 'Datum',
-    'time'            => 'Zeit',
-    'system'          => 'System',
-    'ore'             => 'Erz',
-    'type'            => 'Typ',
-    'quantity'        => 'Anzahl',
-    'volume'          => 'Volumen',
+    'date' => 'Datum',
+    'time' => 'Zeit',
+    'system' => 'System',
+    'ore' => 'Erz',
+    'type' => 'Typ',
+    'quantity' => 'Anzahl',
+    'volume' => 'Volumen',
     'estimated_value' => 'Geschätzter Wert',
-    'details'         => 'Details',
-    'metadata'        => 'Metadaten',
-    'compounds'       => 'Verbindungen',
-    'history'         => 'Vergangenheit',
+    'details' => 'Details',
+    'metadata' => 'Metadaten',
+    'compounds' => 'Verbindungen',
+    'history' => 'Vergangenheit',
 ];

@@ -115,7 +115,7 @@ class FastLookupController extends Controller
             $title = CorporationTitle::find($request->query('q', 1));
 
             return response()->json([
-                'id'   => $title->id,
+                'id' => $title->id,
                 'text' => sprintf('%s (%s)', strip_tags($title->name), $title->corporation->name),
             ]);
         }
@@ -126,7 +126,7 @@ class FastLookupController extends Controller
             ->get()
             ->map(function ($title) {
                 return [
-                    'id'   => $title->id,
+                    'id' => $title->id,
                     'text' => sprintf('%s (%s)', strip_tags($title->name), $title->corporation->name),
                 ];
             });
@@ -237,7 +237,7 @@ class FastLookupController extends Controller
 
         $this->validate($request, [
             'type' => 'in:characters,corporations,alliances',
-            'q'    => 'required',
+            'q' => 'required',
         ]);
 
         $characters_query = null;
@@ -292,10 +292,10 @@ class FastLookupController extends Controller
                 }
 
                 return [
-                    'id'   => $entity->entity_id,
+                    'id' => $entity->entity_id,
                     'text' => $entity->name,
                     'type' => $entity->entity_type,
-                    'img'  => img(
+                    'img' => img(
                         $img_type,
                         $img_type == 'characters' ? 'portrait' : 'logo',
                         $entity->entity_id,
@@ -332,9 +332,9 @@ class FastLookupController extends Controller
             ->get()
             ->map(function ($item, $key) {
                 return [
-                    'id'   => $item->typeID,
+                    'id' => $item->typeID,
                     'text' => $item->typeName,
-                    'img'  => img('types', 'icon', $item->typeID, 32, ['class' => 'img-circle eve-icon small-icon'], false),
+                    'img' => img('types', 'icon', $item->typeID, 32, ['class' => 'img-circle eve-icon small-icon'], false),
                 ];
             });
 
@@ -391,7 +391,7 @@ class FastLookupController extends Controller
             }
 
             return response()->json([
-                'id'   => $region->region_id,
+                'id' => $region->region_id,
                 'text' => $region->name,
             ]);
         }
@@ -402,7 +402,7 @@ class FastLookupController extends Controller
             ->get()
             ->map(function ($region) {
                 return [
-                    'id'   => $region->region_id,
+                    'id' => $region->region_id,
                     'text' => $region->name,
                 ];
             });
@@ -426,7 +426,7 @@ class FastLookupController extends Controller
             }
 
             return response()->json([
-                'id'   => $constellation->constellation_id,
+                'id' => $constellation->constellation_id,
                 'text' => $constellation->name,
             ]);
         }
@@ -441,7 +441,7 @@ class FastLookupController extends Controller
             ->get()
             ->map(function ($constellation) {
                 return [
-                    'id'   => $constellation->constellation_id,
+                    'id' => $constellation->constellation_id,
                     'text' => $constellation->name,
                 ];
             });
@@ -500,7 +500,7 @@ class FastLookupController extends Controller
             }
 
             return response()->json([
-                'id'   => $system->system_id,
+                'id' => $system->system_id,
                 'text' => $system->name,
             ]);
         }
@@ -518,8 +518,8 @@ class FastLookupController extends Controller
             ->get()
             ->map(function ($system) {
                 return [
-                    'id'       => $system->system_id,
-                    'text'     => $system->name,
+                    'id' => $system->system_id,
+                    'text' => $system->name,
                 ];
             });
 
@@ -543,8 +543,8 @@ class FastLookupController extends Controller
             ->get()
             ->map(function ($role) {
                 return [
-                    'id'       => $role->role,
-                    'text'     => $role->role,
+                    'id' => $role->role,
+                    'text' => $role->role,
                 ];
             });
 

@@ -104,7 +104,7 @@ class CorporationScope implements DataTableScope
 
             return [
                 'corporations' => collect($filters->corporation ?? [])->pluck('id')->toArray(),
-                'alliances'    => collect($filters->alliance ?? [])->pluck('id')->toArray(),
+                'alliances' => collect($filters->alliance ?? [])->pluck('id')->toArray(),
             ];
         });
 

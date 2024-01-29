@@ -45,7 +45,7 @@ class ReassignCharacter extends FormRequest
     public function rules()
     {
         return [
-            'user'      => 'required|exists:users,id',
+            'user' => 'required|exists:users,id',
             'character' => 'required|exists:character_infos,character_id',
         ];
     }

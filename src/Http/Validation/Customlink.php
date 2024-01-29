@@ -37,9 +37,9 @@ class Customlink extends FormRequest
     public function rules()
     {
         return [
-            'customlink-name.*'   => 'string|required',
-            'customlink-url.*'    => 'url|required',
-            'customlink-icon.*'   => 'string|nullable',
+            'customlink-name.*' => 'string|required',
+            'customlink-url.*' => 'url|required',
+            'customlink-icon.*' => 'string|nullable',
             'customlink-newtab.*' => 'boolean|required',
         ];
     }

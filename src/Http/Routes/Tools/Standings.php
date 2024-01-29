@@ -21,7 +21,7 @@
  */
 
 Route::group([
-    'prefix'    => 'standings',
+    'prefix' => 'standings',
     'middleware' => 'can:global.standing_builder',
 ], function () {
 

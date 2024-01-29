@@ -21,13 +21,13 @@
  */
 
 return [
-    'start'               => 'Start',
-    'end'                 => 'End',
-    'location'            => 'Location',
-    'activity'            => 'Activity',
-    'runs'                => 'Runs',
-    'blueprint'           => 'Blueprint',
-    'product'             => 'Product',
+    'start' => 'Start',
+    'end' => 'End',
+    'location' => 'Location',
+    'activity' => 'Activity',
+    'runs' => 'Runs',
+    'blueprint' => 'Blueprint',
+    'product' => 'Product',
     'material_efficiency' => 'Material Efficiency',
-    'time_efficiency'     => 'Time Efficiency',
+    'time_efficiency' => 'Time Efficiency',
 ];
