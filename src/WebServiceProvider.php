@@ -155,7 +155,7 @@ class WebServiceProvider extends AbstractSeatPlugin
             base_path('vendor/twbs/bootstrap/dist/css/bootstrap.min.css') => public_path('web/css/bootstrap.min.css'),
             base_path('vendor/almasaeed2010/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') => public_path('web/js/bootstrap.bundle.min.js'),
 
-            // Datatables pulled from packagist
+            // Datatables from https://datatables.net/download/. plugins: bootstrap 4, buttons and row groups
             __DIR__ . '/resources/js/datatables.min.js' => public_path('web/js/dataTables.min.js'), // use own file until they sort out packagist
 
             // AdminLTE pulled from packagist
