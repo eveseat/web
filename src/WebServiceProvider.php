@@ -155,13 +155,8 @@ class WebServiceProvider extends AbstractSeatPlugin
             base_path('vendor/twbs/bootstrap/dist/css/bootstrap.min.css') => public_path('web/css/bootstrap.min.css'),
             base_path('vendor/almasaeed2010/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') => public_path('web/js/bootstrap.bundle.min.js'),
 
-            // Datatables pulled from packagist
-            __DIR__ . '/resources/js/datatables.min.js' => public_path('web/js/jquery.dataTables.min.js'), // use own file until they sort out packagist
-            base_path('vendor/datatables.net/datatables.net-bs4/css/dataTables.bootstrap4.min.css') => public_path('web/css/dataTables.bootstrap4.min.css'),
-            base_path('vendor/datatables.net/datatables.net-bs4/js/dataTables.bootstrap4.min.js') => public_path('web/js/dataTables.bootstrap4.min.js'),
-            base_path('vendor/datatables.net/datatables.net-buttons/js/dataTables.buttons.min.js') => public_path('web/js/dataTables.buttons.min.js'),
-            base_path('vendor/datatables.net/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') => public_path('web/css/buttons.bootstrap4.min.css'),
-            base_path('vendor/datatables.net/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js') => public_path('web/js/buttons.bootstrap4.min.js'),
+            // Datatables from https://datatables.net/download/. plugins: bootstrap 4, buttons and row groups
+            __DIR__ . '/resources/js/datatables.min.js' => public_path('web/js/dataTables.min.js'), // use own file until they sort out packagist
 
             // AdminLTE pulled from packagist
             base_path('vendor/almasaeed2010/adminlte/dist/css/adminlte.min.css') => public_path('web/css/adminlte.min.css'),
