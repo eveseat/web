@@ -95,9 +95,17 @@ class QueryGroupBuilder
      */
     public function whereHas(string $relation, Closure $callback): QueryGroupBuilder {
         if($this->is_and_group){
-            $this->query->whereHas($relation, $callback);
+            if($relation !== '') {
+                $this->query->whereHas($relation, $callback);
+            } else {
+                $this->query->where($callback);
+            }
         } else {
-            $this->query->orWhereHas($relation, $callback);
+            if($relation !== '') {
+                $this->query->orWhereHas($relation, $callback);
+            } else {
+                $this->query->orWhere($callback);
+            }
         }
 
         return $this;
@@ -115,9 +123,17 @@ class QueryGroupBuilder
      */
     public function whereDoesntHave(string $relation, Closure $callback): QueryGroupBuilder {
         if($this->is_and_group){
-            $this->query->whereDoesntHave($relation, $callback);
+            if($relation !== '') {
+                $this->query->whereDoesntHave($relation, $callback);
+            } else {
+                $this->query->whereNot($callback);
+            }
         } else {
-            $this->query->orWhereDoesntHave($relation, $callback);
+            if($relation !== '') {
+                $this->query->orWhereDoesntHave($relation, $callback);
+            } else {
+                $this->query->orWhereNot($callback);
+            }
         }
 
         return $this;

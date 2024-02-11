@@ -111,7 +111,12 @@ class Squad extends Model
      * @throws InvalidFilterException
      */
     public function isUserEligible(User $user): bool {
-        return $this->isEligible($user);
+        // Check all user characters. If any character is eligible, the user is eligible too
+        foreach ($user->characters as $character){
+            if($this->isEligible($character)) return true;
+        }
+        // no eligible character found, so the user is not eligible
+        return false;
     }
 
     /**
