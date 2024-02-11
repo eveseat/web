@@ -21,6 +21,7 @@
  */
 
 use Illuminate\Database\Migrations\Migration;
+use Seat\Services\Facades\DeferredMigration;
 use Seat\Web\Models\Squads\Squad;
 use Seat\Web\Models\User;
 
@@ -36,18 +37,8 @@ class UpgradeSquadsMaj4Min4Hf2 extends Migration
      */
     public function up()
     {
-        Squad::where('type', 'auto')->get()->each(function ($squad) {
-            User::chunk(100, function ($users) use ($squad) {
-                $users->each(function ($user) use ($squad) {
-                    $is_member = $squad->members()->where('id', $user->id)->exists();
-
-                    if ($is_member && ! $squad->isEligible($user))
-                        $squad->members()->detach($user->id);
-
-                    if (! $is_member && $squad->isEligible($user))
-                        $squad->members()->attach($user->id);
-                });
-            });
+        DeferredMigration::schedule(function (){
+            Squad::recheckAllUsers();
         });
     }
 

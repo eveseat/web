@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use LasseRafn\InitialAvatarGenerator\InitialAvatar;
+use Seat\Web\Exceptions\InvalidFilterException;
 use Seat\Web\Http\Scopes\SquadScope;
 use Seat\Web\Models\Acl\Role;
 use Seat\Web\Models\Filterable;
@@ -78,7 +79,7 @@ class Squad extends Model
 
         static::addGlobalScope(new SquadScope());
 
-        self::updated(function ($model) {
+        self::updated(function (Squad $model) {
 
             // apply updates only if filters or type has been altered
             if (! array_key_exists('filters', $model->getChanges()) &&
@@ -87,7 +88,7 @@ class Squad extends Model
 
             // kick members which are non longer eligible according to new filters
             $model->members->each(function ($user) use ($model) {
-                if (! $model->isEligible($user))
+                if (! $model->isUserEligible($user))
                     $model->members()->detach($user->id);
             });
 
@@ -99,10 +100,39 @@ class Squad extends Model
                     })->get();
 
                 $users->each(function ($user) use ($model) {
-                    if ($model->isEligible($user))
+                    if ($model->isUserEligible($user))
                         $model->members()->save($user);
                 });
             }
+        });
+    }
+
+    /**
+     * @throws InvalidFilterException
+     */
+    public function isUserEligible(User $user): bool {
+        return $this->isEligible($user);
+    }
+
+    /**
+     * Checks all users for eligibility. This function is used in migrations after major changes and bugs in the squad
+     * eligibility code to ensure that we are in a valid state.
+     * @return void
+     * @throws InvalidFilterException
+     */
+    public static function recheckAllUsers(): void {
+        Squad::where('type', 'auto')->get()->each(function (Squad $squad) {
+            User::chunk(100, function ($users) use ($squad) {
+                $users->each(function (User $user) use ($squad) {
+                    $is_member = $squad->members()->where('id', $user->id)->exists();
+
+                    if ($is_member && ! $squad->isUserEligible($user))
+                        $squad->members()->detach($user->id);
+
+                    if (! $is_member && $squad->isUserEligible($user))
+                        $squad->members()->attach($user->id);
+                });
+            });
         });
     }
 

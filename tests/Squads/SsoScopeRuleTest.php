@@ -117,7 +117,7 @@ class SsoScopeRuleTest extends TestCase
             $token->save();
         });
 
-        $this->assertFalse($squad->isEligible($user));
+        $this->assertFalse($squad->isUserEligible($user));
     }
 
     public function testUserHasScope()
@@ -149,6 +149,6 @@ class SsoScopeRuleTest extends TestCase
             $token->save();
         });
 
-        $this->assertTrue($squad->isEligible($user));
+        $this->assertTrue($squad->isUserEligible($user));
     }
 }

@@ -146,7 +146,7 @@ class SameCharacterAcrossRulesTest extends TestCase
             'character_id' => $character_2->character_id
         ]);
 
-        $this->assertFalse($squad->isEligible($user));
+        $this->assertFalse($squad->isUserEligible($user));
     }
 
     /**
@@ -220,6 +220,6 @@ class SameCharacterAcrossRulesTest extends TestCase
             'character_id' => $character_2->character_id
         ]);
 
-        $this->assertFalse($squad->isEligible($user));
+        $this->assertFalse($squad->isUserEligible($user));
     }
 }

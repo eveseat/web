@@ -118,7 +118,7 @@ class AllianceRuleTest extends TestCase
 
         // ensure no users are eligible
         foreach ($users as $user) {
-            $this->assertFalse($squad->isEligible($user));
+            $this->assertFalse($squad->isUserEligible($user));
         }
     }
 
@@ -151,8 +151,8 @@ class AllianceRuleTest extends TestCase
 
         foreach ($users as $user) {
             $user->id == $reference_user->id ?
-                $this->assertTrue($squad->isEligible($user)) :
-                $this->assertFalse($squad->isEligible($user));
+                $this->assertTrue($squad->isUserEligible($user)) :
+                $this->assertFalse($squad->isUserEligible($user));
         }
     }
 
@@ -186,13 +186,13 @@ class AllianceRuleTest extends TestCase
                 'alliance_id' => 99000000,
             ]);
         });
-        $this->assertFalse($squad->isEligible($user));
+        $this->assertFalse($squad->isUserEligible($user));
 
         $user->characters->each(function ($character){
             $character->affiliation->update([
                 'alliance_id' => null,
             ]);
         });
-        $this->assertTrue($squad->isEligible($user));
+        $this->assertTrue($squad->isUserEligible($user));
     }
 }

@@ -152,7 +152,7 @@ class SkillAffiliationRulesGroupsTest extends TestCase
 
         // ensure no users are eligible
         foreach ($users as $user) {
-            $this->assertFalse($squad->isEligible($user));
+            $this->assertFalse($squad->isUserEligible($user));
         }
     }
 
@@ -218,20 +218,20 @@ class SkillAffiliationRulesGroupsTest extends TestCase
             'corporation_id' => 98541700,
         ]);
 
-        $this->assertFalse($squad->isEligible($reference_user));
+        $this->assertFalse($squad->isUserEligible($reference_user));
 
         $reference_character->affiliation->update([
             'alliance_id' => 99000000,
             'corporation_id' => 98541699,
         ]);
 
-        $this->assertFalse($squad->isEligible($reference_user));
+        $this->assertFalse($squad->isUserEligible($reference_user));
 
         $reference_character->affiliation->update([
             'alliance_id' => 99000000,
             'corporation_id' => 98541700,
         ]);
 
-        $this->assertTrue($squad->isEligible($reference_user));
+        $this->assertTrue($squad->isUserEligible($reference_user));
     }
 }

@@ -103,7 +103,7 @@ class NoRulesTest extends TestCase
         $user = User::first();
 
         // ensure no users are eligible
-        $this->assertTrue($squad->isEligible($user), 'Squad without filter is open to anyone');
+        $this->assertTrue($squad->isUserEligible($user), 'Squad without filter is open to anyone');
 
     }
 }
