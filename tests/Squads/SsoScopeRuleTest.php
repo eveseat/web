@@ -99,7 +99,7 @@ class SsoScopeRuleTest extends TestCase
                 'and' => [
                     [
                         'name' => 'scopes',
-                        'path' => 'characters.refresh_token',
+                        'path' => 'refresh_token',
                         'field' => 'scopes',
                         'criteria' => 'publicData',
                         'operator' => 'contains',
@@ -131,7 +131,7 @@ class SsoScopeRuleTest extends TestCase
                 'and' => [
                     [
                         'name' => 'scopes',
-                        'path' => 'characters.refresh_token',
+                        'path' => 'refresh_token',
                         'field' => 'scopes',
                         'criteria' => 'publicData',
                         'operator' => 'contains',

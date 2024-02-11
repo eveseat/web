@@ -103,7 +103,7 @@ class SkillSkillLevelPairFiltersTest extends TestCase
                 'and' => [
                     [
                         'name' => 'skill',
-                        'path' => 'characters.skills',
+                        'path' => 'skills',
                         'field' => 'skill_id',
                         'operator' => '=',
                         'criteria' => 3350,
@@ -111,7 +111,7 @@ class SkillSkillLevelPairFiltersTest extends TestCase
                     ],
                     [
                         'name' => 'skill level',
-                        'path' => 'characters.skills',
+                        'path' => 'skills',
                         'field' => 'trained_skill_level',
                         'operator' => '>',
                         'criteria' => 4,
@@ -141,7 +141,7 @@ class SkillSkillLevelPairFiltersTest extends TestCase
                 'and' => [
                     [
                         'name' => 'skill',
-                        'path' => 'characters.skills',
+                        'path' => 'skills',
                         'field' => 'skill_id',
                         'operator' => '=',
                         'criteria' => 3350,
@@ -149,7 +149,7 @@ class SkillSkillLevelPairFiltersTest extends TestCase
                     ],
                     [
                         'name' => 'skill level',
-                        'path' => 'characters.skills',
+                        'path' => 'skills',
                         'field' => 'trained_skill_level',
                         'operator' => '>',
                         'criteria' => 4,
@@ -187,7 +187,7 @@ class SkillSkillLevelPairFiltersTest extends TestCase
                 'or' => [
                     [
                         'name' => 'skill',
-                        'path' => 'characters.skills',
+                        'path' => 'skills',
                         'field' => 'skill_id',
                         'operator' => '=',
                         'criteria' => 3350,
@@ -195,7 +195,7 @@ class SkillSkillLevelPairFiltersTest extends TestCase
                     ],
                     [
                         'name' => 'skill level',
-                        'path' => 'characters.skills',
+                        'path' => 'skills',
                         'field' => 'trained_skill_level',
                         'operator' => '>',
                         'criteria' => 4,
@@ -225,7 +225,7 @@ class SkillSkillLevelPairFiltersTest extends TestCase
                 'or' => [
                     [
                         'name' => 'skill',
-                        'path' => 'characters.skills',
+                        'path' => 'skills',
                         'field' => 'skill_id',
                         'operator' => '=',
                         'criteria' => 3350,
@@ -233,7 +233,7 @@ class SkillSkillLevelPairFiltersTest extends TestCase
                     ],
                     [
                         'name' => 'skill level',
-                        'path' => 'characters.skills',
+                        'path' => 'skills',
                         'field' => 'trained_skill_level',
                         'operator' => '>',
                         'criteria' => 4,

@@ -107,7 +107,7 @@ class SkillAffiliationRulesGroupsTest extends TestCase
                         'and' => [
                             [
                                 'name' => 'skill',
-                                'path' => 'characters.skills',
+                                'path' => 'skills',
                                 'field' => 'skill_id',
                                 'operator' => '=',
                                 'criteria' => 3350,
@@ -115,7 +115,7 @@ class SkillAffiliationRulesGroupsTest extends TestCase
                             ],
                             [
                                 'name' => 'skill level',
-                                'path' => 'characters.skills',
+                                'path' => 'skills',
                                 'field' => 'trained_skill_level',
                                 'operator' => '>',
                                 'criteria' => 5,
@@ -127,7 +127,7 @@ class SkillAffiliationRulesGroupsTest extends TestCase
                         'and' => [
                             [
                                 'name' => 'corporation',
-                                'path' => 'characters.affiliation',
+                                'path' => 'affiliation',
                                 'field' => 'corporation_id',
                                 'operator' => '=',
                                 'criteria' => 98541700,
@@ -135,7 +135,7 @@ class SkillAffiliationRulesGroupsTest extends TestCase
                             ],
                             [
                                 'name' => 'alliance',
-                                'path' => 'characters.affiliation',
+                                'path' => 'affiliation',
                                 'field' => 'alliance_id',
                                 'operator' => '=',
                                 'criteria' => 99000000,
@@ -169,7 +169,7 @@ class SkillAffiliationRulesGroupsTest extends TestCase
                         'and' => [
                             [
                                 'name' => 'skill',
-                                'path' => 'characters.skills',
+                                'path' => 'skills',
                                 'field' => 'skill_id',
                                 'operator' => '=',
                                 'criteria' => 3350,
@@ -177,7 +177,7 @@ class SkillAffiliationRulesGroupsTest extends TestCase
                             ],
                             [
                                 'name' => 'skill level',
-                                'path' => 'characters.skills',
+                                'path' => 'skills',
                                 'field' => 'trained_skill_level',
                                 'operator' => '>',
                                 'criteria' => 5,
@@ -189,7 +189,7 @@ class SkillAffiliationRulesGroupsTest extends TestCase
                         'and' => [
                             [
                                 'name' => 'corporation',
-                                'path' => 'characters.affiliation',
+                                'path' => 'affiliation',
                                 'field' => 'corporation_id',
                                 'operator' => '=',
                                 'criteria' => 98541700,
@@ -197,7 +197,7 @@ class SkillAffiliationRulesGroupsTest extends TestCase
                             ],
                             [
                                 'name' => 'alliance',
-                                'path' => 'characters.affiliation',
+                                'path' => 'affiliation',
                                 'field' => 'alliance_id',
                                 'operator' => '=',
                                 'criteria' => 99000000,

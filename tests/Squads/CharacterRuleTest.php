@@ -99,7 +99,7 @@ class CharacterRuleTest extends TestCase
                 'and' => [
                     [
                         'name' => 'character',
-                        'path' => 'characters',
+                        'path' => '',
                         'field' => 'character_infos.character_id',
                         'operator' => '=',
                         'criteria' => 90174490,
@@ -132,7 +132,7 @@ class CharacterRuleTest extends TestCase
                 'and' => [
                     [
                         'name' => 'character',
-                        'path' => 'characters',
+                        'path' => '',
                         'field' => 'character_infos.character_id',
                         'operator' => '=',
                         'criteria' => $reference_user->characters->first()->character_id,

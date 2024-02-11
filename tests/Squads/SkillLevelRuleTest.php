@@ -103,7 +103,7 @@ class SkillLevelRuleTest extends TestCase
                 'and' => [
                     [
                         'name' => 'skill level',
-                        'path' => 'characters.skills',
+                        'path' => 'skills',
                         'field' => 'trained_skill_level',
                         'operator' => '>',
                         'criteria' => 5,
@@ -133,7 +133,7 @@ class SkillLevelRuleTest extends TestCase
                 'and' => [
                     [
                         'name' => 'skill level',
-                        'path' => 'characters.skills',
+                        'path' => 'skills',
                         'field' => 'trained_skill_level',
                         'operator' => '>',
                         'criteria' => 4,

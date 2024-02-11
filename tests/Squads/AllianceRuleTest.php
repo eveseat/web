@@ -103,7 +103,7 @@ class AllianceRuleTest extends TestCase
                 'and' => [
                     [
                         'name' => 'alliance',
-                        'path' => 'characters.affiliation',
+                        'path' => 'affiliation',
                         'field' => 'alliance_id',
                         'operator' => '=',
                         'criteria' => 99000000,
@@ -133,7 +133,7 @@ class AllianceRuleTest extends TestCase
                 'and' => [
                     [
                         'name' => 'alliance',
-                        'path' => 'characters.affiliation',
+                        'path' => 'affiliation',
                         'field' => 'alliance_id',
                         'operator' => '=',
                         'criteria' => 99000000,
@@ -169,7 +169,7 @@ class AllianceRuleTest extends TestCase
                 'and' => [
                     [
                         'name' => 'alliance',
-                        'path' => 'characters.affiliation',
+                        'path' => 'affiliation',
                         'field' => 'alliance_id',
                         'operator' => '<>',
                         'criteria' => 99000000,

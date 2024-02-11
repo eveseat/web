@@ -103,7 +103,7 @@ class AllianceCorporationPairFiltersTest extends TestCase
                 'and' => [
                     [
                         'name' => 'alliance',
-                        'path' => 'characters.affiliation',
+                        'path' => 'affiliation',
                         'field' => 'alliance_id',
                         'operator' => '=',
                         'criteria' => 99000050,
@@ -111,7 +111,7 @@ class AllianceCorporationPairFiltersTest extends TestCase
                     ],
                     [
                         'name' => 'corporation',
-                        'path' => 'characters.affiliation',
+                        'path' => 'affiliation',
                         'field' => 'corporation_id',
                         'operator' => '=',
                         'criteria' => 98541700,
@@ -141,7 +141,7 @@ class AllianceCorporationPairFiltersTest extends TestCase
                 'and' => [
                     [
                         'name' => 'alliance',
-                        'path' => 'characters.affiliation',
+                        'path' => 'affiliation',
                         'field' => 'alliance_id',
                         'operator' => '=',
                         'criteria' => 99000050,
@@ -149,7 +149,7 @@ class AllianceCorporationPairFiltersTest extends TestCase
                     ],
                     [
                         'name' => 'corporation',
-                        'path' => 'characters.affiliation',
+                        'path' => 'affiliation',
                         'field' => 'corporation_id',
                         'operator' => '=',
                         'criteria' => 98541700,
@@ -187,7 +187,7 @@ class AllianceCorporationPairFiltersTest extends TestCase
                 'or' => [
                     [
                         'name' => 'alliance',
-                        'path' => 'characters.affiliation',
+                        'path' => 'affiliation',
                         'field' => 'alliance_id',
                         'operator' => '=',
                         'criteria' => 99000050,
@@ -195,7 +195,7 @@ class AllianceCorporationPairFiltersTest extends TestCase
                     ],
                     [
                         'name' => 'corporation',
-                        'path' => 'characters.affiliation',
+                        'path' => 'affiliation',
                         'field' => 'corporation_id',
                         'operator' => '=',
                         'criteria' => 98541700,
@@ -225,7 +225,7 @@ class AllianceCorporationPairFiltersTest extends TestCase
                 'or' => [
                     [
                         'name' => 'alliance',
-                        'path' => 'characters.affiliation',
+                        'path' => 'affiliation',
                         'field' => 'alliance_id',
                         'operator' => '=',
                         'criteria' => 99000050,
@@ -233,7 +233,7 @@ class AllianceCorporationPairFiltersTest extends TestCase
                     ],
                     [
                         'name' => 'corporation',
-                        'path' => 'characters.affiliation',
+                        'path' => 'affiliation',
                         'field' => 'corporation_id',
                         'operator' => '=',
                         'criteria' => 98541700,

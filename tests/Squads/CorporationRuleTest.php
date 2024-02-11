@@ -103,7 +103,7 @@ class CorporationRuleTest extends TestCase
                 'and' => [
                     [
                         'name' => 'corporation',
-                        'path' => 'characters.affiliation',
+                        'path' => 'affiliation',
                         'field' => 'corporation_id',
                         'operator' => '=',
                         'criteria' => 98541700,
@@ -133,7 +133,7 @@ class CorporationRuleTest extends TestCase
                 'and' => [
                     [
                         'name' => 'corporation',
-                        'path' => 'characters.affiliation',
+                        'path' => 'affiliation',
                         'field' => 'corporation_id',
                         'operator' => '=',
                         'criteria' => 98541700,

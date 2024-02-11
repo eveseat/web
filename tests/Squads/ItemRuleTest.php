@@ -103,7 +103,7 @@ class ItemRuleTest extends TestCase
                 'and' => [
                     [
                         'name' => 'type',
-                        'path' => 'characters.assets',
+                        'path' => 'assets',
                         'field' => 'type_id',
                         'operator' => '=',
                         'criteria' => 2160,
@@ -133,7 +133,7 @@ class ItemRuleTest extends TestCase
                 'and' => [
                     [
                         'name' => 'type',
-                        'path' => 'characters.assets',
+                        'path' => 'assets',
                         'field' => 'type_id',
                         'operator' => '=',
                         'criteria' => 2160,

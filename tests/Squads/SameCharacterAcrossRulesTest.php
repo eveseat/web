@@ -100,7 +100,7 @@ class SameCharacterAcrossRulesTest extends TestCase
                 'and' => [
                     [
                         'name'=>'corporation',
-                        'path'=>'characters.affiliation',
+                        'path'=>'affiliation',
                         'field'=>'corporation_id',
                         'criteria'=>strval($CORPORATION_ID),
                         'operator'=>'=',
@@ -108,7 +108,7 @@ class SameCharacterAcrossRulesTest extends TestCase
                     ],
                     [
                         'name'=>'role',
-                        'path'=>'characters.corporation_roles',
+                        'path'=>'corporation_roles',
                         'field'=>'role',
                         'criteria'=>$ROLE,
                         'operator'=>'=',
@@ -170,7 +170,7 @@ class SameCharacterAcrossRulesTest extends TestCase
                 'and' => [
                     [
                         'name'=>'corporation',
-                        'path'=>'characters.affiliation',
+                        'path'=>'affiliation',
                         'field'=>'corporation_id',
                         'criteria'=>strval($CORPORATION_ID),
                         'operator'=>'=',
@@ -180,7 +180,7 @@ class SameCharacterAcrossRulesTest extends TestCase
                         'and'=>[
                             [
                                 'name'=>'role',
-                                'path'=>'characters.corporation_roles',
+                                'path'=>'corporation_roles',
                                 'field'=>'role',
                                 'criteria'=>$ROLE,
                                 'operator'=>'=',

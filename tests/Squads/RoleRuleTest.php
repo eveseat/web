@@ -107,7 +107,7 @@ class RoleRuleTest extends TestCase
                 'and' => [
                     [
                         'name' => 'role',
-                        'path' => 'characters.corporation_roles',
+                        'path' => 'corporation_roles',
                         'field' => 'role',
                         'operator' => '=',
                         'criteria' => 'role_1000',
@@ -137,7 +137,7 @@ class RoleRuleTest extends TestCase
                 'and' => [
                     [
                         'name' => 'role',
-                        'path' => 'characters.corporation_roles',
+                        'path' => 'corporation_roles',
                         'field' => 'role',
                         'operator' => '=',
                         'criteria' => 'role_1000',

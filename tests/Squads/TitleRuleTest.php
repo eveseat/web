@@ -123,7 +123,7 @@ class TitleRuleTest extends TestCase
                 'and' => [
                     [
                         'name' => 'title',
-                        'path' => 'characters.titles',
+                        'path' => 'titles',
                         'field' => 'name',
                         'operator' => '=',
                         'criteria' => 'id',
@@ -163,7 +163,7 @@ class TitleRuleTest extends TestCase
                 'and' => [
                     [
                         'name' => 'title',
-                        'path' => 'characters.titles',
+                        'path' => 'titles',
                         'field' => 'id',
                         'operator' => '=',
                         'criteria' => $reference_title->id,
