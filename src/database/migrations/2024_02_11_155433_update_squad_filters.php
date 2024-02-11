@@ -44,12 +44,9 @@ return new class extends Migration
 
                     $parts = explode('.',$path);
 
-                    logger()->error(json_encode($parts).json_encode(array_slice($parts,1)));
-
                     if($parts[0] !== 'characters' ) {
                         throw new Exception('Cannot migrate squad filter: filter path doesn\'t go over character');
                     }
-
 
                     return implode('.',array_slice($parts,1));
                 });
@@ -93,13 +90,15 @@ return new class extends Migration
      */
     public function down()
     {
-//        DB::table('squads')->select('id','filters')->chunkById(50, function ($squads){
-//            foreach ($squads as $squad) {
-//                $this->updateSquad($squad, function ($path) {
-//                    // we deliberately ignore the refresh_tokens special case since keeping it over character fixes a security issue
-//                    return sprintf('characters.%s',$path);
-//                });
-//            }
-//        });
+        DB::table('squads')->select('id','filters')->chunkById(50, function ($squads){
+            foreach ($squads as $squad) {
+                $this->updateSquad($squad, function ($path) {
+                    if($path === '') return 'characters';
+
+                    // we deliberately ignore the refresh_tokens special case since keeping it over character fixes a security issue
+                    return sprintf('characters.%s',$path);
+                });
+            }
+        });
     }
 };
