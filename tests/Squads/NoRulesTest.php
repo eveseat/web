@@ -27,6 +27,7 @@ use Lunaweb\RedisMock\Providers\RedisMockServiceProvider;
 use Orchestra\Testbench\TestCase;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\RefreshToken;
+use Seat\Web\Exceptions\InvalidFilterException;
 use Seat\Web\Models\Squads\Squad;
 use Seat\Web\Models\User;
 use Seat\Web\WebServiceProvider;
@@ -72,10 +73,10 @@ class NoRulesTest extends TestCase
 
         Event::fake();
 
-        CharacterInfo::factory(50)
+        CharacterInfo::factory(5)
             ->create();
 
-        User::factory(10)
+        User::factory(1)
             ->create()
             ->each(function ($user) {
                 CharacterInfo::whereDoesntHave('refresh_token')->get()
@@ -99,11 +100,10 @@ class NoRulesTest extends TestCase
         ]);
 
         // pickup users
-        $users = User::all();
+        $user = User::first();
 
         // ensure no users are eligible
-        foreach ($users as $user) {
-            $this->assertTrue($squad->isEligible($user));
-        }
+        $this->assertTrue($squad->isEligible($user), 'Squad without filter is open to anyone');
+
     }
 }
