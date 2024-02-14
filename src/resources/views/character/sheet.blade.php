@@ -217,8 +217,6 @@
         <div class="card-header">
           <h3 class="card-title">
             {{ trans('web::seat.employment_history') }}
-            <i class="fas fa-exclamation-circle text-danger" data-toggle="tooltip" data-placement="top" 
-                title="This field will not update with new data until CCP re-enable the endpoint"></i>
           </h3>
           @if($character->refresh_token)
           <div class="card-tools">
