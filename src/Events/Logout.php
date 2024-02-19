@@ -45,9 +45,9 @@ class Logout
         if (! $event->user)
             return;
 
-        # Adds trusted proxies if exists.
-        if (!empty($trusted_proxies = config('web.config.trusted_proxies')))
-        Request::setTrustedProxies(explode(',',$trusted_proxies), 0b00010);
+        // Adds trusted proxies if exists.
+        if (! empty($trusted_proxies = config('web.config.trusted_proxies')))
+        Request::setTrustedProxies(explode(',', $trusted_proxies), 0b00010);
 
         $event->user->login_history()->save(new UserLoginHistory([
             'source' => Request::getClientIp(),
