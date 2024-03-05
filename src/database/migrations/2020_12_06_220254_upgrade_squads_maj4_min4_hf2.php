@@ -38,7 +38,7 @@ class UpgradeSquadsMaj4Min4Hf2 extends Migration
     public function up()
     {
         DeferredMigration::schedule(function (){
-            Squad::recheckAllUsers();
+            Squad::recomputeAllSquadMemberships();
         });
     }
 

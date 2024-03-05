@@ -86,24 +86,7 @@ class Squad extends Model
                 ! array_key_exists('type', $model->getChanges()))
                 return;
 
-            // kick members which are non longer eligible according to new filters
-            $model->members->each(function ($user) use ($model) {
-                if (! $model->isUserEligible($user))
-                    $model->members()->detach($user->id);
-            });
-
-            // invite members which are eligible according to new filters (only for auto squads)
-            if ($model->type == 'auto') {
-                $users = User::standard()
-                    ->whereDoesntHave('squads', function (Builder $query) use ($model) {
-                        $query->where('id', $model->id);
-                    })->get();
-
-                $users->each(function ($user) use ($model) {
-                    if ($model->isUserEligible($user))
-                        $model->members()->save($user);
-                });
-            }
+            $model->recomputeSquadMemberships();
         });
     }
 
@@ -120,24 +103,41 @@ class Squad extends Model
     }
 
     /**
+     * Checks if the members of this squad are still eligible and if new members have to be added.
+     * This function is typically called after changes in the squad configuration or in a deferred migration if the behaviour of the squad eligibility logic changes
+     * @return void
+     * @throws InvalidFilterException
+     */
+    private function recomputeSquadMemberships(): void {
+        // kick members which are non longer eligible according to new filters
+        $this->members->each(function ($user) {
+            if (! $this->isUserEligible($user))
+                $this->members()->detach($user->id);
+        });
+
+        // invite members which are eligible according to new filters (only for auto squads)
+        if ($this->type == 'auto') {
+            $users = User::standard()
+                ->whereDoesntHave('squads', function (Builder $query) {
+                    $query->where('id', $this->id);
+                })->get();
+
+            $users->each(function ($user) {
+                if ($this->isUserEligible($user))
+                    $this->members()->save($user);
+            });
+        }
+    }
+
+    /**
      * Checks all users for eligibility. This function is used in migrations after major changes and bugs in the squad
      * eligibility code to ensure that we are in a valid state.
      * @return void
      * @throws InvalidFilterException
      */
-    public static function recheckAllUsers(): void {
+    public static function recomputeAllSquadMemberships(): void {
         Squad::where('type', 'auto')->get()->each(function (Squad $squad) {
-            User::chunk(100, function ($users) use ($squad) {
-                $users->each(function (User $user) use ($squad) {
-                    $is_member = $squad->members()->where('id', $user->id)->exists();
-
-                    if ($is_member && ! $squad->isUserEligible($user))
-                        $squad->members()->detach($user->id);
-
-                    if (! $is_member && $squad->isUserEligible($user))
-                        $squad->members()->attach($user->id);
-                });
-            });
+            $squad->recomputeSquadMemberships();
         });
     }
 

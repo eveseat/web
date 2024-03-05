@@ -55,7 +55,7 @@ return new class extends Migration
 
         // since the squad filter change with this migration, we have to recompute the eligibility of everyone
         DeferredMigration::schedule(function (){
-            Squad::recheckAllUsers();
+            Squad::recomputeAllSquadMemberships();
         });
     }
 
