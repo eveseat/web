@@ -25,20 +25,18 @@ namespace Seat\Tests\Web\Squads;
 use Illuminate\Support\Facades\Event;
 use Lunaweb\RedisMock\Providers\RedisMockServiceProvider;
 use Orchestra\Testbench\TestCase;
-use Seat\Eveapi\Models\Character\CharacterAffiliation;
 use Seat\Eveapi\Models\Character\CharacterInfo;
-use Seat\Eveapi\Models\Character\CharacterRole;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Models\Squads\Squad;
 use Seat\Web\Models\User;
 use Seat\Web\WebServiceProvider;
 
 /**
- * Class RoleRule.
+ * Class NoRulesTest.
  *
  * @package Seat\Tests\Web\Squads
  */
-class RoleRuleTest extends TestCase
+class SsoScopeRuleTest extends TestCase
 {
     /**
      * @param \Illuminate\Foundation\Application $app
@@ -47,9 +45,9 @@ class RoleRuleTest extends TestCase
     {
         $app['config']->set('database.default', 'testbench');
         $app['config']->set('database.connections.testbench', [
-            'driver'   => 'sqlite',
+            'driver' => 'sqlite',
             'database' => ':memory:',
-            'prefix'   => '',
+            'prefix' => '',
         ]);
         $app['config']->set('database.redis.client', 'mock');
     }
@@ -75,13 +73,7 @@ class RoleRuleTest extends TestCase
         Event::fake();
 
         CharacterInfo::factory(50)
-            ->create()
-            ->each(function($character) {
-                $character->affiliation()->save(CharacterAffiliation::factory()->make());
-                CharacterRole::factory(rand(1, 10))->create([
-                    'character_id' => $character->character_id,
-                ]);
-            });
+            ->create();
 
         User::factory(10)
             ->create()
@@ -96,7 +88,7 @@ class RoleRuleTest extends TestCase
             });
     }
 
-    public function testUserHasNoCharacterWithRole()
+    public function testUserDoesntHaveScope()
     {
         // spawn test squad
         $squad = new Squad([
@@ -106,27 +98,29 @@ class RoleRuleTest extends TestCase
             'filters' => json_encode([
                 'and' => [
                     [
-                        'name' => 'role',
-                        'path' => 'corporation_roles',
-                        'field' => 'role',
-                        'operator' => '=',
-                        'criteria' => 'role_1000',
-                        'text' => 'Random Role',
-                    ],
-                ],
-            ]),
+                        'name' => 'scopes',
+                        'path' => 'refresh_token',
+                        'field' => 'scopes',
+                        'criteria' => 'publicData',
+                        'operator' => 'contains',
+                        'text' => 'publicData'
+                    ]
+                ]
+            ])
         ]);
 
-        // pickup users
-        $users = User::all();
+        $user = User::first();
 
-        // ensure no users are eligible
-        foreach ($users as $user) {
-            $this->assertFalse($squad->isUserEligible($user));
-        }
+        // remove all scopes
+        $user->refresh_tokens->each(function ($token) {
+            $token->scopes = [];
+            $token->save();
+        });
+
+        $this->assertFalse($squad->isUserEligible($user));
     }
 
-    public function testUserHasCharacterWithRole()
+    public function testUserHasScope()
     {
         // spawn test squad
         $squad = new Squad([
@@ -136,33 +130,25 @@ class RoleRuleTest extends TestCase
             'filters' => json_encode([
                 'and' => [
                     [
-                        'name' => 'role',
-                        'path' => 'corporation_roles',
-                        'field' => 'role',
-                        'operator' => '=',
-                        'criteria' => 'role_1000',
-                        'text' => 'Random Role',
-                    ],
-                ],
-            ]),
+                        'name' => 'scopes',
+                        'path' => 'refresh_token',
+                        'field' => 'scopes',
+                        'criteria' => 'publicData',
+                        'operator' => 'contains',
+                        'text' => 'publicData'
+                    ]
+                ]
+            ])
         ]);
 
-        // update an user to match criteria
-        $reference_user = User::first();
+        $user = User::first();
 
-        $reference_user->characters->first()->corporation_roles()->save(CharacterRole::factory()->make([
-            'scope' => 'roles',
-            'role' => 'role_1000',
-        ]));
+        // remove all scopes
+        $user->refresh_tokens->each(function ($token) {
+            $token->scopes = ['publicData'];
+            $token->save();
+        });
 
-        // pickup users
-        $users = User::all();
-
-        // ensure no users are eligible
-        foreach ($users as $user) {
-            $user->id == $reference_user->id ?
-                $this->assertTrue($squad->isUserEligible($user)) :
-                $this->assertFalse($squad->isUserEligible($user));
-        }
+        $this->assertTrue($squad->isUserEligible($user));
     }
 }

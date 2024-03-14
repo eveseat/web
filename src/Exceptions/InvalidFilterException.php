@@ -20,34 +20,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-use Illuminate\Database\Migrations\Migration;
-use Seat\Services\Facades\DeferredMigration;
-use Seat\Web\Models\Squads\Squad;
+namespace Seat\Web\Exceptions;
 
-/**
- * Class UpgradeSquadsMaj4Min4Hf2.
- */
-class UpgradeSquadsMaj4Min4Hf2 extends Migration
+class InvalidFilterException extends \Exception
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        DeferredMigration::schedule(function () {
-            Squad::recomputeAllSquadMemberships();
-        });
-    }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-
-    }
 }

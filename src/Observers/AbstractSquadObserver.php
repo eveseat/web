@@ -23,6 +23,7 @@
 namespace Seat\Web\Observers;
 
 use Illuminate\Database\Eloquent\Model;
+use Seat\Web\Exceptions\InvalidFilterException;
 use Seat\Web\Models\Squads\Squad;
 use Seat\Web\Models\User;
 
@@ -45,6 +46,8 @@ abstract class AbstractSquadObserver
      * Update squads to which the user owning model firing the event is member.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $fired_model  The model which fired the catch event
+     *
+     * @throws InvalidFilterException
      */
     protected function updateUserSquads(Model $fired_model)
     {
@@ -61,14 +64,14 @@ abstract class AbstractSquadObserver
         })->get();
 
         // remove the user from squads to which he's non longer eligible.
-        $member_squads->each(function ($squad) use ($user) {
-            if (! $squad->isEligible($user))
+        $member_squads->each(function (Squad $squad) use ($user) {
+            if (! $squad->isUserEligible($user))
                 $squad->members()->detach($user->id);
         });
 
         // add the user to squads from which he's not already a member.
-        $other_squads->each(function ($squad) use ($user) {
-            if ($squad->isEligible($user))
+        $other_squads->each(function (Squad $squad) use ($user) {
+            if ($squad->isUserEligible($user))
                 $squad->members()->save($user);
         });
     }

@@ -123,7 +123,7 @@ class TitleRuleTest extends TestCase
                 'and' => [
                     [
                         'name' => 'title',
-                        'path' => 'characters.titles',
+                        'path' => 'titles',
                         'field' => 'name',
                         'operator' => '=',
                         'criteria' => 'id',
@@ -138,7 +138,7 @@ class TitleRuleTest extends TestCase
 
         // ensure no users are eligible
         foreach ($users as $user) {
-            $this->assertFalse($squad->isEligible($user));
+            $this->assertFalse($squad->isUserEligible($user));
         }
     }
 
@@ -163,7 +163,7 @@ class TitleRuleTest extends TestCase
                 'and' => [
                     [
                         'name' => 'title',
-                        'path' => 'characters.titles',
+                        'path' => 'titles',
                         'field' => 'id',
                         'operator' => '=',
                         'criteria' => $reference_title->id,
@@ -179,8 +179,8 @@ class TitleRuleTest extends TestCase
         // ensure no users are eligible
         foreach ($users as $user) {
             $user->id == $reference_user->id ?
-                $this->assertTrue($squad->isEligible($user)) :
-                $this->assertFalse($squad->isEligible($user));
+                $this->assertTrue($squad->isUserEligible($user)) :
+                $this->assertFalse($squad->isUserEligible($user));
         }
     }
 }

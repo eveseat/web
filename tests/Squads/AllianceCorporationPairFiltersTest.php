@@ -103,7 +103,7 @@ class AllianceCorporationPairFiltersTest extends TestCase
                 'and' => [
                     [
                         'name' => 'alliance',
-                        'path' => 'characters.affiliation',
+                        'path' => 'affiliation',
                         'field' => 'alliance_id',
                         'operator' => '=',
                         'criteria' => 99000050,
@@ -111,7 +111,7 @@ class AllianceCorporationPairFiltersTest extends TestCase
                     ],
                     [
                         'name' => 'corporation',
-                        'path' => 'characters.affiliation',
+                        'path' => 'affiliation',
                         'field' => 'corporation_id',
                         'operator' => '=',
                         'criteria' => 98541700,
@@ -126,7 +126,7 @@ class AllianceCorporationPairFiltersTest extends TestCase
 
         // ensure no users are eligible
         foreach ($users as $user) {
-            $this->assertFalse($squad->isEligible($user));
+            $this->assertFalse($squad->isUserEligible($user));
         }
     }
 
@@ -141,7 +141,7 @@ class AllianceCorporationPairFiltersTest extends TestCase
                 'and' => [
                     [
                         'name' => 'alliance',
-                        'path' => 'characters.affiliation',
+                        'path' => 'affiliation',
                         'field' => 'alliance_id',
                         'operator' => '=',
                         'criteria' => 99000050,
@@ -149,7 +149,7 @@ class AllianceCorporationPairFiltersTest extends TestCase
                     ],
                     [
                         'name' => 'corporation',
-                        'path' => 'characters.affiliation',
+                        'path' => 'affiliation',
                         'field' => 'corporation_id',
                         'operator' => '=',
                         'criteria' => 98541700,
@@ -171,8 +171,8 @@ class AllianceCorporationPairFiltersTest extends TestCase
         // ensure no users are eligible
         foreach ($users as $user) {
             $user->id == $reference_user->id ?
-                $this->assertTrue($squad->isEligible($user)) :
-                $this->assertFalse($squad->isEligible($user));
+                $this->assertTrue($squad->isUserEligible($user)) :
+                $this->assertFalse($squad->isUserEligible($user));
         }
     }
 
@@ -187,7 +187,7 @@ class AllianceCorporationPairFiltersTest extends TestCase
                 'or' => [
                     [
                         'name' => 'alliance',
-                        'path' => 'characters.affiliation',
+                        'path' => 'affiliation',
                         'field' => 'alliance_id',
                         'operator' => '=',
                         'criteria' => 99000050,
@@ -195,7 +195,7 @@ class AllianceCorporationPairFiltersTest extends TestCase
                     ],
                     [
                         'name' => 'corporation',
-                        'path' => 'characters.affiliation',
+                        'path' => 'affiliation',
                         'field' => 'corporation_id',
                         'operator' => '=',
                         'criteria' => 98541700,
@@ -210,7 +210,7 @@ class AllianceCorporationPairFiltersTest extends TestCase
 
         // ensure no users are eligible
         foreach ($users as $user) {
-            $this->assertFalse($squad->isEligible($user));
+            $this->assertFalse($squad->isUserEligible($user));
         }
     }
 
@@ -225,7 +225,7 @@ class AllianceCorporationPairFiltersTest extends TestCase
                 'or' => [
                     [
                         'name' => 'alliance',
-                        'path' => 'characters.affiliation',
+                        'path' => 'affiliation',
                         'field' => 'alliance_id',
                         'operator' => '=',
                         'criteria' => 99000050,
@@ -233,7 +233,7 @@ class AllianceCorporationPairFiltersTest extends TestCase
                     ],
                     [
                         'name' => 'corporation',
-                        'path' => 'characters.affiliation',
+                        'path' => 'affiliation',
                         'field' => 'corporation_id',
                         'operator' => '=',
                         'criteria' => 98541700,
@@ -256,8 +256,8 @@ class AllianceCorporationPairFiltersTest extends TestCase
         // ensure no users are eligible
         foreach ($users as $user) {
             $user->id == $reference_user->id ?
-                $this->assertTrue($squad->isEligible($user)) :
-                $this->assertFalse($squad->isEligible($user));
+                $this->assertTrue($squad->isUserEligible($user)) :
+                $this->assertFalse($squad->isUserEligible($user));
         }
 
         $reference_character->affiliation->update([
@@ -270,8 +270,8 @@ class AllianceCorporationPairFiltersTest extends TestCase
         // ensure no users are eligible
         foreach ($users as $user) {
             $user->id == $reference_user->id ?
-                $this->assertTrue($squad->isEligible($user)) :
-                $this->assertFalse($squad->isEligible($user));
+                $this->assertTrue($squad->isUserEligible($user)) :
+                $this->assertFalse($squad->isUserEligible($user));
         }
     }
 }

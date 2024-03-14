@@ -158,7 +158,7 @@
                   </button>
                 </div>
               @endif
-              @if(! $squad->is_candidate && $squad->type == 'manual' && $squad->isEligible(auth()->user()))
+              @if(! $squad->is_candidate && $squad->type == 'manual' && $squad->isUserEligible(auth()->user()))
                 @if($squad->moderators->isEmpty())
                   <form method="post" action="{{ route('seatcore::squads.applications.store', $squad) }}">
                     {!! csrf_field() !!}

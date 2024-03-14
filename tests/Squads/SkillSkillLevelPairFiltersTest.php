@@ -103,7 +103,7 @@ class SkillSkillLevelPairFiltersTest extends TestCase
                 'and' => [
                     [
                         'name' => 'skill',
-                        'path' => 'characters.skills',
+                        'path' => 'skills',
                         'field' => 'skill_id',
                         'operator' => '=',
                         'criteria' => 3350,
@@ -111,7 +111,7 @@ class SkillSkillLevelPairFiltersTest extends TestCase
                     ],
                     [
                         'name' => 'skill level',
-                        'path' => 'characters.skills',
+                        'path' => 'skills',
                         'field' => 'trained_skill_level',
                         'operator' => '>',
                         'criteria' => 4,
@@ -126,7 +126,7 @@ class SkillSkillLevelPairFiltersTest extends TestCase
 
         // ensure no users are eligible
         foreach ($users as $user) {
-            $this->assertFalse($squad->isEligible($user));
+            $this->assertFalse($squad->isUserEligible($user));
         }
     }
 
@@ -141,7 +141,7 @@ class SkillSkillLevelPairFiltersTest extends TestCase
                 'and' => [
                     [
                         'name' => 'skill',
-                        'path' => 'characters.skills',
+                        'path' => 'skills',
                         'field' => 'skill_id',
                         'operator' => '=',
                         'criteria' => 3350,
@@ -149,7 +149,7 @@ class SkillSkillLevelPairFiltersTest extends TestCase
                     ],
                     [
                         'name' => 'skill level',
-                        'path' => 'characters.skills',
+                        'path' => 'skills',
                         'field' => 'trained_skill_level',
                         'operator' => '>',
                         'criteria' => 4,
@@ -171,8 +171,8 @@ class SkillSkillLevelPairFiltersTest extends TestCase
         // ensure no users are eligible
         foreach ($users as $user) {
             $user->id == $reference_user->id ?
-                $this->assertTrue($squad->isEligible($user)) :
-                $this->assertFalse($squad->isEligible($user));
+                $this->assertTrue($squad->isUserEligible($user)) :
+                $this->assertFalse($squad->isUserEligible($user));
         }
     }
 
@@ -187,7 +187,7 @@ class SkillSkillLevelPairFiltersTest extends TestCase
                 'or' => [
                     [
                         'name' => 'skill',
-                        'path' => 'characters.skills',
+                        'path' => 'skills',
                         'field' => 'skill_id',
                         'operator' => '=',
                         'criteria' => 3350,
@@ -195,7 +195,7 @@ class SkillSkillLevelPairFiltersTest extends TestCase
                     ],
                     [
                         'name' => 'skill level',
-                        'path' => 'characters.skills',
+                        'path' => 'skills',
                         'field' => 'trained_skill_level',
                         'operator' => '>',
                         'criteria' => 4,
@@ -210,7 +210,7 @@ class SkillSkillLevelPairFiltersTest extends TestCase
 
         // ensure no users are eligible
         foreach ($users as $user) {
-            $this->assertFalse($squad->isEligible($user));
+            $this->assertFalse($squad->isUserEligible($user));
         }
     }
 
@@ -225,7 +225,7 @@ class SkillSkillLevelPairFiltersTest extends TestCase
                 'or' => [
                     [
                         'name' => 'skill',
-                        'path' => 'characters.skills',
+                        'path' => 'skills',
                         'field' => 'skill_id',
                         'operator' => '=',
                         'criteria' => 3350,
@@ -233,7 +233,7 @@ class SkillSkillLevelPairFiltersTest extends TestCase
                     ],
                     [
                         'name' => 'skill level',
-                        'path' => 'characters.skills',
+                        'path' => 'skills',
                         'field' => 'trained_skill_level',
                         'operator' => '>',
                         'criteria' => 4,
@@ -256,8 +256,8 @@ class SkillSkillLevelPairFiltersTest extends TestCase
         // ensure no users are eligible
         foreach ($users as $user) {
             $user->id == $reference_user->id ?
-                $this->assertTrue($squad->isEligible($user)) :
-                $this->assertFalse($squad->isEligible($user));
+                $this->assertTrue($squad->isUserEligible($user)) :
+                $this->assertFalse($squad->isUserEligible($user));
         }
 
         $reference_character->skills->first()->update([
@@ -271,8 +271,8 @@ class SkillSkillLevelPairFiltersTest extends TestCase
         // ensure no users are eligible
         foreach ($users as $user) {
             $user->id == $reference_user->id ?
-                $this->assertTrue($squad->isEligible($user)) :
-                $this->assertFalse($squad->isEligible($user));
+                $this->assertTrue($squad->isUserEligible($user)) :
+                $this->assertFalse($squad->isUserEligible($user));
         }
     }
 }
