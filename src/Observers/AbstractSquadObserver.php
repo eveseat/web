@@ -45,7 +45,8 @@ abstract class AbstractSquadObserver
     /**
      * Update squads to which the user owning model firing the event is member.
      *
-     * @param \Illuminate\Database\Eloquent\Model $fired_model The model which fired the catch event
+     * @param  \Illuminate\Database\Eloquent\Model  $fired_model  The model which fired the catch event
+     *
      * @throws InvalidFilterException
      */
     protected function updateUserSquads(Model $fired_model)

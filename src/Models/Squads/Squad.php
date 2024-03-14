@@ -98,14 +98,17 @@ class Squad extends Model
         foreach ($user->characters as $character){
             if($this->isEligible($character)) return true;
         }
+
         // no eligible character found, so the user is not eligible
         return false;
     }
 
     /**
      * Checks if the members of this squad are still eligible and if new members have to be added.
-     * This function is typically called after changes in the squad configuration or in a deferred migration if the behaviour of the squad eligibility logic changes
+     * This function is typically called after changes in the squad configuration or in a deferred migration if the behaviour of the squad eligibility logic changes.
+     *
      * @return void
+     *
      * @throws InvalidFilterException
      */
     private function recomputeSquadMemberships(): void {
@@ -132,7 +135,9 @@ class Squad extends Model
     /**
      * Checks all users for eligibility. This function is used in migrations after major changes and bugs in the squad
      * eligibility code to ensure that we are in a valid state.
+     *
      * @return void
+     *
      * @throws InvalidFilterException
      */
     public static function recomputeAllSquadMemberships(): void {

@@ -23,7 +23,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Seat\Services\Facades\DeferredMigration;
 use Seat\Web\Models\Squads\Squad;
-use Seat\Web\Models\User;
 
 /**
  * Class UpgradeSquadsMaj4Min4Hf2.
@@ -37,7 +36,7 @@ class UpgradeSquadsMaj4Min4Hf2 extends Migration
      */
     public function up()
     {
-        DeferredMigration::schedule(function (){
+        DeferredMigration::schedule(function () {
             Squad::recomputeAllSquadMemberships();
         });
     }

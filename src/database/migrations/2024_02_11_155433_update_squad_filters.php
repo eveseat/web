@@ -25,9 +25,7 @@ use Illuminate\Support\Facades\DB;
 use Seat\Services\Facades\DeferredMigration;
 use Seat\Web\Models\Squads\Squad;
 
-
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -35,26 +33,26 @@ return new class extends Migration
      */
     public function up()
     {
-        DB::table('squads')->select('id','filters')->chunkById(50, function ($squads){
+        DB::table('squads')->select('id', 'filters')->chunkById(50, function ($squads) {
             foreach ($squads as $squad) {
                 $this->updateSquad($squad, function ($path) {
                     // refresh tokens are a special case, since they don't go over character.
                     // However, they also work over character when a plural s is removed
                     if($path === 'refresh_tokens') return 'refresh_token';
 
-                    $parts = explode('.',$path);
+                    $parts = explode('.', $path);
 
-                    if($parts[0] !== 'characters' ) {
+                    if($parts[0] !== 'characters') {
                         throw new Exception('Cannot migrate squad filter: filter path doesn\'t go over character');
                     }
 
-                    return implode('.',array_slice($parts,1));
+                    return implode('.', array_slice($parts, 1));
                 });
             }
         });
 
         // since the squad filter change with this migration, we have to recompute the eligibility of everyone
-        DeferredMigration::schedule(function (){
+        DeferredMigration::schedule(function () {
             Squad::recomputeAllSquadMemberships();
         });
     }
@@ -63,22 +61,22 @@ return new class extends Migration
         $filter = json_decode($squad->filters);
         $this->updateFilter($filter, $callback);
         DB::table('squads')
-            ->where('id',$squad->id)
+            ->where('id', $squad->id)
             ->update([
-                'filters' => json_encode($filter)
+                'filters' => json_encode($filter),
             ]);
     }
 
     private function updateFilter($filter, $callback) {
-        if(property_exists($filter,'and')){
+        if(property_exists($filter, 'and')){
             foreach ($filter->and as $rule) {
                 $this->updateFilter($rule, $callback);
             }
-        } else if (property_exists($filter,'or')){
+        } elseif (property_exists($filter, 'or')){
             foreach ($filter->or as $rule) {
                 $this->updateFilter($rule, $callback);
             }
-        } else if (property_exists($filter,'path')){
+        } elseif (property_exists($filter, 'path')){
             $filter->path = $callback($filter->path);
         }
     }
@@ -90,13 +88,13 @@ return new class extends Migration
      */
     public function down()
     {
-        DB::table('squads')->select('id','filters')->chunkById(50, function ($squads){
+        DB::table('squads')->select('id', 'filters')->chunkById(50, function ($squads) {
             foreach ($squads as $squad) {
                 $this->updateSquad($squad, function ($path) {
                     if($path === '') return 'characters';
 
                     // we deliberately ignore the refresh_tokens special case since keeping it over character fixes a security issue
-                    return sprintf('characters.%s',$path);
+                    return sprintf('characters.%s', $path);
                 });
             }
         });
