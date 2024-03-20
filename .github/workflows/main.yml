@@ -2,6 +2,8 @@ name: Tag a new seat-docker release
 on:
   release:
     types: [released]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 jobs:
   build:
