@@ -8,10 +8,9 @@ jobs:
     name: Checkout and tag
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           repository: eveseat/seat-docker
-          ref: '5.0.x'
           ssh-key: '${{ secrets.SEAT_DOCKER_REPO }}'
       - run: |
           git config user.name github-actions
