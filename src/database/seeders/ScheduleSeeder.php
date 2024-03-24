@@ -32,11 +32,11 @@ use Seat\Services\Seeding\AbstractScheduleSeeder;
 class ScheduleSeeder extends AbstractScheduleSeeder
 {
     /**
-     * Returns an array of schedules that should be seeded whenever the stack boots up
+     * Returns an array of schedules that should be seeded whenever the stack boots up.
      *
      * @return array
      */
-    function getSchedules(): array
+    public function getSchedules(): array
     {
         return [
             [   // Horizon Metrics | Every Five Minutes
@@ -51,10 +51,11 @@ class ScheduleSeeder extends AbstractScheduleSeeder
     }
 
     /**
-     * Returns a list of commands to remove from the schedule
+     * Returns a list of commands to remove from the schedule.
+     *
      * @return array
      */
-    function getDeprecatedSchedules(): array
+    public function getDeprecatedSchedules(): array
     {
         return [];
     }
