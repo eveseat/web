@@ -32,7 +32,7 @@
     "erusev/parsedown": "^1.7",
     "eveseat/eseye": "^3.0",
     "eveseat/eveapi": "^5.0",
-    "eveseat/services": "^5.0.3",
+    "eveseat/services": "^5.0.6",
     "guzzlehttp/guzzle": "^7.0",
     "intervention/image": "^2.0",
     "laravel/framework": "^10.0",

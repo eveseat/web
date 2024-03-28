@@ -22,47 +22,41 @@
 
 namespace Seat\Web\Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use Seat\Services\Seeding\AbstractScheduleSeeder;
 
 /**
  * Class ScheduleSeeder.
  *
  * @package Seat\Web\database\seeds
  */
-class ScheduleSeeder extends Seeder
+class ScheduleSeeder extends AbstractScheduleSeeder
 {
     /**
-     * @var array
+     * Returns an array of schedules that should be seeded whenever the stack boots up.
+     *
+     * @return array
      */
-    protected $schedules = [
-        [   // Horizon Metrics | Every Five Minutes
-            'command' => 'horizon:snapshot',
-            'expression' => '*/5 * * * *',
-            'allow_overlap' => false,
-            'allow_maintenance' => false,
-            'ping_before' => null,
-            'ping_after' => null,
-        ],
-    ];
+    public function getSchedules(): array
+    {
+        return [
+            [   // Horizon Metrics | Every Five Minutes
+                'command' => 'horizon:snapshot',
+                'expression' => '*/5 * * * *',
+                'allow_overlap' => false,
+                'allow_maintenance' => false,
+                'ping_before' => null,
+                'ping_after' => null,
+            ],
+        ];
+    }
 
     /**
-     * Run the database seeds.
+     * Returns a list of commands to remove from the schedule.
      *
-     * @return void
+     * @return array
      */
-    public function run()
+    public function getDeprecatedSchedules(): array
     {
-        // Check if we have the schedules, else,
-        // insert them
-        foreach ($this->schedules as $job) {
-            if (DB::table('schedules')->where('command', $job['command'])->exists()) {
-                DB::table('schedules')->where('command', $job['command'])->update([
-                    'expression' => $job['expression'],
-                ]);
-            } else {
-                DB::table('schedules')->insert($job);
-            }
-        }
+        return [];
     }
 }
