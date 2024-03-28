@@ -45,6 +45,10 @@ class Login
         if (session()->has('impersonation_origin'))
             return;
 
+        // Adds trusted proxies if exists.
+        if (! empty($trusted_proxies = config('web.config.trusted_proxies')))
+            Request::setTrustedProxies(explode(',', $trusted_proxies), 0b00010);
+
         // Create a log entry for this login.
         $event->user->last_login_source = Request::getClientIp();
         $event->user->last_login = new DateTime();
