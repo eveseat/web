@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,40 +21,40 @@
  */
 
 Route::group([
-    'prefix'    => 'standings',
+    'prefix' => 'standings',
     'middleware' => 'can:global.standing_builder',
 ], function () {
 
     Route::get('/')
-        ->name('tools.standings')
+        ->name('seatcore::tools.standings')
         ->uses('StandingsController@getAvailableProfiles');
 
     Route::post('/')
-        ->name('tools.standings.new')
+        ->name('seatcore::tools.standings.new')
         ->uses('StandingsController@postNewStanding');
 
     Route::get('/delete/{profile_id}')
-        ->name('tools.standings.delete')
+        ->name('seatcore::tools.standings.delete')
         ->uses('StandingsController@getDeleteStandingsProfile');
 
     Route::get('/edit/{id}')
-        ->name('tools.standings.edit')
+        ->name('seatcore::tools.standings.edit')
         ->uses('StandingsController@getStandingEdit');
 
     // Ajax Search
     Route::post('/ajax/element')
-        ->name('tools.standings.ajax.element')
+        ->name('seatcore::tools.standings.ajax.element')
         ->uses('StandingsController@getStandingsAjaxElementName');
 
     Route::post('/edit/add-element')
-        ->name('tools.standings.edit.addelement')
+        ->name('seatcore::tools.standings.edit.addelement')
         ->uses('StandingsController@postAddElementToStanding');
 
     Route::post('/edit/add-element/fromcorpchar')
-        ->name('tools.standings.edit.addelement.fromcorpchar')
+        ->name('seatcore::tools.standings.edit.addelement.fromcorpchar')
         ->uses('StandingsController@postAddStandingsFromCorpOrChar');
 
     Route::get('/edit/remove/{entity_id}/{profile_id}')
-        ->name('tools.standings.edit.remove')
+        ->name('seatcore::tools.standings.edit.remove')
         ->uses('StandingsController@getRemoveElementFromProfile');
 });

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,16 +21,16 @@
  */
 
 return [
-    'date'            => 'Datum',
-    'time'            => 'Zeit',
-    'system'          => 'System',
-    'ore'             => 'Erz',
-    'type'            => 'Typ',
-    'quantity'        => 'Anzahl',
-    'volume'          => 'Volumen',
+    'date' => 'Datum',
+    'time' => 'Zeit',
+    'system' => 'System',
+    'ore' => 'Erz',
+    'type' => 'Typ',
+    'quantity' => 'Anzahl',
+    'volume' => 'Volumen',
     'estimated_value' => 'Geschätzter Wert',
-    'details'         => 'Details',
-    'metadata'        => 'Metadaten',
-    'compounds'       => 'Verbindungen',
-    'history'         => 'Vergangenheit',
+    'details' => 'Details',
+    'metadata' => 'Metadaten',
+    'compounds' => 'Verbindungen',
+    'history' => 'Vergangenheit',
 ];

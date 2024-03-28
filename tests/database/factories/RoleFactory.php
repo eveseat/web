@@ -20,12 +20,27 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-use Faker\Generator;
+namespace Seat\Tests\Web\Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Seat\Web\Models\Acl\Role;
 
-$factory->define(Role::class, function (Generator $faker) {
-    return [
-        'id'          => $faker->numberBetween(1, 10),
-        'title'       => $faker->name,
-    ];
-});
+/**
+ * Class RoleFactory.
+ * @package Seat\Tests\Web\Database\Factories
+ */
+class RoleFactory extends Factory
+{
+    protected $model = Role::class;
+
+    /**
+     * @return array
+     */
+    public function definition(): array
+    {
+        return [
+            'id' => fake()->numberBetween(1, 10),
+            'title' => fake()->name,
+        ];
+    }
+}

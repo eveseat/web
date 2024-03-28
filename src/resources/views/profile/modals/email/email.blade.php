@@ -9,7 +9,7 @@
       </div>
       <div class="modal-body">
 
-        <form role="form" action="{{ route('profile.update.email') }}" method="post">
+        <form role="form" action="{{ route('seatcore::profile.update.email') }}" method="post">
           {{ csrf_field() }}
 
           <div class="box-body">

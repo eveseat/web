@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,14 +21,14 @@
  */
 
 return [
-    'issued'  => '已提交',
+    'issued' => '已提交',
     'expires' => '已超时',
-    'buy'     => '求购',
-    'sell'    => '出售',
-    'order'   => '物品',
-    'range'   => '范围',
-    'volume'  => '体积',
-    'price'   => '价格',
-    'total'   => '总价',
-    'type'    => '类型',
+    'buy' => '求购',
+    'sell' => '出售',
+    'order' => '物品',
+    'range' => '范围',
+    'volume' => '体积',
+    'price' => '价格',
+    'total' => '总价',
+    'type' => '类型',
 ];

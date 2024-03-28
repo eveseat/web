@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,11 +46,11 @@ class StandingsElementAdd extends FormRequest
     {
 
         return [
-            'id'        => 'required|exists:standings_profiles,id',
+            'id' => 'required|exists:standings_profiles,id',
             'entity_id' => 'required|numeric',
-            'name'      => 'required|string',
-            'type'      => 'required|in:character,corporation,alliance',
-            'standing'  => 'required|between:-10,10',
+            'name' => 'required|string',
+            'type' => 'required|in:character,corporation,alliance',
+            'standing' => 'required|between:-10,10',
         ];
     }
 }

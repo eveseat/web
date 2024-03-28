@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,11 +21,11 @@
  */
 
 return [
-    'planet'            => '행성',
-    'reinforcement'     => '강화 기간',
-    'alliance'          => '얼라이언스에 접근 허용',
-    'standings'         => '평판에 따른 접근 허용',
-    'standing_level'    => '최소 평판 수치',
+    'planet' => '행성',
+    'reinforcement' => '강화 기간',
+    'alliance' => '얼라이언스에 접근 허용',
+    'standings' => '평판에 따른 접근 허용',
+    'standing_level' => '최소 평판 수치',
     'tax_alliance_corp' => '얼라이언스/콥 세금',
-    'tax_standings'     => '평판에 따른 세금',
+    'tax_standings' => '평판에 따른 세금',
 ];

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,16 +21,16 @@
  */
 
 return [
-    'region'        => 'リージョン|リージョン一覧',
+    'region' => 'リージョン|リージョン一覧',
     'constellation' => 'コンステレーション|コンステレーション一覧',
-    'system'        => 'ソーラーシステム|ソーラーシステム一覧',
-    'planet'        => '惑星|惑星一覧',
-    'moon'          => '衛星 | 衛星一覧',
-    'indicator'     => '表示 | 一覧',
-    'sovereignty'   => '支配者 | 一覧',
-    'ubiquitous'    => 'レア度: ユビキタス',
-    'common'        => 'レア度: コモン',
-    'uncommon'      => 'レア度: アンコモン',
-    'rare'          => 'レア度: レア',
-    'exceptional'   => 'レア度：エクセプショナル',
+    'system' => 'ソーラーシステム|ソーラーシステム一覧',
+    'planet' => '惑星|惑星一覧',
+    'moon' => '衛星 | 衛星一覧',
+    'indicator' => '表示 | 一覧',
+    'sovereignty' => '支配者 | 一覧',
+    'ubiquitous' => 'レア度: ユビキタス',
+    'common' => 'レア度: コモン',
+    'uncommon' => 'レア度: アンコモン',
+    'rare' => 'レア度: レア',
+    'exceptional' => 'レア度：エクセプショナル',
 ];

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,42 +20,34 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/', [
-    'as'   => 'profile.view',
-    'uses' => 'ProfileController@getView',
-]);
+Route::get('/')
+    ->name('seatcore::profile.view')
+    ->uses('ProfileController@getView');
 
-Route::get('/scopes/{user_id}/{character_id}', [
-    'as'   => 'profile.character.scopes',
-    'uses' => 'ProfileController@getCharacterScopes',
-]);
+Route::get('/scopes/{user_id}/{character_id}')
+    ->name('seatcore::profile.character.scopes')
+    ->uses('ProfileController@getCharacterScopes');
 
-Route::post('/update', [
-    'as'   => 'profile.update.settings',
-    'uses' => 'ProfileController@postUpdateUserSettings',
-]);
+Route::post('/update')
+    ->name('seatcore::profile.update.settings')
+    ->uses('ProfileController@postUpdateUserSettings');
 
-Route::post('/update/email', [
-    'as'   => 'profile.update.email',
-    'uses' => 'ProfileController@postUpdateEmail',
-]);
+Route::post('/update/email')
+    ->name('seatcore::profile.update.email')
+    ->uses('ProfileController@postUpdateEmail');
 
-Route::post('/update/main-character', [
-    'as'   => 'profile.change-character',
-    'uses' => 'ProfileController@postChangeCharacter',
-]);
+Route::post('/update/main-character')
+    ->name('seatcore::profile.change-character')
+    ->uses('ProfileController@postChangeCharacter');
 
-Route::post('/update/sharelink', [
-    'as'   => 'profile.update.sharelink',
-    'uses' => 'ProfileController@postUpdateSharelink',
-]);
+Route::post('/update/sharelink')
+    ->name('seatcore::profile.update.sharelink')
+    ->uses('ProfileController@postUpdateSharelink');
 
-Route::delete('/update/sharelink', [
-    'as'   => 'profile.update.sharelink.remove',
-    'uses' => 'ProfileController@deleteRemoveSharelink',
-]);
+Route::delete('/update/sharelink')
+    ->name('seatcore::profile.update.sharelink.remove')
+    ->uses('ProfileController@deleteRemoveSharelink');
 
-Route::delete('/character', [
-    'as' => 'profile.delete.character',
-    'uses' => 'ProfileController@deleteUnlinkCharacter',
-]);
+Route::delete('/character')
+    ->name('seatcore::profile.delete.character')
+    ->uses('ProfileController@deleteUnlinkCharacter');

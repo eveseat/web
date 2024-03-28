@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,19 +20,17 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/')->uses('HomeController@index');
+Route::get('/')
+    ->uses('HomeController@index');
 
-Route::get('/home', [
-    'as'   => 'home',
-    'uses' => 'HomeController@getHome',
-]);
+Route::get('/home')
+    ->name('seatcore::home')
+    ->uses('HomeController@getHome');
 
-Route::get('/home/chart/server-status', [
-    'as'   => 'home.chart.serverstatus',
-    'uses' => 'HomeController@getServerStatusChartData',
-]);
+Route::get('/home/chart/server-status')
+    ->name('seatcore::home.chart.serverstatus')
+    ->uses('HomeController@getServerStatusChartData');
 
-Route::get('/home/chart/server-response-times', [
-    'as'   => 'home.chart.serverresponse',
-    'uses' => 'HomeController@getEsiResponseTimeChartData',
-]);
+Route::get('/home/chart/server-response-times')
+    ->name('seatcore::home.chart.serverresponse')
+    ->uses('HomeController@getEsiResponseTimeChartData');

@@ -11,7 +11,7 @@
     </div>
     <div class="card-body">
 
-      <form role="form" action="{{ route('seat.update.settings') }}" method="post"
+      <form role="form" action="{{ route('seatcore::seat.update.settings') }}" method="post"
             class="form-horizontal">
         {{ csrf_field() }}
 
@@ -158,7 +158,7 @@
     <div class="card-body">
       <p>{!! trans('web::seat.customlink_description', ['fa-link' => '<a href="https://fontawesome.com/icons?d=gallery" target="_blank">Font Awesome</a>', 'icon' => '<code>fas fa-link</code>']) !!}</p>
 
-      <form role="form" action="{{ route('seat.update.customlink') }}" method="post">
+      <form role="form" action="{{ route('seatcore::seat.update.customlink') }}" method="post">
         {{ csrf_field() }}
         <div class="row">
           <div class="col-md-4">{{ trans_choice('web::seat.name', 1) }}</div>
@@ -331,14 +331,14 @@
     var market_prices_region = $('#market_prices_region');
     market_prices_region.select2({
         ajax: {
-            url: '{{ route('fastlookup.regions') }}',
+            url: '{{ route('seatcore::fastlookup.regions') }}',
             dataType: 'json'
         }
     });
 
     $.ajax({
         type: 'get',
-        url: '{{ route('fastlookup.regions') }}?_type=find&q={{ setting('market_prices_region_id', true) ?: 0 }}'
+        url: '{{ route('seatcore::fastlookup.regions') }}?_type=find&q={{ setting('market_prices_region_id', true) ?: 0 }}'
     }).then(function (data) {
         var option = new Option(data.text, data.id, true, true);
         market_prices_region.append(option).trigger('change');
@@ -359,7 +359,7 @@
 
     var copyVersions = $('#copy-versions');
 
-    jQuery.get("{{ route('check.sde') }}", function (data) {
+    jQuery.get("{{ route('seatcore::check.sde') }}", function (data) {
       var live_sde = "error";
       if (data != null) {
         live_sde = data.version;
@@ -442,7 +442,7 @@
 
       // send a request to check if or not a package is up-to-date
       $.ajax({
-        url: '{{ route('packages.check') }}',
+        url: '{{ route('seatcore::packages.check') }}',
         method: 'POST',
         data: {
             'vendor': toCheckPackage.attr('data-vendor'),
@@ -478,7 +478,7 @@
       changelogModal.find('.modal-body').html('');
 
       $.ajax({
-        url: '{{ route('packages.changelog') }}',
+        url: '{{ route('seatcore::packages.changelog') }}',
         method: 'POST',
         data: changelogMetadata.data(),
         beforeSend: function () {

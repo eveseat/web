@@ -67,7 +67,7 @@
   <div class="col-4">
     <dl>
       <dt>Hull Estimated Price</dt>
-      <dd>{{ number_format($structure->type->price->average) }}</dd>
+      <dd>{{ number_format($structure->type->price->adjusted_price) }}</dd>
     </dl>
   </div>
   <div class="col-4">

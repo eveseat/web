@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,11 +21,11 @@
  */
 
 return [
-    'planet'            => 'Planet',
-    'reinforcement'     => 'Rf. Period',
-    'alliance'          => 'Allow Ally.',
-    'standings'         => 'Allow Std.',
-    'standing_level'    => 'Min. Std. Lvl.',
+    'planet' => 'Planet',
+    'reinforcement' => 'Rf. Period',
+    'alliance' => 'Allow Ally.',
+    'standings' => 'Allow Std.',
+    'standing_level' => 'Min. Std. Lvl.',
     'tax_alliance_corp' => 'Tax Alliance/Corp',
-    'tax_standings'     => 'Tax Standings',
+    'tax_standings' => 'Tax Standings',
 ];

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,13 +21,13 @@
  */
 
 return [
-    'start'               => 'Start',
-    'end'                 => 'End',
-    'location'            => 'Location',
-    'activity'            => 'Activity',
-    'runs'                => 'Runs',
-    'blueprint'           => 'Blueprint',
-    'product'             => 'Product',
+    'start' => 'Start',
+    'end' => 'End',
+    'location' => 'Location',
+    'activity' => 'Activity',
+    'runs' => 'Runs',
+    'blueprint' => 'Blueprint',
+    'product' => 'Product',
     'material_efficiency' => 'Material Efficiency',
-    'time_efficiency'     => 'Time Efficiency',
+    'time_efficiency' => 'Time Efficiency',
 ];

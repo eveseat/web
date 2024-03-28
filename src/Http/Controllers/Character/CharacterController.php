@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,7 +55,7 @@ class CharacterController extends Controller
     {
         // by default, redirect user to character sheet
         if (Gate::allows('character.sheet', $character))
-            return redirect()->route('character.view.sheet', [
+            return redirect()->route('seatcore::character.view.sheet', [
                 'character' => $character,
             ]);
 
@@ -80,7 +80,7 @@ class CharacterController extends Controller
         event('security.log', [$message, 'authorization']);
 
         // Redirect away from the original request
-        return redirect()->route('auth.unauthorized');
+        return redirect()->route('seatcore::auth.unauthorized');
     }
 
     /**

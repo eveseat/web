@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ class ProfileSettings extends FormRequest
     public function rules()
     {
 
-        $allowed_skins = implode(',', Profile::$options['skins']);
+        $allowed_skins = implode(',', config('web.skins'));
         $allowed_languages = implode(',', array_map(function ($entry) {
             return $entry['short'];
         }, config('web.locale.languages')));
@@ -60,13 +60,13 @@ class ProfileSettings extends FormRequest
             $this->request->set('thousand_seperator', ' ');
 
         return [
-            'skin'                => 'required|in:' . $allowed_skins,
-            'language'            => 'required|in:' . $allowed_languages,
-            'sidebar'             => 'required|in:' . $allowed_sidebar,
-            'mail_threads'        => 'required|in:' . $mail_threads,
-            'thousand_seperator'  => 'nullable|in:" ",",","."|size:1',
-            'decimal_seperator'   => 'required|in:",","."|size:1',
-            'reprocessing_yield'  => 'required|numeric|min:0|max:1',
+            'skin' => 'required|in:' . $allowed_skins,
+            'language' => 'required|in:' . $allowed_languages,
+            'sidebar' => 'required|in:' . $allowed_sidebar,
+            'mail_threads' => 'required|in:' . $mail_threads,
+            'thousand_seperator' => 'nullable|in:" ",",","."|size:1',
+            'decimal_seperator' => 'required|in:",","."|size:1',
+            'reprocessing_yield' => 'required|numeric|min:0|max:1',
             'email_notifications' => 'required|in:yes,no',
         ];
     }

@@ -26,7 +26,7 @@
     $('table#character-assets').DataTable({
       processing  : true,
       serverSide  : true,
-      ajax        : '{{ route('support.search.assets.data') }}',
+      ajax        : '{{ route('seatcore::support.search.assets.data') }}',
       columns     : [
         {data: 'character.name', name: 'character.name', 'searchable': false},
         {data: 'character.affiliation.corporation.name', name: 'character.affiliation.corporation.name', 'searchable': false},

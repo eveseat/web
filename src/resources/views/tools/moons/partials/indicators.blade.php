@@ -3,4 +3,4 @@
 <span class="badge badge-info">{{ $row->moon_indicators->uncommon }}</span>
 <span class="badge badge-warning">{{ $row->moon_indicators->rare }}</span>
 <span class="badge badge-danger">{{ $row->moon_indicators->exceptional }}</span>
-<span class="badge badge-default">{{ $row->moon_indicators->standard }}</span>
+

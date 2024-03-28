@@ -64,8 +64,6 @@
 @stop
 
 @push('javascript')
-  <script src="{{ asset('web/js/dataTables.buttons.min.js') }}"></script>
-  <script src="{{ asset('web/js/buttons.bootstrap4.min.js') }}"></script>
   <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
 
   {!! $dataTable->scripts() !!}
@@ -82,7 +80,7 @@
 
   <script type="text/javascript">
     // ChartJS Spending Graph
-    $.get("{{ route('character.view.journal.graph.balance', ['character' => $request->character]) }}", function (data) {
+    $.get("{{ route('seatcore::character.view.journal.graph.balance', ['character' => $request->character]) }}", function (data) {
 
       new Chart($("canvas#balance-over-time"), {
         type   : 'line',

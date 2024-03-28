@@ -11,7 +11,7 @@
   </ul>
 
   <!-- search form -->
-  <form action="{{ route('support.search') }}" method="get" class="form-inline ml-3">
+  <form action="{{ route('seatcore::support.search') }}" method="get" class="form-inline ml-3">
     <div class="input-group input-group-sm">
       <input type="text" name="q" class="form-control form-control-navbar" placeholder="{{ trans('web::seat.search') }}...">
       <div class="input-group-append">
@@ -30,7 +30,7 @@
     @if(session('impersonation_origin', false))
 
       <li class="nav-item dropdown">
-        <a href="{{ route('configuration.users.impersonate.stop') }}"
+        <a href="{{ route('seatcore::configuration.users.impersonate.stop') }}"
            class="nav-link" data-widget="dropdown" data-placement="bottom"
            title="{{ trans('web::seat.stop_impersonation') }}">
           <i class="fa fa-user-secret"></i>
@@ -64,7 +64,7 @@
       </a>
       <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
         @if(auth()->user()->name != 'admin')
-          <a href="{{ route('profile.view') }}" class="dropdown-item">
+          <a href="{{ route('seatcore::profile.view') }}" class="dropdown-item">
             <i class="fas fa-id-card"></i> {{ trans('web::seat.profile') }}
           </a>
           <div class="dropdown-divider"></div>
@@ -72,12 +72,12 @@
             <i class="fas fa-exchange-alt"></i> {{ trans('web::seat.switch_character') }}
           </a>
           <div class="dropdown-divider"></div>
-          <a href="{{ route('auth.eve') }}" class="dropdown-item">
+          <a href="{{ route('seatcore::auth.eve') }}" class="dropdown-item">
             <i class="fas fa-link"></i> {{ trans('web::seat.link_character') }}
           </a>
           <div class="dropdown-divider"></div>
         @endif
-        <form action="{{ route('auth.logout') }}" method="post">
+        <form action="{{ route('seatcore::auth.logout') }}" method="post">
           {{ csrf_field() }}
           <button type="submit" class="btn btn-link dropdown-item">
             <i class="fas fa-sign-out-alt"></i>
@@ -121,7 +121,7 @@
               {{ $character->name }}
             </td>
             <td>
-              <form method="post" action="{{ route('profile.change-character') }}">
+              <form method="post" action="{{ route('seatcore::profile.change-character') }}">
                 {!! csrf_field() !!}
                 <input type="hidden" name="character_id" value="{{ $character->character_id }}" />
                 <button type="submit" class="btn btn-sm btn-link">{{ trans('web::seat.use_as_main_character') }}</button>

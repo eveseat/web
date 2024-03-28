@@ -31,7 +31,7 @@
 
             <tr>
               <td>
-                <a href="{{ route('character.view.sheet', ['character' => $member->character_id]) }}">
+                <a href="{{ route('seatcore::character.view.sheet', ['character' => $member->character_id]) }}">
                   {!! img('characters', 'portrait', $member->character_id, 64, ['class' => 'img-circle eve-icon small-icon']) !!}
                   <span class="id-to-name" data-id="{{ $member->character_id }}">{{ trans('web::seat.unknown') }}</span>
                 </a>

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Corporation\Intel;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Eveapi\Models\Corporation\CorporationMemberTracking;
 use Seat\Eveapi\Models\Sde\SolarSystem;
 use Seat\Eveapi\Models\Sde\StaStation;
@@ -37,14 +38,14 @@ use Yajra\DataTables\Services\DataTable;
  */
 class MembersTrackingDataTable extends DataTable
 {
-    protected $exportClass = MembersTrackingDataTableExport::class;
+    protected string $exportClass = MembersTrackingDataTableExport::class;
 
     /**
      * @return \Illuminate\Http\JsonResponse
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -109,7 +110,7 @@ class MembersTrackingDataTable extends DataTable
                     });
             })
             ->rawColumns(['refresh_token.expires_on', 'character.name', 'ship.typeName', 'start_date', 'logon_date'])
-            ->make(true);
+            ->toJson();
     }
 
     /**
@@ -125,7 +126,7 @@ class MembersTrackingDataTable extends DataTable
             ->orderBy(1, 'asc')
             ->parameters([
                 'drawCallback' => 'function() { ids_to_names(); $("[data-toggle=tooltip]").tooltip(); }',
-                'dom'          => '<"row"<"col-sm-12 col-md-4"l><"col-sm-12 col-md-4 text-center"B><"col-sm-12 col-md-4"f>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+                'dom' => '<"row"<"col-sm-12 col-md-4"l><"col-sm-12 col-md-4 text-center"B><"col-sm-12 col-md-4"f>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
                 'buttons' => ['postCsv', 'postExcel'],
             ]);
     }

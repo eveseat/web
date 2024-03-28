@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Character\Financial;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Eveapi\Models\Character\CharacterLoyaltyPoints;
 use Yajra\DataTables\Services\DataTable;
 
@@ -45,7 +46,7 @@ class LoyaltyPointsDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         $market_region = setting('market_prices_region_id', true);
 
@@ -61,10 +62,10 @@ class LoyaltyPointsDataTable extends DataTable
                 return number($row->amount, 0);
             })
             ->addColumn('fuzzworks', function ($row) use ($market_region) {
-                return view('web::character.partials.fuzzwork-lp-prices', ['corporation' => $row->corporation, 'region'=>$market_region])->render();
+                return view('web::character.partials.fuzzwork-lp-prices', ['corporation' => $row->corporation, 'region' => $market_region])->render();
             })
             ->rawColumns(['character.name', 'corporation.name', 'amount', 'fuzzworks'])
-            ->make(true);
+            ->toJson();
     }
 
     /**
@@ -87,8 +88,8 @@ class LoyaltyPointsDataTable extends DataTable
         return [
             ['data' => 'character.name', 'title' => trans('web::seat.character_name')],
             ['data' => 'corporation.name', 'title' => trans('web::seat.corporation_name')],
-            ['data' => 'amount', 'title' => trans('web::seat.loyalty_points'), 'searchable'=>false],
-            ['data' => 'fuzzworks', 'title' => trans('web::seat.loyalty_point_prices'), 'sortable'=>false, 'searchable'=>false],
+            ['data' => 'amount', 'title' => trans('web::seat.loyalty_points'), 'searchable' => false],
+            ['data' => 'fuzzworks', 'title' => trans('web::seat.loyalty_point_prices'), 'sortable' => false, 'searchable' => false],
         ];
     }
 }

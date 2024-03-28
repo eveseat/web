@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -77,14 +77,14 @@ class LoginController extends Controller
     {
 
         // Warn if SSO has not been configured yet.
-        if (strlen(config('esi.eseye_client_secret')) < 5 || strlen(config('esi.eseye_client_id')) < 5)
+        if (strlen(config('eseye.esi.auth.client_secret')) < 5 || strlen(config('eseye.esi.auth.client_id')) < 5)
             session()->flash('warning', trans('web::seat.sso_config_warning'));
 
         // Sign in message text
         $custom_signin_message = setting('custom_signin_message', true);
         $signin_message = sprintf('%s<div class="box-body text-center"><a href="%s"><img src="%s" alt="LOG IN with EVE Online"></a></div>',
             trans('web::seat.login_welcome'),
-            route('auth.eve'),
+            route('seatcore::auth.eve'),
             asset('web/img/evesso.png'));
 
         if(! empty($custom_signin_message)) {
@@ -97,7 +97,7 @@ class LoginController extends Controller
 
                 $signin_message = preg_replace_callback($pattern, function ($matches) {
                     return sprintf('<div class="box-body text-center"><a href="%s"><img src="%s" alt="LOG IN with EVE Online"></a></div>',
-                        route('auth.eve.profile', $matches[1]),
+                        route('seatcore::auth.eve.profile', $matches[1]),
                         asset('web/img/evesso.png'));
                 }, $signin_message);
             }

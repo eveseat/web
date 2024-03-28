@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@ class MembersController extends Controller
             ->get()
             ->map(function ($user) {
                 return [
-                    'id'   => $user->id,
+                    'id' => $user->id,
                     'text' => $user->name,
                 ];
             });
@@ -120,6 +120,6 @@ class MembersController extends Controller
     {
         $squad->members()->detach(auth()->user()->id);
 
-        return redirect()->route('squads.index');
+        return redirect()->route('seatcore::squads.index');
     }
 }

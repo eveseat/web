@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ class BlueprintController extends Controller
             $ability = sprintf('corporation.%s', $permission);
 
             if (Gate::allows($ability, $corporation))
-                array_push($division_ids, ($key + 1));
+                array_push($division_ids, $key + 1);
         }
 
         return $dataTable->addScope(new CorporationScope('corporation.blueprint', [$corporation->corporation_id]))

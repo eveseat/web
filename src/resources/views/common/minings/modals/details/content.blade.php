@@ -42,7 +42,7 @@
         </td>
         <td>{{ number_format(intdiv($entries->sum('quantity'), 100) * $type->pivot->quantity * 0.80) }}</td>
         <td>{{ number_format(intdiv($entries->sum('quantity'), 100) * $type->pivot->quantity * 0.80 * $type->volume, 2) }}</td>
-        <td>{{ number_format(intdiv($entries->sum('quantity'), 100) * $type->pivot->quantity * 0.80 * $type->price->average, 2) }}</td>
+        <td>{{ number_format(intdiv($entries->sum('quantity'), 100) * $type->pivot->quantity * 0.80 * $type->price->adjusted_price, 2) }}</td>
       </tr>
     @endforeach
   </tbody>
@@ -65,7 +65,7 @@
         <td>{{ $entry->time }}</td>
         <td>{{ number_format($entry->quantity, 0) }}</td>
         <td>{{ number_format($entry->quantity * $entry->type->volume, 2) }}</td>
-        <td>{{ number_format($entry->quantity * $entry->type->price->average, 2) }}</td>
+        <td>{{ number_format($entry->quantity * $entry->type->price->adjusted_price, 2) }}</td>
       </tr>
     @endforeach
   </tbody>

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,14 +21,14 @@
  */
 
 return [
-    'issued'  => '発行済み',
+    'issued' => '発行済み',
     'expires' => '有効期限',
-    'buy'     => '購入',
-    'sell'    => '売却',
-    'order'   => '注文',
-    'range'   => 'ジャンプ',
-    'volume'  => '数量',
-    'price'   => '価格',
-    'total'   => '合計',
-    'type'    => '種類',
+    'buy' => '購入',
+    'sell' => '売却',
+    'order' => '注文',
+    'range' => 'ジャンプ',
+    'volume' => '数量',
+    'price' => '価格',
+    'total' => '合計',
+    'type' => '種類',
 ];

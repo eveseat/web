@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Squads;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Web\Models\Squads\SquadApplication;
 use Yajra\DataTables\Services\DataTable;
 
@@ -35,7 +36,7 @@ class CandidatesDataTable extends DataTable
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->query())
@@ -61,7 +62,7 @@ class CandidatesDataTable extends DataTable
                 });
             })
             ->rawColumns(['characters', 'user.name', 'created_at', 'action'])
-            ->make(true);
+            ->toJson();
     }
 
     /**

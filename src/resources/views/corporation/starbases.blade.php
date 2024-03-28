@@ -76,7 +76,7 @@
 
         $.ajax({
           type   : 'POST',
-          url    : "{{ route('corporation.view.starbase.modules', ['corporation' => $corporation]) }}",
+          url    : "{{ route('seatcore::corporation.view.starbase.modules', ['corporation' => $corporation]) }}",
           data   : {
             'starbase_id': starbase_id
           },

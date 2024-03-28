@@ -14,7 +14,7 @@
     </div>
     <div class="card-body">
 
-      <form role="form" action="{{ route('tools.standings.edit.addelement.fromcorpchar') }}" method="post">
+      <form role="form" action="{{ route('seatcore::tools.standings.edit.addelement.fromcorpchar') }}" method="post">
         {{ csrf_field() }}
         <input type="hidden" name="id" value="{{ $request->id }}">
 
@@ -60,7 +60,7 @@
     </div>
     <div class="card-body">
 
-      <form role="form" action="{{ route('tools.standings.edit.addelement') }}" method="post">
+      <form role="form" action="{{ route('seatcore::tools.standings.edit.addelement') }}" method="post">
         {{ csrf_field() }}
         <input type="hidden" name="id" value="{{ $request->id }}">
         <input type="hidden" name="name" id="entity_name" value="" />
@@ -133,10 +133,10 @@
   // Resolve names to EVE IDs
   $("select#element-name").select2({
     ajax: {
-      url     : '{{ route("tools.standings.ajax.element") }}',
+      url     : '{{ route("seatcore::tools.standings.ajax.element") }}',
       dataType: 'json',
       type    : 'POST',
-      delay   : 250,
+      delay   : 1000,
       cache   : true,
       data    : function(params){
           return {
@@ -154,7 +154,7 @@
   $("select#characterstanding").select2({
     placeholder: "{{ trans('web::seat.select_item_add') }}",
     ajax: {
-      url: "{{ route('fastlookup.characters') }}",
+      url: "{{ route('seatcore::fastlookup.characters') }}",
       dataType: 'json',
       cache: true,
     },
@@ -164,7 +164,7 @@
   $("select#corporationstanding").select2({
     placeholder: "{{ trans('web::seat.select_item_add') }}",
     ajax: {
-      url: "{{ route('fastlookup.corporations') }}",
+      url: "{{ route('seatcore::fastlookup.corporations') }}",
       dataType: 'json',
       cache: true,
     },
@@ -174,7 +174,7 @@
   $("select#alliancestanding").select2({
     placeholder: "{{ trans('web::seat.select_item_add') }}",
     ajax: {
-      url: "{{ route('fastlookup.alliances') }}",
+      url: "{{ route('seatcore::fastlookup.alliances') }}",
       dataType: 'json',
       cache: true,
     },

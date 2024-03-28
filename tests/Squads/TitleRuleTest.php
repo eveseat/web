@@ -73,20 +73,18 @@ class TitleRuleTest extends TestCase
 
         $this->loadMigrationsFrom(realpath(__DIR__ . '/../database/migrations'));
 
-        $this->withFactories(__DIR__ . '/../database/factories');
-
         Event::fake();
 
-        factory(CorporationInfo::class, 10)
+        CorporationInfo::factory(10)
             ->create()
             ->each(function ($corporation) {
 
-                $corporation->titles()->saveMany(factory(CorporationTitle::class, 20)->make());
+                $corporation->titles()->saveMany(CorporationTitle::factory(20)->make());
 
-                factory(CharacterInfo::class, 20)
+                CharacterInfo::factory(20)
                     ->create()
                     ->each(function ($character) use ($corporation) {
-                        $character->affiliation()->save(factory(CharacterAffiliation::class)->make([
+                        $character->affiliation()->save(CharacterAffiliation::factory()->make([
                             'corporation_id' => $corporation->corporation_id,
                         ]));
 
@@ -97,12 +95,12 @@ class TitleRuleTest extends TestCase
                     });
             });
 
-        factory(User::class, 10)
+        User::factory(10)
             ->create()
             ->each(function ($user) {
                 CharacterInfo::whereDoesntHave('refresh_token')->get()
                     ->random(rand(1, 5))->each(function ($character) use ($user) {
-                        factory(RefreshToken::class)->create([
+                        RefreshToken::factory()->create([
                             'character_id' => $character->character_id,
                             'user_id' => $user->id,
                         ]);
@@ -125,7 +123,7 @@ class TitleRuleTest extends TestCase
                 'and' => [
                     [
                         'name' => 'title',
-                        'path' => 'characters.titles',
+                        'path' => 'titles',
                         'field' => 'name',
                         'operator' => '=',
                         'criteria' => 'id',
@@ -140,7 +138,7 @@ class TitleRuleTest extends TestCase
 
         // ensure no users are eligible
         foreach ($users as $user) {
-            $this->assertFalse($squad->isEligible($user));
+            $this->assertFalse($squad->isUserEligible($user));
         }
     }
 
@@ -150,7 +148,7 @@ class TitleRuleTest extends TestCase
         $reference_user = User::first();
         $reference_character = User::first()->characters->first();
         $reference_corporation = CorporationInfo::find($reference_character->affiliation->corporation_id);
-        $reference_title = factory(CorporationTitle::class)->make([
+        $reference_title = CorporationTitle::factory()->make([
             'name' => 'Random Title',
         ]);
         $reference_corporation->titles()->save($reference_title);
@@ -165,7 +163,7 @@ class TitleRuleTest extends TestCase
                 'and' => [
                     [
                         'name' => 'title',
-                        'path' => 'characters.titles',
+                        'path' => 'titles',
                         'field' => 'id',
                         'operator' => '=',
                         'criteria' => $reference_title->id,
@@ -181,8 +179,8 @@ class TitleRuleTest extends TestCase
         // ensure no users are eligible
         foreach ($users as $user) {
             $user->id == $reference_user->id ?
-                $this->assertTrue($squad->isEligible($user)) :
-                $this->assertFalse($squad->isEligible($user));
+                $this->assertTrue($squad->isUserEligible($user)) :
+                $this->assertFalse($squad->isUserEligible($user));
         }
     }
 }

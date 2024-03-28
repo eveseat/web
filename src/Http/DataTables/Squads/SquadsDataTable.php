@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Squads;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Seat\Web\Models\Squads\Squad;
@@ -37,7 +38,7 @@ class SquadsDataTable extends DataTable
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -84,7 +85,7 @@ class SquadsDataTable extends DataTable
                     ->groupBy('id', 'name', 'description', 'type', 'is_moderated');
             })
             ->rawColumns(['is_candidate', 'is_member', 'is_moderator', 'is_moderated', 'action'])
-            ->make(true);
+            ->toJson();
     }
 
     /**

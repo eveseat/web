@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,9 @@
  */
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 /**
  * Class RenameElementIDToEntityIDIntoStandingsProfileStandingsTable.
@@ -35,7 +37,17 @@ class RenameElementIDToEntityIDIntoStandingsProfileStandingsTable extends Migrat
      */
     public function up()
     {
-        DB::statement('ALTER TABLE standings_profile_standings CHANGE elementID entity_id bigint UNSIGNED NOT NULL');
+        Schema::table('standings_profile_standings', function (Blueprint $table) {
+            $table->bigInteger('entity_id')->unsigned()->nullable()->after('type');
+        });
+
+        DB::table('standings_profile_standings')
+            ->update(['entity_id' => DB::raw('"elementID"')]);
+
+        Schema::table('standings_profile_standings', function (Blueprint $table) {
+            $table->bigInteger('entity_id')->unsigned()->nullable(false)->change();
+            $table->dropColumn('elementID');
+        });
     }
 
     /**
@@ -45,6 +57,15 @@ class RenameElementIDToEntityIDIntoStandingsProfileStandingsTable extends Migrat
      */
     public function down()
     {
-        DB::statement('ALTER TABLE standings_profile_standings CHANGE entity_id elementID int');
+        Schema::table('standings_profile_standings', function (Blueprint $table) {
+            $table->integer('elementID')->nullable();
+        });
+
+        DB::table('standings_profile_standings')
+            ->update(['elementID' => DB::raw('"entity_id"')]);
+
+        Schema::table('standings_profile_standings', function (Blueprint $table) {
+            $table->dropColumn('entity_id');
+        });
     }
 }

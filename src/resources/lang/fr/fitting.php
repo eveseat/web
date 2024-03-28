@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,9 +21,9 @@
  */
 
 return [
-    'name'            => 'Nom',
-    'type'            => 'Type',
-    'items'           => 'Éléments',
+    'name' => 'Nom',
+    'type' => 'Type',
+    'items' => 'Éléments',
     'hull_estimated_value' => 'Valeur estimée de la coque',
     'fitting_estimated_value' => 'Valeur estimée de l\'équipement',
     'full_estimated_value' => 'Valeur estimée totale',

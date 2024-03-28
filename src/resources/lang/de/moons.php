@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,16 +21,16 @@
  */
 
 return [
-    'region'        => 'Region(en)',
+    'region' => 'Region(en)',
     'constellation' => 'Konstellation(en)',
-    'system'        => 'Sonnensystem(e)',
-    'planet'        => 'Planet(en)',
-    'moon'          => 'Mond(e)',
-    'indicator'     => 'Indikator(en)',
-    'sovereignty'   => 'Souveränität',
-    'ubiquitous'    => 'Ubiquitous',
-    'common'        => 'Gewöhnlich',
-    'uncommon'      => 'Ungewöhnlich',
-    'rare'          => 'Selten',
-    'exceptional'   => 'Außergewöhnlich',
+    'system' => 'Sonnensystem(e)',
+    'planet' => 'Planet(en)',
+    'moon' => 'Mond(e)',
+    'indicator' => 'Indikator(en)',
+    'sovereignty' => 'Souveränität',
+    'ubiquitous' => 'Ubiquitous',
+    'common' => 'Gewöhnlich',
+    'uncommon' => 'Ungewöhnlich',
+    'rare' => 'Selten',
+    'exceptional' => 'Außergewöhnlich',
 ];

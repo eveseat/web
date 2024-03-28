@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Character\Industrial;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Eveapi\Models\PlanetaryInteraction\CharacterPlanet;
 use Yajra\DataTables\Services\DataTable;
 
@@ -37,11 +38,11 @@ class PlanetaryInteractionDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
-            ->make(true);
+            ->toJson();
     }
 
     /**

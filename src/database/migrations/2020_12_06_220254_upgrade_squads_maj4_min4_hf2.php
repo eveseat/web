@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,8 +21,8 @@
  */
 
 use Illuminate\Database\Migrations\Migration;
+use Seat\Services\Facades\DeferredMigration;
 use Seat\Web\Models\Squads\Squad;
-use Seat\Web\Models\User;
 
 /**
  * Class UpgradeSquadsMaj4Min4Hf2.
@@ -36,18 +36,8 @@ class UpgradeSquadsMaj4Min4Hf2 extends Migration
      */
     public function up()
     {
-        Squad::where('type', 'auto')->get()->each(function ($squad) {
-            User::chunk(100, function ($users) use ($squad) {
-                $users->each(function ($user) use ($squad) {
-                    $is_member = $squad->members()->where('id', $user->id)->exists();
-
-                    if ($is_member && ! $squad->isEligible($user))
-                        $squad->members()->detach($user->id);
-
-                    if (! $is_member && $squad->isEligible($user))
-                        $squad->members()->attach($user->id);
-                });
-            });
+        DeferredMigration::schedule(function () {
+            Squad::recomputeAllSquadMemberships();
         });
     }
 

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,6 +37,8 @@ class DropGroupsTable extends Migration
      */
     public function up()
     {
+        $engine = DB::getDriverName();
+
         // drop admin account - if exists
         $entry = DB::table('users')
             ->where('name', 'admin')
@@ -67,12 +69,25 @@ class DropGroupsTable extends Migration
             ->whereNotIn('group_id', DB::table('groups')->select('id'))
             ->delete();
 
-        // remove duplicate entries using group_id and name as pivot
-        DB::statement('DELETE a FROM user_settings a INNER JOIN user_settings b WHERE a.id > b.id AND a.group_id = b.group_id AND a.name = b.name');
+        switch ($engine) {
+            case 'mysql':
+                // remove duplicate entries using group_id and name as pivot
+                DB::statement('DELETE a FROM user_settings a INNER JOIN user_settings b WHERE a.id > b.id AND a.group_id = b.group_id AND a.name = b.name');
 
-        // remove duplicate main character setting using name and value as pivot
-        DB::statement('DELETE a FROM user_settings a INNER JOIN user_settings b WHERE a.id < b.id AND a.name = b.name AND a.name = "main_character_id" AND a.value = b.value');
-        DB::statement('DELETE a FROM user_settings a INNER JOIN user_settings b WHERE a.id < b.id AND a.name = b.name AND a.name = "main_character_name" AND a.value = b.value');
+                // remove duplicate main character setting using name and value as pivot
+                DB::statement('DELETE a FROM user_settings a INNER JOIN user_settings b WHERE a.id < b.id AND a.name = b.name AND a.name = ? AND a.value = b.value', ['main_character_id']);
+                DB::statement('DELETE a FROM user_settings a INNER JOIN user_settings b WHERE a.id < b.id AND a.name = b.name AND a.name = ? AND a.value = b.value', ['main_character_name']);
+                break;
+            case 'pgsql':
+            case 'postgresql':
+                // remove duplicate entries using group_id and name as pivot
+                DB::statement('DELETE FROM user_settings a USING user_settings b WHERE a.id > b.id AND a.group_id = b.group_id AND a.name = b.name');
+
+                // remove duplicate main character setting using name and value as pivot
+                DB::statement('DELETE FROM user_settings a USING user_settings b WHERE a.id < b.id AND a.name = b.name AND a.name = ? AND a.value = b.value', ['main_character_id']);
+                DB::statement('DELETE FROM user_settings a USING user_settings b WHERE a.id < b.id AND a.name = b.name AND a.name = ? AND a.value = b.value', ['main_character_name']);
+                break;
+        }
 
         ///
         /// Pre-check regarding users table structure and associated main_character
@@ -250,7 +265,7 @@ class DropGroupsTable extends Migration
                         $join->where('user_settings.name', 'main_character_id');
                     })
                     ->whereNotNull('user_settings.value')
-                    ->select('users.group_id', 'users.id', 'users.character_owner_hash', 'user_settings.value'));
+                    ->selectRaw('users.group_id, users.id, users.character_owner_hash, CAST(user_settings.value AS INT)'));
 
         // fetch duplicated users which are not related to main character
         $entries = DB::table('mig_groups')
@@ -291,12 +306,12 @@ class DropGroupsTable extends Migration
 
         // init auto-increment field (1 is lock for admin)
         DB::table('users')->insert([
-            'id'                => 1,
-            'name'              => 'admin',
-            'active'            => true,
+            'id' => 1,
+            'name' => 'admin',
+            'active' => true,
             'main_character_id' => 0,
-            'created_at'        => carbon(),
-            'updated_at'        => carbon(),
+            'created_at' => carbon(),
+            'updated_at' => carbon(),
         ]);
 
         DB::table('users')
@@ -308,7 +323,7 @@ class DropGroupsTable extends Migration
                     ->update([
                         'id' => ($key + 2),
                     ]);
-        });
+            });
 
         // switch id field from simple integer to auto-increment field
         Schema::table('users', function (Blueprint $table) {

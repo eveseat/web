@@ -15,7 +15,7 @@
       <td>{{ number($insurance->cost) }}</td>
       <td>{{ number($insurance->payout) }}</td>
       <td>{{ number($insurance->payout - $insurance->cost) }}</td>
-      <td>{{ number($ship->price->average - $insurance->payout + $insurance->cost) }}</td>
+      <td>{{ number($ship->price->adjusted_price - $insurance->payout + $insurance->cost) }}</td>
     </tr>
   @endforeach
   </tbody>

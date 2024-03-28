@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,9 +21,9 @@
  */
 
 return [
-    'jobs'                      => 'Tâche|Tâches',
-    'market_prices_region'      => 'Région des prix du marché',
+    'jobs' => 'Tâche|Tâches',
+    'market_prices_region' => 'Région des prix du marché',
     'market_prices_region_help' => 'Ceci sera utilisé par SeAT pour collecter les prix moyens du marché auprès d\'ESI. Ces prix peuvent être utilisés à des endroits différents, comme dans les contrats, les raccords ou les relevés miniers.',
-    'admin'                     => 'Administrateur|Administrateurs',
-    'admin_assist_edit'         => 'Attention, si vous cochez cette case, cet utilisateur aura accès à tous les paramètres, utilisateurs et autorisations. Ils contourneront également toutes les couches de sécurité en raison de cet état. Procédez avec prudence.',
+    'admin' => 'Administrateur|Administrateurs',
+    'admin_assist_edit' => 'Attention, si vous cochez cette case, cet utilisateur aura accès à tous les paramètres, utilisateurs et autorisations. Ils contourneront également toutes les couches de sécurité en raison de cet état. Procédez avec prudence.',
 ];

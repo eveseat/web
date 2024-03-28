@@ -16,13 +16,13 @@
           @foreach ($chunk as $period)
             <li class="nav-item">
               @if(date('Y', strtotime($period->year . '-01-01')) == (request()->route()->parameter('year') ?: carbon()->isoFormat('YYYY')) && date('m', strtotime($period->year . '-' . $period->month . '-01')) == (request()->route()->parameter('month') ?: carbon()->isoFormat('MM')))
-                <a href="{{ route('corporation.view.ledger.bounty_prizes', [
+                <a href="{{ route('seatcore::corporation.view.ledger.bounty_prizes', [
                     $corporation,
                     date('Y', strtotime($period->year. '-01-01')),
                     date('m', strtotime($period->year . '-' . $period->month . '-01'))
                   ]) }}" class="nav-link active">{{ date("M Y", strtotime(sprintf('%d-%d-01', $period->year, $period->month))) }}</a>
               @else
-                <a href="{{ route('corporation.view.ledger.bounty_prizes', [
+                <a href="{{ route('seatcore::corporation.view.ledger.bounty_prizes', [
                     $corporation,
                     date('Y', strtotime($period->year. '-01-01')),
                     date('m', strtotime($period->year . '-' . $period->month . '-01'))

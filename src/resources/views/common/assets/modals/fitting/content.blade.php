@@ -14,19 +14,19 @@
   <div class="col-4">
     <dl>
       <dt>Hull Estimated Price</dt>
-      <dd>{{ number($asset->type->price->average) }}</dd>
+      <dd>{{ number($asset->type->price->adjusted_price) }}</dd>
     </dl>
   </div>
   <div class="col-4">
     <dl>
       <dt>Fitting Estimated Price</dt>
-      <dd>{{ number($asset->content->sum(function ($item) { return $item->quantity * $item->type->price->average; })) }}</dd>
+      <dd>{{ number($asset->content->sum(function ($item) { return $item->quantity * $item->type->price->adjusted_price; })) }}</dd>
     </dl>
   </div>
   <div class="col-4">
     <dl>
       <dt>Full Estimated Price</dt>
-      <dd>{{ number($asset->type->price->average + $asset->content->sum(function ($item) { return $item->quantity * $item->type->price->average; })) }}</dd>
+      <dd>{{ number($asset->type->price->adjusted_price + $asset->content->sum(function ($item) { return $item->quantity * $item->type->price->adjusted_price; })) }}</dd>
     </dl>
   </div>
 </div>

@@ -72,23 +72,21 @@ class SkillAffiliationRulesGroupsTest extends TestCase
 
         $this->loadMigrationsFrom(realpath(__DIR__ . '/../database/migrations'));
 
-        $this->withFactories(__DIR__ . '/../database/factories');
-
         Event::fake();
 
-        factory(CharacterInfo::class, 50)
+        CharacterInfo::factory(50)
             ->create()
             ->each(function ($character) {
-                $character->skills()->saveMany(factory(CharacterSkill::class, 20)->make());
-                $character->affiliation()->save(factory(CharacterAffiliation::class)->make());
+                $character->skills()->saveMany(CharacterSkill::factory(20)->make());
+                $character->affiliation()->save(CharacterAffiliation::factory()->make());
             });
 
-        factory(User::class, 10)
+        User::factory(10)
             ->create()
             ->each(function ($user) {
                 CharacterInfo::whereDoesntHave('refresh_token')->get()
                     ->random(rand(1, 5))->each(function ($character) use ($user) {
-                        factory(RefreshToken::class)->create([
+                        RefreshToken::factory()->create([
                             'character_id' => $character->character_id,
                             'user_id' => $user->id,
                         ]);
@@ -109,7 +107,7 @@ class SkillAffiliationRulesGroupsTest extends TestCase
                         'and' => [
                             [
                                 'name' => 'skill',
-                                'path' => 'characters.skills',
+                                'path' => 'skills',
                                 'field' => 'skill_id',
                                 'operator' => '=',
                                 'criteria' => 3350,
@@ -117,7 +115,7 @@ class SkillAffiliationRulesGroupsTest extends TestCase
                             ],
                             [
                                 'name' => 'skill level',
-                                'path' => 'characters.skills',
+                                'path' => 'skills',
                                 'field' => 'trained_skill_level',
                                 'operator' => '>',
                                 'criteria' => 5,
@@ -129,7 +127,7 @@ class SkillAffiliationRulesGroupsTest extends TestCase
                         'and' => [
                             [
                                 'name' => 'corporation',
-                                'path' => 'characters.affiliation',
+                                'path' => 'affiliation',
                                 'field' => 'corporation_id',
                                 'operator' => '=',
                                 'criteria' => 98541700,
@@ -137,7 +135,7 @@ class SkillAffiliationRulesGroupsTest extends TestCase
                             ],
                             [
                                 'name' => 'alliance',
-                                'path' => 'characters.affiliation',
+                                'path' => 'affiliation',
                                 'field' => 'alliance_id',
                                 'operator' => '=',
                                 'criteria' => 99000000,
@@ -154,7 +152,7 @@ class SkillAffiliationRulesGroupsTest extends TestCase
 
         // ensure no users are eligible
         foreach ($users as $user) {
-            $this->assertFalse($squad->isEligible($user));
+            $this->assertFalse($squad->isUserEligible($user));
         }
     }
 
@@ -171,7 +169,7 @@ class SkillAffiliationRulesGroupsTest extends TestCase
                         'and' => [
                             [
                                 'name' => 'skill',
-                                'path' => 'characters.skills',
+                                'path' => 'skills',
                                 'field' => 'skill_id',
                                 'operator' => '=',
                                 'criteria' => 3350,
@@ -179,7 +177,7 @@ class SkillAffiliationRulesGroupsTest extends TestCase
                             ],
                             [
                                 'name' => 'skill level',
-                                'path' => 'characters.skills',
+                                'path' => 'skills',
                                 'field' => 'trained_skill_level',
                                 'operator' => '>',
                                 'criteria' => 5,
@@ -191,7 +189,7 @@ class SkillAffiliationRulesGroupsTest extends TestCase
                         'and' => [
                             [
                                 'name' => 'corporation',
-                                'path' => 'characters.affiliation',
+                                'path' => 'affiliation',
                                 'field' => 'corporation_id',
                                 'operator' => '=',
                                 'criteria' => 98541700,
@@ -199,7 +197,7 @@ class SkillAffiliationRulesGroupsTest extends TestCase
                             ],
                             [
                                 'name' => 'alliance',
-                                'path' => 'characters.affiliation',
+                                'path' => 'affiliation',
                                 'field' => 'alliance_id',
                                 'operator' => '=',
                                 'criteria' => 99000000,
@@ -220,20 +218,20 @@ class SkillAffiliationRulesGroupsTest extends TestCase
             'corporation_id' => 98541700,
         ]);
 
-        $this->assertFalse($squad->isEligible($reference_user));
+        $this->assertFalse($squad->isUserEligible($reference_user));
 
         $reference_character->affiliation->update([
             'alliance_id' => 99000000,
             'corporation_id' => 98541699,
         ]);
 
-        $this->assertFalse($squad->isEligible($reference_user));
+        $this->assertFalse($squad->isUserEligible($reference_user));
 
         $reference_character->affiliation->update([
             'alliance_id' => 99000000,
             'corporation_id' => 98541700,
         ]);
 
-        $this->assertTrue($squad->isEligible($reference_user));
+        $this->assertTrue($squad->isUserEligible($reference_user));
     }
 }

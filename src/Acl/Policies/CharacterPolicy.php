@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -154,7 +154,7 @@ class CharacterPolicy extends AbstractEntityPolicy
 
     /**
      * @param  \Seat\Web\Models\Acl\Permission  $permission
-     * @param $character
+     * @param  $character
      * @return bool
      */
     private function isGrantedByFilters(Permission $permission, CharacterInfo $character): bool

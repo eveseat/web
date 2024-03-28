@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,13 +22,13 @@
 
 // Namespace all of the routes for this package.
 Route::group([
-    'namespace'  => 'Seat\Web\Http\Controllers',
+    'namespace' => 'Seat\Web\Http\Controllers',
     'middleware' => 'web',   // Web middleware for state etc since L5.3
 ], function () {
 
     // Authentication & Registration Routes.
     Route::group([
-        'namespace'  => 'Auth',
+        'namespace' => 'Auth',
         'middleware' => 'requirements',
     ], function () {
 
@@ -56,7 +56,7 @@ Route::group([
         // Support Routes
         Route::group([
             'namespace' => 'Support',
-            'prefix'    => 'support',
+            'prefix' => 'support',
         ], function () {
 
             include __DIR__ . '/Routes/Support/List.php';
@@ -68,7 +68,7 @@ Route::group([
         // User Profile Routes
         Route::group([
             'namespace' => 'Profile',
-            'prefix'    => 'profile',
+            'prefix' => 'profile',
         ], function () {
 
             // Preferences
@@ -82,7 +82,7 @@ Route::group([
         // Queue Jobs
         Route::group([
             'namespace' => 'Queue',
-            'prefix'    => 'queue',
+            'prefix' => 'queue',
         ], function () {
 
             include __DIR__ . '/Routes/Queue/Status.php';
@@ -91,7 +91,7 @@ Route::group([
         // Alliance Routes
         Route::group([
             'namespace' => 'Alliance',
-            'prefix'    => 'alliances',
+            'prefix' => 'alliances',
         ], function () {
 
             include __DIR__ . '/Routes/Alliance/View.php';
@@ -100,7 +100,7 @@ Route::group([
         // Corporation Routes
         Route::group([
             'namespace' => 'Corporation',
-            'prefix'    => 'corporations',
+            'prefix' => 'corporations',
         ], function () {
 
             include __DIR__ . '/Routes/Corporation/View.php';
@@ -109,7 +109,7 @@ Route::group([
         // Character Routes
         Route::group([
             'namespace' => 'Character',
-            'prefix'    => 'characters',
+            'prefix' => 'characters',
         ], function () {
 
             include __DIR__ . '/Routes/Character/View.php';
@@ -118,7 +118,7 @@ Route::group([
         // Squads Routes
         Route::group([
             'namespace' => 'Squads',
-            'prefix'    => 'squads',
+            'prefix' => 'squads',
         ], function () {
             include __DIR__ . '/Routes/Squads/Routes.php';
         });
@@ -127,8 +127,8 @@ Route::group([
         // all configuration should only be possible if
         // a user has the 'superuser' role.
         Route::group([
-            'namespace'  => 'Configuration',
-            'prefix'     => 'configuration',
+            'namespace' => 'Configuration',
+            'prefix' => 'configuration',
             'middleware' => 'can:global.superuser',
         ], function () {
 
@@ -175,7 +175,7 @@ Route::group([
         // For obvious reasons I hope...
         Route::group([
             'namespace' => 'Configuration',
-            'prefix'    => 'configuration',
+            'prefix' => 'configuration',
         ], function () {
 
             include __DIR__ . '/Routes/Configuration/Impersonation.php';
@@ -184,19 +184,20 @@ Route::group([
         // Tools Routes
         Route::group([
             'namespace' => 'Tools',
-            'prefix'    => 'tools',
+            'prefix' => 'tools',
         ], function () {
 
             include __DIR__ . '/Routes/Tools/Job.php';
             include __DIR__ . '/Routes/Tools/Standings.php';
             include __DIR__ . '/Routes/Tools/Notes.php';
             include __DIR__ . '/Routes/Tools/Moons.php';
+            include __DIR__ . '/Routes/Tools/Market.php';
         });
 
     });
 
     Route::group([
-        'namespace'  => 'Support',
+        'namespace' => 'Support',
         'middleware' => ['auth'],
     ], function () {
 

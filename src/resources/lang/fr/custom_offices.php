@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,11 +21,11 @@
  */
 
 return [
-    'planet'            => 'Planète',
-    'reinforcement'     => 'Période de renf.',
-    'alliance'          => 'Autoriser alliance',
-    'standings'         => 'Autoriser rép.',
-    'standing_level'    => 'Niveau rép. min.',
+    'planet' => 'Planète',
+    'reinforcement' => 'Période de renf.',
+    'alliance' => 'Autoriser alliance',
+    'standings' => 'Autoriser rép.',
+    'standing_level' => 'Niveau rép. min.',
     'tax_alliance_corp' => 'Taxe alliance/corp',
-    'tax_standings'     => 'Taxes réputations',
+    'tax_standings' => 'Taxes réputations',
 ];

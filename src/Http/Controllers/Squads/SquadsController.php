@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -106,15 +106,15 @@ class SquadsController extends Controller
     public function store(SquadValidation $request)
     {
         $squad = Squad::create([
-            'name'          => $request->input('name'),
-            'type'          => $request->input('type'),
-            'description'   => $request->input('description'),
-            'filters'       => $request->input('filters'),
+            'name' => $request->input('name'),
+            'type' => $request->input('type'),
+            'description' => $request->input('description'),
+            'filters' => $request->input('filters'),
             'is_classified' => $request->input('classified') == 'on',
-            'logo'          => $request->file('logo'),
+            'logo' => $request->file('logo'),
         ]);
 
-        return redirect()->route('squads.show', $squad->id)
+        return redirect()->route('seatcore::squads.show', $squad->id)
             ->with('success', 'Squad has successfully been created. Please complete its setup by providing roles & moderators.');
     }
 
@@ -146,7 +146,7 @@ class SquadsController extends Controller
         $squad->save();
 
         return redirect()
-            ->route('squads.show', $squad)
+            ->route('seatcore::squads.show', $squad)
             ->with('success', 'Squad has successfully been updated.');
     }
 
@@ -158,7 +158,7 @@ class SquadsController extends Controller
     {
         $squad->delete();
 
-        return redirect()->route('squads.index')
+        return redirect()->route('seatcore::squads.index')
             ->with('success', 'Squad has been deleted.');
     }
 }

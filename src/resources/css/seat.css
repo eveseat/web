@@ -159,3 +159,17 @@ table.dataTable tr.dtrg-group.dtrg-level-2 td {
 .select2-selection.select2-selection--multiple {
     height: 100%;
 }
+
+/* 
+ * SeAT Font!
+ */
+
+@font-face {
+    font-family: Poppins-Regular;
+    src: url('/web/fonts/Poppins-Regular.woff2') format('woff2'),
+    url('/web/fonts/Poppins-Regular.woff') format('woff');
+}
+
+.seat-font {
+    font-family: 'Poppins-Regular', Inter, -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif !important;
+}

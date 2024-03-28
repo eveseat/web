@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,9 +46,9 @@ class Logout
             return;
 
         $event->user->login_history()->save(new UserLoginHistory([
-            'source'     => Request::getClientIp(),
+            'source' => Request::getClientIp(),
             'user_agent' => Request::header('User-Agent'),
-            'action'     => 'logout',
+            'action' => 'logout',
         ]));
 
         $message = 'User logged out from ' . Request::getClientIp();

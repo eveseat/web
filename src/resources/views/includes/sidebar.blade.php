@@ -1,7 +1,7 @@
 <aside class="main-sidebar elevation-4 sidebar-dark-primary">
 
   <!-- Logo -->
-  <a href="{{ route('home') }}" class="brand-link">
+  <a href="{{ route('seatcore::home') }}" class="brand-link">
     <img class="brand-image img-circle elevation-3" src="{{ asset('web/img/logo.png') }}" alt="SeAT" />
     <span class="brand-text font-weight-light">S<b>e</b>AT</span>
   </a>
@@ -16,7 +16,7 @@
         {!! img('characters', 'portrait', $user->main_character_id, 64, ['class' => 'img-circle elevation-2', 'alt' => 'User Image'], false) !!}
       </div>
       <div class="info">
-        <a href="{{ route('character.view.sheet', ['character' => $user->main_character]) }}" class="d-block">
+        <a href="{{ route('seatcore::character.view.sheet', ['character' => $user->main_character]) }}" class="d-block">
           {{ $user->name }}
         </a>
       </div>

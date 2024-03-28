@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,20 +21,20 @@
  */
 
 return [
-    'date'       => '日時',
-    'ref_type'   => 'タイプ',
+    'date' => '日時',
+    'ref_type' => 'タイプ',
     'from_party' => 'パーティーから',
-    'to_party'   => 'パーティーへ',
-    'amount'     => '金額',
-    'balance'    => '残高',
+    'to_party' => 'パーティーへ',
+    'amount' => '金額',
+    'balance' => '残高',
 
-    'order'      => '注文',
-    'type'       => 'タイプ',
-    'location'   => '場所',
-    'price'      => '価格',
-    'quantity'   => '数量',
-    'total'      => '合計',
-    'party'      => 'パーティー',
+    'order' => '注文',
+    'type' => 'タイプ',
+    'location' => '場所',
+    'price' => '価格',
+    'quantity' => '数量',
+    'total' => '合計',
+    'party' => 'パーティー',
 
     'acceleration_gate_fee' => 'アクセラレーションゲート料金',
     'advertisement_listing_fee' => '広告表示手数料',

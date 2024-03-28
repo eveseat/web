@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ class MembersTrackingDataTableExport extends DataTablesCollectionExport
                 'token' => self::isValidToken($character->refresh_token),
                 'name' => $character->character->name,
                 'location' => $character->location->name,
-                'ship'=>$character->ship->typeName,
+                'ship' => $character->ship->typeName,
                 'joined' => $character->start_date,
                 'last_login' => $character->logon_date,
             ];

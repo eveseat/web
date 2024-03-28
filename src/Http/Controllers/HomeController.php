@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,18 +82,18 @@ class HomeController extends Controller
         $data = $this->getEveServerStatuses(50);
 
         return response()->json([
-            'labels'   => $data->map(function ($item) {
+            'labels' => $data->map(function ($item) {
 
                 return $item->created_at->toDateTimeString();
             })->toArray(),
             'datasets' => [
                 [
-                    'label'           => 'Concurrent Player Count',
-                    'fill'            => false,
-                    'lineTension'     => 0.1,
+                    'label' => 'Concurrent Player Count',
+                    'fill' => false,
+                    'lineTension' => 0.1,
                     'backgroundColor' => 'rgba(60,141,188,0.9)',
-                    'borderColor'     => 'rgba(60,141,188,0.8)',
-                    'data'            => $data->map(function ($item) {
+                    'borderColor' => 'rgba(60,141,188,0.8)',
+                    'data' => $data->map(function ($item) {
 
                         return $item->players;
                     })->toArray(),
@@ -111,18 +111,18 @@ class HomeController extends Controller
         $data = $this->getEsiResponseTimes(50);
 
         return response()->json([
-            'labels'   => $data->map(function ($item) {
+            'labels' => $data->map(function ($item) {
 
                 return '"' . $item->status . '" @ ' . $item->created_at->toDateTimeString();
             })->toArray(),
             'datasets' => [
                 [
-                    'label'           => 'Response Time',
-                    'fill'            => false,
-                    'lineTension'     => 0.1,
+                    'label' => 'Response Time',
+                    'fill' => false,
+                    'lineTension' => 0.1,
                     'backgroundColor' => 'rgba(60,141,188,0.9)',
-                    'borderColor'     => 'rgba(60,141,188,0.8)',
-                    'data'            => $data->map(function ($item) {
+                    'borderColor' => 'rgba(60,141,188,0.8)',
+                    'data' => $data->map(function ($item) {
 
                         return $item->request_time;
                     })->toArray(),

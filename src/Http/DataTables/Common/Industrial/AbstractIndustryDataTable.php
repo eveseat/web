@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Common\Industrial;
 
+use Illuminate\Http\JsonResponse;
 use Yajra\DataTables\Services\DataTable;
 
 /**
@@ -36,7 +37,7 @@ abstract class AbstractIndustryDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -104,7 +105,7 @@ abstract class AbstractIndustryDataTable extends DataTable
                 'start_date', 'end_date', 'progress', 'runs', 'activity.activityName',
                 'blueprint.typeName', 'product.typeName',
             ])
-            ->make(true);
+            ->toJson();
     }
 
     /**

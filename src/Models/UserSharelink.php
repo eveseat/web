@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,7 +57,9 @@ class UserSharelink extends Model
     /**
      * @var array
      */
-    protected $dates = ['expires_on'];
+    protected $casts = [
+        'expires_on' => 'datetime',
+    ];
 
     /**
      * Each sharelink item belongs to a user.

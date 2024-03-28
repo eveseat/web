@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,9 +21,9 @@
  */
 
 return [
-    'jobs'                      => '任务',
-    'market_prices_region'      => '星域市场数据',
+    'jobs' => '任务',
+    'market_prices_region' => '星域市场数据',
     'market_prices_region_help' => 'SeAT 将使用它从 ESI 收集市场平均价格。这些价格可能在不同的地方使用，例如在合同，装配方案或采矿帐本中。',
-    'admin'                     => '超级用户',
-    'admin_assist_edit'         => '警告，如果选中此框，则该用户将有权访问所有设置，用户和权限。由于此状态，他（们）还将绕过所有安全限制。请务必谨慎考虑。',
+    'admin' => '超级用户',
+    'admin_assist_edit' => '警告，如果选中此框，则该用户将有权访问所有设置，用户和权限。由于此状态，他（们）还将绕过所有安全限制。请务必谨慎考虑。',
 ];

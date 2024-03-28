@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Common\Financial;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Lang;
 use Yajra\DataTables\Services\DataTable;
 
@@ -37,7 +38,7 @@ abstract class AbstractContractDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -127,7 +128,7 @@ abstract class AbstractContractDataTable extends DataTable
                 'action', 'detail.date_issued', 'detail.issuer.name', 'detail.assignee.name', 'detail.acceptor.name',
                 'detail.status', 'detail.price', 'detail.reward',
             ])
-            ->make(true);
+            ->toJson();
     }
 
     /**
@@ -141,7 +142,7 @@ abstract class AbstractContractDataTable extends DataTable
             ->addAction()
             ->orderBy(0, 'desc')
             ->parameters([
-                'dom'          => '<"row"<"col-sm-12 col-md-4"l><"col-sm-12 col-md-4 text-center"B><"col-sm-12 col-md-4"f>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+                'dom' => '<"row"<"col-sm-12 col-md-4"l><"col-sm-12 col-md-4 text-center"B><"col-sm-12 col-md-4"f>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
                 'buttons' => ['postCsv', 'postExcel'],
                 'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); ids_to_names(); }',
             ]);

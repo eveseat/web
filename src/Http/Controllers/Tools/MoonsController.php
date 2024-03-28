@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,10 +49,10 @@ class MoonsController extends Controller
     public function index(MoonsDataTable $dataTable)
     {
         $groups = [
-            Moon::UBIQUITOUS  => trans('web::moons.ubiquitous'),
-            Moon::COMMON      => trans('web::moons.common'),
-            Moon::UNCOMMON    => trans('web::moons.uncommon'),
-            Moon::RARE        => trans('web::moons.rare'),
+            Moon::UBIQUITOUS => trans('web::moons.ubiquitous'),
+            Moon::COMMON => trans('web::moons.common'),
+            Moon::UNCOMMON => trans('web::moons.uncommon'),
+            Moon::RARE => trans('web::moons.rare'),
             Moon::EXCEPTIONAL => trans('web::moons.exceptional'),
         ];
 

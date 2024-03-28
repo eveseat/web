@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-lg modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header bg-blue">
-        <h4 class="modal-title">Components</h4>
+        <h4 class="modal-title">{{ trans('web::moons.components') }}</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>

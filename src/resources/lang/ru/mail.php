@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,12 +21,12 @@
  */
 
 return [
-    'read'         => 'Прочитать',
-    'date'         => 'Дата',
-    'sender'       => 'Отправитель',
-    'subject'      => 'Тема',
+    'read' => 'Прочитать',
+    'date' => 'Дата',
+    'sender' => 'Отправитель',
+    'subject' => 'Тема',
     'mailing_list' => 'Список рассылки',
-    'sent'         => 'Отправлено',
-    'author'       => 'Автор',
-    'recipients'   => 'Получатели',
+    'sent' => 'Отправлено',
+    'author' => 'Автор',
+    'recipients' => 'Получатели',
 ];

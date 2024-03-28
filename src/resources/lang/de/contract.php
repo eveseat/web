@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,31 +21,31 @@
  */
 
 return [
-    'created'             => 'Erstellt',
-    'type'                => 'Typ',
-    'issuer'              => 'Aussteller',
-    'assignee'            => 'Ausgetsellt an',
-    'acceptor'            => 'Angenommen von',
-    'status'              => 'Status',
-    'price'               => 'Preis',
-    'reward'              => 'Belohnung',
+    'created' => 'Erstellt',
+    'type' => 'Typ',
+    'issuer' => 'Aussteller',
+    'assignee' => 'Ausgetsellt an',
+    'acceptor' => 'Angenommen von',
+    'status' => 'Status',
+    'price' => 'Preis',
+    'reward' => 'Belohnung',
 
-    'unknown'             => 'Unbekannt',
-    'item_exchange'       => 'Gegenstandstausch',
-    'auction'             => 'Auktion',
-    'courier'             => 'Kurier',
-    'loan'                => 'Darlehen',
+    'unknown' => 'Unbekannt',
+    'item_exchange' => 'Gegenstandstausch',
+    'auction' => 'Auktion',
+    'courier' => 'Kurier',
+    'loan' => 'Darlehen',
 
-    'outstanding'         => 'Ausstehend',
-    'in_progress'         => 'In Bearbeitung',
-    'finished_issuer'     => 'Aussteller beendet',
+    'outstanding' => 'Ausstehend',
+    'in_progress' => 'In Bearbeitung',
+    'finished_issuer' => 'Aussteller beendet',
     'finished_contractor' => 'Auftragenehmer beendet',
-    'finished'            => 'Beendet',
-    'cancelled'           => 'Abgebrochen',
-    'rejected'            => 'Abgelehnt',
-    'failed'              => 'Fehlgeschlagen',
-    'deleted'             => 'Gelöscht',
-    'reversed'            => 'Rückgängig gemacht',
+    'finished' => 'Beendet',
+    'cancelled' => 'Abgebrochen',
+    'rejected' => 'Abgelehnt',
+    'failed' => 'Fehlgeschlagen',
+    'deleted' => 'Gelöscht',
+    'reversed' => 'Rückgängig gemacht',
 
-    'not_accepted'        => 'Nicht akzeptiert',
+    'not_accepted' => 'Nicht akzeptiert',
 ];

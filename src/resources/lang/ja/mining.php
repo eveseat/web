@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,16 +21,16 @@
  */
 
 return [
-    'date'            => '日時',
-    'time'            => '時間',
-    'system'          => 'システム',
-    'ore'             => '鉱石',
-    'type'            => 'タイプ',
-    'quantity'        => '数量',
-    'volume'          => '体積',
+    'date' => '日時',
+    'time' => '時間',
+    'system' => 'システム',
+    'ore' => '鉱石',
+    'type' => 'タイプ',
+    'quantity' => '数量',
+    'volume' => '体積',
     'estimated_value' => '推定価格',
-    'details'         => '詳細',
-    'metadata'        => 'メタデータ',
-    'compounds'       => '化合物',
-    'history'         => '履歴',
+    'details' => '詳細',
+    'metadata' => 'メタデータ',
+    'compounds' => '化合物',
+    'history' => '履歴',
 ];

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,12 +22,14 @@
 
 namespace Seat\Web\Http\Controllers\Support;
 
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Seat\Eveapi\Models\Alliances\Alliance;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Universe\UniverseName;
+use Seat\Services\Contracts\EsiClient;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Models\User;
 
@@ -53,10 +55,16 @@ class ResolveController extends Controller
     protected $response;
 
     /**
+     * @var \Seat\Services\Contracts\EsiClient
+     */
+    private EsiClient $esi;
+
+    /**
      * ResolveController constructor.
      */
-    public function __construct()
+    public function __construct(EsiClient $client)
     {
+        $this->esi = $client;
         $this->response = collect();
     }
 
@@ -68,10 +76,6 @@ class ResolveController extends Controller
      */
     public function resolveIdsToNames(Request $request)
     {
-
-        // Resolve the Esi client library from the IoC
-        $eseye = app('esi-client')->get();
-
         // Grab the ids from the request for processing
         collect(explode(',', $request->ids))
             ->map(function ($id) {
@@ -127,13 +131,13 @@ class ResolveController extends Controller
                 });
             })
             ->chunk(1000)
-            ->each(function ($chunk) use ($eseye) {
+            ->each(function ($chunk) {
 
-                // quick break if no more IDs must be resolve by ESI
+                // quick break if no more IDs must be resolved by ESI
                 if ($chunk->isEmpty())
                     return;
 
-                $this->resolveIDsfromESI($chunk, $eseye);
+                $this->resolveFromESI($chunk);
 
             });
 
@@ -156,8 +160,8 @@ class ResolveController extends Controller
             ->get()
             ->map(function ($entity) {
                 return collect([
-                    'id'       => $entity->entity_id,
-                    'name'     => $entity->name,
+                    'id' => $entity->entity_id,
+                    'name' => $entity->name,
                     'category' => $entity->category,
                 ]);
             });
@@ -182,7 +186,7 @@ class ResolveController extends Controller
                 return collect([
                     'id' => $entity->entity_id,
                     'name' => $entity->name,
-                    'category' =>$entity->category,
+                    'category' => $entity->category,
                 ]);
             });
 
@@ -252,8 +256,8 @@ class ResolveController extends Controller
             ->get()
             ->map(function ($alliance) {
                 return collect([
-                    'id'       => $alliance->alliance_id,
-                    'name'     => $alliance->name,
+                    'id' => $alliance->alliance_id,
+                    'name' => $alliance->name,
                     'category' => 'alliance',
                 ]);
             });
@@ -268,20 +272,20 @@ class ResolveController extends Controller
      * If name could be resolved, save the name to universe_names table.
      *
      * @param  \Illuminate\Support\Collection  $ids
-     * @param  \Seat\Eseye\Eseye  $eseye
      */
-    private function resolveIDsfromESI(Collection $ids, $eseye)
+    private function resolveFromESI(Collection $ids): void
     {
 
         // Finally, grab outstanding ids and resolve their names
         // using Esi.
 
         try {
-            $eseye->setVersion('v3');
-            $eseye->setBody($ids->flatten()->toArray());
-            $names = $eseye->invoke('post', '/universe/names/');
+            $this->esi->setVersion('v3');
+            $this->esi->setBody($ids->flatten()->toArray());
+            $response = $this->esi->invoke('post', '/universe/names/');
+            $names = collect($response->getBody());
 
-            collect($names)->each(function ($name) {
+            $names->each(function ($name) {
 
                 // Cache the name resolution for this id for a long time.
                 cache([$this->prefix . $name->id => $name->name], carbon()->addCentury());
@@ -290,14 +294,12 @@ class ResolveController extends Controller
                 UniverseName::firstOrCreate([
                     'entity_id' => $name->id,
                 ], [
-                    'name'      => $name->name,
-                    'category'  => $name->category,
+                    'name' => $name->name,
+                    'category' => $name->category,
                 ]);
-
             });
-
-        } catch (\Exception $e) {
-            // If this fails split the ids in half and try to self referential resolve the half_chunks
+        } catch (Exception $e) {
+            // If these fails split the ids in half and try to self-referential resolve the half_chunks
             // until all possible resolvable ids has processed.
             if ($ids->count() === 1) {
                 // return a singleton unresolvable id as 'unknown'
@@ -307,15 +309,13 @@ class ResolveController extends Controller
                 $half = ceil($ids->count() / 2);
                 //keep on processing the halfs independently,
                 //ideally one of the halfs will process just perfect
-                $ids->chunk($half)->each(function ($half_chunk) use ($eseye) {
+                $ids->chunk($half)->each(function ($half_chunk) {
 
                     //this is a selfrefrencial call.
-                    $this->resolveIDsfromESI($half_chunk, $eseye);
+                    $this->resolveFromESI($half_chunk);
                 });
             }
-
         }
-
     }
 
     /**
@@ -335,8 +335,8 @@ class ResolveController extends Controller
             UniverseName::firstOrCreate([
                 'entity_id' => $name['id'],
             ], [
-                'name'      => $name['name'],
-                'category'  => $name['category'],
+                'name' => $name['name'],
+                'category' => $name['category'],
             ]);
         });
 
@@ -346,7 +346,6 @@ class ResolveController extends Controller
         });
 
         return $ids;
-
     }
 
     /**
@@ -370,6 +369,5 @@ class ResolveController extends Controller
         });
 
         return response()->json($this->response);
-
     }
 }

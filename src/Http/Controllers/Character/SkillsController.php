@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,12 +57,12 @@ class SkillsController extends Controller
         $data = $this->getCharacterSkillsAmountPerLevel($character->character_id);
 
         return response()->json([
-            'labels'   => [
+            'labels' => [
                 'Level 0', 'Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5',
             ],
             'datasets' => [
                 [
-                    'data'            => $data,
+                    'data' => $data,
                     'backgroundColor' => [
                         '#00c0ef',
                         '#39cccc',
@@ -87,22 +87,21 @@ class SkillsController extends Controller
         $character = CharacterInfo::where('character_id', $character->character_id)->first();
 
         return response()->json([
-            'labels'   => $data->map(function ($item) {
+            'labels' => $data->map(function ($item) {
 
                 return $item->marketGroupName;
             })->toArray(), // skills category
             'datasets' => [
                 [
-                    'label'                => $character->name,
-                    'data'                 => $data->map(function ($item) {
-
-                        return round($item->characterAmount / $item->gameAmount * 100, 2);  // character / in game rate
+                    'label' => $character->name,
+                    'data' => $data->map(function ($item) {
+                        return round($item->character_amount / $item->game_amount * 100, 2);  // character / in game rate
                     })->toArray(),
-                    'fill'                 => true,
-                    'backgroundColor'      => 'rgba(60,141,188,0.3)',
-                    'borderColor'          => '#3c8dbc',
+                    'fill' => true,
+                    'backgroundColor' => 'rgba(60,141,188,0.3)',
+                    'borderColor' => '#3c8dbc',
                     'pointBackgroundColor' => '#3c8dbc',
-                    'pointBorderColor'     => '#fff',
+                    'pointBorderColor' => '#fff',
                 ],
             ],
         ]);
@@ -133,14 +132,12 @@ class SkillsController extends Controller
      */
     private function getEveSkillsGroups()
     {
-
         $groups = InvGroup::where('categoryID', 16)
             ->where('groupID', '<>', 505)
             ->orderBy('groupName')
             ->get();
 
         return $groups;
-
     }
 
     /**
@@ -151,7 +148,6 @@ class SkillsController extends Controller
      */
     private function getCharacterSkillsInformation(int $character_id): Collection
     {
-
         return CharacterSkill::join('invTypes',
             'character_skills.skill_id', '=',
             'invTypes.typeID')

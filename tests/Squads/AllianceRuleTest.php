@@ -71,22 +71,20 @@ class AllianceRuleTest extends TestCase
 
         $this->loadMigrationsFrom(realpath(__DIR__ . '/../database/migrations'));
 
-        $this->withFactories(__DIR__ . '/../database/factories');
-
         Event::fake();
 
-        factory(CharacterInfo::class, 50)
+        CharacterInfo::factory(50)
             ->create()
             ->each(function($character) {
-                $character->affiliation()->save(factory(CharacterAffiliation::class)->make());
+                $character->affiliation()->save(CharacterAffiliation::factory()->make());
             });
 
-        factory(User::class, 10)
+        User::factory(10)
             ->create()
             ->each(function ($user) {
                 CharacterInfo::whereDoesntHave('refresh_token')->get()
                     ->random(rand(1, 5))->each(function ($character) use ($user) {
-                        factory(RefreshToken::class)->create([
+                        RefreshToken::factory()->create([
                             'character_id' => $character->character_id,
                             'user_id' => $user->id,
                         ]);
@@ -105,7 +103,7 @@ class AllianceRuleTest extends TestCase
                 'and' => [
                     [
                         'name' => 'alliance',
-                        'path' => 'characters.affiliation',
+                        'path' => 'affiliation',
                         'field' => 'alliance_id',
                         'operator' => '=',
                         'criteria' => 99000000,
@@ -120,7 +118,7 @@ class AllianceRuleTest extends TestCase
 
         // ensure no users are eligible
         foreach ($users as $user) {
-            $this->assertFalse($squad->isEligible($user));
+            $this->assertFalse($squad->isUserEligible($user));
         }
     }
 
@@ -135,7 +133,7 @@ class AllianceRuleTest extends TestCase
                 'and' => [
                     [
                         'name' => 'alliance',
-                        'path' => 'characters.affiliation',
+                        'path' => 'affiliation',
                         'field' => 'alliance_id',
                         'operator' => '=',
                         'criteria' => 99000000,
@@ -153,8 +151,48 @@ class AllianceRuleTest extends TestCase
 
         foreach ($users as $user) {
             $user->id == $reference_user->id ?
-                $this->assertTrue($squad->isEligible($user)) :
-                $this->assertFalse($squad->isEligible($user));
+                $this->assertTrue($squad->isUserEligible($user)) :
+                $this->assertFalse($squad->isUserEligible($user));
         }
+    }
+
+    /**
+     * This test checks whether a character from a corp outside an alliance is eligible for a squad with a alliance is not filter.
+     * In SeAT 4, this was not working properly
+     */
+    public function testCharacterHasNoAllianceWithAllianceIsNotFilter(){
+        $squad = new Squad([
+            'name' => 'Testing Squad',
+            'description' => 'Some description',
+            'type' => 'auto',
+            'filters' => json_encode([
+                'and' => [
+                    [
+                        'name' => 'alliance',
+                        'path' => 'affiliation',
+                        'field' => 'alliance_id',
+                        'operator' => '<>',
+                        'criteria' => 99000000,
+                        'text' => 'Random Alliance',
+                    ],
+                ],
+            ]),
+        ]);
+
+        $user = User::first();
+
+        $user->characters->each(function ($character){
+            $character->affiliation->update([
+                'alliance_id' => 99000000,
+            ]);
+        });
+        $this->assertFalse($squad->isUserEligible($user));
+
+        $user->characters->each(function ($character){
+            $character->affiliation->update([
+                'alliance_id' => null,
+            ]);
+        });
+        $this->assertTrue($squad->isUserEligible($user));
     }
 }

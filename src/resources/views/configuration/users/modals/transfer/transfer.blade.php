@@ -8,7 +8,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form method="post" action="{{ route('configuration.users.reassign', $user->id) }}" id="character-transfer-form">
+        <form method="post" action="{{ route('seatcore::configuration.users.reassign', $user->id) }}" id="character-transfer-form">
           {!! csrf_field() !!}
           {!! method_field('PUT') !!}
           <input type="hidden" name="character" value="0" />
@@ -41,7 +41,7 @@
         placeholder: 'Choose target user',
         dropdownParent: '#character-transfer-modal',
         ajax: {
-          url: '{{ route('fastlookup.users') }}',
+          url: '{{ route('seatcore::fastlookup.users') }}',
           dataType: 'json',
           cache: true,
           data: function (params) {

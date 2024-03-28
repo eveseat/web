@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,7 +64,7 @@ return [
     'contact_widget_documentation' => 'Dokumentation',
     'contact_widget_updated_at' => 'Zuletzt aktualisiert um :date_time',
     'contact_widget_read_me' => 'Lesen',
-    'contact_widget_github_issues' =>  ':count Issues',
+    'contact_widget_github_issues' => ':count Issues',
     'contact_widget_github_contribute' => 'Beitragen',
 
     //

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,31 +21,31 @@
  */
 
 return [
-    'created'             => 'Created',
-    'type'                => 'Type',
-    'issuer'              => 'Issuer',
-    'assignee'            => 'Assignee',
-    'acceptor'            => 'Acceptor',
-    'status'              => 'Status',
-    'price'               => 'Price',
-    'reward'              => 'Reward',
+    'created' => 'Created',
+    'type' => 'Type',
+    'issuer' => 'Issuer',
+    'assignee' => 'Assignee',
+    'acceptor' => 'Acceptor',
+    'status' => 'Status',
+    'price' => 'Price',
+    'reward' => 'Reward',
 
-    'unknown'             => 'Unknown',
-    'item_exchange'       => 'Item Exchange',
-    'auction'             => 'Auction',
-    'courier'             => 'Courier',
-    'loan'                => 'Loan',
+    'unknown' => 'Unknown',
+    'item_exchange' => 'Item Exchange',
+    'auction' => 'Auction',
+    'courier' => 'Courier',
+    'loan' => 'Loan',
 
-    'outstanding'         => 'Outstanding',
-    'in_progress'         => 'In Progress',
-    'finished_issuer'     => 'Finished Issuer',
+    'outstanding' => 'Outstanding',
+    'in_progress' => 'In Progress',
+    'finished_issuer' => 'Finished Issuer',
     'finished_contractor' => 'Finished Contractor',
-    'finished'            => 'Finished',
-    'cancelled'           => 'Cancelled',
-    'rejected'            => 'Rejected',
-    'failed'              => 'Failed',
-    'deleted'             => 'Deleted',
-    'reversed'            => 'Reversed',
+    'finished' => 'Finished',
+    'cancelled' => 'Cancelled',
+    'rejected' => 'Rejected',
+    'failed' => 'Failed',
+    'deleted' => 'Deleted',
+    'reversed' => 'Reversed',
 
-    'not_accepted'        => 'Not Accepted',
+    'not_accepted' => 'Not Accepted',
 ];

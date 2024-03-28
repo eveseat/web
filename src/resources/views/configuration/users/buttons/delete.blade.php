@@ -3,7 +3,7 @@
     <i class="fas fa-trash-alt"></i> {{ trans('web::seat.delete') }}
   </button>
 @else
-  <form method="post" action="{{ route('configuration.users.delete', ['user_id' => $row->id]) }}">
+  <form method="post" action="{{ route('seatcore::configuration.users.delete', ['user_id' => $row->id]) }}">
     {{ csrf_field() }}
     {{ method_field('DELETE') }}
     <button class="btn btn-sm btn-danger confirmdelete" data-seat-entity="{{ trans('web::seat.user') }}">

@@ -12,7 +12,7 @@
     </div>
     <div class="card-body">
 
-      <form role="form" action="{{ route('configuration.users.update', ['user_id' => $user->id]) }}" method="post">
+      <form role="form" action="{{ route('seatcore::configuration.users.update', ['user_id' => $user->id]) }}" method="post">
         {{ csrf_field() }}
         {!! method_field('put') !!}
         <input type="hidden" name="user_id" value="{{ $user->id }}">
@@ -67,7 +67,7 @@
         <div class="box-footer">
 
           @if(auth()->user()->id != $user->id)
-            <a href="{{ route('configuration.users.edit.account_status', ['user_id' => $user->id]) }}"
+            <a href="{{ route('seatcore::configuration.users.edit.account_status', ['user_id' => $user->id]) }}"
                class="btn btn-{{ $user->active ? 'danger' : 'success' }} float-left">
               @if($user->active)
                 <i class="fas fa-user-slash"></i>
@@ -195,12 +195,12 @@
                     <td>
                       @if(auth()->user()->id != $user->id)
                         <div class="btn-group btn-group-sm float-right">
-                          <a href="{{ route('configuration.access.roles.edit', [$role->id]) }}" type="button"
+                          <a href="{{ route('seatcore::configuration.access.roles.edit', [$role->id]) }}" type="button"
                              class="btn btn-warning">
                             <i class="fas fa-pencil-alt"></i>
                             {{ trans('web::seat.edit') }}
                           </a>
-                          <form method="post" action="{{ route('configuration.access.roles.edit.remove.user', ['role_id' => $role->id, 'user_id' => $user->id]) }}">
+                          <form method="post" action="{{ route('seatcore::configuration.access.roles.edit.remove.user', ['role_id' => $role->id, 'user_id' => $user->id]) }}">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
                             <button type="submit" class="btn btn-danger">

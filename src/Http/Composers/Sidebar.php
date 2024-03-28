@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,11 +66,11 @@ class Sidebar extends AbstractMenu
             $node_name = Str::slug(preg_replace('/\s+/', '', strtolower($node->name)));
 
             $menu[$node_name] = [
-                'name'          => $node->name,
-                'icon'          => $node->icon,
+                'name' => $node->name,
+                'icon' => $node->icon,
                 'route_segment' => 'custom',
-                'route'         => $node->url,
-                'new_tab'       => $node->new_tab,
+                'route' => $node->url,
+                'new_tab' => $node->new_tab,
             ];
         }
 

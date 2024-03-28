@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,24 +22,24 @@
 
 return [
     [
-        'name'           => 'contacts',
-        'label'          => 'web::seat.contacts',
-        'permission'     => 'alliance.contact',
+        'name' => 'contacts',
+        'label' => 'web::seat.contacts',
+        'permission' => 'alliance.contact',
         'highlight_view' => 'contacts',
-        'route'          => 'alliance.view.contacts',
+        'route' => 'seatcore::alliance.view.contacts',
     ],
     [
-        'name'           => 'summary',
-        'label'          => 'web::seat.summary',
-        'permission'     => 'alliance.summary',
+        'name' => 'summary',
+        'label' => 'web::seat.summary',
+        'permission' => 'alliance.summary',
         'highlight_view' => 'summary',
-        'route'          => 'alliance.view.summary',
+        'route' => 'seatcore::alliance.view.summary',
     ],
     [
-        'name'           => 'tracking',
-        'label'          => 'web::seat.tracking',
-        'permission'     => 'alliance.tracking',
+        'name' => 'tracking',
+        'label' => 'web::seat.tracking',
+        'permission' => 'alliance.tracking',
         'highlight_view' => 'tracking',
-        'route'          => 'alliance.view.tracking',
+        'route' => 'seatcore::alliance.view.tracking',
     ],
 ];

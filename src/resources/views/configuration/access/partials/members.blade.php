@@ -25,7 +25,7 @@
           <td>
             @if(auth()->user()->id != $member->id)
               <button type="button" class="btn btn-danger btn-xs float-right"
-                      data-url="{{ route('configuration.access.roles.edit.remove.user', ['role_id' => $role->id, 'user_id' => $member->id]) }}">
+                      data-url="{{ route('seatcore::configuration.access.roles.edit.remove.user', ['role_id' => $role->id, 'user_id' => $member->id]) }}">
                 <i class="fas fa-trash"></i>
                 {{ trans('web::seat.remove') }}
               </button>

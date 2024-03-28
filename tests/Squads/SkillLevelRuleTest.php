@@ -71,22 +71,20 @@ class SkillLevelRuleTest extends TestCase
 
         $this->loadMigrationsFrom(realpath(__DIR__ . '/../database/migrations'));
 
-        $this->withFactories(__DIR__ . '/../database/factories');
-
         Event::fake();
 
-        factory(CharacterInfo::class, 50)
+        CharacterInfo::factory(50)
             ->create()
             ->each(function ($character) {
-                $character->skills()->save(factory(CharacterSkill::class)->make());
+                $character->skills()->save(CharacterSkill::factory()->make());
             });
 
-        factory(User::class, 10)
+        User::factory(10)
             ->create()
             ->each(function ($user) {
                 CharacterInfo::whereDoesntHave('refresh_token')->get()
                     ->random(rand(1, 5))->each(function ($character) use ($user) {
-                        factory(RefreshToken::class)->create([
+                        RefreshToken::factory()->create([
                             'character_id' => $character->character_id,
                             'user_id' => $user->id,
                         ]);
@@ -105,7 +103,7 @@ class SkillLevelRuleTest extends TestCase
                 'and' => [
                     [
                         'name' => 'skill level',
-                        'path' => 'characters.skills',
+                        'path' => 'skills',
                         'field' => 'trained_skill_level',
                         'operator' => '>',
                         'criteria' => 5,
@@ -120,7 +118,7 @@ class SkillLevelRuleTest extends TestCase
 
         // ensure no users are eligible
         foreach ($users as $user) {
-            $this->assertFalse($squad->isEligible($user));
+            $this->assertFalse($squad->isUserEligible($user));
         }
     }
 
@@ -135,7 +133,7 @@ class SkillLevelRuleTest extends TestCase
                 'and' => [
                     [
                         'name' => 'skill level',
-                        'path' => 'characters.skills',
+                        'path' => 'skills',
                         'field' => 'trained_skill_level',
                         'operator' => '>',
                         'criteria' => 4,
@@ -156,8 +154,8 @@ class SkillLevelRuleTest extends TestCase
         // ensure no users are eligible
         foreach ($users as $user) {
             $user->id == $reference_user->id ?
-                $this->assertTrue($squad->isEligible($user)) :
-                $this->assertFalse($squad->isEligible($user));
+                $this->assertTrue($squad->isUserEligible($user)) :
+                $this->assertFalse($squad->isUserEligible($user));
         }
     }
 }

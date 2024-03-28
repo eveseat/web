@@ -11,7 +11,7 @@
     </div>
     <div class="card-body">
 
-      <form role="form" method="post" action="{{ route('configuration.access.roles.store') }}">
+      <form role="form" method="post" action="{{ route('seatcore::configuration.access.roles.store') }}">
         {{ csrf_field() }}
 
         <div class="box-body">

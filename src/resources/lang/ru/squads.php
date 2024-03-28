@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,25 +21,25 @@
  */
 
 return [
-    'squad'        => 'Squad|Squads',
-    'name'         => 'Name|Names',
-    'description'  => 'Описание',
-    'type'         => 'Тип',
-    'member'       => 'Member|Members',
-    'moderated'    => 'Moderated',
-    'moderator'    => 'Модератор | Модераторы',
-    'candidate'    => 'Candidate|Candidates',
+    'squad' => 'Squad|Squads',
+    'name' => 'Name|Names',
+    'description' => 'Описание',
+    'type' => 'Тип',
+    'member' => 'Member|Members',
+    'moderated' => 'Moderated',
+    'moderator' => 'Модератор | Модераторы',
+    'candidate' => 'Candidate|Candidates',
     'member_since' => 'Участник с',
-    'applied_at'   => 'Applied At',
-    'character'    => 'Персонаж|Персонажи',
-    'show'         => 'Показать',
-    'delete'       => 'Удалить',
-    'approve'      => 'Утвердить',
-    'reject'       => 'Отклонить',
-    'kick'         => 'Выгнать',
-    'leave'        => 'Покинуть',
-    'join'         => 'Присоединиться',
-    'message'      => 'Сообщение',
-    'remove'       => 'Удалить',
-    'cancel'       => 'Отмена',
+    'applied_at' => 'Applied At',
+    'character' => 'Персонаж|Персонажи',
+    'show' => 'Показать',
+    'delete' => 'Удалить',
+    'approve' => 'Утвердить',
+    'reject' => 'Отклонить',
+    'kick' => 'Выгнать',
+    'leave' => 'Покинуть',
+    'join' => 'Присоединиться',
+    'message' => 'Сообщение',
+    'remove' => 'Удалить',
+    'cancel' => 'Отмена',
 ];
