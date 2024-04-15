@@ -71,6 +71,25 @@ trait Filterable
         return $query->getUnderlyingQuery()->exists();
     }
 
+    final public function printUnderlyingQuery(Model $member): string
+    {
+        $query = new QueryGroupBuilder($member->newQuery(), true);
+
+        // make sure we only allow results of the entity we are checking count
+        $query->where(function (Builder $inner_query) use ($member) {
+            $inner_query->where($member->getKeyName(), $member->getKey());
+        });
+
+        // wrap this in an inner query to ensure it is '(correct_entity_check) AND (rule1 AND/OR rule2)'
+        $query->where(function ($inner_query) {
+            $this->applyGroup($inner_query, $this->getFilters());
+        });
+
+        dd($query->getUnderlyingQuery()->toSql());
+
+        return $query->getUnderlyingQuery()->toSql();
+    }
+
     /**
      * Applies a filter group to $query.
      *
@@ -88,7 +107,16 @@ trait Filterable
         foreach ($rules as $rule){
             // check if this is a nested group or not
             if(property_exists($rule, 'path')){
-                $this->applyRule($query_group, $rule);
+                if ($rule->name == "skill_level") {
+                    // Now get all the skill rules in this group
+                    foreach ($rules as $skrule){
+                        if ($skrule->name == "skill"){
+                            $this->applySkillLevelRule($query_group, $rule, $skrule);
+                        }
+                    }
+                } else {
+                    $this->applyRule($query_group, $rule);
+                }
             } else {
                 // this is a nested group
                 $query_group->where(function ($group_query) use ($rule) {
@@ -122,6 +150,42 @@ trait Filterable
             // contains is maybe a misleading name, since it actually checks if json contains a value
             $query->whereHas($rule->path, function (Builder $inner_query) use ($rule) {
                 $inner_query->whereJsonContains($rule->field, $rule->criteria);
+            });
+        } else {
+            throw new InvalidFilterException(sprintf('Unknown rule operator: \'%s\'', $rule->operator));
+        }
+    }
+
+    /**
+     * Applies a skill level rule to a query group.
+     *
+     * @param  QueryGroupBuilder  $query  the query to add the rule to
+     * @param  stdClass  $rule  the rule configuration
+     *
+     * @throws InvalidFilterException
+     */
+    private function applySkillLevelRule(QueryGroupBuilder $query, stdClass $rule, stdClass $skrule): void {
+        // 'is' operator
+        if($rule->operator === '=' || $rule->operator === '<' || $rule->operator === '>'){
+            // normal comparison operations need to relation to exist
+            $query->whereHas($rule->path, function (Builder $inner_query) use ($rule, $skrule) {
+                $inner_query->where(function($q) use($rule, $skrule){
+                    $q->where($rule->field, $rule->operator, $rule->criteria)
+                      ->where($skrule->field, $skrule->operator, $skrule->criteria);
+                });
+            });
+        } elseif ($rule->operator === '<>' || $rule->operator === '!=') {
+            // not equal is special cased since a missing relation is the same as not equal
+            $query->whereDoesntHave($rule->path, function (Builder $inner_query) use ($rule, $skrule) {
+                $inner_query->where($rule->field, $rule->criteria)
+                ->where($skrule->field, $skrule->operator, $skrule->criteria);
+                //TODO TEST THIS PATH
+            });
+        } elseif($rule->operator === 'contains'){
+            // contains is maybe a misleading name, since it actually checks if json contains a value
+            $query->whereHas($rule->path, function (Builder $inner_query) use ($rule) {
+                $inner_query->whereJsonContains($rule->field, $rule->criteria);
+                // TODO HANDLE THIS CRITERIA ((even though I dont think it is valid))
             });
         } else {
             throw new InvalidFilterException(sprintf('Unknown rule operator: \'%s\'', $rule->operator));
