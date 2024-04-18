@@ -116,7 +116,8 @@ trait Filterable
                 if ($rule->name == 'skill_level') {
                     // Now get all the skill rules in this group
                     foreach ($rules as $skrule) {
-                        if ($skrule->name == 'skill') {
+                        // if it is a skill rule, special case it
+                        if (property_exists($skrule, 'path') && $skrule->name == 'skill') {
                             $this->applySkillLevelRule($query_group, $rule, $skrule);
                         }
                     }
