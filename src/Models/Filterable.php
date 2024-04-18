@@ -53,7 +53,7 @@ trait Filterable
     {
         // in case no filters exists, everyone should be allowed
         // this is the case with manual squads
-        if (! property_exists($this->getFilters(), 'and') && ! property_exists($this->getFilters(), 'or'))
+        if (!property_exists($this->getFilters(), 'and') && !property_exists($this->getFilters(), 'or'))
             return true;
 
         $query = new QueryGroupBuilder($member->newQuery(), true);
@@ -71,6 +71,15 @@ trait Filterable
         return $query->getUnderlyingQuery()->exists();
     }
 
+    /**
+     * Print the sql query that will be generated to check for user eligibility.
+     * This is for developmental testing and tinkering.
+     *
+     * @param  Model  $member  The entity to check
+     * @return string The sql query that checks eligibility
+     *
+     * @throws InvalidFilterException If a invalid filter configuration is used
+     */
     final public function printUnderlyingQuery(Model $member): string
     {
         $query = new QueryGroupBuilder($member->newQuery(), true);
@@ -84,8 +93,6 @@ trait Filterable
         $query->where(function ($inner_query) {
             $this->applyGroup($inner_query, $this->getFilters());
         });
-
-        dd($query->getUnderlyingQuery()->toSql());
 
         return $query->getUnderlyingQuery()->toSql();
     }
@@ -101,16 +108,15 @@ trait Filterable
     private function applyGroup(Builder $query, stdClass $group): void
     {
         $query_group = new QueryGroupBuilder($query, property_exists($group, 'and'));
-
         $rules = $query_group->isAndGroup() ? $group->and : $group->or;
 
-        foreach ($rules as $rule){
+        foreach ($rules as $rule) {
             // check if this is a nested group or not
-            if(property_exists($rule, 'path')){
-                if ($rule->name == "skill_level") {
+            if (property_exists($rule, 'path')) {
+                if ($rule->name == "skill_level" ) {
                     // Now get all the skill rules in this group
-                    foreach ($rules as $skrule){
-                        if ($skrule->name == "skill"){
+                    foreach ($rules as $skrule) {
+                        if ($skrule->name == "skill") {
                             $this->applySkillLevelRule($query_group, $rule, $skrule);
                         }
                     }
@@ -134,9 +140,10 @@ trait Filterable
      *
      * @throws InvalidFilterException
      */
-    private function applyRule(QueryGroupBuilder $query, stdClass $rule): void {
+    private function applyRule(QueryGroupBuilder $query, stdClass $rule): void
+    {
         // 'is' operator
-        if($rule->operator === '=' || $rule->operator === '<' || $rule->operator === '>'){
+        if ($rule->operator === '=' || $rule->operator === '<' || $rule->operator === '>') {
             // normal comparison operations need to relation to exist
             $query->whereHas($rule->path, function (Builder $inner_query) use ($rule) {
                 $inner_query->where($rule->field, $rule->operator, $rule->criteria);
@@ -146,7 +153,7 @@ trait Filterable
             $query->whereDoesntHave($rule->path, function (Builder $inner_query) use ($rule) {
                 $inner_query->where($rule->field, $rule->criteria);
             });
-        } elseif($rule->operator === 'contains'){
+        } elseif ($rule->operator === 'contains') {
             // contains is maybe a misleading name, since it actually checks if json contains a value
             $query->whereHas($rule->path, function (Builder $inner_query) use ($rule) {
                 $inner_query->whereJsonContains($rule->field, $rule->criteria);
@@ -164,24 +171,25 @@ trait Filterable
      *
      * @throws InvalidFilterException
      */
-    private function applySkillLevelRule(QueryGroupBuilder $query, stdClass $rule, stdClass $skrule): void {
+    private function applySkillLevelRule(QueryGroupBuilder $query, stdClass $rule, stdClass $skrule): void
+    {
         // 'is' operator
-        if($rule->operator === '=' || $rule->operator === '<' || $rule->operator === '>'){
+        if ($rule->operator === '=' || $rule->operator === '<' || $rule->operator === '>') {
             // normal comparison operations need to relation to exist
             $query->whereHas($rule->path, function (Builder $inner_query) use ($rule, $skrule) {
-                $inner_query->where(function($q) use($rule, $skrule){
+                $inner_query->where(function ($q) use ($rule, $skrule) {
                     $q->where($rule->field, $rule->operator, $rule->criteria)
-                      ->where($skrule->field, $skrule->operator, $skrule->criteria);
+                        ->where($skrule->field, $skrule->operator, $skrule->criteria);
                 });
             });
         } elseif ($rule->operator === '<>' || $rule->operator === '!=') {
             // not equal is special cased since a missing relation is the same as not equal
             $query->whereDoesntHave($rule->path, function (Builder $inner_query) use ($rule, $skrule) {
                 $inner_query->where($rule->field, $rule->criteria)
-                ->where($skrule->field, $skrule->operator, $skrule->criteria);
+                    ->where($skrule->field, $skrule->operator, $skrule->criteria);
                 //TODO TEST THIS PATH
             });
-        } elseif($rule->operator === 'contains'){
+        } elseif ($rule->operator === 'contains') {
             // contains is maybe a misleading name, since it actually checks if json contains a value
             $query->whereHas($rule->path, function (Builder $inner_query) use ($rule) {
                 $inner_query->whereJsonContains($rule->field, $rule->criteria);
