@@ -176,6 +176,55 @@ class SkillSkillLevelPairFiltersTest extends TestCase
         }
     }
 
+    public function testUserHasCharacterWithSkillAndOtherSkillLevel()
+    {
+        // spawn test squad
+        $squad = new Squad([
+            'name' => 'Testing Squad',
+            'description' => 'Some description',
+            'type' => 'auto',
+            'filters' => json_encode([
+                'and' => [
+                    [
+                        'name' => 'skill',
+                        'path' => 'skills',
+                        'field' => 'skill_id',
+                        'operator' => '=',
+                        'criteria' => 3350,
+                        'text' => 'Random Skill',
+                    ],
+                    [
+                        'name' => 'skill_level',
+                        'path' => 'skills',
+                        'field' => 'trained_skill_level',
+                        'operator' => '>',
+                        'criteria' => 4,
+                        'text' => 'Random Skill',
+                    ],
+                ],
+            ]),
+        ]);
+
+        $reference_user = User::first();
+        $reference_user->characters->first()->skills->first()->update([
+            'skill_id' => 3350,
+            'trained_skill_level' => 1,
+        ]);
+        $reference_user->characters->first()->skills->where('skill_id', '<>', 3350)
+            ->first()->update([
+            'skill_id' => 3349,
+            'trained_skill_level' => 5,
+        ]);
+
+        // pickup users
+        $users = User::all();
+
+        // ensure no users are eligible
+        foreach ($users as $user) {
+            $this->assertFalse($squad->isUserEligible($user));
+        }
+    }
+
     public function testUserHasNoCharacterWithSkillOrSkillLevel()
     {
         // spawn test squad
