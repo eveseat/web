@@ -53,7 +53,7 @@ trait Filterable
     {
         // in case no filters exists, everyone should be allowed
         // this is the case with manual squads
-        if (!property_exists($this->getFilters(), 'and') && !property_exists($this->getFilters(), 'or'))
+        if (! property_exists($this->getFilters(), 'and') && ! property_exists($this->getFilters(), 'or'))
             return true;
 
         $query = new QueryGroupBuilder($member->newQuery(), true);
@@ -113,10 +113,10 @@ trait Filterable
         foreach ($rules as $rule) {
             // check if this is a nested group or not
             if (property_exists($rule, 'path')) {
-                if ($rule->name == "skill_level" ) {
+                if ($rule->name == 'skill_level') {
                     // Now get all the skill rules in this group
                     foreach ($rules as $skrule) {
-                        if ($skrule->name == "skill") {
+                        if ($skrule->name == 'skill') {
                             $this->applySkillLevelRule($query_group, $rule, $skrule);
                         }
                     }
