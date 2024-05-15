@@ -71,7 +71,7 @@ class SsoController extends Controller
         // in case the user is already authenticated - we're in a link flow
         if (auth()->check()) {
             // attempt to determine a used scopes and apply the same pattern for the newly linked character
-            $token = auth()->user()->refresh_tokens->first();
+            $token = auth()->user()->main_character()->refresh_token;
 
             if (! is_null($token))
                 $used_scopes = $token->scopes;
