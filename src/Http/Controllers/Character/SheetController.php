@@ -24,6 +24,7 @@ namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Web\Http\Controllers\Controller;
+use Seat\Eveapi\Models\Sde\InvType;
 
 /**
  * Class SheetController.
@@ -38,6 +39,15 @@ class SheetController extends Controller
      */
     public function show(CharacterInfo $character)
     {
-        return view('web::character.sheet', compact('character'));
+        
+        //create key/value pairs for implant IDs and texts
+        $jumpclone_implants = array();
+        foreach ($character->jump_clones as $jump_clone) {
+            foreach($jump_clone->implants as $implant_id) {
+                $jumpclone_implants[$implant_id] = InvType::find($implant_id)->typeName;
+            }
+        }
+
+        return view('web::character.sheet', compact('character', 'jumpclone_implants'));
     }
 }
