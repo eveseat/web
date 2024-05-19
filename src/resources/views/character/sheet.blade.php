@@ -141,7 +141,7 @@
                         @if(! empty($clone->implants))
                           </br>&nbsp&nbsp
                           @foreach($clone->implants as $implant)
-                            {!! img('types', 'icon', $implant, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
+                            <i data-toggle="tooltip" title="{{ $implant }}">{!! img('types', 'icon', $implant, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}</i>
                           @endforeach
                         @endif
                       </li>
