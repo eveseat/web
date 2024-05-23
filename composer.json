@@ -36,7 +36,7 @@
     "guzzlehttp/guzzle": "^7.0",
     "intervention/image": "^2.0",
     "laravel/framework": "^10.0",
-    "laravel/horizon": "^5.0",
+    "laravel/horizon": "^5.24.4",
     "laravel/socialite": "^5.0",
     "laravel/ui": "^4.0",
     "lasserafn/php-initial-avatar-generator": "^4.2",
