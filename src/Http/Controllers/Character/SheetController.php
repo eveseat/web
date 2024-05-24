@@ -40,12 +40,15 @@ class SheetController extends Controller
     public function show(CharacterInfo $character)
     {
         //create key/value pairs for implant IDs and texts
-        $jumpclone_implants = [];
-        foreach ($character->jump_clones as $jump_clone) {
-            foreach($jump_clone->implants as $implant_id) {
-                $jumpclone_implants[$implant_id] = InvType::find($implant_id)->typeName;
-            }
-        }
+        $jumpclone_implant_ids = collect($character->jump_clones)
+            ->pluck('implants')
+            ->flatten()
+            ->unique();
+
+        $jumpclone_implants = InvType::whereIn('typeID', $jumpclone_implant_ids)
+            ->get()
+            ->pluck('typeName', 'typeID')
+            ->toArray();
 
         return view('web::character.sheet', compact('character', 'jumpclone_implants'));
     }
