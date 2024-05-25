@@ -137,6 +137,15 @@
                         @else
                           Location is unknown
                         @endif
+
+                        @if(! empty($clone->implants))
+                          </br>&nbsp&nbsp
+                          @foreach($clone->implants as $implant_id)
+                            <i data-toggle="tooltip" title="{{ $jumpclone_implants[$implant_id] }}">
+                              {!! img('types', 'icon', $implant_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
+                            </i>
+                          @endforeach
+                        @endif
                       </li>
                     @endforeach
 
