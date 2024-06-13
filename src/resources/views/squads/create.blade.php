@@ -67,7 +67,7 @@
 
   @include('web::components.filters.modals.filters.filters', [
     'filters' => [
-      (object) ['name' => 'scopes', 'src' => route('seatcore::fastlookup.scopes'), 'path' => 'refresh_tokens', 'field' => 'scopes', 'label' => 'Scopes'],
+      (object) ['name' => 'scopes', 'src' => route('seatcore::fastlookup.scopes'), 'path' => 'refresh_token', 'field' => 'scopes', 'label' => 'Scopes'],
         (object) ['name' => 'character', 'src' => route('seatcore::fastlookup.characters'), 'path' => '', 'field' => 'character_id', 'label' => 'Character'],
         (object) ['name' => 'title', 'src' => route('seatcore::fastlookup.titles'), 'path' => 'titles', 'field' => 'id', 'label' => 'Title'],
         (object) ['name' => 'corporation', 'src' => route('seatcore::fastlookup.corporations'), 'path' => 'affiliation', 'field' => 'corporation_id', 'label' => 'Corporation'],
