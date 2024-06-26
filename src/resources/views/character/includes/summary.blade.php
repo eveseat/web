@@ -143,7 +143,7 @@
          target="_blank">
         <img src="{{ asset('web/img/evewho.png') }}">
       </a>
-      <a href="https://zkillboard.com/character/{{ $character->id }}"
+      <a href="https://zkillboard.com/character/{{ $character->character_id }}"
          target="_blank">
         <img src="{{ asset('web/img/zkillboard.png') }}">
       </a>
