@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\Model;
 use Intervention\Image\Facades\Image;
 use OpenApi\Attributes as OA;
 use Seat\Tests\Web\Database\Factories\RoleFactory;
+use Seat\Web\Models\CharacterSchedulingRule;
 use Seat\Web\Models\Squads\Squad;
 use Seat\Web\Models\Squads\SquadRole;
 use Seat\Web\Models\User;
@@ -100,6 +101,14 @@ class Role extends Model
 
         return $this->belongsToMany(Squad::class, 'squad_role')
             ->using(SquadRole::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function character_scheduling_rule(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(CharacterSchedulingRule::class);
     }
 
     /**

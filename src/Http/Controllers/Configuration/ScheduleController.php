@@ -22,10 +22,12 @@
 
 namespace Seat\Web\Http\Controllers\Configuration;
 
-use Artisan;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Http\Request;
 use Seat\Services\Models\Schedule;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\NewSchedule;
+use Seat\Web\Models\CharacterSchedulingRule;
 
 /**
  * Class ScheduleController.
@@ -55,8 +57,10 @@ class ScheduleController extends Controller
 
         ];
 
+        $character_scheduling_rules = CharacterSchedulingRule::with('role')->get();
+
         return view('web::configuration.schedule.view',
-            compact('schedule', 'commands', 'expressions'));
+            compact('schedule', 'commands', 'expressions', 'character_scheduling_rules'));
     }
 
     /**
@@ -84,5 +88,17 @@ class ScheduleController extends Controller
 
         return redirect()->back()
             ->with('success', 'Schedule entry deleted!');
+    }
+
+    public function deleteCharacterSchedulingRule(Request $request): \Illuminate\Http\RedirectResponse
+    {
+        $request->validate([
+            'role_id'=>'required|integer'
+        ]);
+
+        CharacterSchedulingRule::destroy($request->role_id);
+
+        return redirect()->back()
+            ->with('success', trans('web::seat.character_scheduling_rule_deleted'));
     }
 }

@@ -99,6 +99,7 @@ return [
     'token_status_valid' => 'This character has a valid registered token.',
     'token_status_invalid' => 'You don\'t own any valid token for this character.',
     'set_default' => 'Set Default',
+    'default' => 'Default',
 
     // Requirements
     'requirements' => 'Requirements',
@@ -375,6 +376,11 @@ return [
     'scheduled_commands' => 'Scheduled Commands',
     'choose_prepop' => 'Choose a pre-populated cron expression, or write your own.',
     'add_scheduled' => 'Add Scheduled Command',
+    'esi_character_scheduling_rules' => 'ESI Character Scheduling Rules',
+    'new_esi_character_scheduling_rules' => 'Add ESI Character Scheduling Rules',
+    'update_interval' => 'Update Interval',
+    'character_scheduling_rules_default'=>'When no rules apply, an update interval of one hour is used.',
+    'character_scheduling_rule_deleted' => 'Successfully deleted character scheduling rule!',
 
     // Security
     'category' => 'Category',
