@@ -35,3 +35,7 @@ Route::get('/delete/{schedule_id}')
 Route::post('rules/delete')
     ->name('seatcore::configuration.schedule.rule.delete')
     ->uses('ScheduleController@deleteCharacterSchedulingRule');
+
+Route::post('rules/create')
+    ->name('seatcore::configuration.schedule.rule.create')
+    ->uses('ScheduleController@newCharacterSchedulingRule');

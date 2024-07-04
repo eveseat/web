@@ -137,7 +137,39 @@
                   <h3 class="card-title">{{ trans('web::seat.new_esi_character_scheduling_rules') }}</h3>
               </div>
               <div class="card-body">
+                <form action="{{ route('seatcore::configuration.schedule.rule.create') }}" method="POST">
+                  @csrf
+                  <div class="form-group">
+                    <label for="role">{{ trans_choice('web::seat.role',1) }}</label>
+                    <select id="role" class="form-control" name="role_id">
+                      @foreach($roles as $role)
+                        <option value="{{$role->id}}">{{$role->title}}</option>
+                      @endforeach
+                    </select>
+                  </div>
 
+                  <div class="form-group">
+                    <label for="time">{{ trans('web::seat.character_scheduling_rules_interval_input_label') }}</label>
+                    <div class="row mx-0">
+                      <input class="form-control col-md-9" type="number" name="time" value="1" min="1" step="0.01" id="time">
+                      <select name="timeunit" class="form-control col-md-3">
+                        <option selected value="hour">{{trans('web::seat.hour')}}</option>
+                        <option value="day">{{trans('web::seat.day')}}</option>
+                        <option value="week">{{trans('web::seat.week')}}</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <p class="form-text text-muted">
+                    Edit and create roles on the <a href="{{ route('seatcore::configuration.access.roles') }}">access management</a> page and automate role assignment using
+                    <a href="{{ route('seatcore::squads.index') }}">squads</a>.
+                  </p>
+
+                  <button type="submit" class="btn btn-success float-right">
+                    <i class="fas fa-plus-square"></i>
+                    {{trans('web::seat.add_character_scheduling_rule')}}
+                  </button>
+                </form>
               </div>
           </div>
       </div>
@@ -181,7 +213,11 @@
                 @endforeach
 
                 <tr>
-                  <td colspan="3" class="text-center text-muted">{{ trans('web::seat.character_scheduling_rules_default') }}</td>
+                  @if($character_scheduling_rules->isEmpty())
+                    <td colspan="3" class="text-center text-muted">{{ trans('web::seat.character_scheduling_rules_empty') }}</td>
+                  @else
+                    <td colspan="3" class="text-center text-muted">{{ trans('web::seat.character_scheduling_rules_default') }}</td>
+                  @endif
                 </tr>
 
               </tbody>
@@ -189,7 +225,7 @@
 
           </div>
           <div class="card-footer">
-            <i class="text-muted float-right">{{ count($character_scheduling_rules) }} {{ trans('web::seat.esi_character_scheduling_rules') }}</i>
+            <i class="text-muted float-right">{{ count($character_scheduling_rules) }} {{ trans_choice('web::seat.esi_character_scheduling_rules',count($character_scheduling_rules)) }}</i>
           </div>
         </div>
       </div>

@@ -100,6 +100,9 @@ return [
     'token_status_invalid' => 'You don\'t own any valid token for this character.',
     'set_default' => 'Set Default',
     'default' => 'Default',
+    'hour' => 'hour',
+    'week' => 'week',
+    'day' => 'day',
 
     // Requirements
     'requirements' => 'Requirements',
@@ -376,11 +379,16 @@ return [
     'scheduled_commands' => 'Scheduled Commands',
     'choose_prepop' => 'Choose a pre-populated cron expression, or write your own.',
     'add_scheduled' => 'Add Scheduled Command',
-    'esi_character_scheduling_rules' => 'ESI Character Scheduling Rules',
-    'new_esi_character_scheduling_rules' => 'Add ESI Character Scheduling Rules',
+    'esi_character_scheduling_rules' => 'Character Scheduling Rule|Character Scheduling Rules',
+    'new_esi_character_scheduling_rules' => 'Add Character Scheduling Rules',
     'update_interval' => 'Update Interval',
-    'character_scheduling_rules_default'=>'When no rules apply, an update interval of one hour is used.',
+    'character_scheduling_rules_default'=>'When no rules apply to a character, an update interval of one hour is used.',
+    'character_scheduling_rules_empty'=>'no character scheduling rules defined, using a default of one hour for everyone',
     'character_scheduling_rule_deleted' => 'Successfully deleted character scheduling rule!',
+    'character_scheduling_rules_interval_input_label' => 'Update Interval',
+    'add_character_scheduling_rule' => 'Add Scheduling Rule',
+    'role_not_found' => 'The selected roles doesn\'t exist. Please reload the page and try again.',
+    'character_scheduling_rule_creation_success'=>'Successfully created new scheduling rule!',
 
     // Security
     'category' => 'Category',

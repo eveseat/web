@@ -27,6 +27,7 @@ use Illuminate\Http\Request;
 use Seat\Services\Models\Schedule;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\NewSchedule;
+use Seat\Web\Models\Acl\Role;
 use Seat\Web\Models\CharacterSchedulingRule;
 
 /**
@@ -58,9 +59,10 @@ class ScheduleController extends Controller
         ];
 
         $character_scheduling_rules = CharacterSchedulingRule::with('role')->get();
+        $roles = Role::all();
 
         return view('web::configuration.schedule.view',
-            compact('schedule', 'commands', 'expressions', 'character_scheduling_rules'));
+            compact('schedule', 'commands', 'expressions', 'character_scheduling_rules', 'roles'));
     }
 
     /**
@@ -88,6 +90,39 @@ class ScheduleController extends Controller
 
         return redirect()->back()
             ->with('success', 'Schedule entry deleted!');
+    }
+
+    public function newCharacterSchedulingRule(Request $request)
+    {
+        $request->validate([
+            'role_id' => 'required|integer',
+            'time' => 'required|decimal:0,2|min:1',
+            'timeunit' => 'required|string|in:hour,day,week'
+        ]);
+
+        $role = Role::find($request->role_id);
+        if($role === null) {
+            return redirect()->back()->with('error',trans('web::seat.role_not_found'));
+        }
+
+        $rule = $role->character_scheduling_rule;
+        if($rule === null) {
+            $rule = new CharacterSchedulingRule();
+            $rule->role_id = $role->id;
+        }
+
+        if($request->timeunit === "hour") {
+            $time_modifier = 60*60;
+        } elseif ($request->timeunit === "day") {
+            $time_modifier = 60*60*24;
+        } elseif ($request->timeunit === "week") {
+            $time_modifier = 60*60*24*7;
+        }
+
+        $rule->update_interval = $request->time * $time_modifier;
+        $rule->save();
+
+        return redirect()->back()->with('success',trans('web::seat.character_scheduling_rule_creation_success'));
     }
 
     public function deleteCharacterSchedulingRule(Request $request): \Illuminate\Http\RedirectResponse
