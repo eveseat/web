@@ -30,29 +30,7 @@ use Seat\Web\Models\Acl\Role;
  *
  * @package Seat\Web\Events
  */
-class UserRoleAdded
+class UserRoleAdded extends AbstractRoleEvent
 {
-    use SerializesModels;
 
-    /**
-     * @var int
-     */
-    public $user_id;
-
-    /**
-     * @var Role
-     */
-    public $role;
-
-    /**
-     * UserRoleAdded constructor.
-     *
-     * @param  int  $user_id
-     * @param  \Seat\Web\Models\Acl\Role  $role
-     */
-    public function __construct(int $user_id, Role $role)
-    {
-        $this->user_id = $user_id;
-        $this->role = $role;
-    }
 }

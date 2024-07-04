@@ -20,37 +20,45 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Models\Squads;
+namespace Seat\Web\Events;
 
-use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Queue\SerializesModels;
+use Seat\Web\Models\Acl\Role;
 use Seat\Web\Models\User;
 
 /**
- * Class SquadMember.
+ * Class UserRoleAdded.
  *
- * @package Seat\Web\Models\Squads
- *
- * @property int squad_id
- * @property int user_id
- *
- * @property Squad squad
- * @property User user
+ * @package Seat\Web\Events
  */
-class SquadMember extends Pivot
+abstract class AbstractRoleEvent
 {
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function squad()
-    {
-        return $this->belongsTo(Squad::class);
-    }
+    use SerializesModels;
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @var int
      */
-    public function user()
+    public $user_id;
+
+    /**
+     * @var Role
+     */
+    public $role;
+
+    /**
+     * UserRoleAdded constructor.
+     *
+     * @param  int  $user_id
+     * @param  \Seat\Web\Models\Acl\Role  $role
+     */
+    public function __construct(int $user_id, Role $role)
     {
-        return $this->belongsTo(User::class);
+        $this->user_id = $user_id;
+        $this->role = $role;
+    }
+
+    public function user(): User
+    {
+        return User::find($this->user_id);
     }
 }

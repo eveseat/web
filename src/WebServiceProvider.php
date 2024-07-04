@@ -28,6 +28,7 @@ use Illuminate\Auth\Events\Logout as LogoutEvent;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Horizon\Horizon;
@@ -46,6 +47,8 @@ use Seat\Web\Events\Attempt;
 use Seat\Web\Events\Login;
 use Seat\Web\Events\Logout;
 use Seat\Web\Events\SecLog;
+use Seat\Web\Events\UserRoleAdded;
+use Seat\Web\Events\UserRoleRemoved;
 use Seat\Web\Http\Composers\AllianceLayout;
 use Seat\Web\Http\Composers\AllianceMenu;
 use Seat\Web\Http\Composers\CharacterLayout;
@@ -59,6 +62,7 @@ use Seat\Web\Http\Middleware\Authenticate;
 use Seat\Web\Http\Middleware\Locale;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
 use Seat\Web\Http\Middleware\Requirements;
+use Seat\Web\Listeners\UpdateRefreshTokenSchedule;
 use Seat\Web\Models\Squads\SquadMember;
 use Seat\Web\Models\Squads\SquadRole;
 use Seat\Web\Observers\CharacterAffiliationObserver;
@@ -291,6 +295,9 @@ class WebServiceProvider extends AbstractSeatPlugin
 
         // Custom Events
         $this->app->events->listen('security.log', SecLog::class);
+
+        Event::listen(UserRoleAdded::class,UpdateRefreshTokenSchedule::class);
+        Event::listen(UserRoleRemoved::class,UpdateRefreshTokenSchedule::class);
 
         // Characters / Corporations first auth - Jobs Events
         CharacterRole::observe(CharacterRoleObserver::class);

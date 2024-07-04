@@ -31,6 +31,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\Models\UserSetting;
@@ -44,6 +45,9 @@ use Seat\Web\Models\Squads\SquadMember;
  * Class User.
  *
  * @package Seat\Web\Models
+ *
+ * @property int id
+ * @property Collection roles
  */
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {

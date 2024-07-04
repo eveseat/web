@@ -22,6 +22,8 @@
 
 namespace Seat\Web\Observers;
 
+use Seat\Web\Events\UserRoleAdded;
+use Seat\Web\Events\UserRoleRemoved;
 use Seat\Web\Models\Squads\SquadMember;
 use Seat\Web\Models\Squads\SquadRole;
 
@@ -42,6 +44,11 @@ class SquadMemberObserver
 
         // add squad roles to user
         $member->user->roles()->syncWithoutDetaching($roles->pluck('role_id'));
+
+        // emit an event that roles have been added
+        foreach ($roles as $role){
+            event(new UserRoleAdded($member->user->id, $role->role));
+        }
     }
 
     /**
@@ -60,5 +67,10 @@ class SquadMemberObserver
 
         // remove squad roles from user
         $member->user->roles()->detach($roles->pluck('role_id'));
+
+        // emit an event that roles have been added
+        foreach ($roles as $role){
+            event(new UserRoleRemoved($member->user->id, $role->role));
+        }
     }
 }

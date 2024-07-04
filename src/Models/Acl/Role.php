@@ -33,6 +33,9 @@ use Seat\Web\Models\Squads\Squad;
 use Seat\Web\Models\Squads\SquadRole;
 use Seat\Web\Models\User;
 
+/**
+ * @property CharacterSchedulingRule character_scheduling_rule
+ */
 #[OA\Schema(
     title: 'Role',
     description: 'Role',
