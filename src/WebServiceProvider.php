@@ -63,11 +63,13 @@ use Seat\Web\Http\Middleware\Locale;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
 use Seat\Web\Http\Middleware\Requirements;
 use Seat\Web\Listeners\UpdateRefreshTokenSchedule;
+use Seat\Web\Models\CharacterSchedulingRule;
 use Seat\Web\Models\Squads\SquadMember;
 use Seat\Web\Models\Squads\SquadRole;
 use Seat\Web\Observers\CharacterAffiliationObserver;
 use Seat\Web\Observers\CharacterAssetObserver;
 use Seat\Web\Observers\CharacterRoleObserver;
+use Seat\Web\Observers\CharacterSchedulingRuleObserver;
 use Seat\Web\Observers\CharacterSkillObserver;
 use Seat\Web\Observers\CharacterTitleObserver;
 use Seat\Web\Observers\RefreshTokenObserver;
@@ -310,6 +312,7 @@ class WebServiceProvider extends AbstractSeatPlugin
         CharacterTitle::observe(CharacterTitleObserver::class);
         SquadMember::observe(SquadMemberObserver::class);
         SquadRole::observe(SquadRoleObserver::class);
+        CharacterSchedulingRule::observe(CharacterSchedulingRuleObserver::class);
     }
 
     /**

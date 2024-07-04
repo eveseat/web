@@ -25,6 +25,7 @@ namespace Seat\Web\Models\Acl;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Intervention\Image\Facades\Image;
 use OpenApi\Attributes as OA;
 use Seat\Tests\Web\Database\Factories\RoleFactory;
@@ -35,6 +36,7 @@ use Seat\Web\Models\User;
 
 /**
  * @property CharacterSchedulingRule character_scheduling_rule
+ * @property Collection users
  */
 #[OA\Schema(
     title: 'Role',
