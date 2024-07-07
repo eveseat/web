@@ -111,6 +111,7 @@ class ScheduleController extends Controller
             $rule->role_id = $role->id;
         }
 
+        // $time_modifier: conversion factor from timeunit to seconds
         if($request->timeunit === 'hour') {
             $time_modifier = 60 * 60;
         } elseif ($request->timeunit === 'day') {

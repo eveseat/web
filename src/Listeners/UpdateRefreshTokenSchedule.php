@@ -26,6 +26,9 @@ use Seat\Web\Events\UserRoleAdded;
 use Seat\Web\Events\UserRoleRemoved;
 use Seat\Web\Models\CharacterSchedulingRule;
 
+/**
+ * This listener is triggered when users gain or loose roles. In that case, their refresh token schedule is updated
+ */
 class UpdateRefreshTokenSchedule
 {
     public function handle(UserRoleAdded|UserRoleRemoved $event): void

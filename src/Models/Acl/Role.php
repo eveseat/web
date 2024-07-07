@@ -25,6 +25,7 @@ namespace Seat\Web\Models\Acl;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Collection;
 use Intervention\Image\Facades\Image;
 use OpenApi\Attributes as OA;
@@ -109,9 +110,9 @@ class Role extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return HasOne
      */
-    public function character_scheduling_rule(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function character_scheduling_rule(): HasOne
     {
         return $this->hasOne(CharacterSchedulingRule::class);
     }

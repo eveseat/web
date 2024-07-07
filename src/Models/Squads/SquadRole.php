@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Models\Squads;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Seat\Web\Models\Acl\Role;
 
@@ -37,12 +38,12 @@ use Seat\Web\Models\Acl\Role;
  */
 class SquadRole extends Pivot
 {
-    public function role(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);
     }
 
-    public function squad(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function squad(): BelongsTo
     {
         return $this->belongsTo(Squad::class);
     }

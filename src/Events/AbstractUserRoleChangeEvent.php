@@ -31,25 +31,25 @@ use Seat\Web\Models\User;
  *
  * @package Seat\Web\Events
  */
-abstract class AbstractRoleEvent
+abstract class AbstractUserRoleChangeEvent
 {
     use SerializesModels;
 
     /**
      * @var int
      */
-    public $user_id;
+    public int $user_id;
 
     /**
      * @var Role
      */
-    public $role;
+    public Role $role;
 
     /**
-     * UserRoleAdded constructor.
+     * AbstractUserRoleChangeEvent constructor.
      *
      * @param  int  $user_id
-     * @param  \Seat\Web\Models\Acl\Role  $role
+     * @param Role $role
      */
     public function __construct(int $user_id, Role $role)
     {

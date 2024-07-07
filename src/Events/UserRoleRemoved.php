@@ -27,7 +27,7 @@ namespace Seat\Web\Events;
  *
  * @package Seat\Web\Events
  */
-class UserRoleRemoved extends AbstractRoleEvent
+class UserRoleRemoved extends AbstractUserRoleChangeEvent
 {
 
 }

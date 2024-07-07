@@ -23,6 +23,7 @@
 namespace Seat\Web\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Eveapi\Models\RefreshTokenSchedule;
 use Seat\Services\Models\ExtensibleModel;
@@ -36,13 +37,24 @@ use Seat\Web\Models\Acl\Role;
  */
 class CharacterSchedulingRule extends ExtensibleModel
 {
-    const DEFAULT_UPDATE_INTERVAL = 60 * 60;
-
+    /**
+     * @var bool
+     */
     public $timestamps = false;
+
+    /**
+     * @var string
+     */
     protected $primaryKey = 'role_id';
+
+    /**
+     * @var bool
+     */
     public $incrementing = false;
 
-    public function role(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    const DEFAULT_UPDATE_INTERVAL = 60 * 60; // 1 hour, the esi cache timer for most endpoints
+
+    public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);
     }
