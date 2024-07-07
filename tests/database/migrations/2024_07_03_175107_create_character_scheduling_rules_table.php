@@ -24,9 +24,6 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-/*
- * NOTE: This file should be kept in sync with its copy in the testing system
- */
 return new class extends Migration {
     /**
      * Run the migrations.
