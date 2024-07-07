@@ -22,8 +22,6 @@
 
 namespace Seat\Web\Observers;
 
-use Seat\Web\Events\UserRoleAdded;
-use Seat\Web\Events\UserRoleRemoved;
 use Seat\Web\Models\Squads\Squad;
 use Seat\Web\Models\Squads\SquadRole;
 use Seat\Web\Models\User;
@@ -45,7 +43,7 @@ class SquadRoleObserver
 
         // add new role to each squad members
         $squad->members->each(function (User $member) use ($squad_role) {
-            if(!$member->roles()->where('role_id',$squad_role->role_id)->exists()) {
+            if(! $member->roles()->where('role_id', $squad_role->role_id)->exists()) {
                 $member->roles()->attach($squad_role->role_id);
             }
         });
