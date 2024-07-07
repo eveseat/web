@@ -382,13 +382,13 @@ return [
     'esi_character_scheduling_rules' => 'Character Scheduling Rule|Character Scheduling Rules',
     'new_esi_character_scheduling_rules' => 'Add Character Scheduling Rules',
     'update_interval' => 'Update Interval',
-    'character_scheduling_rules_default'=>'When no rules apply to a character, an update interval of one hour is used.',
-    'character_scheduling_rules_empty'=>'no character scheduling rules defined, using a default of one hour for everyone',
+    'character_scheduling_rules_default' => 'When no rules apply to a character, an update interval of one hour is used.',
+    'character_scheduling_rules_empty' => 'no character scheduling rules defined, using a default of one hour for everyone',
     'character_scheduling_rule_deleted' => 'Successfully deleted character scheduling rule!',
     'character_scheduling_rules_interval_input_label' => 'Update Interval',
     'add_character_scheduling_rule' => 'Add Scheduling Rule',
     'role_not_found' => 'The selected roles doesn\'t exist. Please reload the page and try again.',
-    'character_scheduling_rule_creation_success'=>'Successfully created new scheduling rule!',
+    'character_scheduling_rule_creation_success' => 'Successfully created new scheduling rule!',
 
     // Security
     'category' => 'Category',

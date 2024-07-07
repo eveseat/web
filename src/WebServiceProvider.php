@@ -298,8 +298,8 @@ class WebServiceProvider extends AbstractSeatPlugin
         // Custom Events
         $this->app->events->listen('security.log', SecLog::class);
 
-        Event::listen(UserRoleAdded::class,UpdateRefreshTokenSchedule::class);
-        Event::listen(UserRoleRemoved::class,UpdateRefreshTokenSchedule::class);
+        Event::listen(UserRoleAdded::class, UpdateRefreshTokenSchedule::class);
+        Event::listen(UserRoleRemoved::class, UpdateRefreshTokenSchedule::class);
 
         // Characters / Corporations first auth - Jobs Events
         CharacterRole::observe(CharacterRoleObserver::class);

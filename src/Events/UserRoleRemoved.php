@@ -22,9 +22,6 @@
 
 namespace Seat\Web\Events;
 
-use Illuminate\Queue\SerializesModels;
-use Seat\Web\Models\Acl\Role;
-
 /**
  * Class UserRoleRemoved.
  *

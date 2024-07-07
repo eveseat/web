@@ -32,7 +32,6 @@ use Seat\Web\Models\Acl\Role;
  *
  * @property int $role_id
  * @property int $squad_id
- *
  * @property Role $role
  * @property Squad $squad
  */

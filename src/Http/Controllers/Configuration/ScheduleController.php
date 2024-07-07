@@ -22,8 +22,8 @@
 
 namespace Seat\Web\Http\Controllers\Configuration;
 
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Seat\Services\Models\Schedule;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\NewSchedule;
@@ -97,12 +97,12 @@ class ScheduleController extends Controller
         $request->validate([
             'role_id' => 'required|integer',
             'time' => 'required|decimal:0,2|min:1',
-            'timeunit' => 'required|string|in:hour,day,week'
+            'timeunit' => 'required|string|in:hour,day,week',
         ]);
 
         $role = Role::find($request->role_id);
         if($role === null) {
-            return redirect()->back()->with('error',trans('web::seat.role_not_found'));
+            return redirect()->back()->with('error', trans('web::seat.role_not_found'));
         }
 
         $rule = $role->character_scheduling_rule;
@@ -111,24 +111,24 @@ class ScheduleController extends Controller
             $rule->role_id = $role->id;
         }
 
-        if($request->timeunit === "hour") {
-            $time_modifier = 60*60;
-        } elseif ($request->timeunit === "day") {
-            $time_modifier = 60*60*24;
-        } elseif ($request->timeunit === "week") {
-            $time_modifier = 60*60*24*7;
+        if($request->timeunit === 'hour') {
+            $time_modifier = 60 * 60;
+        } elseif ($request->timeunit === 'day') {
+            $time_modifier = 60 * 60 * 24;
+        } elseif ($request->timeunit === 'week') {
+            $time_modifier = 60 * 60 * 24 * 7;
         }
 
         $rule->update_interval = $request->time * $time_modifier;
         $rule->save();
 
-        return redirect()->back()->with('success',trans('web::seat.character_scheduling_rule_creation_success'));
+        return redirect()->back()->with('success', trans('web::seat.character_scheduling_rule_creation_success'));
     }
 
     public function deleteCharacterSchedulingRule(Request $request): \Illuminate\Http\RedirectResponse
     {
         $request->validate([
-            'role_id'=>'required|integer'
+            'role_id' => 'required|integer',
         ]);
 
         CharacterSchedulingRule::destroy($request->role_id);

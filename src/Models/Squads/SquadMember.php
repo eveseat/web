@@ -32,7 +32,6 @@ use Seat\Web\Models\User;
  *
  * @property int squad_id
  * @property int user_id
- *
  * @property Squad squad
  * @property User user
  */
