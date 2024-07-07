@@ -63,6 +63,7 @@ use Seat\Web\Http\Middleware\Locale;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
 use Seat\Web\Http\Middleware\Requirements;
 use Seat\Web\Listeners\UpdateRefreshTokenSchedule;
+use Seat\Web\Models\Acl\RoleUser;
 use Seat\Web\Models\CharacterSchedulingRule;
 use Seat\Web\Models\Squads\SquadMember;
 use Seat\Web\Models\Squads\SquadRole;
@@ -73,6 +74,7 @@ use Seat\Web\Observers\CharacterSchedulingRuleObserver;
 use Seat\Web\Observers\CharacterSkillObserver;
 use Seat\Web\Observers\CharacterTitleObserver;
 use Seat\Web\Observers\RefreshTokenObserver;
+use Seat\Web\Observers\RoleUserObserver;
 use Seat\Web\Observers\SquadMemberObserver;
 use Seat\Web\Observers\SquadRoleObserver;
 
@@ -298,9 +300,6 @@ class WebServiceProvider extends AbstractSeatPlugin
         // Custom Events
         $this->app->events->listen('security.log', SecLog::class);
 
-        Event::listen(UserRoleAdded::class, UpdateRefreshTokenSchedule::class);
-        Event::listen(UserRoleRemoved::class, UpdateRefreshTokenSchedule::class);
-
         // Characters / Corporations first auth - Jobs Events
         CharacterRole::observe(CharacterRoleObserver::class);
         RefreshToken::observe(RefreshTokenObserver::class);
@@ -313,6 +312,7 @@ class WebServiceProvider extends AbstractSeatPlugin
         SquadMember::observe(SquadMemberObserver::class);
         SquadRole::observe(SquadRoleObserver::class);
         CharacterSchedulingRule::observe(CharacterSchedulingRuleObserver::class);
+        RoleUser::observe(RoleUserObserver::class);
     }
 
     /**

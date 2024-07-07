@@ -189,7 +189,7 @@ trait AccessManager
 
         // If the role does not already have the user, add it.
         if (! $role->users->contains($user_id)) {
-            $role->users()->save($user);
+            $role->users()->attach($user);
             event(new UserRoleAdded($user_id, $role));
         }
     }

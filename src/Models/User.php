@@ -29,6 +29,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
@@ -38,6 +39,7 @@ use Seat\Services\Models\UserSetting;
 use Seat\Services\Settings\Profile;
 use Seat\Tests\Web\Database\Factories\UserFactory;
 use Seat\Web\Models\Acl\Role;
+use Seat\Web\Models\Acl\RoleUser;
 use Seat\Web\Models\Squads\Squad;
 use Seat\Web\Models\Squads\SquadMember;
 
@@ -157,11 +159,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function roles()
+    public function roles(): BelongsToMany
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Role::class)->using(RoleUser::class);
     }
 
     /**
@@ -201,7 +203,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function moderators()
     {
@@ -209,7 +211,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function squads()
     {

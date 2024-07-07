@@ -43,11 +43,10 @@ class SquadMemberObserver
         $roles = SquadRole::where('squad_id', $member->squad_id)->get();
 
         // add squad roles to user
-        $member->user->roles()->syncWithoutDetaching($roles->pluck('role_id'));
-
-        // emit an event that roles have been added
         foreach ($roles as $role){
-            event(new UserRoleAdded($member->user->id, $role->role));
+            if(!$member->user->roles()->where('role_id',$role->role_id)->exists()) {
+                $member->user->roles()->attach($role->role_id);
+            }
         }
     }
 
@@ -67,10 +66,5 @@ class SquadMemberObserver
 
         // remove squad roles from user
         $member->user->roles()->detach($roles->pluck('role_id'));
-
-        // emit an event that roles have been added
-        foreach ($roles as $role){
-            event(new UserRoleRemoved($member->user->id, $role->role));
-        }
     }
 }

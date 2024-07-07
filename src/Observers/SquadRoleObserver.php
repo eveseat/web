@@ -45,8 +45,9 @@ class SquadRoleObserver
 
         // add new role to each squad members
         $squad->members->each(function (User $member) use ($squad_role) {
-            $member->roles()->syncWithoutDetaching([$squad_role->role_id]);
-            event(new UserRoleAdded($member->id, $squad_role->role));
+            if(!$member->roles()->where('role_id',$squad_role->role_id)->exists()) {
+                $member->roles()->attach($squad_role->role_id);
+            }
         });
     }
 
@@ -61,7 +62,6 @@ class SquadRoleObserver
         // remove role from each squad member
         $squad->members->each(function (User $member) use ($squad_role) {
             $member->roles()->detach($squad_role->role_id);
-            event(new UserRoleRemoved($member->id, $squad_role->role));
         });
     }
 }
