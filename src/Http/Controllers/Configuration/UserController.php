@@ -153,7 +153,20 @@ class UserController extends Controller
     {
         $user = User::findOrFail($user_id);
 
-        $user->active = $user->active == false ? true : false;
+        if ($user->active == true){
+            $user->active = false;
+            event('security.log', [
+                'deactivated account for user ' . $user->name,
+                'userstatus',
+            ]);
+        } else {
+            $user->active = true;
+            event('security.log', [
+                'reactivated account for user ' . $user->name,
+                'userstatus',
+            ]);
+        }
+
         $user->save();
 
         return redirect()->back()

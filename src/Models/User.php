@@ -261,4 +261,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return $this->admin === true;
     }
+
+    /**
+     * Return whether the user is active or not.
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return $this->active === true;
+    }
 }
