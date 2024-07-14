@@ -46,7 +46,7 @@ Route::group([
     // All routes from here require *at least* that the
     // user is authenticated. We also run the localization
     // related logic here for translation support.
-    Route::group(['middleware' => ['auth', 'locale']], function () {
+    Route::group(['middleware' => ['auth', 'locale', 'user.active']], function () {
 
         // The home route does not need any prefixes
         // and or namespacing modifications, so we will

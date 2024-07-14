@@ -59,6 +59,7 @@ use Seat\Web\Http\Middleware\Authenticate;
 use Seat\Web\Http\Middleware\Locale;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
 use Seat\Web\Http\Middleware\Requirements;
+use Seat\Web\Http\Middleware\UserActive;
 use Seat\Web\Models\Squads\SquadMember;
 use Seat\Web\Models\Squads\SquadRole;
 use Seat\Web\Observers\CharacterAffiliationObserver;
@@ -275,6 +276,10 @@ class WebServiceProvider extends AbstractSeatPlugin
         // Registration Middleware checks of the app is
         // allowing new user registration to occur.
         $router->aliasMiddleware('registration.status', RegistrationAllowed::class);
+
+        // UserActive Middleware checks if the user is active
+        // and redirects them to the login page if not.
+        $router->aliasMiddleware('user.active', UserActive::class);
     }
 
     /**
