@@ -38,7 +38,7 @@ class UserActive
     public function handle($request, Closure $next)
     {
 
-        if (!auth()->user()->isActive())
+        if (! auth()->user()->isActive())
             return redirect()->guest('auth/logout')
                 ->with('error', 'Account is administratively disabled.');
 

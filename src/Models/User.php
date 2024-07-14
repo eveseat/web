@@ -264,6 +264,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     /**
      * Return whether the user is active or not.
+     *
      * @return bool
      */
     public function isActive(): bool
