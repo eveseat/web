@@ -31,14 +31,14 @@ use Seat\Web\Models\User;
  *
  * @package Seat\Web\Observers
  */
-class CharacterAssetObserver extends AbstractSquadObserver
+class CharacterAssetObserver extends AbstractCharacterFilterObserver
 {
     /**
      * @param  \Seat\Eveapi\Models\Assets\CharacterAsset  $asset
      */
     public function created(CharacterAsset $asset)
     {
-        $this->updateUserSquads($asset);
+        $this->fireCharacterFilterEvent($asset);
     }
 
     /**
@@ -46,7 +46,7 @@ class CharacterAssetObserver extends AbstractSquadObserver
      */
     public function updated(CharacterAsset $asset)
     {
-        $this->updateUserSquads($asset);
+        $this->fireCharacterFilterEvent($asset);
     }
 
     /**
@@ -54,7 +54,7 @@ class CharacterAssetObserver extends AbstractSquadObserver
      */
     public function deleted(CharacterAsset $asset)
     {
-        $this->updateUserSquads($asset);
+        $this->fireCharacterFilterEvent($asset);
     }
 
     /**

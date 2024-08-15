@@ -31,14 +31,14 @@ use Seat\Web\Models\User;
  *
  * @package Seat\Web\Observers
  */
-class CharacterAffiliationObserver extends AbstractSquadObserver
+class CharacterAffiliationObserver extends AbstractCharacterFilterObserver
 {
     /**
      * @param  \Seat\Eveapi\Models\Character\CharacterAffiliation  $affiliation
      */
     public function created(CharacterAffiliation $affiliation)
     {
-        $this->updateUserSquads($affiliation);
+        $this->fireCharacterFilterEvent($affiliation);
     }
 
     /**
@@ -46,7 +46,7 @@ class CharacterAffiliationObserver extends AbstractSquadObserver
      */
     public function updated(CharacterAffiliation $affiliation)
     {
-        $this->updateUserSquads($affiliation);
+        $this->fireCharacterFilterEvent($affiliation);
     }
 
     /**

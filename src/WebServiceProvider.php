@@ -28,6 +28,7 @@ use Illuminate\Auth\Events\Logout as LogoutEvent;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Horizon\Horizon;
@@ -43,6 +44,7 @@ use Seat\Services\Settings\Seat;
 use Seat\Web\Commands\Seat\Admin\Login as AdminLogin;
 use Seat\Web\Database\Seeders\ScheduleSeeder;
 use Seat\Web\Events\Attempt;
+use Seat\Web\Events\CharacterFilterDataUpdate;
 use Seat\Web\Events\Login;
 use Seat\Web\Events\Logout;
 use Seat\Web\Events\SecLog;
@@ -59,6 +61,7 @@ use Seat\Web\Http\Middleware\Authenticate;
 use Seat\Web\Http\Middleware\Locale;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
 use Seat\Web\Http\Middleware\Requirements;
+use Seat\Web\Listeners\CharacterFilterDataUpdatedSquads;
 use Seat\Web\Models\Squads\SquadMember;
 use Seat\Web\Models\Squads\SquadRole;
 use Seat\Web\Observers\CharacterAffiliationObserver;
@@ -285,12 +288,13 @@ class WebServiceProvider extends AbstractSeatPlugin
     {
 
         // Internal Authentication Events
-        $this->app->events->listen(LoginEvent::class, Login::class);
-        $this->app->events->listen(LogoutEvent::class, Logout::class);
-        $this->app->events->listen(Attempting::class, Attempt::class);
+        Event::listen(LoginEvent::class, Login::class);
+        Event::listen(LogoutEvent::class, Logout::class);
+        Event::listen(Attempting::class, Attempt::class);
 
         // Custom Events
-        $this->app->events->listen('security.log', SecLog::class);
+        Event::listen('security.log', SecLog::class);
+        Event::listen(CharacterFilterDataUpdate::class, CharacterFilterDataUpdatedSquads::class);
 
         // Characters / Corporations first auth - Jobs Events
         CharacterRole::observe(CharacterRoleObserver::class);

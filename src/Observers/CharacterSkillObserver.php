@@ -31,14 +31,14 @@ use Seat\Web\Models\User;
  *
  * @package Seat\Web\Observers
  */
-class CharacterSkillObserver extends AbstractSquadObserver
+class CharacterSkillObserver extends AbstractCharacterFilterObserver
 {
     /**
      * @param  \Seat\Eveapi\Models\Character\CharacterSkill  $skill
      */
     public function created(CharacterSkill $skill)
     {
-        $this->updateUserSquads($skill);
+        $this->fireCharacterFilterEvent($skill);
     }
 
     /**
@@ -46,7 +46,7 @@ class CharacterSkillObserver extends AbstractSquadObserver
      */
     public function updated(CharacterSkill $skill)
     {
-        $this->updateUserSquads($skill);
+        $this->fireCharacterFilterEvent($skill);
     }
 
     /**
@@ -54,7 +54,7 @@ class CharacterSkillObserver extends AbstractSquadObserver
      */
     public function deleted(CharacterSkill $skill)
     {
-        $this->updateUserSquads($skill);
+        $this->fireCharacterFilterEvent($skill);
     }
 
     /**

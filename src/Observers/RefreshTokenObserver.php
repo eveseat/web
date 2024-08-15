@@ -33,7 +33,7 @@ use Seat\Web\Models\User;
  *
  * @package Seat\Web\Observers
  */
-class RefreshTokenObserver extends AbstractSquadObserver
+class RefreshTokenObserver extends AbstractCharacterFilterObserver
 {
     /**
      * @param  \Seat\Eveapi\Models\RefreshToken  $token
@@ -45,7 +45,7 @@ class RefreshTokenObserver extends AbstractSquadObserver
             $job->fire();
 
             // enqueue squads update
-            $this->updateUserSquads($token);
+            $this->fireCharacterFilterEvent($token);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
         }
@@ -57,7 +57,7 @@ class RefreshTokenObserver extends AbstractSquadObserver
     public function updated(RefreshToken $token)
     {
         try {
-            $this->updateUserSquads($token);
+            $this->fireCharacterFilterEvent($token);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
         }
@@ -77,7 +77,7 @@ class RefreshTokenObserver extends AbstractSquadObserver
     public function deleted(RefreshToken $token)
     {
         try {
-            $this->updateUserSquads($token);
+            $this->fireCharacterFilterEvent($token);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
         }
@@ -93,7 +93,7 @@ class RefreshTokenObserver extends AbstractSquadObserver
             $job->fire();
 
             // enqueue squads update
-            $this->updateUserSquads($token);
+            $this->fireCharacterFilterEvent($token);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
         }

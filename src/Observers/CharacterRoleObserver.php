@@ -34,14 +34,14 @@ use Seat\Web\Models\User;
  *
  * @package Seat\Web\Observers
  */
-class CharacterRoleObserver extends AbstractSquadObserver
+class CharacterRoleObserver extends AbstractCharacterFilterObserver
 {
     /**
      * @param  \Seat\Eveapi\Models\Character\CharacterRole  $role
      */
     public function created(CharacterRole $role)
     {
-        $this->updateUserSquads($role);
+        $this->fireCharacterFilterEvent($role);
 
         // in case the created role is not a Director role, ignore
         if ($role->role != 'Director')
@@ -67,7 +67,7 @@ class CharacterRoleObserver extends AbstractSquadObserver
      */
     public function updated(CharacterRole $role)
     {
-        $this->updateUserSquads($role);
+        $this->fireCharacterFilterEvent($role);
     }
 
     /**
@@ -75,7 +75,7 @@ class CharacterRoleObserver extends AbstractSquadObserver
      */
     public function deleted(CharacterRole $role)
     {
-        $this->updateUserSquads($role);
+        $this->fireCharacterFilterEvent($role);
     }
 
     /**
