@@ -50,6 +50,7 @@ use Seat\Web\Events\Logout;
 use Seat\Web\Events\SecLog;
 use Seat\Web\Http\Composers\AllianceLayout;
 use Seat\Web\Http\Composers\AllianceMenu;
+use Seat\Web\Http\Composers\CharacterFilter;
 use Seat\Web\Http\Composers\CharacterLayout;
 use Seat\Web\Http\Composers\CharacterMenu;
 use Seat\Web\Http\Composers\CorporationLayout;
@@ -246,6 +247,11 @@ class WebServiceProvider extends AbstractSeatPlugin
             'web::alliance.layouts.view',
         ], AllianceLayout::class);
 
+        // Squad filter rules
+        $this->app['view']->composer([
+            'web::squads.edit',
+            'web::squads.create',
+        ], CharacterFilter::class);
     }
 
     /**
@@ -350,6 +356,8 @@ class WebServiceProvider extends AbstractSeatPlugin
             __DIR__ . '/Config/web.locale.php', 'web.locale');
         $this->mergeConfigFrom(
             __DIR__ . '/Config/web.skins.php', 'web.skins');
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/web.characterfilter.php', 'web.characterfilter');
 
         // Menu Configurations
         $this->mergeConfigFrom(
