@@ -99,6 +99,10 @@ return [
     'token_status_valid' => 'This character has a valid registered token.',
     'token_status_invalid' => 'You don\'t own any valid token for this character.',
     'set_default' => 'Set Default',
+    'rule' => 'Rule|Rules',
+    'hour' => 'hour',
+    'week' => 'week',
+    'day' => 'day',
 
     // Requirements
     'requirements' => 'Requirements',
@@ -375,6 +379,11 @@ return [
     'scheduled_commands' => 'Scheduled Commands',
     'choose_prepop' => 'Choose a pre-populated cron expression, or write your own.',
     'add_scheduled' => 'Add Scheduled Command',
+    'character_scheduling_rules' => 'Character Scheduling Rules',
+    'new_character_scheduling_rule' => 'New Character Scheduling Rule',
+    'update_interval' => 'Update Interval',
+    'name_input_placeholder' => 'Enter a name...',
+
 
     // Security
     'category' => 'Category',

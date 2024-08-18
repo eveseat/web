@@ -251,6 +251,7 @@ class WebServiceProvider extends AbstractSeatPlugin
         $this->app['view']->composer([
             'web::squads.edit',
             'web::squads.create',
+            'web::configuration.schedule.view'
         ], CharacterFilter::class);
     }
 
