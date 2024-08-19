@@ -103,6 +103,7 @@ return [
     'hour' => 'hour',
     'week' => 'week',
     'day' => 'day',
+    'save' => 'Save',
 
     // Requirements
     'requirements' => 'Requirements',
@@ -379,10 +380,13 @@ return [
     'scheduled_commands' => 'Scheduled Commands',
     'choose_prepop' => 'Choose a pre-populated cron expression, or write your own.',
     'add_scheduled' => 'Add Scheduled Command',
+    'character_scheduling_rule'=>'character scheduling rule',
     'character_scheduling_rules' => 'Character Scheduling Rules',
     'new_character_scheduling_rule' => 'New Character Scheduling Rule',
     'update_interval' => 'Update Interval',
     'name_input_placeholder' => 'Enter a name...',
+    'character_scheduling_rules_empty' => 'There are no character scheduling rules defined, using a default of one hour for everyone.',
+    'character_scheduling_rules_default' => 'When no rules apply to a character, an update interval of one hour is used.',
 
 
     // Security

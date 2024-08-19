@@ -137,7 +137,7 @@
           <h3 class="card-title">{{ trans('web::seat.new_character_scheduling_rule') }}</h3>
         </div>
         <div class="card-body">
-          <form action="{{ route('seatcore::configuration.schedule.rule.create') }}" method="POST">
+          <form action="{{ route('seatcore::configuration.schedule.rule.create') }}" method="POST" id="rule-form">
             @csrf
 
             <div class="form-group">
@@ -150,7 +150,7 @@
               <label for="time">{{ trans('web::seat.update_interval') }}</label>
               <div class="row mx-0">
                 <input class="form-control col-md-9" type="number" name="time" value="1" min="1" step="0.01" id="time">
-                <select name="timeunit" class="form-control col-md-3">
+                <select name="timeunit" class="form-control col-md-3" id="timeunit">
                   <option selected value="hour">{{trans('web::seat.hour')}}</option>
                   <option value="day">{{trans('web::seat.day')}}</option>
                   <option value="week">{{trans('web::seat.week')}}</option>
@@ -166,7 +166,7 @@
 
             <button type="submit" class="btn btn-success float-right">
               <i class="fas fa-plus-square"></i>
-              {{trans('web::seat.add')}}
+              {{trans('web::seat.save')}}
             </button>
           </form>
         </div>
@@ -184,17 +184,43 @@
             <tr>
               <th>{{trans_choice('web::seat.rule', 1)}}</th>
               <th>{{trans('web::seat.update_interval')}}</th>
-              <th>{{trans('web::seat.action')}}</th>
+              <th class="text-right">{{trans('web::seat.action')}}</th>
             </tr>
             </thead>
             <tbody>
+              @foreach($scheduling_rules as $scheduling_rule)
+                <tr>
+                  <td>{{ $scheduling_rule->name }}</td>
+                  <td>{{ \Carbon\CarbonInterval::seconds($scheduling_rule->interval)->cascade() }}</td>
+                  <td class="d-flex flex-row align-items-center justify-content-end">
+                      <button type="button" class="btn btn-success btn-sm btn-edit-rule mx-2" data-filter="{{$scheduling_rule->filter}}" data-name="{{$scheduling_rule->name}}" data-interval="{{$scheduling_rule->interval}}">{{ trans('web::seat.edit') }}</button>
 
+                      <form action="{{ route('seatcore::configuration.schedule.rule.delete') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="rule_id" value="{{$scheduling_rule->id}}">
+                        <button type="submit" class="btn btn-danger btn-sm confirmdelete" data-seat-entity="{{trans('web::seat.character_scheduling_rule')}}">{{ trans('web::seat.delete') }}</button>
+                      </form>
+                  </td>
+                </tr>
+              @endforeach
+
+                <tr>
+                  <td colspan="3" class="text-center">
+                    @if($scheduling_rules->isEmpty())
+                      {{trans('web::seat.character_scheduling_rules_empty')}}
+                    @endif
+                  </td>
+                </tr>
             </tbody>
           </table>
+          @if(!$scheduling_rules->isEmpty())
+            <p class="text-muted">
+              {{trans('web::seat.character_scheduling_rules_default')}}
+            </p>
+          @endif
         </div>
       </div>
     </div>
-
   </div>
 
 
@@ -218,6 +244,20 @@
           $("span#expression").html(
               "Cron: <b>" + this.value.replace("<", "") + "</b>");
       });
+  </script>
+
+  <script>
+      $('#rule-form').on('submit', function () {
+          $('input[name="filters"]').val(document.getElementById('filters-btn').dataset.filters);
+      });
+
+      $('.btn-edit-rule').on('click', function (){
+          $('#filters-btn').attr('data-filters',$(this).attr('data-filter'))
+          $('#rule-name').val($(this).data('name'))
+          $('#time').val($(this).data('interval')/3600)
+          $('#timeunit').val("hour")
+          $(this).blur()
+      })
   </script>
 
 @endpush

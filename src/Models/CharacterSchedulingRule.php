@@ -20,22 +20,23 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/')
-    ->name('seatcore::configuration.schedule')
-    ->uses('ScheduleController@listSchedule');
+namespace Seat\Web\Models;
 
-Route::post('/new')
-    ->name('seatcore::configuration.schedule.new')
-    ->uses('ScheduleController@newSchedule');
+use Carbon\Carbon;
+use Seat\Eveapi\Models\RefreshToken;
+use Seat\Eveapi\Models\RefreshTokenSchedule;
+use Seat\Services\Models\ExtensibleModel;
 
-Route::get('/delete/{schedule_id}')
-    ->name('seatcore::configuration.schedule.delete')
-    ->uses('ScheduleController@deleteSchedule');
-
-Route::post('/rules/create')
-    ->name('seatcore::configuration.schedule.rule.create')
-    ->uses('ScheduleController@createSchedulingRule');
-
-Route::post('/rules/delete')
-    ->name('seatcore::configuration.schedule.rule.delete')
-    ->uses('ScheduleController@deleteSchedulingRule');
+/**
+ * @property int $id
+ * @property string name
+ * @property string filter
+ * @property int interval
+ */
+class CharacterSchedulingRule extends ExtensibleModel
+{
+    /**
+     * @var bool
+     */
+    public $timestamps = false;
+}

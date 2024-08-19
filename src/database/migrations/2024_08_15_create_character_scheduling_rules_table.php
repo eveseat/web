@@ -13,7 +13,7 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('character_scheduling_rules', function (Blueprint $table) {
-            $table->bigIncrements('id')->primary();
+            $table->bigIncrements('id');
             $table->string("name");
             $table->integer("interval")->unsigned();
             $table->json("filter");
