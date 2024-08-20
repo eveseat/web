@@ -23,6 +23,7 @@
 namespace Seat\Web\Observers;
 
 use Illuminate\Database\Eloquent\Model;
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Web\Events\CharacterFilterDataUpdate;
 use Seat\Web\Exceptions\InvalidFilterException;
 use Seat\Web\Models\Squads\Squad;
@@ -39,9 +40,9 @@ abstract class AbstractCharacterFilterObserver
      * Return the User owning the model which fired the catch event.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $fired_model  The model which fired the catch event
-     * @return \Seat\Web\Models\User|null The user owning this model
+     * @return ?CharacterInfo The character that is affected by this update
      */
-    abstract protected function findRelatedUser(Model $fired_model): ?User;
+    abstract protected function findRelatedCharacter(Model $fired_model): ?CharacterInfo;
 
     /**
      * Update squads to which the user owning model firing the event is member.
@@ -52,11 +53,11 @@ abstract class AbstractCharacterFilterObserver
      */
     protected function fireCharacterFilterEvent(Model $fired_model): void
     {
-        $user = $this->findRelatedUser($fired_model);
+        $character = $this->findRelatedCharacter($fired_model);
 
-        if (! $user)
+        if (! $character)
             return;
 
-        event(new CharacterFilterDataUpdate($user));
+        event(new CharacterFilterDataUpdate($character));
     }
 }

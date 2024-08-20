@@ -23,6 +23,7 @@
 namespace Seat\Web\Observers;
 
 use Illuminate\Database\Eloquent\Model;
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Character\CharacterSkill;
 use Seat\Web\Models\User;
 
@@ -68,5 +69,16 @@ class CharacterSkillObserver extends AbstractCharacterFilterObserver
             ->whereHas('characters', function ($query) use ($fired_model) {
                 $query->where('character_infos.character_id', $fired_model->character_id);
             })->first();
+    }
+
+    /**
+     * Return the User owning the model which fired the catch event.
+     *
+     * @param \Illuminate\Database\Eloquent\Model $fired_model The model which fired the catch event
+     * @return ?CharacterInfo The character that is affected by this update
+     */
+    protected function findRelatedCharacter(Model $fired_model): ?CharacterInfo
+    {
+        return $fired_model->character;
     }
 }

@@ -23,6 +23,7 @@
 namespace Seat\Web\Observers;
 
 use Illuminate\Database\Eloquent\Model;
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Pivot\Character\CharacterTitle;
 use Seat\Web\Models\User;
 
@@ -58,15 +59,13 @@ class CharacterTitleObserver extends AbstractCharacterFilterObserver
     }
 
     /**
-     * {@inheritdoc}
+     * Return the User owning the model which fired the catch event.
+     *
+     * @param \Illuminate\Database\Eloquent\Model $fired_model The model which fired the catch event
+     * @return ?CharacterInfo The character that is affected by this update
      */
-    protected function findRelatedUser(Model $fired_model): ?User
+    protected function findRelatedCharacter(Model $fired_model): ?CharacterInfo
     {
-        // retrieve user related to the character affiliation
-        return User::with('squads')
-            ->standard()
-            ->whereHas('characters', function ($query) use ($fired_model) {
-                $query->where('character_infos.character_id', $fired_model->character_id);
-            })->first();
+        return CharacterInfo::find($fired_model->character_id);
     }
 }

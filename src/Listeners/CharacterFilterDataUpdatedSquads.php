@@ -9,7 +9,7 @@ class CharacterFilterDataUpdatedSquads
 {
     public static function handle(CharacterFilterDataUpdate $event)
     {
-        $user = $event->user;
+        $user = $event->character->user;
 
         $member_squads = $user->squads;
 

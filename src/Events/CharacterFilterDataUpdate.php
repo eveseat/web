@@ -3,6 +3,7 @@
 namespace Seat\Web\Events;
 
 use Illuminate\Queue\SerializesModels;
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Web\Models\User;
 
 /**
@@ -12,13 +13,13 @@ class CharacterFilterDataUpdate
 {
     use SerializesModels;
 
-    public User $user;
+    public CharacterInfo $character;
 
     /**
      * @param User $user
      */
-    public function __construct(User $user)
+    public function __construct(CharacterInfo $character)
     {
-        $this->user = $user;
+        $this->character = $character;
     }
 }
