@@ -63,6 +63,7 @@ use Seat\Web\Http\Middleware\Locale;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
 use Seat\Web\Http\Middleware\Requirements;
 use Seat\Web\Listeners\CharacterFilterDataUpdatedSquads;
+use Seat\Web\Listeners\CharacterFilterDataUpdatedTokens;
 use Seat\Web\Models\Squads\SquadMember;
 use Seat\Web\Models\Squads\SquadRole;
 use Seat\Web\Observers\CharacterAffiliationObserver;
@@ -302,6 +303,7 @@ class WebServiceProvider extends AbstractSeatPlugin
         // Custom Events
         Event::listen('security.log', SecLog::class);
         Event::listen(CharacterFilterDataUpdate::class, CharacterFilterDataUpdatedSquads::class);
+        Event::listen(CharacterFilterDataUpdate::class, CharacterFilterDataUpdatedTokens::class);
 
         // Characters / Corporations first auth - Jobs Events
         CharacterRole::observe(CharacterRoleObserver::class);

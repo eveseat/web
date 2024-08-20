@@ -22,10 +22,10 @@
 
 namespace Seat\Web\Models;
 
-use Carbon\Carbon;
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\RefreshToken;
-use Seat\Eveapi\Models\RefreshTokenSchedule;
 use Seat\Services\Models\ExtensibleModel;
+use stdClass;
 
 /**
  * @property int $id
@@ -35,8 +35,52 @@ use Seat\Services\Models\ExtensibleModel;
  */
 class CharacterSchedulingRule extends ExtensibleModel
 {
+    use Filterable;
+
     /**
      * @var bool
      */
     public $timestamps = false;
+
+    /**
+     * The filters to use.
+     *
+     * @return \stdClass
+     */
+    public function getFilters(): stdClass
+    {
+        return json_decode($this->filter);
+    }
+
+    /**
+     * Recomputes the update interval of a character and saves it in the refresh_token_schedules table
+     *
+     * @param RefreshToken $token
+     * @return void
+     */
+    public static function updateRefreshTokenSchedule(RefreshToken $token): void
+    {
+        $schedule = $token->token_schedule;
+        $schedule->update_interval = self::getCharacterSchedulingInterval($token->character);
+        $schedule->save();
+    }
+
+    /**
+     * Computes the scheduling interval from the character scheduling rules for a character
+     *
+     * @param CharacterInfo $character
+     * @return int
+     */
+    private static function getCharacterSchedulingInterval(CharacterInfo $character): int
+    {
+        $scheduling_rules = CharacterSchedulingRule::orderBy('interval', 'asc')->get();
+
+        foreach ($scheduling_rules as $rule) {
+            if($rule->isEligible($character)) {
+                return $rule->interval;
+            }
+        }
+
+        return 60*60; // 1 hour
+    }
 }

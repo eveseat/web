@@ -58,6 +58,7 @@ class CharacterAffiliationObserver extends AbstractCharacterFilterObserver
      */
     protected function findRelatedCharacter(Model $fired_model): ?CharacterInfo
     {
-        return $fired_model->character;
+        // CharacterAffiliation links to UniverseName instead of CharacterInfo
+        return CharacterInfo::find($fired_model->character_id);
     }
 }

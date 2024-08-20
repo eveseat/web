@@ -24,6 +24,7 @@ namespace Seat\Web\Http\Controllers\Configuration;
 
 use Artisan;
 use Illuminate\Http\Request;
+use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\Models\Schedule;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\NewSchedule;
@@ -117,6 +118,10 @@ class ScheduleController extends Controller
         $rule->filter = $request->filters;
         $rule->save();
 
+        RefreshToken::all()->each(function ($token){
+            CharacterSchedulingRule::updateRefreshTokenSchedule($token);
+        });
+
         return redirect()->back()
             ->with('success', 'Character Scheduling Rule added!');
     }
@@ -128,6 +133,10 @@ class ScheduleController extends Controller
         ]);
 
         CharacterSchedulingRule::destroy($request->rule_id);
+
+        RefreshToken::all()->each(function ($token){
+           CharacterSchedulingRule::updateRefreshTokenSchedule($token);
+        });
 
         return redirect()->back()->with('success','Successfully removed character scheduling rule!');
     }
