@@ -96,7 +96,7 @@ class ScheduleController extends Controller
             'filters' => 'required|json',
             'name' => 'required|string',
             'time' => 'required|numeric',
-            'timeunit' => 'required|in:hour,day,week'
+            'timeunit' => 'required|in:hour,day,week',
         ]);
 
         // $time_modifier: conversion factor from timeunit to seconds
@@ -118,7 +118,7 @@ class ScheduleController extends Controller
         $rule->filter = $request->filters;
         $rule->save();
 
-        RefreshToken::all()->each(function ($token){
+        RefreshToken::all()->each(function ($token) {
             CharacterSchedulingRule::updateRefreshTokenSchedule($token);
         });
 
@@ -129,15 +129,15 @@ class ScheduleController extends Controller
     public function deleteSchedulingRule(Request $request)
     {
         $request->validate([
-            'rule_id' => 'required|numeric'
+            'rule_id' => 'required|numeric',
         ]);
 
         CharacterSchedulingRule::destroy($request->rule_id);
 
-        RefreshToken::all()->each(function ($token){
+        RefreshToken::all()->each(function ($token) {
            CharacterSchedulingRule::updateRefreshTokenSchedule($token);
         });
 
-        return redirect()->back()->with('success','Successfully removed character scheduling rule!');
+        return redirect()->back()->with('success', 'Successfully removed character scheduling rule!');
     }
 }

@@ -74,7 +74,7 @@ class CharacterSkillObserver extends AbstractCharacterFilterObserver
     /**
      * Return the User owning the model which fired the catch event.
      *
-     * @param \Illuminate\Database\Eloquent\Model $fired_model The model which fired the catch event
+     * @param  \Illuminate\Database\Eloquent\Model  $fired_model  The model which fired the catch event
      * @return ?CharacterInfo The character that is affected by this update
      */
     protected function findRelatedCharacter(Model $fired_model): ?CharacterInfo

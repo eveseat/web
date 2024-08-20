@@ -26,7 +26,6 @@ use Illuminate\Database\Eloquent\Model;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Web\Events\CharacterFilterDataUpdate;
 use Seat\Web\Exceptions\InvalidFilterException;
-use Seat\Web\Models\Squads\Squad;
 use Seat\Web\Models\User;
 
 /**

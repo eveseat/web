@@ -162,7 +162,7 @@
               @include('web::components.filters.buttons.filters', ['rules' => [], 'buttonText'=>'Configure Character Filter'])
             </div>
 
-            <input type="hidden" name="filters" value="{}" />
+            <input type="hidden" name="filters" value="{}"/>
 
             <button type="submit" class="btn btn-success float-right">
               <i class="fas fa-plus-square"></i>
@@ -188,29 +188,32 @@
             </tr>
             </thead>
             <tbody>
-              @foreach($scheduling_rules as $scheduling_rule)
-                <tr>
-                  <td>{{ $scheduling_rule->name }}</td>
-                  <td>{{ \Carbon\CarbonInterval::seconds($scheduling_rule->interval)->cascade() }}</td>
-                  <td class="d-flex flex-row align-items-center justify-content-end">
-                      <button type="button" class="btn btn-success btn-sm btn-edit-rule mx-2" data-filter="{{$scheduling_rule->filter}}" data-name="{{$scheduling_rule->name}}" data-interval="{{$scheduling_rule->interval}}">{{ trans('web::seat.edit') }}</button>
+            @foreach($scheduling_rules as $scheduling_rule)
+              <tr>
+                <td>{{ $scheduling_rule->name }}</td>
+                <td>{{ \Carbon\CarbonInterval::seconds($scheduling_rule->interval)->cascade() }}</td>
+                <td class="d-flex flex-row align-items-center justify-content-end">
+                  <button type="button" class="btn btn-success btn-sm btn-edit-rule mx-2"
+                          data-filter="{{$scheduling_rule->filter}}" data-name="{{$scheduling_rule->name}}"
+                          data-interval="{{$scheduling_rule->interval}}">{{ trans('web::seat.edit') }}</button>
 
-                      <form action="{{ route('seatcore::configuration.schedule.rule.delete') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="rule_id" value="{{$scheduling_rule->id}}">
-                        <button type="submit" class="btn btn-danger btn-sm confirmdelete" data-seat-entity="{{trans('web::seat.character_scheduling_rule')}}">{{ trans('web::seat.delete') }}</button>
-                      </form>
-                  </td>
-                </tr>
-              @endforeach
+                  <form action="{{ route('seatcore::configuration.schedule.rule.delete') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="rule_id" value="{{$scheduling_rule->id}}">
+                    <button type="submit" class="btn btn-danger btn-sm confirmdelete"
+                            data-seat-entity="{{trans('web::seat.character_scheduling_rule')}}">{{ trans('web::seat.delete') }}</button>
+                  </form>
+                </td>
+              </tr>
+            @endforeach
 
-                <tr>
-                  <td colspan="3" class="text-center">
-                    @if($scheduling_rules->isEmpty())
-                      {{trans('web::seat.character_scheduling_rules_empty')}}
-                    @endif
-                  </td>
-                </tr>
+            @if($scheduling_rules->isEmpty())
+              <tr>
+                <td colspan="3" class="text-center">
+                  {{trans('web::seat.character_scheduling_rules_empty')}}
+                </td>
+              </tr>
+            @endif
             </tbody>
           </table>
           @if(!$scheduling_rules->isEmpty())
@@ -251,10 +254,10 @@
           $('input[name="filters"]').val(document.getElementById('filters-btn').dataset.filters);
       });
 
-      $('.btn-edit-rule').on('click', function (){
-          $('#filters-btn').attr('data-filters',$(this).attr('data-filter'))
+      $('.btn-edit-rule').on('click', function () {
+          $('#filters-btn').attr('data-filters', $(this).attr('data-filter'))
           $('#rule-name').val($(this).data('name'))
-          $('#time').val($(this).data('interval')/3600)
+          $('#time').val($(this).data('interval') / 3600)
           $('#timeunit').val("hour")
           $(this).blur()
       })

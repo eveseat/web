@@ -53,9 +53,9 @@ class CharacterSchedulingRule extends ExtensibleModel
     }
 
     /**
-     * Recomputes the update interval of a character and saves it in the refresh_token_schedules table
+     * Recomputes the update interval of a character and saves it in the refresh_token_schedules table.
      *
-     * @param RefreshToken $token
+     * @param  RefreshToken  $token
      * @return void
      */
     public static function updateRefreshTokenSchedule(RefreshToken $token): void
@@ -66,9 +66,9 @@ class CharacterSchedulingRule extends ExtensibleModel
     }
 
     /**
-     * Computes the scheduling interval from the character scheduling rules for a character
+     * Computes the scheduling interval from the character scheduling rules for a character.
      *
-     * @param CharacterInfo $character
+     * @param  CharacterInfo  $character
      * @return int
      */
     private static function getCharacterSchedulingInterval(CharacterInfo $character): int
@@ -81,6 +81,6 @@ class CharacterSchedulingRule extends ExtensibleModel
             }
         }
 
-        return 60*60; // 1 hour
+        return 60 * 60; // 1 hour
     }
 }
