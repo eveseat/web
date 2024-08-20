@@ -33,12 +33,11 @@ class CharacterFilter
         // work with raw arrays since the filter code requires an array of objects, and laravel collections don't like to give us that
         $newrules = [];
         foreach ($rules as $rule) {
+            // convert route names to urls, but keep arrays with hardcoded options
             if(is_string($rule['src'])){
                 $rule['src'] = route($rule['src']);
             }
-
             $newrules[] = (object) $rule;
-
         }
 
         $view->with('characterFilterRules', $newrules);
