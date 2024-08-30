@@ -24,6 +24,7 @@ namespace Seat\Web\Models;
 
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\RefreshToken;
+use Seat\Eveapi\Models\RefreshTokenSchedule;
 use Seat\Services\Models\ExtensibleModel;
 use stdClass;
 
@@ -61,6 +62,12 @@ class CharacterSchedulingRule extends ExtensibleModel
     public static function updateRefreshTokenSchedule(RefreshToken $token): void
     {
         $schedule = $token->token_schedule;
+
+        if($schedule === null) {
+            $schedule = new RefreshTokenSchedule();
+            $schedule->character_id = $token->character_id;
+        }
+
         $schedule->update_interval = self::getCharacterSchedulingInterval($token->character);
         $schedule->save();
     }
