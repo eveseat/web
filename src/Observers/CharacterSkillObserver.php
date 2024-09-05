@@ -23,6 +23,7 @@
 namespace Seat\Web\Observers;
 
 use Illuminate\Database\Eloquent\Model;
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Character\CharacterSkill;
 use Seat\Web\Models\User;
 
@@ -31,14 +32,14 @@ use Seat\Web\Models\User;
  *
  * @package Seat\Web\Observers
  */
-class CharacterSkillObserver extends AbstractSquadObserver
+class CharacterSkillObserver extends AbstractCharacterFilterObserver
 {
     /**
      * @param  \Seat\Eveapi\Models\Character\CharacterSkill  $skill
      */
     public function created(CharacterSkill $skill)
     {
-        $this->updateUserSquads($skill);
+        $this->fireCharacterFilterEvent($skill);
     }
 
     /**
@@ -46,7 +47,7 @@ class CharacterSkillObserver extends AbstractSquadObserver
      */
     public function updated(CharacterSkill $skill)
     {
-        $this->updateUserSquads($skill);
+        $this->fireCharacterFilterEvent($skill);
     }
 
     /**
@@ -54,7 +55,7 @@ class CharacterSkillObserver extends AbstractSquadObserver
      */
     public function deleted(CharacterSkill $skill)
     {
-        $this->updateUserSquads($skill);
+        $this->fireCharacterFilterEvent($skill);
     }
 
     /**
@@ -68,5 +69,16 @@ class CharacterSkillObserver extends AbstractSquadObserver
             ->whereHas('characters', function ($query) use ($fired_model) {
                 $query->where('character_infos.character_id', $fired_model->character_id);
             })->first();
+    }
+
+    /**
+     * Return the User owning the model which fired the catch event.
+     *
+     * @param  \Illuminate\Database\Eloquent\Model  $fired_model  The model which fired the catch event
+     * @return ?CharacterInfo The character that is affected by this update
+     */
+    protected function findRelatedCharacter(Model $fired_model): ?CharacterInfo
+    {
+        return $fired_model->character;
     }
 }

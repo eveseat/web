@@ -186,6 +186,9 @@ class CorporationPolicyTest extends TestCase
      */
     public function testCorporationPermissionsAsDelegatedCharacter()
     {
+        // make sure this doesn't generate observer events that trigger the squads logic
+        CharacterAffiliation::unsetEventDispatcher();
+
         $permissions = array_keys(require __DIR__ . '/../../src/Config/Permissions/corporation.php');
 
         $user = User::factory()->create();

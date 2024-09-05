@@ -23,42 +23,40 @@
 namespace Seat\Web\Observers;
 
 use Illuminate\Database\Eloquent\Model;
-use Seat\Eveapi\Models\Character\CharacterAffiliation;
 use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Web\Events\CharacterFilterDataUpdate;
+use Seat\Web\Exceptions\InvalidFilterException;
 use Seat\Web\Models\User;
 
 /**
- * Class CharacterAffiliationObserver.
+ * Class AbstractSquadObserver.
  *
  * @package Seat\Web\Observers
  */
-class CharacterAffiliationObserver extends AbstractCharacterFilterObserver
+abstract class AbstractCharacterFilterObserver
 {
-    /**
-     * @param  \Seat\Eveapi\Models\Character\CharacterAffiliation  $affiliation
-     */
-    public function created(CharacterAffiliation $affiliation)
-    {
-        $this->fireCharacterFilterEvent($affiliation);
-    }
-
-    /**
-     * @param  \Seat\Eveapi\Models\Character\CharacterAffiliation  $affiliation
-     */
-    public function updated(CharacterAffiliation $affiliation)
-    {
-        $this->fireCharacterFilterEvent($affiliation);
-    }
-
     /**
      * Return the User owning the model which fired the catch event.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $fired_model  The model which fired the catch event
      * @return ?CharacterInfo The character that is affected by this update
      */
-    protected function findRelatedCharacter(Model $fired_model): ?CharacterInfo
+    abstract protected function findRelatedCharacter(Model $fired_model): ?CharacterInfo;
+
+    /**
+     * Update squads to which the user owning model firing the event is member.
+     *
+     * @param  \Illuminate\Database\Eloquent\Model  $fired_model  The model which fired the catch event
+     *
+     * @throws InvalidFilterException
+     */
+    protected function fireCharacterFilterEvent(Model $fired_model): void
     {
-        // CharacterAffiliation links to UniverseName instead of CharacterInfo
-        return CharacterInfo::find($fired_model->character_id);
+        $character = $this->findRelatedCharacter($fired_model);
+
+        if (! $character)
+            return;
+
+        event(new CharacterFilterDataUpdate($character));
     }
 }

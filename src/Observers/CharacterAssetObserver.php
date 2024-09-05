@@ -24,6 +24,7 @@ namespace Seat\Web\Observers;
 
 use Illuminate\Database\Eloquent\Model;
 use Seat\Eveapi\Models\Assets\CharacterAsset;
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Web\Models\User;
 
 /**
@@ -31,14 +32,14 @@ use Seat\Web\Models\User;
  *
  * @package Seat\Web\Observers
  */
-class CharacterAssetObserver extends AbstractSquadObserver
+class CharacterAssetObserver extends AbstractCharacterFilterObserver
 {
     /**
      * @param  \Seat\Eveapi\Models\Assets\CharacterAsset  $asset
      */
     public function created(CharacterAsset $asset)
     {
-        $this->updateUserSquads($asset);
+        $this->fireCharacterFilterEvent($asset);
     }
 
     /**
@@ -46,7 +47,7 @@ class CharacterAssetObserver extends AbstractSquadObserver
      */
     public function updated(CharacterAsset $asset)
     {
-        $this->updateUserSquads($asset);
+        $this->fireCharacterFilterEvent($asset);
     }
 
     /**
@@ -54,19 +55,17 @@ class CharacterAssetObserver extends AbstractSquadObserver
      */
     public function deleted(CharacterAsset $asset)
     {
-        $this->updateUserSquads($asset);
+        $this->fireCharacterFilterEvent($asset);
     }
 
     /**
-     * {@inheritdoc}
+     * Return the User owning the model which fired the catch event.
+     *
+     * @param  \Illuminate\Database\Eloquent\Model  $fired_model  The model which fired the catch event
+     * @return ?CharacterInfo The character that is affected by this update
      */
-    protected function findRelatedUser(Model $fired_model): ?User
+    protected function findRelatedCharacter(Model $fired_model): ?CharacterInfo
     {
-        // retrieve user related to the character affiliation
-        return User::with('squads')
-            ->standard()
-            ->whereHas('characters', function ($query) use ($fired_model) {
-                $query->where('character_infos.character_id', $fired_model->character_id);
-            })->first();
+        return $fired_model->character;
     }
 }

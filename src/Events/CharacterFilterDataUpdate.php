@@ -20,22 +20,26 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/')
-    ->name('seatcore::configuration.schedule')
-    ->uses('ScheduleController@listSchedule');
+namespace Seat\Web\Events;
 
-Route::post('/new')
-    ->name('seatcore::configuration.schedule.new')
-    ->uses('ScheduleController@newSchedule');
+use Illuminate\Queue\SerializesModels;
+use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Web\Models\User;
 
-Route::get('/delete/{schedule_id}')
-    ->name('seatcore::configuration.schedule.delete')
-    ->uses('ScheduleController@deleteSchedule');
+/**
+ * This event is fired when character filters, like used in squads, need to recompute because the data they are based on changed.
+ */
+class CharacterFilterDataUpdate
+{
+    use SerializesModels;
 
-Route::post('/rules/create')
-    ->name('seatcore::configuration.schedule.rule.create')
-    ->uses('ScheduleController@createSchedulingRule');
+    public CharacterInfo $character;
 
-Route::post('/rules/delete')
-    ->name('seatcore::configuration.schedule.rule.delete')
-    ->uses('ScheduleController@deleteSchedulingRule');
+    /**
+     * @param  User  $user
+     */
+    public function __construct(CharacterInfo $character)
+    {
+        $this->character = $character;
+    }
+}

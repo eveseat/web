@@ -258,6 +258,9 @@ class CharacterPolicyTest extends TestCase
      */
     public function testCharacterPermissionsAsDelegatedCorporation()
     {
+        // make sure this doesn't generate observer events that trigger the squads logic
+        CharacterAffiliation::unsetEventDispatcher();
+
         $permissions = array_keys(require __DIR__ . '/../../src/Config/Permissions/character.php');
 
         $user = User::factory()->create();
@@ -313,6 +316,9 @@ class CharacterPolicyTest extends TestCase
      */
     public function testCharacterPermissionsAsDelegatedAlliance()
     {
+        // make sure this doesn't generate observer events that trigger the squads logic
+        CharacterAffiliation::unsetEventDispatcher();
+
         $permissions = array_keys(require __DIR__ . '/../../src/Config/Permissions/character.php');
 
         $user = User::factory()->create();

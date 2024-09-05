@@ -20,22 +20,15 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/')
-    ->name('seatcore::configuration.schedule')
-    ->uses('ScheduleController@listSchedule');
+namespace Seat\Web\Listeners;
 
-Route::post('/new')
-    ->name('seatcore::configuration.schedule.new')
-    ->uses('ScheduleController@newSchedule');
+use Seat\Web\Events\CharacterFilterDataUpdate;
+use Seat\Web\Models\CharacterSchedulingRule;
 
-Route::get('/delete/{schedule_id}')
-    ->name('seatcore::configuration.schedule.delete')
-    ->uses('ScheduleController@deleteSchedule');
-
-Route::post('/rules/create')
-    ->name('seatcore::configuration.schedule.rule.create')
-    ->uses('ScheduleController@createSchedulingRule');
-
-Route::post('/rules/delete')
-    ->name('seatcore::configuration.schedule.rule.delete')
-    ->uses('ScheduleController@deleteSchedulingRule');
+class CharacterFilterDataUpdatedTokens
+{
+    public static function handle(CharacterFilterDataUpdate $update)
+    {
+        CharacterSchedulingRule::updateRefreshTokenSchedule($update->character->refresh_token);
+    }
+}

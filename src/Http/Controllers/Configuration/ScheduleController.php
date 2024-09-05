@@ -23,9 +23,12 @@
 namespace Seat\Web\Http\Controllers\Configuration;
 
 use Artisan;
+use Illuminate\Http\Request;
+use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\Models\Schedule;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\NewSchedule;
+use Seat\Web\Models\CharacterSchedulingRule;
 
 /**
  * Class ScheduleController.
@@ -52,11 +55,12 @@ class ScheduleController extends Controller
             'every five minutes' => '*/5 * * * *',
             'every ten minutes' => '*/10 * * * *',
             'every thirty minutes' => '*/30 * * * *',
-
         ];
 
+        $scheduling_rules = CharacterSchedulingRule::all();
+
         return view('web::configuration.schedule.view',
-            compact('schedule', 'commands', 'expressions'));
+            compact('schedule', 'commands', 'expressions', 'scheduling_rules'));
     }
 
     /**
@@ -84,5 +88,56 @@ class ScheduleController extends Controller
 
         return redirect()->back()
             ->with('success', 'Schedule entry deleted!');
+    }
+
+    public function createSchedulingRule(Request $request)
+    {
+        $request->validate([
+            'filters' => 'required|json',
+            'name' => 'required|string',
+            'time' => 'required|numeric',
+            'timeunit' => 'required|in:hour,day,week',
+        ]);
+
+        // $time_modifier: conversion factor from timeunit to seconds
+        if($request->timeunit === 'hour') {
+            $time_modifier = 60 * 60;
+        } elseif ($request->timeunit === 'day') {
+            $time_modifier = 60 * 60 * 24;
+        } elseif ($request->timeunit === 'week') {
+            $time_modifier = 60 * 60 * 24 * 7;
+        }
+        $time = $request->time * $time_modifier;
+
+        $rule = CharacterSchedulingRule::where('name', $request->name)->first();
+        if($rule === null) {
+            $rule = new CharacterSchedulingRule();
+            $rule->name = $request->name;
+        }
+        $rule->interval = $time;
+        $rule->filter = $request->filters;
+        $rule->save();
+
+        RefreshToken::all()->each(function ($token) {
+            CharacterSchedulingRule::updateRefreshTokenSchedule($token);
+        });
+
+        return redirect()->back()
+            ->with('success', 'Character Scheduling Rule added!');
+    }
+
+    public function deleteSchedulingRule(Request $request)
+    {
+        $request->validate([
+            'rule_id' => 'required|numeric',
+        ]);
+
+        CharacterSchedulingRule::destroy($request->rule_id);
+
+        RefreshToken::all()->each(function ($token) {
+           CharacterSchedulingRule::updateRefreshTokenSchedule($token);
+        });
+
+        return redirect()->back()->with('success', 'Successfully removed character scheduling rule!');
     }
 }

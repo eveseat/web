@@ -83,17 +83,7 @@
   </div>
 
   @include('web::components.filters.modals.filters.filters', [
-    'filters' => [
-        (object) ['name' => 'scopes', 'src' => route('seatcore::fastlookup.scopes'), 'path' => 'refresh_token', 'field' => 'scopes', 'label' => 'Scopes'],
-        (object) ['name' => 'character', 'src' => route('seatcore::fastlookup.characters'), 'path' => '', 'field' => 'character_id', 'label' => 'Character'],
-        (object) ['name' => 'title', 'src' => route('seatcore::fastlookup.titles'), 'path' => 'titles', 'field' => 'id', 'label' => 'Title'],
-        (object) ['name' => 'corporation', 'src' => route('seatcore::fastlookup.corporations'), 'path' => 'affiliation', 'field' => 'corporation_id', 'label' => 'Corporation'],
-        (object) ['name' => 'alliance', 'src' => route('seatcore::fastlookup.alliances'), 'path' => 'affiliation', 'field' => 'alliance_id', 'label' => 'Alliance'],
-        (object) ['name' => 'skill', 'src' => route('seatcore::fastlookup.skills'), 'path' => 'skills', 'field' => 'skill_id', 'label' => 'Skill'],
-        (object) ['name' => 'skill_level', 'src' => [['id' => 1, 'text' => 'Level 1'], ['id' => 2, 'text' => 'Level 2'], ['id' => 3, 'text' => 'Level 3'], ['id' => 4, 'text' => 'Level 4'], ['id' => 5, 'text' => 'Level 5']], 'path' => 'skills', 'field' => 'trained_skill_level', 'label' => 'Skill Level'],
-        (object) ['name' => 'type', 'src' => route('seatcore::fastlookup.items'), 'path' => 'assets', 'field' => 'type_id', 'label' => 'Item'],
-        (object) ['name' => 'role', 'src' => route('seatcore::fastlookup.roles'), 'path' => 'corporation_roles', 'field' => 'role', 'label' => 'Role'],
-    ],
+    'filters' => $characterFilterRules,
   ])
 @endsection
 

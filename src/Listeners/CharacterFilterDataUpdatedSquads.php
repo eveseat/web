@@ -20,41 +20,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Observers;
+namespace Seat\Web\Listeners;
 
-use Illuminate\Database\Eloquent\Model;
-use Seat\Web\Exceptions\InvalidFilterException;
+use Seat\Web\Events\CharacterFilterDataUpdate;
 use Seat\Web\Models\Squads\Squad;
-use Seat\Web\Models\User;
 
-/**
- * Class AbstractSquadObserver.
- *
- * @package Seat\Web\Observers
- */
-abstract class AbstractSquadObserver
+class CharacterFilterDataUpdatedSquads
 {
-    /**
-     * Return the User owning the model which fired the catch event.
-     *
-     * @param  \Illuminate\Database\Eloquent\Model  $fired_model  The model which fired the catch event
-     * @return \Seat\Web\Models\User|null The user owning this model
-     */
-    abstract protected function findRelatedUser(Model $fired_model): ?User;
-
-    /**
-     * Update squads to which the user owning model firing the event is member.
-     *
-     * @param  \Illuminate\Database\Eloquent\Model  $fired_model  The model which fired the catch event
-     *
-     * @throws InvalidFilterException
-     */
-    protected function updateUserSquads(Model $fired_model)
+    public static function handle(CharacterFilterDataUpdate $event)
     {
-        $user = $this->findRelatedUser($fired_model);
-
-        if (! $user)
-            return;
+        $user = $event->character->user;
 
         $member_squads = $user->squads;
 

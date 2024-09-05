@@ -20,22 +20,26 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/')
-    ->name('seatcore::configuration.schedule')
-    ->uses('ScheduleController@listSchedule');
+namespace Seat\Web\Http\Composers;
 
-Route::post('/new')
-    ->name('seatcore::configuration.schedule.new')
-    ->uses('ScheduleController@newSchedule');
+use Illuminate\View\View;
 
-Route::get('/delete/{schedule_id}')
-    ->name('seatcore::configuration.schedule.delete')
-    ->uses('ScheduleController@deleteSchedule');
+class CharacterFilter
+{
+    public function compose(View $view)
+    {
+        $rules = config('web.characterfilter');
 
-Route::post('/rules/create')
-    ->name('seatcore::configuration.schedule.rule.create')
-    ->uses('ScheduleController@createSchedulingRule');
+        // work with raw arrays since the filter code requires an array of objects, and laravel collections don't like to give us that
+        $newrules = [];
+        foreach ($rules as $rule) {
+            // convert route names to urls, but keep arrays with hardcoded options
+            if(is_string($rule['src'])){
+                $rule['src'] = route($rule['src']);
+            }
+            $newrules[] = (object) $rule;
+        }
 
-Route::post('/rules/delete')
-    ->name('seatcore::configuration.schedule.rule.delete')
-    ->uses('ScheduleController@deleteSchedulingRule');
+        $view->with('characterFilterRules', $newrules);
+    }
+}

@@ -20,22 +20,33 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/')
-    ->name('seatcore::configuration.schedule')
-    ->uses('ScheduleController@listSchedule');
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-Route::post('/new')
-    ->name('seatcore::configuration.schedule.new')
-    ->uses('ScheduleController@newSchedule');
+return new class extends Migration {
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('character_scheduling_rules', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->integer('interval')->unsigned();
+            $table->json('filter');
+        });
+    }
 
-Route::get('/delete/{schedule_id}')
-    ->name('seatcore::configuration.schedule.delete')
-    ->uses('ScheduleController@deleteSchedule');
-
-Route::post('/rules/create')
-    ->name('seatcore::configuration.schedule.rule.create')
-    ->uses('ScheduleController@createSchedulingRule');
-
-Route::post('/rules/delete')
-    ->name('seatcore::configuration.schedule.rule.delete')
-    ->uses('ScheduleController@deleteSchedulingRule');
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop('character_scheduling_rules');
+    }
+};

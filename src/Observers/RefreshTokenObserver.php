@@ -25,6 +25,7 @@ namespace Seat\Web\Observers;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Seat\Eveapi\Bus\Character;
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Models\User;
 
@@ -33,7 +34,7 @@ use Seat\Web\Models\User;
  *
  * @package Seat\Web\Observers
  */
-class RefreshTokenObserver extends AbstractSquadObserver
+class RefreshTokenObserver extends AbstractCharacterFilterObserver
 {
     /**
      * @param  \Seat\Eveapi\Models\RefreshToken  $token
@@ -45,7 +46,7 @@ class RefreshTokenObserver extends AbstractSquadObserver
             $job->fire();
 
             // enqueue squads update
-            $this->updateUserSquads($token);
+            $this->fireCharacterFilterEvent($token);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
         }
@@ -57,7 +58,7 @@ class RefreshTokenObserver extends AbstractSquadObserver
     public function updated(RefreshToken $token)
     {
         try {
-            $this->updateUserSquads($token);
+            $this->fireCharacterFilterEvent($token);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
         }
@@ -77,7 +78,7 @@ class RefreshTokenObserver extends AbstractSquadObserver
     public function deleted(RefreshToken $token)
     {
         try {
-            $this->updateUserSquads($token);
+            $this->fireCharacterFilterEvent($token);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
         }
@@ -93,18 +94,20 @@ class RefreshTokenObserver extends AbstractSquadObserver
             $job->fire();
 
             // enqueue squads update
-            $this->updateUserSquads($token);
+            $this->fireCharacterFilterEvent($token);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
         }
     }
 
     /**
-     * {@inheritdoc}
+     * Return the User owning the model which fired the catch event.
+     *
+     * @param  \Illuminate\Database\Eloquent\Model  $fired_model  The model which fired the catch event
+     * @return ?CharacterInfo The character that is affected by this update
      */
-    protected function findRelatedUser(Model $fired_model): ?User
+    protected function findRelatedCharacter(Model $fired_model): ?CharacterInfo
     {
-        return User::with('squads')
-            ->find($fired_model->user_id);
+        return $fired_model->character;
     }
 }

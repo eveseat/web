@@ -25,6 +25,7 @@ namespace Seat\Web\Observers;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Seat\Eveapi\Bus\Corporation;
+use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Character\CharacterRole;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Models\User;
@@ -34,14 +35,14 @@ use Seat\Web\Models\User;
  *
  * @package Seat\Web\Observers
  */
-class CharacterRoleObserver extends AbstractSquadObserver
+class CharacterRoleObserver extends AbstractCharacterFilterObserver
 {
     /**
      * @param  \Seat\Eveapi\Models\Character\CharacterRole  $role
      */
     public function created(CharacterRole $role)
     {
-        $this->updateUserSquads($role);
+        $this->fireCharacterFilterEvent($role);
 
         // in case the created role is not a Director role, ignore
         if ($role->role != 'Director')
@@ -67,7 +68,7 @@ class CharacterRoleObserver extends AbstractSquadObserver
      */
     public function updated(CharacterRole $role)
     {
-        $this->updateUserSquads($role);
+        $this->fireCharacterFilterEvent($role);
     }
 
     /**
@@ -75,19 +76,17 @@ class CharacterRoleObserver extends AbstractSquadObserver
      */
     public function deleted(CharacterRole $role)
     {
-        $this->updateUserSquads($role);
+        $this->fireCharacterFilterEvent($role);
     }
 
     /**
-     * {@inheritdoc}
+     * Return the User owning the model which fired the catch event.
+     *
+     * @param  \Illuminate\Database\Eloquent\Model  $fired_model  The model which fired the catch event
+     * @return ?CharacterInfo The character that is affected by this update
      */
-    protected function findRelatedUser(Model $fired_model): ?User
+    protected function findRelatedCharacter(Model $fired_model): ?CharacterInfo
     {
-        // retrieve user related to the character affiliation
-        return User::with('squads')
-            ->standard()
-            ->whereHas('characters', function ($query) use ($fired_model) {
-                $query->where('character_infos.character_id', $fired_model->character_id);
-            })->first();
+        return $fired_model->character;
     }
 }
