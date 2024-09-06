@@ -20,42 +20,38 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Observers;
+namespace Seat\Web\Commands\Seat\Filters;
 
-use Exception;
-use Seat\Eveapi\Bus\Character;
-use Seat\Eveapi\Models\RefreshToken;
+use Illuminate\Console\Command;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Seat\Web\Jobs\UpdateCharacterFilters;
 
-/**
- * Class RefreshTokenObserver.
- *
- * @package Seat\Web\Observers
- */
-class RefreshTokenObserver
+class Update extends Command
 {
-    /**
-     * @param  \Seat\Eveapi\Models\RefreshToken  $token
-     */
-    public function created(RefreshToken $token)
-    {
-        try {
-            $job = new Character($token->character_id, $token);
-            $job->fire();
-        } catch (Exception $e) {
-            logger()->error($e->getMessage());
-        }
-    }
+    use DispatchesJobs;
 
     /**
-     * @param  \Seat\Eveapi\Models\RefreshToken  $token
+     * The name and signature of the console command.
+     *
+     * @var string
      */
-    public function restored(RefreshToken $token)
+    protected $signature = 'seat:filters:update';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Runs squad and character scheduling rule updates';
+
+    /**
+     * Run the command.
+     *
+     * @return void
+     */
+    public function handle(): void
     {
-        try {
-            $job = new Character($token->character_id, $token);
-            $job->fire();
-        } catch (Exception $e) {
-            logger()->error($e->getMessage());
-        }
+        UpdateCharacterFilters::dispatch()->onQueue('high');
+        $this->line('Scheduled character filter updates for all characters!');
     }
 }

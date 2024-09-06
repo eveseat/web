@@ -20,42 +20,36 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Observers;
+namespace Seat\Web\Jobs;
 
-use Exception;
-use Seat\Eveapi\Bus\Character;
-use Seat\Eveapi\Models\RefreshToken;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Web\Events\CharacterFilterDataUpdate;
 
-/**
- * Class RefreshTokenObserver.
- *
- * @package Seat\Web\Observers
- */
-class RefreshTokenObserver
+class UpdateCharacterFilters implements ShouldQueue
 {
-    /**
-     * @param  \Seat\Eveapi\Models\RefreshToken  $token
-     */
-    public function created(RefreshToken $token)
+    use Queueable, InteractsWithQueue, Dispatchable;
+
+    public function tags()
     {
-        try {
-            $job = new Character($token->character_id, $token);
-            $job->fire();
-        } catch (Exception $e) {
-            logger()->error($e->getMessage());
-        }
+        return ['web', 'filters'];
     }
 
     /**
-     * @param  \Seat\Eveapi\Models\RefreshToken  $token
+     * Go over all character and trigger a character filter update.
+     *
+     * @return void
      */
-    public function restored(RefreshToken $token)
+    public function handle()
     {
-        try {
-            $job = new Character($token->character_id, $token);
-            $job->fire();
-        } catch (Exception $e) {
-            logger()->error($e->getMessage());
-        }
+        // without chunking, we can run out of memory on large installs
+        CharacterInfo::chunk(200, function ($characters) {
+            foreach ($characters as $character){
+                event(new CharacterFilterDataUpdate($character));
+            }
+        });
     }
 }

@@ -47,6 +47,14 @@ class ScheduleSeeder extends AbstractScheduleSeeder
                 'ping_before' => null,
                 'ping_after' => null,
             ],
+            [
+                'command' => 'seat:filters:update',
+                'expression' => sprintf('%d * * * *', rand(0, 59)),
+                'allow_overlap' => false,
+                'allow_maintenance' => false,
+                'ping_before' => null,
+                'ping_after' => null,
+            ],
         ];
     }
 
