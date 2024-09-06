@@ -37,7 +37,8 @@ use Seat\Eveapi\Models\RefreshToken;
 use Seat\Services\AbstractSeatPlugin;
 use Seat\Services\Settings\Profile;
 use Seat\Services\Settings\Seat;
-use Seat\Web\Commands\Seat\Admin\Login as AdminLogin;
+use Seat\Web\Commands\Seat\Admin\Login as AdminLoginCommand;
+use Seat\Web\Commands\Seat\Filters\Update as FilterUpdateCommand;
 use Seat\Web\Database\Seeders\ScheduleSeeder;
 use Seat\Web\Events\Attempt;
 use Seat\Web\Events\CharacterFilterDataUpdate;
@@ -412,7 +413,8 @@ class WebServiceProvider extends AbstractSeatPlugin
     private function addCommands()
     {
         $this->commands([
-            AdminLogin::class,
+            AdminLoginCommand::class,
+            FilterUpdateCommand::class
         ]);
     }
 
