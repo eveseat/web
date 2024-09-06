@@ -32,12 +32,8 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Horizon\Horizon;
-use Seat\Eveapi\Models\Assets\CharacterAsset;
-use Seat\Eveapi\Models\Character\CharacterAffiliation;
 use Seat\Eveapi\Models\Character\CharacterRole;
-use Seat\Eveapi\Models\Character\CharacterSkill;
 use Seat\Eveapi\Models\RefreshToken;
-use Seat\Eveapi\Pivot\Character\CharacterTitle;
 use Seat\Services\AbstractSeatPlugin;
 use Seat\Services\Settings\Profile;
 use Seat\Services\Settings\Seat;
@@ -62,15 +58,12 @@ use Seat\Web\Http\Middleware\Authenticate;
 use Seat\Web\Http\Middleware\Locale;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
 use Seat\Web\Http\Middleware\Requirements;
+use Seat\Web\Listeners\CharacterBatchProcessed;
 use Seat\Web\Listeners\CharacterFilterDataUpdatedSquads;
 use Seat\Web\Listeners\CharacterFilterDataUpdatedTokens;
 use Seat\Web\Models\Squads\SquadMember;
 use Seat\Web\Models\Squads\SquadRole;
-use Seat\Web\Observers\CharacterAffiliationObserver;
-use Seat\Web\Observers\CharacterAssetObserver;
 use Seat\Web\Observers\CharacterRoleObserver;
-use Seat\Web\Observers\CharacterSkillObserver;
-use Seat\Web\Observers\CharacterTitleObserver;
 use Seat\Web\Observers\RefreshTokenObserver;
 use Seat\Web\Observers\SquadMemberObserver;
 use Seat\Web\Observers\SquadRoleObserver;
@@ -302,6 +295,7 @@ class WebServiceProvider extends AbstractSeatPlugin
 
         // Custom Events
         Event::listen('security.log', SecLog::class);
+        Event::listen(\Seat\Eveapi\Events\CharacterBatchProcessed::class, CharacterBatchProcessed::class);
         Event::listen(CharacterFilterDataUpdate::class, CharacterFilterDataUpdatedSquads::class);
         Event::listen(CharacterFilterDataUpdate::class, CharacterFilterDataUpdatedTokens::class);
 
