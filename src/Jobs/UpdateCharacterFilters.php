@@ -45,9 +45,11 @@ class UpdateCharacterFilters implements ShouldQueue
      */
     public function handle()
     {
-        $characters = CharacterInfo::all();
-        foreach ($characters as $character){
-            event(new CharacterFilterDataUpdate($character));
-        }
+        // without chunking, we can run out of memory on large installs
+        CharacterInfo::chunk(200, function ($characters){
+            foreach ($characters as $character){
+                event(new CharacterFilterDataUpdate($character));
+            }
+        });
     }
 }
