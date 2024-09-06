@@ -66,6 +66,7 @@ class CharacterSchedulingRule extends ExtensibleModel
         if($schedule === null) {
             $schedule = new RefreshTokenSchedule();
             $schedule->character_id = $token->character_id;
+            $schedule->last_update = now()->subYears(10); // Hopefully this is far enough in the past to mean never?
         }
 
         $schedule->update_interval = self::getCharacterSchedulingInterval($token->character);
