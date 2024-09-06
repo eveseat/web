@@ -118,8 +118,11 @@ class ScheduleController extends Controller
         $rule->filter = $request->filters;
         $rule->save();
 
-        RefreshToken::all()->each(function ($token) {
-            CharacterSchedulingRule::updateRefreshTokenSchedule($token);
+        // chunk this to avoid out-of-memory issues on large installs
+        RefreshToken::chunk(200, function ($tokens) {
+            foreach ($tokens as $token) {
+                CharacterSchedulingRule::updateRefreshTokenSchedule($token);
+            }
         });
 
         return redirect()->back()
@@ -134,8 +137,11 @@ class ScheduleController extends Controller
 
         CharacterSchedulingRule::destroy($request->rule_id);
 
-        RefreshToken::all()->each(function ($token) {
-           CharacterSchedulingRule::updateRefreshTokenSchedule($token);
+        // chunk this to avoid out-of-memory issues on large installs
+        RefreshToken::chunk(200, function ($tokens) {
+            foreach ($tokens as $token) {
+                CharacterSchedulingRule::updateRefreshTokenSchedule($token);
+            }
         });
 
         return redirect()->back()->with('success', 'Successfully removed character scheduling rule!');
