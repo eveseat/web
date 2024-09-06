@@ -23,12 +23,9 @@
 namespace Seat\Web\Observers;
 
 use Exception;
-use Illuminate\Database\Eloquent\Model;
 use Seat\Eveapi\Bus\Corporation;
-use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Character\CharacterRole;
 use Seat\Eveapi\Models\RefreshToken;
-use Seat\Web\Models\User;
 
 /**
  * Class CharacterRoleObserver.

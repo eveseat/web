@@ -23,11 +23,8 @@
 namespace Seat\Web\Observers;
 
 use Exception;
-use Illuminate\Database\Eloquent\Model;
 use Seat\Eveapi\Bus\Character;
-use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\RefreshToken;
-use Seat\Web\Models\User;
 
 /**
  * Class RefreshTokenObserver.

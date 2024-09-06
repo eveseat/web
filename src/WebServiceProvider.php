@@ -414,7 +414,7 @@ class WebServiceProvider extends AbstractSeatPlugin
     {
         $this->commands([
             AdminLoginCommand::class,
-            FilterUpdateCommand::class
+            FilterUpdateCommand::class,
         ]);
     }
 

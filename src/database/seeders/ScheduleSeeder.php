@@ -54,7 +54,7 @@ class ScheduleSeeder extends AbstractScheduleSeeder
                 'allow_maintenance' => false,
                 'ping_before' => null,
                 'ping_after' => null,
-            ]
+            ],
         ];
     }
 
