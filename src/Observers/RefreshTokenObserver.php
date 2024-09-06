@@ -34,7 +34,7 @@ use Seat\Web\Models\User;
  *
  * @package Seat\Web\Observers
  */
-class RefreshTokenObserver extends AbstractCharacterFilterObserver
+class RefreshTokenObserver
 {
     /**
      * @param  \Seat\Eveapi\Models\RefreshToken  $token
@@ -44,41 +44,6 @@ class RefreshTokenObserver extends AbstractCharacterFilterObserver
         try {
             $job = new Character($token->character_id, $token);
             $job->fire();
-
-            // enqueue squads update
-            $this->fireCharacterFilterEvent($token);
-        } catch (Exception $e) {
-            logger()->error($e->getMessage());
-        }
-    }
-
-    /**
-     * @param  \Seat\Eveapi\Models\RefreshToken  $token
-     */
-    public function updated(RefreshToken $token)
-    {
-        try {
-            $this->fireCharacterFilterEvent($token);
-        } catch (Exception $e) {
-            logger()->error($e->getMessage());
-        }
-    }
-
-    /**
-     * @param  \Seat\Eveapi\Models\RefreshToken  $token
-     */
-    public function softDeleted(RefreshToken $token)
-    {
-        $this->deleted($token);
-    }
-
-    /**
-     * @param  \Seat\Eveapi\Models\RefreshToken  $token
-     */
-    public function deleted(RefreshToken $token)
-    {
-        try {
-            $this->fireCharacterFilterEvent($token);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
         }
@@ -92,22 +57,8 @@ class RefreshTokenObserver extends AbstractCharacterFilterObserver
         try {
             $job = new Character($token->character_id, $token);
             $job->fire();
-
-            // enqueue squads update
-            $this->fireCharacterFilterEvent($token);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
         }
-    }
-
-    /**
-     * Return the User owning the model which fired the catch event.
-     *
-     * @param  \Illuminate\Database\Eloquent\Model  $fired_model  The model which fired the catch event
-     * @return ?CharacterInfo The character that is affected by this update
-     */
-    protected function findRelatedCharacter(Model $fired_model): ?CharacterInfo
-    {
-        return $fired_model->character;
     }
 }

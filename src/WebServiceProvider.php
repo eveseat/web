@@ -310,10 +310,6 @@ class WebServiceProvider extends AbstractSeatPlugin
         RefreshToken::observe(RefreshTokenObserver::class);
 
         // Squads Events
-        CharacterAffiliation::observe(CharacterAffiliationObserver::class);
-        CharacterAsset::observe(CharacterAssetObserver::class);
-        CharacterSkill::observe(CharacterSkillObserver::class);
-        CharacterTitle::observe(CharacterTitleObserver::class);
         SquadMember::observe(SquadMemberObserver::class);
         SquadRole::observe(SquadRoleObserver::class);
     }

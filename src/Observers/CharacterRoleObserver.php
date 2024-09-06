@@ -35,15 +35,13 @@ use Seat\Web\Models\User;
  *
  * @package Seat\Web\Observers
  */
-class CharacterRoleObserver extends AbstractCharacterFilterObserver
+class CharacterRoleObserver
 {
     /**
      * @param  \Seat\Eveapi\Models\Character\CharacterRole  $role
      */
     public function created(CharacterRole $role)
     {
-        $this->fireCharacterFilterEvent($role);
-
         // in case the created role is not a Director role, ignore
         if ($role->role != 'Director')
             return;
@@ -61,32 +59,5 @@ class CharacterRoleObserver extends AbstractCharacterFilterObserver
         } catch (Exception $e) {
             logger()->error($e->getMessage());
         }
-    }
-
-    /**
-     * @param  \Seat\Eveapi\Models\Character\CharacterRole  $role
-     */
-    public function updated(CharacterRole $role)
-    {
-        $this->fireCharacterFilterEvent($role);
-    }
-
-    /**
-     * @param  \Seat\Eveapi\Models\Character\CharacterRole  $role
-     */
-    public function deleted(CharacterRole $role)
-    {
-        $this->fireCharacterFilterEvent($role);
-    }
-
-    /**
-     * Return the User owning the model which fired the catch event.
-     *
-     * @param  \Illuminate\Database\Eloquent\Model  $fired_model  The model which fired the catch event
-     * @return ?CharacterInfo The character that is affected by this update
-     */
-    protected function findRelatedCharacter(Model $fired_model): ?CharacterInfo
-    {
-        return $fired_model->character;
     }
 }
