@@ -29,6 +29,7 @@ class CharacterFilterDataUpdatedTokens
 {
     public static function handle(CharacterFilterDataUpdate $update)
     {
-        CharacterSchedulingRule::updateRefreshTokenSchedule($update->character->refresh_token);
+        if (!is_null($update->character->refresh_token))
+            CharacterSchedulingRule::updateRefreshTokenSchedule($update->character->refresh_token);
     }
 }
