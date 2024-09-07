@@ -77,6 +77,11 @@ class SsoController extends Controller
                 $used_scopes = $token->scopes;
         }
 
+        if (count($used_scopes) > 1){
+            if (($key = array_search('publicData', $used_scopes)) !== false) {
+                unset($used_scopes[$key]);
+            }
+        }
         // Store the scopes we are sending to CCP in the session so we can
         // validate the JWT response contains the right scopes.
         session()->put('scopes', $used_scopes);
