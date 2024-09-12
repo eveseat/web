@@ -22,4 +22,5 @@
 
 return [
     'queue_status_update_time' => 10 * 1000, // milliseconds = seconds x 1,000
+    'trusted_proxies' => env('TRUSTED_PROXIES'),
 ];
