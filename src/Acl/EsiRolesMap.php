@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,65 +38,65 @@ class EsiRolesMap
      * @var array
      */
     const DEFAULT_VALUES = [
-        'Accountant'        => [
+        'Accountant' => [
             'corporation.summary',
             'corporation.journal',
             'corporation.transaction',
         ],
-        'Account_Take_1'    => [
+        'Account_Take_1' => [
             'corporation.wallet_first_division',
         ],
-        'Account_Take_2'    => [
+        'Account_Take_2' => [
             'corporation.wallet_second_division',
         ],
-        'Account_Take_3'    => [
+        'Account_Take_3' => [
             'corporation.wallet_third_division',
         ],
-        'Account_Take_4'    => [
+        'Account_Take_4' => [
             'corporation.wallet_fourth_division',
         ],
-        'Account_Take_5'    => [
+        'Account_Take_5' => [
             'corporation.wallet_fifth_division',
         ],
-        'Account_Take_6'    => [
+        'Account_Take_6' => [
             'corporation.wallet_sixth_division',
         ],
-        'Account_Take_7'    => [
+        'Account_Take_7' => [
             'corporation.wallet_seventh_division',
         ],
-        'Auditor'           => [
+        'Auditor' => [
             'corporation.summary',
         ],
-        'Container_Take_1'  => [
+        'Container_Take_1' => [
             'corporation.asset_first_division',
         ],
-        'Container_Take_2'  => [
+        'Container_Take_2' => [
             'corporation.asset_first_division',
         ],
-        'Container_Take_3'  => [
+        'Container_Take_3' => [
             'corporation.asset_third_division',
         ],
-        'Container_Take_4'  => [
+        'Container_Take_4' => [
             'corporation.asset_fourth_division',
         ],
-        'Container_Take_5'  => [
+        'Container_Take_5' => [
             'corporation.asset_fifth_division',
         ],
-        'Container_Take_6'  => [
+        'Container_Take_6' => [
             'corporation.asset_sixth_division',
         ],
-        'Container_Take_7'  => [
+        'Container_Take_7' => [
             'corporation.asset_seventh_division',
         ],
-        'Contract_Manager'  => [
+        'Contract_Manager' => [
             'corporation.summary',
             'corporation.contracts',
         ],
-        'Diplomat'          => [
+        'Diplomat' => [
             'corporation.summary',
             'corporation.tracking',
         ],
-        'Director'          => [
+        'Director' => [
             'corporation.summary',
             'corporation.asset',
             'corporation.asset_first_division',
@@ -134,11 +134,11 @@ class EsiRolesMap
         'Junior_Accountant' => [
             'corporation.summary',
         ],
-        'Security_Officer'  => [
+        'Security_Officer' => [
             'corporation.summary',
             'corporation.security',
         ],
-        'Trader'            => [
+        'Trader' => [
             'corporation.summary',
             'corporation.market',
         ],

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@
 
 namespace Seat\Web\Http\Validation;
 
-use Artisan;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
@@ -79,11 +78,9 @@ class NewSchedule extends FormRequest
     public function rules()
     {
 
-        $available_commands = implode(',', array_keys(Artisan::all()));
-
         return [
 
-            'command'    => 'required|in:' . $available_commands,
+            'command' => 'required|artisan',
             'expression' => 'required|cron|unique:schedules,expression,NULL,NULL,command,' .
                 $this->request->get('command'),
         ];

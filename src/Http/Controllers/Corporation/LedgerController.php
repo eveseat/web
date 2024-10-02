@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ class LedgerController extends Controller
         $month = is_null($month) ? date('m') : $month;
 
         $group_column = 'second_party_id';
-        $ref_types = ['bounty_prizes', 'bounty_prize', 'ess_escrow_transfer'];
+        $ref_types = ['bounty_prizes', 'bounty_prize', 'ess_escrow_transfer', 'corporate_reward_payout', 'agent_mission_reward', 'agent_mission_time_bonus_reward'];
 
         $periods = $this->getCorporationLedgerPeriods($corporation->corporation_id, $ref_types);
         $entries = $this->getCorporationLedgerByMonth($corporation->corporation_id, $group_column, $ref_types, $year, $month);
@@ -216,7 +216,7 @@ class LedgerController extends Controller
      */
     private function getCorporationLedgerPeriods(int $corporation_id, array $ref_types)
     {
-        return CorporationWalletJournal::select(DB::raw('DISTINCT MONTH(date) as month, YEAR(date) as year'))
+        return CorporationWalletJournal::select(DB::raw('DISTINCT EXTRACT(MONTH FROM date) as month, EXTRACT(YEAR FROM date) as year'))
             ->where('corporation_id', $corporation_id)
             ->whereIn('ref_type', $ref_types)
             ->orderBy('year', 'desc')

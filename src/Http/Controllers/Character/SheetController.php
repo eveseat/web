@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 namespace Seat\Web\Http\Controllers\Character;
 
 use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\Sde\InvType;
 use Seat\Web\Http\Controllers\Controller;
 
 /**
@@ -38,6 +39,17 @@ class SheetController extends Controller
      */
     public function show(CharacterInfo $character)
     {
-        return view('web::character.sheet', compact('character'));
+        //create key/value pairs for implant IDs and texts
+        $jumpclone_implant_ids = collect($character->jump_clones)
+            ->pluck('implants')
+            ->flatten()
+            ->unique();
+
+        $jumpclone_implants = InvType::whereIn('typeID', $jumpclone_implant_ids)
+            ->get()
+            ->pluck('typeName', 'typeID')
+            ->toArray();
+
+        return view('web::character.sheet', compact('character', 'jumpclone_implants'));
     }
 }

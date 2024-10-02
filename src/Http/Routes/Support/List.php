@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,13 +20,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/inv/types', [
-    'as'   => 'support.inv.types',
-    'uses' => 'ListController@getInvTypes',
-]);
+Route::get('/inv/types')
+    ->name('seatcore::support.inv.types')
+    ->uses('ListController@getInvTypes');
 
-Route::get('/api-key/userlist', [
-    'as'         => 'support.api-key.userlist',
-    'middleware' => 'can:global.superuser',
-    'uses'       => 'ListController@getSeatUserList',
-]);
+Route::get('/api-key/userlist')
+    ->name('seatcore::support.api-key.userlist')
+    ->middleware('can:global.superuser')
+    ->uses('ListController@getSeatUserList');

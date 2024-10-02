@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,32 +20,26 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('login', [
-    'as'   => 'auth.login',
-    'uses' => 'LoginController@showLoginForm',
-]);
+Route::get('login')
+    ->name('seatcore::auth.login')
+    ->uses('LoginController@showLoginForm');
 
-Route::post('login', [
-    'as'   => 'auth.login.post',
-    'uses' => 'LoginController@login',
-]);
+Route::post('login')
+    ->name('seatcore::auth.login.post')
+    ->uses('LoginController@login');
 
-Route::get('login/admin/{token}', [
-    'as'   => 'auth.admin.login',
-    'uses' => 'AdminLoginController@checkLoginToken',
-]);
+Route::get('login/admin/{token}')
+    ->name('seatcore::auth.admin.login')
+    ->uses('AdminLoginController@checkLoginToken');
 
-Route::get('/login/sharelink/{token}', [
-    'as' => 'auth.activate.sharelink',
-    'uses' => 'SharelinkController@checkLoginToken',
-]);
+Route::get('/login/sharelink/{token}')
+    ->name('seatcore::auth.activate.sharelink')
+    ->uses('SharelinkController@checkLoginToken');
 
-Route::any('logout', [
-    'as'   => 'auth.logout',
-    'uses' => 'LoginController@logout',
-]);
+Route::any('logout')
+    ->name('seatcore::auth.logout')
+    ->uses('LoginController@logout');
 
-Route::get('unauthorized', [
-    'as'   => 'auth.unauthorized',
-    'uses' => 'AuthorizationController@getUnauthorized',
-]);
+Route::get('unauthorized')
+    ->name('seatcore::auth.unauthorized')
+    ->uses('AuthorizationController@getUnauthorized');

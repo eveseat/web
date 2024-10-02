@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,11 +21,11 @@
  */
 
 return [
-    'planet'            => '惑星',
-    'reinforcement'     => 'リインフォース時間',
-    'alliance'          => 'アライアンス所属企業に使用を許可する。',
-    'standings'         => 'スタンディングに基づいて使用を許可する。',
-    'standing_level'    => '必要最低スタンディングレベル。',
+    'planet' => '惑星',
+    'reinforcement' => 'リインフォース時間',
+    'alliance' => 'アライアンス所属企業に使用を許可する。',
+    'standings' => 'スタンディングに基づいて使用を許可する。',
+    'standing_level' => '必要最低スタンディングレベル。',
     'tax_alliance_corp' => 'アライアンス/コーポレーションに対する税率',
-    'tax_standings'     => '各スタンディングに対する税率',
+    'tax_standings' => '各スタンディングに対する税率',
 ];

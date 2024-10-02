@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,12 +21,12 @@
  */
 
 return [
-    'read'         => 'Read',
-    'date'         => '날짜',
-    'sender'       => '발신자',
-    'subject'      => '제목',
+    'read' => 'Read',
+    'date' => '날짜',
+    'sender' => '발신자',
+    'subject' => '제목',
     'mailing_list' => '메일링 리스트',
-    'sent'         => 'Sent',
-    'author'       => '작성자',
-    'recipients'   => '수신사',
+    'sent' => 'Sent',
+    'author' => '작성자',
+    'recipients' => '수신사',
 ];

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,31 +21,31 @@
  */
 
 return [
-    'created'             => '생성일',
-    'type'                => '종류',
-    'issuer'              => '생성자',
-    'assignee'            => '양수인',
-    'acceptor'            => '인수인',
-    'status'              => '상태',
-    'price'               => '가격',
-    'reward'              => '보상',
+    'created' => '생성일',
+    'type' => '종류',
+    'issuer' => '생성자',
+    'assignee' => '양수인',
+    'acceptor' => '인수인',
+    'status' => '상태',
+    'price' => '가격',
+    'reward' => '보상',
 
-    'unknown'             => '알 수 없음',
-    'item_exchange'       => '아이템 교환',
-    'auction'             => '경매',
-    'courier'             => '운송',
-    'loan'                => '대출',
+    'unknown' => '알 수 없음',
+    'item_exchange' => '아이템 교환',
+    'auction' => '경매',
+    'courier' => '운송',
+    'loan' => '대출',
 
-    'outstanding'         => 'Outstanding',
-    'in_progress'         => '진행 중',
-    'finished_issuer'     => 'Finished Issuer',
+    'outstanding' => 'Outstanding',
+    'in_progress' => '진행 중',
+    'finished_issuer' => 'Finished Issuer',
     'finished_contractor' => 'Finished Contractor',
-    'finished'            => '완료됨',
-    'cancelled'           => '취소됨',
-    'rejected'            => '거부됨',
-    'failed'              => '실패함',
-    'deleted'             => '삭제됨',
-    'reversed'            => '회수됨',
+    'finished' => '완료됨',
+    'cancelled' => '취소됨',
+    'rejected' => '거부됨',
+    'failed' => '실패함',
+    'deleted' => '삭제됨',
+    'reversed' => '회수됨',
 
-    'not_accepted'        => '미체결',
+    'not_accepted' => '미체결',
 ];

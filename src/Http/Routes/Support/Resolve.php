@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,12 +20,10 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::post('/names/resolve', [
-    'as'   => 'support.names.resolve',
-    'uses' => 'ResolveController@resolveIdsToNames',
-]);
+Route::post('/names/resolve')
+    ->name('seatcore::support.names.resolve')
+    ->uses('ResolveController@resolveIdsToNames');
 
-Route::post('/main/resolve', [
-    'as'   => 'support.main.resolve',
-    'uses' => 'ResolveController@resolveMainCharacter',
-]);
+Route::post('/main/resolve')
+    ->name('seatcore::support.main.resolve')
+    ->uses('ResolveController@resolveMainCharacter');

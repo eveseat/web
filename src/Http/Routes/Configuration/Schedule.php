@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,17 +20,22 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/', [
-    'as'   => 'configuration.schedule',
-    'uses' => 'ScheduleController@listSchedule',
-]);
+Route::get('/')
+    ->name('seatcore::configuration.schedule')
+    ->uses('ScheduleController@listSchedule');
 
-Route::post('/new', [
-    'as'   => 'configuration.schedule.new',
-    'uses' => 'ScheduleController@newSchedule',
-]);
+Route::post('/new')
+    ->name('seatcore::configuration.schedule.new')
+    ->uses('ScheduleController@newSchedule');
 
-Route::get('/delete/{schedule_id}', [
-    'as'   => 'configuration.schedule.delete',
-    'uses' => 'ScheduleController@deleteSchedule',
-]);
+Route::get('/delete/{schedule_id}')
+    ->name('seatcore::configuration.schedule.delete')
+    ->uses('ScheduleController@deleteSchedule');
+
+Route::post('/rules/create')
+    ->name('seatcore::configuration.schedule.rule.create')
+    ->uses('ScheduleController@createSchedulingRule');
+
+Route::post('/rules/delete')
+    ->name('seatcore::configuration.schedule.rule.delete')
+    ->uses('ScheduleController@deleteSchedulingRule');

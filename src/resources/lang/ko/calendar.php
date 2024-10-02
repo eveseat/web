@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,13 +21,13 @@
  */
 
 return [
-    'date'          => '날짜',
-    'owner'         => '소유자',
-    'description'   => '설명',
-    'status'        => '상태',
+    'date' => '날짜',
+    'owner' => '소유자',
+    'description' => '설명',
+    'status' => '상태',
 
     'not_responded' => '응답 없음',
-    'accepted'      => '수락됨',
-    'tentative'     => '미정',
-    'declined'      => '거절됨',
+    'accepted' => '수락됨',
+    'tentative' => '미정',
+    'declined' => '거절됨',
 ];

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,31 +21,31 @@
  */
 
 return [
-    'created'             => 'Créé le',
-    'type'                => 'Type',
-    'issuer'              => 'Mandataire',
-    'assignee'            => 'Cessionnaire',
-    'acceptor'            => 'Approbateur',
-    'status'              => 'Statut',
-    'price'               => 'Prix',
-    'reward'              => 'Récompense',
+    'created' => 'Créé le',
+    'type' => 'Type',
+    'issuer' => 'Mandataire',
+    'assignee' => 'Cessionnaire',
+    'acceptor' => 'Approbateur',
+    'status' => 'Statut',
+    'price' => 'Prix',
+    'reward' => 'Récompense',
 
-    'unknown'             => 'Inconnu',
-    'item_exchange'       => 'Échange d\'objets',
-    'auction'             => 'Enchère',
-    'courier'             => 'Livraison',
-    'loan'                => 'Caution',
+    'unknown' => 'Inconnu',
+    'item_exchange' => 'Échange d\'objets',
+    'auction' => 'Enchère',
+    'courier' => 'Livraison',
+    'loan' => 'Caution',
 
-    'outstanding'         => 'En attente',
-    'in_progress'         => 'En cours',
-    'finished_issuer'     => 'Finalisé par le mandataire',
+    'outstanding' => 'En attente',
+    'in_progress' => 'En cours',
+    'finished_issuer' => 'Finalisé par le mandataire',
     'finished_contractor' => 'Finalisé par le cessionnaire',
-    'finished'            => 'Terminé',
-    'cancelled'           => 'Annulé',
-    'rejected'            => 'Rejeté',
-    'failed'              => 'Échec',
-    'deleted'             => 'Supprimé',
-    'reversed'            => 'Annulé',
+    'finished' => 'Terminé',
+    'cancelled' => 'Annulé',
+    'rejected' => 'Rejeté',
+    'failed' => 'Échec',
+    'deleted' => 'Supprimé',
+    'reversed' => 'Annulé',
 
-    'not_accepted'        => 'Non accepté',
+    'not_accepted' => 'Non accepté',
 ];

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,11 +21,11 @@
  */
 
 return [
-    'date'         => '날짜',
-    'ship'         => '함선',
+    'date' => '날짜',
+    'ship' => '함선',
     'solar_system' => '항성계',
-    'victim'       => '피해자',
-    'killer'       => '살해자',
-    'attackers'    => '공격자',
-    'items'        => '아이템',
+    'victim' => '피해자',
+    'killer' => '살해자',
+    'attackers' => '공격자',
+    'items' => '아이템',
 ];

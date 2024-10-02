@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -69,9 +69,9 @@ class Login extends Command
             $this->warn('User \'admin\' does not exist. It will be created.');
 
             $admin->fill([
-                'name'              => 'admin',
+                'name' => 'admin',
                 'main_character_id' => 0,
-                'admin'             => true,
+                'admin' => true,
             ]);
             $admin->id = 1; // Needed as id is not fillable
             $admin->save();
@@ -92,7 +92,7 @@ class Login extends Command
 
         $this->line('');
         $this->info('Your authentication URL is valid for 60 seconds.');
-        $this->line(route('auth.admin.login', ['token' => $token]));
+        $this->line(route('seatcore::auth.admin.login', ['token' => $token]));
 
         // Analytics
         $this->dispatch(new Analytics((new AnalyticsContainer)
@@ -100,5 +100,7 @@ class Login extends Command
             ->set('ec', 'admin')
             ->set('ea', 'password_reset')
             ->set('el', 'console')));
+
+        return $this::SUCCESS;
     }
 }

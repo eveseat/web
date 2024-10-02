@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -181,7 +181,7 @@ class UserController extends Controller
         // Login as the new user.
         auth()->login($user);
 
-        return redirect()->route('home')
+        return redirect()->route('seatcore::home')
             ->with('success',
                 trans('web::seat.impersonating', ['user' => $user->name]));
     }
@@ -208,7 +208,7 @@ class UserController extends Controller
         // Clear the session value
         session()->forget('impersonation_origin');
 
-        return redirect()->route('home')
+        return redirect()->route('seatcore::home')
             ->with('success', trans('web::seat.revert_impersonation'));
 
     }

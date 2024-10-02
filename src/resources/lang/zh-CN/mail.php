@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,12 +21,12 @@
  */
 
 return [
-    'read'         => '阅读',
-    'date'         => '日期',
-    'sender'       => '发件人',
-    'subject'      => '主题',
+    'read' => '阅读',
+    'date' => '日期',
+    'sender' => '发件人',
+    'subject' => '主题',
     'mailing_list' => '邮件列表',
-    'sent'         => '发送',
-    'author'       => '作者',
-    'recipients'   => '收件者',
+    'sent' => '发送',
+    'author' => '作者',
+    'recipients' => '收件者',
 ];

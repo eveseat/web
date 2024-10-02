@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Common\Military;
 
+use Illuminate\Http\JsonResponse;
 use Yajra\DataTables\Services\DataTable;
 
 /**
@@ -36,7 +37,7 @@ abstract class AbstractFittingDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -51,7 +52,7 @@ abstract class AbstractFittingDataTable extends DataTable
                 return $row->items->count();
             })
             ->addColumn('hull_estimated_value', function ($row) {
-                return number($row->ship->price->average);
+                return number($row->ship->price->adjusted_price);
             })
             ->addColumn('fitting_estimated_value', function ($row) {
                 return number($row->fitting_estimated_price);
@@ -83,7 +84,7 @@ abstract class AbstractFittingDataTable extends DataTable
                 });
             })
             ->rawColumns(['ship.typeName', 'action'])
-            ->make(true);
+            ->toJson();
     }
 
     /**

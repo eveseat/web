@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,7 +62,7 @@ class AlliancesController extends Controller
     {
         // by default, redirect user to alliance summary
         if (Gate::allows('alliance.summary', $alliance))
-            return redirect()->route('alliance.view.summary', [
+            return redirect()->route('seatcore::alliance.view.summary', [
                 'alliance' => $alliance,
             ]);
 
@@ -87,7 +87,7 @@ class AlliancesController extends Controller
         event('security.log', [$message, 'authorization']);
 
         // Redirect away from the original request
-        return redirect()->route('auth.unauthorized');
+        return redirect()->route('seatcore::auth.unauthorized');
     }
 
     /**
@@ -101,7 +101,7 @@ class AlliancesController extends Controller
         $alliance->delete();
 
         return redirect()->back()
-            ->with('success', sprintf('Alliance %s has been successfully removed.', $corporation->name));
+            ->with('success', sprintf('Alliance %s has been successfully removed.', $alliance->name));
     }
 
     /**

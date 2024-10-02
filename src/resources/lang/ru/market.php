@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,14 +21,14 @@
  */
 
 return [
-    'issued'  => 'Выпущен',
+    'issued' => 'Выпущен',
     'expires' => 'Срок истекает',
-    'buy'     => 'Купить',
-    'sell'    => 'Продать',
-    'order'   => 'Заказ',
-    'range'   => 'Дистанция',
-    'volume'  => 'Объем',
-    'price'   => 'Цена',
-    'total'   => 'Всего',
-    'type'    => 'Тип',
+    'buy' => 'Купить',
+    'sell' => 'Продать',
+    'order' => 'Заказ',
+    'range' => 'Дистанция',
+    'volume' => 'Объем',
+    'price' => 'Цена',
+    'total' => 'Всего',
+    'type' => 'Тип',
 ];

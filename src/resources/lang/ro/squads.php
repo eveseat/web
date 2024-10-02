@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,25 +21,25 @@
  */
 
 return [
-    'squad'        => 'Squad|Squads',
-    'name'         => 'Name|Names',
-    'description'  => 'Description',
-    'type'         => 'Type',
-    'member'       => 'Member|Members',
-    'moderated'    => 'Moderated',
-    'moderator'    => 'Moderator|Moderators',
-    'candidate'    => 'Candidate|Candidates',
+    'squad' => 'Squad|Squads',
+    'name' => 'Name|Names',
+    'description' => 'Description',
+    'type' => 'Type',
+    'member' => 'Member|Members',
+    'moderated' => 'Moderated',
+    'moderator' => 'Moderator|Moderators',
+    'candidate' => 'Candidate|Candidates',
     'member_since' => 'Member Since',
-    'applied_at'   => 'Applied At',
-    'character'    => 'Character|Characters',
-    'show'         => 'Show',
-    'delete'       => 'Delete',
-    'approve'      => 'Approve',
-    'reject'       => 'Reject',
-    'kick'         => 'Kick',
-    'leave'        => 'Leave',
-    'join'         => 'Join',
-    'message'      => 'Message',
-    'remove'       => 'Remove',
-    'cancel'       => 'Cancel',
+    'applied_at' => 'Applied At',
+    'character' => 'Character|Characters',
+    'show' => 'Show',
+    'delete' => 'Delete',
+    'approve' => 'Approve',
+    'reject' => 'Reject',
+    'kick' => 'Kick',
+    'leave' => 'Leave',
+    'join' => 'Join',
+    'message' => 'Message',
+    'remove' => 'Remove',
+    'cancel' => 'Cancel',
 ];

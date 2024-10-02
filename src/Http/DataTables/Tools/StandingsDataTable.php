@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Tools;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Web\Models\StandingsProfileStanding;
 use Yajra\DataTables\Services\DataTable;
 
@@ -35,7 +36,7 @@ class StandingsDataTable extends DataTable
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -75,7 +76,7 @@ class StandingsDataTable extends DataTable
                 return view('web::tools.standings.partials.delete_button', ['id' => $row->standings_profile_id, 'entity_id' => $row->entity_id])->render();
             })
             ->rawColumns(['action', 'entity_name.name', 'standing', 'category'])
-            ->make(true);
+            ->toJson();
     }
 
     /**

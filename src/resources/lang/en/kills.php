@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,11 +21,11 @@
  */
 
 return [
-    'date'         => 'Date',
-    'ship'         => 'Ship',
+    'date' => 'Date',
+    'ship' => 'Ship',
     'solar_system' => 'Solar System',
-    'victim'       => 'Victim',
-    'killer'       => 'Killer',
-    'attackers'    => 'Attacker|Attackers',
-    'items'        => 'Item|Items',
+    'victim' => 'Victim',
+    'killer' => 'Killer',
+    'attackers' => 'Attacker|Attackers',
+    'items' => 'Item|Items',
 ];

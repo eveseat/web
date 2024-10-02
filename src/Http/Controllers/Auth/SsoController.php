@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 
 namespace Seat\Web\Http\Controllers\Auth;
 
-use Laravel\Socialite\Contracts\Factory as Socialite;
+use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\User as SocialiteUser;
 use Seat\Eveapi\Jobs\Character\Affiliation;
 use Seat\Eveapi\Jobs\Character\Info;
@@ -41,48 +41,53 @@ class SsoController extends Controller
     /**
      * Redirect the user to the Eve Online authentication page.
      *
-     * @param  \Laravel\Socialite\Contracts\Factory  $social
      * @param  string  $profile
      * @return mixed
      *
      * @throws \Seat\Services\Exceptions\SettingException
      */
-    public function redirectToProvider($profile = null, Socialite $social)
+    public function redirectToProvider($profile = null)
     {
 
         $scopes_setting = collect(setting('sso_scopes', true));
 
         // Get the scopes that are marked as the default.
-        $scopes = $scopes_setting->first(function ($item) {
+        $scopes_profile = $scopes_setting->first(function ($item) {
             return $item->default == true;
         });
 
         if(! is_null($profile)) {
-            $scopes = $scopes_setting->first(function ($item) use ($profile) {
+            $scopes_profile = $scopes_setting->first(function ($item) use ($profile) {
                 return $item->name == $profile;
             });
 
             // Invalid profile name?
-            if(is_null($scopes))
+            if(is_null($scopes_profile))
                 abort(400);
         }
 
-        $used_scopes = $scopes->scopes;
+        $used_scopes = $scopes_profile->scopes;
 
         // in case the user is already authenticated - we're in a link flow
         if (auth()->check()) {
             // attempt to determine a used scopes and apply the same pattern for the newly linked character
-            $token = auth()->user()->refresh_tokens->first();
+            $token = auth()->user()->main_character->refresh_token;
 
             if (! is_null($token))
                 $used_scopes = $token->scopes;
         }
 
+        if (count($used_scopes) > 1){
+            if (($key = array_search('publicData', $used_scopes)) !== false) {
+                unset($used_scopes[$key]);
+            }
+        }
         // Store the scopes we are sending to CCP in the session so we can
         // validate the JWT response contains the right scopes.
         session()->put('scopes', $used_scopes);
+        session()->put('scopes_profile_id', $scopes_profile->id ?? 0);
 
-        return $social->driver('eveonline')
+        return Socialite::driver('eveonline')
             ->scopes($used_scopes)
             ->redirect();
     }
@@ -90,19 +95,18 @@ class SsoController extends Controller
     /**
      * Obtain the user information from Eve Online.
      *
-     * @param  \Laravel\Socialite\Contracts\Factory  $social
      * @return \Illuminate\Http\RedirectResponse
      *
      * @throws \Seat\Services\Exceptions\SettingException
      */
-    public function handleProviderCallback(Socialite $social)
+    public function handleProviderCallback()
     {
 
-        $eve_data = $social->driver('eveonline')->user();
+        $eve_data = Socialite::driver('eveonline')->user();
 
         // Avoid self attachment
         if (auth()->check() && auth()->user()->id == $eve_data->id)
-            return redirect()->route('home')
+            return redirect()->route('seatcore::home')
                 ->with('error', 'You cannot add yourself. Did you forget to change character in Eve Online SSO form ?');
 
         // Get or create the User bound to this login.
@@ -115,7 +119,7 @@ class SsoController extends Controller
         $this->updateCharacterInfo($eve_data);
 
         if (! $this->loginUser($user))
-            return redirect()->route('auth.login')
+            return redirect()->route('seatcore::auth.login')
                 ->with('error', 'Login failed. Please contact your administrator.');
 
         return redirect()->intended();
@@ -205,17 +209,18 @@ class SsoController extends Controller
         }
 
         RefreshToken::withTrashed()->firstOrNew([
-            'character_id'         => $eve_user->id,
+            'character_id' => $eve_user->id,
         ])->fill([
-            'user_id'              => $seat_user->id,
-            'refresh_token'        => $eve_user->refreshToken,
-            'scopes'               => $eve_user->scopes,
-            'token'                => $eve_user->token,
+            'user_id' => $seat_user->id,
+            'refresh_token' => $eve_user->refreshToken,
+            'scopes_profile' => session()->get('scopes_profile_id', 0),
+            'scopes' => $eve_user->scopes,
+            'token' => $eve_user->token,
             'character_owner_hash' => $eve_user->character_owner_hash,
-            'expires_on'           => $eve_user->expires_on,
+            'expires_on' => $eve_user->expires_on,
             // enforce version since restore action will not use default field value
             // the version from an authenticate token is always latest.
-            'version'              => RefreshToken::CURRENT_VERSION,
+            'version' => RefreshToken::CURRENT_VERSION,
         ])->save();
 
         // restore soft deleted token if any
@@ -234,10 +239,10 @@ class SsoController extends Controller
         CharacterInfo::firstOrCreate([
             'character_id' => $eve_user->id,
         ], [
-            'name'         => $eve_user->name,
-            'birthday'     => carbon(),
-            'gender'       => 'male',
-            'race_id'      => 0,
+            'name' => $eve_user->name,
+            'birthday' => carbon(),
+            'gender' => 'male',
+            'race_id' => 0,
             'bloodline_id' => 0,
         ]);
 

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,23 +21,19 @@
  */
 
 Route::group(['prefix' => '/notes/'], function () {
-    Route::get('/{id}', [
-        'as'   => 'tools.notes.show',
-        'uses' => 'NotesController@show',
-    ]);
+    Route::get('/{id}')
+        ->name('seatcore::tools.notes.show')
+        ->uses('NotesController@show');
 
-    Route::post('/', [
-        'as'   => 'tools.notes.store',
-        'uses' => 'NotesController@store',
-    ]);
+    Route::post('/')
+        ->name('seatcore::tools.notes.store')
+        ->uses('NotesController@store');
 
-    Route::put('/{id}', [
-        'as'   => 'tools.notes.update',
-        'uses' => 'NotesController@update',
-    ]);
+    Route::put('/{id}')
+        ->name('seatcore::tools.notes.update')
+        ->uses('NotesController@update');
 
-    Route::delete('/{id}', [
-        'as'   => 'tools.notes.destroy',
-        'uses' => 'NotesController@destroy',
-    ]);
+    Route::delete('/{id}')
+        ->name('seatcore::tools.notes.destroy')
+        ->uses('NotesController@destroy');
 });

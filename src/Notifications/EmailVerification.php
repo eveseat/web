@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -69,7 +69,7 @@ class EmailVerification extends Notification
             ->subject('SeAT Account Activation')
             ->line(
                 'This email address has been used to register a SeAT account ' .
-                'at ' . route('home') . '. Before enabling your account, we would ' .
+                'at ' . route('seatcore::home') . '. Before enabling your account, we would ' .
                 'like to make sure that you really own this address.'
             )
             ->line(
@@ -77,7 +77,7 @@ class EmailVerification extends Notification
                 'this email.'
             )
             ->action(
-                'Activate Your Account', route('auth.email.confirm', [
+                'Activate Your Account', route('seatcore::auth.email.confirm', [
                     'token' => $notifiable->activation_token,
                 ]));
     }
@@ -92,7 +92,7 @@ class EmailVerification extends Notification
     {
 
         return [
-            'id'               => $notifiable->id,
+            'id' => $notifiable->id,
             'activation_token' => $notifiable->activation_token,
         ];
     }

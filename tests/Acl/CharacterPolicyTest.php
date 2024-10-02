@@ -73,8 +73,6 @@ class CharacterPolicyTest extends TestCase
         parent::setUp();
 
         $this->loadMigrationsFrom(realpath(__DIR__ . '/../database/migrations'));
-
-        $this->withFactories(__DIR__ . '/../database/factories');
     }
 
     /**
@@ -84,9 +82,9 @@ class CharacterPolicyTest extends TestCase
     {
         $permissions = array_keys(require __DIR__ . '/../../src/Config/Permissions/character.php');
 
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
-        $character = factory(CharacterInfo::class)->create();
+        $character = CharacterInfo::factory()->create();
 
         foreach ($permissions as $permission) {
             Redis::flushdb();
@@ -103,11 +101,11 @@ class CharacterPolicyTest extends TestCase
     {
         $permissions = array_keys(require __DIR__ . '/../../src/Config/Permissions/character.php');
 
-        $user = factory(User::class)->create([
+        $user = User::factory()->create([
             'admin' => true,
         ]);
 
-        $character = factory(CharacterInfo::class)->create();
+        $character = CharacterInfo::factory()->create();
 
         foreach ($permissions as $permission) {
             Redis::flushdb();
@@ -126,10 +124,10 @@ class CharacterPolicyTest extends TestCase
 
         $permissions = array_keys(require __DIR__ . '/../../src/Config/Permissions/character.php');
 
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
-        $owned_character = factory(CharacterInfo::class)->create();
-        factory(RefreshToken::class)->create([
+        $owned_character = CharacterInfo::factory()->create();
+        RefreshToken::factory()->create([
             'character_id' => $owned_character->character_id,
             'user_id'      => $user->id,
         ]);
@@ -151,9 +149,9 @@ class CharacterPolicyTest extends TestCase
 
         $permissions = array_keys(require __DIR__ . '/../../src/Config/Permissions/character.php');
 
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
-        $characters = factory(CharacterInfo::class, 2)->create();
+        $characters = CharacterInfo::factory(2)->create();
         $ceo = $characters->first();
         $corporation_member = $characters->last();
 
@@ -165,12 +163,12 @@ class CharacterPolicyTest extends TestCase
             'corporation_id' => 1000001,
         ]);
 
-        factory(CorporationInfo::class)->create([
+        CorporationInfo::factory()->create([
             'corporation_id' => 1000001,
             'ceo_id'         => $ceo->character_id,
         ]);
 
-        factory(RefreshToken::class)->create([
+        RefreshToken::factory()->create([
             'character_id' => $ceo->character_id,
             'user_id'      => $user->id,
         ]);
@@ -190,12 +188,12 @@ class CharacterPolicyTest extends TestCase
     {
         $permissions = array_keys(require __DIR__ . '/../../src/Config/Permissions/character.php');
 
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
-        $role = factory(Role::class)->create();
+        $role = Role::factory()->create();
         $role->users()->save($user);
 
-        $character = factory(CharacterInfo::class)->create();
+        $character = CharacterInfo::factory()->create();
 
         // seed role with all character permissions
         foreach ($permissions as $permission) {
@@ -220,12 +218,12 @@ class CharacterPolicyTest extends TestCase
     {
         $permissions = array_keys(require __DIR__ . '/../../src/Config/Permissions/character.php');
 
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
-        $role = factory(Role::class)->create();
+        $role = Role::factory()->create();
         $role->users()->save($user);
 
-        $characters = factory(CharacterInfo::class, 2)->create();
+        $characters = CharacterInfo::factory(2)->create();
         $denied_character = $characters->last();
         $granted_character = $characters->first();
 
@@ -260,18 +258,21 @@ class CharacterPolicyTest extends TestCase
      */
     public function testCharacterPermissionsAsDelegatedCorporation()
     {
+        // make sure this doesn't generate observer events that trigger the squads logic
+        CharacterAffiliation::unsetEventDispatcher();
+
         $permissions = array_keys(require __DIR__ . '/../../src/Config/Permissions/character.php');
 
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
-        $role = factory(Role::class)->create();
+        $role = Role::factory()->create();
         $role->users()->save($user);
 
-        $characters = factory(CharacterInfo::class, 2)->create();
+        $characters = CharacterInfo::factory(2)->create();
         $denied_character = $characters->last();
         $granted_character = $characters->first();
 
-        $corporations = factory(CorporationInfo::class, 2)->create();
+        $corporations = CorporationInfo::factory(2)->create();
         $granted_corporation = $corporations->first();
         CharacterAffiliation::create([
             'character_id'   => $granted_character->character_id,
@@ -315,18 +316,21 @@ class CharacterPolicyTest extends TestCase
      */
     public function testCharacterPermissionsAsDelegatedAlliance()
     {
+        // make sure this doesn't generate observer events that trigger the squads logic
+        CharacterAffiliation::unsetEventDispatcher();
+
         $permissions = array_keys(require __DIR__ . '/../../src/Config/Permissions/character.php');
 
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
-        $role = factory(Role::class)->create();
+        $role = Role::factory()->create();
         $role->users()->save($user);
 
-        $characters = factory(CharacterInfo::class, 2)->create();
+        $characters = CharacterInfo::factory(2)->create();
         $denied_character = $characters->last();
         $granted_character = $characters->first();
 
-        $corporations = factory(CorporationInfo::class, 2)->create();
+        $corporations = CorporationInfo::factory(2)->create();
         $denied_corporation = $corporations->first();
         $granted_corporation = $corporations->last();
 

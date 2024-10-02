@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,7 +65,7 @@ class AccessController extends Controller
         ]);
 
         return redirect()
-            ->route('configuration.access.roles.edit', [
+            ->route('seatcore::configuration.access.roles.edit', [
                 $role->id,
             ])->with('success', trans('web::seat.role_added'));
     }
@@ -111,7 +111,7 @@ class AccessController extends Controller
             $role->description = $request->input('description');
             $role->logo = $request->file('logo');
         } catch (NotReadableException $e) {
-            return redirect()->route('configuration.access.roles.edit', [$role->id])
+            return redirect()->route('seatcore::configuration.access.roles.edit', [$role->id])
                 ->with('error', $e->getMessage());
         }
 
@@ -200,9 +200,9 @@ class AccessController extends Controller
 
         $role->save();
 
-        return redirect()->route('configuration.access.roles.edit', [$role->id])
+        return redirect()->route('seatcore::configuration.access.roles.edit', [$role->id])
             ->with('success', trans('web::seat.role_updated', [
-                'added'   => $added_counter,
+                'added' => $added_counter,
                 'removed' => $removed_counter,
                 'filtered' => $filter_counter,
             ]));
@@ -216,7 +216,7 @@ class AccessController extends Controller
     {
         Role::destroy($role->id);
 
-        return redirect()->route('configuration.access.roles')
+        return redirect()->route('seatcore::configuration.access.roles')
             ->with('success', trans('web::seat.role_removed'));
     }
 

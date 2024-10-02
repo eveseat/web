@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,9 +21,9 @@
  */
 
 return [
-    'created'     => '创建于',
-    'label'       => '标签',
-    'location'    => '位置',
-    'notes'       => '备注',
+    'created' => '创建于',
+    'label' => '标签',
+    'location' => '位置',
+    'notes' => '备注',
     'coordinates' => '坐标',
 ];

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,13 +21,13 @@
  */
 
 return [
-    'date'          => 'Дата',
-    'owner'         => 'Владелец',
-    'description'   => 'Описание',
-    'status'        => 'Статус',
+    'date' => 'Дата',
+    'owner' => 'Владелец',
+    'description' => 'Описание',
+    'status' => 'Статус',
 
     'not_responded' => 'Нет ответа',
-    'accepted'      => 'Принято',
-    'tentative'     => 'Возможно',
-    'declined'      => 'Отклонено',
+    'accepted' => 'Принято',
+    'tentative' => 'Возможно',
+    'declined' => 'Отклонено',
 ];

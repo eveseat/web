@@ -28,7 +28,6 @@ use Orchestra\Testbench\TestCase;
 use Seat\Eveapi\Models\Alliances\Alliance;
 use Seat\Eveapi\Models\Character\CharacterAffiliation;
 use Seat\Eveapi\Models\Character\CharacterInfo;
-use Seat\Eveapi\Models\Character\CharacterRole;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Web\Models\Acl\Permission;
 use Seat\Web\Models\Acl\Role;
@@ -73,8 +72,6 @@ class AlliancePolicyTest extends TestCase
         parent::setUp();
 
         $this->loadMigrationsFrom(realpath(__DIR__ . '/../database/migrations'));
-
-        $this->withFactories(__DIR__ . '/../database/factories');
     }
 
     /**
@@ -84,9 +81,9 @@ class AlliancePolicyTest extends TestCase
     {
         $permissions = array_keys(require __DIR__ . '/../../src/Config/Permissions/alliance.php');
 
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
-        $alliance = factory(Alliance::class)->create();
+        $alliance = Alliance::factory()->create();
 
         foreach ($permissions as $permission) {
             Redis::flushdb();
@@ -103,11 +100,11 @@ class AlliancePolicyTest extends TestCase
     {
         $permissions = array_keys(require __DIR__ . '/../../src/Config/Permissions/alliance.php');
 
-        $user = factory(User::class)->create([
+        $user = User::factory()->create([
             'admin' => true,
         ]);
 
-        $alliance = factory(Alliance::class)->create();
+        $alliance = Alliance::factory()->create();
 
         foreach ($permissions as $permission) {
             Redis::flushdb();
@@ -124,12 +121,12 @@ class AlliancePolicyTest extends TestCase
     {
         $permissions = array_keys(require __DIR__ . '/../../src/Config/Permissions/alliance.php');
 
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
-        $role = factory(Role::class)->create();
+        $role = Role::factory()->create();
         $role->users()->save($user);
 
-        $alliance = factory(Alliance::class)->create();
+        $alliance = Alliance::factory()->create();
 
         // seed role with all corporation permissions
         foreach ($permissions as $permission) {
@@ -152,21 +149,24 @@ class AlliancePolicyTest extends TestCase
      */
     public function testAlliancePermissionsAsDelegatedCharacter()
     {
+        // make sure this doesn't generate observer events that trigger the squads logic
+        CharacterAffiliation::unsetEventDispatcher();
+
         $permissions = array_keys(require __DIR__ . '/../../src/Config/Permissions/alliance.php');
 
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
-        $role = factory(Role::class)->create();
+        $role = Role::factory()->create();
         $role->users()->save($user);
 
-        $alliance = factory(Alliance::class)->create();
+        $alliance = Alliance::factory()->create();
 
-        $corporation = factory(CorporationInfo::class)->create([
+        $corporation = CorporationInfo::factory()->create([
             'alliance_id' => $alliance->alliance_id,
         ]);
 
 
-        $character = factory(CharacterInfo::class)->create();
+        $character = CharacterInfo::factory()->create();
         CharacterAffiliation::create([
             'character_id'   => $character->character_id,
             'corporation_id' => $corporation->corporation_id,
@@ -202,21 +202,24 @@ class AlliancePolicyTest extends TestCase
      */
     public function testAlliancePermissionsAsDelegatedCorporation()
     {
+        // make sure this doesn't generate observer events that trigger the squads logic
+        CharacterAffiliation::unsetEventDispatcher();
+
         $permissions = array_keys(require __DIR__ . '/../../src/Config/Permissions/alliance.php');
 
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
-        $role = factory(Role::class)->create();
+        $role = Role::factory()->create();
         $role->users()->save($user);
 
-        $alliance = factory(Alliance::class)->create();
+        $alliance = Alliance::factory()->create();
 
-        $corporation = factory(CorporationInfo::class)->create([
+        $corporation = CorporationInfo::factory()->create([
             'alliance_id' => $alliance->alliance_id,
         ]);
 
 
-        $character = factory(CharacterInfo::class)->create();
+        $character = CharacterInfo::factory()->create();
         CharacterAffiliation::create([
             'character_id'   => $character->character_id,
             'corporation_id' => $corporation->corporation_id,
@@ -254,12 +257,12 @@ class AlliancePolicyTest extends TestCase
     {
         $permissions = array_keys(require __DIR__ . '/../../src/Config/Permissions/alliance.php');
 
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
-        $role = factory(Role::class)->create();
+        $role = Role::factory()->create();
         $role->users()->save($user);
 
-        $alliances = factory(Alliance::class, 2)->create();
+        $alliances = Alliance::factory(2)->create();
         $denied_alliance = $alliances->last();
         $granted_alliance = $alliances->first();
 

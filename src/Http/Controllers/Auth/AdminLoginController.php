@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ class AdminLoginController extends Controller
         $user = User::where('name', 'admin')->first();
 
         if (is_null($user))
-            return redirect()->route('auth.login')
+            return redirect()->route('seatcore::auth.login')
                 ->withErrors('The Admin user does not exist. Re-run the seat:admin:login command.');
 
         // Login and clear the token we just used.

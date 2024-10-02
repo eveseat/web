@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-Route::get('/short-status', [
-    'as'   => 'queue.status.short',
-    'uses' => 'QueueController@getShortStatus',
-]);
+Route::get('/short-status')
+    ->name('seatcore::queue.status.short')
+    ->uses('QueueController@getShortStatus');

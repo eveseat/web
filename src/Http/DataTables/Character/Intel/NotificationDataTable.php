@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Character\Intel;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Eveapi\Models\Character\CharacterNotification;
 use Yajra\DataTables\Services\DataTable;
 
@@ -37,7 +38,7 @@ class NotificationDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -60,7 +61,7 @@ class NotificationDataTable extends DataTable
                 return $row->sender->name;
             })
             ->rawColumns(['timestamp', 'type', 'sender.name'])
-            ->make(true);
+            ->toJson();
     }
 
     /**

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Common\Intel;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Web\Http\DataTables\Common\IColumn;
 use Yajra\DataTables\Services\DataTable;
 
@@ -37,7 +38,7 @@ abstract class AbstractAssetDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         $location_column = $this->getLocationFlagColumn($this);
         $station_column = $this->getStationColumn($this);
@@ -46,7 +47,7 @@ abstract class AbstractAssetDataTable extends DataTable
             ->eloquent($this->applyScopes($this->query()))
             ->editColumn('type.typeName', function ($row) {
                 return view('web::partials.type', [
-                    'type_id'   => $row->type->typeID,
+                    'type_id' => $row->type->typeID,
                     'type_name' => $row->name ? sprintf('%s (%s)', $row->name, $row->type->typeName) : $row->type->typeName,
                     'variation' => $row->type->group->categoryID == 9 ? 'bpc' : 'icon',
                 ])->render();
@@ -95,7 +96,7 @@ abstract class AbstractAssetDataTable extends DataTable
             $ajax->addColumn($name, $column);
         }
 
-        return $ajax->make(true);
+        return $ajax->toJson();
     }
 
     /**

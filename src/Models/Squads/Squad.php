@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use LasseRafn\InitialAvatarGenerator\InitialAvatar;
+use Seat\Web\Exceptions\InvalidFilterException;
 use Seat\Web\Http\Scopes\SquadScope;
 use Seat\Web\Models\Acl\Role;
 use Seat\Web\Models\Filterable;
@@ -78,31 +79,70 @@ class Squad extends Model
 
         static::addGlobalScope(new SquadScope());
 
-        self::updated(function ($model) {
+        self::updated(function (Squad $model) {
 
             // apply updates only if filters or type has been altered
             if (! array_key_exists('filters', $model->getChanges()) &&
                 ! array_key_exists('type', $model->getChanges()))
                 return;
 
-            // kick members which are non longer eligible according to new filters
-            $model->members->each(function ($user) use ($model) {
-                if (! $model->isEligible($user))
-                    $model->members()->detach($user->id);
+            $model->recomputeSquadMemberships();
+        });
+    }
+
+    /**
+     * @throws InvalidFilterException
+     */
+    public function isUserEligible(User $user): bool {
+        // Check all user characters. If any character is eligible, the user is eligible too
+        foreach ($user->characters as $character){
+            if($this->isEligible($character)) return true;
+        }
+
+        // no eligible character found, so the user is not eligible
+        return false;
+    }
+
+    /**
+     * Checks if the members of this squad are still eligible and if new members have to be added.
+     * This function is typically called after changes in the squad configuration or in a deferred migration if the behaviour of the squad eligibility logic changes.
+     *
+     * @return void
+     *
+     * @throws InvalidFilterException
+     */
+    private function recomputeSquadMemberships(): void {
+        // kick members which are non longer eligible according to new filters
+        $this->members->each(function ($user) {
+            if (! $this->isUserEligible($user))
+                $this->members()->detach($user->id);
+        });
+
+        // invite members which are eligible according to new filters (only for auto squads)
+        if ($this->type == 'auto') {
+            $users = User::standard()
+                ->whereDoesntHave('squads', function (Builder $query) {
+                    $query->where('id', $this->id);
+                })->get();
+
+            $users->each(function ($user) {
+                if ($this->isUserEligible($user))
+                    $this->members()->save($user);
             });
+        }
+    }
 
-            // invite members which are eligible according to new filters (only for auto squads)
-            if ($model->type == 'auto') {
-                $users = User::standard()
-                    ->whereDoesntHave('squads', function (Builder $query) use ($model) {
-                        $query->where('id', $model->id);
-                    })->get();
-
-                $users->each(function ($user) use ($model) {
-                    if ($model->isEligible($user))
-                        $model->members()->save($user);
-                });
-            }
+    /**
+     * Checks all users for eligibility. This function is used in migrations after major changes and bugs in the squad
+     * eligibility code to ensure that we are in a valid state.
+     *
+     * @return void
+     *
+     * @throws InvalidFilterException
+     */
+    public static function recomputeAllSquadMemberships(): void {
+        Squad::where('type', 'auto')->get()->each(function (Squad $squad) {
+            $squad->recomputeSquadMemberships();
         });
     }
 
@@ -178,13 +218,13 @@ class Squad extends Model
      */
     public function getLinkAttribute(): string
     {
-        return route('squads.show', $this->id);
+        return route('seatcore::squads.show', $this->id);
     }
 
     /**
      * Return the logo url-encoded.
      *
-     * @param $value
+     * @param  $value
      * @return string
      */
     public function getLogoAttribute($value): string
@@ -200,7 +240,7 @@ class Squad extends Model
     /**
      * Store the file into blob attribute using url-encoding.
      *
-     * @param $value
+     * @param  $value
      */
     public function setLogoAttribute($value)
     {

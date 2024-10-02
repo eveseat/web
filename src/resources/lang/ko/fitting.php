@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,9 +21,9 @@
  */
 
 return [
-    'name'            => '이름',
-    'type'            => '종류',
-    'items'           => '항목',
+    'name' => '이름',
+    'type' => '종류',
+    'items' => '항목',
     'hull_estimated_value' => '선체 예상 가치',
     'fitting_estimated_value' => '피팅 예상 가치',
     'full_estimated_value' => '총 예상 가치',

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Common\Intel;
 
+use Illuminate\Http\JsonResponse;
 use Yajra\DataTables\Services\DataTable;
 
 /**
@@ -36,7 +37,7 @@ abstract class AbstractContactDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
 
         return datatables()
@@ -88,7 +89,7 @@ abstract class AbstractContactDataTable extends DataTable
                 'standing', 'entity.name', 'entity.affiliation.corporation.name', 'entity.affiliation.alliance.name',
                 'action',
             ])
-            ->make(true);
+            ->toJson();
     }
 
     /**

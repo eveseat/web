@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ abstract class AbstractMiningDataTable extends DataTable
                 return number($row->type->volume * $row->quantity);
             })
             ->addColumn('estimated_value', function ($row) {
-                return number($row->type->price->average * $row->quantity);
+                return number($row->type->price->adjusted_price * $row->quantity);
             })
             ->filterColumn('volume', function ($query, $keyword) {
                 return $query->whereHas('type', function ($sub_query) use ($keyword) {
@@ -66,7 +66,7 @@ abstract class AbstractMiningDataTable extends DataTable
             })
             ->filterColumn('estimated_value', function ($query, $keyword) {
                 return $query->whereHas('type.price', function ($sub_query) use ($keyword) {
-                    return $sub_query->whereRaw('(average * quantity) LIKE ?', ["%$keyword%"]);
+                    return $sub_query->whereRaw('(adjusted_price * quantity) LIKE ?', ["%$keyword%"]);
                 });
             });
     }

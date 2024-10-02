@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,16 +22,16 @@
 
 return [
     'summary' => [
-        'label'       => 'web::permissions.alliance_summary_label',
+        'label' => 'web::permissions.alliance_summary_label',
         'description' => 'web::permissions.alliance_summary_description',
     ],
     'contact' => [
-        'label'       => 'web::permissions.alliance_contact_label',
+        'label' => 'web::permissions.alliance_contact_label',
         'description' => 'web::permissions.alliance_contact_description',
-        'division'    => 'military',
+        'division' => 'military',
     ],
     'tracking' => [
-        'label'       => 'web::permissions.alliance_tracking_label',
+        'label' => 'web::permissions.alliance_tracking_label',
         'description' => 'web::permissions.alliance_tracking_description',
     ],
 ];

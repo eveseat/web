@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,17 +23,15 @@
 namespace Seat\Web\Observers;
 
 use Exception;
-use Illuminate\Database\Eloquent\Model;
 use Seat\Eveapi\Bus\Character;
 use Seat\Eveapi\Models\RefreshToken;
-use Seat\Web\Models\User;
 
 /**
  * Class RefreshTokenObserver.
  *
  * @package Seat\Web\Observers
  */
-class RefreshTokenObserver extends AbstractSquadObserver
+class RefreshTokenObserver
 {
     /**
      * @param  \Seat\Eveapi\Models\RefreshToken  $token
@@ -43,41 +41,6 @@ class RefreshTokenObserver extends AbstractSquadObserver
         try {
             $job = new Character($token->character_id, $token);
             $job->fire();
-
-            // enqueue squads update
-            $this->updateUserSquads($token);
-        } catch (Exception $e) {
-            logger()->error($e->getMessage());
-        }
-    }
-
-    /**
-     * @param  \Seat\Eveapi\Models\RefreshToken  $token
-     */
-    public function updated(RefreshToken $token)
-    {
-        try {
-            $this->updateUserSquads($token);
-        } catch (Exception $e) {
-            logger()->error($e->getMessage());
-        }
-    }
-
-    /**
-     * @param  \Seat\Eveapi\Models\RefreshToken  $token
-     */
-    public function softDeleted(RefreshToken $token)
-    {
-        $this->deleted($token);
-    }
-
-    /**
-     * @param  \Seat\Eveapi\Models\RefreshToken  $token
-     */
-    public function deleted(RefreshToken $token)
-    {
-        try {
-            $this->updateUserSquads($token);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
         }
@@ -91,20 +54,8 @@ class RefreshTokenObserver extends AbstractSquadObserver
         try {
             $job = new Character($token->character_id, $token);
             $job->fire();
-
-            // enqueue squads update
-            $this->updateUserSquads($token);
         } catch (Exception $e) {
             logger()->error($e->getMessage());
         }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function findRelatedUser(Model $fired_model): ?User
-    {
-        return User::with('squads')
-            ->find($fired_model->user_id);
     }
 }

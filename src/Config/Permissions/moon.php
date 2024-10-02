@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,18 +22,18 @@
 
 return [
     'view_moon_reports' => [
-        'division'      => 'industrial',
-        'label'         => 'web::permissions.view_moon_reports_label',
-        'description'   => 'web::permissions.view_moon_reports_description',
+        'division' => 'industrial',
+        'label' => 'web::permissions.view_moon_reports_label',
+        'description' => 'web::permissions.view_moon_reports_description',
     ],
     'create_moon_reports' => [
-        'division'      => 'industrial',
-        'label'         => 'web::permissions.create_moon_reports_label',
-        'description'   => 'web::permissions.create_moon_reports_description',
+        'division' => 'industrial',
+        'label' => 'web::permissions.create_moon_reports_label',
+        'description' => 'web::permissions.create_moon_reports_description',
     ],
     'manage_moon_reports' => [
-        'division'      => 'industrial',
-        'label'         => 'web::permissions.manage_moon_reports_label',
-        'description'   => 'web::permissions.manage_moon_reports_description',
+        'division' => 'industrial',
+        'label' => 'web::permissions.manage_moon_reports_label',
+        'description' => 'web::permissions.manage_moon_reports_description',
     ],
 ];

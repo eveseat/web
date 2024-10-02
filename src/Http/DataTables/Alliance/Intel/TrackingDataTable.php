@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Alliance\Intel;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Yajra\DataTables\Services\DataTable;
 
@@ -37,7 +38,7 @@ class TrackingDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -49,7 +50,7 @@ class TrackingDataTable extends DataTable
             })
             ->editColumn('member_count', function ($row) {
                 if ($row->member_limit->limit < 1)
-                    return sprintf('%d/%d (100.00%%)', $row->member_count, $row->member_count);
+                    return sprintf('%d', $row->member_count);
 
                 return sprintf('%d/%d (%s%%)',
                     $row->member_count, $row->member_limit->limit, number($row->member_count / $row->member_limit->limit * 100));
@@ -58,8 +59,6 @@ class TrackingDataTable extends DataTable
                 return view('web::partials.character', ['character' => $row->ceo])->render();
             })
             ->editColumn('tracking', function ($row) {
-                // <dd>{{ $trackings }} / {{ $sheet->member_count }} ({{ number_format($trackings/$sheet->member_count * 100, 2) }}%) {{ trans_choice('web::seat.valid_token', $sheet->member_count) }}</dd>
-
                 $trackings = $row->characters->reject(function ($char) {
                     return is_null($char->refresh_token);
                 })->count();
@@ -70,7 +69,7 @@ class TrackingDataTable extends DataTable
                 return view('web::corporation.partials.delete', compact('row'));
             })
             ->rawColumns(['name', 'ceo.name'])
-            ->make(true);
+            ->toJson();
     }
 
     /**
@@ -93,7 +92,8 @@ class TrackingDataTable extends DataTable
      */
     public function query()
     {
-        return CorporationInfo::player()->with('member_limit', 'ceo', 'alliance')
+        return CorporationInfo::player()
+            ->with('member_limit', 'ceo', 'alliance', 'characters')
             ->select('corporation_infos.*');
     }
 
@@ -108,7 +108,7 @@ class TrackingDataTable extends DataTable
             ['data' => 'ceo.name', 'title' => trans('web::seat.ceo')],
             ['data' => 'tax_rate', 'title' => trans('web::seat.tax_rate')],
             ['data' => 'member_count', 'title' => trans('web::seat.member_count')],
-            ['data' => 'tracking', 'title' => trans_choice('web::seat.valid_token', 2)],
+            ['data' => 'tracking', 'title' => trans_choice('web::seat.valid_token', 2), 'orderable' => false],
         ];
     }
 }

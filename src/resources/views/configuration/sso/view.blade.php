@@ -14,7 +14,7 @@
     </div>
 
     <div class="card-body">
-      <form role="form" id="profile" action="{{ route('configuration.sso') }}" method="post">
+      <form role="form" id="profile" action="{{ route('seatcore::configuration.sso') }}" method="post">
         {{ csrf_field() }}
         <div class="form-group row">
           <label for="available_profiles">{{ trans('web::seat.profile') }}</label>
@@ -25,8 +25,8 @@
           </select>
         </div>
       </form>
-      <a href="{{ route('configuration.sso.add_profile') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Add new Profile</a>
-      <a href="{{ route('configuration.sso.delete_profile', $selected_profile->id) }}" class="btn btn-danger"><i class="fas fa-trash"></i> Delete Profile</a>
+      <a href="{{ route('seatcore::configuration.sso.add_profile') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Add new Profile</a>
+      <a href="{{ route('seatcore::configuration.sso.delete_profile', $selected_profile->id) }}" class="btn btn-danger"><i class="fas fa-trash"></i> Delete Profile</a>
     </div>
   </div>
   
@@ -37,7 +37,7 @@
       </h3>
       <div class="card-tools">
         <div class="input-group input-group-sm btn-group btn-group-sm">
-          <a href="{{ route('configuration.sso.set_default_profile', $selected_profile->id) }}" id="set_default" class="btn btn-sm btn-info">
+          <a href="{{ route('seatcore::configuration.sso.set_default_profile', $selected_profile->id) }}" id="set_default" class="btn btn-sm btn-info">
             {{ trans('web::seat.set_default') }}
           </a>
           <button role="button" id="enable_all" class="btn btn-sm btn-primary">
@@ -52,7 +52,7 @@
 
     <div class="card-body">
 
-      <form role="form" action="{{ route('configuration.sso.update_scopes') }}" method="post">
+      <form role="form" action="{{ route('seatcore::configuration.sso.update_scopes') }}" method="post">
         {{ csrf_field() }}
         <input type="hidden" name="profile_id" id="profile_id" value="{{ $selected_profile->id }}" />
 
@@ -116,7 +116,7 @@
       <dl>
         <dt>{{ trans('web::seat.client_id_status') }}</dt>
         <dd>
-          @if(strlen(config('esi.eseye_client_id')) > 5)
+          @if(strlen(config('eseye.esi.auth.client_id')) > 5)
             <p class="text-green">{{ trans('web::seat.client_id_ok') }}</p>
           @else
             <p class="text-red">{{ trans('web::seat.client_id_not_ok') }}</p>
@@ -125,7 +125,7 @@
 
         <dt>{{ trans('web::seat.client_secret_status') }}</dt>
         <dd>
-          @if(strlen(config('esi.eseye_client_secret')) > 5)
+          @if(strlen(config('eseye.esi.auth.client_secret')) > 5)
             <p class="text-green">{{ trans('web::seat.client_secret_ok') }}</p>
           @else
             <p class="text-red">{{ trans('web::seat.client_secret_not_ok') }}</p>
@@ -134,14 +134,14 @@
 
         <dt>{{ trans('web::seat.callback_url_status') }}</dt>
         <dd>
-          @if(config('esi.eseye_client_callback') == route('auth.eve.callback'))
-            <p class="text-green">{{ trans('web::seat.callback_url_ok', ['url' => config('esi.eseye_client_callback')]) }}</p>
-          @elseif(strlen(config('esi.eseye_client_callback')) > 5)
+          @if(config('eseye.esi.auth.client_callback') == route('seatcore::auth.eve.callback'))
+            <p class="text-green">{{ trans('web::seat.callback_url_ok', ['url' => config('eseye.esi.auth.client_callback')]) }}</p>
+          @elseif(strlen(config('eseye.esi.auth.client_callback')) > 5)
             <p class="text-yellow">
-              {{ trans('web::seat.callback_maybe_wrong', ['current' => config('esi.eseye_client_callback'), 'suggested' => route('auth.eve.callback')]) }}
+              {{ trans('web::seat.callback_maybe_wrong', ['current' => config('eseye.esi.auth.client_callback'), 'suggested' => route('seatcore::auth.eve.callback')]) }}
             </p>
           @else
-            <p class="text-red">{{ trans('web::seat.client_callback_not_ok', ['url' => route('auth.eve.callback')]) }}</p>
+            <p class="text-red">{{ trans('web::seat.client_callback_not_ok', ['url' => route('seatcore::auth.eve.callback')]) }}</p>
           @endif
         </dd>
 
@@ -159,7 +159,7 @@
 
     <div class="card-body">
       <p>{{ trans('web::seat.custom_signin_page_desc') }}</p>
-      <form method="post" action="{{ route('configuration.sso.update_custom_signin') }}" enctype="multipart/form-data" id="customise-login-form">
+      <form method="post" action="{{ route('seatcore::configuration.sso.update_custom_signin') }}" enctype="multipart/form-data" id="customise-login-form">
         {{ csrf_field() }}
         <input type="hidden" name="message" value="" />
         <div id="login_page_content"></div>

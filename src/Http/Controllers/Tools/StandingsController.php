@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@ use Seat\Eveapi\Models\Contacts\AllianceContact;
 use Seat\Eveapi\Models\Contacts\CharacterContact;
 use Seat\Eveapi\Models\Contacts\CorporationContact;
 use Seat\Eveapi\Models\Universe\UniverseName;
+use Seat\Services\Contracts\EsiClient;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\DataTables\Scopes\Filters\StandingsProfileScope;
 use Seat\Web\Http\DataTables\Tools\StandingsDataTable;
@@ -47,6 +48,16 @@ use Seat\Web\Models\StandingsProfileStanding;
 class StandingsController extends Controller
 {
     const ENTITY_CACHE_PREFIX = 'name_id';
+
+    /**
+     * @var \Seat\Services\Contracts\EsiClient
+     */
+    private EsiClient $esi;
+
+    public function __construct(EsiClient $client)
+    {
+        $this->esi = $client;
+    }
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -110,23 +121,26 @@ class StandingsController extends Controller
     public function getStandingsAjaxElementName(Request $request)
     {
 
-        $response = [
+        $payload = [
             'results' => [],
         ];
 
-        if (strlen($request->input('search')) > 0) {
+        if (strlen($request->input('search')) > 0 && auth()->user()->main_character->refresh_token !== null) {
 
             try {
 
                 // Resolve the Esi client library from the IoC
-                $eseye = app('esi-client')->get();
-                $eseye->setVersion('v2');
-                $eseye->setQueryString([
+                $this->esi->setAuthentication(auth()->user()->main_character->refresh_token);
+                $this->esi->setVersion('v3');
+                $this->esi->setQueryString([
                     'categories' => $request->input('type'),
-                    'search'     => $request->input('search'),
+                    'search' => $request->input('search'),
                 ]);
 
-                $entityIds = $eseye->invoke('get', '/search/');
+                $response = $this->esi->invoke('get', '/characters/{character_id}/search/', [
+                    'character_id' => auth()->user()->main_character_id,
+                ]);
+                $entityIds = $response->getBody();
 
                 if (! property_exists($entityIds, $request->input('type')))
                     return response()->json([]);
@@ -135,14 +149,14 @@ class StandingsController extends Controller
                     return response()->json();
 
                 collect($entityIds->{$request->input('type')})->unique()
-                    ->filter(function ($id) use (&$response) {
+                    ->filter(function ($id) use (&$payload) {
 
                         // Next, filter the ids we have in the cache, setting
                         // the appropriate response values as we go along.
                         if ($cached_entry = cache(sprintf('%s:%d', self::ENTITY_CACHE_PREFIX, $id))) {
 
-                            $response['results'][] = [
-                                'id'   => $id,
+                            $payload['results'][] = [
+                                'id' => $id,
                                 'text' => $cached_entry,
                             ];
 
@@ -154,21 +168,22 @@ class StandingsController extends Controller
                         // so that we can update it later.
                         return true;
 
-                    })->chunk(1000)->each(function ($chunk) use (&$response, $eseye) {
+                    })->chunk(1000)->each(function ($chunk) use (&$payload) {
 
-                        $eseye->setVersion('v2');
-                        $eseye->setBody($chunk->flatten()->toArray());
-                        $names = $eseye->invoke('post', '/universe/names/');
+                        $this->esi->setVersion('v2');
+                        $this->esi->setBody($chunk->flatten()->toArray());
+                        $response = $this->esi->invoke('post', '/universe/names/');
+                        $names = collect($response->getBody());
 
-                        collect($names)->each(function ($name) use (&$response) {
+                        $names->each(function ($name) use (&$payload) {
 
                             // Cache the name resolution for this id for a long time.
                             cache(
                                 [sprintf('%s:%d', self::ENTITY_CACHE_PREFIX, $name->id) => $name->name],
                                 now()->addHour());
 
-                            $response['results'][] = [
-                                'id'   => $name->id,
+                            $payload['results'][] = [
+                                'id' => $name->id,
                                 'text' => $name->name,
                             ];
                         });
@@ -176,10 +191,22 @@ class StandingsController extends Controller
                     });
 
             } catch (Exception $e) {
+                logger()->error($e->getMessage(), $e->getTrace());
+            } finally {
+                if ($this->esi->isAuthenticated()) {
+                    $last_auth = $this->esi->getAuthentication();
+
+                    if (! empty($last_auth->getRefreshToken()))
+                        auth()->user()->main_character->refresh_token->refresh_token = $last_auth->getRefreshToken();
+
+                    auth()->user()->main_character->refresh_token->token = $this->esi->getAuthentication()->getAccessToken();
+                    auth()->user()->main_character->refresh_token->expires_on = $this->esi->getAuthentication()->getExpiresOn();
+                    auth()->user()->main_character->save();
+                }
             }
         }
 
-        return response()->json($response);
+        return response()->json($payload);
     }
 
     /**
@@ -205,7 +232,7 @@ class StandingsController extends Controller
         UniverseName::firstOrCreate([
             'entity_id' => $entity_id,
         ], [
-            'name'     => $entity_name,
+            'name' => $entity_name,
             'category' => $entity_type,
         ]);
 
@@ -213,7 +240,7 @@ class StandingsController extends Controller
 
         $standing = new StandingsProfileStanding([
             'entity_id' => $entity_id,
-            'standing' =>$standing,
+            'standing' => $standing,
             'category' => $entity_type,
         ]);
         $standings_profile->entities()->save($standing);

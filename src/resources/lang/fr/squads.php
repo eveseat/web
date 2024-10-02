@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,25 +21,25 @@
  */
 
 return [
-    'squad'        => 'Brigade|Brigades',
-    'name'         => 'Nom|Noms',
-    'description'  => 'Description',
-    'type'         => 'Type',
-    'member'       => 'Membre | Membres',
-    'moderated'    => 'Modérés',
-    'moderator'    => 'Modérateur|Modérateurs',
-    'candidate'    => 'Candidat|Candidats',
+    'squad' => 'Brigade|Brigades',
+    'name' => 'Nom|Noms',
+    'description' => 'Description',
+    'type' => 'Type',
+    'member' => 'Membre | Membres',
+    'moderated' => 'Modérés',
+    'moderator' => 'Modérateur|Modérateurs',
+    'candidate' => 'Candidat|Candidats',
     'member_since' => 'Membre depuis',
-    'applied_at'   => 'Postulé le',
-    'character'    => 'Personnage|Personnages',
-    'show'         => 'Afficher',
-    'delete'       => 'Supprimer',
-    'approve'      => 'Approuver',
-    'reject'       => 'Rejeter',
-    'kick'         => 'Expulser',
-    'leave'        => 'Quitter',
-    'join'         => 'Rejoindre',
-    'message'      => 'Message',
-    'remove'       => 'Retirer',
-    'cancel'       => 'Annuler',
+    'applied_at' => 'Postulé le',
+    'character' => 'Personnage|Personnages',
+    'show' => 'Afficher',
+    'delete' => 'Supprimer',
+    'approve' => 'Approuver',
+    'reject' => 'Rejeter',
+    'kick' => 'Expulser',
+    'leave' => 'Quitter',
+    'join' => 'Rejoindre',
+    'message' => 'Message',
+    'remove' => 'Retirer',
+    'cancel' => 'Annuler',
 ];

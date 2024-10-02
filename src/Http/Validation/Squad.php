@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,10 +45,10 @@ class Squad extends FormRequest
                     Rule::unique('squads', 'name'),
                 'max:255',
             ],
-            'type'        => 'required|in:manual,auto,hidden',
+            'type' => 'required|in:manual,auto,hidden',
             'description' => 'required',
-            'logo'        => 'mimes:jpeg,jpg,png|max:2000',
-            'filters'     => 'json',
+            'logo' => 'mimes:jpeg,jpg,png|max:2000',
+            'filters' => 'json',
         ];
     }
 }

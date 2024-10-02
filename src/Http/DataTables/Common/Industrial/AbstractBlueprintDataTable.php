@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Common\Industrial;
 
+use Illuminate\Http\JsonResponse;
 use Seat\Web\Http\DataTables\Common\IColumn;
 use Yajra\DataTables\Services\DataTable;
 
@@ -37,7 +38,7 @@ abstract class AbstractBlueprintDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         $station_column = $this->getStationColumn($this);
         $location_column = $this->getLocationFlagColumn($this);
@@ -77,7 +78,7 @@ abstract class AbstractBlueprintDataTable extends DataTable
                 return '';
             })
             ->rawColumns(['type.typeName', 'runs'])
-            ->make(true);
+            ->toJson();
     }
 
     /**

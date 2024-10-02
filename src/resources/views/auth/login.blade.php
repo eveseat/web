@@ -4,8 +4,13 @@
 
 @section('content')
 
-  <div class="login-logo">
-    S<b>e</b>AT | {{ trans('web::seat.sign_in') }}
+  <div class="text-center mb-4">
+    <img src="{{ asset('web/img/seat.svg') }}" alt="SeAT Logo" />
+    <br>
+    <a href="{{ config('app.url') }}" class="navbar-brand navbar-brand-autodark">
+      <span class="display-4 seat-font">S<b>e</b>AT</span>
+    </a>
+
   </div>
 
   <hr>
@@ -17,7 +22,7 @@
 
     <!-- SSO Button! -->
     <!-- <div class="box-body text-center">
-      <a href="{{ route('auth.eve') }}">
+      <a href="{{ route('seatcore::auth.eve') }}">
         <img src="{{ asset('web/img/evesso.png') }}">
       </a>
     </div> -->

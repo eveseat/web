@@ -31,7 +31,7 @@
               <dt>{{ trans('web::seat.curr_training') }}</dt>
               <dd>
                 @if($character->skill_queue->where('finish_date', '>', carbon())->isNotEmpty())
-                  {{ $character->skill_queue->where('finish_date', '>', carbon())->first()->type->typeName }} to level
+                  {{ $character->skill_queue->where('finish_date', '>', carbon())->first()->type->typeName ?? trans('web::seat.unknown') }} to level
                   <b>{{ $character->skill_queue->where('finish_date', '>', carbon())->first()->finished_level }}</b>
                 @else
                   {{ trans('web::seat.no_skill_training') }}
@@ -60,7 +60,7 @@
                         <span class="col-md-8" data-toggle="tooltip" title=""
                               @if($skill->finish_date != '0000-00-00 00:00:00')
                               data-original-title="Ends {{ human_diff(carbon($skill->finish_date)->toDateString()) }} on {{ carbon($skill->finish_date)->toDateString() }} at {{ carbon($skill->finish_date)->toTimeString() }}"
-                            @endif>{{ $skill->type->typeName }}</span>
+                            @endif>{{ $skill->type->typeName ?? trans('web::seat.unknown') }}</span>
                         <span class="col-md-4">
                           @for($i = 1; $i <= $skill->finished_level; $i++)
                             @if($i == $skill->finished_level)
@@ -136,6 +136,15 @@
                           Located at <b>{{ $clone->location->name }}</b>
                         @else
                           Location is unknown
+                        @endif
+
+                        @if(! empty($clone->implants))
+                          </br>&nbsp&nbsp
+                          @foreach($clone->implants as $implant_id)
+                            <i data-toggle="tooltip" title="{{ $jumpclone_implants[$implant_id] }}">
+                              {!! img('types', 'icon', $implant_id, 32, ['class' => 'img-circle eve-icon small-icon'], false) !!}
+                            </i>
+                          @endforeach
                         @endif
                       </li>
                     @endforeach
@@ -267,7 +276,7 @@
             <ul>
 
               @foreach($character->implants as $implant)
-                <li>{{ $implant->type->typeName }}</li>
+                <li>{{ $implant->type->typeName ?? trans('web::seat.unknown') }}</li>
               @endforeach
 
             </ul>

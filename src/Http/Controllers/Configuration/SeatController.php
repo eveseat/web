@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,9 +51,9 @@ class SeatController extends Controller
         $packages = $this->getPluginsMetadataList();
 
         // Validate SSO Environment settings
-        if (is_null(config('esi.eseye_client_id')) or
-            is_null(config('esi.eseye_client_secret')) or
-            is_null(config('esi.eseye_client_callback'))
+        if (is_null(config('eseye.esi.auth.client_id')) or
+            is_null(config('eseye.esi.auth.client_secret')) or
+            is_null(config('eseye.esi.auth.client_callback'))
         )
             $warn_sso = true;
         else
@@ -117,9 +117,9 @@ class SeatController extends Controller
 
         foreach($names as $key => $name) {
             $custom_links->push((object) [
-                'name'    => $name,
-                'url'     => $urls[$key],
-                'icon'    => $icons[$key],
+                'name' => $name,
+                'url' => $urls[$key],
+                'icon' => $icons[$key],
                 'new_tab' => (bool) $new_tabs[$key],
             ]);
         }
@@ -366,13 +366,13 @@ class SeatController extends Controller
             });
         } catch (Exception $e) {
             logger()->error('An error occurred while fetching changelog from API.', [
-                'code'       => $e->getCode(),
-                'error'      => $e->getMessage(),
-                'trace'      => $e->getTrace(),
-                'uri'        => $uri,
+                'code' => $e->getCode(),
+                'error' => $e->getMessage(),
+                'trace' => $e->getTrace(),
+                'uri' => $uri,
                 'attributes' => [
                     'body' => $body_attribute,
-                    'tag'  => $tag_attribute,
+                    'tag' => $tag_attribute,
                 ],
             ]);
         }
@@ -405,10 +405,10 @@ class SeatController extends Controller
             });
         } catch (Exception $e) {
             logger()->error('An error occurred while fetching changelog from file.', [
-                'code'       => $e->getCode(),
-                'error'      => $e->getMessage(),
-                'trace'      => $e->getTrace(),
-                'uri'        => $uri,
+                'code' => $e->getCode(),
+                'error' => $e->getMessage(),
+                'trace' => $e->getTrace(),
+                'uri' => $uri,
             ]);
         }
 

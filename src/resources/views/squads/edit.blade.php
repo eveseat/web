@@ -19,7 +19,7 @@
           <div class="media">
             <img src="{{ $squad->logo }}" width="128" height="128" class="border align-self-center mr-3" id="squad-logo" />
             <div class="media-body">
-              <form method="post" action="{{ route('squads.update', $squad) }}" enctype="multipart/form-data" id="squad-form">
+              <form method="post" action="{{ route('seatcore::squads.update', $squad) }}" enctype="multipart/form-data" id="squad-form">
                 {!! csrf_field() !!}
                 {!! method_field('PUT') !!}
                 <div class="form-group row">
@@ -63,7 +63,7 @@
                     <div>If a squad is classified, then only moderators and administrators will be able to see the member list</div>
                   </div>
                 </div>
-                <input type="hidden" name="description" value="{{ $squad->getOriginal('filters') }}" />
+                <input type="hidden" name="description" value="{{ $squad->getRawOriginal('filters') }}" />
                 <input type="hidden" name="filters" value="{{ $squad->filters }}" />
                 <input type="file" name="logo" accept="image/png, image/jpeg" id="file-image" class="d-none" />
                 <div id="squad-description"></div>
@@ -83,17 +83,7 @@
   </div>
 
   @include('web::components.filters.modals.filters.filters', [
-    'filters' => [
-        (object) ['name' => 'scopes', 'src' => route('fastlookup.scopes'), 'path' => 'refresh_tokens', 'field' => 'scopes', 'label' => 'Scopes'],
-        (object) ['name' => 'character', 'src' => route('fastlookup.characters'), 'path' => 'characters', 'field' => 'character_infos.character_id', 'label' => 'Character'],
-        (object) ['name' => 'title', 'src' => route('fastlookup.titles'), 'path' => 'characters.titles', 'field' => 'id', 'label' => 'Title'],
-        (object) ['name' => 'corporation', 'src' => route('fastlookup.corporations'), 'path' => 'characters.affiliation', 'field' => 'corporation_id', 'label' => 'Corporation'],
-        (object) ['name' => 'alliance', 'src' => route('fastlookup.alliances'), 'path' => 'characters.affiliation', 'field' => 'alliance_id', 'label' => 'Alliance'],
-        (object) ['name' => 'skill', 'src' => route('fastlookup.skills'), 'path' => 'characters.skills', 'field' => 'skill_id', 'label' => 'Skill'],
-        (object) ['name' => 'skill_level', 'src' => [['id' => 1, 'text' => 'Level 1'], ['id' => 2, 'text' => 'Level 2'], ['id' => 3, 'text' => 'Level 3'], ['id' => 4, 'text' => 'Level 4'], ['id' => 5, 'text' => 'Level 5']], 'path' => 'characters.skills', 'field' => 'trained_skill_level', 'label' => 'Skill Level'],
-        (object) ['name' => 'type', 'src' => route('fastlookup.items'), 'path' => 'characters.assets', 'field' => 'type_id', 'label' => 'Item'],
-        (object) ['name' => 'role', 'src' => route('fastlookup.roles'), 'path' => 'characters.corporation_roles', 'field' => 'role', 'label' => 'Role'],
-    ],
+    'filters' => $characterFilterRules,
   ])
 @endsection
 

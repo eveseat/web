@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,7 +63,7 @@ class ProfileController extends Controller
         $languages = config('web.locale.languages');
 
         // available options
-        $skins = Profile::$options['skins'];
+        $skins = config('web.skins');
         $sidebar = Profile::$options['sidebar'];
         $thousand = Profile::$options['thousand_seperator'];
         $decimal = Profile::$options['decimal_seperator'];
@@ -176,7 +176,7 @@ class ProfileController extends Controller
         // Find the new user to login as.
         auth()->user()->fill([
             'main_character_id' => $requested_character->character_id,
-            'name'              => $requested_character->name,
+            'name' => $requested_character->name,
         ])->save();
 
         // Log the character change login event.

@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,20 +21,20 @@
  */
 
 return [
-    'date'       => 'Date',
-    'ref_type'   => 'Type',
+    'date' => 'Date',
+    'ref_type' => 'Type',
     'from_party' => 'Du tiers',
-    'to_party'   => 'Au tiers',
-    'amount'     => 'Montant',
-    'balance'    => 'Solde',
+    'to_party' => 'Au tiers',
+    'amount' => 'Montant',
+    'balance' => 'Solde',
 
-    'order'      => 'Achat/Vente',
-    'type'       => 'Type',
-    'location'   => 'Emplacement',
-    'price'      => 'Prix',
-    'quantity'   => 'Quantité',
-    'total'      => 'Total',
-    'party'      => 'Tiers',
+    'order' => 'Achat/Vente',
+    'type' => 'Type',
+    'location' => 'Emplacement',
+    'price' => 'Prix',
+    'quantity' => 'Quantité',
+    'total' => 'Total',
+    'party' => 'Tiers',
 
     'acceleration_gate_fee' => 'Frais de portail d\'accélération',
     'advertisement_listing_fee' => 'Frais d\'annonces',

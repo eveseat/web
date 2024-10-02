@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2015 to 2022 Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Http\DataTables\Common\Financial;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Lang;
 use Yajra\DataTables\Services\DataTable;
 
@@ -37,7 +38,7 @@ abstract class AbstractWalletJournalDataTable extends DataTable
      *
      * @throws \Exception
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         return datatables()
             ->eloquent($this->applyScopes($this->query()))
@@ -87,7 +88,7 @@ abstract class AbstractWalletJournalDataTable extends DataTable
                 $query->whereIn('ref_type', $ref_types);
             })
             ->rawColumns(['date', 'first_party.name', 'second_party.name'])
-            ->make(true);
+            ->toJson();
     }
 
     /**
@@ -99,7 +100,7 @@ abstract class AbstractWalletJournalDataTable extends DataTable
             ->columns($this->getColumns())
             ->postAjax()
             ->parameters([
-                'dom'          => '<"row"<"col-sm-12 col-md-4"l><"col-sm-12 col-md-4 text-center"B><"col-sm-12 col-md-4"f>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+                'dom' => '<"row"<"col-sm-12 col-md-4"l><"col-sm-12 col-md-4 text-center"B><"col-sm-12 col-md-4"f>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
                 'buttons' => ['postCsv', 'postExcel'],
                 'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); ids_to_names(); }',
             ]);
