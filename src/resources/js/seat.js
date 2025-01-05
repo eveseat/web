@@ -24,7 +24,7 @@ $(document).on("click", ".confirmform", function (e) {
     }
     bootbox.confirm(message, function (confirmed) {
         if (confirmed) {
-            currentForm.submit();
+            currentForm.get(0).requestSubmit(); // requestSubmit is not supported by jquery, so access the rwa DOM element
         }
     });
 });
@@ -47,7 +47,7 @@ $(document).on("click", ".confirmdelete", function (e) {
     }
     bootbox.confirm(message, function (confirmed) {
         if (confirmed) {
-            currentForm.submit();
+            currentForm.get(0).requestSubmit(); // requestSubmit is not supported by jquery, so access the rwa DOM element
         }
     });
 });
