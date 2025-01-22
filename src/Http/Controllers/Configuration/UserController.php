@@ -75,7 +75,7 @@ class UserController extends Controller
         $current_user = $character->user;
         $target_user = User::find($request->input('user'));
 
-        $token = $character->refresh_token;
+        $token = $character->refresh_token()->withTrashed()->first();
 
         // erase existing link between the character and current user
         $token->user_id = $target_user->id;
