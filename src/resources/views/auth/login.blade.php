@@ -5,7 +5,7 @@
 @section('content')
 
   <div class="text-center mb-4">
-    <img src="{{ asset('web/img/seat.svg') }}" alt="SeAT Logo" />
+    <img class="login-logo" src="{{ asset('web/img/seat.svg') }}" alt="SeAT Logo" />
     <br>
     <a href="{{ config('app.url') }}" class="navbar-brand navbar-brand-autodark">
       <span class="display-4 seat-font">S<b>e</b>AT</span>
