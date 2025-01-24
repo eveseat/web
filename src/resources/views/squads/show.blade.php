@@ -399,7 +399,7 @@
             dom: 'Bfrtip',
             processing: true,
             serverSide: true,
-            order: [[0, 'desc']],
+            order: [[0, 'asc']],
             ajax: {
                 url: '{{ route('seatcore::squads.members.index', $squad) }}',
                 type: 'POST',
@@ -424,7 +424,7 @@
             dom: 'Bfrtip',
             processing: true,
             serverSide: true,
-            order: [[0, 'desc']],
+            order: [[0, 'asc']],
             ajax: {
                 url: '{{ route('seatcore::squads.applications.index', $squad) }}',
                 type: 'POST',
@@ -449,7 +449,7 @@
             dom: 'Bfrtip',
             processing: true,
             serverSide: true,
-            order: [[0, 'desc']],
+            order: [[0, 'asc']],
             ajax: {
                 url: '{{ route('seatcore::squads.roles.show', $squad) }}',
                 type: 'POST',

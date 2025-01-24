@@ -83,6 +83,7 @@ class MembersDataTable extends DataTable
         return $this->builder()
             ->postAjax()
             ->columns($this->columns())
+            ->orderBy(0, 'asc')
             ->parameters([
                 'drawCallback' => 'function() { $("[data-toggle=tooltip]").tooltip(); }',
             ])
