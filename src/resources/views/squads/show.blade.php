@@ -18,7 +18,7 @@
                   Edit
                 </a>
                 @can('squads.create')
-                  <button type="submit" class="btn btn-sm btn-danger" form="delete-squad">
+                  <button type="submit" class="btn btn-sm btn-danger confirmdelete" form="delete-squad">
                     <i class="fas fa-trash-alt"></i>
                     Delete
                   </button>
