@@ -95,6 +95,7 @@ class SeatController extends Controller
         //check if we have changed the admin contact.
         if ($request->admin_contact !== setting('admin_contact', true)){
             setting(['admin_contact', $request->admin_contact], true);
+
             return redirect()->back()
             ->with('warning', 'SeAT settings updated! Admin Contact has changed, please restart SeAT to apply this change!');
         }
