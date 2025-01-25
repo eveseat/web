@@ -40,6 +40,10 @@ Route::get('/corporations')
     ->name('seatcore::fastlookup.corporations')
     ->uses('FastLookupController@getCorporations');
 
+Route::get('/factions')
+    ->name('seatcore::fastlookup.factions')
+    ->uses('FastLookupController@getFactions');
+
 Route::get('/alliances')
     ->name('seatcore::fastlookup.alliances')
     ->uses('FastLookupController@getAlliances');

@@ -29,6 +29,7 @@ use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Corporation\CorporationRole;
 use Seat\Eveapi\Models\Corporation\CorporationTitle;
+use Seat\Eveapi\Models\Sde\ChrFaction;
 use Seat\Eveapi\Models\Sde\Constellation;
 use Seat\Eveapi\Models\Sde\InvType;
 use Seat\Eveapi\Models\Sde\Region;
@@ -193,6 +194,37 @@ class FastLookupController extends Controller
 
         return response()->json([
             'results' => $corporations,
+        ]);
+
+    }
+
+    /**
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getFactions(Request $request)
+    {
+        if ($request->query('_type', 'query') == 'find') {
+            $faction = ChrFaction::find($request->query('q', 0));
+
+            return response()->json([
+                'id' => $faction->factionID,
+                'text' => $faction->name,
+            ]);
+        }
+
+        $factions = ChrFaction::where('factionName', 'like', '%' . $request->query('q', '') . '%')
+            ->orderBy('factionName')
+            ->get()
+            ->map(function ($faction, $key) {
+                return [
+                    'id' => $faction->factionID,
+                    'text' => $faction->name,
+                ];
+            });
+
+        return response()->json([
+            'results' => $factions,
         ]);
 
     }
