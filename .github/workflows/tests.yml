@@ -2,9 +2,9 @@ name: Unit Testing
 
 on:
   push:
-    branches: [ "5.0.x" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "5.0.x" ]
+    branches: [ "master" ]
 
 jobs:
   tests:
