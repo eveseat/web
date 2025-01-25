@@ -33,11 +33,11 @@ use Seat\Web\Models\User;
 use Seat\Web\WebServiceProvider;
 
 /**
- * Class AllianceRule.
+ * Class FactionRuleTest.
  *
  * @package Seat\Tests\Web\Squads
  */
-class AllianceRuleTest extends TestCase
+class FactionRuleTest extends TestCase
 {
     /**
      * @param \Illuminate\Foundation\Application $app
