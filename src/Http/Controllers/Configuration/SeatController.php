@@ -87,18 +87,11 @@ class SeatController extends Controller
     {
 
         setting(['registration', $request->registration], true);
+        setting(['admin_contact', $request->admin_contact], true);
         setting(['allow_tracking', $request->allow_tracking], true);
         setting(['cleanup_data', $request->cleanup_data], true);
         setting(['market_prices_region_id', $request->market_prices_region], true);
         setting(['allow_user_character_unlink', $request->allow_user_character_unlink], true);
-
-        //check if we have changed the admin contact.
-        if ($request->admin_contact !== setting('admin_contact', true)){
-            setting(['admin_contact', $request->admin_contact], true);
-
-            return redirect()->back()
-            ->with('warning', 'SeAT settings updated! Admin Contact has changed, please restart SeAT to apply this change!');
-        }
 
         return redirect()->back()
             ->with('success', 'SeAT settings updated!');
