@@ -37,7 +37,7 @@ class RemoveDeprecatedSsoScopesProfiles extends Migration
         $remove_scopes = [
             'esi-bookmarks.read_character_bookmarks.v1',
             'esi-bookmarks.read_corporation_bookmarks.v1',
-            'esi-characters.read_opportunities.v1'
+            'esi-characters.read_opportunities.v1',
         ];
 
         // Fix the global_settings
