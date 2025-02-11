@@ -287,7 +287,7 @@ class CorporationPolicyTest extends TestCase
         $denied_corporation = $corporations->first();
         $granted_corporation = $corporations->last();
 
-        $granted_corporation->alliance_id = 99000000;
+        $granted_corporation->alliance_id = 90000000;
         $granted_corporation->save();
 
         // seed role with all corporation permissions
@@ -304,7 +304,7 @@ class CorporationPolicyTest extends TestCase
                 'filters' => json_encode([
                     'alliance' => [
                         [
-                            'id'   => 99000000,
+                            'id'   => 90000000,
                             'text' => 'Testing Alliance',
                         ],
                     ],
