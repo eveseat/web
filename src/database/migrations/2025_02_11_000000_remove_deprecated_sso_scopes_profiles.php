@@ -40,8 +40,13 @@ class RemoveDeprecatedSsoScopesProfiles extends Migration
             'esi-characters.read_opportunities.v1',
         ];
 
+        $sso_scopes_setting = DB::table('global_settings')->where('name', 'sso_scopes')->first();
+
+        // if no sso scope settings have been configured, we don't have anything to migrate
+        if($sso_scopes_setting === null) return;
+
         // Fix the global_settings
-        $profiles = json_decode(DB::table('global_settings')->where('name', 'sso_scopes')->first()->value);
+        $profiles = json_decode($sso_scopes_setting->value);
         foreach($profiles as &$profile) {
             foreach($remove_scopes as $rs) {
                 foreach(array_keys($profile->scopes, $rs, true) as $key) {
