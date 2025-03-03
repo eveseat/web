@@ -25,6 +25,7 @@ namespace Seat\Web\Observers;
 use Exception;
 use Seat\Eveapi\Bus\Character;
 use Seat\Eveapi\Models\RefreshToken;
+use Seat\Web\Events\CharacterFilterDataUpdate;
 
 /**
  * Class RefreshTokenObserver.
