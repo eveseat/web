@@ -29,7 +29,7 @@ class CharacterFilterDataUpdatedSquads
 {
     public static function handle(CharacterFilterDataUpdate $event)
     {
-        $user = $event->character->user;
+        $user = RefreshToken::where('character_id', $event->character_id)->withTrashed()->user()->with('squads');
 
         $member_squads = $user->squads;
 

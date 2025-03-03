@@ -58,4 +58,12 @@ class RefreshTokenObserver
             logger()->error($e->getMessage());
         }
     }
+
+    /**
+     * @param  \Seat\Eveapi\Models\RefreshToken  $token
+     */
+    public function deleted(RefreshToken $token)
+    {
+        event(new CharacterFilterDataUpdate($token->character));
+    }
 }
