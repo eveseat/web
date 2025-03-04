@@ -22,6 +22,7 @@
 
 namespace Seat\Web\Listeners;
 
+use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Events\CharacterFilterDataUpdate;
 use Seat\Web\Models\Squads\Squad;
 
@@ -29,7 +30,9 @@ class CharacterFilterDataUpdatedSquads
 {
     public static function handle(CharacterFilterDataUpdate $event)
     {
-        $user = $event->character->user;
+        $user = RefreshToken::where('character_id', $event->character->character_id)->withTrashed()->first()?->user()->with('squads')->first();
+        if (! $user)
+            return;
 
         $member_squads = $user->squads;
 

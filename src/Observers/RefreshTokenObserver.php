@@ -25,6 +25,7 @@ namespace Seat\Web\Observers;
 use Exception;
 use Seat\Eveapi\Bus\Character;
 use Seat\Eveapi\Models\RefreshToken;
+use Seat\Web\Events\CharacterFilterDataUpdate;
 
 /**
  * Class RefreshTokenObserver.
@@ -57,5 +58,13 @@ class RefreshTokenObserver
         } catch (Exception $e) {
             logger()->error($e->getMessage());
         }
+    }
+
+    /**
+     * @param  \Seat\Eveapi\Models\RefreshToken  $token
+     */
+    public function deleted(RefreshToken $token)
+    {
+        event(new CharacterFilterDataUpdate($token->character));
     }
 }
