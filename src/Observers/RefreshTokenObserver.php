@@ -65,6 +65,6 @@ class RefreshTokenObserver
      */
     public function deleted(RefreshToken $token)
     {
-        event(new CharacterFilterDataUpdate($token->character));
+        event(new CharacterFilterDataUpdate($token));
     }
 }

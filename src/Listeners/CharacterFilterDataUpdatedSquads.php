@@ -30,7 +30,7 @@ class CharacterFilterDataUpdatedSquads
 {
     public static function handle(CharacterFilterDataUpdate $event)
     {
-        $user = RefreshToken::where('character_id', $event->character->character_id)->withTrashed()->first()?->user()->with('squads')->first();
+        $user = $event->token->user()->with('squads')->first();
         if (! $user)
             return;
 

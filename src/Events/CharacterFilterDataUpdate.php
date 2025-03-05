@@ -24,6 +24,7 @@ namespace Seat\Web\Events;
 
 use Illuminate\Queue\SerializesModels;
 use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Models\User;
 
 /**
@@ -33,13 +34,13 @@ class CharacterFilterDataUpdate
 {
     use SerializesModels;
 
-    public CharacterInfo $character;
+    public RefreshToken $token;
 
     /**
      * @param  User  $user
      */
-    public function __construct(CharacterInfo $character)
+    public function __construct(RefreshToken $token)
     {
-        $this->character = $character;
+        $this->token = $token;
     }
 }

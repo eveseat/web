@@ -29,6 +29,10 @@ class CharacterBatchProcessed
 {
     public static function handle(BatchEvent $event)
     {
-        event(new CharacterFilterDataUpdate($event->character));
+        $token  = $event->character->refresh_token;
+        if($token === null)
+            return;
+
+        event(new CharacterFilterDataUpdate($token));
     }
 }
