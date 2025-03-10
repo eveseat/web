@@ -22,14 +22,14 @@
 
 namespace Seat\Web\Listeners;
 
-use Seat\Web\Events\CharacterFilterDataUpdate;
+use Seat\Web\Events\AuthedCharacterFilterDataUpdate;
 use Seat\Web\Models\CharacterSchedulingRule;
 
-class CharacterFilterDataUpdatedTokens
+class AuthedCharacterFilterDataUpdatedTokens
 {
-    public static function handle(CharacterFilterDataUpdate $update)
+    public static function handle(AuthedCharacterFilterDataUpdate $update)
     {
-        if (! is_null($update->character->refresh_token))
-            CharacterSchedulingRule::updateRefreshTokenSchedule($update->character->refresh_token);
+        if (! is_null($update->token))
+            CharacterSchedulingRule::updateRefreshTokenSchedule($update->token);
     }
 }

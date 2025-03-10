@@ -35,7 +35,7 @@ class Update extends Command
      *
      * @var string
      */
-    protected $signature = 'seat:filters:update';
+    protected $signature = 'seat:filters:update {--sync}';
 
     /**
      * The console command description.
@@ -51,7 +51,12 @@ class Update extends Command
      */
     public function handle(): void
     {
-        UpdateCharacterFilters::dispatch()->onQueue('high');
-        $this->line('Scheduled character filter updates for all characters!');
+        if($this->option('sync')){
+            UpdateCharacterFilters::dispatchSync();
+            $this->line('Updated character filters!');
+        } else {
+            UpdateCharacterFilters::dispatch()->onQueue('high');
+            $this->line('Scheduled character filter updates for all characters!');
+        }
     }
 }
