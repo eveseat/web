@@ -28,7 +28,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\RefreshToken;
-use Seat\Web\Events\CharacterFilterDataUpdate;
+use Seat\Web\Events\AuthedCharacterFilterDataUpdate;
 
 class UpdateCharacterFilters implements ShouldQueue
 {
@@ -49,7 +49,7 @@ class UpdateCharacterFilters implements ShouldQueue
         // Without chunking, we can run out of memory on large installs.
         RefreshToken::withTrashed()->with('user.squads')->chunk(5, function ($tokens) {
             foreach ($tokens as $token){
-                event(new CharacterFilterDataUpdate($token));
+                event(new AuthedCharacterFilterDataUpdate($token));
             }
         });
     }

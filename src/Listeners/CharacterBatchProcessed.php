@@ -23,7 +23,7 @@
 namespace Seat\Web\Listeners;
 
 use Seat\Eveapi\Events\CharacterBatchProcessed as BatchEvent;
-use Seat\Web\Events\CharacterFilterDataUpdate;
+use Seat\Web\Events\AuthedCharacterFilterDataUpdate;
 
 class CharacterBatchProcessed
 {
@@ -33,6 +33,6 @@ class CharacterBatchProcessed
         if($token === null)
             return;
 
-        event(new CharacterFilterDataUpdate($token));
+        event(new AuthedCharacterFilterDataUpdate($token));
     }
 }

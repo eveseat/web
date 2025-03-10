@@ -24,7 +24,7 @@ namespace Seat\Web\Observers;
 
 use Illuminate\Database\Eloquent\Model;
 use Seat\Eveapi\Models\Character\CharacterInfo;
-use Seat\Web\Events\CharacterFilterDataUpdate;
+use Seat\Web\Events\AuthedCharacterFilterDataUpdate;
 use Seat\Web\Exceptions\InvalidFilterException;
 use Seat\Web\Models\User;
 
@@ -62,6 +62,6 @@ abstract class AbstractCharacterFilterObserver
         if($token === null)
             return;
 
-        event(new CharacterFilterDataUpdate($token));
+        event(new AuthedCharacterFilterDataUpdate($token));
     }
 }

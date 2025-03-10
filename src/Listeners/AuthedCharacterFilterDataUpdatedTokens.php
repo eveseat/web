@@ -20,27 +20,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Events;
+namespace Seat\Web\Listeners;
 
-use Illuminate\Queue\SerializesModels;
-use Seat\Eveapi\Models\Character\CharacterInfo;
-use Seat\Eveapi\Models\RefreshToken;
-use Seat\Web\Models\User;
+use Seat\Web\Events\AuthedCharacterFilterDataUpdate;
+use Seat\Web\Models\CharacterSchedulingRule;
 
-/**
- * This event is fired when character filters, like used in squads, need to recompute because the data they are based on changed.
- */
-class CharacterFilterDataUpdate
+class AuthedCharacterFilterDataUpdatedTokens
 {
-    use SerializesModels;
-
-    public RefreshToken $token;
-
-    /**
-     * @param  User  $user
-     */
-    public function __construct(RefreshToken $token)
+    public static function handle(AuthedCharacterFilterDataUpdate $update)
     {
-        $this->token = $token;
+        if (! is_null($update->token))
+            CharacterSchedulingRule::updateRefreshTokenSchedule($update->token);
     }
 }

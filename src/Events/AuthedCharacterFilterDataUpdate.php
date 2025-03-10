@@ -20,16 +20,30 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Seat\Web\Listeners;
+namespace Seat\Web\Events;
 
-use Seat\Web\Events\CharacterFilterDataUpdate;
-use Seat\Web\Models\CharacterSchedulingRule;
+use Illuminate\Queue\SerializesModels;
+use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\RefreshToken;
+use Seat\Web\Models\User;
 
-class CharacterFilterDataUpdatedTokens
+/**
+ * This event is fired when the state or data of an authenticated character significantly changes.
+ * This is for example the case when a character finishes his ESI jobs, or when his token gets deleted.
+ * It is mostly used for systems like squad filters or per-token update intervals.
+ * This event might be computationally expensive, please try to keep invocations to a minimum.
+ */
+class AuthedCharacterFilterDataUpdate
 {
-    public static function handle(CharacterFilterDataUpdate $update)
+    use SerializesModels;
+
+    public RefreshToken $token;
+
+    /**
+     * @param  User  $user
+     */
+    public function __construct(RefreshToken $token)
     {
-        if (! is_null($update->token))
-            CharacterSchedulingRule::updateRefreshTokenSchedule($update->token);
+        $this->token = $token;
     }
 }
