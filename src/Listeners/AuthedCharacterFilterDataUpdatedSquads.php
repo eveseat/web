@@ -22,7 +22,6 @@
 
 namespace Seat\Web\Listeners;
 
-use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Events\AuthedCharacterFilterDataUpdate;
 use Seat\Web\Models\Squads\Squad;
 

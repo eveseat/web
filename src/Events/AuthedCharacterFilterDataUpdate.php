@@ -23,7 +23,6 @@
 namespace Seat\Web\Events;
 
 use Illuminate\Queue\SerializesModels;
-use Seat\Eveapi\Models\Character\CharacterInfo;
 use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Models\User;
 

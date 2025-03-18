@@ -32,6 +32,7 @@ use Seat\Web\Models\User;
  * Class AbstractSquadObserver.
  *
  * @package Seat\Web\Observers
+ *
  * @deprecated This class will be removed in SeAT 6
  */
 abstract class AbstractCharacterFilterObserver
@@ -58,7 +59,7 @@ abstract class AbstractCharacterFilterObserver
         if (! $character)
             return;
 
-        $token  = $character->refresh_token;
+        $token = $character->refresh_token;
         if($token === null)
             return;
 

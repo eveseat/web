@@ -29,7 +29,7 @@ class CharacterBatchProcessed
 {
     public static function handle(BatchEvent $event)
     {
-        $token  = $event->character->refresh_token;
+        $token = $event->character->refresh_token;
         if($token === null)
             return;
 
