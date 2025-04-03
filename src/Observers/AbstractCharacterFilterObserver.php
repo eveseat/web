@@ -24,7 +24,7 @@ namespace Seat\Web\Observers;
 
 use Illuminate\Database\Eloquent\Model;
 use Seat\Eveapi\Models\Character\CharacterInfo;
-use Seat\Web\Events\CharacterFilterDataUpdate;
+use Seat\Web\Events\AuthedCharacterFilterDataUpdate;
 use Seat\Web\Exceptions\InvalidFilterException;
 use Seat\Web\Models\User;
 
@@ -32,6 +32,8 @@ use Seat\Web\Models\User;
  * Class AbstractSquadObserver.
  *
  * @package Seat\Web\Observers
+ *
+ * @deprecated This class will be removed in SeAT 6
  */
 abstract class AbstractCharacterFilterObserver
 {
@@ -57,6 +59,10 @@ abstract class AbstractCharacterFilterObserver
         if (! $character)
             return;
 
-        event(new CharacterFilterDataUpdate($character));
+        $token = $character->refresh_token;
+        if($token === null)
+            return;
+
+        event(new AuthedCharacterFilterDataUpdate($token));
     }
 }

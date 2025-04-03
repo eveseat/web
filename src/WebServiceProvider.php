@@ -41,7 +41,7 @@ use Seat\Web\Commands\Seat\Admin\Login as AdminLoginCommand;
 use Seat\Web\Commands\Seat\Filters\Update as FilterUpdateCommand;
 use Seat\Web\Database\Seeders\ScheduleSeeder;
 use Seat\Web\Events\Attempt;
-use Seat\Web\Events\CharacterFilterDataUpdate;
+use Seat\Web\Events\AuthedCharacterFilterDataUpdate;
 use Seat\Web\Events\Login;
 use Seat\Web\Events\Logout;
 use Seat\Web\Events\SecLog;
@@ -59,9 +59,9 @@ use Seat\Web\Http\Middleware\Authenticate;
 use Seat\Web\Http\Middleware\Locale;
 use Seat\Web\Http\Middleware\RegistrationAllowed;
 use Seat\Web\Http\Middleware\Requirements;
+use Seat\Web\Listeners\AuthedCharacterFilterDataUpdatedSquads;
+use Seat\Web\Listeners\AuthedCharacterFilterDataUpdatedTokens;
 use Seat\Web\Listeners\CharacterBatchProcessed;
-use Seat\Web\Listeners\CharacterFilterDataUpdatedSquads;
-use Seat\Web\Listeners\CharacterFilterDataUpdatedTokens;
 use Seat\Web\Models\Squads\SquadMember;
 use Seat\Web\Models\Squads\SquadRole;
 use Seat\Web\Observers\CharacterRoleObserver;
@@ -297,8 +297,8 @@ class WebServiceProvider extends AbstractSeatPlugin
         // Custom Events
         Event::listen('security.log', SecLog::class);
         Event::listen(\Seat\Eveapi\Events\CharacterBatchProcessed::class, CharacterBatchProcessed::class);
-        Event::listen(CharacterFilterDataUpdate::class, CharacterFilterDataUpdatedSquads::class);
-        Event::listen(CharacterFilterDataUpdate::class, CharacterFilterDataUpdatedTokens::class);
+        Event::listen(AuthedCharacterFilterDataUpdate::class, AuthedCharacterFilterDataUpdatedSquads::class);
+        Event::listen(AuthedCharacterFilterDataUpdate::class, AuthedCharacterFilterDataUpdatedTokens::class);
 
         // Characters / Corporations first auth - Jobs Events
         CharacterRole::observe(CharacterRoleObserver::class);

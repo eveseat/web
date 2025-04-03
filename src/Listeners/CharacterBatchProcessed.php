@@ -23,12 +23,16 @@
 namespace Seat\Web\Listeners;
 
 use Seat\Eveapi\Events\CharacterBatchProcessed as BatchEvent;
-use Seat\Web\Events\CharacterFilterDataUpdate;
+use Seat\Web\Events\AuthedCharacterFilterDataUpdate;
 
 class CharacterBatchProcessed
 {
     public static function handle(BatchEvent $event)
     {
-        event(new CharacterFilterDataUpdate($event->character));
+        $token = $event->character->refresh_token;
+        if($token === null)
+            return;
+
+        event(new AuthedCharacterFilterDataUpdate($token));
     }
 }

@@ -23,23 +23,26 @@
 namespace Seat\Web\Events;
 
 use Illuminate\Queue\SerializesModels;
-use Seat\Eveapi\Models\Character\CharacterInfo;
+use Seat\Eveapi\Models\RefreshToken;
 use Seat\Web\Models\User;
 
 /**
- * This event is fired when character filters, like used in squads, need to recompute because the data they are based on changed.
+ * This event is fired when the state or data of an authenticated character significantly changes.
+ * This is for example the case when a character finishes his ESI jobs, or when his token gets deleted.
+ * It is mostly used for systems like squad filters or per-token update intervals.
+ * This event might be computationally expensive, please try to keep invocations to a minimum.
  */
-class CharacterFilterDataUpdate
+class AuthedCharacterFilterDataUpdate
 {
     use SerializesModels;
 
-    public CharacterInfo $character;
+    public RefreshToken $token;
 
     /**
      * @param  User  $user
      */
-    public function __construct(CharacterInfo $character)
+    public function __construct(RefreshToken $token)
     {
-        $this->character = $character;
+        $this->token = $token;
     }
 }
