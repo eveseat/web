@@ -704,6 +704,7 @@ return [
     'user_sharelink' => 'ユーザー共有',
     'user_sharelink_description' => '他のSeATユーザーと共有できる共有リンクを生成して、リンクされたキャラクター情報を表示することができます。',
     'user_sharelink_generate' => 'リンクを生成する',
+    'page_limit' => 'ページ制限',
 
     // Queue
     'queue_manage' => 'キュー管理',

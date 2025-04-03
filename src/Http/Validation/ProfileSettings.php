@@ -52,6 +52,7 @@ class ProfileSettings extends FormRequest
         }, config('web.locale.languages')));
         $allowed_sidebar = implode(',', Profile::$options['sidebar']);
         $mail_threads = implode(',', Profile::$options['mail_threads']);
+        $page_limit = implode(',', Profile::$options['page_limit']);
 
         // Workaround if the thousands seperator is null to convert it
         // to a space. We dont receive a space from the request as a
@@ -64,6 +65,7 @@ class ProfileSettings extends FormRequest
             'language' => 'required|in:' . $allowed_languages,
             'sidebar' => 'required|in:' . $allowed_sidebar,
             'mail_threads' => 'required|in:' . $mail_threads,
+            'page_limit' => 'required|numeric|in:' . $page_limit,
             'thousand_seperator' => 'nullable|in:" ",",","."|size:1',
             'decimal_seperator' => 'required|in:",","."|size:1',
             'reprocessing_yield' => 'required|numeric|min:0|max:1',

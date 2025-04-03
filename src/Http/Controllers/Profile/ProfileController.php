@@ -65,12 +65,24 @@ class ProfileController extends Controller
         // available options
         $skins = config('web.skins');
         $sidebar = Profile::$options['sidebar'];
+        $page_limit = Profile::$options['page_limit'];
         $thousand = Profile::$options['thousand_seperator'];
         $decimal = Profile::$options['decimal_seperator'];
 
-        return view('web::profile.view',
-            compact('user', 'history', 'characters', 'skins', 'languages',
-                'sidebar', 'thousand', 'decimal'));
+        return view(
+            'web::profile.view',
+            compact(
+                'user',
+                'history',
+                'characters',
+                'skins',
+                'languages',
+                'sidebar',
+                'page_limit',
+                'thousand',
+                'decimal'
+            )
+        );
     }
 
     /**
@@ -101,6 +113,7 @@ class ProfileController extends Controller
         Profile::set('language', $request->language);
         Profile::set('sidebar', $request->sidebar);
         Profile::set('mail_threads', $request->mail_threads);
+        Profile::set('page_limit', $request->page_limit);
 
         Profile::set('thousand_seperator', $request->thousand_seperator);
         Profile::set('decimal_seperator', $request->decimal_seperator);

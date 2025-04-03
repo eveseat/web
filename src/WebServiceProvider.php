@@ -596,6 +596,7 @@ class WebServiceProvider extends AbstractSeatPlugin
         Profile::define('skin', 'default');
         Profile::define('language', 'en');
         Profile::define('mail_threads', 'yes');
+        Profile::define('page_limit', 10);
 
         // Numbers
         Profile::define('thousand_separator', ' ');

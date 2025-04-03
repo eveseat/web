@@ -90,11 +90,17 @@ $(document).ready(function () {
     });
 });
 
-// Configure some defaults for Datatables
 $.extend(true, $.fn.dataTable.defaults, {
     responsive: true,
     autoWidth: false,
-    order: [[0, 'desc']]
+    order: [[0, 'desc']],
+    // External javascript variable defined in `app.blade.php`.
+    pageLength: typeof pageLength !== 'undefined' ? pageLength : 10,
+    // Improved `lengthMenu` options to include showing all table rows.
+    lengthMenu: [
+        [10, 25, 50, 100, -1],
+        [10, 25, 50, 100, "All"]
+    ]
 });
 
 // put some animation on the caret neat to the user dropdown
