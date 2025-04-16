@@ -227,7 +227,7 @@
     <p>{{ trans('web::seat.third_party_access') }}</p>
     <hr/>
     <p class="mb-0 text-right">
-      <a class="btn btn-sm btn-warning" style="color: inherit; text-decoration: inherit;" href="https://community.eveonline.com/support/third-party-applications/" target="_blank">{{ trans('web::seat.view_third_party_access') }}</a>
+      <a class="btn btn-sm btn-warning text-decoration-none" href="https://community.eveonline.com/support/third-party-applications/" target="_blank">{{ trans('web::seat.view_third_party_access') }}</a>
     </p>
   </div>
 
