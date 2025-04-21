@@ -704,6 +704,7 @@ return [
     'user_sharelink' => 'Partage d\'accès',
     'user_sharelink_description' => 'Vous pouvez générer un lien de partage qui peut être utilisé par un autre utilisateur de SeAT pour leur permettre d\'accéder aux informations de vos différents personnages.',
     'user_sharelink_generate' => 'Générer un lien',
+    'page_limit' => 'Limite de page',
 
     // Queue
     'queue_manage' => 'Gestion de la fil d\'attente',

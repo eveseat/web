@@ -19,7 +19,7 @@
 
           <!-- Select Basic -->
           <div class="form-group row">
-            <label class="col-md-4 col-form-label" for="skin">{{ trans('web::seat.seat_skin') }}</label>
+            <label class="col-md-6 col-form-label" for="skin">{{ trans('web::seat.seat_skin') }}</label>
             <div class="col-md-6">
               <select id="skin" name="skin" class="form-control w-100">
                 @foreach($skins as $skin)
@@ -35,7 +35,7 @@
 
           <!-- Select Basic -->
           <div class="form-group row">
-            <label class="col-md-4 col-form-label" for="language">{{ trans('web::seat.language') }}</label>
+            <label class="col-md-6 col-form-label" for="language">{{ trans('web::seat.language') }}</label>
             <div class="col-md-6">
               <select id="language" name="language" class="form-control w-100">
                 @foreach($languages as $language)
@@ -51,7 +51,7 @@
 
           <!-- Select Basic -->
           <div class="form-group row">
-            <label class="col-md-4 col-form-label" for="sidebar">{{ trans('web::seat.sidebar_size') }}</label>
+            <label class="col-md-6 col-form-label" for="sidebar">{{ trans('web::seat.sidebar_size') }}</label>
             <div class="col-md-6">
               <select id="sidebar" name="sidebar" class="form-control w-100">
                 @foreach($sidebar as $style)
@@ -67,7 +67,7 @@
 
           <!-- Select Basic -->
           <div class="form-group row">
-            <label class="col-md-4 col-form-label" for="sidebar">{{ trans('web::seat.mail_as_threads') }}</label>
+            <label class="col-md-6 col-form-label" for="sidebar">{{ trans('web::seat.mail_as_threads') }}</label>
             <div class="col-md-6">
               <select id="sidebar" name="mail_threads" class="form-control w-100">
                 <option value="yes"
@@ -82,11 +82,25 @@
             </div>
           </div>
 
+          <!-- Select Basic -->
+          <div class="form-group row">
+            <label class="col-md-6 col-form-label" for="page_limit">{{ trans('web::seat.page_limit') }}</label>
+            <div class="col-md-6">
+              <select id="page_limit" name="page_limit" class="form-control w-100">
+                @foreach([10, 25, 50, 100, -1] as $limit)
+                  <option value="{{ $limit }}" {{ old('page_limit', setting('page_limit')) == $limit ? 'selected' : '' }}>
+                    {{ $limit == -1 ? 'All' : $limit }}
+                  </option>
+                @endforeach
+              </select>
+            </div>
+          </div>
+
           <legend>{{ trans('web::seat.number_format') }}</legend>
 
           <!-- Select Basic -->
           <div class="form-group row">
-            <label class="col-md-4 col-form-label"
+            <label class="col-md-6 col-form-label"
                    for="thousand_seperator">{{ trans('web::seat.thousands_seperator') }}</label>
             <div class="col-md-6">
               <div class="form-inline input-group">
@@ -107,7 +121,7 @@
 
           <!-- Select Basic -->
           <div class="form-group row">
-            <label class="col-md-4 col-form-label"
+            <label class="col-md-6 col-form-label"
                    for="decimal_seperator">{{ trans('web::seat.decimal_seperator') }}</label>
             <div class="col-md-6">
               <div class="form-inline input-group">
@@ -126,7 +140,7 @@
           </div>
 
         <div class="form-group row">
-          <label class="col-md-4 col-form-label"
+          <label class="col-md-6 col-form-label"
                  for="reprocessing_yield">{{ trans('web::seat.reprocessing_yield') }}</label>
           <div class="col-md-6">
             <div class="form-inline input-group">
@@ -139,7 +153,7 @@
 
           <!-- Select Basic -->
           <div class="form-group row">
-            <label class="col-md-4 col-form-label"
+            <label class="col-md-6 col-form-label"
                    for="email_notifications">{{ trans('web::seat.email_notifications') }}</label>
             <div class="col-md-6">
               <div class="form-inline input-group">

@@ -717,6 +717,7 @@ return [
     'user_sharelink' => 'User Sharing',
     'user_sharelink_description' => 'You can generate a sharing link that can be shared with other SeAT users to allow them to view your linked characters information.',
     'user_sharelink_generate' => 'Generate Link',
+    'page_limit' => 'Page Limit',
 
     // Queue
     'queue_manage' => 'Queue Management',

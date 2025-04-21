@@ -134,6 +134,14 @@
   <script src="{{ asset('web/js/chart.min.js') }}"></script>
   <!-- Theme JS -->
   <script src="{{ asset('web/js/adminlte.min.js') }}"></script>
+
+  <script>
+    // Inject the page limit value with fallback to 10 if not set.
+    //
+    // This is required as `seat.js` uses this variable, with their own fallback, just in case.
+    var pageLength = {{ setting('page_limit') ?? 10 }};
+  </script>
+
   <!-- SeAT JS -->
   <script src="{{ asset('web/js/seat.js') }}"></script>
 
