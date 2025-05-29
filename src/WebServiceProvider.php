@@ -541,7 +541,6 @@ class WebServiceProvider extends AbstractSeatPlugin
                     'esi-characters.read_notifications.v1',
                     'esi-characters.read_standings.v1',
                     'esi-characters.read_titles.v1',
-                    'esi-characterstats.read.v1',
                     'esi-clones.read_clones.v1',
                     'esi-clones.read_implants.v1',
                     'esi-contracts.read_character_contracts.v1',
