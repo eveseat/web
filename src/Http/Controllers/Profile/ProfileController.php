@@ -84,7 +84,9 @@ class ProfileController extends Controller
             ->where('user_id', $user_id)
             ->first();
 
-        return view('web::profile.modals.scopes.content', ['scopes' => $token->scopes]);
+        $profile_name = collect(setting('sso_scopes'))->where('id', $token->scopes_profile)->first()->name ?? null;
+
+        return view('web::profile.modals.scopes.content', ['scopes' => $token->scopes, "profile_name"=>$profile_name]);
     }
 
     /**

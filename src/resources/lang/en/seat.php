@@ -717,6 +717,8 @@ return [
     'user_sharelink' => 'User Sharing',
     'user_sharelink_description' => 'You can generate a sharing link that can be shared with other SeAT users to allow them to view your linked characters information.',
     'user_sharelink_generate' => 'Generate Link',
+    'unknown_scopes_profile' => 'Unknown (Profile not found)',
+    'scopes_profile' => 'Scopes Profile',
 
     // Queue
     'queue_manage' => 'Queue Management',
