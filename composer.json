@@ -31,7 +31,7 @@
     "doctrine/dbal": "^3.0",
     "erusev/parsedown": "^1.7",
     "eveseat/eseye": "^3.0",
-    "eveseat/eveapi": "^5.0.18",
+    "eveseat/eveapi": "^5.0.24",
     "eveseat/services": "^5.0.8",
     "guzzlehttp/guzzle": "^7.0",
     "intervention/image": "^2.0",
