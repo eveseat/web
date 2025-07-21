@@ -20,21 +20,32 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-return [
-    'region' => 'Region(en)',
-    'constellation' => 'Konstellation(en)',
-    'system' => 'Sonnensystem(e)',
-    'planet' => 'Planet(en)',
-    'moon' => 'Mond(e)',
-    'indicator' => 'Indikator(en)',
-    'sovereignty' => 'Souveränität',
-    'ubiquitous' => 'Ubiquitous',
-    'common' => 'Gewöhnlich',
-    'uncommon' => 'Ungewöhnlich',
-    'rare' => 'Selten',
-    'exceptional' => 'Außergewöhnlich',
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-    'notes' => 'Notizen',
-    'notes_instruction' => 'Du kannst hier Notizen zu den Mond(en) eingeben. Falls du Daten für mehrere Monde gleichzeitig eingibst, wird die Notiz zu allen neuen Monden hinzugefügt.',
-    'notes_placeholder' => 'Gib hier Notizen ein',
-];
+return new class extends Migration {
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('universe_moon_reports', function (Blueprint $table) {
+            $table->string('notes')->default('');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('universe_moon_reports', function (Blueprint $table) {
+            $table->dropColumn('notes');
+        });
+    }
+};

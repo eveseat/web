@@ -125,6 +125,7 @@ class MoonsController extends Controller
                         $universe_moon = UniverseMoonReport::firstOrNew(['moon_id' => $component->moonID]);
                         $universe_moon->user_id = auth()->user()->getAuthIdentifier();
                         $universe_moon->updated_at = now();
+                        $universe_moon->notes = $request->notes;
                         $universe_moon->save();
 
                         // search for any existing and outdated report regarding current moon
@@ -157,5 +158,20 @@ class MoonsController extends Controller
         $report->delete();
 
         return redirect()->back();
+    }
+
+    /**
+     * @param  int  $moon
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function edit(int $moon)
+    {
+        $moon = UniverseMoonReport::with('content')->where('moon_id', $moon)->first();
+        if($moon == null) return response()->json([], 400);
+
+        return response()->json([
+            'report' => $moon->formatReport(),
+            'notes' => $moon->notes,
+        ]);
     }
 }
