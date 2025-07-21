@@ -46,7 +46,7 @@ class ProbeReport extends FormRequest
     {
         return [
             'moon-report' => 'required',
-            'notes' => 'present|string'
+            'notes' => 'present|string',
         ];
     }
 }

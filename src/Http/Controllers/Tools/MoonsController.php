@@ -22,7 +22,6 @@
 
 namespace Seat\Web\Http\Controllers\Tools;
 
-use Illuminate\Http\Request;
 use Seat\Eveapi\Models\Sde\Moon;
 use Seat\Services\ReportParser\Exceptions\InvalidReportException;
 use Seat\Services\ReportParser\Parsers\MoonReport;
@@ -162,13 +161,13 @@ class MoonsController extends Controller
     }
 
     /**
-     * @param int $moon
+     * @param  int  $moon
      * @return \Illuminate\Http\JsonResponse
      */
     public function edit(int $moon)
     {
-        $moon = UniverseMoonReport::with('content')->where('moon_id',$moon)->first();
-        if($moon == null) return response()->json([],400);
+        $moon = UniverseMoonReport::with('content')->where('moon_id', $moon)->first();
+        if($moon == null) return response()->json([], 400);
 
         return response()->json([
             'report' => $moon->formatReport(),

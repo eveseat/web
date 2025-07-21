@@ -148,14 +148,14 @@ class UniverseMoonReport extends Model
     }
 
     /**
-     * Converts the moon back into a report string
+     * Converts the moon back into a report string.
      *
      * @return string
      */
     public function formatReport(): string
     {
         // header + moon name
-        $report = sprintf("Moon	Moon Product\tQuantity\tOre TypeID\tSolarSystemID\tPlanetID\tMoonID\n%s\n",$this->moon->name);
+        $report = sprintf("Moon	Moon Product\tQuantity\tOre TypeID\tSolarSystemID\tPlanetID\tMoonID\n%s\n", $this->moon->name);
 
         foreach ($this->content as $content){
             $report .= sprintf("\t%s\t%F\t%d\t%d\t%d\t%d\n",
