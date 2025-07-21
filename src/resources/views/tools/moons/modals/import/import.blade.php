@@ -12,7 +12,7 @@
           {{ csrf_field() }}
           <div class="form-group">
             <label for="moon-report" class="control-label">{{ trans('web::moons.report') }}</label>
-            <textarea class="form-control" name="moon-report" id="moon-report"></textarea>
+            <textarea class="form-control" name="moon-report" id="moon-report" rows="5"></textarea>
             <p class="form-text text-muted mb-0">
               {!! trans('web::moons.probe_report_instruction') !!}
             </p>
@@ -43,7 +43,6 @@
   <script src="{{ asset('web/js/quill.min.js') }}"></script>
 
   <script>
-
     Quill.prototype.getHtml = function () {
       var html = this.container.querySelector('.ql-editor').innerHTML;
       html = html.replace(/<p>(<br>|<br\/>|<br\s\/>|\s+|)<\/p>\r\n/gmi, "");
@@ -65,11 +64,23 @@
       theme: 'snow'
     });
 
-    editor.setContents(editor.clipboard.convert($('input[name="notes"]').val()), 'silent');
-
     $('#moon-report-form').on('submit', function () {
       const input = $('input[name="notes"]');
       input.val(editor.getHtml());
     });
+
+
+    $('#moon-import').on('show.bs.modal', function (e) {
+      $('#components-detail').modal('hide')
+
+      $.ajax($(e.relatedTarget).data('url'))
+        .done(function (data) {
+          $('#moon-report').val(data.report)
+          editor.setContents(editor.clipboard.convert(data.notes), 'silent');
+        }).fail(function () {
+          $('#moon-report').val('')
+          editor.setContents(editor.clipboard.convert(''), 'silent');
+      })
+    })
   </script>
 @endpush

@@ -1,4 +1,7 @@
-<h4>{{ $moon->moon->name }}</h4>
+<h4 class="d-flex">
+  <span class="mr-auto">{{ $moon->moon->name }}</span>
+  @include('web::tools.moons.buttons.edit',['row'=>$moon])
+</h4>
 <p class="lead">
   {{ trans('web::moons.yield_explanation',['volume'=>number_format(Seat\Eveapi\Models\Industry\CorporationIndustryMiningExtraction::BASE_DRILLING_VOLUME, 2),'yield'=>(setting('reprocessing_yield') ?: 0.80) * 100]) }}
 </p>
