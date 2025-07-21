@@ -125,6 +125,7 @@ class MoonsController extends Controller
                         $universe_moon = UniverseMoonReport::firstOrNew(['moon_id' => $component->moonID]);
                         $universe_moon->user_id = auth()->user()->getAuthIdentifier();
                         $universe_moon->updated_at = now();
+                        $universe_moon->notes = $request->notes;
                         $universe_moon->save();
 
                         // search for any existing and outdated report regarding current moon

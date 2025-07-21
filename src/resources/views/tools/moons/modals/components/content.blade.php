@@ -16,6 +16,11 @@
   <dt>{{ trans_choice('web::moons.moon', 1) }}</dt>
   <dd>{{ $moon->moon->name }}</dd>
 
+  @if(strip_tags($moon->notes) !== "")
+    <dt>{{ trans('web::moons.notes') }}</dt>
+    <dd>{!! $moon->notes !!}</dd>
+  @endif
+
   <dt>{{trans_choice('web::moons.region', 1)}}</dt>
   <dd>{{ $moon->moon->region->name }}</dd>
 

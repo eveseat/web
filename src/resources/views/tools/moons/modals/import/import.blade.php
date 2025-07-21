@@ -17,6 +17,14 @@
               {!! trans('web::moons.probe_report_instruction') !!}
             </p>
           </div>
+          <div class="form-group">
+            <label for="notes" class="control-label">{{ trans('web::moons.notes') }}</label>
+            <input type="hidden" id="notes" name="notes" value="" />
+            <div id="moon-notes" style="max-height: 7em"></div>
+            <p class="form-text text-muted mb-0">
+              {!! trans('web::moons.notes_instruction') !!}
+            </p>
+          </div>
         </form>
       </div>
       <div class="modal-footer">
@@ -26,3 +34,42 @@
     </div>
   </div>
 </div>
+
+@push('head')
+  <link href="{{ asset('web/css/quill.snow.css') }}" rel="stylesheet" />
+@endpush
+
+@push('javascript')
+  <script src="{{ asset('web/js/quill.min.js') }}"></script>
+
+  <script>
+
+    Quill.prototype.getHtml = function () {
+      var html = this.container.querySelector('.ql-editor').innerHTML;
+      html = html.replace(/<p>(<br>|<br\/>|<br\s\/>|\s+|)<\/p>\r\n/gmi, "");
+      return html;
+    };
+
+    var editor = new Quill('#moon-notes', {
+      modules: {
+        toolbar: [
+          [{'header': ['1', '2', '3', '4', '5', '6', false]}, {'color': []}],
+          ['bold', 'italic', 'underline', 'strike'],
+          [{'list': 'ordered'}, {'list': 'bullet'}],
+          [{'align': []}, {'indent': '-1'}, {'indent': '+1'}],
+          ['link'],
+          ['clean']
+        ]
+      },
+      placeholder: '{{ trans('web::moons.notes_placeholder') }}',
+      theme: 'snow'
+    });
+
+    editor.setContents(editor.clipboard.convert($('input[name="notes"]').val()), 'silent');
+
+    $('#moon-report-form').on('submit', function () {
+      const input = $('input[name="notes"]');
+      input.val(editor.getHtml());
+    });
+  </script>
+@endpush
