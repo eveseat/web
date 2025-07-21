@@ -33,4 +33,8 @@ return [
     'uncommon' => 'Ungewöhnlich',
     'rare' => 'Selten',
     'exceptional' => 'Außergewöhnlich',
+
+    'notes' => 'Notizen',
+    'notes_instruction' => 'Du kannst hier Notizen zu den Mond(en) eingeben. Falls du Daten für mehrere Monde gleichzeitig eingibst, wird die Notiz zu allen neuen Monden hinzugefügt.',
+    'notes_placeholder' => 'Gib hier Notizen ein',
 ];
