@@ -22,5 +22,6 @@
 
 return [
     'jet',
+    'iuligigi',
     'default',
 ];
