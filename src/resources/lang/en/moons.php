@@ -55,4 +55,7 @@ return [
     'filter_by_constellation' => 'Filter by constellation',
     'filter_by_system' => 'Filter by system',
     'import' => 'Import',
+    'notes' => 'Notes',
+    'notes_instruction' => 'You can enter some notes about the moon(s) here. When adding multiple moons, the note will be added to all of them.',
+    'notes_placeholder' => 'Enter your notes here',
 ];

@@ -34,6 +34,10 @@ Route::group([
         ->name('seatcore::tools.moons.show')
         ->uses('MoonsController@show');
 
+    Route::get('/{id}/edit')
+        ->name('seatcore::tools.moons.edit')
+        ->uses('MoonsController@edit');
+
     Route::post('/')
         ->name('seatcore::tools.moons.store')
         ->uses('MoonsController@store')
