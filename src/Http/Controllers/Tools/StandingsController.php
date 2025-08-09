@@ -131,7 +131,7 @@ class StandingsController extends Controller
 
                 // Resolve the Esi client library from the IoC
                 $this->esi->setAuthentication(auth()->user()->main_character->refresh_token);
-                $this->esi->setVersion('v3');
+                $this->esi->setCompatibilityDate('2025-08-09');
                 $this->esi->setQueryString([
                     'categories' => $request->input('type'),
                     'search' => $request->input('search'),
@@ -170,7 +170,7 @@ class StandingsController extends Controller
 
                     })->chunk(1000)->each(function ($chunk) use (&$payload) {
 
-                        $this->esi->setVersion('v2');
+                        $this->esi->setCompatibilityDate('2025-08-09');
                         $this->esi->setBody($chunk->flatten()->toArray());
                         $response = $this->esi->invoke('post', '/universe/names/');
                         $names = collect($response->getBody());

@@ -280,7 +280,7 @@ class ResolveController extends Controller
         // using Esi.
 
         try {
-            $this->esi->setVersion('v3');
+            $this->esi->setCompatibilityDate('2025-08-09');
             $this->esi->setBody($ids->flatten()->toArray());
             $response = $this->esi->invoke('post', '/universe/names/');
             $names = collect($response->getBody());
