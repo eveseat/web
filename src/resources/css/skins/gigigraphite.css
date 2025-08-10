@@ -1,5 +1,5 @@
 /*
-  * THIS IS SOLOS BLUE THEME FOR SEAT
+  * THIS IS SOLOS GRAPHITE THEME FOR SEAT
 */
 
 /* fonts */
@@ -18,18 +18,18 @@
   --border-width-none: 0;
   --border-width-small: 1px;
 
-  --color-background-primary: #050914;
-  --color-background-secondary: #0f172a;
-  --color-background-tertiary: #1f2937;
+  --color-background-primary: #1a1c1f;
+  --color-background-secondary: #212429;
+  --color-background-tertiary: #2a2f35;
   --color-background-table-th: var(--color-background-secondary);
-  --color-background-table-odd: #343a4b;
+  --color-background-table-odd: #2f353c;
   --color-background-table-even: var(--color-background-secondary);
-  --color-text-primary: #E5E7EB;
+  --color-text-primary: #E6E8EA;
   --color-text-secondary: #F3F4F6;
-  --color-text-tertiary: #6c757d;
+  --color-text-tertiary: #9aa3ad;
   --color-text-placeholder: #455a64;
-  --color-accent-primary: #f97316;
-  --color-accent-secondary: #3f80ea;
+  --color-accent-primary: #73787c;
+  --color-accent-secondary: #73787c;
   --color-white-default: #fff;
   --color-white-10: rgba(255, 255, 255, .1);
   --color-white-20: rgba(255, 255, 255, .2);
@@ -45,9 +45,9 @@
   --color-success-background: #008b00;
   --color-success-text: #75e900;
   --color-danger-background: #b71c1c;
-  --color-danger-text: #f44336;
+  --color-danger-text: #73787c;
   --color-warning-background: #e65100;
-  --color-warning-text: #ff9800;
+  --color-warning-text: #73787c;
 
   --font-size-x-small: .625rem;
   --font-size-small: .825rem;
@@ -1848,7 +1848,7 @@ select.custom-select option {
 }
 
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
-  background-color: #f97316 !important;
+  background-color: #73787c !important;
   color: #050914 !important;
 }
 
@@ -1890,7 +1890,7 @@ select.custom-select option {
 
 .seat-info .label {
   background-color: #374151;
-  color: #f97316;
+  color: #73787c;
   padding: 4px 8px;
   border-radius: 4px;
   font-size: 11px;
@@ -1919,8 +1919,8 @@ select.custom-select option {
 }
 
 .planetary-projects .project-row .btn:hover {
-  background-color: #f97316;
-  border-color: #f97316;
+  background-color: #73787c;
+  border-color: #73787c;
   color: #fff;
 }
 
@@ -1947,13 +1947,13 @@ select.custom-select option {
 }
 
 .list-group-item.list-group-item-action[data-article-id] a:hover {
-  color: #f97316 !important;
+  color: #73787c !important;
   text-decoration: underline;
 }
 
 .badge.badge-secondary {
   background-color: #374151 !important;
-  color: #f97316 !important;
+  color: #73787c !important;
   padding: 4px 8px;
   font-size: 11px;
   border-radius: 4px;
@@ -1971,7 +1971,7 @@ select.custom-select option {
 
 .btn-article-up:hover,
 .btn-article-down:hover {
-  background-color: #f97316 !important;
+  background-color: #73787c !important;
   color: white !important;
 }
 
@@ -1988,11 +1988,11 @@ select.custom-select option {
 
 .card .list-group-item.list-group-item-action:hover {
   background-color: #273549 !important;
-  color: #f97316 !important;
+  color: #73787c !important;
 }
 
 .card .list-group-item.list-group-item-action.active {
-  background-color: #f97316 !important;
+  background-color: #73787c !important;
   color: #050914 !important;
 }
 
@@ -2012,7 +2012,7 @@ select.custom-select option {
 }
 
 .small-box.bg-gray .row b {
-  color: #f97316;
+  color: #73787c;
 }
 
 .small-box.bg-gray i {
@@ -2020,7 +2020,7 @@ select.custom-select option {
 }
 
 .badge.badge-success.p-1 {
-  background-color: #f97316 !important;
+  background-color: #73787c !important;
   color: #fff !important;
   font-size: 12px;
   padding: 4px 8px;
@@ -2043,7 +2043,7 @@ select.custom-select option {
 }
 
 .small-box-footer:hover {
-  background-color: #f97316 !important;
+  background-color: #73787c !important;
   color: white !important;
 }
 
@@ -2066,7 +2066,7 @@ select.custom-select option {
 blockquote.quote-secondary {
   background-color: #1f2937 !important;
   color: #f3f4f6 !important;
-  border-left: 4px solid #f97316 !important;
+  border-left: 4px solid #73787c !important;
   padding: 12px 16px;
   margin: 10px 0;
   border-radius: 6px;
@@ -2095,7 +2095,7 @@ blockquote.quote-secondary {
 /* Orange chevrons */
 .daterangepicker .prev span:before,
 .daterangepicker .next span:before {
-    color: #ff7f27 !important;
+    color: #73787c !important;
 }
 /* === Darker background for Staging System and Fleet Commander dropdowns === */
 select#staging_system,
@@ -2113,10 +2113,10 @@ select#fleet_commander option {
 /* Always use orange chevrons for date picker navigation */
 .daterangepicker th.prev.available span,
 .daterangepicker th.next.available span {
-    border-color: transparent #ff8c42 transparent transparent !important;
+    border-color: transparent #73787c transparent transparent !important;
 }
 .daterangepicker th.next.available span {
-    border-color: transparent transparent transparent #ff8c42 !important;
+    border-color: transparent transparent transparent #73787c !important;
 }
 /* Fix 1 (hard override): Date range picker uses theme bg + orange text */
 body .daterangepicker,
@@ -2268,5 +2268,370 @@ body .autocomplete-suggestions .autocomplete-suggestion:hover {
   color: #fff !important; /* readable text */
 }
 .table-danger a {
-  color: #ff6666 !important; /* link contrast */
+  color: #73787c !important; /* link contrast */
+}
+
+
+/* === Graphite + Pewter: neutralize legacy blue backgrounds (future-proof) === */
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus,
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus,
+.panel-primary > .panel-heading,
+.nav-pills > li.active > a,
+.nav-pills > li.active > a:hover,
+.nav-pills > li.active > a:focus,
+.list-group-item.active,
+.list-group-item.active:hover,
+.list-group-item.active:focus,
+.pagination > .active > a,
+.pagination > .active > span,
+.page-item.active .page-link {
+  background-color: #343541 !important; /* graphite */
+  border-color: #343541 !important;
+  color: var(--color-text-primary) !important;
+}
+
+.dropdown-menu .dropdown-item:hover,
+.nav-pills > li > a:hover,
+.page-link:hover {
+  background-color: var(--color-background-tertiary) !important;
+  color: var(--color-text-primary) !important;
+}
+
+/* Safeguards for inline-styled legacy blues (background only) */
+*[style*="background-color:#1f2d3d"],
+*[style*="background:#1f2d3d"],
+*[style*="background-color: #1f2d3d"],
+*[style*="background: #1f2d3d"],
+*[style*="background-color:#2196f3"],
+*[style*="background:#2196f3"],
+*[style*="background-color: #2196f3"],
+*[style*="background: #2196f3"] {
+  background-color: #343541 !important;
+  color: var(--color-text-primary) !important;
+}
+
+
+
+/* === v3 Graphite + Pewter hard overrides (Select2, accordions, residual blues) === */
+
+/* -- Select2 closed control -- */
+.select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--multiple,
+.select2-selection {
+  background-color: var(--color-background-secondary) !important;
+  border: 1px solid var(--color-background-tertiary) !important;
+  color: var(--color-text-primary) !important;
+  box-shadow: none !important;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered,
+.select2-container--default .select2-selection--multiple .select2-selection__rendered {
+  color: var(--color-text-primary) !important;
+  background: transparent !important;
+}
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+  color: var(--color-text-tertiary) !important;
+}
+
+/* -- Select2 dropdown panel + options -- */
+.select2-dropdown,
+.select2-container--default .select2-results > .select2-results__options {
+  background-color: var(--color-background-secondary) !important;
+  border: 1px solid var(--color-background-tertiary) !important;
+  color: var(--color-text-primary) !important;
+}
+.select2-results__option {
+  background: transparent !important;
+  color: var(--color-text-primary) !important;
+}
+.select2-container--default .select2-results__option--highlighted[aria-selected],
+.select2-container--default .select2-results__option[aria-selected="true"] {
+  background-color: var(--color-background-tertiary) !important;
+  color: var(--color-text-secondary) !important;
+}
+
+/* -- Select2 search box inside dropdown -- */
+.select2-container--default .select2-search--dropdown {
+  background: var(--color-background-secondary) !important;
+  border-bottom: 1px solid var(--color-background-tertiary) !important;
+}
+.select2-container--default .select2-search--dropdown .select2-search__field {
+  background: var(--color-background-primary) !important;
+  border: 1px solid var(--color-background-tertiary) !important;
+  color: var(--color-text-primary) !important;
+}
+.select2-container--default .select2-results__group {
+  background: transparent !important;
+  color: var(--color-text-tertiary) !important;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+  border-color: var(--color-text-tertiary) transparent transparent transparent !important;
+}
+
+/* -- Accordions / panels / info lists -- */
+.panel,
+.panel-default,
+.panel-primary,
+.panel > .panel-heading,
+.panel-default > .panel-heading,
+.panel-primary > .panel-heading,
+.card,
+.card-header,
+.card-body,
+.card .list-group-item.list-group-item-action,
+.seat-info .article-list-item {
+  background-color: var(--color-background-secondary) !important;
+  border-color: var(--color-background-tertiary) !important;
+  color: var(--color-text-primary) !important;
+}
+.panel > .panel-heading a,
+.card-header a,
+.seat-info .article-list-item a {
+  color: var(--color-text-secondary) !important;
+}
+.card .list-group-item.list-group-item-action:hover,
+.seat-info .article-list-item:hover {
+  background-color: var(--color-background-tertiary) !important;
+  color: var(--color-text-primary) !important;
+}
+
+/* -- Dropdowns (native/Bootstrap) -- */
+.dropdown-menu,
+.dropdown-menu .dropdown-item {
+  background-color: var(--color-background-secondary) !important;
+  color: var(--color-text-primary) !important;
+}
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus {
+  background-color: var(--color-background-tertiary) !important;
+  color: var(--color-text-secondary) !important;
+}
+
+/* -- Safety net for any inline old blues on backgrounds -- */
+*[style*="background-color:#1f2d3d"],
+*[style*="background:#1f2d3d"],
+*[style*="background-color:#2196f3"],
+*[style*="background:#2196f3"],
+*[style*="background-color:#0d6efd"],
+*[style*="background:#0d6efd"] {
+  background-color: #343541 !important;
+  color: var(--color-text-primary) !important;
+}
+
+
+
+/* ============================
+   v4 Graphite + Pewter patches
+   - Kill remaining blue backgrounds (Select2 & list groups)
+   - Fix "white" list-group items
+   - Broaden Select2 highlight/message styles
+   ============================ */
+
+/* Select2: dropdown panel & list root */
+ul.select2-results__options {
+  background: var(--color-background-secondary) !important;
+  border: 1px solid var(--color-background-tertiary) !important;
+  color: var(--color-text-primary) !important;
+}
+
+/* Select2: generic option row */
+.select2-results__option[role="option"] {
+  background: transparent !important;
+  color: var(--color-text-primary) !important;
+}
+
+/* Select2: highlighted/active options (cover every state) */
+.select2-results__option--highlighted,
+.select2-container--default .select2-results__option--highlighted[aria-selected],
+.select2-container--default .select2-results__option[aria-selected="true"] {
+  background-color: var(--color-background-tertiary) !important;
+  color: var(--color-text-secondary) !important;
+}
+
+/* Select2: helper/message rows (e.g., 'Please enter 2 or more characters') */
+.select2-results__message {
+  background: var(--color-background-secondary) !important;
+  color: var(--color-text-tertiary) !important;
+}
+
+/* Select2: search box inside the dropdown (extra guard) */
+.select2-container--default .select2-search--dropdown,
+.select2-container--default .select2-search--dropdown .select2-search__field {
+  background: var(--color-background-secondary) !important;
+  color: var(--color-text-primary) !important;
+  border-color: var(--color-background-tertiary) !important;
+}
+
+/* List groups: ensure dark background even when using .list-group-flush */
+.list-group-item,
+.list-group-flush .list-group-item,
+.card .list-group-flush .list-group-item {
+  background: var(--color-background-secondary) !important;
+  color: var(--color-text-primary) !important;
+  border-color: var(--color-background-tertiary) !important;
+}
+
+/* Article up/down buttons (neutral graphite pewter look) */
+.btn-article-up,
+.btn-article-down {
+  background-color: var(--color-background-secondary) !important;
+  border: 1px solid var(--color-background-tertiary) !important;
+  color: var(--color-text-primary) !important;
+}
+.btn-article-up:hover,
+.btn-article-down:hover {
+  background-color: var(--color-background-tertiary) !important;
+  color: var(--color-text-secondary) !important;
+}
+
+/* Extra safety net for legacy blues on backgrounds only */
+*[style*="background-color:#1f2d3d"],
+*[style*="background:#1f2d3d"],
+*[style*="background-color:#2196f3"],
+*[style*="background:#2196f3"],
+*[style*="background-color:#0d6efd"],
+*[style*="background:#0d6efd"] {
+  background-color: #343541 !important;
+  color: var(--color-text-primary) !important;
+}
+
+/* Kill residual blue in Select2 dropdown + highlight */
+.select2-dropdown,
+.select2-container--default .select2-results > .select2-results__options,
+ul.select2-results__options {
+  background: var(--color-background-secondary) !important;
+  border: 1px solid var(--color-background-tertiary) !important;
+  color: var(--color-text-primary) !important;
+  box-shadow: none !important;
+}
+
+.select2-results__option[role="option"] {
+  background: transparent !important;
+  color: var(--color-text-primary) !important;
+}
+
+.select2-results__option--highlighted,
+.select2-container--default .select2-results__option--highlighted,
+.select2-container--default .select2-results__option--highlighted[aria-selected],
+.select2-container--default .select2-results__option[aria-selected="true"] {
+  background: var(--color-background-tertiary) !important;
+  color: var(--color-text-secondary) !important;
+}
+
+/* message rows like “Please enter 2 or more characters” */
+.select2-results__message {
+  background: var(--color-background-secondary) !important;
+  color: var(--color-text-tertiary) !important;
+}
+
+/* Discord article vote buttons */
+.btn-article-up,
+.btn-article-down {
+  background: var(--color-background-secondary) !important;
+  border: 1px solid var(--color-background-tertiary) !important;
+  color: var(--color-text-secondary) !important;
+  box-shadow: none !important;
+}
+
+.btn-article-up:hover,
+.btn-article-down:hover {
+  background: var(--color-background-tertiary) !important;
+  color: var(--color-text-secondary) !important;
+  border-color: var(--color-background-tertiary) !important;
+}
+
+
+/* ==============================
+   v6 Graphite + Pewter additions
+   - Select2: message rows + dropdown bg + search field focus
+   - Tone down success greens (table-success, badge-success)
+   ============================== */
+
+/* Select2: universal dropdown containers */
+html body .select2-dropdown,
+html body .select2-container--default .select2-results > .select2-results__options,
+html body ul.select2-results__options {
+  background: var(--color-background-secondary) !important;
+  border: 1px solid var(--color-background-tertiary) !important;
+  color: var(--color-text-primary) !important;
+  box-shadow: none !important;
+}
+
+/* Select2: generic option rows + highlighted */
+html body .select2-results__option {
+  background: transparent !important;
+  color: var(--color-text-primary) !important;
+}
+html body .select2-results__option--highlighted,
+html body .select2-container--default .select2-results__option--highlighted[aria-selected],
+html body .select2-container--default .select2-results__option[aria-selected="true"] {
+  background: var(--color-background-tertiary) !important;
+  color: var(--color-text-secondary) !important;
+}
+
+/* Select2: info/error/helper messages (e.g., “Please enter X…”, “No results…”) */
+html body .select2-results__message,
+html body .select2-results__option[role="alert"] {
+  background: var(--color-background-secondary) !important;
+  color: var(--color-text-tertiary) !important;
+  padding: 6px 10px;
+}
+
+/* Select2: cover any listbox id starting with select2- */
+html body ul[id^="select2-"],
+html body ul[id^="select2-"] .select2-results__message {
+  background: var(--color-background-secondary) !important;
+  color: var(--color-text-tertiary) !important;
+}
+
+/* Select2: search input inside dropdown — remove blue border/outline */
+html body .select2-search--dropdown {
+  background: var(--color-background-secondary) !important;
+  border-bottom: 1px solid var(--color-background-tertiary) !important;
+}
+html body .select2-search--dropdown .select2-search__field {
+  background: var(--color-background-primary) !important;
+  border: 1px solid var(--color-background-tertiary) !important;
+  color: var(--color-text-primary) !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+html body .select2-search--dropdown .select2-search__field:focus {
+  border-color: var(--color-background-tertiary) !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Tone down “success” greens to a muted pewter-green */
+:root {
+  /* optional: expose a toned success if needed elsewhere */
+  --color-success-muted: #4f6854;
+  --color-success-muted-border: #3e5343;
+}
+
+/* success badges (e.g., “Met”, “Completed”) */
+.badge-success {
+  background-color: var(--color-success-muted) !important;
+  color: var(--color-text-primary) !important;
+  border: 1px solid var(--color-success-muted-border) !important;
+}
+
+/* table-success rows — consistent muted tone */
+.table-success,
+.table-success > td,
+.table-success > th {
+  background-color: #3b4b40 !important; /* a hair darker for table bg */
+  color: var(--color-text-primary) !important;
+  border-color: var(--color-background-tertiary) !important;
+}
+
+/* preserve zebra in success blocks but keep muted */
+.table tbody tr.table-success:nth-child(odd) > th,
+.table tbody tr.table-success:nth-child(odd) > td {
+  background: #3b4b40 !important;
+}
+.table tbody tr.table-success:nth-child(even) > th,
+.table tbody tr.table-success:nth-child(even) > td {
+  background: #334238 !important;
 }

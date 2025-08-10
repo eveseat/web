@@ -23,5 +23,6 @@
 return [
     'jet',
     'iuligigi',
+    'gigigraphite',
     'default',
 ];
