@@ -37,7 +37,7 @@
     </div>
   </div>
 
-  @foreach($character->skills->groupBy('type.groupID')->chunk(2) as $skill_group_row)
+  @foreach($character->skills()->has('type.group')->get()->groupBy('type.groupID')->chunk(2) as $skill_group_row)
     <div class="row">
       <div class="col-md-12 mt-3">
         <div class="card-deck">
