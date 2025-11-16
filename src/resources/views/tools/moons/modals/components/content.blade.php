@@ -58,7 +58,7 @@
         <td>{{ number_format($type->pivot->rate * 100, 2) }} %</td>
         <td>{{ number_format($type->pivot->rate * Seat\Eveapi\Models\Industry\CorporationIndustryMiningExtraction::BASE_DRILLING_VOLUME * 720, 2) }} m3</td>
         <td>{{ number_format(($type->pivot->rate * Seat\Eveapi\Models\Industry\CorporationIndustryMiningExtraction::BASE_DRILLING_VOLUME * 720) / $type->volume) }}</td>
-        <td>{{ number_format((($type->pivot->rate * Seat\Eveapi\Models\Industry\CorporationIndustryMiningExtraction::BASE_DRILLING_VOLUME * 720) / $type->volume) * $type->price->adjusted_price, 2) }}</td>
+        <td>{{ number_format((($type->pivot->rate * Seat\Eveapi\Models\Industry\CorporationIndustryMiningExtraction::BASE_DRILLING_VOLUME * 720) / $type->volume) * $type->price->sell_price, 2) }}</td>
       </tr>
     @endforeach
       <tfoot>
@@ -99,7 +99,7 @@
         </td>
         <td>{{ number_format($material->sum('pivot.quantity') * $material->first()->volume, 2) }} m3</td>
         <td>{{ number_format($material->sum('pivot.quantity')) }}</td>
-        <td>{{ number_format($material->sum('pivot.quantity') * $material->first()->price->adjusted_price) }}</td>
+        <td>{{ number_format($material->sum('pivot.quantity') * $material->first()->price->sell_price) }}</td>
       </tr>
     @endforeach
       <tfoot>
