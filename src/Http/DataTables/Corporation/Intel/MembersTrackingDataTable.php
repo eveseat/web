@@ -104,7 +104,7 @@ class MembersTrackingDataTable extends DataTable
                         });
                 }
 
-                $query->whereIn('character_id', $characters->toArray())
+                $query->whereIn('character_id', $characters->flatten(1))
                     ->orWhereHas('character', function ($query) use ($keyword) {
                         $query->where('name', 'like', "%{$keyword}%");
                     });
