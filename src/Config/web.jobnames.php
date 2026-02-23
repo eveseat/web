@@ -76,6 +76,7 @@ return [
         'transactions' => \Seat\Eveapi\Jobs\Wallet\Corporation\Transactions::class,
         'starbases' => \Seat\Eveapi\Jobs\Corporation\Starbases::class,
         'structures' => \Seat\Eveapi\Jobs\Corporation\Structures::class,
+        'projects' => \Seat\Eveapi\Jobs\CorporationProjects\Projects::class,
     ],
     'alliance' => [
         'contacts' => [

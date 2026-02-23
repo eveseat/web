@@ -214,3 +214,13 @@ Route::get('/{corporation}/transactions')
 Route::post('/{corporation}/transactions/export')
     ->uses('WalletController@transactions')
     ->middleware('can:corporation.transaction,corporation');
+
+Route::get('/{corporation}/projects')
+    ->name('seatcore::corporation.view.projects')
+    ->uses('ProjectController@getProjects')
+    ->middleware('can:corporation.projects,corporation');
+
+Route::get('/{corporation}/project/{project_id}')
+    ->name('seatcore::corporation.view.projects.details')
+    ->uses('ProjectController@getProject')
+    ->middleware('can:corporation.projects,corporation');

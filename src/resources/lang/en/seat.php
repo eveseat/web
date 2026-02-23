@@ -201,6 +201,8 @@ return [
     'tracking' => 'Tracking',
     'about' => 'About',
     'market_browser' => 'Market Browser',
+    'project' => 'Project|Projects',
+    'last_modified' => 'Last Modified',
 
     'assets' => 'Assets',
     'location_flag' => 'Location Flag',
@@ -496,6 +498,7 @@ return [
     'update_transactions' => 'Update Transactions',
     'update_wallet' => 'Update Wallet',
     'update_loyalty_points' => 'Update Loyalty Points',
+    'update_projects' => 'Update Projects',
 
     // Character
     'joined_curr_corp' => 'Joined Current Corporation',
@@ -770,4 +773,7 @@ return [
     'sde_version' => 'SDE Version',
     'render_in' => 'Rendered In',
     'copyright' => 'Copyright',
+
+    // Projects
+    'contributor' => 'Contributor|Contributors'
 ];
