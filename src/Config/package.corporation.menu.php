@@ -64,7 +64,7 @@ return [
         'highlight_view' => 'industry',
         'route' => 'seatcore::corporation.view.industry',
     ],
-        [
+    [
         'name' => 'project',
         'label' => 'web::seat.project',
         'plural' => true,

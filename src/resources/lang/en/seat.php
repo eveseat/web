@@ -775,5 +775,5 @@ return [
     'copyright' => 'Copyright',
 
     // Projects
-    'contributor' => 'Contributor|Contributors'
+    'contributor' => 'Contributor|Contributors',
 ];

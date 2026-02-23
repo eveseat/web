@@ -3,7 +3,7 @@
 /*
  * This file is part of SeAT
  *
- * Copyright (C) 2026 to present Leon Jacobs
+ * Copyright (C) 2015 to present Leon Jacobs
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,29 +46,31 @@ class ProjectDataTable extends DataTable
                 return ucfirst(str_replace('_', ' ', $row->state));
             })
             ->addColumn('progress', function ($raw) {
-                $row = (object)[
+                $row = (object) [
                     'min' => 0,
                     'value' => $raw->progress_current,
                     'max' => $raw->progress_desired,
                     'showval' => true,
                 ];
+
                 return view('web::partials.progress', compact('row'))->render();
             })
             ->addColumn('reward', function ($raw) use (&$rawColumns) {
                 if (is_null($raw->reward_initial) || $raw->reward_initial == 0) {
                     return 'No Reward'; // TODO localise
                 } else {
-                    $row = (object)[
+                    $row = (object) [
                         'min' => 0,
                         'value' => $raw->reward_initial - $raw->reward_remaining,
                         'max' => $raw->reward_initial,
                         'showval' => true,
                     ];
                     $rawColumns[] = 'reward';
+
                     return view('web::partials.progress', compact('row'))->render();
                 }
             })
-            ->editColumn('action', function ($row) use ($rawColumns){
+            ->editColumn('action', function ($row) use ($rawColumns) {
                 return view('web::corporation.projects.buttons.action', compact('row'))->render();
             })
             ->rawColumns(['action', 'progress', 'reward'])
