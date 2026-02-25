@@ -49,17 +49,16 @@ class ProjectController extends Controller
 
     /**
      * @param  \Seat\Eveapi\Models\Corporation\CorporationInfo  $corporation
-     * @param  uuid  $project_id
+     * @param  string  $project_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getProject(CorporationInfo $corporation, $project_id)
+    public function getProject(CorporationInfo $corporation, string $project_id)
     {
         $project = CorporationProject::with('contributors', 'creator')
             ->where('id', $project_id)
             ->first();
         $config = $this->normalizeProjectConfiguration($project->configuration);
 
-        // dd($project, $corporation);
         return view('web::corporation.projects.modals.content', compact('corporation', 'project', 'config'));
     }
 

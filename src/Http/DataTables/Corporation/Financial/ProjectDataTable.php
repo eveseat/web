@@ -57,7 +57,7 @@ class ProjectDataTable extends DataTable
             })
             ->addColumn('reward', function ($raw) use (&$rawColumns) {
                 if (is_null($raw->reward_initial) || $raw->reward_initial == 0) {
-                    return 'No Reward'; // TODO localise
+                    return trans('web::seat.no_reward');
                 } else {
                     $row = (object) [
                         'min' => 0,
@@ -109,8 +109,8 @@ class ProjectDataTable extends DataTable
             ['data' => 'name', 'title' => trans_choice('web::seat.name', 1)],
             ['data' => 'last_modified', 'title' => trans_choice('web::seat.last_modified', 1)],
             ['data' => 'state', 'title' => trans('web::seat.state')],
-            ['data' => 'progress', 'title' => trans('web::seat.progress')],
-            ['data' => 'reward', 'title' => trans('web::seat.reward')],
+            ['data' => 'progress', 'title' => trans('web::seat.progress'), 'orderable' => false],
+            ['data' => 'reward', 'title' => trans('web::seat.reward'), 'orderable' => false],
             ['data' => 'contributors_count', 'title' => trans_choice('web::seat.contributor', 2)],
         ];
     }

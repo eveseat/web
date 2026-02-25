@@ -5,7 +5,7 @@
     <div class="media-body">
         <h5 class="mt-0">{{ $project->name }}</h5>
         <p class="text-justify">
-            {!! $project->description ?: 'No description provided.' !!}
+            {!! $project->description ?: trans('web::seat.no_description') !!}
         </p>
     </div>
 </div>
@@ -13,19 +13,19 @@
 <div class="row">
     <div class="col-4">
         <dl>
-            <dt>Career</dt>
+            <dt>{{ trans('web::seat.career') }}</dt>
             <dd>{{ $project->career }}</dd>
         </dl>
     </div>
     <div class="col-4">
         <dl>
-            <dt>State</dt>
+            <dt>{{ trans('web::seat.state') }}</dt>
             <dd>{{ $project->state }}</dd>
         </dl>
     </div>
     <div class="col-4">
         <dl>
-            <dt>Created</dt>
+            <dt>{{ trans('web::seat.created') }}</dt>
             <dd>{{ carbon($project->created)->toDayDateTimeString() }}</dd>
         </dl>
     </div>
@@ -34,7 +34,7 @@
 <div class="row mb-3">
     <div class="col-4">
         <dl>
-            <dt>Expires</dt>
+            <dt>{{ trans('web::seat.expiry') }}</dt>
             <dd>
                 @if(!is_null($project->Expires))
                 <span data-toggle="tooltip" title="{{ $project->expires }}">
@@ -48,7 +48,7 @@
                     {{ human_diff($project->expires) }}
                 </span>
                 @else
-                No Expiry
+                {{ trans('web::seat.no_expiry') }}
                 @endif
             </dd>
         </dl>
@@ -56,7 +56,7 @@
 
     <div class="col-4">
         <dl>
-            <dt>Progress</dt>
+            <dt>{{ trans('web::seat.progress') }}</dt>
             <dd>
                 {{ number_format($project->progress_current) }}
                 /
@@ -67,7 +67,7 @@
 
     <div class="col-4">
         <dl>
-            <dt>Creator</dt>
+            <dt>{{ trans('web::seat.created_by') }}</dt>
             <dd>
                 @include('web::partials.character', ['character' => $project->creator])
             </dd>
@@ -75,68 +75,68 @@
     </div>
 </div>
 
-<h4>Financial</h4>
+<h4>{{ trans('web::seat.financial') }}</h4>
 
 <div class="row mb-3">
     <div class="col-4">
         <dl>
-            <dt>Initial Reward</dt>
+            <dt>{{ trans('web::seat.reward_initial') }}</dt>
             <dd>{{ number_format($project->reward_initial) }} ISK</dd>
         </dl>
     </div>
     <div class="col-4">
         <dl>
-            <dt>Remaining Reward</dt>
+            <dt>{{ trans('web::seat.reward_remaining') }}</dt>
             <dd>{{ number_format($project->reward_remaining) }} ISK</dd>
         </dl>
     </div>
     <div class="col-4">
         <dl>
-            <dt>Reward per Contribution</dt>
+            <dt>{{ trans('web::seat.contribution_reward') }}</dt>
             <dd>{{ number_format($project->contribution_reward) }} ISK</dd>
         </dl>
     </div>
 </div>
 
-<h4>Contribution Rules</h4>
+<h4>{{ trans('web::seat.contribution_rules') }}</h4>
 
 <div class="row mb-3">
     <div class="col-4">
         <dl>
-            <dt>Participation Limit</dt>
+            <dt>{{ trans('web::seat.participation_limit') }}</dt>
             <dd>
-                {{ $project->contribution_participation_limit ?? 'Unlimited' }}
+                {{ $project->contribution_participation_limit ?? trans('web::seat.unlimited') }}
             </dd>
         </dl>
     </div>
 
     <div class="col-4">
         <dl>
-            <dt>Submission Limit</dt>
+            <dt>{{ trans('web::seat.submission_limit') }}</dt>
             <dd>
-                {{ $project->contribution_submission_limit ?? 'Unlimited' }}
+                {{ $project->contribution_submission_limit ?? trans('web::seat.unlimited') }}
             </dd>
         </dl>
     </div>
 
     <div class="col-4">
         <dl>
-            <dt>Submission Multiplier</dt>
+            <dt>{{ trans('web::seat.submission_multiplier') }}</dt>
             <dd>
-                {{ $project->contribution_submission_multiplier ?? 'None' }}
+                {{ $project->contribution_submission_multiplier ?? trans('web::seat.none') }}
             </dd>
         </dl>
     </div>
 </div>
 
-<h4>Contributors</h4>
+<h4>{{ trans_choice('web::seat.contributor', 2) }}</h4>
 
 <table class="table table-sm table-striped">
     <thead>
         <tr>
-            <th>Character</th>
-            <th>Contributed</th>
-            <th>Last Updated</th>
+            <th>{{ trans('web::seat.character') }}</th>
+            <th>{{ trans('web::seat.contributed') }} </th>
+            <th>{{ trans('web::seat.last_updated') }}</th>
         </tr>
     </thead>
     <tbody>
@@ -150,13 +150,22 @@
             </tr>
         @empty
             <tr>
-                <td colspan="3" class="text-center text-muted">No contributions yet.</td>
+                <td colspan="3" class="text-center text-muted">{{ trans('web::seat.no_contributions') }}</td>
             </tr>
         @endforelse
     </tbody>
 </table>
 
-<h4>Configuration</h4>
+<h4 style="display: inline-block;">
+    {{ trans('web::seat.configuration') }}
+</h4>
+
+<span class="text-warning">
+    <i class="fas fa-exclamation-circle"
+       data-toggle="tooltip"
+       title="This section is a work in progress. Stay tuned for more updates.">
+    </i>
+</span>
 
 
 @php
@@ -225,7 +234,7 @@
 @endphp
 
 @if(empty($config))
-    <p class="text-muted">No configuration available for this project.</p>
+    <p class="text-muted">{{ trans('web::seat.no_configuration_project') }}</p>
 @else
     <h5 class="mt-3 mb-2">{{ $prettyTopKey }}</h5>
 
@@ -233,7 +242,7 @@
         <table class="table table-sm table-striped">
             <thead>
                 <tr>
-                    <th style="width: 25%;">Setting</th>
+                    <th style="width: 25%;">{{ trans('web::seat.project_setting') }}</th>
                     <th>Value</th>
                 </tr>
             </thead>
