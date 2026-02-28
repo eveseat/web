@@ -183,4 +183,8 @@ return [
         'label' => 'web::permissions.corporation_tracking_label',
         'description' => 'web::permissions.corporation_tracking_description',
     ],
+    'projects' => [
+        'label' => 'web::permissions.corporation_projects_label',
+        'description' => 'web::permissions.corporation_projects_description',
+    ],
 ];

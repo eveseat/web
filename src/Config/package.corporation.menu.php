@@ -65,6 +65,14 @@ return [
         'route' => 'seatcore::corporation.view.industry',
     ],
     [
+        'name' => 'project',
+        'label' => 'web::seat.project',
+        'plural' => true,
+        'permission' => 'corporation.projects',
+        'highlight_view' => 'projects',
+        'route' => 'seatcore::corporation.view.projects',
+    ],
+    [
         'name' => 'killmails',
         'label' => 'web::seat.killmails',
         'permission' => 'corporation.killmail',

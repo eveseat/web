@@ -44,6 +44,7 @@ return [
     'id' => 'ID|IDs',
     'type' => 'Type|Types',
     'expiry' => 'Expiry',
+    'no_expiry' => 'No Expiry',
     'never' => 'Never',
     'detail' => 'Detail|Details',
     'delete' => 'Delete',
@@ -58,12 +59,14 @@ return [
     'owner' => 'Owner',
     'general' => 'General',
     'description' => 'Description',
+    'no_description' => 'No Description',
     'labels' => 'Labels',
     'created' => 'Created',
     'issuer' => 'Issuer',
     'title' => 'Title|Titles',
     'price' => 'Price',
     'reward' => 'Reward',
+    'no_reward' => 'No Reward',
     'collateral' => 'Collateral',
     'assignee' => 'Assignee',
     'acceptor' => 'Acceptor',
@@ -104,6 +107,7 @@ return [
     'week' => 'week',
     'day' => 'day',
     'save' => 'Save',
+    'unlimited' => 'Unlimited',
 
     // Requirements
     'requirements' => 'Requirements',
@@ -201,6 +205,8 @@ return [
     'tracking' => 'Tracking',
     'about' => 'About',
     'market_browser' => 'Market Browser',
+    'project' => 'Project|Projects',
+    'last_modified' => 'Last Modified',
 
     'assets' => 'Assets',
     'location_flag' => 'Location Flag',
@@ -496,6 +502,7 @@ return [
     'update_transactions' => 'Update Transactions',
     'update_wallet' => 'Update Wallet',
     'update_loyalty_points' => 'Update Loyalty Points',
+    'update_projects' => 'Update Projects',
 
     // Character
     'joined_curr_corp' => 'Joined Current Corporation',
@@ -770,4 +777,21 @@ return [
     'sde_version' => 'SDE Version',
     'render_in' => 'Rendered In',
     'copyright' => 'Copyright',
+
+    // Projects
+    'contributor' => 'Contributor|Contributors',
+    'contributed' => 'Contributed',
+    'no_contributions' => 'No Contributions',
+    'no_configuration_project' => 'No configuration available for this project',
+    'project_setting' => 'Setting',
+    'career' => 'Career',
+
+    'financial' => 'Financial',
+    'reward_initial' => 'Initial Reward',
+    'reward_remaining' => 'Remaining Reward',
+    'contribution_reward' => 'Reward per Contribution',
+    'contribution_rules' => 'Contribution Rules',
+    'participation_limit' => 'Participation Limit',
+    'submission_limit' => 'Submission Limit',
+    'submission_multiplier' => 'Submission Multiplier',
 ];

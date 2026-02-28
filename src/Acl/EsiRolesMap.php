@@ -142,6 +142,9 @@ class EsiRolesMap
             'corporation.summary',
             'corporation.market',
         ],
+        'Project Manager' => [
+            'corporation.projects',
+        ],
     ];
 
     /**
