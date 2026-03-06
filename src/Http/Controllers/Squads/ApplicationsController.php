@@ -64,8 +64,8 @@ class ApplicationsController extends Controller
      */
     public function store(Request $request, Squad $squad)
     {
-        if(!$squad->isUserEligible(auth()->user())) {
-            return redirect()->back()->with('error','You are not eligible for this squad!');
+        if(! $squad->isUserEligible(auth()->user())) {
+            return redirect()->back()->with('error', 'You are not eligible for this squad!');
         }
 
         // in case the squad is manual and does not contain any moderator
@@ -112,8 +112,8 @@ class ApplicationsController extends Controller
     {
         $application = SquadApplication::with('squad', 'user')->find($id);
 
-        if(!$squad->isUserEligible($application->user)) {
-            return redirect()->back()->with('error','The applicant is not eligible for this squad!');
+        if(! $squad->isUserEligible($application->user)) {
+            return redirect()->back()->with('error', 'The applicant is not eligible for this squad!');
         }
 
         $squad->members()->save($application->user);

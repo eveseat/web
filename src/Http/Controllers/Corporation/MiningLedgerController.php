@@ -40,7 +40,7 @@ class MiningLedgerController extends Controller
      * @param  \Seat\Web\Http\DataTables\Corporation\Industrial\MiningDataTable  $dataTable
      * @return mixed
      */
-    public function index(CorporationInfo $corporation, MiningDataTable $dataTable, int $year = null, int $month = null)
+    public function index(CorporationInfo $corporation, MiningDataTable $dataTable, ?int $year = null, ?int $month = null)
     {
         if (is_null($year)) $year = carbon()->year;
 
