@@ -130,7 +130,7 @@ class MailController extends Controller
      * @param  int  $message_id
      * @return mixed
      */
-    private function getCharacterMailTimeline(int $message_id = null)
+    private function getCharacterMailTimeline(?int $message_id = null)
     {
         // Get the User for permissions and affiliation
         // checks
