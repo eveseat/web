@@ -81,7 +81,7 @@
           @include('web::partials.type', [
             'type_id' => $item->type->typeID,
             'type_name' => $item->name ? sprintf('%s (%s)', $item->name, $item->type->typeName) : $item->type->typeName,
-            'variation' => $item->type->group->categoryID == 9 ? 'bpc' : 'icon',
+            'variation' => $item->type->group->categoryID == 9 ? ($item->is_blueprint_copy ? 'bpc' : 'bp') : 'icon',
           ])
         </td>
         <td>{{ number($item->quantity, 0) }}</td>
