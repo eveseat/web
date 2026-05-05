@@ -49,7 +49,7 @@ abstract class AbstractAssetDataTable extends DataTable
                 return view('web::partials.type', [
                     'type_id' => $row->type->typeID,
                     'type_name' => $row->name ? sprintf('%s (%s)', $row->name, $row->type->typeName) : $row->type->typeName,
-                    'variation' => $row->type->group->categoryID == 9 ? 'bpc' : 'icon',
+                    'variation' => $row->type->group->categoryID == 9 ? ($row->is_blueprint_copy ? 'bpc' : 'bp') : 'icon',
                 ])->render();
             })
             ->editColumn('quantity', function ($row) {
