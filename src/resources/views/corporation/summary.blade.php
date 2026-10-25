@@ -22,7 +22,8 @@
             <dd>{{ $sheet->member_count }} {{ trans_choice('web::seat.member', $sheet->member_count) }}</dd>
             @can('corporation.tracking', $sheet)
               <dt><i class="far fa-address-book"></i> {{ trans('web::seat.tracking') }}</dt>
-              <dd>{{ $trackings }} / {{ $sheet->member_count }} ({{ number_format($trackings/$sheet->member_count * 100, 2) }}%) {{ trans_choice('web::seat.valid_token', $sheet->member_count) }}</dd>
+              @php($coverage = $sheet->member_count > 0 ? $trackings / $sheet->member_count * 100 : 0)
+              <dd>{{ $trackings }} / {{ $sheet->member_count }} ({{ number_format($coverage, 2) }}%) {{ trans_choice('web::seat.valid_token', $sheet->member_count) }}</dd>
             @endcan
           </dl>
 
