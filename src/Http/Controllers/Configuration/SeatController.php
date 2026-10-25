@@ -142,7 +142,7 @@ class SeatController extends Controller
             try {
 
                 $sde_uri = 'https://raw.githubusercontent.com/eveseat/resources/master/sde.json';
-                $response = (new Client())->request('GET', $sde_uri);
+                $response = (new Client(['connect_timeout' => 3, 'timeout' => 5]))->request('GET', $sde_uri);
 
                 // Ensure that the request was successful
                 if (! $response->getStatusCode() == 200)
@@ -214,7 +214,7 @@ class SeatController extends Controller
             try {
 
                 $discord_uri = 'https://discord.com/api/guilds/821361165791133716/widget.json';
-                $response = (new Client())->request('GET', $discord_uri);
+                $response = (new Client(['connect_timeout' => 3, 'timeout' => 5]))->request('GET', $discord_uri);
 
                 // Ensure that the request was successful
                 if ($response->getStatusCode() == 200) {
@@ -257,7 +257,7 @@ class SeatController extends Controller
             try {
 
                 $github_uri = 'https://api.github.com/repos/eveseat/docs';
-                $response = (new Client())->request('GET', $github_uri);
+                $response = (new Client(['connect_timeout' => 3, 'timeout' => 5]))->request('GET', $github_uri);
 
                 // Ensure that the request was successful
                 if ($response->getStatusCode() == 200) {
@@ -299,7 +299,7 @@ class SeatController extends Controller
             try {
 
                 $github_uri = 'https://api.github.com/repos/eveseat/seat';
-                $response = (new Client())->request('GET', $github_uri);
+                $response = (new Client(['connect_timeout' => 3, 'timeout' => 5]))->request('GET', $github_uri);
 
                 // Ensure that the request was successful
                 if ($response->getStatusCode() == 200) {
@@ -340,7 +340,7 @@ class SeatController extends Controller
                 $changelog = '';
 
                 // retrieve releases from provided API endpoint
-                $client = new Client();
+                $client = new Client(['connect_timeout' => 3, 'timeout' => 5]);
                 $response = $client->request('GET', $uri);
 
                 // decode the response
@@ -393,7 +393,7 @@ class SeatController extends Controller
         try {
             return cache()->remember($this->getChangelogCacheKey($uri), 30, function () use ($uri) {
                 // retrieve changelog from provided uri
-                $client = new Client();
+                $client = new Client(['connect_timeout' => 3, 'timeout' => 5]);
                 $response = $client->request('GET', $uri);
 
                 // spawn a new Markdown parser
