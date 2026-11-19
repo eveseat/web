@@ -287,6 +287,20 @@
           </ul>
         </dd>
 
+        @if(setting('installed_ccp_sde', true))
+          <dt>
+            Eve Online SDE (CCP)
+            <span id="live-ccp-sde-status" class="badge d-none" data-toggle="tooltip" title=""></span>
+          </dt>
+          <dd>
+            <ul>
+              <li>{{ trans('web::seat.installed') }}: <b>{{ setting('installed_ccp_sde', true) }}</b></li>
+              <li id="live-ccp-sde-version">{{ trans('web::seat.ccp_sde_latest') }}: <b>...</b></li>
+              <li>{{ trans('web::seat.url') }}: <a href="https://developers.eveonline.com/static-data" target="_blank">https://developers.eveonline.com/static-data</a></li>
+            </ul>
+          </dd>
+        @endif
+
       </dl>
 
     </div>
@@ -380,6 +394,36 @@
         liveSdeStatus.attr('data-original-title', liveSdeOutdated ? 'At least one new version has been released !' : 'The package is up-to-date.');
       }
     });
+
+    @if(setting('installed_ccp_sde', true))
+    @php
+      $ccp_sde_states = [
+        'latest' => ['css' => 'badge-success', 'label' => trans('web::seat.ccp_sde_status_latest'), 'hint' => trans('web::seat.ccp_sde_hint_latest')],
+        'new' => ['css' => 'badge-warning', 'label' => trans('web::seat.ccp_sde_status_new'), 'hint' => trans('web::seat.ccp_sde_hint_new')],
+        'outdated' => ['css' => 'badge-danger', 'label' => trans('web::seat.ccp_sde_status_outdated'), 'hint' => trans('web::seat.ccp_sde_hint_outdated')],
+      ];
+    @endphp
+    jQuery.get("{{ route('seatcore::check.ccp_sde') }}", function (data) {
+      var states = @json($ccp_sde_states);
+
+      $('#live-ccp-sde-version b').text((data != null && data.build)
+        ? data.build + (data.released ? ' (' + data.released + ')' : '')
+        : @json(trans('web::seat.ccp_sde_unknown')));
+
+      var state = data != null ? states[data.status] : null;
+      if (! state)
+        return;
+
+      var hint = state.hint.replace(':build', data.pinned);
+
+      $('#live-ccp-sde-status')
+        .addClass(state.css)
+        .text(state.label)
+        .attr('title', hint)
+        .attr('data-original-title', hint)
+        .removeClass('d-none');
+    });
+    @endif
 
     copyVersions.on('click', function() {
       var buffer = "```\r\n";

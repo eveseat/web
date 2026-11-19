@@ -26,6 +26,7 @@ use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Parsedown;
+use Seat\Eveapi\Database\Seeders\CcpSdeSeeder;
 use Seat\Services\Traits\VersionsManagementTrait;
 use Seat\Web\Http\Controllers\Controller;
 use Seat\Web\Http\Validation\Customlink;
@@ -160,6 +161,63 @@ class SeatController extends Controller
         });
 
         return response()->json(['version' => $sde_version]);
+    }
+
+    /**
+     * CCP's newest SDE build, read from the pointer file CCP publishes with every build.
+     * A failed lookup is cached too, so CCP being unreachable never slows a page.
+     *
+     * CCP publishes a build most days, but SeAT only installs the one its CCP seeder
+     * pins. So "outdated" means this SeAT version would install a newer build than the
+     * one installed, which eve:update:sde fixes. A newer build at CCP alone is "new".
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getLatestCcpSde()
+    {
+        $latest = cache()->remember('live_ccp_sde_version', 3600, function () {
+
+            try {
+
+                $response = (new Client())->request('GET',
+                    'https://developers.eveonline.com/static-data/tranquility/latest.jsonl', ['timeout' => 10]);
+
+                $json = json_decode((string) strtok((string) $response->getBody(), "\n"), true);
+
+                if (! isset($json['buildNumber']))
+                    return ['build' => null, 'released' => null];
+
+                return [
+                    'build' => (string) $json['buildNumber'],
+                    'released' => isset($json['releaseDate']) ? substr($json['releaseDate'], 0, 10) : null,
+                ];
+
+            } catch (Exception $e) {
+
+                return ['build' => null, 'released' => null];
+            }
+
+        });
+
+        $installed = strtok((string) setting('installed_ccp_sde', true), ' ') ?: null;
+
+        // Older eveapi releases don't expose the build their CCP seeder installs.
+        $pinned = method_exists(CcpSdeSeeder::class, 'getVersion') ? (new CcpSdeSeeder)->getVersion() : null;
+
+        $status = null;
+
+        if ($installed && $pinned && (int) $installed < (int) $pinned)
+            $status = 'outdated';
+        elseif ($installed && $latest['build'])
+            $status = (int) $installed < (int) $latest['build'] ? 'new' : 'latest';
+
+        return response()->json([
+            'build' => $latest['build'],
+            'released' => $latest['released'],
+            'installed' => $installed,
+            'pinned' => $pinned,
+            'status' => $status,
+        ]);
     }
 
     /**

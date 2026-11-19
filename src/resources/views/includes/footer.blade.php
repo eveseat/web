@@ -15,7 +15,30 @@
     @endif
 
     <b>{{ trans('web::seat.render_in') }}</b> {{ number_format((microtime(true) - LARAVEL_START), 3) }}s |
-    <b>{{ trans('web::seat.sde_version') }}</b> {{ setting('installed_sde', true) }} |
+    @php
+      $ccp_sde = setting('installed_ccp_sde', true);
+      $sde_version = $ccp_sde
+        ? sprintf('Fuzzwork %s + CCP %s', setting('installed_sde', true), $ccp_sde)
+        : setting('installed_sde', true);
+    @endphp
+    <b>{{ trans('web::seat.sde_version') }}</b> {{ $sde_version }}
+    @if($ccp_sde)
+      @can('global.superuser')
+        @php
+          // Only flagged when this SeAT version installs a newer build, so there is something to run.
+          // CCP publishes a build most days, which the Settings page reports instead.
+          $ccp_sde_pinned = method_exists(\Seat\Eveapi\Database\Seeders\CcpSdeSeeder::class, 'getVersion')
+            ? (new \Seat\Eveapi\Database\Seeders\CcpSdeSeeder)->getVersion()
+            : null;
+          $ccp_sde_outdated = $ccp_sde_pinned && (int) strtok((string) $ccp_sde, ' ') < (int) $ccp_sde_pinned;
+        @endphp
+        @if($ccp_sde_outdated)
+          <a href="{{ route('seatcore::seat.settings.view') }}" class="badge badge-danger" data-toggle="tooltip"
+             title="{{ trans('web::seat.ccp_sde_hint_outdated', ['build' => $ccp_sde_pinned]) }}">{{ trans('web::seat.ccp_sde_status_outdated') }}</a>
+        @endif
+      @endcan
+    @endif
+    |
     @if(file_exists(storage_path('version')))
       <b>{{ trans('web::seat.docker_version') }}</b> {{ file_get_contents(storage_path('version')) }}
     @else
