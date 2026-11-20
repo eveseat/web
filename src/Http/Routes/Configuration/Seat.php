@@ -40,6 +40,10 @@ Route::get('/check/sde')
     ->name('seatcore::check.sde')
     ->uses('SeatController@getApprovedSDE');
 
+Route::get('/check/ccp-sde')
+    ->name('seatcore::check.ccp_sde')
+    ->uses('SeatController@getLatestCcpSde');
+
 Route::post('/packages/check')
     ->name('seatcore::packages.check')
     ->uses('SeatController@postPackagesCheck');
